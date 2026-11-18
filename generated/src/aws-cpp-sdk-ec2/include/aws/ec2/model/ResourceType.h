@@ -25,6 +25,7 @@ enum class ResourceType {
   elastic_gpu,
   export_image_task,
   export_instance_task,
+  fca_policy,
   fleet,
   fpga_image,
   host_reservation,
@@ -114,13 +115,17 @@ enum class ResourceType {
   ipam_prefix_list_resolver,
   ipam_policy,
   ipam_prefix_list_resolver_target,
+  ipam_internet_registry_association,
   secondary_interface,
   secondary_network,
   secondary_subnet,
   capacity_manager_data_export,
   vpn_concentrator,
   ipam_pool_allocation,
-  capacity_reservation_cancellation_quote
+  capacity_reservation_cancellation_quote,
+  application_status_check,
+  capacity_reservation_modification_quote,
+  metric_category
 };
 
 namespace ResourceTypeMapper {

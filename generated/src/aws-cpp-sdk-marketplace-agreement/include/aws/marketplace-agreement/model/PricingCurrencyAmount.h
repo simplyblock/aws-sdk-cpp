@@ -5,16 +5,16 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AgreementService {
 namespace Model {
@@ -28,9 +28,9 @@ namespace Model {
 class PricingCurrencyAmount {
  public:
   AWS_AGREEMENTSERVICE_API PricingCurrencyAmount() = default;
-  AWS_AGREEMENTSERVICE_API PricingCurrencyAmount(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API PricingCurrencyAmount& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_AGREEMENTSERVICE_API PricingCurrencyAmount(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API PricingCurrencyAmount& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -71,7 +71,7 @@ class PricingCurrencyAmount {
 
   ///@{
   /**
-   * <p>The 3-letter ISO 4217 currency code (e.g., <code>USD</code>,
+   * <p>The 3-letter ISO 4217 currency code (for example, <code>USD</code>,
    * <code>EUR</code>, <code>JPY</code>).</p>
    */
   inline const Aws::String& GetCurrencyCode() const { return m_currencyCode; }

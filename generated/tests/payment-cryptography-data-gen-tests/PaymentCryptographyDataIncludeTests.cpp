@@ -8,12 +8,14 @@
 
 #include <aws/payment-cryptography-data/PaymentCryptographyDataClient.h>
 #include <aws/payment-cryptography-data/PaymentCryptographyDataEndpointProvider.h>
-#include <aws/payment-cryptography-data/PaymentCryptographyDataEndpointRules.h>
 #include <aws/payment-cryptography-data/PaymentCryptographyDataErrorMarshaller.h>
 #include <aws/payment-cryptography-data/PaymentCryptographyDataErrors.h>
+#include <aws/payment-cryptography-data/PaymentCryptographyDataPaginationBase.h>
 #include <aws/payment-cryptography-data/PaymentCryptographyDataRequest.h>
 #include <aws/payment-cryptography-data/PaymentCryptographyDataServiceClientModel.h>
+#include <aws/payment-cryptography-data/PaymentCryptographyDataWaiter.h>
 #include <aws/payment-cryptography-data/PaymentCryptographyData_EXPORTS.h>
+#include <aws/payment-cryptography-data/internal/PaymentCryptographyDataEndpointRules.h>
 #include <aws/payment-cryptography-data/model/AmexAttributes.h>
 #include <aws/payment-cryptography-data/model/AmexCardSecurityCodeVersion1.h>
 #include <aws/payment-cryptography-data/model/AmexCardSecurityCodeVersion2.h>
@@ -105,6 +107,7 @@
 #include <aws/payment-cryptography-data/model/SessionKeyEmv2000.h>
 #include <aws/payment-cryptography-data/model/SessionKeyEmvCommon.h>
 #include <aws/payment-cryptography-data/model/SessionKeyMastercard.h>
+#include <aws/payment-cryptography-data/model/SessionKeyUnionPay.h>
 #include <aws/payment-cryptography-data/model/SessionKeyVisa.h>
 #include <aws/payment-cryptography-data/model/SymmetricEncryptionAttributes.h>
 #include <aws/payment-cryptography-data/model/SymmetricKeyAlgorithm.h>

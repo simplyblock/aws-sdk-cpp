@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/rtbfabric/RTBFabricEndpointRules.h>
 #include <aws/rtbfabric/RTBFabric_EXPORTS.h>
 
 namespace Aws {
 namespace RTBFabric {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using RTBFabricClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using RTBFabricEndpointProviderBase =
     EndpointProviderBase<RTBFabricClientConfiguration, RTBFabricBuiltInParameters, RTBFabricClientContextParameters>;
 
 using RTBFabricDefaultEpProviderBase =
-    DefaultEndpointProvider<RTBFabricClientConfiguration, RTBFabricBuiltInParameters, RTBFabricClientContextParameters>;
+    BDDEndpointProvider<RTBFabricClientConfiguration, RTBFabricBuiltInParameters, RTBFabricClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_RTBFABRIC_API RTBFabricEndpointProvider : public RTBFabricDefaultEpPro
  public:
   using RTBFabricResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  RTBFabricEndpointProvider()
-      : RTBFabricDefaultEpProviderBase(Aws::RTBFabric::RTBFabricEndpointRules::GetRulesBlob(),
-                                       Aws::RTBFabric::RTBFabricEndpointRules::RulesBlobSize) {}
+  RTBFabricEndpointProvider();
 
   ~RTBFabricEndpointProvider() {}
 };

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-directory-service-data "C++ SDK for the AWS directory-service-data service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-directory-service-data "C++ SDK for AWS Directory Service Data" aws-cpp-sdk-core)
 
 file(GLOB AWS_DIRECTORY-SERVICE-DATA_HEADERS
     "include/aws/directory-service-data/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_DIRECTORY-SERVICE-DATA_HEADERS
 
 file(GLOB AWS_DIRECTORY-SERVICE-DATA_MODEL_HEADERS
     "include/aws/directory-service-data/model/*.h"
+)
+
+file(GLOB AWS_DIRECTORY-SERVICE-DATA_INTERNAL_HEADERS
+    "include/aws/directory-service-data/internal/*.h"
 )
 
 file(GLOB AWS_DIRECTORY-SERVICE-DATA_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_DIRECTORY-SERVICE-DATA_MODEL_SOURCE
 
 file(GLOB DIRECTORY-SERVICE-DATA_UNIFIED_HEADERS
     ${AWS_DIRECTORY-SERVICE-DATA_HEADERS}
+    ${AWS_DIRECTORY-SERVICE-DATA_INTERNAL_HEADERS}
     ${AWS_DIRECTORY-SERVICE-DATA_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\directory-service-data" FILES ${AWS_DIRECTORY-SERVICE-DATA_HEADERS})
+        source_group("Header Files\\aws\\directory-service-data\\internal" FILES ${AWS_DIRECTORY-SERVICE-DATA_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\directory-service-data\\model" FILES ${AWS_DIRECTORY-SERVICE-DATA_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_DIRECTORY-SERVICE-DATA_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_DIRECTORY-SERVICE-DATA_MODEL_SOURCE})

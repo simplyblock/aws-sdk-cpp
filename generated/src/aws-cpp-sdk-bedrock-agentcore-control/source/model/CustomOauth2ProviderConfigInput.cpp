@@ -47,6 +47,10 @@ CustomOauth2ProviderConfigInput& CustomOauth2ProviderConfigInput::operator=(Json
         ClientAuthenticationMethodTypeMapper::GetClientAuthenticationMethodTypeForName(jsonValue.GetString("clientAuthenticationMethod"));
     m_clientAuthenticationMethodHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("privateKeyJwtConfig")) {
+    m_privateKeyJwtConfig = jsonValue.GetObject("privateKeyJwtConfig");
+    m_privateKeyJwtConfigHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("privateEndpoint")) {
     m_privateEndpoint = jsonValue.GetObject("privateEndpoint");
     m_privateEndpointHasBeenSet = true;
@@ -58,6 +62,14 @@ CustomOauth2ProviderConfigInput& CustomOauth2ProviderConfigInput::operator=(Json
       m_privateEndpointOverrides.push_back(privateEndpointOverridesJsonList[privateEndpointOverridesIndex].AsObject());
     }
     m_privateEndpointOverridesHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("certificateConfigurations")) {
+    Aws::Utils::Array<JsonView> certificateConfigurationsJsonList = jsonValue.GetArray("certificateConfigurations");
+    for (unsigned certificateConfigurationsIndex = 0; certificateConfigurationsIndex < certificateConfigurationsJsonList.GetLength();
+         ++certificateConfigurationsIndex) {
+      m_certificateConfigurations.push_back(certificateConfigurationsJsonList[certificateConfigurationsIndex].AsObject());
+    }
+    m_certificateConfigurationsHasBeenSet = true;
   }
   return *this;
 }
@@ -94,6 +106,10 @@ JsonValue CustomOauth2ProviderConfigInput::Jsonize() const {
                        ClientAuthenticationMethodTypeMapper::GetNameForClientAuthenticationMethodType(m_clientAuthenticationMethod));
   }
 
+  if (m_privateKeyJwtConfigHasBeenSet) {
+    payload.WithObject("privateKeyJwtConfig", m_privateKeyJwtConfig.Jsonize());
+  }
+
   if (m_privateEndpointHasBeenSet) {
     payload.WithObject("privateEndpoint", m_privateEndpoint.Jsonize());
   }
@@ -106,6 +122,16 @@ JsonValue CustomOauth2ProviderConfigInput::Jsonize() const {
           m_privateEndpointOverrides[privateEndpointOverridesIndex].Jsonize());
     }
     payload.WithArray("privateEndpointOverrides", std::move(privateEndpointOverridesJsonList));
+  }
+
+  if (m_certificateConfigurationsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> certificateConfigurationsJsonList(m_certificateConfigurations.size());
+    for (unsigned certificateConfigurationsIndex = 0; certificateConfigurationsIndex < certificateConfigurationsJsonList.GetLength();
+         ++certificateConfigurationsIndex) {
+      certificateConfigurationsJsonList[certificateConfigurationsIndex].AsObject(
+          m_certificateConfigurations[certificateConfigurationsIndex].Jsonize());
+    }
+    payload.WithArray("certificateConfigurations", std::move(certificateConfigurationsJsonList));
   }
 
   return payload;

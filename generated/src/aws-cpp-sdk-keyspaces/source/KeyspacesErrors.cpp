@@ -5,6 +5,7 @@
 
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/HashingUtils.h>
+#include <aws/core/utils/cbor/CborValue.h>
 #include <aws/keyspaces/KeyspacesErrors.h>
 #include <aws/keyspaces/model/ResourceNotFoundException.h>
 
@@ -18,7 +19,8 @@ namespace Keyspaces {
 template <>
 AWS_KEYSPACES_API ResourceNotFoundException KeyspacesError::GetModeledError() {
   assert(this->GetErrorType() == KeyspacesErrors::RESOURCE_NOT_FOUND);
-  return ResourceNotFoundException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return ResourceNotFoundException(payload.GetDecoder());
 }
 
 namespace KeyspacesErrorMapper {

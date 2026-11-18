@@ -7,13 +7,16 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/invoicing/InvoicingClient.h>
+#include <aws/invoicing/InvoicingClientPagination.h>
 #include <aws/invoicing/InvoicingEndpointProvider.h>
-#include <aws/invoicing/InvoicingEndpointRules.h>
 #include <aws/invoicing/InvoicingErrorMarshaller.h>
 #include <aws/invoicing/InvoicingErrors.h>
+#include <aws/invoicing/InvoicingPaginationBase.h>
 #include <aws/invoicing/InvoicingRequest.h>
 #include <aws/invoicing/InvoicingServiceClientModel.h>
+#include <aws/invoicing/InvoicingWaiter.h>
 #include <aws/invoicing/Invoicing_EXPORTS.h>
+#include <aws/invoicing/internal/InvoicingEndpointRules.h>
 #include <aws/invoicing/model/AccessDeniedException.h>
 #include <aws/invoicing/model/AmountBreakdown.h>
 #include <aws/invoicing/model/BatchGetInvoiceProfileRequest.h>
@@ -42,6 +45,7 @@
 #include <aws/invoicing/model/EinvoiceDeliveryPreference.h>
 #include <aws/invoicing/model/EinvoiceDeliveryStatus.h>
 #include <aws/invoicing/model/Entity.h>
+#include <aws/invoicing/model/FeatureConfigurations.h>
 #include <aws/invoicing/model/FeesBreakdown.h>
 #include <aws/invoicing/model/FeesBreakdownAmount.h>
 #include <aws/invoicing/model/Filters.h>
@@ -52,6 +56,7 @@
 #include <aws/invoicing/model/GetProcurementPortalPreferenceRequest.h>
 #include <aws/invoicing/model/GetProcurementPortalPreferenceResult.h>
 #include <aws/invoicing/model/InternalServerException.h>
+#include <aws/invoicing/model/InvoiceConfiguration.h>
 #include <aws/invoicing/model/InvoiceCurrencyAmount.h>
 #include <aws/invoicing/model/InvoiceFrequency.h>
 #include <aws/invoicing/model/InvoicePDF.h>
@@ -62,20 +67,33 @@
 #include <aws/invoicing/model/InvoiceType.h>
 #include <aws/invoicing/model/InvoiceUnit.h>
 #include <aws/invoicing/model/InvoiceUnitRule.h>
+#include <aws/invoicing/model/ListInvoiceSummariesPaginationTraits.h>
 #include <aws/invoicing/model/ListInvoiceSummariesRequest.h>
 #include <aws/invoicing/model/ListInvoiceSummariesResourceType.h>
 #include <aws/invoicing/model/ListInvoiceSummariesResult.h>
+#include <aws/invoicing/model/ListInvoiceUnitsPaginationTraits.h>
 #include <aws/invoicing/model/ListInvoiceUnitsRequest.h>
 #include <aws/invoicing/model/ListInvoiceUnitsResult.h>
+#include <aws/invoicing/model/ListProcurementPortalPreferencesPaginationTraits.h>
 #include <aws/invoicing/model/ListProcurementPortalPreferencesRequest.h>
 #include <aws/invoicing/model/ListProcurementPortalPreferencesResult.h>
+#include <aws/invoicing/model/ListProcurementPortalSuppliersPaginationTraits.h>
+#include <aws/invoicing/model/ListProcurementPortalSuppliersRequest.h>
+#include <aws/invoicing/model/ListProcurementPortalSuppliersResult.h>
+#include <aws/invoicing/model/ListProcurementPortalsPaginationTraits.h>
+#include <aws/invoicing/model/ListProcurementPortalsRequest.h>
+#include <aws/invoicing/model/ListProcurementPortalsResult.h>
 #include <aws/invoicing/model/ListTagsForResourceRequest.h>
 #include <aws/invoicing/model/ListTagsForResourceResult.h>
+#include <aws/invoicing/model/MarketplacePunchOutPreference.h>
+#include <aws/invoicing/model/ProcurementPortal.h>
+#include <aws/invoicing/model/ProcurementPortalEnv.h>
 #include <aws/invoicing/model/ProcurementPortalName.h>
 #include <aws/invoicing/model/ProcurementPortalPreference.h>
 #include <aws/invoicing/model/ProcurementPortalPreferenceSelector.h>
 #include <aws/invoicing/model/ProcurementPortalPreferenceStatus.h>
 #include <aws/invoicing/model/ProcurementPortalPreferenceSummary.h>
+#include <aws/invoicing/model/ProcurementPortalSupplier.h>
 #include <aws/invoicing/model/Protocol.h>
 #include <aws/invoicing/model/PurchaseOrderDataSource.h>
 #include <aws/invoicing/model/PurchaseOrderDataSourceType.h>
@@ -85,6 +103,8 @@
 #include <aws/invoicing/model/ReceiverRole.h>
 #include <aws/invoicing/model/ResourceNotFoundException.h>
 #include <aws/invoicing/model/ResourceTag.h>
+#include <aws/invoicing/model/SendProcurementPortalValidationRequest.h>
+#include <aws/invoicing/model/SendProcurementPortalValidationResult.h>
 #include <aws/invoicing/model/SupplementalDocument.h>
 #include <aws/invoicing/model/SupplementalDocumentType.h>
 #include <aws/invoicing/model/SupplierDomain.h>
@@ -104,6 +124,8 @@
 #include <aws/invoicing/model/ValidationException.h>
 #include <aws/invoicing/model/ValidationExceptionField.h>
 #include <aws/invoicing/model/ValidationExceptionReason.h>
+#include <aws/invoicing/model/VerifyProcurementPortalValidationRequest.h>
+#include <aws/invoicing/model/VerifyProcurementPortalValidationResult.h>
 
 using InvoicingIncludeTest = ::testing::Test;
 

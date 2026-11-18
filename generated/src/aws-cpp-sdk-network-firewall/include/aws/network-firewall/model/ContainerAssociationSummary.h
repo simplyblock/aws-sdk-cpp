@@ -5,34 +5,34 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace NetworkFirewall {
 namespace Model {
 
 /**
- * <p>High-level information about a container association, returned by the
- * <a>ListContainerAssociations</a> operation. You can use this information to
- * retrieve the full details of a container association using
- * <a>DescribeContainerAssociation</a>.</p><p><h3>See Also:</h3>   <a
+ * <p>The metadata for a container association returned by
+ * <code>ListContainerAssociations</code>. Contains the ARN and name that you use
+ * to identify the container association in other operations.</p><p><h3>See
+ * Also:</h3>   <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/ContainerAssociationSummary">AWS
  * API Reference</a></p>
  */
 class ContainerAssociationSummary {
  public:
   AWS_NETWORKFIREWALL_API ContainerAssociationSummary() = default;
-  AWS_NETWORKFIREWALL_API ContainerAssociationSummary(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API ContainerAssociationSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_NETWORKFIREWALL_API ContainerAssociationSummary(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API ContainerAssociationSummary& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**

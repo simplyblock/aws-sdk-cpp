@@ -82,7 +82,9 @@
 #include <aws/cloudformation/model/RecordHandlerProgressRequest.h>
 #include <aws/cloudformation/model/RegisterPublisherRequest.h>
 #include <aws/cloudformation/model/RegisterTypeRequest.h>
+#include <aws/cloudformation/model/RemoveAliasRequest.h>
 #include <aws/cloudformation/model/RollbackStackRequest.h>
+#include <aws/cloudformation/model/SetAliasRequest.h>
 #include <aws/cloudformation/model/SetStackPolicyRequest.h>
 #include <aws/cloudformation/model/SetTypeConfigurationRequest.h>
 #include <aws/cloudformation/model/SetTypeDefaultVersionRequest.h>
@@ -267,7 +269,8 @@ CloudFormationClient::InvokeOperationOutcome CloudFormationClient::InvokeService
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -279,7 +282,7 @@ CloudFormationClient::InvokeOperationOutcome CloudFormationClient::InvokeService
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 ActivateOrganizationsAccessOutcome CloudFormationClient::ActivateOrganizationsAccess(
@@ -727,9 +730,19 @@ RegisterTypeOutcome CloudFormationClient::RegisterType(const RegisterTypeRequest
   return result.IsSuccess() ? RegisterTypeOutcome(result.GetResultWithOwnership()) : RegisterTypeOutcome(std::move(result.GetError()));
 }
 
+RemoveAliasOutcome CloudFormationClient::RemoveAlias(const RemoveAliasRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? RemoveAliasOutcome(result.GetResultWithOwnership()) : RemoveAliasOutcome(std::move(result.GetError()));
+}
+
 RollbackStackOutcome CloudFormationClient::RollbackStack(const RollbackStackRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? RollbackStackOutcome(result.GetResultWithOwnership()) : RollbackStackOutcome(std::move(result.GetError()));
+}
+
+SetAliasOutcome CloudFormationClient::SetAlias(const SetAliasRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? SetAliasOutcome(result.GetResultWithOwnership()) : SetAliasOutcome(std::move(result.GetError()));
 }
 
 SetStackPolicyOutcome CloudFormationClient::SetStackPolicy(const SetStackPolicyRequest& request) const {

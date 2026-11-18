@@ -62,6 +62,19 @@ ResaleAuthorizationSummary& ResaleAuthorizationSummary::operator=(JsonView jsonV
     m_availabilityEndDate = jsonValue.GetString("AvailabilityEndDate");
     m_availabilityEndDateHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("ResellerRole")) {
+    m_resellerRole =
+        ResaleAuthorizationResellerRoleStringMapper::GetResaleAuthorizationResellerRoleStringForName(jsonValue.GetString("ResellerRole"));
+    m_resellerRoleHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("SourceAuthorization")) {
+    m_sourceAuthorization = jsonValue.GetString("SourceAuthorization");
+    m_sourceAuthorizationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("IssuerAccountId")) {
+    m_issuerAccountId = jsonValue.GetString("IssuerAccountId");
+    m_issuerAccountIdHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -110,6 +123,19 @@ JsonValue ResaleAuthorizationSummary::Jsonize() const {
 
   if (m_availabilityEndDateHasBeenSet) {
     payload.WithString("AvailabilityEndDate", m_availabilityEndDate);
+  }
+
+  if (m_resellerRoleHasBeenSet) {
+    payload.WithString("ResellerRole",
+                       ResaleAuthorizationResellerRoleStringMapper::GetNameForResaleAuthorizationResellerRoleString(m_resellerRole));
+  }
+
+  if (m_sourceAuthorizationHasBeenSet) {
+    payload.WithString("SourceAuthorization", m_sourceAuthorization);
+  }
+
+  if (m_issuerAccountIdHasBeenSet) {
+    payload.WithString("IssuerAccountId", m_issuerAccountId);
   }
 
   return payload;

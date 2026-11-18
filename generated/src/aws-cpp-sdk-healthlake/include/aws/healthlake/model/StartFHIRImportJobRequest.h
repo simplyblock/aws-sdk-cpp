@@ -106,7 +106,7 @@ class StartFHIRImportJobRequest : public HealthLakeRequest {
 
   ///@{
   /**
-   * <p>The Amazon Resource Name (ARN) that grants access permission to AWS
+   * <p>The Amazon Resource Name (ARN) that grants access permission to
    * HealthLake.</p>
    */
   inline const Aws::String& GetDataAccessRoleArn() const { return m_dataAccessRoleArn; }
@@ -156,6 +156,74 @@ class StartFHIRImportJobRequest : public HealthLakeRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The data transformation profile identifier to use for the import job.</p>
+   */
+  inline const Aws::String& GetProfileId() const { return m_profileId; }
+  inline bool ProfileIdHasBeenSet() const { return m_profileIdHasBeenSet; }
+  template <typename ProfileIdT = Aws::String>
+  void SetProfileId(ProfileIdT&& value) {
+    m_profileIdHasBeenSet = true;
+    m_profileId = std::forward<ProfileIdT>(value);
+  }
+  template <typename ProfileIdT = Aws::String>
+  StartFHIRImportJobRequest& WithProfileId(ProfileIdT&& value) {
+    SetProfileId(std::forward<ProfileIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The input format of the data to be imported.</p>
+   */
+  inline const Aws::String& GetInputFormat() const { return m_inputFormat; }
+  inline bool InputFormatHasBeenSet() const { return m_inputFormatHasBeenSet; }
+  template <typename InputFormatT = Aws::String>
+  void SetInputFormat(InputFormatT&& value) {
+    m_inputFormatHasBeenSet = true;
+    m_inputFormat = std::forward<InputFormatT>(value);
+  }
+  template <typename InputFormatT = Aws::String>
+  StartFHIRImportJobRequest& WithInputFormat(InputFormatT&& value) {
+    SetInputFormat(std::forward<InputFormatT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Specifies whether to enable drift detection for the import job.</p>
+   */
+  inline bool GetDriftDetectionEnabled() const { return m_driftDetectionEnabled; }
+  inline bool DriftDetectionEnabledHasBeenSet() const { return m_driftDetectionEnabledHasBeenSet; }
+  inline void SetDriftDetectionEnabled(bool value) {
+    m_driftDetectionEnabledHasBeenSet = true;
+    m_driftDetectionEnabled = value;
+  }
+  inline StartFHIRImportJobRequest& WithDriftDetectionEnabled(bool value) {
+    SetDriftDetectionEnabled(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Specifies whether to enable provenance for the import job.</p>
+   */
+  inline bool GetProvenanceEnabled() const { return m_provenanceEnabled; }
+  inline bool ProvenanceEnabledHasBeenSet() const { return m_provenanceEnabledHasBeenSet; }
+  inline void SetProvenanceEnabled(bool value) {
+    m_provenanceEnabledHasBeenSet = true;
+    m_provenanceEnabled = value;
+  }
+  inline StartFHIRImportJobRequest& WithProvenanceEnabled(bool value) {
+    SetProvenanceEnabled(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_jobName;
 
@@ -170,6 +238,14 @@ class StartFHIRImportJobRequest : public HealthLakeRequest {
   Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
   ValidationLevel m_validationLevel{ValidationLevel::NOT_SET};
+
+  Aws::String m_profileId;
+
+  Aws::String m_inputFormat;
+
+  bool m_driftDetectionEnabled{false};
+
+  bool m_provenanceEnabled{false};
   bool m_jobNameHasBeenSet = false;
   bool m_inputDataConfigHasBeenSet = false;
   bool m_jobOutputDataConfigHasBeenSet = false;
@@ -177,6 +253,10 @@ class StartFHIRImportJobRequest : public HealthLakeRequest {
   bool m_dataAccessRoleArnHasBeenSet = false;
   bool m_clientTokenHasBeenSet = true;
   bool m_validationLevelHasBeenSet = false;
+  bool m_profileIdHasBeenSet = false;
+  bool m_inputFormatHasBeenSet = false;
+  bool m_driftDetectionEnabledHasBeenSet = false;
+  bool m_provenanceEnabledHasBeenSet = false;
 };
 
 }  // namespace Model

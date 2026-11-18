@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-config "C++ SDK for the AWS config service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-config "C++ SDK for AWS Config" aws-cpp-sdk-core)
 
 file(GLOB AWS_CONFIG_HEADERS
     "include/aws/config/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CONFIG_HEADERS
 
 file(GLOB AWS_CONFIG_MODEL_HEADERS
     "include/aws/config/model/*.h"
+)
+
+file(GLOB AWS_CONFIG_INTERNAL_HEADERS
+    "include/aws/config/internal/*.h"
 )
 
 file(GLOB AWS_CONFIG_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CONFIG_MODEL_SOURCE
 
 file(GLOB CONFIG_UNIFIED_HEADERS
     ${AWS_CONFIG_HEADERS}
+    ${AWS_CONFIG_INTERNAL_HEADERS}
     ${AWS_CONFIG_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\config" FILES ${AWS_CONFIG_HEADERS})
+        source_group("Header Files\\aws\\config\\internal" FILES ${AWS_CONFIG_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\config\\model" FILES ${AWS_CONFIG_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CONFIG_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CONFIG_MODEL_SOURCE})

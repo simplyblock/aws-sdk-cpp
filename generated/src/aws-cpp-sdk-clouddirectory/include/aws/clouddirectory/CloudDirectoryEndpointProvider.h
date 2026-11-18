@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/clouddirectory/CloudDirectoryEndpointRules.h>
 #include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace CloudDirectory {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using CloudDirectoryClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using CloudDirectoryEndpointProviderBase =
     EndpointProviderBase<CloudDirectoryClientConfiguration, CloudDirectoryBuiltInParameters, CloudDirectoryClientContextParameters>;
 
 using CloudDirectoryDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudDirectoryClientConfiguration, CloudDirectoryBuiltInParameters, CloudDirectoryClientContextParameters>;
+    BDDEndpointProvider<CloudDirectoryClientConfiguration, CloudDirectoryBuiltInParameters, CloudDirectoryClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_CLOUDDIRECTORY_API CloudDirectoryEndpointProvider : public CloudDirect
  public:
   using CloudDirectoryResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  CloudDirectoryEndpointProvider()
-      : CloudDirectoryDefaultEpProviderBase(Aws::CloudDirectory::CloudDirectoryEndpointRules::GetRulesBlob(),
-                                            Aws::CloudDirectory::CloudDirectoryEndpointRules::RulesBlobSize) {}
+  CloudDirectoryEndpointProvider();
 
   ~CloudDirectoryEndpointProvider() {}
 };

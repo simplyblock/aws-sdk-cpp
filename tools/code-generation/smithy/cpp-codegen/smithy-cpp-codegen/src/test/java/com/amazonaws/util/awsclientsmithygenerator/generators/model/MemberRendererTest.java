@@ -1,0 +1,461 @@
+/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+package com.amazonaws.util.awsclientsmithygenerator.generators.model;
+
+import com.amazonaws.util.awsclientsmithygenerator.generators.CppWriter;
+import org.junit.jupiter.api.Test;
+import software.amazon.smithy.model.Model;
+import software.amazon.smithy.model.shapes.BooleanShape;
+import software.amazon.smithy.model.shapes.IntegerShape;
+import software.amazon.smithy.model.shapes.ListShape;
+import software.amazon.smithy.model.shapes.MapShape;
+import software.amazon.smithy.model.shapes.MemberShape;
+import software.amazon.smithy.model.shapes.StringShape;
+import software.amazon.smithy.model.shapes.StructureShape;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class MemberRendererTest {
+
+    @Test
+    void renderPublicSection_stringMember_producesGetSetWith() {
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("Name", str.getId())
+            .build();
+        Model model = Model.builder().addShapes(str, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("inline const Aws::String& GetName() const"), "Missing getter: " + output);
+        assertTrue(output.contains("inline bool NameHasBeenSet() const"), "Missing HasBeenSet: " + output);
+        assertTrue(output.contains("void SetName(NameT&& value)"), "Missing setter: " + output);
+        assertTrue(output.contains("MyShape& WithName(NameT&& value)"), "Missing With: " + output);
+    }
+
+    @Test
+    void renderPublicSection_lowercaseMember_capitalizesMethodNames() {
+        // Smithy member names often start lowercase; C2J capitalizes accessor/template names while
+        // keeping the decapitalized field name (m_extendedKeyUsage).
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("extendedKeyUsage", str.getId())
+            .build();
+        Model model = Model.builder().addShapes(str, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("GetExtendedKeyUsage() const"), "Getter should be capitalized: " + output);
+        assertTrue(output.contains("ExtendedKeyUsageHasBeenSet() const"), "HasBeenSet should be capitalized: " + output);
+        assertTrue(output.contains("SetExtendedKeyUsage(ExtendedKeyUsageT&& value)"), "Setter should be capitalized: " + output);
+        assertTrue(output.contains("WithExtendedKeyUsage(ExtendedKeyUsageT&& value)"), "With should be capitalized: " + output);
+        assertTrue(output.contains("m_extendedKeyUsage = std::forward"), "Field should stay decapitalized: " + output);
+        assertFalse(output.contains("GetextendedKeyUsage"), "Must not emit lowercase getter: " + output);
+        assertFalse(output.contains("WithextendedKeyUsage"), "Must not emit lowercase With: " + output);
+    }
+
+    @Test
+    void renderPublicSection_listMember_producesAddMethod() {
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        ListShape list = ListShape.builder()
+            .id("com.example#StringList")
+            .member(MemberShape.builder().id("com.example#StringList$member").target("com.example#String").build())
+            .build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("Items", list.getId())
+            .build();
+        Model model = Model.builder().addShapes(str, list, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("MyShape& AddItems(ItemsT&& value)"), "Missing Add: " + output);
+        assertTrue(output.contains("m_items.emplace_back(std::forward<ItemsT>(value))"), "Missing emplace_back: " + output);
+    }
+
+    @Test
+    void renderPublicSection_listMember_addTemplateDefaultIsElementType() {
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        ListShape list = ListShape.builder()
+            .id("com.example#StringList")
+            .member(MemberShape.builder().id("com.example#StringList$member").target("com.example#String").build())
+            .build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("Items", list.getId())
+            .build();
+        Model model = Model.builder().addShapes(str, list, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(writer);
+        String output = writer.toString();
+        // The Add method's template default should be the element type, not the list type
+        assertTrue(output.contains("template <typename ItemsT = Aws::String>\nMyShape& AddItems"),
+            "Add template default should be element type: " + output);
+    }
+
+    @Test
+    void renderPublicSection_listOfPrimitive_addIsByValue() {
+        // C2J emits by-value Add for lists of primitive OR enum elements; only non-primitive,
+        // non-enum elements get the templated forwarding Add.
+        IntegerShape intShape = IntegerShape.builder().id("com.example#Integer").build();
+        ListShape list = ListShape.builder()
+            .id("com.example#IntList")
+            .member(MemberShape.builder().id("com.example#IntList$member").target("com.example#Integer").build())
+            .build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("Counts", list.getId())
+            .build();
+        Model model = Model.builder().addShapes(intShape, list, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("inline MyShape& AddCounts(int value)"),
+            "List of primitive should get by-value Add: " + output);
+        assertTrue(output.contains("m_counts.push_back(value)"),
+            "By-value list Add should push_back directly: " + output);
+        assertFalse(output.contains("AddCounts(CountsT&&"),
+            "Must not emit templated Add for primitive element: " + output);
+    }
+
+    @Test
+    void renderPublicSection_mapWithPrimitiveValue_addIsByValue() {
+        // C2J emits a by-value Add for maps unless BOTH key and value are non-primitive
+        // AND non-enum. Here value is int (primitive), so Add must be a plain by-value overload.
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        IntegerShape intShape = IntegerShape.builder().id("com.example#Integer").build();
+        MapShape map = MapShape.builder()
+            .id("com.example#SummaryMap")
+            .key(MemberShape.builder().id("com.example#SummaryMap$key").target("com.example#String").build())
+            .value(MemberShape.builder().id("com.example#SummaryMap$value").target("com.example#Integer").build())
+            .build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("SummaryMap", map.getId())
+            .build();
+        Model model = Model.builder().addShapes(str, intShape, map, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("MyShape& AddSummaryMap(Aws::String key, int value)"),
+            "Map with primitive value should get by-value Add: " + output);
+        assertTrue(output.contains("m_summaryMap.emplace(key, value)"),
+            "By-value Add should emplace directly: " + output);
+        assertFalse(output.contains("AddSummaryMap(SummaryMapKeyT&&"),
+            "Must not emit templated forwarding Add when value is primitive: " + output);
+    }
+
+    @Test
+    void renderPublicSection_mapWithNonPrimitiveKeyAndValue_addIsTemplated() {
+        // Both key (String) and value (struct) are non-primitive/non-enum -> templated Add.
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        StructureShape valueStruct = StructureShape.builder().id("com.example#ValueStruct").build();
+        MapShape map = MapShape.builder()
+            .id("com.example#ThingMap")
+            .key(MemberShape.builder().id("com.example#ThingMap$key").target("com.example#String").build())
+            .value(MemberShape.builder().id("com.example#ThingMap$value").target("com.example#ValueStruct").build())
+            .build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("ThingMap", map.getId())
+            .build();
+        Model model = Model.builder().addShapes(str, valueStruct, map, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("MyShape& AddThingMap(ThingMapKeyT&& key, ThingMapValueT&& value)"),
+            "Map with non-primitive key/value should get templated Add: " + output);
+        assertTrue(output.contains("m_thingMap.emplace(std::forward<ThingMapKeyT>(key), std::forward<ThingMapValueT>(value))"),
+            "Templated Add should perfect-forward: " + output);
+    }
+
+    @Test
+    void renderPublicSection_documentMember_getterReturnsDocumentViewByValue() {
+        // C2J special-cases the document getter to return Aws::Utils::DocumentView by value, while
+        // the field and setter stay Aws::Utils::Document.
+        software.amazon.smithy.model.shapes.DocumentShape doc =
+            software.amazon.smithy.model.shapes.DocumentShape.builder().id("com.example#Doc").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("json", doc.getId())
+            .build();
+        Model model = Model.builder().addShapes(doc, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("inline Aws::Utils::DocumentView GetJson() const { return m_json; }"),
+            "Document getter must return DocumentView by value: " + output);
+        assertFalse(output.contains("const Aws::Utils::Document& GetJson"),
+            "Document getter must not return const Document&: " + output);
+        // Setter still forwards an Aws::Utils::Document.
+        assertTrue(output.contains("template <typename JsonT = Aws::Utils::Document>"),
+            "Document setter template default must be Aws::Utils::Document: " + output);
+    }
+
+    @Test
+    void renderPublicSection_documentMember_privateFieldIsDocument() {
+        software.amazon.smithy.model.shapes.DocumentShape doc =
+            software.amazon.smithy.model.shapes.DocumentShape.builder().id("com.example#Doc").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("json", doc.getId())
+            .build();
+        Model model = Model.builder().addShapes(doc, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, null).renderPrivateSection(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("Aws::Utils::Document m_json;"),
+            "Document field must be Aws::Utils::Document: " + output);
+    }
+
+    @Test
+    void renderPublicSection_sensitiveBlobMember_usesCryptoBuffer() {
+        // A @sensitive blob member renders CryptoBuffer in the getter, setter template default,
+        // and (via renderPrivateSection) the field — matching C2J.
+        software.amazon.smithy.model.shapes.BlobShape sensitive =
+            software.amazon.smithy.model.shapes.BlobShape.builder().id("com.example#PartBody")
+                .addTrait(new software.amazon.smithy.model.traits.SensitiveTrait()).build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("bytes", sensitive.getId())
+            .build();
+        Model model = Model.builder().addShapes(sensitive, shape).build();
+        CppWriter pub = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(pub);
+        String pubOut = pub.toString();
+        assertTrue(pubOut.contains("inline const Aws::Utils::CryptoBuffer& GetBytes() const"),
+            "Sensitive blob getter must be CryptoBuffer: " + pubOut);
+        assertTrue(pubOut.contains("template <typename BytesT = Aws::Utils::CryptoBuffer>"),
+            "Sensitive blob setter template default must be CryptoBuffer: " + pubOut);
+        CppWriter priv = new CppWriter();
+        MemberRenderer.forStructure(model, shape, null).renderPrivateSection(priv);
+        assertTrue(priv.toString().contains("Aws::Utils::CryptoBuffer m_bytes{};"),
+            "Sensitive blob field must be CryptoBuffer: " + priv);
+    }
+
+    @Test
+    void renderPublicSection_primitiveGetter_returnsByValue() {
+        IntegerShape intShape = IntegerShape.builder().id("com.example#Integer").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("Count", intShape.getId())
+            .build();
+        Model model = Model.builder().addShapes(intShape, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("inline int GetCount() const"), "Primitive should return by value: " + output);
+        assertFalse(output.contains("inline const int&"), "Should NOT return const ref for primitives: " + output);
+    }
+
+    @Test
+    void renderPublicSection_doxygenGroupMarkers() {
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("Name", str.getId())
+            .build();
+        Model model = Model.builder().addShapes(str, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, "MyShape").renderPublicAccessors(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("///@{"), "Missing doxygen open: " + output);
+        assertTrue(output.contains("///@}"), "Missing doxygen close: " + output);
+    }
+
+    @Test
+    void renderPrivateSection_primitiveMembers_haveDefaultValues() {
+        IntegerShape intShape = IntegerShape.builder().id("com.example#Integer").build();
+        BooleanShape boolShape = BooleanShape.builder().id("com.example#Boolean").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("Count", intShape.getId())
+            .addMember("Enabled", boolShape.getId())
+            .build();
+        Model model = Model.builder().addShapes(intShape, boolShape, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, null).renderPrivateSection(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("int m_count{0}"), "Missing int default: " + output);
+        assertTrue(output.contains("bool m_enabled{false}"), "Missing bool default: " + output);
+        assertTrue(output.contains("bool m_countHasBeenSet = false"), "Missing count HasBeenSet flag: " + output);
+        assertTrue(output.contains("bool m_enabledHasBeenSet = false"), "Missing enabled HasBeenSet flag: " + output);
+    }
+
+    @Test
+    void renderPrivateSection_nonPrimitiveMembers_noDefaultValue() {
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("Name", str.getId())
+            .build();
+        Model model = Model.builder().addShapes(str, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, null).renderPrivateSection(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("Aws::String m_name;"), "Missing string field: " + output);
+        assertFalse(output.contains("m_name{"), "String should NOT have brace init: " + output);
+        assertTrue(output.contains("bool m_nameHasBeenSet = false"), "Missing HasBeenSet flag: " + output);
+    }
+
+    @Test
+    void renderPrivateSection_idempotencyTokenMember_initializesWithPseudoRandomUuidAndHasBeenSetTrue() {
+        // C2J auto-populates @idempotencyToken members with a random UUID and flags them already-set,
+        // so a caller who omits the token still gets idempotent behavior.
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember(MemberShape.builder()
+                .id("com.example#MyShape$clientToken").target("com.example#String")
+                .addTrait(new software.amazon.smithy.model.traits.IdempotencyTokenTrait())
+                .build())
+            .build();
+        Model model = Model.builder().addShapes(str, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, null).renderPrivateSection(writer);
+        String output = writer.toString();
+        assertTrue(output.contains("Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};"),
+            "Idempotency token should be initialized with PseudoRandomUUID: " + output);
+        assertTrue(output.contains("bool m_clientTokenHasBeenSet = true;"),
+            "Idempotency token HasBeenSet flag should default to true: " + output);
+    }
+
+    @Test
+    void renderPrivateDataMembersExcluding_idempotencyTokenMember_initializesWithPseudoRandomUuid() {
+        // The streaming-result / event-stream path routes through the *Excluding overloads;
+        // they must apply the same idempotency-token initializer as the primary path.
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember(MemberShape.builder()
+                .id("com.example#MyShape$clientToken").target("com.example#String")
+                .addTrait(new software.amazon.smithy.model.traits.IdempotencyTokenTrait())
+                .build())
+            .addMember("other", str.getId())
+            .build();
+        Model model = Model.builder().addShapes(str, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, null).excluding("other").renderDataMembers(writer);
+        String dataOut = writer.toString();
+        assertTrue(dataOut.contains("Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};"),
+            "Excluding overload should also emit the idempotency-token initializer: " + dataOut);
+        CppWriter flagWriter = new CppWriter();
+        MemberRenderer.forStructure(model, shape, null).excluding("other").renderHasBeenSetFlags(flagWriter);
+        String flagOut = flagWriter.toString();
+        assertTrue(flagOut.contains("bool m_clientTokenHasBeenSet = true;"),
+            "Excluding overload should also emit HasBeenSet = true: " + flagOut);
+    }
+
+    @Test
+    void renderPrivateSection_hasBeenSetFlagsGroupedAtEnd() {
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        IntegerShape intShape = IntegerShape.builder().id("com.example#Integer").build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember("Name", str.getId())
+            .addMember("Count", intShape.getId())
+            .build();
+        Model model = Model.builder().addShapes(str, intShape, shape).build();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, shape, null).renderPrivateSection(writer);
+        String output = writer.toString();
+        int nameFieldPos = output.indexOf("Aws::String m_name;");
+        int countFieldPos = output.indexOf("int m_count{0};");
+        int nameHasBeenSetPos = output.indexOf("bool m_nameHasBeenSet = false;");
+        int countHasBeenSetPos = output.indexOf("bool m_countHasBeenSet = false;");
+        assertTrue(nameFieldPos < nameHasBeenSetPos, "Data members should precede HasBeenSet flags");
+        assertTrue(countFieldPos < countHasBeenSetPos, "Data members should precede HasBeenSet flags");
+    }
+
+    @Test
+    void renderRequestIdAccessors_emitsTemplatedGetSetWith() {
+        com.amazonaws.util.awsclientsmithygenerator.generators.CppWriter writer =
+            new com.amazonaws.util.awsclientsmithygenerator.generators.CppWriter();
+        MemberRenderer.renderRequestIdAccessors(writer, "GetFooResult");
+        String out = writer.toString();
+        assertTrue(out.contains("inline const Aws::String& GetRequestId() const { return m_requestId; }"));
+        assertTrue(out.contains("template <typename RequestIdT = Aws::String>"));
+        assertTrue(out.contains("void SetRequestId(RequestIdT&& value)"));
+        assertTrue(out.contains("m_requestIdHasBeenSet = true;"));
+        assertTrue(out.contains("m_requestId = std::forward<RequestIdT>(value);"));
+        assertTrue(out.contains("GetFooResult& WithRequestId(RequestIdT&& value)"));
+        assertTrue(out.contains("SetRequestId(std::forward<RequestIdT>(value));"));
+        assertTrue(out.contains("///@{"));
+        assertTrue(out.contains("///@}"));
+    }
+
+    /**
+     * A structure carrying: the framework ResponseMetadata envelope member (targeting a
+     * ResponseMetadata structure), a modeled {@code @required} member, and a plain member.
+     */
+    private static Model responseMetadataModel() {
+        StringShape str = StringShape.builder().id("com.example#String").build();
+        StructureShape responseMetadata = StructureShape.builder()
+            .id("com.example#ResponseMetadata")
+            .addMember(MemberShape.builder()
+                .id("com.example#ResponseMetadata$RequestId").target(str.getId()).build())
+            .build();
+        StructureShape shape = StructureShape.builder()
+            .id("com.example#MyShape")
+            .addMember(MemberShape.builder()
+                .id("com.example#MyShape$ResponseMetadata").target(responseMetadata.getId()).build())
+            .addMember(MemberShape.builder()
+                .id("com.example#MyShape$RequiredName").target(str.getId())
+                .addTrait(new software.amazon.smithy.model.traits.RequiredTrait()).build())
+            .addMember(MemberShape.builder()
+                .id("com.example#MyShape$Name").target(str.getId()).build())
+            .build();
+        return Model.builder().addShapes(str, responseMetadata, shape).build();
+    }
+
+    private static StructureShape myShape(Model model) {
+        return model.expectShape(
+            software.amazon.smithy.model.shapes.ShapeId.from("com.example#MyShape"), StructureShape.class);
+    }
+
+    @Test
+    void injectedResponseMetadata_inStructure_omitsGetter_whileOthersKeepIt() {
+        // The injected ResponseMetadata envelope is always present -> no HasBeenSet getter. A modeled
+        // @required member is not special-cased, so it keeps its getter like a plain member.
+        Model model = responseMetadataModel();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, myShape(model), "MyShape").renderPublicAccessors(writer);
+        String out = writer.toString();
+        assertFalse(out.contains("ResponseMetadataHasBeenSet()"),
+            "injected ResponseMetadata must not get a HasBeenSet getter: " + out);
+        assertTrue(out.contains("inline bool RequiredNameHasBeenSet() const"),
+            "modeled @required member must still get a HasBeenSet getter: " + out);
+        assertTrue(out.contains("inline bool NameHasBeenSet() const"),
+            "plain member must get a HasBeenSet getter: " + out);
+    }
+
+    @Test
+    void injectedResponseMetadata_inStructure_initsFlagTrue_whileOthersFalse() {
+        Model model = responseMetadataModel();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forStructure(model, myShape(model), null).renderHasBeenSetFlags(writer);
+        String out = writer.toString();
+        assertTrue(out.contains("bool m_responseMetadataHasBeenSet = true;"),
+            "injected ResponseMetadata flag must init true: " + out);
+        assertTrue(out.contains("bool m_requiredNameHasBeenSet = false;"),
+            "modeled @required member flag must init false: " + out);
+        assertTrue(out.contains("bool m_nameHasBeenSet = false;"),
+            "plain member flag must init false: " + out);
+    }
+
+    @Test
+    void injectedResponseMetadata_inResult_initsFlagFalse() {
+        // Results use useRequiredField=false (emitHasBeenSet=false), so even the injected
+        // ResponseMetadata inits false there (and results emit no HasBeenSet getters).
+        Model model = responseMetadataModel();
+        CppWriter writer = new CppWriter();
+        MemberRenderer.forResult(model, myShape(model), null).renderHasBeenSetFlags(writer);
+        String out = writer.toString();
+        assertTrue(out.contains("bool m_responseMetadataHasBeenSet = false;"),
+            "injected ResponseMetadata flag stays false in a result context: " + out);
+    }
+}

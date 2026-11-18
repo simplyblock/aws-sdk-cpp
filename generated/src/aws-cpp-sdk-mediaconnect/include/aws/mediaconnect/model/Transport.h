@@ -10,6 +10,8 @@
 #include <aws/mediaconnect/model/NdiOutputTimecodeSource.h>
 #include <aws/mediaconnect/model/NdiSourceSettings.h>
 #include <aws/mediaconnect/model/Protocol.h>
+#include <aws/mediaconnect/model/RtmpPushOutputSettings.h>
+#include <aws/mediaconnect/model/RtmpPushSourceSettings.h>
 
 #include <utility>
 
@@ -350,6 +352,63 @@ class Transport {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The audio reference level of the NDI receiver, in decibels relative to full
+   * scale (dBFS). Common values are <code>-20</code> (NDI and SMPTE) and
+   * <code>-18</code> (EBU). For NDI outputs, this field is always present and
+   * defaults to <code>-20</code>.</p>
+   */
+  inline int GetNdiAudioReferenceLevel() const { return m_ndiAudioReferenceLevel; }
+  inline bool NdiAudioReferenceLevelHasBeenSet() const { return m_ndiAudioReferenceLevelHasBeenSet; }
+  inline void SetNdiAudioReferenceLevel(int value) {
+    m_ndiAudioReferenceLevelHasBeenSet = true;
+    m_ndiAudioReferenceLevel = value;
+  }
+  inline Transport& WithNdiAudioReferenceLevel(int value) {
+    SetNdiAudioReferenceLevel(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The settings for the RTMP (Real-Time Messaging Protocol) source.</p>
+   */
+  inline const RtmpPushSourceSettings& GetRtmpPushSourceSettings() const { return m_rtmpPushSourceSettings; }
+  inline bool RtmpPushSourceSettingsHasBeenSet() const { return m_rtmpPushSourceSettingsHasBeenSet; }
+  template <typename RtmpPushSourceSettingsT = RtmpPushSourceSettings>
+  void SetRtmpPushSourceSettings(RtmpPushSourceSettingsT&& value) {
+    m_rtmpPushSourceSettingsHasBeenSet = true;
+    m_rtmpPushSourceSettings = std::forward<RtmpPushSourceSettingsT>(value);
+  }
+  template <typename RtmpPushSourceSettingsT = RtmpPushSourceSettings>
+  Transport& WithRtmpPushSourceSettings(RtmpPushSourceSettingsT&& value) {
+    SetRtmpPushSourceSettings(std::forward<RtmpPushSourceSettingsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The settings for an output that pushes a stream to a destination using the
+   * RTMP (Real-Time Messaging Protocol) protocol, or RTMPS (RTMP over TLS) when TLS
+   * encryption is specified.</p>
+   */
+  inline const RtmpPushOutputSettings& GetRtmpPushOutputSettings() const { return m_rtmpPushOutputSettings; }
+  inline bool RtmpPushOutputSettingsHasBeenSet() const { return m_rtmpPushOutputSettingsHasBeenSet; }
+  template <typename RtmpPushOutputSettingsT = RtmpPushOutputSettings>
+  void SetRtmpPushOutputSettings(RtmpPushOutputSettingsT&& value) {
+    m_rtmpPushOutputSettingsHasBeenSet = true;
+    m_rtmpPushOutputSettings = std::forward<RtmpPushOutputSettingsT>(value);
+  }
+  template <typename RtmpPushOutputSettingsT = RtmpPushOutputSettings>
+  Transport& WithRtmpPushOutputSettings(RtmpPushOutputSettingsT&& value) {
+    SetRtmpPushOutputSettings(std::forward<RtmpPushOutputSettingsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::Vector<Aws::String> m_cidrAllowList;
 
@@ -384,6 +443,12 @@ class Transport {
   NdiSourceSettings m_ndiSourceSettings;
 
   NdiOutputTimecodeSource m_ndiOutputTimecodeSource{NdiOutputTimecodeSource::NOT_SET};
+
+  int m_ndiAudioReferenceLevel{0};
+
+  RtmpPushSourceSettings m_rtmpPushSourceSettings;
+
+  RtmpPushOutputSettings m_rtmpPushOutputSettings;
   bool m_cidrAllowListHasBeenSet = false;
   bool m_maxBitrateHasBeenSet = false;
   bool m_maxLatencyHasBeenSet = false;
@@ -401,6 +466,9 @@ class Transport {
   bool m_ndiProgramNameHasBeenSet = false;
   bool m_ndiSourceSettingsHasBeenSet = false;
   bool m_ndiOutputTimecodeSourceHasBeenSet = false;
+  bool m_ndiAudioReferenceLevelHasBeenSet = false;
+  bool m_rtmpPushSourceSettingsHasBeenSet = false;
+  bool m_rtmpPushOutputSettingsHasBeenSet = false;
 };
 
 }  // namespace Model

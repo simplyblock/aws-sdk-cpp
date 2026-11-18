@@ -15,6 +15,7 @@
 #include <aws/autoscaling/model/LaunchTemplateSpecification.h>
 #include <aws/autoscaling/model/LifecycleHookSpecification.h>
 #include <aws/autoscaling/model/MixedInstancesPolicy.h>
+#include <aws/autoscaling/model/Operator.h>
 #include <aws/autoscaling/model/Tag.h>
 #include <aws/autoscaling/model/TrafficSourceIdentifier.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
@@ -119,7 +120,11 @@ class CreateAutoScalingGroupRequest : public AutoScalingRequest {
    * <p>The mixed instances policy. For more information, see <a
    * href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-mixed-instances-groups.html">Auto
    * Scaling groups with multiple instance types and purchase options</a> in the
-   * <i>Amazon EC2 Auto Scaling User Guide</i>.</p>
+   * <i>Amazon EC2 Auto Scaling User Guide</i>. To learn how to prioritize multiple
+   * capacity types, see <a
+   * href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/use-distribution-segments.html">Use
+   * Distribution Segments to target multiple capacity types</a> in the <i>Amazon EC2
+   * Auto Scaling User Guide</i>.</p>
    */
   inline const MixedInstancesPolicy& GetMixedInstancesPolicy() const { return m_mixedInstancesPolicy; }
   inline bool MixedInstancesPolicyHasBeenSet() const { return m_mixedInstancesPolicyHasBeenSet; }
@@ -875,6 +880,28 @@ class CreateAutoScalingGroupRequest : public AutoScalingRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The entity that manages the Auto Scaling group. If you specify this
+   * parameter, Amazon EC2 Auto Scaling passes the operator identity to EC2 for
+   * instance launches and only allows the designated operator to make changes to the
+   * Auto Scaling group. All mutating API calls from non-operator callers are
+   * rejected with an <code>AccessDenied</code> exception.</p>
+   */
+  inline const Operator& GetOperator() const { return m_operator; }
+  inline bool OperatorHasBeenSet() const { return m_operatorHasBeenSet; }
+  template <typename OperatorT = Operator>
+  void SetOperator(OperatorT&& value) {
+    m_operatorHasBeenSet = true;
+    m_operator = std::forward<OperatorT>(value);
+  }
+  template <typename OperatorT = Operator>
+  CreateAutoScalingGroupRequest& WithOperator(OperatorT&& value) {
+    SetOperator(std::forward<OperatorT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_autoScalingGroupName;
 
@@ -945,6 +972,8 @@ class CreateAutoScalingGroupRequest : public AutoScalingRequest {
   CapacityReservationSpecification m_capacityReservationSpecification;
 
   InstanceLifecyclePolicy m_instanceLifecyclePolicy;
+
+  Operator m_operator;
   bool m_autoScalingGroupNameHasBeenSet = false;
   bool m_launchConfigurationNameHasBeenSet = false;
   bool m_launchTemplateHasBeenSet = false;
@@ -980,6 +1009,7 @@ class CreateAutoScalingGroupRequest : public AutoScalingRequest {
   bool m_skipZonalShiftValidationHasBeenSet = false;
   bool m_capacityReservationSpecificationHasBeenSet = false;
   bool m_instanceLifecyclePolicyHasBeenSet = false;
+  bool m_operatorHasBeenSet = false;
 };
 
 }  // namespace Model

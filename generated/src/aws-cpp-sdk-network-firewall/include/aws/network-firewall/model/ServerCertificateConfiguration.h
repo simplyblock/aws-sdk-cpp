@@ -6,8 +6,10 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/network-firewall/model/CheckCertificateRevocationStatusActions.h>
+#include <aws/network-firewall/model/DecryptionAction.h>
 #include <aws/network-firewall/model/ServerCertificate.h>
 #include <aws/network-firewall/model/ServerCertificateScope.h>
 
@@ -15,10 +17,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace NetworkFirewall {
 namespace Model {
@@ -42,9 +43,9 @@ namespace Model {
 class ServerCertificateConfiguration {
  public:
   AWS_NETWORKFIREWALL_API ServerCertificateConfiguration() = default;
-  AWS_NETWORKFIREWALL_API ServerCertificateConfiguration(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API ServerCertificateConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_NETWORKFIREWALL_API ServerCertificateConfiguration(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API ServerCertificateConfiguration& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -148,6 +149,29 @@ class ServerCertificateConfiguration {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>What the firewall does with SSL/TLS traffic that doesn't match any scope in
+   * this server certificate configuration. This setting applies only to proxy mode
+   * firewalls. If you don't specify a value, the firewall uses <code>BYPASS</code>.
+   * You can choose from the following values:</p> <ul> <li> <p> <code>BYPASS</code>
+   * - The firewall doesn't decrypt the traffic.</p> </li> <li> <p>
+   * <code>DECRYPT</code> - The firewall decrypts the traffic for inspection. You can
+   * use <code>DECRYPT</code> only if every scope in the configuration sets
+   * <code>DeploymentMode</code> to <code>EXPLICIT_PROXY_ONLY</code>.</p> </li> </ul>
+   */
+  inline DecryptionAction GetDefaultDecryptionBehavior() const { return m_defaultDecryptionBehavior; }
+  inline bool DefaultDecryptionBehaviorHasBeenSet() const { return m_defaultDecryptionBehaviorHasBeenSet; }
+  inline void SetDefaultDecryptionBehavior(DecryptionAction value) {
+    m_defaultDecryptionBehaviorHasBeenSet = true;
+    m_defaultDecryptionBehavior = value;
+  }
+  inline ServerCertificateConfiguration& WithDefaultDecryptionBehavior(DecryptionAction value) {
+    SetDefaultDecryptionBehavior(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::Vector<ServerCertificate> m_serverCertificates;
 
@@ -156,10 +180,13 @@ class ServerCertificateConfiguration {
   Aws::String m_certificateAuthorityArn;
 
   CheckCertificateRevocationStatusActions m_checkCertificateRevocationStatus;
+
+  DecryptionAction m_defaultDecryptionBehavior{DecryptionAction::NOT_SET};
   bool m_serverCertificatesHasBeenSet = false;
   bool m_scopesHasBeenSet = false;
   bool m_certificateAuthorityArnHasBeenSet = false;
   bool m_checkCertificateRevocationStatusHasBeenSet = false;
+  bool m_defaultDecryptionBehaviorHasBeenSet = false;
 };
 
 }  // namespace Model

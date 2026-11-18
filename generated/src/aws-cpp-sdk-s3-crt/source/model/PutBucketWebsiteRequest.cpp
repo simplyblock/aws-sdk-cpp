@@ -41,7 +41,7 @@ Aws::String PutBucketWebsiteRequest::SerializePayload() const {
 
   m_websiteConfiguration.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -105,3 +105,5 @@ Aws::String PutBucketWebsiteRequest::GetChecksumAlgorithmName() const {
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
 }
+
+bool PutBucketWebsiteRequest::ChecksumAlgorithmIsSet() const { return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET; }

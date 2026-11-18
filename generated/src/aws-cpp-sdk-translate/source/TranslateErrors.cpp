@@ -5,6 +5,7 @@
 
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/HashingUtils.h>
+#include <aws/core/utils/cbor/CborValue.h>
 #include <aws/translate/TranslateErrors.h>
 #include <aws/translate/model/DetectedLanguageLowConfidenceException.h>
 #include <aws/translate/model/TooManyTagsException.h>
@@ -21,25 +22,29 @@ namespace Translate {
 template <>
 AWS_TRANSLATE_API UnsupportedLanguagePairException TranslateError::GetModeledError() {
   assert(this->GetErrorType() == TranslateErrors::UNSUPPORTED_LANGUAGE_PAIR);
-  return UnsupportedLanguagePairException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return UnsupportedLanguagePairException(payload.GetDecoder());
 }
 
 template <>
 AWS_TRANSLATE_API DetectedLanguageLowConfidenceException TranslateError::GetModeledError() {
   assert(this->GetErrorType() == TranslateErrors::DETECTED_LANGUAGE_LOW_CONFIDENCE);
-  return DetectedLanguageLowConfidenceException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return DetectedLanguageLowConfidenceException(payload.GetDecoder());
 }
 
 template <>
 AWS_TRANSLATE_API UnsupportedDisplayLanguageCodeException TranslateError::GetModeledError() {
   assert(this->GetErrorType() == TranslateErrors::UNSUPPORTED_DISPLAY_LANGUAGE_CODE);
-  return UnsupportedDisplayLanguageCodeException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return UnsupportedDisplayLanguageCodeException(payload.GetDecoder());
 }
 
 template <>
 AWS_TRANSLATE_API TooManyTagsException TranslateError::GetModeledError() {
   assert(this->GetErrorType() == TranslateErrors::TOO_MANY_TAGS);
-  return TooManyTagsException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return TooManyTagsException(payload.GetDecoder());
 }
 
 namespace TranslateErrorMapper {
@@ -65,7 +70,7 @@ AWSError<CoreErrors> GetErrorForName(const char* errorName) {
   } else if (hashCode == UNSUPPORTED_LANGUAGE_PAIR_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(TranslateErrors::UNSUPPORTED_LANGUAGE_PAIR), RetryableType::NOT_RETRYABLE);
   } else if (hashCode == INTERNAL_SERVER_HASH) {
-    return AWSError<CoreErrors>(static_cast<CoreErrors>(TranslateErrors::INTERNAL_SERVER), RetryableType::NOT_RETRYABLE);
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(TranslateErrors::INTERNAL_SERVER), RetryableType::RETRYABLE);
   } else if (hashCode == DETECTED_LANGUAGE_LOW_CONFIDENCE_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(TranslateErrors::DETECTED_LANGUAGE_LOW_CONFIDENCE), RetryableType::NOT_RETRYABLE);
   } else if (hashCode == LIMIT_EXCEEDED_HASH) {

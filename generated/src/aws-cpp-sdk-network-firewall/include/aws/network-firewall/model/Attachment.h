@@ -5,6 +5,7 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/network-firewall/model/AttachmentStatus.h>
 
@@ -12,10 +13,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace NetworkFirewall {
 namespace Model {
@@ -38,9 +38,9 @@ namespace Model {
 class Attachment {
  public:
   AWS_NETWORKFIREWALL_API Attachment() = default;
-  AWS_NETWORKFIREWALL_API Attachment(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Attachment& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_NETWORKFIREWALL_API Attachment(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API Attachment& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -127,6 +127,32 @@ class Attachment {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The proxy DNS name of a proxy mode firewall. Your clients send proxy requests
+   * to the firewall at this name. It's your <code>ProxySettings</code>
+   * <code>DomainName</code> if you specified one, or a name that Network Firewall
+   * generates in the format
+   * <code>proxy-<i>id</i>.nfw.<i>region</i>.amazonaws.com</code>.</p> <p>The
+   * firewall has one proxy DNS name for every Availability Zone and VPC that it
+   * serves. In each Availability Zone, the name resolves to the firewall endpoint in
+   * that Availability Zone, so traffic stays in your client's Availability Zone.
+   * Your clients must use the VPC's Route 53 Resolver.</p>
+   */
+  inline const Aws::String& GetDnsName() const { return m_dnsName; }
+  inline bool DnsNameHasBeenSet() const { return m_dnsNameHasBeenSet; }
+  template <typename DnsNameT = Aws::String>
+  void SetDnsName(DnsNameT&& value) {
+    m_dnsNameHasBeenSet = true;
+    m_dnsName = std::forward<DnsNameT>(value);
+  }
+  template <typename DnsNameT = Aws::String>
+  Attachment& WithDnsName(DnsNameT&& value) {
+    SetDnsName(std::forward<DnsNameT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_subnetId;
 
@@ -135,10 +161,13 @@ class Attachment {
   AttachmentStatus m_status{AttachmentStatus::NOT_SET};
 
   Aws::String m_statusMessage;
+
+  Aws::String m_dnsName;
   bool m_subnetIdHasBeenSet = false;
   bool m_endpointIdHasBeenSet = false;
   bool m_statusHasBeenSet = false;
   bool m_statusMessageHasBeenSet = false;
+  bool m_dnsNameHasBeenSet = false;
 };
 
 }  // namespace Model

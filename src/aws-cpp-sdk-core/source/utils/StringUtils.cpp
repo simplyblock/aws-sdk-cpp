@@ -341,11 +341,7 @@ long long StringUtils::ConvertToInt64(const char* source)
         return 0;
     }
 
-#ifdef __ANDROID__
-    return atoll(source);
-#else
-    return std::atoll(source);
-#endif // __ANDROID__
+    return std::strtoll(source, nullptr, 10);
 }
 
 
@@ -356,7 +352,7 @@ long StringUtils::ConvertToInt32(const char* source)
         return 0;
     }
 
-    return std::atol(source);
+    return std::strtol(source, nullptr, 10);
 }
 
 
@@ -385,6 +381,36 @@ double StringUtils::ConvertToDouble(const char* source)
     }
 
     return std::strtod(source, NULL);
+}
+
+Aws::Crt::Optional<int64_t> StringUtils::ParseInt64(const Aws::String& source)
+{
+    if (source.empty())
+    {
+        return {};
+    }
+    char* end = nullptr;
+    const long long value = std::strtoll(source.c_str(), &end, 10);
+    if (end != source.c_str() + source.size())
+    {
+        return {};
+    }
+    return static_cast<int64_t>(value);
+}
+
+Aws::Crt::Optional<double> StringUtils::ParseDouble(const Aws::String& source)
+{
+    if (source.empty())
+    {
+        return {};
+    }
+    char* end = nullptr;
+    const double value = std::strtod(source.c_str(), &end);
+    if (end != source.c_str() + source.size())
+    {
+        return {};
+    }
+    return value;
 }
 
 Aws::String StringUtils::Join(const Aws::Vector<Aws::String>& elements, char delimiter)

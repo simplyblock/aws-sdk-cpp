@@ -57,12 +57,21 @@ enum class UpdateParamType {
   VendedLogs,
   UpdatedTier,
   PreviousTier,
+  EnableCrossNamespace,
+  DisabledServices,
   WarmPoolEnabled,
   WarmPoolMaxGroupPreparedCapacity,
   WarmPoolMinSize,
   WarmPoolState,
   WarmPoolReuseOnScaleIn,
-  ControlPlaneEgressMode
+  ControlPlaneEgressMode,
+  KubeApiServerConfig,
+  KubeSchedulerConfig,
+  KubeControllerManagerConfig,
+  ActiveCertificateAuthority,
+  TrustedCertificateAuthorities,
+  CertificateAuthorityId,
+  SigningStatus
 };
 
 namespace UpdateParamTypeMapper {

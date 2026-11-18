@@ -66,6 +66,14 @@ GetWorkflowResult& GetWorkflowResult::operator=(const Aws::AmazonWebServiceResul
     m_definitionS3Location = jsonValue.GetObject("DefinitionS3Location");
     m_definitionS3LocationHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("Code")) {
+    m_code = jsonValue.GetObject("Code");
+    m_codeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("CodeSnapshottedAt")) {
+    m_codeSnapshottedAt = jsonValue.GetString("CodeSnapshottedAt");
+    m_codeSnapshottedAtHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("ScheduleConfiguration")) {
     m_scheduleConfiguration = jsonValue.GetObject("ScheduleConfiguration");
     m_scheduleConfigurationHasBeenSet = true;
@@ -77,6 +85,10 @@ GetWorkflowResult& GetWorkflowResult::operator=(const Aws::AmazonWebServiceResul
   if (jsonValue.ValueExists("NetworkConfiguration")) {
     m_networkConfiguration = jsonValue.GetObject("NetworkConfiguration");
     m_networkConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("Environment")) {
+    m_environment = jsonValue.GetObject("Environment");
+    m_environmentHasBeenSet = true;
   }
   if (jsonValue.ValueExists("TriggerMode")) {
     m_triggerMode = jsonValue.GetString("TriggerMode");

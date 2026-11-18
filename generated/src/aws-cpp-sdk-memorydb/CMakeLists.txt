@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-memorydb "C++ SDK for the AWS memorydb service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-memorydb "C++ SDK for Amazon MemoryDB" aws-cpp-sdk-core)
 
 file(GLOB AWS_MEMORYDB_HEADERS
     "include/aws/memorydb/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MEMORYDB_HEADERS
 
 file(GLOB AWS_MEMORYDB_MODEL_HEADERS
     "include/aws/memorydb/model/*.h"
+)
+
+file(GLOB AWS_MEMORYDB_INTERNAL_HEADERS
+    "include/aws/memorydb/internal/*.h"
 )
 
 file(GLOB AWS_MEMORYDB_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MEMORYDB_MODEL_SOURCE
 
 file(GLOB MEMORYDB_UNIFIED_HEADERS
     ${AWS_MEMORYDB_HEADERS}
+    ${AWS_MEMORYDB_INTERNAL_HEADERS}
     ${AWS_MEMORYDB_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\memorydb" FILES ${AWS_MEMORYDB_HEADERS})
+        source_group("Header Files\\aws\\memorydb\\internal" FILES ${AWS_MEMORYDB_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\memorydb\\model" FILES ${AWS_MEMORYDB_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MEMORYDB_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MEMORYDB_MODEL_SOURCE})

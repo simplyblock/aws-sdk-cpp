@@ -7,27 +7,28 @@
 #include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/transcribe/TranscribeService_EXPORTS.h>
+#include <aws/transcribe/model/EncryptionConfiguration.h>
 #include <aws/transcribe/model/LanguageCode.h>
 
 #include <utility>
-
 namespace Aws {
 template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
 namespace Utils {
-namespace Json {
-class JsonValue;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace TranscribeService {
 namespace Model {
 class GetVocabularyFilterResult {
  public:
   AWS_TRANSCRIBESERVICE_API GetVocabularyFilterResult() = default;
-  AWS_TRANSCRIBESERVICE_API GetVocabularyFilterResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-  AWS_TRANSCRIBESERVICE_API GetVocabularyFilterResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TRANSCRIBESERVICE_API GetVocabularyFilterResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_TRANSCRIBESERVICE_API GetVocabularyFilterResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
   ///@{
   /**
@@ -101,6 +102,42 @@ class GetVocabularyFilterResult {
   ///@}
 
   ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the IAM role used to access the Amazon S3
+   * bucket that contains your input files and, if applicable, the KMS key specified
+   * in <code>EncryptionConfiguration</code>.</p>
+   */
+  inline const Aws::String& GetDataAccessRoleArn() const { return m_dataAccessRoleArn; }
+  template <typename DataAccessRoleArnT = Aws::String>
+  void SetDataAccessRoleArn(DataAccessRoleArnT&& value) {
+    m_dataAccessRoleArnHasBeenSet = true;
+    m_dataAccessRoleArn = std::forward<DataAccessRoleArnT>(value);
+  }
+  template <typename DataAccessRoleArnT = Aws::String>
+  GetVocabularyFilterResult& WithDataAccessRoleArn(DataAccessRoleArnT&& value) {
+    SetDataAccessRoleArn(std::forward<DataAccessRoleArnT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The encryption configuration used for your custom vocabulary filter.</p>
+   */
+  inline const EncryptionConfiguration& GetEncryptionConfiguration() const { return m_encryptionConfiguration; }
+  template <typename EncryptionConfigurationT = EncryptionConfiguration>
+  void SetEncryptionConfiguration(EncryptionConfigurationT&& value) {
+    m_encryptionConfigurationHasBeenSet = true;
+    m_encryptionConfiguration = std::forward<EncryptionConfigurationT>(value);
+  }
+  template <typename EncryptionConfigurationT = EncryptionConfiguration>
+  GetVocabularyFilterResult& WithEncryptionConfiguration(EncryptionConfigurationT&& value) {
+    SetEncryptionConfiguration(std::forward<EncryptionConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -125,12 +162,18 @@ class GetVocabularyFilterResult {
 
   Aws::String m_downloadUri;
 
+  Aws::String m_dataAccessRoleArn;
+
+  EncryptionConfiguration m_encryptionConfiguration;
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_vocabularyFilterNameHasBeenSet = false;
   bool m_languageCodeHasBeenSet = false;
   bool m_lastModifiedTimeHasBeenSet = false;
   bool m_downloadUriHasBeenSet = false;
+  bool m_dataAccessRoleArnHasBeenSet = false;
+  bool m_encryptionConfigurationHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

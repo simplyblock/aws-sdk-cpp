@@ -6,9 +6,11 @@
 #pragma once
 #include <aws/bedrock-agentcore-control/BedrockAgentCoreControl_EXPORTS.h>
 #include <aws/bedrock-agentcore-control/model/AllowedWorkloadConfiguration.h>
+#include <aws/bedrock-agentcore-control/model/CertificateConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/CustomClaimValidationType.h>
 #include <aws/bedrock-agentcore-control/model/PrivateEndpoint.h>
 #include <aws/bedrock-agentcore-control/model/PrivateEndpointOverride.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
@@ -132,6 +134,37 @@ class CustomJWTAuthorizerConfiguration {
 
   ///@{
   /**
+   * <p>A map that associates each scope in <code>allowedScopes</code> with a
+   * corresponding advertised scope value. The advertised scope appears in OAuth
+   * protected resource metadata and <code>WWW-Authenticate</code> response headers.
+   * Use this parameter when the scope that clients request from your identity
+   * provider differs from the scope in the validated token. Each key is a scope from
+   * <code>allowedScopes</code> that the service uses for token validation. Each
+   * value is the corresponding scope that the service advertises to clients. Scopes
+   * without a mapping entry appear unchanged to clients.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetAdvertisedScopeMapping() const { return m_advertisedScopeMapping; }
+  inline bool AdvertisedScopeMappingHasBeenSet() const { return m_advertisedScopeMappingHasBeenSet; }
+  template <typename AdvertisedScopeMappingT = Aws::Map<Aws::String, Aws::String>>
+  void SetAdvertisedScopeMapping(AdvertisedScopeMappingT&& value) {
+    m_advertisedScopeMappingHasBeenSet = true;
+    m_advertisedScopeMapping = std::forward<AdvertisedScopeMappingT>(value);
+  }
+  template <typename AdvertisedScopeMappingT = Aws::Map<Aws::String, Aws::String>>
+  CustomJWTAuthorizerConfiguration& WithAdvertisedScopeMapping(AdvertisedScopeMappingT&& value) {
+    SetAdvertisedScopeMapping(std::forward<AdvertisedScopeMappingT>(value));
+    return *this;
+  }
+  template <typename AdvertisedScopeMappingKeyT = Aws::String, typename AdvertisedScopeMappingValueT = Aws::String>
+  CustomJWTAuthorizerConfiguration& AddAdvertisedScopeMapping(AdvertisedScopeMappingKeyT&& key, AdvertisedScopeMappingValueT&& value) {
+    m_advertisedScopeMappingHasBeenSet = true;
+    m_advertisedScopeMapping.emplace(std::forward<AdvertisedScopeMappingKeyT>(key), std::forward<AdvertisedScopeMappingValueT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>An array of objects that define a custom claim validation name, value, and
    * operation </p>
    */
@@ -198,6 +231,36 @@ class CustomJWTAuthorizerConfiguration {
 
   ///@{
   /**
+   * <p>The private certificate authority (CA) configurations for the identity
+   * provider. Use this to have AgentCore Identity trust a private CA when
+   * establishing TLS connections to identity provider endpoints. You can specify
+   * only one certificate authority configuration in this list. Provide the
+   * certificate by reference to an Amazon S3 object or an Amazon Web Services
+   * Secrets Manager secret. You can use this only together with
+   * <code>privateEndpoint</code>.</p>
+   */
+  inline const Aws::Vector<CertificateConfiguration>& GetCertificateConfigurations() const { return m_certificateConfigurations; }
+  inline bool CertificateConfigurationsHasBeenSet() const { return m_certificateConfigurationsHasBeenSet; }
+  template <typename CertificateConfigurationsT = Aws::Vector<CertificateConfiguration>>
+  void SetCertificateConfigurations(CertificateConfigurationsT&& value) {
+    m_certificateConfigurationsHasBeenSet = true;
+    m_certificateConfigurations = std::forward<CertificateConfigurationsT>(value);
+  }
+  template <typename CertificateConfigurationsT = Aws::Vector<CertificateConfiguration>>
+  CustomJWTAuthorizerConfiguration& WithCertificateConfigurations(CertificateConfigurationsT&& value) {
+    SetCertificateConfigurations(std::forward<CertificateConfigurationsT>(value));
+    return *this;
+  }
+  template <typename CertificateConfigurationsT = CertificateConfiguration>
+  CustomJWTAuthorizerConfiguration& AddCertificateConfigurations(CertificateConfigurationsT&& value) {
+    m_certificateConfigurationsHasBeenSet = true;
+    m_certificateConfigurations.emplace_back(std::forward<CertificateConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The configuration that restricts which workloads in the request's identity
    * chain are allowed to invoke the target, identified by their hosting environments
    * and workload identities. At launch, this is supported only for AgentCore Runtime
@@ -225,20 +288,26 @@ class CustomJWTAuthorizerConfiguration {
 
   Aws::Vector<Aws::String> m_allowedScopes;
 
+  Aws::Map<Aws::String, Aws::String> m_advertisedScopeMapping;
+
   Aws::Vector<CustomClaimValidationType> m_customClaims;
 
   PrivateEndpoint m_privateEndpoint;
 
   Aws::Vector<PrivateEndpointOverride> m_privateEndpointOverrides;
 
+  Aws::Vector<CertificateConfiguration> m_certificateConfigurations;
+
   AllowedWorkloadConfiguration m_allowedWorkloadConfiguration;
   bool m_discoveryUrlHasBeenSet = false;
   bool m_allowedAudienceHasBeenSet = false;
   bool m_allowedClientsHasBeenSet = false;
   bool m_allowedScopesHasBeenSet = false;
+  bool m_advertisedScopeMappingHasBeenSet = false;
   bool m_customClaimsHasBeenSet = false;
   bool m_privateEndpointHasBeenSet = false;
   bool m_privateEndpointOverridesHasBeenSet = false;
+  bool m_certificateConfigurationsHasBeenSet = false;
   bool m_allowedWorkloadConfigurationHasBeenSet = false;
 };
 

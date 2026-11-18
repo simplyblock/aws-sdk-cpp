@@ -51,6 +51,7 @@
 #include <aws/ivs-realtime/model/ListStagesRequest.h>
 #include <aws/ivs-realtime/model/ListStorageConfigurationsRequest.h>
 #include <aws/ivs-realtime/model/ListTagsForResourceRequest.h>
+#include <aws/ivs-realtime/model/RevokeConnectionTokenRequest.h>
 #include <aws/ivs-realtime/model/StartCompositionRequest.h>
 #include <aws/ivs-realtime/model/StartParticipantReplicationRequest.h>
 #include <aws/ivs-realtime/model/StopCompositionRequest.h>
@@ -195,7 +196,8 @@ IvsrealtimeClient::InvokeOperationOutcome IvsrealtimeClient::InvokeServiceOperat
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -209,7 +211,7 @@ IvsrealtimeClient::InvokeOperationOutcome IvsrealtimeClient::InvokeServiceOperat
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -551,6 +553,17 @@ ListTagsForResourceOutcome IvsrealtimeClient::ListTagsForResource(const ListTags
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
   return result.IsSuccess() ? ListTagsForResourceOutcome(result.GetResultWithOwnership())
                             : ListTagsForResourceOutcome(std::move(result.GetError()));
+}
+
+RevokeConnectionTokenOutcome IvsrealtimeClient::RevokeConnectionToken(const RevokeConnectionTokenRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/RevokeConnectionToken");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? RevokeConnectionTokenOutcome(result.GetResultWithOwnership())
+                            : RevokeConnectionTokenOutcome(std::move(result.GetError()));
 }
 
 StartCompositionOutcome IvsrealtimeClient::StartComposition(const StartCompositionRequest& request) const {

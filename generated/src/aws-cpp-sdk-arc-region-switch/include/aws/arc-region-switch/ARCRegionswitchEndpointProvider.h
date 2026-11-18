@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/arc-region-switch/ARCRegionswitchEndpointRules.h>
 #include <aws/arc-region-switch/ARCRegionswitch_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ARCRegionswitch {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ARCRegionswitchClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using ARCRegionswitchEndpointProviderBase =
     EndpointProviderBase<ARCRegionswitchClientConfiguration, ARCRegionswitchBuiltInParameters, ARCRegionswitchClientContextParameters>;
 
 using ARCRegionswitchDefaultEpProviderBase =
-    DefaultEndpointProvider<ARCRegionswitchClientConfiguration, ARCRegionswitchBuiltInParameters, ARCRegionswitchClientContextParameters>;
+    BDDEndpointProvider<ARCRegionswitchClientConfiguration, ARCRegionswitchBuiltInParameters, ARCRegionswitchClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_ARCREGIONSWITCH_API ARCRegionswitchEndpointProvider : public ARCRegion
  public:
   using ARCRegionswitchResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ARCRegionswitchEndpointProvider()
-      : ARCRegionswitchDefaultEpProviderBase(Aws::ARCRegionswitch::ARCRegionswitchEndpointRules::GetRulesBlob(),
-                                             Aws::ARCRegionswitch::ARCRegionswitchEndpointRules::RulesBlobSize) {}
+  ARCRegionswitchEndpointProvider();
 
   ~ARCRegionswitchEndpointProvider() {}
 };

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -9,14 +9,18 @@
 #include <aws/servicecatalog/ServiceCatalogClientPagination.h>
 #include <aws/servicecatalog/ServiceCatalogPaginationBase.h>
 #include <aws/servicecatalog/model/GetProvisionedProductOutputsPaginationTraits.h>
+#include <aws/servicecatalog/model/ListProvisionedProductPlansPaginationTraits.h>
 #include <aws/servicecatalog/model/SearchProductsPaginationTraits.h>
 #include <aws/servicecatalog/model/ListBudgetsForResourcePaginationTraits.h>
+#include <aws/servicecatalog/model/ListStackInstancesForProvisionedProductPaginationTraits.h>
 #include <aws/servicecatalog/model/ListAcceptedPortfolioSharesPaginationTraits.h>
 #include <aws/servicecatalog/model/SearchProductsAsAdminPaginationTraits.h>
 #include <aws/servicecatalog/model/SearchProvisionedProductsPaginationTraits.h>
 #include <aws/servicecatalog/model/ListConstraintsForPortfolioPaginationTraits.h>
+#include <aws/servicecatalog/model/ScanProvisionedProductsPaginationTraits.h>
 #include <aws/servicecatalog/model/ListServiceActionsPaginationTraits.h>
 #include <aws/servicecatalog/model/ListPrincipalsForPortfolioPaginationTraits.h>
+#include <aws/servicecatalog/model/ListRecordHistoryPaginationTraits.h>
 #include <aws/servicecatalog/model/ListPortfolioAccessPaginationTraits.h>
 #include <aws/servicecatalog/model/ListPortfoliosPaginationTraits.h>
 #include <aws/servicecatalog/model/ListLaunchPathsPaginationTraits.h>
@@ -36,6 +40,6 @@ class ServiceCatalogPaginationCompilationTest : public Aws::Testing::AwsCppSdkGT
 
 TEST_F(ServiceCatalogPaginationCompilationTest, ServiceCatalogPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

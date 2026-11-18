@@ -36,7 +36,25 @@ static const char SERVER_SIDE_ENCRYPTION_CUSTOMER_KEY_MD5[] = "x-amz-server-side
 static const unsigned MAX_EXPIRATION_SECONDS = 7 * 24 * 60 * 60;
 
 /**
- * <p/>
+ *  <p>For information about using the Amazon S3 API—including
+ * authentication, signing requests, code examples, and error handling—see the <a
+ * href="https://docs.aws.amazon.com/AmazonS3/latest/developerguide/Welcome.html">Amazon
+ * S3 Developer Guide</a>.</p>  <p>Welcome to the <i>Amazon S3 API
+ * Reference</i>. This guide explains the Amazon Simple Storage Service (Amazon S3)
+ * application programming interface (API).</p> <p>Welcome to the <i>Amazon S3 API
+ * Reference</i>. This guide explains the Amazon Simple Storage Service (Amazon S3)
+ * application programming interface (API).</p> <p>You can use any toolkit that
+ * supports HTTP to use the REST API. You can even use a browser to fetch objects,
+ * as long as they are anonymously readable.</p> <p>The REST API uses the standard
+ * HTTP headers and status codes, so that standard browsers and toolkits work as
+ * expected. In some areas, we have added functionality to HTTP (for example, we
+ * added headers to support access control). In these cases, we have done our best
+ * to add the new functionality in a way that matched the style of standard HTTP
+ * usage.</p> <p>The current version of the Amazon S3 API is
+ * <code>2006-03-01</code>.</p> <p>Amazon S3 supports the REST API.</p>
+ * <p>As announced on May 5, 2025, SOAP API support is discontinued. Requests that
+ * use the SOAP API return an HTTP <code>400 Bad Request</code> error. Use this
+ * REST API or the Amazon Web Services SDKs instead.</p>
  */
 class AWS_S3_API S3Client : public Aws::Client::AWSXMLClient,
                             public Aws::Client::ClientWithAsyncTemplateMethods<S3Client>,
@@ -845,16 +863,25 @@ class AWS_S3_API S3Client : public Aws::Client::AWSXMLClient,
    * the multipart upload request. For more information about multipart uploads, see
    * <a
    * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html">Multipart
-   * Upload Overview</a> in the <i>Amazon S3 User Guide</i>.</p>  <p>After you
-   * initiate a multipart upload and upload one or more parts, to stop being charged
-   * for storing the uploaded parts, you must either complete or abort the multipart
-   * upload. Amazon S3 frees up the space used to store the parts and stops charging
-   * you for storing them only after you either complete or abort a multipart upload.
-   * </p>  <p>If you have configured a lifecycle rule to abort incomplete
-   * multipart uploads, the created multipart upload must be completed within the
-   * number of days specified in the bucket lifecycle configuration. Otherwise, the
-   * incomplete multipart upload becomes eligible for an abort action and Amazon S3
-   * aborts the multipart upload. For more information, see <a
+   * Upload Overview</a> in the <i>Amazon S3 User Guide</i>.</p>  <ul> <li>
+   * <p>After you initiate a multipart upload and upload one or more parts, to stop
+   * being charged for storing the uploaded parts, you must either complete or abort
+   * the multipart upload. Amazon S3 frees up the space used to store the parts and
+   * stops charging you for storing them only after you either complete or abort a
+   * multipart upload. </p> </li> <li> <p>When you initiate a multipart upload,
+   * Amazon S3 records the bucket configuration in place at that time and uses it for
+   * the rest of the upload. Changes that you make to the bucket configuration after
+   * you initiate the upload don't apply to that upload. To apply new bucket
+   * configuration to uploads in progress, use <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html">ListMultipartUploads</a>
+   * to find them and <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html">AbortMultipartUpload</a>
+   * to stop them. Then start the uploads again.</p> </li> </ul>  <p>If you
+   * have configured a lifecycle rule to abort incomplete multipart uploads, the
+   * created multipart upload must be completed within the number of days specified
+   * in the bucket lifecycle configuration. Otherwise, the incomplete multipart
+   * upload becomes eligible for an abort action and Amazon S3 aborts the multipart
+   * upload. For more information, see <a
    * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config">Aborting
    * Incomplete Multipart Uploads Using a Bucket Lifecycle Configuration</a>.</p>
    *  <ul> <li> <p> <b>Directory buckets </b> - S3 Lifecycle is not supported
@@ -1737,7 +1764,7 @@ class AWS_S3_API S3Client : public Aws::Client::AWSXMLClient,
   /**
    *  <p> We recommend that you delete your S3 Metadata configurations by
    * using the V2 <a
-   * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketMetadataTableConfiguration.html">DeleteBucketMetadataTableConfiguration</a>
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketMetadataConfiguration.html">DeleteBucketMetadataConfiguration</a>
    * API operation. We no longer recommend using the V1
    * <code>DeleteBucketMetadataTableConfiguration</code> API operation. </p> <p>If
    * you created your S3 Metadata configuration before July 15, 2025, we recommend
@@ -3021,9 +3048,9 @@ class AWS_S3_API S3Client : public Aws::Client::AWSXMLClient,
    * <code>GetBucketLifecycleConfiguration</code> has the following special
    * error:</p> <ul> <li> <p>Error code: <code>NoSuchLifecycleConfiguration</code>
    * </p> <ul> <li> <p>Description: The lifecycle configuration does not exist.</p>
-   * </li> <li> <p>HTTP Status Code: 404 Not Found</p> </li> <li> <p>SOAP Fault Code
-   * Prefix: Client</p> </li> </ul> </li> </ul> <p>The following operations are
-   * related to <code>GetBucketLifecycleConfiguration</code>:</p> <ul> <li> <p> <a
+   * </li> <li> <p>HTTP Status Code: 404 Not Found</p> </li> </ul> </li> </ul> <p>The
+   * following operations are related to
+   * <code>GetBucketLifecycleConfiguration</code>:</p> <ul> <li> <p> <a
    * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycle.html">GetBucketLifecycle</a>
    * </p> </li> <li> <p> <a
    * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html">PutBucketLifecycle</a>
@@ -3218,7 +3245,7 @@ class AWS_S3_API S3Client : public Aws::Client::AWSXMLClient,
   /**
    *  <p> We recommend that you retrieve your S3 Metadata configurations
    * by using the V2 <a
-   * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketMetadataTableConfiguration.html">GetBucketMetadataTableConfiguration</a>
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketMetadataConfiguration.html">GetBucketMetadataConfiguration</a>
    * API operation. We no longer recommend using the V1
    * <code>GetBucketMetadataTableConfiguration</code> API operation. </p> <p>If you
    * created your S3 Metadata configuration before July 15, 2025, we recommend that
@@ -7813,16 +7840,14 @@ class AWS_S3_API S3Client : public Aws::Client::AWSXMLClient,
    * </ul> <ul> <li> <p>Special errors:</p> <ul> <li> <p> <i>Code:
    * RestoreAlreadyInProgress</i> </p> </li> <li> <p> <i>Cause: Object restore is
    * already in progress.</i> </p> </li> <li> <p> <i>HTTP Status Code: 409
-   * Conflict</i> </p> </li> <li> <p> <i>SOAP Fault Code Prefix: Client</i> </p>
-   * </li> </ul> </li> <li> <ul> <li> <p> <i>Code:
+   * Conflict</i> </p> </li> </ul> </li> <li> <ul> <li> <p> <i>Code:
    * GlacierExpeditedRetrievalNotAvailable</i> </p> </li> <li> <p> <i>Cause:
    * expedited retrievals are currently not available. Try again later. (Returned if
    * there is insufficient capacity to process the Expedited request. This error
    * applies only to Expedited retrievals and not to S3 Standard or Bulk
    * retrievals.)</i> </p> </li> <li> <p> <i>HTTP Status Code: 503</i> </p> </li>
-   * <li> <p> <i>SOAP Fault Code Prefix: N/A</i> </p> </li> </ul> </li> </ul> </dd>
-   * </dl> <p>The following operations are related to <code>RestoreObject</code>:</p>
-   * <ul> <li> <p> <a
+   * </ul> </li> </ul> </dd> </dl> <p>The following operations are related to
+   * <code>RestoreObject</code>:</p> <ul> <li> <p> <a
    * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html">PutBucketLifecycleConfiguration</a>
    * </p> </li> <li> <p> <a
    * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketNotificationConfiguration.html">GetBucketNotificationConfiguration</a>
@@ -8165,10 +8190,9 @@ class AWS_S3_API S3Client : public Aws::Client::AWSXMLClient,
    * new encryption type <code>UpdateObjectEncryption</code> request.</p>
    * <dl> <dt>Permissions</dt> <dd> <ul> <li> <p>To use the
    * <code>UpdateObjectEncryption</code> operation, you must have the following
-   * permissions:</p> <ul> <li> <p> <code>s3:PutObject</code> </p> </li> <li> <p>
-   * <code>s3:UpdateObjectEncryption</code> </p> </li> <li> <p>
-   * <code>kms:Encrypt</code> </p> </li> <li> <p> <code>kms:Decrypt</code> </p> </li>
-   * <li> <p> <code>kms:GenerateDataKey</code> </p> </li> <li> <p>
+   * permissions:</p> <ul> <li> <p> <code>s3:UpdateObjectEncryption</code> </p> </li>
+   * <li> <p> <code>kms:Encrypt</code> </p> </li> <li> <p> <code>kms:Decrypt</code>
+   * </p> </li> <li> <p> <code>kms:GenerateDataKey</code> </p> </li> <li> <p>
    * <code>kms:ReEncrypt*</code> </p> </li> </ul> </li> <li> <p>If you're using
    * Organizations, to use this operation with customer-managed KMS keys from other
    * Amazon Web Services accounts within your organization, you must have the
@@ -8369,10 +8393,9 @@ class AWS_S3_API S3Client : public Aws::Client::AWSXMLClient,
    * errors</dt> <dd> <ul> <li> <p>Error Code: <code>NoSuchUpload</code> </p> <ul>
    * <li> <p>Description: The specified multipart upload does not exist. The upload
    * ID might be invalid, or the multipart upload might have been aborted or
-   * completed.</p> </li> <li> <p>HTTP Status Code: 404 Not Found </p> </li> <li>
-   * <p>SOAP Fault Code Prefix: Client</p> </li> </ul> </li> </ul> </dd> <dt>HTTP
-   * Host header syntax</dt> <dd> <p> <b>Directory buckets </b> - The HTTP Host
-   * header syntax is <code>
+   * completed.</p> </li> <li> <p>HTTP Status Code: 404 Not Found </p> </li> </ul>
+   * </li> </ul> </dd> <dt>HTTP Host header syntax</dt> <dd> <p> <b>Directory buckets
+   * </b> - The HTTP Host header syntax is <code>
    * <i>Bucket-name</i>.s3express-<i>zone-id</i>.<i>region-code</i>.amazonaws.com</code>.</p>
    * </dd> </dl> <p>The following operations are related to
    * <code>UploadPart</code>:</p> <ul> <li> <p> <a

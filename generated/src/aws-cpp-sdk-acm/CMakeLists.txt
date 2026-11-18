@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-acm "C++ SDK for the AWS acm service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-acm "C++ SDK for AWS Certificate Manager" aws-cpp-sdk-core)
 
 file(GLOB AWS_ACM_HEADERS
     "include/aws/acm/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ACM_HEADERS
 
 file(GLOB AWS_ACM_MODEL_HEADERS
     "include/aws/acm/model/*.h"
+)
+
+file(GLOB AWS_ACM_INTERNAL_HEADERS
+    "include/aws/acm/internal/*.h"
 )
 
 file(GLOB AWS_ACM_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ACM_MODEL_SOURCE
 
 file(GLOB ACM_UNIFIED_HEADERS
     ${AWS_ACM_HEADERS}
+    ${AWS_ACM_INTERNAL_HEADERS}
     ${AWS_ACM_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\acm" FILES ${AWS_ACM_HEADERS})
+        source_group("Header Files\\aws\\acm\\internal" FILES ${AWS_ACM_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\acm\\model" FILES ${AWS_ACM_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ACM_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ACM_MODEL_SOURCE})

@@ -7,6 +7,7 @@
 #include <aws/appstream/AppStream_EXPORTS.h>
 #include <aws/appstream/model/AccessEndpoint.h>
 #include <aws/appstream/model/DomainJoinInfo.h>
+#include <aws/appstream/model/ImageBuilderAgentAccessConfig.h>
 #include <aws/appstream/model/ImageBuilderState.h>
 #include <aws/appstream/model/ImageBuilderStateChangeReason.h>
 #include <aws/appstream/model/LatestAppstreamAgentVersion.h>
@@ -18,15 +19,15 @@
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AppStream {
 namespace Model {
@@ -40,9 +41,9 @@ namespace Model {
 class ImageBuilder {
  public:
   AWS_APPSTREAM_API ImageBuilder() = default;
-  AWS_APPSTREAM_API ImageBuilder(Aws::Utils::Json::JsonView jsonValue);
-  AWS_APPSTREAM_API ImageBuilder& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_APPSTREAM_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_APPSTREAM_API ImageBuilder(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_APPSTREAM_API ImageBuilder& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_APPSTREAM_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -185,7 +186,11 @@ class ImageBuilder {
    * </li> <li> <p>stream.graphics.g6f.large</p> </li> <li>
    * <p>stream.graphics.g6f.xlarge</p> </li> <li> <p>stream.graphics.g6f.2xlarge</p>
    * </li> <li> <p>stream.graphics.g6f.4xlarge</p> </li> <li>
-   * <p>stream.graphics.gr6f.4xlarge</p> </li> </ul>
+   * <p>stream.graphics.gr6f.4xlarge</p> </li> <li> <p>stream.graphics.g7.2xlarge</p>
+   * </li> <li> <p>stream.graphics.g7.4xlarge</p> </li> <li>
+   * <p>stream.graphics.g7.8xlarge</p> </li> <li> <p>stream.graphics.g7.12xlarge</p>
+   * </li> <li> <p>stream.graphics.g7.24xlarge</p> </li> <li>
+   * <p>stream.graphics.g7.48xlarge</p> </li> </ul>
    */
   inline const Aws::String& GetInstanceType() const { return m_instanceType; }
   inline bool InstanceTypeHasBeenSet() const { return m_instanceTypeHasBeenSet; }
@@ -469,6 +474,25 @@ class ImageBuilder {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The agent access configuration of the image builder, if agent access is
+   * enabled.</p>
+   */
+  inline const ImageBuilderAgentAccessConfig& GetAgentAccessConfig() const { return m_agentAccessConfig; }
+  inline bool AgentAccessConfigHasBeenSet() const { return m_agentAccessConfigHasBeenSet; }
+  template <typename AgentAccessConfigT = ImageBuilderAgentAccessConfig>
+  void SetAgentAccessConfig(AgentAccessConfigT&& value) {
+    m_agentAccessConfigHasBeenSet = true;
+    m_agentAccessConfig = std::forward<AgentAccessConfigT>(value);
+  }
+  template <typename AgentAccessConfigT = ImageBuilderAgentAccessConfig>
+  ImageBuilder& WithAgentAccessConfig(AgentAccessConfigT&& value) {
+    SetAgentAccessConfig(std::forward<AgentAccessConfigT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_name;
 
@@ -511,6 +535,8 @@ class ImageBuilder {
   LatestAppstreamAgentVersion m_latestAppstreamAgentVersion{LatestAppstreamAgentVersion::NOT_SET};
 
   bool m_disableIMDSV1{false};
+
+  ImageBuilderAgentAccessConfig m_agentAccessConfig;
   bool m_nameHasBeenSet = false;
   bool m_arnHasBeenSet = false;
   bool m_imageArnHasBeenSet = false;
@@ -532,6 +558,7 @@ class ImageBuilder {
   bool m_rootVolumeConfigHasBeenSet = false;
   bool m_latestAppstreamAgentVersionHasBeenSet = false;
   bool m_disableIMDSV1HasBeenSet = false;
+  bool m_agentAccessConfigHasBeenSet = false;
 };
 
 }  // namespace Model

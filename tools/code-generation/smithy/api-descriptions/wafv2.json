@@ -2119,10 +2119,16 @@
                     "traits": {
                         "smithy.api#documentation": "<p>Customizes the maximum size of the request body that your protected CloudFront, API Gateway, Amazon Cognito, App Runner, and Verified Access resources forward to WAF for inspection. The default size is 16 KB (16,384 bytes). You can change the setting for any of the available resource types. </p>\n         <note>\n            <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p>\n         </note>\n         <p>Example JSON: <code> {\n    \"API_GATEWAY\": \"KB_48\",\n    \"APP_RUNNER_SERVICE\": \"KB_32\"\n    }</code>\n         </p>\n         <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>"
                     }
+                },
+                "ChallengeJavascriptSdkInjection": {
+                    "target": "com.amazonaws.wafv2#ChallengeJavascriptSdkInjection",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the CloudFront distributions that insert the WAF challenge JavaScript SDK into the HTML responses that they return. When you enable this setting for a distribution, you do not add the SDK to your web pages yourself. </p>\n         <p>You can configure this setting only for CloudFront distributions, using the <code>CLOUDFRONT</code> map key. WAF rejects any other resource type, and the setting is not available for regional resources. To configure it, use the CloudFront scope. </p>\n         <p>Your web ACL must also contain at least one of the following qualifying managed rule groups. WAF Bot Control qualifies only at the <code>TARGETED</code> inspection level, not at <code>COMMON</code>: </p>\n         <ul>\n            <li>\n               <p>The WAF Bot Control managed rule group <code>AWSManagedRulesBotControlRuleSet</code>, with the inspection level set to <code>TARGETED</code>. </p>\n            </li>\n            <li>\n               <p>The WAF Fraud Control account takeover prevention (ATP) managed rule group <code>AWSManagedRulesATPRuleSet</code>. </p>\n            </li>\n            <li>\n               <p>The WAF Fraud Control account creation fraud prevention (ACFP) managed rule group <code>AWSManagedRulesACFPRuleSet</code>. </p>\n            </li>\n         </ul>\n         <p>If you remove the last qualifying managed rule group from the web ACL, or lower the WAF Bot Control inspection level from <code>TARGETED</code> to <code>COMMON</code>, you must remove this setting in the same update. Otherwise, WAF rejects the update. </p>\n         <p>Example JSON: <code> { \"CLOUDFRONT\": {} }</code>\n         </p>\n         <p>If you omit this setting, CloudFront does not insert the SDK. When you omit it from a web ACL that previously used it, cached HTML that already contains the SDK is still served until it expires, or until you invalidate the cache for that distribution. For more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-challenge-javascript-sdk-injection.html\">Automatic SDK integration for CloudFront distributions</a> in the <i>WAF Developer Guide</i>. </p>"
+                    }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>Specifies custom configurations for the associations between the web ACL and protected resources.  </p>\n         <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can \n    customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p>\n         <note>\n            <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p>\n         </note>\n         <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>"
+                "smithy.api#documentation": "<p>Specifies custom configurations for the associations between the web ACL and protected resources.  </p>\n         <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can \n    customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p>\n         <note>\n            <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p>\n         </note>\n         <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>\n         <p>You can also use this to have your CloudFront distributions insert the WAF challenge JavaScript SDK into the HTML responses that they return. For more information, see the <code>ChallengeJavascriptSdkInjection</code> setting. </p>"
             }
         },
         "com.amazonaws.wafv2#AttributeName": {
@@ -2303,6 +2309,12 @@
                         "smithy.api#required": {}
                     }
                 },
+                "PreParseTextTransformations": {
+                    "target": "com.amazonaws.wafv2#PreParseTextTransformations",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Pre-parse text transformations normalize the raw query string before WAF parses it into individual\n         query arguments. They are applied before the standard text transformations. Pre-parse text transformations\n         are only supported when <code>FieldToMatch</code> is <code>SingleQueryArgument</code> or\n         <code>AllQueryArguments</code>. You can specify up to 10 pre-parse text transformations per rule statement.</p>"
+                    }
+                },
                 "PositionalConstraint": {
                     "target": "com.amazonaws.wafv2#PositionalConstraint",
                     "traits": {
@@ -2403,6 +2415,27 @@
             },
             "traits": {
                 "smithy.api#documentation": "<p>Specifies how WAF should handle <code>Challenge</code> evaluations. This is\n         available at the web ACL level and in each rule. </p>"
+            }
+        },
+        "com.amazonaws.wafv2#ChallengeJavascriptSdkInjection": {
+            "type": "map",
+            "key": {
+                "target": "com.amazonaws.wafv2#AssociatedResourceType"
+            },
+            "value": {
+                "target": "com.amazonaws.wafv2#ChallengeJavascriptSdkInjectionConfig"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1
+                }
+            }
+        },
+        "com.amazonaws.wafv2#ChallengeJavascriptSdkInjectionConfig": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies whether the associated CloudFront distribution inserts the WAF challenge JavaScript SDK into the HTML responses that it returns. The structure is empty: including it turns insertion on, and removing it turns insertion off. </p>\n         <p>This is used in the <code>ChallengeJavascriptSdkInjection</code> map of the <code>AssociationConfig</code> of the web ACL. The map key identifies the resource type and must be <code>CLOUDFRONT</code>. </p>\n         <p>JSON specification: <code>\"CLOUDFRONT\": {}</code>\n         </p>"
             }
         },
         "com.amazonaws.wafv2#ChallengeResponse": {
@@ -2620,6 +2653,153 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 1
+                }
+            }
+        },
+        "com.amazonaws.wafv2#ConnectedAccountArn": {
+            "type": "string",
+            "traits": {
+                "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of a connected account used for AI bot monetization settlement. You obtain this ARN from Payment preferences > Connected accounts in the Amazon Web Services Billing and Cost Management console. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-connected-accounts.html\">Managing connected accounts</a>. The ARN is 56 to 140 characters.</p>",
+                "smithy.api#length": {
+                    "min": 56,
+                    "max": 140
+                },
+                "smithy.api#pattern": "^arn:aws(-[a-z]+)*:payments::[0-9]{12}:connectedaccount/[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}-[A-Za-z0-9]{6}$"
+            }
+        },
+        "com.amazonaws.wafv2#ConnectedAccountChain": {
+            "type": "enum",
+            "members": {
+                "BASE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "BASE"
+                    }
+                },
+                "SOLANA": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "SOLANA"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The blockchain network for a connected account. Production networks only. Test networks are not supported because connected accounts settle production payments only.</p>\n         <p>Valid values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>BASE</code> - Base mainnet.</p>\n            </li>\n            <li>\n               <p>\n                  <code>SOLANA</code> - Solana mainnet.</p>\n            </li>\n         </ul>"
+            }
+        },
+        "com.amazonaws.wafv2#ConnectedAccountChainConfig": {
+            "type": "structure",
+            "members": {
+                "Chain": {
+                    "target": "com.amazonaws.wafv2#ConnectedAccountChain",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The blockchain network for receiving payments through the connected account. Test networks are not supported for connected accounts.</p>\n         <p>Valid values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>BASE</code> - Base mainnet.</p>\n            </li>\n            <li>\n               <p>\n                  <code>SOLANA</code> - Solana mainnet.</p>\n            </li>\n         </ul>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Prices": {
+                    "target": "com.amazonaws.wafv2#ConnectedAccountPrices",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The price configuration for this network. Currently supports a single price entry in USDC.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A per-network configuration for a connected account, specifying the blockchain network and the price per request. Unlike <code>PaymentNetwork</code>, you do not provide a wallet address; the receiving address is managed for the connected account.</p>"
+            }
+        },
+        "com.amazonaws.wafv2#ConnectedAccountConfig": {
+            "type": "structure",
+            "members": {
+                "ConnectedAccountArn": {
+                    "target": "com.amazonaws.wafv2#ConnectedAccountArn",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the connected account that payments settle to. You obtain this ARN from Payment preferences > Connected accounts in the Amazon Web Services Billing and Cost Management console. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-connected-accounts.html\">Managing connected accounts</a>. The connected account must be active and enabled for crypto settlement; otherwise the request is rejected. To use a connected account, you must have the <code>payments:GetConnectedAccount</code> permission on this ARN.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "PaymentNetworks": {
+                    "target": "com.amazonaws.wafv2#ConnectedAccountPaymentNetworks",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The per-network configurations for the connected account. You can specify 1 to 2 networks. Each entry specifies a blockchain network and the price for each request.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A connected account configuration for AI bot monetization. Specifies the connected account that payments settle to and the per-network pricing. Settlement through a connected account is an alternative to the self-managed wallets in <code>CryptoConfig</code>; wallet addresses are managed for the connected account rather than configured by you. If the referenced connected account is not active or not enabled for crypto settlement, the <code>CreateWebACL</code>, <code>UpdateWebACL</code>, <code>CreateRuleGroup</code>, or <code>UpdateRuleGroup</code> request that includes it is rejected. Specifically, a request that references the account is rejected with <code>WAFInvalidOperationException</code> if the account or its crypto settlement capability isn't active, <code>WAFNonexistentItemException</code> if the ARN no longer exists, <code>AccessDeniedException</code> if you don't have <code>payments:GetConnectedAccount</code>, or <code>WAFInvalidParameterException</code> if the ARN is invalid or the partition is unsupported. Connected accounts are available only in the commercial Amazon Web Services partition.</p>"
+            }
+        },
+        "com.amazonaws.wafv2#ConnectedAccountConfigs": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.wafv2#ConnectedAccountConfig"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The list of connected account configurations for AI bot monetization. Currently must contain exactly one entry.</p>",
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1
+                }
+            }
+        },
+        "com.amazonaws.wafv2#ConnectedAccountPaymentNetworks": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.wafv2#ConnectedAccountChainConfig"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The per-network configurations for a connected account. Contains 1 to 2 entries.</p>",
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 2
+                }
+            }
+        },
+        "com.amazonaws.wafv2#ConnectedAccountPrice": {
+            "type": "structure",
+            "members": {
+                "Amount": {
+                    "target": "com.amazonaws.wafv2#ConnectedAccountPriceAmount",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The price per request as a decimal string in the specified currency. Valid values range from 0.01 to 999999.99 USDC, with up to two decimal places. Sub-cent amounts are not supported.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Currency": {
+                    "target": "com.amazonaws.wafv2#CryptoCurrency",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The cryptocurrency for payment. Currently only <code>USDC</code> is supported.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The price per request for a connected account payment network, specifying the amount and cryptocurrency.</p>"
+            }
+        },
+        "com.amazonaws.wafv2#ConnectedAccountPriceAmount": {
+            "type": "string",
+            "traits": {
+                "smithy.api#documentation": "<p>The price per request for a connected account, as a decimal string. Valid values range from 0.01 to 999999.99 USDC, with up to two decimal places. Sub-cent amounts are not supported.</p>",
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 9
+                },
+                "smithy.api#pattern": "^([1-9][0-9]{0,5}(\\.[0-9]{1,2})?|0\\.(0[1-9]|[1-9][0-9]?))$"
+            }
+        },
+        "com.amazonaws.wafv2#ConnectedAccountPrices": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.wafv2#ConnectedAccountPrice"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The list of per-request prices for a connected account payment network. Currently must contain exactly one entry in <code>USDC</code>.</p>",
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1
                 }
             }
         },
@@ -4667,7 +4847,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Creates a <a>WebACL</a> per the specifications provided.</p>\n         <p> A web ACL defines a collection of rules to use to inspect and control web requests. Each rule has a statement that defines what to look for in web requests and an action that WAF applies to requests that match the statement. In the web ACL, you assign a default action to take (allow, block) for any request that does not match any of the rules. The rules in a web ACL can be a combination of the types <a>Rule</a>, <a>RuleGroup</a>, and managed rule group. You can associate a web ACL with one or more Amazon Web Services resources to protect. The resource types include Amazon CloudFront distribution, Amazon API Gateway REST API, Application Load Balancer, AppSync GraphQL API, Amazon Cognito user pool, App Runner service, Amplify application, and Amazon Web Services Verified Access instance.  </p>"
+                "smithy.api#documentation": "<p>Creates a <a>WebACL</a> per the specifications provided.</p>\n         <p> A web ACL defines a collection of rules to use to inspect and control web requests. Each rule has a statement that defines what to look for in web requests and an action that WAF applies to requests that match the statement. In the web ACL, you assign a default action to take (allow, block) for any request that does not match any of the rules. The rules in a web ACL can be a combination of the types <a>Rule</a>, <a>RuleGroup</a>, and managed rule group. You can associate a web ACL with one or more Amazon Web Services resources to protect. The resource types include Amazon CloudFront distribution, Amazon API Gateway REST API, Application Load Balancer, AppSync GraphQL API, Amazon Cognito user pool, App Runner service, Amplify application, Amazon Web Services Verified Access instance, and Amazon Bedrock AgentCore Gateway.  </p>"
             }
         },
         "com.amazonaws.wafv2#CreateWebACLRequest": {
@@ -4752,7 +4932,7 @@
                 "AssociationConfig": {
                     "target": "com.amazonaws.wafv2#AssociationConfig",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies custom configurations for the associations between the web ACL and protected resources.  </p>\n         <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can \n    customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p>\n         <note>\n            <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p>\n         </note>\n         <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>"
+                        "smithy.api#documentation": "<p>Specifies custom configurations for the associations between the web ACL and protected resources.  </p>\n         <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can \n    customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p>\n         <note>\n            <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p>\n         </note>\n         <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>\n         <p>You can also use this to have your CloudFront distributions insert the WAF challenge JavaScript SDK into the HTML responses that they return. For more information, see the <code>ChallengeJavascriptSdkInjection</code> setting. </p>"
                     }
                 },
                 "OnSourceDDoSProtectionConfig": {
@@ -6288,7 +6468,7 @@
                 "FieldKeys": {
                     "target": "com.amazonaws.wafv2#FieldToProtectKeys",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the keys to protect for the specified field type. If you don't specify any key, then all keys for the field type are protected.  </p>"
+                        "smithy.api#documentation": "<p>Specifies the keys to protect for the specified field type.</p>\n         <p>Required for <code>SINGLE_HEADER</code>, <code>SINGLE_COOKIE</code>, and\n         <code>SINGLE_QUERY_ARGUMENT</code>: provide a non-empty array naming the specific headers,\n         cookies, or query arguments to protect. There is no option to protect all keys of these\n         field types, so enumerate each key you intend to protect.</p>\n         <p>Must be omitted for <code>QUERY_STRING</code> and <code>BODY</code>: the entire\n         component is protected and these field types take no keys. Supplying\n         <code>FieldKeys</code> for them is rejected.</p>"
                     }
                 }
             },
@@ -10365,15 +10545,21 @@
                         "smithy.api#documentation": "<p>The cryptocurrency payment configuration, including the blockchain networks and wallet addresses where you receive payments.</p>"
                     }
                 },
+                "ConnectedAccountConfigs": {
+                    "target": "com.amazonaws.wafv2#ConnectedAccountConfigs",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The connected account configurations for settling AI bot payments through a connected account with a supported third-party payment provider (Stripe), as an alternative to the self-managed wallets in <code>CryptoConfig</code>. You can provide <code>CryptoConfig</code>, <code>ConnectedAccountConfigs</code>, or both; however, a given blockchain network (chain) can be used by only one of them. Currently supports exactly one connected account.</p>"
+                    }
+                },
                 "CurrencyMode": {
                     "target": "com.amazonaws.wafv2#CurrencyMode",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies whether the configuration uses real or test currency. Set to <code>REAL</code> to settle payments in USDC on production blockchain networks (Base, Solana). Set to <code>TEST</code> to settle on testnet networks (Base Sepolia, Solana Devnet) with tokens that have no monetary value. If not specified, defaults to <code>REAL</code>.</p>"
+                        "smithy.api#documentation": "<p>Specifies whether the configuration uses real or test currency. If not specified, defaults to <code>REAL</code>. Connected account configurations support production settlement only; <code>TEST</code> is not supported when <code>ConnectedAccountConfigs</code> is present.</p>\n         <p>Valid values:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>REAL</code> - Settle payments in USDC on production blockchain networks (Base, Solana).</p>\n            </li>\n            <li>\n               <p>\n                  <code>TEST</code> - Settle on testnet networks (Base Sepolia, Solana Devnet) with tokens that have no monetary value.</p>\n            </li>\n         </ul>"
                     }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>The monetization configuration for a web ACL or rule group. Specifies the cryptocurrency payment networks and currency mode for AI bot monetization. You must provide this configuration when any rule in the web ACL or rule group uses the <code>Monetize</code> action.</p>"
+                "smithy.api#documentation": "<p>The monetization configuration for a web ACL or rule group. Specifies the payment settlement options (self-managed crypto wallets in <code>CryptoConfig</code>, a connected account in <code>ConnectedAccountConfigs</code>, or both) and the currency mode for artificial intelligence (AI) bot monetization. You must provide this configuration when any rule in the web ACL or rule group uses the <code>Monetize</code> action.</p>"
             }
         },
         "com.amazonaws.wafv2#MonetizationFilter": {
@@ -11038,6 +11224,18 @@
                     "traits": {
                         "smithy.api#enumValue": "PAYMENT_NETWORK"
                     }
+                },
+                "PRE_PARSE_TEXT_TRANSFORMATION": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "PRE_PARSE_TEXT_TRANSFORMATION"
+                    }
+                },
+                "CHALLENGE_JAVASCRIPT_SDK_INJECTION_CONFIG": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "CHALLENGE_JAVASCRIPT_SDK_INJECTION_CONFIG"
+                    }
                 }
             }
         },
@@ -11286,6 +11484,79 @@
                         "smithy.api#enumValue": "CONTAINS_WORD"
                     }
                 }
+            }
+        },
+        "com.amazonaws.wafv2#PreParseTextTransformation": {
+            "type": "structure",
+            "members": {
+                "Priority": {
+                    "target": "com.amazonaws.wafv2#PreParseTextTransformationPriority",
+                    "traits": {
+                        "smithy.api#default": 0,
+                        "smithy.api#documentation": "<p>Sets the relative processing order for the pre-parse text transformations that you define.\n         WAF processes all transformations, from lowest priority value to highest,\n         before inspecting the transformed content. </p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Type": {
+                    "target": "com.amazonaws.wafv2#PreParseTextTransformationType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of pre-parse text transformation to apply to the raw query string.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A pre-parse text transformation that normalizes the raw query string before WAF parses\n         it into individual query arguments. Pre-parse text transformations are only supported when\n         <code>FieldToMatch</code> is <code>SingleQueryArgument</code> or <code>AllQueryArguments</code>. </p>"
+            }
+        },
+        "com.amazonaws.wafv2#PreParseTextTransformationPriority": {
+            "type": "integer",
+            "traits": {
+                "smithy.api#default": 0,
+                "smithy.api#range": {
+                    "min": 0
+                }
+            }
+        },
+        "com.amazonaws.wafv2#PreParseTextTransformationType": {
+            "type": "enum",
+            "members": {
+                "NONE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "NONE"
+                    }
+                },
+                "URL_DECODE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "URL_DECODE"
+                    }
+                },
+                "URL_DECODE_UNI": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "URL_DECODE_UNI"
+                    }
+                },
+                "COMBINE_DUPLICATE_QUERY_ARGS_BY_COMMA": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "COMBINE_DUPLICATE_QUERY_ARGS_BY_COMMA"
+                    }
+                },
+                "REPLACE_SEMICOLONS_WITH_AMPERSANDS": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "REPLACE_SEMICOLONS_WITH_AMPERSANDS"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.wafv2#PreParseTextTransformations": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.wafv2#PreParseTextTransformation"
             }
         },
         "com.amazonaws.wafv2#Price": {
@@ -12046,7 +12317,7 @@
                 "RegexString": {
                     "target": "com.amazonaws.wafv2#RegexPatternString",
                     "traits": {
-                        "smithy.api#documentation": "<p>The string representing the regular expression.</p>"
+                        "smithy.api#documentation": "<p>The string representing the regular expression. WAF enforces a quota on the maximum number of characters in a regex pattern. For the current limit, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">WAF quotas</a> in the <i>WAF Developer Guide</i>.</p>"
                     }
                 }
             },
@@ -12060,7 +12331,7 @@
                 "RegexString": {
                     "target": "com.amazonaws.wafv2#RegexPatternString",
                     "traits": {
-                        "smithy.api#documentation": "<p>The string representing the regular expression.</p>",
+                        "smithy.api#documentation": "<p>The string representing the regular expression. WAF enforces a quota on the maximum number of characters in a regex pattern. For the current limit, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">WAF quotas</a> in the <i>WAF Developer Guide</i>.</p>",
                         "smithy.api#required": {}
                     }
                 },
@@ -12076,6 +12347,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the transformed component contents. </p>",
                         "smithy.api#required": {}
+                    }
+                },
+                "PreParseTextTransformations": {
+                    "target": "com.amazonaws.wafv2#PreParseTextTransformations",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Pre-parse text transformations normalize the raw query string before WAF parses it into individual\n         query arguments. They are applied before the standard text transformations. Pre-parse text transformations\n         are only supported when <code>FieldToMatch</code> is <code>SingleQueryArgument</code> or\n         <code>AllQueryArguments</code>. You can specify up to 10 pre-parse text transformations per rule statement.</p>"
                     }
                 }
             },
@@ -12143,6 +12420,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the transformed component contents. </p>",
                         "smithy.api#required": {}
+                    }
+                },
+                "PreParseTextTransformations": {
+                    "target": "com.amazonaws.wafv2#PreParseTextTransformations",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Pre-parse text transformations normalize the raw query string before WAF parses it into individual\n         query arguments. They are applied before the standard text transformations. Pre-parse text transformations\n         are only supported when <code>FieldToMatch</code> is <code>SingleQueryArgument</code> or\n         <code>AllQueryArguments</code>. You can specify up to 10 pre-parse text transformations per rule statement.</p>"
                     }
                 }
             },
@@ -13603,6 +13886,12 @@
                         "smithy.api#documentation": "<p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the transformed component contents. </p>",
                         "smithy.api#required": {}
                     }
+                },
+                "PreParseTextTransformations": {
+                    "target": "com.amazonaws.wafv2#PreParseTextTransformations",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Pre-parse text transformations normalize the raw query string before WAF parses it into individual\n         query arguments. They are applied before the standard text transformations. Pre-parse text transformations\n         are only supported when <code>FieldToMatch</code> is <code>SingleQueryArgument</code> or\n         <code>AllQueryArguments</code>. You can specify up to 10 pre-parse text transformations per rule statement.</p>"
+                    }
                 }
             },
             "traits": {
@@ -13751,6 +14040,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the transformed component contents. </p>",
                         "smithy.api#required": {}
+                    }
+                },
+                "PreParseTextTransformations": {
+                    "target": "com.amazonaws.wafv2#PreParseTextTransformations",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Pre-parse text transformations normalize the raw query string before WAF parses it into individual\n         query arguments. They are applied before the standard text transformations. Pre-parse text transformations\n         are only supported when <code>FieldToMatch</code> is <code>SingleQueryArgument</code> or\n         <code>AllQueryArguments</code>. You can specify up to 10 pre-parse text transformations per rule statement.</p>"
                     }
                 },
                 "SensitivityLevel": {
@@ -14204,6 +14499,66 @@
                     "target": "smithy.api#Unit",
                     "traits": {
                         "smithy.api#enumValue": "UTF8_TO_UNICODE"
+                    }
+                },
+                "REMOVE_WHITESPACE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "REMOVE_WHITESPACE"
+                    }
+                },
+                "TRIM": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "TRIM"
+                    }
+                },
+                "TRIM_LEFT": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "TRIM_LEFT"
+                    }
+                },
+                "TRIM_RIGHT": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "TRIM_RIGHT"
+                    }
+                },
+                "REMOVE_COMMENTS_CHAR": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "REMOVE_COMMENTS_CHAR"
+                    }
+                },
+                "UPPERCASE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "UPPERCASE"
+                    }
+                },
+                "CMD_LINE_WIN": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "CMD_LINE_WIN"
+                    }
+                },
+                "CMD_LINE_UNIX": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "CMD_LINE_UNIX"
+                    }
+                },
+                "JS_DECODE_EXT": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "JS_DECODE_EXT"
+                    }
+                },
+                "SHA256": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "SHA256"
                     }
                 }
             }
@@ -14834,7 +15189,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Updates the specified <a>WebACL</a>. While updating a web ACL, WAF provides\n         continuous coverage to the resources that you have associated with the web ACL. </p>\n         <note>\n            <p>This operation completely replaces the mutable specifications that you already have for the web ACL with the ones that you provide to this call. </p>\n            <p>To modify a web ACL, do the following: </p>\n            <ol>\n               <li>\n                  <p>Retrieve it by calling <a>GetWebACL</a>\n                  </p>\n               </li>\n               <li>\n                  <p>Update its settings as needed</p>\n               </li>\n               <li>\n                  <p>Provide the complete web ACL specification to this call</p>\n               </li>\n            </ol>\n         </note>\n         <p> A web ACL defines a collection of rules to use to inspect and control web requests. Each rule has a statement that defines what to look for in web requests and an action that WAF applies to requests that match the statement. In the web ACL, you assign a default action to take (allow, block) for any request that does not match any of the rules. The rules in a web ACL can be a combination of the types <a>Rule</a>, <a>RuleGroup</a>, and managed rule group. You can associate a web ACL with one or more Amazon Web Services resources to protect. The resource types include Amazon CloudFront distribution, Amazon API Gateway REST API, Application Load Balancer, AppSync GraphQL API, Amazon Cognito user pool, App Runner service, Amplify application, and Amazon Web Services Verified Access instance.  </p>\n         <p>\n            <b>Temporary inconsistencies during updates</b>\n         </p>\n         <p>When you create or change a web ACL or other WAF resources, the changes take a small amount of time to propagate to all areas where the resources are stored. The propagation time can be from a few seconds to a number of minutes. </p>\n         <p>The following are examples of the temporary inconsistencies that you might notice during change propagation: </p>\n         <ul>\n            <li>\n               <p>After you create a web ACL, if you try to associate it with a resource, you might get an exception indicating that the web ACL is unavailable. </p>\n            </li>\n            <li>\n               <p>After you add a rule group to a web ACL, the new rule group rules might be in effect in one area where the web ACL is used and not in another.</p>\n            </li>\n            <li>\n               <p>After you change a rule action setting, you might see the old action in some places and the new action in others. </p>\n            </li>\n            <li>\n               <p>After you add an IP address to an IP set that is in use in a blocking rule, the new address might be blocked in one area while still allowed in another.</p>\n            </li>\n         </ul>"
+                "smithy.api#documentation": "<p>Updates the specified <a>WebACL</a>. While updating a web ACL, WAF provides\n         continuous coverage to the resources that you have associated with the web ACL. </p>\n         <note>\n            <p>This operation completely replaces the mutable specifications that you already have for the web ACL with the ones that you provide to this call. </p>\n            <p>To modify a web ACL, do the following: </p>\n            <ol>\n               <li>\n                  <p>Retrieve it by calling <a>GetWebACL</a>\n                  </p>\n               </li>\n               <li>\n                  <p>Update its settings as needed</p>\n               </li>\n               <li>\n                  <p>Provide the complete web ACL specification to this call</p>\n               </li>\n            </ol>\n         </note>\n         <p> A web ACL defines a collection of rules to use to inspect and control web requests. Each rule has a statement that defines what to look for in web requests and an action that WAF applies to requests that match the statement. In the web ACL, you assign a default action to take (allow, block) for any request that does not match any of the rules. The rules in a web ACL can be a combination of the types <a>Rule</a>, <a>RuleGroup</a>, and managed rule group. You can associate a web ACL with one or more Amazon Web Services resources to protect. The resource types include Amazon CloudFront distribution, Amazon API Gateway REST API, Application Load Balancer, AppSync GraphQL API, Amazon Cognito user pool, App Runner service, Amplify application, Amazon Web Services Verified Access instance, and Amazon Bedrock AgentCore Gateway.  </p>\n         <p>\n            <b>Temporary inconsistencies during updates</b>\n         </p>\n         <p>When you create or change a web ACL or other WAF resources, the changes take a small amount of time to propagate to all areas where the resources are stored. The propagation time can be from a few seconds to a number of minutes. </p>\n         <p>The following are examples of the temporary inconsistencies that you might notice during change propagation: </p>\n         <ul>\n            <li>\n               <p>After you create a web ACL, if you try to associate it with a resource, you might get an exception indicating that the web ACL is unavailable. </p>\n            </li>\n            <li>\n               <p>After you add a rule group to a web ACL, the new rule group rules might be in effect in one area where the web ACL is used and not in another.</p>\n            </li>\n            <li>\n               <p>After you change a rule action setting, you might see the old action in some places and the new action in others. </p>\n            </li>\n            <li>\n               <p>After you add an IP address to an IP set that is in use in a blocking rule, the new address might be blocked in one area while still allowed in another.</p>\n            </li>\n         </ul>"
             }
         },
         "com.amazonaws.wafv2#UpdateWebACLRequest": {
@@ -14927,7 +15282,7 @@
                 "AssociationConfig": {
                     "target": "com.amazonaws.wafv2#AssociationConfig",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies custom configurations for the associations between the web ACL and protected resources.  </p>\n         <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can \n    customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p>\n         <note>\n            <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p>\n         </note>\n         <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>"
+                        "smithy.api#documentation": "<p>Specifies custom configurations for the associations between the web ACL and protected resources.  </p>\n         <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can \n    customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p>\n         <note>\n            <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p>\n         </note>\n         <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>\n         <p>You can also use this to have your CloudFront distributions insert the WAF challenge JavaScript SDK into the HTML responses that they return. For more information, see the <code>ChallengeJavascriptSdkInjection</code> setting. </p>"
                     }
                 },
                 "OnSourceDDoSProtectionConfig": {
@@ -15511,7 +15866,7 @@
                 "AssociationConfig": {
                     "target": "com.amazonaws.wafv2#AssociationConfig",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies custom configurations for the associations between the web ACL and protected resources.  </p>\n         <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can \n    customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p>\n         <note>\n            <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p>\n         </note>\n         <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>"
+                        "smithy.api#documentation": "<p>Specifies custom configurations for the associations between the web ACL and protected resources.  </p>\n         <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can \n    customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p>\n         <note>\n            <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p>\n         </note>\n         <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>\n         <p>You can also use this to have your CloudFront distributions insert the WAF challenge JavaScript SDK into the HTML responses that they return. For more information, see the <code>ChallengeJavascriptSdkInjection</code> setting. </p>"
                     }
                 },
                 "RetrofittedByFirewallManager": {
@@ -15536,12 +15891,12 @@
                 "MonetizationConfig": {
                     "target": "com.amazonaws.wafv2#MonetizationConfig",
                     "traits": {
-                        "smithy.api#documentation": "<p>The monetization configuration for the web ACL. Required when any rule in the web ACL uses the <code>Monetize</code> action. Specifies the cryptocurrency payment networks and currency mode for AI bot monetization.</p>"
+                        "smithy.api#documentation": "<p>The monetization configuration for the web ACL. Required when any rule in the web ACL uses the <code>Monetize</code> action. Specifies the payment settlement options and currency mode for AI bot monetization.</p>"
                     }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p> A web ACL defines a collection of rules to use to inspect and control web requests. Each rule has a statement that defines what to look for in web requests and an action that WAF applies to requests that match the statement. In the web ACL, you assign a default action to take (allow, block) for any request that does not match any of the rules. The rules in a web ACL can be a combination of the types <a>Rule</a>, <a>RuleGroup</a>, and managed rule group. You can associate a web ACL with one or more Amazon Web Services resources to protect. The resource types include Amazon CloudFront distribution, Amazon API Gateway REST API, Application Load Balancer, AppSync GraphQL API, Amazon Cognito user pool, App Runner service, Amplify application, and Amazon Web Services Verified Access instance.  </p>"
+                "smithy.api#documentation": "<p> A web ACL defines a collection of rules to use to inspect and control web requests. Each rule has a statement that defines what to look for in web requests and an action that WAF applies to requests that match the statement. In the web ACL, you assign a default action to take (allow, block) for any request that does not match any of the rules. The rules in a web ACL can be a combination of the types <a>Rule</a>, <a>RuleGroup</a>, and managed rule group. You can associate a web ACL with one or more Amazon Web Services resources to protect. The resource types include Amazon CloudFront distribution, Amazon API Gateway REST API, Application Load Balancer, AppSync GraphQL API, Amazon Cognito user pool, App Runner service, Amplify application, Amazon Web Services Verified Access instance, and Amazon Bedrock AgentCore Gateway.  </p>"
             }
         },
         "com.amazonaws.wafv2#WebACLSummaries": {
@@ -15603,6 +15958,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection. Text transformations are used in rule match statements, to transform the <code>FieldToMatch</code> request component before inspecting it, and they're used in rate-based rule statements, to transform request components before using them as custom aggregation keys. If you specify one or more transformations to apply, WAF performs all transformations on the specified content, starting from the lowest priority setting, and then uses the transformed component contents. </p>",
                         "smithy.api#required": {}
+                    }
+                },
+                "PreParseTextTransformations": {
+                    "target": "com.amazonaws.wafv2#PreParseTextTransformations",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Pre-parse text transformations normalize the raw query string before WAF parses it into individual\n         query arguments. They are applied before the standard text transformations. Pre-parse text transformations\n         are only supported when <code>FieldToMatch</code> is <code>SingleQueryArgument</code> or\n         <code>AllQueryArguments</code>. You can specify up to 10 pre-parse text transformations per rule statement.</p>"
                     }
                 }
             },

@@ -23,6 +23,7 @@
 #include <aws/opensearch/model/AcceptInboundConnectionRequest.h>
 #include <aws/opensearch/model/AddDataSourceRequest.h>
 #include <aws/opensearch/model/AddDirectQueryDataSourceRequest.h>
+#include <aws/opensearch/model/AddReplicationPeerRequest.h>
 #include <aws/opensearch/model/AddTagsRequest.h>
 #include <aws/opensearch/model/AssociatePackageRequest.h>
 #include <aws/opensearch/model/AssociatePackagesRequest.h>
@@ -30,6 +31,7 @@
 #include <aws/opensearch/model/AuthorizeVpcEndpointAccessRequest.h>
 #include <aws/opensearch/model/CancelDomainConfigChangeRequest.h>
 #include <aws/opensearch/model/CancelServiceSoftwareUpdateRequest.h>
+#include <aws/opensearch/model/CompareDomainConfigurationRequest.h>
 #include <aws/opensearch/model/CreateApplicationRequest.h>
 #include <aws/opensearch/model/CreateDomainRequest.h>
 #include <aws/opensearch/model/CreateIndexRequest.h>
@@ -52,6 +54,7 @@
 #include <aws/opensearch/model/DescribeDomainConfigRequest.h>
 #include <aws/opensearch/model/DescribeDomainHealthRequest.h>
 #include <aws/opensearch/model/DescribeDomainNodesRequest.h>
+#include <aws/opensearch/model/DescribeDomainReplicationRequest.h>
 #include <aws/opensearch/model/DescribeDomainRequest.h>
 #include <aws/opensearch/model/DescribeDomainsRequest.h>
 #include <aws/opensearch/model/DescribeDryRunProgressRequest.h>
@@ -66,6 +69,7 @@
 #include <aws/opensearch/model/DetachDataSourceRequest.h>
 #include <aws/opensearch/model/DissociatePackageRequest.h>
 #include <aws/opensearch/model/DissociatePackagesRequest.h>
+#include <aws/opensearch/model/FailoverReplicationRequest.h>
 #include <aws/opensearch/model/GetApplicationRequest.h>
 #include <aws/opensearch/model/GetCapabilityRequest.h>
 #include <aws/opensearch/model/GetCompatibleVersionsRequest.h>
@@ -74,6 +78,7 @@
 #include <aws/opensearch/model/GetDirectQueryDataSourceRequest.h>
 #include <aws/opensearch/model/GetDomainMaintenanceStatusRequest.h>
 #include <aws/opensearch/model/GetIndexRequest.h>
+#include <aws/opensearch/model/GetMigrationRequest.h>
 #include <aws/opensearch/model/GetPackageVersionHistoryRequest.h>
 #include <aws/opensearch/model/GetUpgradeHistoryRequest.h>
 #include <aws/opensearch/model/GetUpgradeStatusRequest.h>
@@ -87,6 +92,7 @@
 #include <aws/opensearch/model/ListDomainsForPackageRequest.h>
 #include <aws/opensearch/model/ListInsightsRequest.h>
 #include <aws/opensearch/model/ListInstanceTypeDetailsRequest.h>
+#include <aws/opensearch/model/ListMigrationsRequest.h>
 #include <aws/opensearch/model/ListPackagesForDomainRequest.h>
 #include <aws/opensearch/model/ListScheduledActionsRequest.h>
 #include <aws/opensearch/model/ListTagsRequest.h>
@@ -98,12 +104,16 @@
 #include <aws/opensearch/model/PutDefaultApplicationSettingRequest.h>
 #include <aws/opensearch/model/RegisterCapabilityRequest.h>
 #include <aws/opensearch/model/RejectInboundConnectionRequest.h>
+#include <aws/opensearch/model/RemoveReplicationPeerRequest.h>
 #include <aws/opensearch/model/RemoveTagsRequest.h>
 #include <aws/opensearch/model/RevokeVpcEndpointAccessRequest.h>
 #include <aws/opensearch/model/RollbackServiceSoftwareUpdateRequest.h>
 #include <aws/opensearch/model/StartDomainMaintenanceRequest.h>
+#include <aws/opensearch/model/StartMigrationRequest.h>
 #include <aws/opensearch/model/StartServiceSoftwareUpdateRequest.h>
+#include <aws/opensearch/model/SwitchoverReplicationRequest.h>
 #include <aws/opensearch/model/UpdateApplicationRequest.h>
+#include <aws/opensearch/model/UpdateCloneRequest.h>
 #include <aws/opensearch/model/UpdateDataSourceRequest.h>
 #include <aws/opensearch/model/UpdateDirectQueryDataSourceRequest.h>
 #include <aws/opensearch/model/UpdateDomainConfigRequest.h>
@@ -254,7 +264,8 @@ OpenSearchServiceClient::InvokeOperationOutcome OpenSearchServiceClient::InvokeS
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -268,7 +279,7 @@ OpenSearchServiceClient::InvokeOperationOutcome OpenSearchServiceClient::InvokeS
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -318,6 +329,25 @@ AddDirectQueryDataSourceOutcome OpenSearchServiceClient::AddDirectQueryDataSourc
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? AddDirectQueryDataSourceOutcome(result.GetResultWithOwnership())
                             : AddDirectQueryDataSourceOutcome(std::move(result.GetError()));
+}
+
+AddReplicationPeerOutcome OpenSearchServiceClient::AddReplicationPeer(const AddReplicationPeerRequest& request) const {
+  if (!request.DomainNameHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("AddReplicationPeer", "Required field: DomainName, is not set");
+    return AddReplicationPeerOutcome(Aws::Client::AWSError<OpenSearchServiceErrors>(
+        OpenSearchServiceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [DomainName]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2021-01-01/opensearch/domain/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDomainName());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/replication/addPeer");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? AddReplicationPeerOutcome(result.GetResultWithOwnership())
+                            : AddReplicationPeerOutcome(std::move(result.GetError()));
 }
 
 AddTagsOutcome OpenSearchServiceClient::AddTags(const AddTagsRequest& request) const {
@@ -433,6 +463,18 @@ CancelServiceSoftwareUpdateOutcome OpenSearchServiceClient::CancelServiceSoftwar
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CancelServiceSoftwareUpdateOutcome(result.GetResultWithOwnership())
                             : CancelServiceSoftwareUpdateOutcome(std::move(result.GetError()));
+}
+
+CompareDomainConfigurationOutcome OpenSearchServiceClient::CompareDomainConfiguration(
+    const CompareDomainConfigurationRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2021-01-01/opensearch/compareDomainConfiguration");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CompareDomainConfigurationOutcome(result.GetResultWithOwnership())
+                            : CompareDomainConfigurationOutcome(std::move(result.GetError()));
 }
 
 CreateApplicationOutcome OpenSearchServiceClient::CreateApplication(const CreateApplicationRequest& request) const {
@@ -838,6 +880,25 @@ DescribeDomainNodesOutcome OpenSearchServiceClient::DescribeDomainNodes(const De
                             : DescribeDomainNodesOutcome(std::move(result.GetError()));
 }
 
+DescribeDomainReplicationOutcome OpenSearchServiceClient::DescribeDomainReplication(const DescribeDomainReplicationRequest& request) const {
+  if (!request.DomainNameHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DescribeDomainReplication", "Required field: DomainName, is not set");
+    return DescribeDomainReplicationOutcome(Aws::Client::AWSError<OpenSearchServiceErrors>(
+        OpenSearchServiceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [DomainName]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2021-01-01/opensearch/domain/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDomainName());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/replication");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? DescribeDomainReplicationOutcome(result.GetResultWithOwnership())
+                            : DescribeDomainReplicationOutcome(std::move(result.GetError()));
+}
+
 DescribeDomainsOutcome OpenSearchServiceClient::DescribeDomains(const DescribeDomainsRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -1028,6 +1089,25 @@ DissociatePackagesOutcome OpenSearchServiceClient::DissociatePackages(const Diss
                             : DissociatePackagesOutcome(std::move(result.GetError()));
 }
 
+FailoverReplicationOutcome OpenSearchServiceClient::FailoverReplication(const FailoverReplicationRequest& request) const {
+  if (!request.DomainNameHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("FailoverReplication", "Required field: DomainName, is not set");
+    return FailoverReplicationOutcome(Aws::Client::AWSError<OpenSearchServiceErrors>(
+        OpenSearchServiceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [DomainName]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2021-01-01/opensearch/domain/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDomainName());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/replication/failover");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? FailoverReplicationOutcome(result.GetResultWithOwnership())
+                            : FailoverReplicationOutcome(std::move(result.GetError()));
+}
+
 GetApplicationOutcome OpenSearchServiceClient::GetApplication(const GetApplicationRequest& request) const {
   if (!request.IdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetApplication", "Required field: Id, is not set");
@@ -1181,6 +1261,23 @@ GetIndexOutcome OpenSearchServiceClient::GetIndex(const GetIndexRequest& request
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
   return result.IsSuccess() ? GetIndexOutcome(result.GetResultWithOwnership()) : GetIndexOutcome(std::move(result.GetError()));
+}
+
+GetMigrationOutcome OpenSearchServiceClient::GetMigration(const GetMigrationRequest& request) const {
+  if (!request.MigrationIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetMigration", "Required field: MigrationId, is not set");
+    return GetMigrationOutcome(Aws::Client::AWSError<OpenSearchServiceErrors>(
+        OpenSearchServiceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [MigrationId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2021-01-01/opensearch/app-migrations/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetMigrationId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetMigrationOutcome(result.GetResultWithOwnership()) : GetMigrationOutcome(std::move(result.GetError()));
 }
 
 GetPackageVersionHistoryOutcome OpenSearchServiceClient::GetPackageVersionHistory(const GetPackageVersionHistoryRequest& request) const {
@@ -1389,6 +1486,22 @@ ListInstanceTypeDetailsOutcome OpenSearchServiceClient::ListInstanceTypeDetails(
                             : ListInstanceTypeDetailsOutcome(std::move(result.GetError()));
 }
 
+ListMigrationsOutcome OpenSearchServiceClient::ListMigrations(const ListMigrationsRequest& request) const {
+  if (!request.ApplicationIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListMigrations", "Required field: ApplicationId, is not set");
+    return ListMigrationsOutcome(Aws::Client::AWSError<OpenSearchServiceErrors>(
+        OpenSearchServiceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ApplicationId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2021-01-01/opensearch/app-migrations");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListMigrationsOutcome(result.GetResultWithOwnership()) : ListMigrationsOutcome(std::move(result.GetError()));
+}
+
 ListPackagesForDomainOutcome OpenSearchServiceClient::ListPackagesForDomain(const ListPackagesForDomainRequest& request) const {
   if (!request.DomainNameHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("ListPackagesForDomain", "Required field: DomainName, is not set");
@@ -1564,6 +1677,25 @@ RejectInboundConnectionOutcome OpenSearchServiceClient::RejectInboundConnection(
                             : RejectInboundConnectionOutcome(std::move(result.GetError()));
 }
 
+RemoveReplicationPeerOutcome OpenSearchServiceClient::RemoveReplicationPeer(const RemoveReplicationPeerRequest& request) const {
+  if (!request.DomainNameHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("RemoveReplicationPeer", "Required field: DomainName, is not set");
+    return RemoveReplicationPeerOutcome(Aws::Client::AWSError<OpenSearchServiceErrors>(
+        OpenSearchServiceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [DomainName]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2021-01-01/opensearch/domain/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDomainName());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/replication/removePeer");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? RemoveReplicationPeerOutcome(result.GetResultWithOwnership())
+                            : RemoveReplicationPeerOutcome(std::move(result.GetError()));
+}
+
 RemoveTagsOutcome OpenSearchServiceClient::RemoveTags(const RemoveTagsRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -1624,6 +1756,16 @@ StartDomainMaintenanceOutcome OpenSearchServiceClient::StartDomainMaintenance(co
                             : StartDomainMaintenanceOutcome(std::move(result.GetError()));
 }
 
+StartMigrationOutcome OpenSearchServiceClient::StartMigration(const StartMigrationRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2021-01-01/opensearch/app-migrations");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StartMigrationOutcome(result.GetResultWithOwnership()) : StartMigrationOutcome(std::move(result.GetError()));
+}
+
 StartServiceSoftwareUpdateOutcome OpenSearchServiceClient::StartServiceSoftwareUpdate(
     const StartServiceSoftwareUpdateRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
@@ -1634,6 +1776,25 @@ StartServiceSoftwareUpdateOutcome OpenSearchServiceClient::StartServiceSoftwareU
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? StartServiceSoftwareUpdateOutcome(result.GetResultWithOwnership())
                             : StartServiceSoftwareUpdateOutcome(std::move(result.GetError()));
+}
+
+SwitchoverReplicationOutcome OpenSearchServiceClient::SwitchoverReplication(const SwitchoverReplicationRequest& request) const {
+  if (!request.DomainNameHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("SwitchoverReplication", "Required field: DomainName, is not set");
+    return SwitchoverReplicationOutcome(Aws::Client::AWSError<OpenSearchServiceErrors>(
+        OpenSearchServiceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [DomainName]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2021-01-01/opensearch/domain/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDomainName());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/replication/switchover");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? SwitchoverReplicationOutcome(result.GetResultWithOwnership())
+                            : SwitchoverReplicationOutcome(std::move(result.GetError()));
 }
 
 UpdateApplicationOutcome OpenSearchServiceClient::UpdateApplication(const UpdateApplicationRequest& request) const {
@@ -1652,6 +1813,24 @@ UpdateApplicationOutcome OpenSearchServiceClient::UpdateApplication(const Update
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
   return result.IsSuccess() ? UpdateApplicationOutcome(result.GetResultWithOwnership())
                             : UpdateApplicationOutcome(std::move(result.GetError()));
+}
+
+UpdateCloneOutcome OpenSearchServiceClient::UpdateClone(const UpdateCloneRequest& request) const {
+  if (!request.DomainNameHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateClone", "Required field: DomainName, is not set");
+    return UpdateCloneOutcome(Aws::Client::AWSError<OpenSearchServiceErrors>(
+        OpenSearchServiceErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [DomainName]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2021-01-01/opensearch/domain/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDomainName());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/clone");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateCloneOutcome(result.GetResultWithOwnership()) : UpdateCloneOutcome(std::move(result.GetError()));
 }
 
 UpdateDataSourceOutcome OpenSearchServiceClient::UpdateDataSource(const UpdateDataSourceRequest& request) const {

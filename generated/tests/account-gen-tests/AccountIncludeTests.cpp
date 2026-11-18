@@ -7,13 +7,16 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/account/AccountClient.h>
+#include <aws/account/AccountClientPagination.h>
 #include <aws/account/AccountEndpointProvider.h>
-#include <aws/account/AccountEndpointRules.h>
 #include <aws/account/AccountErrorMarshaller.h>
 #include <aws/account/AccountErrors.h>
+#include <aws/account/AccountPaginationBase.h>
 #include <aws/account/AccountRequest.h>
 #include <aws/account/AccountServiceClientModel.h>
+#include <aws/account/AccountWaiter.h>
 #include <aws/account/Account_EXPORTS.h>
+#include <aws/account/internal/AccountEndpointRules.h>
 #include <aws/account/model/AcceptPrimaryEmailUpdateRequest.h>
 #include <aws/account/model/AcceptPrimaryEmailUpdateResult.h>
 #include <aws/account/model/AccessDeniedException.h>
@@ -36,11 +39,15 @@
 #include <aws/account/model/GetGovCloudAccountInformationResult.h>
 #include <aws/account/model/GetPrimaryEmailRequest.h>
 #include <aws/account/model/GetPrimaryEmailResult.h>
+#include <aws/account/model/GetPrimaryEmailUpdateStatusRequest.h>
+#include <aws/account/model/GetPrimaryEmailUpdateStatusResult.h>
 #include <aws/account/model/GetRegionOptStatusRequest.h>
 #include <aws/account/model/GetRegionOptStatusResult.h>
 #include <aws/account/model/InternalServerException.h>
+#include <aws/account/model/ListRegionsPaginationTraits.h>
 #include <aws/account/model/ListRegionsRequest.h>
 #include <aws/account/model/ListRegionsResult.h>
+#include <aws/account/model/PhoneNumberVerificationStatus.h>
 #include <aws/account/model/PrimaryEmailUpdateStatus.h>
 #include <aws/account/model/PutAccountNameRequest.h>
 #include <aws/account/model/PutAlternateContactRequest.h>
@@ -49,12 +56,16 @@
 #include <aws/account/model/RegionOptStatus.h>
 #include <aws/account/model/ResourceNotFoundException.h>
 #include <aws/account/model/ResourceUnavailableException.h>
+#include <aws/account/model/SendPhoneNumberVerificationRequest.h>
+#include <aws/account/model/SendPhoneNumberVerificationResult.h>
 #include <aws/account/model/StartPrimaryEmailUpdateRequest.h>
 #include <aws/account/model/StartPrimaryEmailUpdateResult.h>
 #include <aws/account/model/TooManyRequestsException.h>
 #include <aws/account/model/ValidationException.h>
 #include <aws/account/model/ValidationExceptionField.h>
 #include <aws/account/model/ValidationExceptionReason.h>
+#include <aws/account/model/VerifyPhoneNumberRequest.h>
+#include <aws/account/model/VerifyPhoneNumberResult.h>
 
 using AccountIncludeTest = ::testing::Test;
 

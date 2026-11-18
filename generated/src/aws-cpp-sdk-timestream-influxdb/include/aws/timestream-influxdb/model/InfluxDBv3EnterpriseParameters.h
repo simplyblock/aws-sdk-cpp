@@ -736,50 +736,37 @@ class InfluxDBv3EnterpriseParameters {
 
   ///@{
   /**
-   * <p>Specifies number of instances in the DbCluster which can both ingest and
-   * query.</p>
+   * <p>Specifies the URL of the repository that InfluxDB downloads plugins from.</p>
    */
-  inline int GetIngestQueryInstances() const { return m_ingestQueryInstances; }
-  inline bool IngestQueryInstancesHasBeenSet() const { return m_ingestQueryInstancesHasBeenSet; }
-  inline void SetIngestQueryInstances(int value) {
-    m_ingestQueryInstancesHasBeenSet = true;
-    m_ingestQueryInstances = value;
+  inline const Aws::String& GetPluginRepositoryUrl() const { return m_pluginRepositoryUrl; }
+  inline bool PluginRepositoryUrlHasBeenSet() const { return m_pluginRepositoryUrlHasBeenSet; }
+  template <typename PluginRepositoryUrlT = Aws::String>
+  void SetPluginRepositoryUrl(PluginRepositoryUrlT&& value) {
+    m_pluginRepositoryUrlHasBeenSet = true;
+    m_pluginRepositoryUrl = std::forward<PluginRepositoryUrlT>(value);
   }
-  inline InfluxDBv3EnterpriseParameters& WithIngestQueryInstances(int value) {
-    SetIngestQueryInstances(value);
+  template <typename PluginRepositoryUrlT = Aws::String>
+  InfluxDBv3EnterpriseParameters& WithPluginRepositoryUrl(PluginRepositoryUrlT&& value) {
+    SetPluginRepositoryUrl(std::forward<PluginRepositoryUrlT>(value));
     return *this;
   }
   ///@}
 
   ///@{
   /**
-   * <p>Specifies number of instances in the DbCluster which can only query.</p>
+   * <p>The Amazon Resource Name (ARN) of the Secrets Manager secret that holds your
+   * repository access token.</p>
    */
-  inline int GetQueryOnlyInstances() const { return m_queryOnlyInstances; }
-  inline bool QueryOnlyInstancesHasBeenSet() const { return m_queryOnlyInstancesHasBeenSet; }
-  inline void SetQueryOnlyInstances(int value) {
-    m_queryOnlyInstancesHasBeenSet = true;
-    m_queryOnlyInstances = value;
+  inline const Aws::String& GetPluginRepositorySecretArn() const { return m_pluginRepositorySecretArn; }
+  inline bool PluginRepositorySecretArnHasBeenSet() const { return m_pluginRepositorySecretArnHasBeenSet; }
+  template <typename PluginRepositorySecretArnT = Aws::String>
+  void SetPluginRepositorySecretArn(PluginRepositorySecretArnT&& value) {
+    m_pluginRepositorySecretArnHasBeenSet = true;
+    m_pluginRepositorySecretArn = std::forward<PluginRepositorySecretArnT>(value);
   }
-  inline InfluxDBv3EnterpriseParameters& WithQueryOnlyInstances(int value) {
-    SetQueryOnlyInstances(value);
-    return *this;
-  }
-  ///@}
-
-  ///@{
-  /**
-   * <p>Specifies if the compactor instance should be a standalone instance or
-   * not.</p>
-   */
-  inline bool GetDedicatedCompactor() const { return m_dedicatedCompactor; }
-  inline bool DedicatedCompactorHasBeenSet() const { return m_dedicatedCompactorHasBeenSet; }
-  inline void SetDedicatedCompactor(bool value) {
-    m_dedicatedCompactorHasBeenSet = true;
-    m_dedicatedCompactor = value;
-  }
-  inline InfluxDBv3EnterpriseParameters& WithDedicatedCompactor(bool value) {
-    SetDedicatedCompactor(value);
+  template <typename PluginRepositorySecretArnT = Aws::String>
+  InfluxDBv3EnterpriseParameters& WithPluginRepositorySecretArn(PluginRepositorySecretArnT&& value) {
+    SetPluginRepositorySecretArn(std::forward<PluginRepositorySecretArnT>(value));
     return *this;
   }
   ///@}
@@ -972,6 +959,81 @@ class InfluxDBv3EnterpriseParameters {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Specifies whether to migrate the cluster from the Parquet storage engine to
+   * PachaTree. This action cannot be reversed. To create a new cluster on Parquet,
+   * set this to false.</p>
+   */
+  inline bool GetUpgradePachaTree() const { return m_upgradePachaTree; }
+  inline bool UpgradePachaTreeHasBeenSet() const { return m_upgradePachaTreeHasBeenSet; }
+  inline void SetUpgradePachaTree(bool value) {
+    m_upgradePachaTreeHasBeenSet = true;
+    m_upgradePachaTree = value;
+  }
+  inline InfluxDBv3EnterpriseParameters& WithUpgradePachaTree(bool value) {
+    SetUpgradePachaTree(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The maximum size, in bytes, of the in-memory WAL buffer before a flush is
+   * triggered regardless of the flush interval. Increase this value if WAL files are
+   * flushed before the interval elapses.</p>
+   */
+  inline long long GetWalBufferSize() const { return m_walBufferSize; }
+  inline bool WalBufferSizeHasBeenSet() const { return m_walBufferSizeHasBeenSet; }
+  inline void SetWalBufferSize(long long value) {
+    m_walBufferSizeHasBeenSet = true;
+    m_walBufferSize = value;
+  }
+  inline InfluxDBv3EnterpriseParameters& WithWalBufferSize(long long value) {
+    SetWalBufferSize(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The maximum size of the active snapshot bucket before it is rotated for
+   * snapshotting.</p>
+   */
+  inline const PercentOrAbsoluteLong& GetSnapshotSize() const { return m_snapshotSize; }
+  inline bool SnapshotSizeHasBeenSet() const { return m_snapshotSizeHasBeenSet; }
+  template <typename SnapshotSizeT = PercentOrAbsoluteLong>
+  void SetSnapshotSize(SnapshotSizeT&& value) {
+    m_snapshotSizeHasBeenSet = true;
+    m_snapshotSize = std::forward<SnapshotSizeT>(value);
+  }
+  template <typename SnapshotSizeT = PercentOrAbsoluteLong>
+  InfluxDBv3EnterpriseParameters& WithSnapshotSize(SnapshotSizeT&& value) {
+    SetSnapshotSize(std::forward<SnapshotSizeT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The time-based trigger that controls how often the ingester creates
+   * snapshots. This value is also used on query nodes as the bucket rotation
+   * interval for the replica buffer.</p>
+   */
+  inline const Duration& GetSnapshotDuration() const { return m_snapshotDuration; }
+  inline bool SnapshotDurationHasBeenSet() const { return m_snapshotDurationHasBeenSet; }
+  template <typename SnapshotDurationT = Duration>
+  void SetSnapshotDuration(SnapshotDurationT&& value) {
+    m_snapshotDurationHasBeenSet = true;
+    m_snapshotDuration = std::forward<SnapshotDurationT>(value);
+  }
+  template <typename SnapshotDurationT = Duration>
+  InfluxDBv3EnterpriseParameters& WithSnapshotDuration(SnapshotDurationT&& value) {
+    SetSnapshotDuration(std::forward<SnapshotDurationT>(value));
+    return *this;
+  }
+  ///@}
  private:
   int m_queryFileLimit{0};
 
@@ -1051,11 +1113,9 @@ class InfluxDBv3EnterpriseParameters {
 
   Duration m_hardDeleteDefaultDuration;
 
-  int m_ingestQueryInstances{0};
+  Aws::String m_pluginRepositoryUrl;
 
-  int m_queryOnlyInstances{0};
-
-  bool m_dedicatedCompactor{false};
+  Aws::String m_pluginRepositorySecretArn;
 
   int m_compactionRowLimit{0};
 
@@ -1076,6 +1136,14 @@ class InfluxDBv3EnterpriseParameters {
   Duration m_replicationInterval;
 
   Duration m_catalogSyncInterval;
+
+  bool m_upgradePachaTree{false};
+
+  long long m_walBufferSize{0};
+
+  PercentOrAbsoluteLong m_snapshotSize;
+
+  Duration m_snapshotDuration;
   bool m_queryFileLimitHasBeenSet = false;
   bool m_queryLogSizeHasBeenSet = false;
   bool m_logFilterHasBeenSet = false;
@@ -1115,9 +1183,8 @@ class InfluxDBv3EnterpriseParameters {
   bool m_retentionCheckIntervalHasBeenSet = false;
   bool m_deleteGracePeriodHasBeenSet = false;
   bool m_hardDeleteDefaultDurationHasBeenSet = false;
-  bool m_ingestQueryInstancesHasBeenSet = false;
-  bool m_queryOnlyInstancesHasBeenSet = false;
-  bool m_dedicatedCompactorHasBeenSet = false;
+  bool m_pluginRepositoryUrlHasBeenSet = false;
+  bool m_pluginRepositorySecretArnHasBeenSet = false;
   bool m_compactionRowLimitHasBeenSet = false;
   bool m_compactionMaxNumFilesPerPlanHasBeenSet = false;
   bool m_compactionGen2DurationHasBeenSet = false;
@@ -1128,6 +1195,10 @@ class InfluxDBv3EnterpriseParameters {
   bool m_distinctValueCacheDisableFromHistoryHasBeenSet = false;
   bool m_replicationIntervalHasBeenSet = false;
   bool m_catalogSyncIntervalHasBeenSet = false;
+  bool m_upgradePachaTreeHasBeenSet = false;
+  bool m_walBufferSizeHasBeenSet = false;
+  bool m_snapshotSizeHasBeenSet = false;
+  bool m_snapshotDurationHasBeenSet = false;
 };
 
 }  // namespace Model

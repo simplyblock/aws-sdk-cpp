@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/backup-gateway/BackupGatewayEndpointRules.h>
 #include <aws/backup-gateway/BackupGateway_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace BackupGateway {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using BackupGatewayClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using BackupGatewayEndpointProviderBase =
     EndpointProviderBase<BackupGatewayClientConfiguration, BackupGatewayBuiltInParameters, BackupGatewayClientContextParameters>;
 
 using BackupGatewayDefaultEpProviderBase =
-    DefaultEndpointProvider<BackupGatewayClientConfiguration, BackupGatewayBuiltInParameters, BackupGatewayClientContextParameters>;
+    BDDEndpointProvider<BackupGatewayClientConfiguration, BackupGatewayBuiltInParameters, BackupGatewayClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_BACKUPGATEWAY_API BackupGatewayEndpointProvider : public BackupGateway
  public:
   using BackupGatewayResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  BackupGatewayEndpointProvider()
-      : BackupGatewayDefaultEpProviderBase(Aws::BackupGateway::BackupGatewayEndpointRules::GetRulesBlob(),
-                                           Aws::BackupGateway::BackupGatewayEndpointRules::RulesBlobSize) {}
+  BackupGatewayEndpointProvider();
 
   ~BackupGatewayEndpointProvider() {}
 };

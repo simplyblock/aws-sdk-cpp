@@ -11,7 +11,7 @@
 #include <aws/core/client/AWSClient.h>
 #include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/client/ClientConfiguration.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 namespace Aws {
 namespace AppStream {
@@ -36,12 +36,12 @@ namespace AppStream {
  * href="http://aws.amazon.com/documentation/appstream2">Amazon WorkSpaces
  * Applications documentation</a> </p> </li> </ul>
  */
-class AWS_APPSTREAM_API AppStreamClient : public Aws::Client::AWSJsonClient,
+class AWS_APPSTREAM_API AppStreamClient : public Aws::Client::AWSRpcV2CborClient,
                                           public Aws::Client::ClientWithAsyncTemplateMethods<AppStreamClient>,
                                           public AppStreamPaginationBase<AppStreamClient>,
                                           public AppStreamWaiter<AppStreamClient> {
  public:
-  typedef Aws::Client::AWSJsonClient BASECLASS;
+  typedef Aws::Client::AWSRpcV2CborClient BASECLASS;
   static const char* GetServiceName();
   static const char* GetAllocationTag();
 
@@ -1428,7 +1428,8 @@ class AWS_APPSTREAM_API AppStreamClient : public Aws::Client::AWSJsonClient,
   /**
    * <p>Retrieves a list that describes one or more specified image builders, if the
    * image builder names are provided. Otherwise, all image builders in the account
-   * are described.</p><p><h3>See Also:</h3>   <a
+   * are described.</p> <p>The description of each image builder includes its agent
+   * access configuration, if agent access is enabled.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/appstream-2016-12-01/DescribeImageBuilders">AWS
    * API Reference</a></p>
    */
@@ -2542,6 +2543,33 @@ class AWS_APPSTREAM_API AppStreamClient : public Aws::Client::AWSJsonClient,
                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                         const UpdateFleetRequestT& request = {}) const {
     return SubmitAsync(&AppStreamClient::UpdateFleet, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the specified fields for the specified image builder. The image
+   * builder must be in the STOPPED state.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/appstream-2016-12-01/UpdateImageBuilder">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateImageBuilderOutcome UpdateImageBuilder(const Model::UpdateImageBuilderRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateImageBuilder that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateImageBuilderRequestT = Model::UpdateImageBuilderRequest>
+  Model::UpdateImageBuilderOutcomeCallable UpdateImageBuilderCallable(const UpdateImageBuilderRequestT& request) const {
+    return SubmitCallable(&AppStreamClient::UpdateImageBuilder, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateImageBuilder that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename UpdateImageBuilderRequestT = Model::UpdateImageBuilderRequest>
+  void UpdateImageBuilderAsync(const UpdateImageBuilderRequestT& request, const UpdateImageBuilderResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&AppStreamClient::UpdateImageBuilder, request, handler, context);
   }
 
   /**

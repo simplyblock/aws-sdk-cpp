@@ -41,7 +41,7 @@ Aws::String PutBucketAclRequest::SerializePayload() const {
 
   m_accessControlPolicy.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -139,3 +139,5 @@ Aws::String PutBucketAclRequest::GetChecksumAlgorithmName() const {
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
 }
+
+bool PutBucketAclRequest::ChecksumAlgorithmIsSet() const { return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET; }

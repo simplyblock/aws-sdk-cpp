@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/mediaconvert/MediaConvertEndpointRules.h>
 #include <aws/mediaconvert/MediaConvert_EXPORTS.h>
 
 namespace Aws {
 namespace MediaConvert {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using MediaConvertClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using MediaConvertEndpointProviderBase =
     EndpointProviderBase<MediaConvertClientConfiguration, MediaConvertBuiltInParameters, MediaConvertClientContextParameters>;
 
 using MediaConvertDefaultEpProviderBase =
-    DefaultEndpointProvider<MediaConvertClientConfiguration, MediaConvertBuiltInParameters, MediaConvertClientContextParameters>;
+    BDDEndpointProvider<MediaConvertClientConfiguration, MediaConvertBuiltInParameters, MediaConvertClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_MEDIACONVERT_API MediaConvertEndpointProvider : public MediaConvertDef
  public:
   using MediaConvertResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  MediaConvertEndpointProvider()
-      : MediaConvertDefaultEpProviderBase(Aws::MediaConvert::MediaConvertEndpointRules::GetRulesBlob(),
-                                          Aws::MediaConvert::MediaConvertEndpointRules::RulesBlobSize) {}
+  MediaConvertEndpointProvider();
 
   ~MediaConvertEndpointProvider() {}
 };

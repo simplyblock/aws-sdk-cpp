@@ -20,8 +20,13 @@ namespace Aws {
 namespace BedrockAgent {
 AWS_BEDROCKAGENT_API extern const char SERVICE_NAME[];
 /**
- * <p>Describes the API operations for creating and managing Amazon Bedrock
- * agents.</p>
+ * <p> <p>Amazon Bedrock Agents (now Amazon Bedrock Agents Classic) is no
+ * longer open to new customers. For capabilities similar to Bedrock Agents
+ * Classic, explore Amazon Bedrock AgentCore. Existing customers can continue to
+ * use the service as normal. For more information, see <a
+ * href="https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html">Amazon
+ * Bedrock Agents Classic availability change</a>.</p>  <p>Describes the API
+ * operations for creating and managing Amazon Bedrock agents.</p></p>
  */
 class AWS_BEDROCKAGENT_API BedrockAgentClient
     : Aws::Client::ClientWithAsyncTemplateMethods<BedrockAgentClient>,
@@ -150,13 +155,19 @@ class AWS_BEDROCKAGENT_API BedrockAgentClient
   }
 
   /**
-   * <p>Creates an agent that orchestrates interactions between foundation models,
-   * data sources, software applications, user conversations, and APIs to carry out
-   * tasks to help customers.</p> <ul> <li> <p>Specify the following fields for
-   * security purposes.</p> <ul> <li> <p> <code>agentResourceRoleArn</code> – The
-   * Amazon Resource Name (ARN) of the role with permissions to invoke API operations
-   * on an agent.</p> </li> <li> <p>(Optional) <code>customerEncryptionKeyArn</code>
-   * – The Amazon Resource Name (ARN) of a KMS key to encrypt the creation of the
+   * <p> <p>Amazon Bedrock Agents (now Amazon Bedrock Agents Classic) is no
+   * longer open to new customers. For capabilities similar to Bedrock Agents
+   * Classic, explore Amazon Bedrock AgentCore. Existing customers can continue to
+   * use the service as normal. For more information, see <a
+   * href="https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html">Amazon
+   * Bedrock Agents Classic availability change</a>.</p>  <p>Creates an agent
+   * that orchestrates interactions between foundation models, data sources, software
+   * applications, user conversations, and APIs to carry out tasks to help
+   * customers.</p> <ul> <li> <p>Specify the following fields for security
+   * purposes.</p> <ul> <li> <p> <code>agentResourceRoleArn</code> – The Amazon
+   * Resource Name (ARN) of the role with permissions to invoke API operations on an
+   * agent.</p> </li> <li> <p>(Optional) <code>customerEncryptionKeyArn</code> – The
+   * Amazon Resource Name (ARN) of a KMS key to encrypt the creation of the
    * agent.</p> </li> <li> <p>(Optional) <code>idleSessionTTLinSeconds</code> –
    * Specify the number of seconds for which the agent should maintain session
    * information. After this time expires, the subsequent <code>InvokeAgent</code>
@@ -173,7 +184,7 @@ class AWS_BEDROCKAGENT_API BedrockAgentClient
    * <code>recommendedActions</code> for you to troubleshoot.</p> </li> <li> <p>The
    * agent instructions will not be honored if your agent has only one knowledge
    * base, uses default prompts, has no action group, and user input is disabled.</p>
-   * </li> </ul><p><h3>See Also:</h3>   <a
+   * </li> </ul></p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CreateAgent">AWS
    * API Reference</a></p>
    */
@@ -516,6 +527,100 @@ class AWS_BEDROCKAGENT_API BedrockAgentClient
   }
 
   /**
+   * <p>Creates a new retrieval instruction. The retrieval instruction is usable once
+   * its status becomes ACTIVE. Use GetRetrievalInstruction to check whether it is
+   * ready.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CreateRetrievalInstruction">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateRetrievalInstructionOutcome CreateRetrievalInstruction(
+      const Model::CreateRetrievalInstructionRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateRetrievalInstruction that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename CreateRetrievalInstructionRequestT = Model::CreateRetrievalInstructionRequest>
+  Model::CreateRetrievalInstructionOutcomeCallable CreateRetrievalInstructionCallable(
+      const CreateRetrievalInstructionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentClient::CreateRetrievalInstruction, request);
+  }
+
+  /**
+   * An Async wrapper for CreateRetrievalInstruction that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateRetrievalInstructionRequestT = Model::CreateRetrievalInstructionRequest>
+  void CreateRetrievalInstructionAsync(const CreateRetrievalInstructionRequestT& request,
+                                       const CreateRetrievalInstructionResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentClient::CreateRetrievalInstruction, request, handler, context);
+  }
+
+  /**
+   * <p>Creates an immutable numbered version from the retrieval instruction's
+   * current reviewed content. The service creates the version synchronously.</p>
+   * <p>The service numbers versions from 1 and assigns them in order, never reusing
+   * a number.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CreateRetrievalInstructionVersion">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateRetrievalInstructionVersionOutcome CreateRetrievalInstructionVersion(
+      const Model::CreateRetrievalInstructionVersionRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateRetrievalInstructionVersion that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename CreateRetrievalInstructionVersionRequestT = Model::CreateRetrievalInstructionVersionRequest>
+  Model::CreateRetrievalInstructionVersionOutcomeCallable CreateRetrievalInstructionVersionCallable(
+      const CreateRetrievalInstructionVersionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentClient::CreateRetrievalInstructionVersion, request);
+  }
+
+  /**
+   * An Async wrapper for CreateRetrievalInstructionVersion that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename CreateRetrievalInstructionVersionRequestT = Model::CreateRetrievalInstructionVersionRequest>
+  void CreateRetrievalInstructionVersionAsync(const CreateRetrievalInstructionVersionRequestT& request,
+                                              const CreateRetrievalInstructionVersionResponseReceivedHandler& handler,
+                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentClient::CreateRetrievalInstructionVersion, request, handler, context);
+  }
+
+  /**
+   * <p>Creates a VPC configuration that lets a knowledge base connect to a resource
+   * in your private VPC. This operation is asynchronous: it returns a
+   * <code>vpcConfigurationId</code> with status <code>CREATING</code>. Poll
+   * <code>GetVpcConfiguration</code> until the status becomes <code>CREATED</code>
+   * or <code>CREATE_FAILED</code>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CreateVpcConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateVpcConfigurationOutcome CreateVpcConfiguration(const Model::CreateVpcConfigurationRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateVpcConfiguration that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateVpcConfigurationRequestT = Model::CreateVpcConfigurationRequest>
+  Model::CreateVpcConfigurationOutcomeCallable CreateVpcConfigurationCallable(const CreateVpcConfigurationRequestT& request) const {
+    return SubmitCallable(&BedrockAgentClient::CreateVpcConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for CreateVpcConfiguration that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateVpcConfigurationRequestT = Model::CreateVpcConfigurationRequest>
+  void CreateVpcConfigurationAsync(const CreateVpcConfigurationRequestT& request,
+                                   const CreateVpcConfigurationResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentClient::CreateVpcConfiguration, request, handler, context);
+  }
+
+  /**
    * <p>Deletes an agent.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DeleteAgent">AWS
    * API Reference</a></p>
@@ -841,6 +946,71 @@ class AWS_BEDROCKAGENT_API BedrockAgentClient
   void DeleteResourcePolicyAsync(const DeleteResourcePolicyRequestT& request, const DeleteResourcePolicyResponseReceivedHandler& handler,
                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&BedrockAgentClient::DeleteResourcePolicy, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a retrieval instruction or a single version of it. Omit
+   * retrievalInstructionVersion to delete the retrieval instruction itself; the
+   * service rejects that request with ConflictException while the retrieval
+   * instruction has versions or while lastTransitionStatus is CREATING or UPDATING.
+   * Specify retrievalInstructionVersion to delete only that version; the retrieval
+   * instruction and its other versions are unaffected.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DeleteRetrievalInstruction">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteRetrievalInstructionOutcome DeleteRetrievalInstruction(
+      const Model::DeleteRetrievalInstructionRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteRetrievalInstruction that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename DeleteRetrievalInstructionRequestT = Model::DeleteRetrievalInstructionRequest>
+  Model::DeleteRetrievalInstructionOutcomeCallable DeleteRetrievalInstructionCallable(
+      const DeleteRetrievalInstructionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentClient::DeleteRetrievalInstruction, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteRetrievalInstruction that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteRetrievalInstructionRequestT = Model::DeleteRetrievalInstructionRequest>
+  void DeleteRetrievalInstructionAsync(const DeleteRetrievalInstructionRequestT& request,
+                                       const DeleteRetrievalInstructionResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentClient::DeleteRetrievalInstruction, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a VPC configuration. This operation is asynchronous: it returns
+   * status <code>DELETING</code>. Poll <code>GetVpcConfiguration</code> until it
+   * returns a <code>ResourceNotFoundException</code>, indicating the configuration
+   * is deleted. Delete requests are idempotent and safe to retry.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DeleteVpcConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteVpcConfigurationOutcome DeleteVpcConfiguration(const Model::DeleteVpcConfigurationRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteVpcConfiguration that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteVpcConfigurationRequestT = Model::DeleteVpcConfigurationRequest>
+  Model::DeleteVpcConfigurationOutcomeCallable DeleteVpcConfigurationCallable(const DeleteVpcConfigurationRequestT& request) const {
+    return SubmitCallable(&BedrockAgentClient::DeleteVpcConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteVpcConfiguration that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteVpcConfigurationRequestT = Model::DeleteVpcConfigurationRequest>
+  void DeleteVpcConfigurationAsync(const DeleteVpcConfigurationRequestT& request,
+                                   const DeleteVpcConfigurationResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentClient::DeleteVpcConfiguration, request, handler, context);
   }
 
   /**
@@ -1311,6 +1481,62 @@ class AWS_BEDROCKAGENT_API BedrockAgentClient
   }
 
   /**
+   * <p>Gets a retrieval instruction. Also used to poll the terminal reporting of an
+   * asynchronous create or update.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/GetRetrievalInstruction">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetRetrievalInstructionOutcome GetRetrievalInstruction(const Model::GetRetrievalInstructionRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetRetrievalInstruction that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetRetrievalInstructionRequestT = Model::GetRetrievalInstructionRequest>
+  Model::GetRetrievalInstructionOutcomeCallable GetRetrievalInstructionCallable(const GetRetrievalInstructionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentClient::GetRetrievalInstruction, request);
+  }
+
+  /**
+   * An Async wrapper for GetRetrievalInstruction that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetRetrievalInstructionRequestT = Model::GetRetrievalInstructionRequest>
+  void GetRetrievalInstructionAsync(const GetRetrievalInstructionRequestT& request,
+                                    const GetRetrievalInstructionResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentClient::GetRetrievalInstruction, request, handler, context);
+  }
+
+  /**
+   * <p>Returns the details and current status of a single VPC configuration. Use
+   * this operation to poll for the outcome of an asynchronous create or
+   * delete.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/GetVpcConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetVpcConfigurationOutcome GetVpcConfiguration(const Model::GetVpcConfigurationRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetVpcConfiguration that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetVpcConfigurationRequestT = Model::GetVpcConfigurationRequest>
+  Model::GetVpcConfigurationOutcomeCallable GetVpcConfigurationCallable(const GetVpcConfigurationRequestT& request) const {
+    return SubmitCallable(&BedrockAgentClient::GetVpcConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for GetVpcConfiguration that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetVpcConfigurationRequestT = Model::GetVpcConfigurationRequest>
+  void GetVpcConfigurationAsync(const GetVpcConfigurationRequestT& request, const GetVpcConfigurationResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentClient::GetVpcConfiguration, request, handler, context);
+  }
+
+  /**
    * <p>Ingests documents directly into the knowledge base that is connected to the
    * data source. The <code>dataSourceType</code> specified in the content for each
    * document must match the type of the data source that you specify in the header.
@@ -1739,6 +1965,69 @@ class AWS_BEDROCKAGENT_API BedrockAgentClient
   }
 
   /**
+   * <p>Lists the numbered versions of a retrieval instruction, newest first. DRAFT
+   * is not listed; read it with GetRetrievalInstruction without
+   * retrievalInstructionVersion. Results are paginated. Use the nextToken parameter
+   * to retrieve additional results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ListRetrievalInstructionVersions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListRetrievalInstructionVersionsOutcome ListRetrievalInstructionVersions(
+      const Model::ListRetrievalInstructionVersionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListRetrievalInstructionVersions that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename ListRetrievalInstructionVersionsRequestT = Model::ListRetrievalInstructionVersionsRequest>
+  Model::ListRetrievalInstructionVersionsOutcomeCallable ListRetrievalInstructionVersionsCallable(
+      const ListRetrievalInstructionVersionsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentClient::ListRetrievalInstructionVersions, request);
+  }
+
+  /**
+   * An Async wrapper for ListRetrievalInstructionVersions that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename ListRetrievalInstructionVersionsRequestT = Model::ListRetrievalInstructionVersionsRequest>
+  void ListRetrievalInstructionVersionsAsync(const ListRetrievalInstructionVersionsRequestT& request,
+                                             const ListRetrievalInstructionVersionsResponseReceivedHandler& handler,
+                                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentClient::ListRetrievalInstructionVersions, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the retrieval instructions in the caller's account. Results are
+   * paginated. Use the nextToken parameter to retrieve additional
+   * results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ListRetrievalInstructions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListRetrievalInstructionsOutcome ListRetrievalInstructions(
+      const Model::ListRetrievalInstructionsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListRetrievalInstructions that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListRetrievalInstructionsRequestT = Model::ListRetrievalInstructionsRequest>
+  Model::ListRetrievalInstructionsOutcomeCallable ListRetrievalInstructionsCallable(
+      const ListRetrievalInstructionsRequestT& request = {}) const {
+    return SubmitCallable(&BedrockAgentClient::ListRetrievalInstructions, request);
+  }
+
+  /**
+   * An Async wrapper for ListRetrievalInstructions that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListRetrievalInstructionsRequestT = Model::ListRetrievalInstructionsRequest>
+  void ListRetrievalInstructionsAsync(const ListRetrievalInstructionsResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                      const ListRetrievalInstructionsRequestT& request = {}) const {
+    return SubmitAsync(&BedrockAgentClient::ListRetrievalInstructions, request, handler, context);
+  }
+
+  /**
    * <p>List all the tags for the resource you specify.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ListTagsForResource">AWS
    * API Reference</a></p>
@@ -1762,6 +2051,34 @@ class AWS_BEDROCKAGENT_API BedrockAgentClient
   void ListTagsForResourceAsync(const ListTagsForResourceRequestT& request, const ListTagsForResourceResponseReceivedHandler& handler,
                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&BedrockAgentClient::ListTagsForResource, request, handler, context);
+  }
+
+  /**
+   * <p>Returns a paginated list of the VPC configurations for a knowledge base. You
+   * can optionally filter by status. Use the <code>nextToken</code> parameter to
+   * retrieve additional results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ListVpcConfigurations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListVpcConfigurationsOutcome ListVpcConfigurations(const Model::ListVpcConfigurationsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListVpcConfigurations that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListVpcConfigurationsRequestT = Model::ListVpcConfigurationsRequest>
+  Model::ListVpcConfigurationsOutcomeCallable ListVpcConfigurationsCallable(const ListVpcConfigurationsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentClient::ListVpcConfigurations, request);
+  }
+
+  /**
+   * An Async wrapper for ListVpcConfigurations that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListVpcConfigurationsRequestT = Model::ListVpcConfigurationsRequest>
+  void ListVpcConfigurationsAsync(const ListVpcConfigurationsRequestT& request, const ListVpcConfigurationsResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentClient::ListVpcConfigurations, request, handler, context);
   }
 
   /**
@@ -2244,6 +2561,39 @@ class AWS_BEDROCKAGENT_API BedrockAgentClient
   void UpdatePromptAsync(const UpdatePromptRequestT& request, const UpdatePromptResponseReceivedHandler& handler,
                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&BedrockAgentClient::UpdatePrompt, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the content of a retrieval instruction. The update is processed
+   * asynchronously; the stored content is a candidate until content review passes,
+   * and the served content does not change while the update is in flight. The
+   * service rejects the request with ConflictException while lastTransitionStatus is
+   * CREATING or UPDATING.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/UpdateRetrievalInstruction">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateRetrievalInstructionOutcome UpdateRetrievalInstruction(
+      const Model::UpdateRetrievalInstructionRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateRetrievalInstruction that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename UpdateRetrievalInstructionRequestT = Model::UpdateRetrievalInstructionRequest>
+  Model::UpdateRetrievalInstructionOutcomeCallable UpdateRetrievalInstructionCallable(
+      const UpdateRetrievalInstructionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentClient::UpdateRetrievalInstruction, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateRetrievalInstruction that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateRetrievalInstructionRequestT = Model::UpdateRetrievalInstructionRequest>
+  void UpdateRetrievalInstructionAsync(const UpdateRetrievalInstructionRequestT& request,
+                                       const UpdateRetrievalInstructionResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentClient::UpdateRetrievalInstruction, request, handler, context);
   }
 
   /**

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/inspector-scan/InspectorscanEndpointRules.h>
 #include <aws/inspector-scan/Inspectorscan_EXPORTS.h>
 
 namespace Aws {
 namespace inspectorscan {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using InspectorscanClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using InspectorscanEndpointProviderBase =
     EndpointProviderBase<InspectorscanClientConfiguration, InspectorscanBuiltInParameters, InspectorscanClientContextParameters>;
 
 using InspectorscanDefaultEpProviderBase =
-    DefaultEndpointProvider<InspectorscanClientConfiguration, InspectorscanBuiltInParameters, InspectorscanClientContextParameters>;
+    BDDEndpointProvider<InspectorscanClientConfiguration, InspectorscanBuiltInParameters, InspectorscanClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_INSPECTORSCAN_API InspectorscanEndpointProvider : public Inspectorscan
  public:
   using InspectorscanResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  InspectorscanEndpointProvider()
-      : InspectorscanDefaultEpProviderBase(Aws::inspectorscan::InspectorscanEndpointRules::GetRulesBlob(),
-                                           Aws::inspectorscan::InspectorscanEndpointRules::RulesBlobSize) {}
+  InspectorscanEndpointProvider();
 
   ~InspectorscanEndpointProvider() {}
 };

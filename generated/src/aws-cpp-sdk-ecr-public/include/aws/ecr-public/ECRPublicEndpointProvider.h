@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ecr-public/ECRPublicEndpointRules.h>
 #include <aws/ecr-public/ECRPublic_EXPORTS.h>
 
 namespace Aws {
 namespace ECRPublic {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ECRPublicClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using ECRPublicEndpointProviderBase =
     EndpointProviderBase<ECRPublicClientConfiguration, ECRPublicBuiltInParameters, ECRPublicClientContextParameters>;
 
 using ECRPublicDefaultEpProviderBase =
-    DefaultEndpointProvider<ECRPublicClientConfiguration, ECRPublicBuiltInParameters, ECRPublicClientContextParameters>;
+    BDDEndpointProvider<ECRPublicClientConfiguration, ECRPublicBuiltInParameters, ECRPublicClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_ECRPUBLIC_API ECRPublicEndpointProvider : public ECRPublicDefaultEpPro
  public:
   using ECRPublicResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ECRPublicEndpointProvider()
-      : ECRPublicDefaultEpProviderBase(Aws::ECRPublic::ECRPublicEndpointRules::GetRulesBlob(),
-                                       Aws::ECRPublic::ECRPublicEndpointRules::RulesBlobSize) {}
+  ECRPublicEndpointProvider();
 
   ~ECRPublicEndpointProvider() {}
 };

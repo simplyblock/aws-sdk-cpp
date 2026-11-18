@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/acm-pca/ACMPCAEndpointRules.h>
 #include <aws/acm-pca/ACMPCA_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ACMPCA {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ACMPCAClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,8 +30,7 @@ using ACMPCABuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using ACMPCAEndpointProviderBase = EndpointProviderBase<ACMPCAClientConfiguration, ACMPCABuiltInParameters, ACMPCAClientContextParameters>;
 
-using ACMPCADefaultEpProviderBase =
-    DefaultEndpointProvider<ACMPCAClientConfiguration, ACMPCABuiltInParameters, ACMPCAClientContextParameters>;
+using ACMPCADefaultEpProviderBase = BDDEndpointProvider<ACMPCAClientConfiguration, ACMPCABuiltInParameters, ACMPCAClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -41,8 +39,7 @@ class AWS_ACMPCA_API ACMPCAEndpointProvider : public ACMPCADefaultEpProviderBase
  public:
   using ACMPCAResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ACMPCAEndpointProvider()
-      : ACMPCADefaultEpProviderBase(Aws::ACMPCA::ACMPCAEndpointRules::GetRulesBlob(), Aws::ACMPCA::ACMPCAEndpointRules::RulesBlobSize) {}
+  ACMPCAEndpointProvider();
 
   ~ACMPCAEndpointProvider() {}
 };

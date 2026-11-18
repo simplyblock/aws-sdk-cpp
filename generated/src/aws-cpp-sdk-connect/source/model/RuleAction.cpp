@@ -54,9 +54,21 @@ RuleAction& RuleAction::operator=(JsonView jsonValue) {
     m_endAssociatedTasksAction = jsonValue.GetObject("EndAssociatedTasksAction");
     m_endAssociatedTasksActionHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("EndAssociatedEmailsAction")) {
+    m_endAssociatedEmailsAction = jsonValue.GetObject("EndAssociatedEmailsAction");
+    m_endAssociatedEmailsActionHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("SubmitAutoEvaluationAction")) {
     m_submitAutoEvaluationAction = jsonValue.GetObject("SubmitAutoEvaluationAction");
     m_submitAutoEvaluationActionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ExtractInformationAction")) {
+    m_extractInformationAction = jsonValue.GetObject("ExtractInformationAction");
+    m_extractInformationActionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("SendInAppNotificationAction")) {
+    m_sendInAppNotificationAction = jsonValue.GetObject("SendInAppNotificationAction");
+    m_sendInAppNotificationActionHasBeenSet = true;
   }
   return *this;
 }
@@ -100,8 +112,20 @@ JsonValue RuleAction::Jsonize() const {
     payload.WithObject("EndAssociatedTasksAction", m_endAssociatedTasksAction.Jsonize());
   }
 
+  if (m_endAssociatedEmailsActionHasBeenSet) {
+    payload.WithObject("EndAssociatedEmailsAction", m_endAssociatedEmailsAction.Jsonize());
+  }
+
   if (m_submitAutoEvaluationActionHasBeenSet) {
     payload.WithObject("SubmitAutoEvaluationAction", m_submitAutoEvaluationAction.Jsonize());
+  }
+
+  if (m_extractInformationActionHasBeenSet) {
+    payload.WithObject("ExtractInformationAction", m_extractInformationAction.Jsonize());
+  }
+
+  if (m_sendInAppNotificationActionHasBeenSet) {
+    payload.WithObject("SendInAppNotificationAction", m_sendInAppNotificationAction.Jsonize());
   }
 
   return payload;

@@ -88,6 +88,14 @@ ExecutionBlockConfiguration& ExecutionBlockConfiguration::operator=(JsonView jso
     m_neptuneGlobalDatabaseConfig = jsonValue.GetObject("neptuneGlobalDatabaseConfig");
     m_neptuneGlobalDatabaseConfigHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("rdsSwitchoverReadReplicaConfig")) {
+    m_rdsSwitchoverReadReplicaConfig = jsonValue.GetObject("rdsSwitchoverReadReplicaConfig");
+    m_rdsSwitchoverReadReplicaConfigHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ssmSendCommandConfig")) {
+    m_ssmSendCommandConfig = jsonValue.GetObject("ssmSendCommandConfig");
+    m_ssmSendCommandConfigHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -160,6 +168,14 @@ JsonValue ExecutionBlockConfiguration::Jsonize() const {
 
   if (m_neptuneGlobalDatabaseConfigHasBeenSet) {
     payload.WithObject("neptuneGlobalDatabaseConfig", m_neptuneGlobalDatabaseConfig.Jsonize());
+  }
+
+  if (m_rdsSwitchoverReadReplicaConfigHasBeenSet) {
+    payload.WithObject("rdsSwitchoverReadReplicaConfig", m_rdsSwitchoverReadReplicaConfig.Jsonize());
+  }
+
+  if (m_ssmSendCommandConfigHasBeenSet) {
+    payload.WithObject("ssmSendCommandConfig", m_ssmSendCommandConfig.Jsonize());
   }
 
   return payload;

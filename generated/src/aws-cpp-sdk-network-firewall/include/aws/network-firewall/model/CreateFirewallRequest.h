@@ -11,8 +11,12 @@
 #include <aws/network-firewall/model/AvailabilityZoneMapping.h>
 #include <aws/network-firewall/model/EnabledAnalysisType.h>
 #include <aws/network-firewall/model/EncryptionConfiguration.h>
+#include <aws/network-firewall/model/NatGatewayCreateMapping.h>
+#include <aws/network-firewall/model/ProxySettings.h>
 #include <aws/network-firewall/model/SubnetMapping.h>
 #include <aws/network-firewall/model/Tag.h>
+#include <aws/network-firewall/model/TransparentFilteringNatScope.h>
+#include <aws/network-firewall/model/VpcEndpoint.h>
 
 #include <utility>
 
@@ -342,6 +346,114 @@ class CreateFirewallRequest : public NetworkFirewallRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The NAT gateways that Network Firewall creates for a proxy mode firewall, one
+   * for each Availability Zone. When you specify this, you create a proxy mode
+   * firewall. Destinations see the IP address of the NAT gateway in the client's
+   * Availability Zone as the source of the traffic.</p> <p>Specify one mapping for
+   * each Availability Zone in <code>VpcEndpoint</code>, and no other Availability
+   * Zones. Each NAT gateway subnet must be in the <code>VpcEndpoint</code> VPC and
+   * can't be one of the firewall endpoint subnets.</p> <p>You need permission to
+   * call the Amazon EC2 <code>CreateNatGateway</code> action.</p> <p>If Network
+   * Firewall can't set up an Availability Zone, for example because Amazon EC2
+   * rejects the NAT gateway, it removes the Availability Zone from the firewall. It
+   * also deletes the NAT gateway that it created there. The Availability Zone's
+   * <code>Attachment</code> status is <code>FAILED</code>, and its status message
+   * explains why. You can add the Availability Zone again with
+   * <code>AssociateSubnets</code>. If no Availability Zone can be set up, the
+   * firewall status is <code>FAILED</code>.</p>
+   */
+  inline const Aws::Vector<NatGatewayCreateMapping>& GetNatGatewayCreateMappings() const { return m_natGatewayCreateMappings; }
+  inline bool NatGatewayCreateMappingsHasBeenSet() const { return m_natGatewayCreateMappingsHasBeenSet; }
+  template <typename NatGatewayCreateMappingsT = Aws::Vector<NatGatewayCreateMapping>>
+  void SetNatGatewayCreateMappings(NatGatewayCreateMappingsT&& value) {
+    m_natGatewayCreateMappingsHasBeenSet = true;
+    m_natGatewayCreateMappings = std::forward<NatGatewayCreateMappingsT>(value);
+  }
+  template <typename NatGatewayCreateMappingsT = Aws::Vector<NatGatewayCreateMapping>>
+  CreateFirewallRequest& WithNatGatewayCreateMappings(NatGatewayCreateMappingsT&& value) {
+    SetNatGatewayCreateMappings(std::forward<NatGatewayCreateMappingsT>(value));
+    return *this;
+  }
+  template <typename NatGatewayCreateMappingsT = NatGatewayCreateMapping>
+  CreateFirewallRequest& AddNatGatewayCreateMappings(NatGatewayCreateMappingsT&& value) {
+    m_natGatewayCreateMappingsHasBeenSet = true;
+    m_natGatewayCreateMappings.emplace_back(std::forward<NatGatewayCreateMappingsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The proxy settings for a proxy mode firewall: the ports and protocols on
+   * which the firewall's proxy listens for traffic, and optionally your own domain
+   * name and certificate. If you don't specify listeners, the firewall listens for
+   * HTTP on port 3128 and HTTPS on port 8443.</p> <p>To change the listeners later,
+   * use <code>UpdateProxySettings</code>.</p>
+   */
+  inline const ProxySettings& GetProxySettings() const { return m_proxySettings; }
+  inline bool ProxySettingsHasBeenSet() const { return m_proxySettingsHasBeenSet; }
+  template <typename ProxySettingsT = ProxySettings>
+  void SetProxySettings(ProxySettingsT&& value) {
+    m_proxySettingsHasBeenSet = true;
+    m_proxySettings = std::forward<ProxySettingsT>(value);
+  }
+  template <typename ProxySettingsT = ProxySettings>
+  CreateFirewallRequest& WithProxySettings(ProxySettingsT&& value) {
+    SetProxySettings(std::forward<ProxySettingsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The VPC and subnets for the endpoints of a proxy mode firewall. Network
+   * Firewall creates a firewall endpoint in each subnet that you specify. It also
+   * creates the firewall's NAT gateways in this VPC, in the subnets that you specify
+   * in <code>NatGatewayCreateMappings</code>.</p> <p>To create a proxy mode
+   * firewall, you must specify <code>VpcEndpoint</code> and
+   * <code>NatGatewayCreateMappings</code>, and you must not specify the top-level
+   * <code>VpcId</code> and <code>SubnetMappings</code>. Specify one subnet for each
+   * Availability Zone where you want to use the firewall.</p>
+   */
+  inline const VpcEndpoint& GetVpcEndpoint() const { return m_vpcEndpoint; }
+  inline bool VpcEndpointHasBeenSet() const { return m_vpcEndpointHasBeenSet; }
+  template <typename VpcEndpointT = VpcEndpoint>
+  void SetVpcEndpoint(VpcEndpointT&& value) {
+    m_vpcEndpointHasBeenSet = true;
+    m_vpcEndpoint = std::forward<VpcEndpointT>(value);
+  }
+  template <typename VpcEndpointT = VpcEndpoint>
+  CreateFirewallRequest& WithVpcEndpoint(VpcEndpointT&& value) {
+    SetVpcEndpoint(std::forward<VpcEndpointT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>How a proxy mode firewall handles traffic that isn't sent to its proxy
+   * listener. If you don't specify a value, the firewall uses <code>NAT_ALL</code>.
+   * You can choose from the following values:</p> <ul> <li> <p> <code>NAT_ALL</code>
+   * - After inspection, the firewall sends this traffic out through its NAT gateway,
+   * which translates the source address.</p> </li> <li> <p> <code>NAT_NONE</code> -
+   * After inspection, the firewall returns this traffic to the firewall endpoint
+   * without address translation.</p> </li> </ul> <p>You can specify this only for a
+   * proxy mode firewall, and you can't change it after you create the firewall.</p>
+   */
+  inline TransparentFilteringNatScope GetTransparentFilteringNatScope() const { return m_transparentFilteringNatScope; }
+  inline bool TransparentFilteringNatScopeHasBeenSet() const { return m_transparentFilteringNatScopeHasBeenSet; }
+  inline void SetTransparentFilteringNatScope(TransparentFilteringNatScope value) {
+    m_transparentFilteringNatScopeHasBeenSet = true;
+    m_transparentFilteringNatScope = value;
+  }
+  inline CreateFirewallRequest& WithTransparentFilteringNatScope(TransparentFilteringNatScope value) {
+    SetTransparentFilteringNatScope(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_firewallName;
 
@@ -370,6 +482,14 @@ class CreateFirewallRequest : public NetworkFirewallRequest {
   Aws::Vector<AvailabilityZoneMapping> m_availabilityZoneMappings;
 
   bool m_availabilityZoneChangeProtection{false};
+
+  Aws::Vector<NatGatewayCreateMapping> m_natGatewayCreateMappings;
+
+  ProxySettings m_proxySettings;
+
+  VpcEndpoint m_vpcEndpoint;
+
+  TransparentFilteringNatScope m_transparentFilteringNatScope{TransparentFilteringNatScope::NOT_SET};
   bool m_firewallNameHasBeenSet = false;
   bool m_firewallPolicyArnHasBeenSet = false;
   bool m_vpcIdHasBeenSet = false;
@@ -384,6 +504,10 @@ class CreateFirewallRequest : public NetworkFirewallRequest {
   bool m_transitGatewayIdHasBeenSet = false;
   bool m_availabilityZoneMappingsHasBeenSet = false;
   bool m_availabilityZoneChangeProtectionHasBeenSet = false;
+  bool m_natGatewayCreateMappingsHasBeenSet = false;
+  bool m_proxySettingsHasBeenSet = false;
+  bool m_vpcEndpointHasBeenSet = false;
+  bool m_transparentFilteringNatScopeHasBeenSet = false;
 };
 
 }  // namespace Model

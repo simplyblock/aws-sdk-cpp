@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -8,7 +8,11 @@
 
 #include <aws/lambda-core/LambdaCoreClientPagination.h>
 #include <aws/lambda-core/LambdaCorePaginationBase.h>
+#include <aws/lambda-core/model/ListNetworkConnectorVersionsPaginationTraits.h>
+#include <aws/lambda-core/model/ListRuntimeAliasesPaginationTraits.h>
 #include <aws/lambda-core/model/ListNetworkConnectorsPaginationTraits.h>
+#include <aws/lambda-core/model/ListRuntimeVersionsPaginationTraits.h>
+#include <aws/lambda-core/model/ListRuntimesPaginationTraits.h>
 
 #include <aws/testing/AwsCppSdkGTestSuite.h>
 
@@ -18,6 +22,6 @@ class LambdaCorePaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestS
 
 TEST_F(LambdaCorePaginationCompilationTest, LambdaCorePaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

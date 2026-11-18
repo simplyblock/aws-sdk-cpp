@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-codepipeline "C++ SDK for the AWS codepipeline service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-codepipeline "C++ SDK for AWS CodePipeline" aws-cpp-sdk-core)
 
 file(GLOB AWS_CODEPIPELINE_HEADERS
     "include/aws/codepipeline/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CODEPIPELINE_HEADERS
 
 file(GLOB AWS_CODEPIPELINE_MODEL_HEADERS
     "include/aws/codepipeline/model/*.h"
+)
+
+file(GLOB AWS_CODEPIPELINE_INTERNAL_HEADERS
+    "include/aws/codepipeline/internal/*.h"
 )
 
 file(GLOB AWS_CODEPIPELINE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CODEPIPELINE_MODEL_SOURCE
 
 file(GLOB CODEPIPELINE_UNIFIED_HEADERS
     ${AWS_CODEPIPELINE_HEADERS}
+    ${AWS_CODEPIPELINE_INTERNAL_HEADERS}
     ${AWS_CODEPIPELINE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\codepipeline" FILES ${AWS_CODEPIPELINE_HEADERS})
+        source_group("Header Files\\aws\\codepipeline\\internal" FILES ${AWS_CODEPIPELINE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\codepipeline\\model" FILES ${AWS_CODEPIPELINE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CODEPIPELINE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CODEPIPELINE_MODEL_SOURCE})

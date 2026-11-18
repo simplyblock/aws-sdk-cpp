@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-sustainability "C++ SDK for the AWS sustainability service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-sustainability "C++ SDK for AWS Sustainability" aws-cpp-sdk-core)
 
 file(GLOB AWS_SUSTAINABILITY_HEADERS
     "include/aws/sustainability/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SUSTAINABILITY_HEADERS
 
 file(GLOB AWS_SUSTAINABILITY_MODEL_HEADERS
     "include/aws/sustainability/model/*.h"
+)
+
+file(GLOB AWS_SUSTAINABILITY_INTERNAL_HEADERS
+    "include/aws/sustainability/internal/*.h"
 )
 
 file(GLOB AWS_SUSTAINABILITY_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SUSTAINABILITY_MODEL_SOURCE
 
 file(GLOB SUSTAINABILITY_UNIFIED_HEADERS
     ${AWS_SUSTAINABILITY_HEADERS}
+    ${AWS_SUSTAINABILITY_INTERNAL_HEADERS}
     ${AWS_SUSTAINABILITY_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\sustainability" FILES ${AWS_SUSTAINABILITY_HEADERS})
+        source_group("Header Files\\aws\\sustainability\\internal" FILES ${AWS_SUSTAINABILITY_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\sustainability\\model" FILES ${AWS_SUSTAINABILITY_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SUSTAINABILITY_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SUSTAINABILITY_MODEL_SOURCE})

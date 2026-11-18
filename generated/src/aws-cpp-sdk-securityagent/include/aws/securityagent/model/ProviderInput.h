@@ -5,10 +5,13 @@
 
 #pragma once
 #include <aws/securityagent/SecurityAgent_EXPORTS.h>
+#include <aws/securityagent/model/AzureDevOpsIntegrationInput.h>
+#include <aws/securityagent/model/BitbucketDataCenterIntegrationInput.h>
 #include <aws/securityagent/model/BitbucketIntegrationInput.h>
 #include <aws/securityagent/model/ConfluenceIntegrationInput.h>
 #include <aws/securityagent/model/GitHubIntegrationInput.h>
 #include <aws/securityagent/model/GitLabIntegrationInput.h>
+#include <aws/securityagent/model/JiraIntegrationInput.h>
 
 #include <utility>
 
@@ -106,6 +109,60 @@ class ProviderInput {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The Azure DevOps-specific input for creating an integration.</p>
+   */
+  inline const AzureDevOpsIntegrationInput& GetAzureDevOps() const { return m_azureDevOps; }
+  inline bool AzureDevOpsHasBeenSet() const { return m_azureDevOpsHasBeenSet; }
+  template <typename AzureDevOpsT = AzureDevOpsIntegrationInput>
+  void SetAzureDevOps(AzureDevOpsT&& value) {
+    m_azureDevOpsHasBeenSet = true;
+    m_azureDevOps = std::forward<AzureDevOpsT>(value);
+  }
+  template <typename AzureDevOpsT = AzureDevOpsIntegrationInput>
+  ProviderInput& WithAzureDevOps(AzureDevOpsT&& value) {
+    SetAzureDevOps(std::forward<AzureDevOpsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Bitbucket Data Center-specific input for creating an integration.</p>
+   */
+  inline const BitbucketDataCenterIntegrationInput& GetBitbucketDataCenter() const { return m_bitbucketDataCenter; }
+  inline bool BitbucketDataCenterHasBeenSet() const { return m_bitbucketDataCenterHasBeenSet; }
+  template <typename BitbucketDataCenterT = BitbucketDataCenterIntegrationInput>
+  void SetBitbucketDataCenter(BitbucketDataCenterT&& value) {
+    m_bitbucketDataCenterHasBeenSet = true;
+    m_bitbucketDataCenter = std::forward<BitbucketDataCenterT>(value);
+  }
+  template <typename BitbucketDataCenterT = BitbucketDataCenterIntegrationInput>
+  ProviderInput& WithBitbucketDataCenter(BitbucketDataCenterT&& value) {
+    SetBitbucketDataCenter(std::forward<BitbucketDataCenterT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The configuration for a Jira integration.</p>
+   */
+  inline const JiraIntegrationInput& GetJira() const { return m_jira; }
+  inline bool JiraHasBeenSet() const { return m_jiraHasBeenSet; }
+  template <typename JiraT = JiraIntegrationInput>
+  void SetJira(JiraT&& value) {
+    m_jiraHasBeenSet = true;
+    m_jira = std::forward<JiraT>(value);
+  }
+  template <typename JiraT = JiraIntegrationInput>
+  ProviderInput& WithJira(JiraT&& value) {
+    SetJira(std::forward<JiraT>(value));
+    return *this;
+  }
+  ///@}
  private:
   GitHubIntegrationInput m_github;
 
@@ -114,10 +171,19 @@ class ProviderInput {
   BitbucketIntegrationInput m_bitbucket;
 
   ConfluenceIntegrationInput m_confluence;
+
+  AzureDevOpsIntegrationInput m_azureDevOps;
+
+  BitbucketDataCenterIntegrationInput m_bitbucketDataCenter;
+
+  JiraIntegrationInput m_jira;
   bool m_githubHasBeenSet = false;
   bool m_gitlabHasBeenSet = false;
   bool m_bitbucketHasBeenSet = false;
   bool m_confluenceHasBeenSet = false;
+  bool m_azureDevOpsHasBeenSet = false;
+  bool m_bitbucketDataCenterHasBeenSet = false;
+  bool m_jiraHasBeenSet = false;
 };
 
 }  // namespace Model

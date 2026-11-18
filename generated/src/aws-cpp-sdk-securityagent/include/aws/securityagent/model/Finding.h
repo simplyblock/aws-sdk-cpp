@@ -12,6 +12,7 @@
 #include <aws/securityagent/model/CodeRemediationTask.h>
 #include <aws/securityagent/model/ConfidenceLevel.h>
 #include <aws/securityagent/model/FindingStatus.h>
+#include <aws/securityagent/model/LinkedIssue.h>
 #include <aws/securityagent/model/RiskLevel.h>
 #include <aws/securityagent/model/ValidationStatus.h>
 #include <aws/securityagent/model/VerificationScript.h>
@@ -347,6 +348,25 @@ class Finding {
 
   ///@{
   /**
+   * <p>The suggested fix for the finding, describing the changes recommended to
+   * remediate the vulnerability, with example code or configuration.</p>
+   */
+  inline const Aws::String& GetRemediationCode() const { return m_remediationCode; }
+  inline bool RemediationCodeHasBeenSet() const { return m_remediationCodeHasBeenSet; }
+  template <typename RemediationCodeT = Aws::String>
+  void SetRemediationCode(RemediationCodeT&& value) {
+    m_remediationCodeHasBeenSet = true;
+    m_remediationCode = std::forward<RemediationCodeT>(value);
+  }
+  template <typename RemediationCodeT = Aws::String>
+  Finding& WithRemediationCode(RemediationCodeT&& value) {
+    SetRemediationCode(std::forward<RemediationCodeT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The code remediation task associated with the finding, if code remediation
    * was initiated.</p>
    */
@@ -465,6 +485,69 @@ class Finding {
 
   ///@{
   /**
+   * <p>The list of pentest job identifiers for revalidation jobs that retested this
+   * finding.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetRevalidationJobIds() const { return m_revalidationJobIds; }
+  inline bool RevalidationJobIdsHasBeenSet() const { return m_revalidationJobIdsHasBeenSet; }
+  template <typename RevalidationJobIdsT = Aws::Vector<Aws::String>>
+  void SetRevalidationJobIds(RevalidationJobIdsT&& value) {
+    m_revalidationJobIdsHasBeenSet = true;
+    m_revalidationJobIds = std::forward<RevalidationJobIdsT>(value);
+  }
+  template <typename RevalidationJobIdsT = Aws::Vector<Aws::String>>
+  Finding& WithRevalidationJobIds(RevalidationJobIdsT&& value) {
+    SetRevalidationJobIds(std::forward<RevalidationJobIdsT>(value));
+    return *this;
+  }
+  template <typename RevalidationJobIdsT = Aws::String>
+  Finding& AddRevalidationJobIds(RevalidationJobIdsT&& value) {
+    m_revalidationJobIdsHasBeenSet = true;
+    m_revalidationJobIds.emplace_back(std::forward<RevalidationJobIdsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The identifier of the original finding that this revalidation finding was
+   * produced from.</p>
+   */
+  inline const Aws::String& GetOriginalFindingId() const { return m_originalFindingId; }
+  inline bool OriginalFindingIdHasBeenSet() const { return m_originalFindingIdHasBeenSet; }
+  template <typename OriginalFindingIdT = Aws::String>
+  void SetOriginalFindingId(OriginalFindingIdT&& value) {
+    m_originalFindingIdHasBeenSet = true;
+    m_originalFindingId = std::forward<OriginalFindingIdT>(value);
+  }
+  template <typename OriginalFindingIdT = Aws::String>
+  Finding& WithOriginalFindingId(OriginalFindingIdT&& value) {
+    SetOriginalFindingId(std::forward<OriginalFindingIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The issue in a third-party issue tracker that this finding has been exported
+   * to.</p>
+   */
+  inline const LinkedIssue& GetLinkedIssue() const { return m_linkedIssue; }
+  inline bool LinkedIssueHasBeenSet() const { return m_linkedIssueHasBeenSet; }
+  template <typename LinkedIssueT = LinkedIssue>
+  void SetLinkedIssue(LinkedIssueT&& value) {
+    m_linkedIssueHasBeenSet = true;
+    m_linkedIssue = std::forward<LinkedIssueT>(value);
+  }
+  template <typename LinkedIssueT = LinkedIssue>
+  Finding& WithLinkedIssue(LinkedIssueT&& value) {
+    SetLinkedIssue(std::forward<LinkedIssueT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The date and time the finding was created, in UTC format.</p>
    */
   inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
@@ -533,6 +616,8 @@ class Finding {
 
   Aws::String m_attackScript;
 
+  Aws::String m_remediationCode;
+
   CodeRemediationTask m_codeRemediationTask;
 
   Aws::String m_lastUpdatedBy;
@@ -544,6 +629,12 @@ class Finding {
   VerificationScript m_verificationScript;
 
   Aws::String m_alignmentRationale;
+
+  Aws::Vector<Aws::String> m_revalidationJobIds;
+
+  Aws::String m_originalFindingId;
+
+  LinkedIssue m_linkedIssue;
 
   Aws::Utils::DateTime m_createdAt{};
 
@@ -565,12 +656,16 @@ class Finding {
   bool m_confidenceHasBeenSet = false;
   bool m_validationStatusHasBeenSet = false;
   bool m_attackScriptHasBeenSet = false;
+  bool m_remediationCodeHasBeenSet = false;
   bool m_codeRemediationTaskHasBeenSet = false;
   bool m_lastUpdatedByHasBeenSet = false;
   bool m_customerNoteHasBeenSet = false;
   bool m_codeLocationsHasBeenSet = false;
   bool m_verificationScriptHasBeenSet = false;
   bool m_alignmentRationaleHasBeenSet = false;
+  bool m_revalidationJobIdsHasBeenSet = false;
+  bool m_originalFindingIdHasBeenSet = false;
+  bool m_linkedIssueHasBeenSet = false;
   bool m_createdAtHasBeenSet = false;
   bool m_updatedAtHasBeenSet = false;
 };

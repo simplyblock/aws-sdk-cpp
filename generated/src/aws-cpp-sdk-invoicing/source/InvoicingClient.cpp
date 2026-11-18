@@ -31,12 +31,16 @@
 #include <aws/invoicing/model/ListInvoiceSummariesRequest.h>
 #include <aws/invoicing/model/ListInvoiceUnitsRequest.h>
 #include <aws/invoicing/model/ListProcurementPortalPreferencesRequest.h>
+#include <aws/invoicing/model/ListProcurementPortalSuppliersRequest.h>
+#include <aws/invoicing/model/ListProcurementPortalsRequest.h>
 #include <aws/invoicing/model/ListTagsForResourceRequest.h>
 #include <aws/invoicing/model/PutProcurementPortalPreferenceRequest.h>
+#include <aws/invoicing/model/SendProcurementPortalValidationRequest.h>
 #include <aws/invoicing/model/TagResourceRequest.h>
 #include <aws/invoicing/model/UntagResourceRequest.h>
 #include <aws/invoicing/model/UpdateInvoiceUnitRequest.h>
 #include <aws/invoicing/model/UpdateProcurementPortalPreferenceStatusRequest.h>
+#include <aws/invoicing/model/VerifyProcurementPortalValidationRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
 using namespace Aws;
@@ -172,7 +176,8 @@ InvoicingClient::InvokeOperationOutcome InvoicingClient::InvokeServiceOperation(
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -184,7 +189,7 @@ InvoicingClient::InvokeOperationOutcome InvoicingClient::InvokeServiceOperation(
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -256,6 +261,19 @@ ListProcurementPortalPreferencesOutcome InvoicingClient::ListProcurementPortalPr
                             : ListProcurementPortalPreferencesOutcome(std::move(result.GetError()));
 }
 
+ListProcurementPortalSuppliersOutcome InvoicingClient::ListProcurementPortalSuppliers(
+    const ListProcurementPortalSuppliersRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListProcurementPortalSuppliersOutcome(result.GetResultWithOwnership())
+                            : ListProcurementPortalSuppliersOutcome(std::move(result.GetError()));
+}
+
+ListProcurementPortalsOutcome InvoicingClient::ListProcurementPortals(const ListProcurementPortalsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListProcurementPortalsOutcome(result.GetResultWithOwnership())
+                            : ListProcurementPortalsOutcome(std::move(result.GetError()));
+}
+
 ListTagsForResourceOutcome InvoicingClient::ListTagsForResource(const ListTagsForResourceRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListTagsForResourceOutcome(result.GetResultWithOwnership())
@@ -267,6 +285,13 @@ PutProcurementPortalPreferenceOutcome InvoicingClient::PutProcurementPortalPrefe
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? PutProcurementPortalPreferenceOutcome(result.GetResultWithOwnership())
                             : PutProcurementPortalPreferenceOutcome(std::move(result.GetError()));
+}
+
+SendProcurementPortalValidationOutcome InvoicingClient::SendProcurementPortalValidation(
+    const SendProcurementPortalValidationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? SendProcurementPortalValidationOutcome(result.GetResultWithOwnership())
+                            : SendProcurementPortalValidationOutcome(std::move(result.GetError()));
 }
 
 TagResourceOutcome InvoicingClient::TagResource(const TagResourceRequest& request) const {
@@ -290,4 +315,11 @@ UpdateProcurementPortalPreferenceStatusOutcome InvoicingClient::UpdateProcuremen
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? UpdateProcurementPortalPreferenceStatusOutcome(result.GetResultWithOwnership())
                             : UpdateProcurementPortalPreferenceStatusOutcome(std::move(result.GetError()));
+}
+
+VerifyProcurementPortalValidationOutcome InvoicingClient::VerifyProcurementPortalValidation(
+    const VerifyProcurementPortalValidationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? VerifyProcurementPortalValidationOutcome(result.GetResultWithOwnership())
+                            : VerifyProcurementPortalValidationOutcome(std::move(result.GetError()));
 }

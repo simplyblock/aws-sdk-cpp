@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/chatbot/ChatbotEndpointRules.h>
 #include <aws/chatbot/Chatbot_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace chatbot {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ChatbotClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using ChatbotEndpointProviderBase =
     EndpointProviderBase<ChatbotClientConfiguration, ChatbotBuiltInParameters, ChatbotClientContextParameters>;
 
 using ChatbotDefaultEpProviderBase =
-    DefaultEndpointProvider<ChatbotClientConfiguration, ChatbotBuiltInParameters, ChatbotClientContextParameters>;
+    BDDEndpointProvider<ChatbotClientConfiguration, ChatbotBuiltInParameters, ChatbotClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_CHATBOT_API ChatbotEndpointProvider : public ChatbotDefaultEpProviderB
  public:
   using ChatbotResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ChatbotEndpointProvider()
-      : ChatbotDefaultEpProviderBase(Aws::chatbot::ChatbotEndpointRules::GetRulesBlob(),
-                                     Aws::chatbot::ChatbotEndpointRules::RulesBlobSize) {}
+  ChatbotEndpointProvider();
 
   ~ChatbotEndpointProvider() {}
 };

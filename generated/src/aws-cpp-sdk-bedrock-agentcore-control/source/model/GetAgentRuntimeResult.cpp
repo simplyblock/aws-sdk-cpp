@@ -62,6 +62,10 @@ GetAgentRuntimeResult& GetAgentRuntimeResult::operator=(const Aws::AmazonWebServ
     m_lifecycleConfiguration = jsonValue.GetObject("lifecycleConfiguration");
     m_lifecycleConfigurationHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("hooksConfiguration")) {
+    m_hooksConfiguration = jsonValue.GetObject("hooksConfiguration");
+    m_hooksConfigurationHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("failureReason")) {
     m_failureReason = jsonValue.GetString("failureReason");
     m_failureReasonHasBeenSet = true;
@@ -108,6 +112,29 @@ GetAgentRuntimeResult& GetAgentRuntimeResult::operator=(const Aws::AmazonWebServ
       m_filesystemConfigurations.push_back(filesystemConfigurationsJsonList[filesystemConfigurationsIndex].AsObject());
     }
     m_filesystemConfigurationsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("capacityProviderConfiguration")) {
+    m_capacityProviderConfiguration = jsonValue.GetObject("capacityProviderConfiguration");
+    m_capacityProviderConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("platformVersion")) {
+    m_platformVersion = jsonValue.GetString("platformVersion");
+    m_platformVersionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("allowedPorts")) {
+    Aws::Utils::Array<JsonView> allowedPortsJsonList = jsonValue.GetArray("allowedPorts");
+    for (unsigned allowedPortsIndex = 0; allowedPortsIndex < allowedPortsJsonList.GetLength(); ++allowedPortsIndex) {
+      m_allowedPorts.push_back(allowedPortsJsonList[allowedPortsIndex].AsObject());
+    }
+    m_allowedPortsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("resourceConfigurations")) {
+    Aws::Utils::Array<JsonView> resourceConfigurationsJsonList = jsonValue.GetArray("resourceConfigurations");
+    for (unsigned resourceConfigurationsIndex = 0; resourceConfigurationsIndex < resourceConfigurationsJsonList.GetLength();
+         ++resourceConfigurationsIndex) {
+      m_resourceConfigurations.push_back(resourceConfigurationsJsonList[resourceConfigurationsIndex].AsObject());
+    }
+    m_resourceConfigurationsHasBeenSet = true;
   }
 
   const auto& headers = result.GetHeaderValueCollection();

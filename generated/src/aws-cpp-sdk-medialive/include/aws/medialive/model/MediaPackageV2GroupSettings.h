@@ -14,6 +14,8 @@
 #include <aws/medialive/model/CmafTimedMetadataId3Frame.h>
 #include <aws/medialive/model/CmafTimedMetadataPassthrough.h>
 #include <aws/medialive/model/MediaPackageAdditionalDestinations.h>
+#include <aws/medialive/model/MediaPackageV2CaptionLanguageSetting.h>
+#include <aws/medialive/model/MediaPackageV2WatermarkingSettings.h>
 #include <aws/medialive/model/Scte35Type.h>
 
 #include <utility>
@@ -118,7 +120,17 @@ class MediaPackageV2GroupSettings {
 
   ///@{
   /**
-   * Type of scte35 track to add. none or scte35WithoutSegmentation
+   * SCTE-35 insertion type. Option "none" indicates that a SCTE-35 marker will not
+   * be inserted, nor will an IDR be inserted at the SCTE-35 cue point, nor will the
+   * segment be segmented. Option "scte35WithoutIdr" indicates that a SCTE-35 marker
+   * will be inserted to indicate the cue point, but MediaLive will not insert an IDR
+   * on that frame nor will it introduce a new segment boundary there if it wasn't
+   * already going to be one (this option is required for use with downstream
+   * multiview bitstream stitching workflows). Option "scte35WithoutSegmentation"
+   * indicates that a SCTE-35 marker will be inserted to indicate the cue point, and
+   * an IDR will be inserted on that frame so that a downstream re-packager might
+   * split the segment there, but MediaLive itself will not introduce a new segment
+   * boundary there.
    */
   inline Scte35Type GetScte35Type() const { return m_scte35Type; }
   inline bool Scte35TypeHasBeenSet() const { return m_scte35TypeHasBeenSet; }
@@ -240,6 +252,50 @@ class MediaPackageV2GroupSettings {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * Specifies the type of watermarking technology to use.
+   */
+  inline const MediaPackageV2WatermarkingSettings& GetWatermarkingSettings() const { return m_watermarkingSettings; }
+  inline bool WatermarkingSettingsHasBeenSet() const { return m_watermarkingSettingsHasBeenSet; }
+  template <typename WatermarkingSettingsT = MediaPackageV2WatermarkingSettings>
+  void SetWatermarkingSettings(WatermarkingSettingsT&& value) {
+    m_watermarkingSettingsHasBeenSet = true;
+    m_watermarkingSettings = std::forward<WatermarkingSettingsT>(value);
+  }
+  template <typename WatermarkingSettingsT = MediaPackageV2WatermarkingSettings>
+  MediaPackageV2GroupSettings& WithWatermarkingSettings(WatermarkingSettingsT&& value) {
+    SetWatermarkingSettings(std::forward<WatermarkingSettingsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * Applies only to 608 Embedded output captions. Controls the CLOSED-CAPTIONS
+   * signaling that MediaPackage v2 writes into the HLS manifest it delivers.
+auto:
+   * The default. If captionLanguageMappings is non-empty, the HLS manifest includes
+   * a CLOSED-CAPTIONS line for each mapped caption channel. If
+   * captionLanguageMappings is empty, the HLS manifest omits any CLOSED-CAPTIONS
+   * line.
+none: The HLS manifest carries CLOSED-CAPTIONS=NONE on each
+   * EXT-X-STREAM-INF tag, which signals to players that the stream has no closed
+   * captions, so they stop offering a CC track. The API rejects none combined with a
+   * non-empty captionLanguageMappings.
+   */
+  inline MediaPackageV2CaptionLanguageSetting GetCaptionLanguageSetting() const { return m_captionLanguageSetting; }
+  inline bool CaptionLanguageSettingHasBeenSet() const { return m_captionLanguageSettingHasBeenSet; }
+  inline void SetCaptionLanguageSetting(MediaPackageV2CaptionLanguageSetting value) {
+    m_captionLanguageSettingHasBeenSet = true;
+    m_captionLanguageSetting = value;
+  }
+  inline MediaPackageV2GroupSettings& WithCaptionLanguageSetting(MediaPackageV2CaptionLanguageSetting value) {
+    SetCaptionLanguageSetting(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::Vector<CaptionLanguageMapping> m_captionLanguageMappings;
 
@@ -262,6 +318,10 @@ class MediaPackageV2GroupSettings {
   CmafTimedMetadataPassthrough m_timedMetadataPassthrough{CmafTimedMetadataPassthrough::NOT_SET};
 
   Aws::Vector<MediaPackageAdditionalDestinations> m_additionalDestinations;
+
+  MediaPackageV2WatermarkingSettings m_watermarkingSettings;
+
+  MediaPackageV2CaptionLanguageSetting m_captionLanguageSetting{MediaPackageV2CaptionLanguageSetting::NOT_SET};
   bool m_captionLanguageMappingsHasBeenSet = false;
   bool m_id3BehaviorHasBeenSet = false;
   bool m_klvBehaviorHasBeenSet = false;
@@ -273,6 +333,8 @@ class MediaPackageV2GroupSettings {
   bool m_timedMetadataId3PeriodHasBeenSet = false;
   bool m_timedMetadataPassthroughHasBeenSet = false;
   bool m_additionalDestinationsHasBeenSet = false;
+  bool m_watermarkingSettingsHasBeenSet = false;
+  bool m_captionLanguageSettingHasBeenSet = false;
 };
 
 }  // namespace Model

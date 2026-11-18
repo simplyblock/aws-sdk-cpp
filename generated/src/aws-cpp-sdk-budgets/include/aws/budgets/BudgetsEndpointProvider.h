@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/budgets/BudgetsEndpointRules.h>
 #include <aws/budgets/Budgets_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace Budgets {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using BudgetsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using BudgetsEndpointProviderBase =
     EndpointProviderBase<BudgetsClientConfiguration, BudgetsBuiltInParameters, BudgetsClientContextParameters>;
 
 using BudgetsDefaultEpProviderBase =
-    DefaultEndpointProvider<BudgetsClientConfiguration, BudgetsBuiltInParameters, BudgetsClientContextParameters>;
+    BDDEndpointProvider<BudgetsClientConfiguration, BudgetsBuiltInParameters, BudgetsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_BUDGETS_API BudgetsEndpointProvider : public BudgetsDefaultEpProviderB
  public:
   using BudgetsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  BudgetsEndpointProvider()
-      : BudgetsDefaultEpProviderBase(Aws::Budgets::BudgetsEndpointRules::GetRulesBlob(),
-                                     Aws::Budgets::BudgetsEndpointRules::RulesBlobSize) {}
+  BudgetsEndpointProvider();
 
   ~BudgetsEndpointProvider() {}
 };

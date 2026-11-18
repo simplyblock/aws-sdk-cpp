@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/lex-models/LexModelBuildingServiceEndpointRules.h>
 #include <aws/lex-models/LexModelBuildingService_EXPORTS.h>
 
 namespace Aws {
 namespace LexModelBuildingService {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using LexModelBuildingServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using LexModelBuildingServiceEndpointProviderBase =
                          LexModelBuildingServiceClientContextParameters>;
 
 using LexModelBuildingServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<LexModelBuildingServiceClientConfiguration, LexModelBuildingServiceBuiltInParameters,
-                            LexModelBuildingServiceClientContextParameters>;
+    BDDEndpointProvider<LexModelBuildingServiceClientConfiguration, LexModelBuildingServiceBuiltInParameters,
+                        LexModelBuildingServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_LEXMODELBUILDINGSERVICE_API LexModelBuildingServiceEndpointProvider : 
  public:
   using LexModelBuildingServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  LexModelBuildingServiceEndpointProvider()
-      : LexModelBuildingServiceDefaultEpProviderBase(Aws::LexModelBuildingService::LexModelBuildingServiceEndpointRules::GetRulesBlob(),
-                                                     Aws::LexModelBuildingService::LexModelBuildingServiceEndpointRules::RulesBlobSize) {}
+  LexModelBuildingServiceEndpointProvider();
 
   ~LexModelBuildingServiceEndpointProvider() {}
 };

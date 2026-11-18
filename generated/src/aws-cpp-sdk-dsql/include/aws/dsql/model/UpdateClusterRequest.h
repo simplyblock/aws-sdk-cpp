@@ -6,8 +6,10 @@
 #pragma once
 #include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/dsql/DSQLRequest.h>
 #include <aws/dsql/DSQL_EXPORTS.h>
+#include <aws/dsql/model/MetricGroupRequest.h>
 #include <aws/dsql/model/MultiRegionProperties.h>
 
 #include <utility>
@@ -68,7 +70,8 @@ class UpdateClusterRequest : public DSQLRequest {
   /**
    * <p>The KMS key that encrypts and protects the data on your cluster. You can
    * specify the ARN, ID, or alias of an existing key or have Amazon Web Services
-   * create a default key for you.</p>
+   * create a default key for you.</p> <p>To switch to the key owned by Amazon Web
+   * Services, specify the reserved value <code>AWS_OWNED_KMS_KEY</code>.</p>
    */
   inline const Aws::String& GetKmsEncryptionKey() const { return m_kmsEncryptionKey; }
   inline bool KmsEncryptionKeyHasBeenSet() const { return m_kmsEncryptionKeyHasBeenSet; }
@@ -126,6 +129,35 @@ class UpdateClusterRequest : public DSQLRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The complete set of metric groups to enable for advanced monitoring on the
+   * cluster. This list replaces the current set, so any metric group that you don't
+   * include is disabled. To disable all metric groups, specify an empty list
+   * (<code>[]</code>). If you omit this parameter, the current setting doesn't
+   * change.</p> <p>To view the metric groups enabled on a cluster, use
+   * <i>GetCluster</i>.</p>
+   */
+  inline const Aws::Vector<MetricGroupRequest>& GetMetricGroups() const { return m_metricGroups; }
+  inline bool MetricGroupsHasBeenSet() const { return m_metricGroupsHasBeenSet; }
+  template <typename MetricGroupsT = Aws::Vector<MetricGroupRequest>>
+  void SetMetricGroups(MetricGroupsT&& value) {
+    m_metricGroupsHasBeenSet = true;
+    m_metricGroups = std::forward<MetricGroupsT>(value);
+  }
+  template <typename MetricGroupsT = Aws::Vector<MetricGroupRequest>>
+  UpdateClusterRequest& WithMetricGroups(MetricGroupsT&& value) {
+    SetMetricGroups(std::forward<MetricGroupsT>(value));
+    return *this;
+  }
+  template <typename MetricGroupsT = MetricGroupRequest>
+  UpdateClusterRequest& AddMetricGroups(MetricGroupsT&& value) {
+    m_metricGroupsHasBeenSet = true;
+    m_metricGroups.emplace_back(std::forward<MetricGroupsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_identifier;
 
@@ -136,11 +168,14 @@ class UpdateClusterRequest : public DSQLRequest {
   Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
   MultiRegionProperties m_multiRegionProperties;
+
+  Aws::Vector<MetricGroupRequest> m_metricGroups;
   bool m_identifierHasBeenSet = false;
   bool m_deletionProtectionEnabledHasBeenSet = false;
   bool m_kmsEncryptionKeyHasBeenSet = false;
   bool m_clientTokenHasBeenSet = true;
   bool m_multiRegionPropertiesHasBeenSet = false;
+  bool m_metricGroupsHasBeenSet = false;
 };
 
 }  // namespace Model

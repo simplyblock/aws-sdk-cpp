@@ -8,11 +8,13 @@
 #include <aws/marketplace-catalog/model/AmiProductFilters.h>
 #include <aws/marketplace-catalog/model/ContainerProductFilters.h>
 #include <aws/marketplace-catalog/model/DataProductFilters.h>
+#include <aws/marketplace-catalog/model/ExpressPrivateOfferConfigurationFilters.h>
 #include <aws/marketplace-catalog/model/MachineLearningProductFilters.h>
 #include <aws/marketplace-catalog/model/OfferFilters.h>
 #include <aws/marketplace-catalog/model/OfferSetFilters.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationFilters.h>
 #include <aws/marketplace-catalog/model/SaaSProductFilters.h>
+#include <aws/marketplace-catalog/model/SubsidiaryAuthorizationFilters.h>
 
 #include <utility>
 
@@ -180,6 +182,44 @@ class EntityTypeFilters {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>A filter for express private offer configurations.</p>
+   */
+  inline const ExpressPrivateOfferConfigurationFilters& GetExpressPrivateOfferConfigurationFilters() const {
+    return m_expressPrivateOfferConfigurationFilters;
+  }
+  inline bool ExpressPrivateOfferConfigurationFiltersHasBeenSet() const { return m_expressPrivateOfferConfigurationFiltersHasBeenSet; }
+  template <typename ExpressPrivateOfferConfigurationFiltersT = ExpressPrivateOfferConfigurationFilters>
+  void SetExpressPrivateOfferConfigurationFilters(ExpressPrivateOfferConfigurationFiltersT&& value) {
+    m_expressPrivateOfferConfigurationFiltersHasBeenSet = true;
+    m_expressPrivateOfferConfigurationFilters = std::forward<ExpressPrivateOfferConfigurationFiltersT>(value);
+  }
+  template <typename ExpressPrivateOfferConfigurationFiltersT = ExpressPrivateOfferConfigurationFilters>
+  EntityTypeFilters& WithExpressPrivateOfferConfigurationFilters(ExpressPrivateOfferConfigurationFiltersT&& value) {
+    SetExpressPrivateOfferConfigurationFilters(std::forward<ExpressPrivateOfferConfigurationFiltersT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>A filter for subsidiary authorizations.</p>
+   */
+  inline const SubsidiaryAuthorizationFilters& GetSubsidiaryAuthorizationFilters() const { return m_subsidiaryAuthorizationFilters; }
+  inline bool SubsidiaryAuthorizationFiltersHasBeenSet() const { return m_subsidiaryAuthorizationFiltersHasBeenSet; }
+  template <typename SubsidiaryAuthorizationFiltersT = SubsidiaryAuthorizationFilters>
+  void SetSubsidiaryAuthorizationFilters(SubsidiaryAuthorizationFiltersT&& value) {
+    m_subsidiaryAuthorizationFiltersHasBeenSet = true;
+    m_subsidiaryAuthorizationFilters = std::forward<SubsidiaryAuthorizationFiltersT>(value);
+  }
+  template <typename SubsidiaryAuthorizationFiltersT = SubsidiaryAuthorizationFilters>
+  EntityTypeFilters& WithSubsidiaryAuthorizationFilters(SubsidiaryAuthorizationFiltersT&& value) {
+    SetSubsidiaryAuthorizationFilters(std::forward<SubsidiaryAuthorizationFiltersT>(value));
+    return *this;
+  }
+  ///@}
  private:
   DataProductFilters m_dataProductFilters;
 
@@ -196,6 +236,10 @@ class EntityTypeFilters {
   MachineLearningProductFilters m_machineLearningProductFilters;
 
   OfferSetFilters m_offerSetFilters;
+
+  ExpressPrivateOfferConfigurationFilters m_expressPrivateOfferConfigurationFilters;
+
+  SubsidiaryAuthorizationFilters m_subsidiaryAuthorizationFilters;
   bool m_dataProductFiltersHasBeenSet = false;
   bool m_saaSProductFiltersHasBeenSet = false;
   bool m_amiProductFiltersHasBeenSet = false;
@@ -204,6 +248,8 @@ class EntityTypeFilters {
   bool m_resaleAuthorizationFiltersHasBeenSet = false;
   bool m_machineLearningProductFiltersHasBeenSet = false;
   bool m_offerSetFiltersHasBeenSet = false;
+  bool m_expressPrivateOfferConfigurationFiltersHasBeenSet = false;
+  bool m_subsidiaryAuthorizationFiltersHasBeenSet = false;
 };
 
 }  // namespace Model

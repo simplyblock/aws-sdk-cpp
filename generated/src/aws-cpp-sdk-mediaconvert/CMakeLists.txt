@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-mediaconvert "C++ SDK for the AWS mediaconvert service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-mediaconvert "C++ SDK for AWS Elemental MediaConvert" aws-cpp-sdk-core)
 
 file(GLOB AWS_MEDIACONVERT_HEADERS
     "include/aws/mediaconvert/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MEDIACONVERT_HEADERS
 
 file(GLOB AWS_MEDIACONVERT_MODEL_HEADERS
     "include/aws/mediaconvert/model/*.h"
+)
+
+file(GLOB AWS_MEDIACONVERT_INTERNAL_HEADERS
+    "include/aws/mediaconvert/internal/*.h"
 )
 
 file(GLOB AWS_MEDIACONVERT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MEDIACONVERT_MODEL_SOURCE
 
 file(GLOB MEDIACONVERT_UNIFIED_HEADERS
     ${AWS_MEDIACONVERT_HEADERS}
+    ${AWS_MEDIACONVERT_INTERNAL_HEADERS}
     ${AWS_MEDIACONVERT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\mediaconvert" FILES ${AWS_MEDIACONVERT_HEADERS})
+        source_group("Header Files\\aws\\mediaconvert\\internal" FILES ${AWS_MEDIACONVERT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\mediaconvert\\model" FILES ${AWS_MEDIACONVERT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MEDIACONVERT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MEDIACONVERT_MODEL_SOURCE})

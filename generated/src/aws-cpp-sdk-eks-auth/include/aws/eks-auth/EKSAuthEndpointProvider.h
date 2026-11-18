@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/eks-auth/EKSAuthEndpointRules.h>
 #include <aws/eks-auth/EKSAuth_EXPORTS.h>
 
 namespace Aws {
 namespace EKSAuth {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using EKSAuthClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using EKSAuthEndpointProviderBase =
     EndpointProviderBase<EKSAuthClientConfiguration, EKSAuthBuiltInParameters, EKSAuthClientContextParameters>;
 
 using EKSAuthDefaultEpProviderBase =
-    DefaultEndpointProvider<EKSAuthClientConfiguration, EKSAuthBuiltInParameters, EKSAuthClientContextParameters>;
+    BDDEndpointProvider<EKSAuthClientConfiguration, EKSAuthBuiltInParameters, EKSAuthClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_EKSAUTH_API EKSAuthEndpointProvider : public EKSAuthDefaultEpProviderB
  public:
   using EKSAuthResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  EKSAuthEndpointProvider()
-      : EKSAuthDefaultEpProviderBase(Aws::EKSAuth::EKSAuthEndpointRules::GetRulesBlob(),
-                                     Aws::EKSAuth::EKSAuthEndpointRules::RulesBlobSize) {}
+  EKSAuthEndpointProvider();
 
   ~EKSAuthEndpointProvider() {}
 };

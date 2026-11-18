@@ -4,12 +4,14 @@
  */
 
 #pragma once
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 #include <aws/marketplace-agreement/model/ByolPricingTerm.h>
 #include <aws/marketplace-agreement/model/ConfigurableUpfrontPricingTerm.h>
 #include <aws/marketplace-agreement/model/FixedUpfrontPricingTerm.h>
 #include <aws/marketplace-agreement/model/FreeTrialPricingTerm.h>
 #include <aws/marketplace-agreement/model/LegalTerm.h>
+#include <aws/marketplace-agreement/model/NetPaymentTerm.h>
 #include <aws/marketplace-agreement/model/PaymentScheduleTerm.h>
 #include <aws/marketplace-agreement/model/RecurringPaymentTerm.h>
 #include <aws/marketplace-agreement/model/RenewalTerm.h>
@@ -22,10 +24,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AgreementService {
 namespace Model {
@@ -39,9 +40,9 @@ namespace Model {
 class AcceptedTerm {
  public:
   AWS_AGREEMENTSERVICE_API AcceptedTerm() = default;
-  AWS_AGREEMENTSERVICE_API AcceptedTerm(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API AcceptedTerm& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_AGREEMENTSERVICE_API AcceptedTerm(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API AcceptedTerm& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -87,10 +88,13 @@ class AcceptedTerm {
    * on its pre-defined end date), a new agreement will be created using the accepted
    * terms on the existing agreement. In other words, the agreement will be renewed.
    * Presence of <code>RenewalTerm</code> in the offer document means that
-   * auto-renewal is allowed. Buyers will have the option to accept or decline
-   * auto-renewal at the offer acceptance/agreement creation. Buyers can also change
-   * this flag from <code>True</code> to <code>False</code> or <code>False</code> to
-   * <code>True</code> at anytime during the agreement's lifecycle.</p>
+   * auto-renewal is allowed. The acceptor will have the option to accept or decline
+   * auto-renewal at the offer acceptance/agreement creation. The acceptor can also
+   * change this flag from <code>True</code> to <code>False</code> or
+   * <code>False</code> to <code>True</code>, within the limits set by
+   * <code>LockoutPeriod</code> and <code>MaxRenewals</code>. Setting the flag to
+   * <code>True</code> doesn't by itself guarantee that the agreement renews, because
+   * the proposer can also opt out.</p>
    */
   inline const RenewalTerm& GetRenewalTerm() const { return m_renewalTerm; }
   inline bool RenewalTermHasBeenSet() const { return m_renewalTermHasBeenSet; }
@@ -224,7 +228,7 @@ class AcceptedTerm {
 
   ///@{
   /**
-   * <p>Defines a short-term free pricing model where the buyers aren’t charged
+   * <p>Defines a short-term free pricing model where the buyers aren't charged
    * anything within a specified limit.</p>
    */
   inline const FreeTrialPricingTerm& GetFreeTrialPricingTerm() const { return m_freeTrialPricingTerm; }
@@ -279,6 +283,25 @@ class AcceptedTerm {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Defines the net payment due period for the agreement, specifying when payment
+   * is due after an invoice is issued.</p>
+   */
+  inline const NetPaymentTerm& GetNetPaymentTerm() const { return m_netPaymentTerm; }
+  inline bool NetPaymentTermHasBeenSet() const { return m_netPaymentTermHasBeenSet; }
+  template <typename NetPaymentTermT = NetPaymentTerm>
+  void SetNetPaymentTerm(NetPaymentTermT&& value) {
+    m_netPaymentTermHasBeenSet = true;
+    m_netPaymentTerm = std::forward<NetPaymentTermT>(value);
+  }
+  template <typename NetPaymentTermT = NetPaymentTerm>
+  AcceptedTerm& WithNetPaymentTerm(NetPaymentTermT&& value) {
+    SetNetPaymentTerm(std::forward<NetPaymentTermT>(value));
+    return *this;
+  }
+  ///@}
  private:
   LegalTerm m_legalTerm;
 
@@ -303,6 +326,8 @@ class AcceptedTerm {
   FixedUpfrontPricingTerm m_fixedUpfrontPricingTerm;
 
   VariablePaymentTerm m_variablePaymentTerm;
+
+  NetPaymentTerm m_netPaymentTerm;
   bool m_legalTermHasBeenSet = false;
   bool m_supportTermHasBeenSet = false;
   bool m_renewalTermHasBeenSet = false;
@@ -315,6 +340,7 @@ class AcceptedTerm {
   bool m_freeTrialPricingTermHasBeenSet = false;
   bool m_fixedUpfrontPricingTermHasBeenSet = false;
   bool m_variablePaymentTermHasBeenSet = false;
+  bool m_netPaymentTermHasBeenSet = false;
 };
 
 }  // namespace Model

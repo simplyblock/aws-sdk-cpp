@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -9,6 +9,7 @@
 #include <aws/gameliftstreams/GameLiftStreamsClientPagination.h>
 #include <aws/gameliftstreams/GameLiftStreamsPaginationBase.h>
 #include <aws/gameliftstreams/model/ListApplicationsPaginationTraits.h>
+#include <aws/gameliftstreams/model/ListStreamUrlsPaginationTraits.h>
 #include <aws/gameliftstreams/model/ListStreamSessionsByAccountPaginationTraits.h>
 #include <aws/gameliftstreams/model/ListStreamGroupsPaginationTraits.h>
 #include <aws/gameliftstreams/model/ListStreamSessionsPaginationTraits.h>
@@ -21,6 +22,6 @@ class GameLiftStreamsPaginationCompilationTest : public Aws::Testing::AwsCppSdkG
 
 TEST_F(GameLiftStreamsPaginationCompilationTest, GameLiftStreamsPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -35,6 +35,7 @@
 #include <aws/ec2/model/SearchTransitGatewayMulticastGroupsPaginationTraits.h>
 #include <aws/ec2/model/GetNetworkInsightsAccessScopeAnalysisFindingsPaginationTraits.h>
 #include <aws/ec2/model/DescribeImportImageTasksPaginationTraits.h>
+#include <aws/ec2/model/GetTransitGatewayPolicyTableEntriesPaginationTraits.h>
 #include <aws/ec2/model/DescribeLaunchTemplateVersionsPaginationTraits.h>
 #include <aws/ec2/model/GetIpamAddressHistoryPaginationTraits.h>
 #include <aws/ec2/model/DescribeClientVpnRoutesPaginationTraits.h>
@@ -48,10 +49,12 @@
 #include <aws/ec2/model/DescribeNetworkInsightsAccessScopeAnalysesPaginationTraits.h>
 #include <aws/ec2/model/GetVpnConnectionDeviceTypesPaginationTraits.h>
 #include <aws/ec2/model/DescribeFastSnapshotRestoresPaginationTraits.h>
+#include <aws/ec2/model/DescribeNetworkingFlexCostAllocationPoliciesPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayAttachmentPropagationsPaginationTraits.h>
 #include <aws/ec2/model/DescribeIpamPrefixListResolversPaginationTraits.h>
 #include <aws/ec2/model/DescribeVpcClassicLinkDnsSupportPaginationTraits.h>
 #include <aws/ec2/model/GetManagedPrefixListEntriesPaginationTraits.h>
+#include <aws/ec2/model/DescribeCapacityReservationDateChangeQuotesPaginationTraits.h>
 #include <aws/ec2/model/GetCapacityManagerMonitoredTagKeysPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayMulticastDomainAssociationsPaginationTraits.h>
 #include <aws/ec2/model/DescribeTransitGatewayPeeringAttachmentsPaginationTraits.h>
@@ -68,6 +71,7 @@
 #include <aws/ec2/model/DescribeScheduledInstancesPaginationTraits.h>
 #include <aws/ec2/model/DescribeRouteTablesPaginationTraits.h>
 #include <aws/ec2/model/DescribeIpamPoolAllocationsPaginationTraits.h>
+#include <aws/ec2/model/DescribeMetricCategoriesPaginationTraits.h>
 #include <aws/ec2/model/GetCapacityManagerMetricDataPaginationTraits.h>
 #include <aws/ec2/model/DescribeSnapshotsPaginationTraits.h>
 #include <aws/ec2/model/DescribeVpcEndpointConnectionNotificationsPaginationTraits.h>
@@ -84,6 +88,7 @@
 #include <aws/ec2/model/DescribeTrafficMirrorTargetsPaginationTraits.h>
 #include <aws/ec2/model/DescribeIamInstanceProfileAssociationsPaginationTraits.h>
 #include <aws/ec2/model/DescribeSecondaryInterfacesPaginationTraits.h>
+#include <aws/ec2/model/GetImageFindingsPaginationTraits.h>
 #include <aws/ec2/model/DescribeVpcEndpointConnectionsPaginationTraits.h>
 #include <aws/ec2/model/DescribeSecondarySubnetsPaginationTraits.h>
 #include <aws/ec2/model/DescribeStoreImageTasksPaginationTraits.h>
@@ -175,6 +180,7 @@
 #include <aws/ec2/model/DescribeImagesPaginationTraits.h>
 #include <aws/ec2/model/DescribeIpamResourceDiscoveryAssociationsPaginationTraits.h>
 #include <aws/ec2/model/GetInstanceTypesFromInstanceRequirementsPaginationTraits.h>
+#include <aws/ec2/model/DescribeNetworkingFlexCostAllocationPolicyAssociationsPaginationTraits.h>
 #include <aws/ec2/model/DescribeHostReservationOfferingsPaginationTraits.h>
 #include <aws/ec2/model/DescribeSecurityGroupsPaginationTraits.h>
 
@@ -186,6 +192,6 @@ class EC2PaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(EC2PaginationCompilationTest, EC2PaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

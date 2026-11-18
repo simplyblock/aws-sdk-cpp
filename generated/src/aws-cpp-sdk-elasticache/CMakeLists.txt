@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-elasticache "C++ SDK for the AWS elasticache service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-elasticache "C++ SDK for Amazon ElastiCache" aws-cpp-sdk-core)
 
 file(GLOB AWS_ELASTICACHE_HEADERS
     "include/aws/elasticache/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ELASTICACHE_HEADERS
 
 file(GLOB AWS_ELASTICACHE_MODEL_HEADERS
     "include/aws/elasticache/model/*.h"
+)
+
+file(GLOB AWS_ELASTICACHE_INTERNAL_HEADERS
+    "include/aws/elasticache/internal/*.h"
 )
 
 file(GLOB AWS_ELASTICACHE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ELASTICACHE_MODEL_SOURCE
 
 file(GLOB ELASTICACHE_UNIFIED_HEADERS
     ${AWS_ELASTICACHE_HEADERS}
+    ${AWS_ELASTICACHE_INTERNAL_HEADERS}
     ${AWS_ELASTICACHE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\elasticache" FILES ${AWS_ELASTICACHE_HEADERS})
+        source_group("Header Files\\aws\\elasticache\\internal" FILES ${AWS_ELASTICACHE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\elasticache\\model" FILES ${AWS_ELASTICACHE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ELASTICACHE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ELASTICACHE_MODEL_SOURCE})

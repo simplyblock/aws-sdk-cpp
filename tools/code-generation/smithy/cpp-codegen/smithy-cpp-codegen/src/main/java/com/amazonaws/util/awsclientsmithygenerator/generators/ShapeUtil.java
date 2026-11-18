@@ -8,6 +8,7 @@ import software.amazon.smithy.model.Model;
 import software.amazon.smithy.model.shapes.IntegerShape;
 import software.amazon.smithy.model.shapes.LongShape;
 import software.amazon.smithy.model.shapes.OperationShape;
+import software.amazon.smithy.model.shapes.ResourceShape;
 import software.amazon.smithy.model.shapes.ServiceShape;
 import software.amazon.smithy.model.shapes.Shape;
 import software.amazon.smithy.model.shapes.StructureShape;
@@ -47,7 +48,7 @@ public class ShapeUtil {
      *
      */
     private static final Map<String, Set<String>> LEGACY_SDK_RESULT_OPERATIONS = Map.of(
-        "medialive", Set.of("ListChannelPlacementGroups", "ListClusters", "ListNetworks", "ListNodes", "DescribeChannelPlacementGroup", "DescribeCluster", "DescribeNode")
+        "medialive", Set.of("ListChannelPlacementGroups", "ListClusters", "ListNetworks", "ListNodes", "DescribeChannelPlacementGroup", "DescribeCluster", "DescribeNode", "ListSharedChannelGroups")
     );
     
     /**
@@ -66,14 +67,14 @@ public class ShapeUtil {
     
     /**
      * C2J/Smithy model mismatches: tokens that are integers in C2J but strings in Smithy.
-     * 
+     *
      * Background:
      * Some services have tokens that were modeled as integers in C2J but changed to
      * strings in Smithy models. The C2J-generated code uses int types, so traits must
      * use `!= 0` checks instead of `.empty()` checks.
-     * 
+     *
      * Map format: service-name -> Map of operation-name -> token-name
-     * 
+     *
      * Example:
      * S3's ListParts operation has NextPartNumberMarker as integer in C2J but string in Smithy.
      */
@@ -161,8 +162,13 @@ public class ShapeUtil {
         }
         
         String baseName = operation.getId().getName();
+        // Only data shapes collide with a result class name; counting an operation named "<Op>Result"
+        // would wrongly force the SdkResult suffix. Matches C2J renameShape (checks the shape map only).
         Set<String> allShapeNames = new HashSet<>();
-        model.shapes().forEach(s -> allShapeNames.add(s.getId().getName()));
+        model.shapes()
+            .filter(s -> !(s instanceof OperationShape) && !(s instanceof ServiceShape)
+                && !(s instanceof ResourceShape))
+            .forEach(s -> allShapeNames.add(s.getId().getName()));
         
         // Output shape name (used for legacy early-accept behavior)
         String outputShapeName = operation.getOutput().isPresent()

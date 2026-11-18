@@ -525,6 +525,41 @@ class AWS_S3VECTORS_API S3VectorsClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates the default index mode for a vector bucket. The updated default
+   * applies to vector indexes that you create after the request succeeds. The
+   * operation doesn't change existing vector indexes. To specify the vector bucket,
+   * you must use either the vector bucket name or the vector bucket Amazon Resource
+   * Name (ARN).</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the
+   * <code>s3vectors:PutVectorBucketDefaultIndexMode</code> permission to use this
+   * operation.</p> </dd> </dl><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/s3vectors-2025-07-15/PutVectorBucketDefaultIndexMode">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::PutVectorBucketDefaultIndexModeOutcome PutVectorBucketDefaultIndexMode(
+      const Model::PutVectorBucketDefaultIndexModeRequest& request) const;
+
+  /**
+   * A Callable wrapper for PutVectorBucketDefaultIndexMode that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename PutVectorBucketDefaultIndexModeRequestT = Model::PutVectorBucketDefaultIndexModeRequest>
+  Model::PutVectorBucketDefaultIndexModeOutcomeCallable PutVectorBucketDefaultIndexModeCallable(
+      const PutVectorBucketDefaultIndexModeRequestT& request) const {
+    return SubmitCallable(&S3VectorsClient::PutVectorBucketDefaultIndexMode, request);
+  }
+
+  /**
+   * An Async wrapper for PutVectorBucketDefaultIndexMode that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename PutVectorBucketDefaultIndexModeRequestT = Model::PutVectorBucketDefaultIndexModeRequest>
+  void PutVectorBucketDefaultIndexModeAsync(const PutVectorBucketDefaultIndexModeRequestT& request,
+                                            const PutVectorBucketDefaultIndexModeResponseReceivedHandler& handler,
+                                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&S3VectorsClient::PutVectorBucketDefaultIndexMode, request, handler, context);
+  }
+
+  /**
    * <p>Creates a bucket policy for a vector bucket. To specify the bucket, you must
    * use either the vector bucket name or the vector bucket Amazon Resource Name
    * (ARN). </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the
@@ -597,27 +632,34 @@ class AWS_S3VECTORS_API S3VectorsClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Performs an approximate nearest neighbor search query in a vector index using
-   * a query vector. By default, it returns the keys of approximate nearest
-   * neighbors. You can optionally include the computed distance (between the query
-   * vector and each vector in the response) and metadata of each vector in the
-   * response.</p> <p>To specify the vector index, you can either use both the vector
-   * bucket name and the vector index name, or use the vector index Amazon Resource
-   * Name (ARN). </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the
+   * <p>Returns matching vector keys from a vector index ranked by vector similarity,
+   * full-text relevance, or both. Specify <code>queryVector</code> to perform a
+   * vector search, specify <code>queryTexts</code> to perform a full-text search, or
+   * specify both to perform a hybrid search. Full-text search ranks results using
+   * BM25. Hybrid search combines the vector and full-text rankings using Reciprocal
+   * Rank Fusion (RRF).</p> <p>Amazon S3 Vectors ranks results by distance for a
+   * vector-only search, by BM25 score for a full-text-only search, and by RRF score
+   * for a hybrid search. You can optionally include computed distances, relevance
+   * scores, and vector metadata in the response. Full-text and hybrid searches
+   * require a vector index in <code>ENHANCED</code> mode.</p> <p>To specify the
+   * vector index, you can either use both the vector bucket name and the vector
+   * index name, or use the vector index Amazon Resource Name (ARN). </p> <dl>
+   * <dt>Permissions</dt> <dd> <p>You must have the
    * <code>s3vectors:QueryVectors</code> permission to use this operation. Additional
    * permissions are required based on the request parameters you specify:</p> <ul>
    * <li> <p>With only <code>s3vectors:QueryVectors</code> permission, you can
    * retrieve vector keys of approximate nearest neighbors and computed distances
-   * between these vectors. This permission is sufficient only when you don't set any
-   * metadata filters and don't request metadata (by keeping the
-   * <code>returnMetadata</code> parameter set to <code>false</code> or not
-   * specified).</p> </li> <li> <p>If you specify a metadata filter or set
-   * <code>returnMetadata</code> to true, you must have both
+   * between these vectors. This permission is sufficient only when you don't set
+   * <code>queryTexts</code>, don't set any metadata filters, and don't request
+   * metadata (by keeping the <code>returnMetadata</code> parameter set to
+   * <code>false</code> or not specified).</p> </li> <li> <p>To use
+   * <code>queryTexts</code>, a metadata filter, or <code>returnMetadata</code> set
+   * to <code>true</code> with this operation, you must have both the
    * <code>s3vectors:QueryVectors</code> and <code>s3vectors:GetVectors</code>
-   * permissions. The request fails with a <code>403 Forbidden error</code> if you
-   * request metadata filtering or metadata without the
-   * <code>s3vectors:GetVectors</code> permission.</p> </li> </ul> </dd>
-   * </dl><p><h3>See Also:</h3>   <a
+   * permissions. If you use any of these options without the
+   * <code>s3vectors:GetVectors</code> permission, Amazon S3 Vectors returns an
+   * <code>AccessDeniedException</code>.</p> </li> </ul> </dd> </dl><p><h3>See
+   * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/s3vectors-2025-07-15/QueryVectors">AWS
    * API Reference</a></p>
    */
@@ -705,6 +747,72 @@ class AWS_S3VECTORS_API S3VectorsClient : public Aws::Client::AWSJsonClient,
   void UntagResourceAsync(const UntagResourceRequestT& request, const UntagResourceResponseReceivedHandler& handler,
                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&S3VectorsClient::UntagResource, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the mode for an existing vector index. You can set the mode to
+   * <code>ENHANCED</code> for any vector index. You can set the mode to
+   * <code>CLASSIC</code> only for a vector index in a vector bucket created before
+   * September 30, 2026. This operation doesn't change the default index mode of the
+   * vector bucket or the mode of other vector indexes. Specify the vector index by
+   * using its Amazon Resource Name (ARN) or both the vector bucket name and vector
+   * index name.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the
+   * <code>s3vectors:UpdateIndexMode</code> permission to use this operation.</p>
+   * </dd> </dl><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/s3vectors-2025-07-15/UpdateIndexMode">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateIndexModeOutcome UpdateIndexMode(const Model::UpdateIndexModeRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateIndexMode that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename UpdateIndexModeRequestT = Model::UpdateIndexModeRequest>
+  Model::UpdateIndexModeOutcomeCallable UpdateIndexModeCallable(const UpdateIndexModeRequestT& request) const {
+    return SubmitCallable(&S3VectorsClient::UpdateIndexMode, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateIndexMode that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename UpdateIndexModeRequestT = Model::UpdateIndexModeRequest>
+  void UpdateIndexModeAsync(const UpdateIndexModeRequestT& request, const UpdateIndexModeResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&S3VectorsClient::UpdateIndexMode, request, handler, context);
+  }
+
+  /**
+   * <p>Adds or deletes text search configurations on a vector index. Specify either
+   * <code>add</code> or <code>delete</code>, but not both. The vector index must be
+   * in <code>ENHANCED</code> mode.</p> <dl> <dt>Permissions</dt> <dd> <p>You must
+   * have the <code>s3vectors:UpdateMetadataConfiguration</code> permission to use
+   * this operation.</p> </dd> </dl><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/s3vectors-2025-07-15/UpdateMetadataConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateMetadataConfigurationOutcome UpdateMetadataConfiguration(
+      const Model::UpdateMetadataConfigurationRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for UpdateMetadataConfiguration that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename UpdateMetadataConfigurationRequestT = Model::UpdateMetadataConfigurationRequest>
+  Model::UpdateMetadataConfigurationOutcomeCallable UpdateMetadataConfigurationCallable(
+      const UpdateMetadataConfigurationRequestT& request = {}) const {
+    return SubmitCallable(&S3VectorsClient::UpdateMetadataConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateMetadataConfiguration that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateMetadataConfigurationRequestT = Model::UpdateMetadataConfigurationRequest>
+  void UpdateMetadataConfigurationAsync(const UpdateMetadataConfigurationResponseReceivedHandler& handler,
+                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                        const UpdateMetadataConfigurationRequestT& request = {}) const {
+    return SubmitAsync(&S3VectorsClient::UpdateMetadataConfiguration, request, handler, context);
   }
 
   virtual void OverrideEndpoint(const Aws::String& endpoint);

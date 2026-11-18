@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/cloudtrail/CloudTrailEndpointRules.h>
 #include <aws/cloudtrail/CloudTrail_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace CloudTrail {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using CloudTrailClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using CloudTrailEndpointProviderBase =
     EndpointProviderBase<CloudTrailClientConfiguration, CloudTrailBuiltInParameters, CloudTrailClientContextParameters>;
 
 using CloudTrailDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudTrailClientConfiguration, CloudTrailBuiltInParameters, CloudTrailClientContextParameters>;
+    BDDEndpointProvider<CloudTrailClientConfiguration, CloudTrailBuiltInParameters, CloudTrailClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_CLOUDTRAIL_API CloudTrailEndpointProvider : public CloudTrailDefaultEp
  public:
   using CloudTrailResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  CloudTrailEndpointProvider()
-      : CloudTrailDefaultEpProviderBase(Aws::CloudTrail::CloudTrailEndpointRules::GetRulesBlob(),
-                                        Aws::CloudTrail::CloudTrailEndpointRules::RulesBlobSize) {}
+  CloudTrailEndpointProvider();
 
   ~CloudTrailEndpointProvider() {}
 };

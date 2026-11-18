@@ -20,12 +20,18 @@
 
 /* Service model headers required in KinesisClient header */
 #include <aws/core/NoResult.h>
+#include <aws/kinesis/model/AcknowledgeDeadLetterQueueRecordsResult.h>
+#include <aws/kinesis/model/AcknowledgeQueueRecordsResult.h>
+#include <aws/kinesis/model/CreateChannelResult.h>
+#include <aws/kinesis/model/CreateQueueResult.h>
 #include <aws/kinesis/model/DeleteStreamRequest.h>
 #include <aws/kinesis/model/DeregisterStreamConsumerRequest.h>
 #include <aws/kinesis/model/DescribeAccountSettingsRequest.h>
 #include <aws/kinesis/model/DescribeAccountSettingsResult.h>
+#include <aws/kinesis/model/DescribeChannelResult.h>
 #include <aws/kinesis/model/DescribeLimitsRequest.h>
 #include <aws/kinesis/model/DescribeLimitsResult.h>
+#include <aws/kinesis/model/DescribeQueueResult.h>
 #include <aws/kinesis/model/DescribeStreamConsumerRequest.h>
 #include <aws/kinesis/model/DescribeStreamConsumerResult.h>
 #include <aws/kinesis/model/DescribeStreamRequest.h>
@@ -37,6 +43,10 @@
 #include <aws/kinesis/model/GetRecordsResult.h>
 #include <aws/kinesis/model/GetResourcePolicyResult.h>
 #include <aws/kinesis/model/GetShardIteratorResult.h>
+#include <aws/kinesis/model/ListChannelsRequest.h>
+#include <aws/kinesis/model/ListChannelsResult.h>
+#include <aws/kinesis/model/ListQueuesRequest.h>
+#include <aws/kinesis/model/ListQueuesResult.h>
 #include <aws/kinesis/model/ListShardsRequest.h>
 #include <aws/kinesis/model/ListShardsResult.h>
 #include <aws/kinesis/model/ListStreamConsumersResult.h>
@@ -47,8 +57,15 @@
 #include <aws/kinesis/model/ListTagsForStreamResult.h>
 #include <aws/kinesis/model/PutRecordResult.h>
 #include <aws/kinesis/model/PutRecordsResult.h>
+#include <aws/kinesis/model/ReceiveDeadLetterQueueRecordsResult.h>
+#include <aws/kinesis/model/ReceiveQueueRecordsResult.h>
 #include <aws/kinesis/model/RegisterStreamConsumerResult.h>
+#include <aws/kinesis/model/RestoreDeadLetterQueueRecordsResult.h>
 #include <aws/kinesis/model/UpdateAccountSettingsResult.h>
+#include <aws/kinesis/model/UpdateChannelResult.h>
+#include <aws/kinesis/model/UpdateDeadLetterQueueRecordsVisibilityResult.h>
+#include <aws/kinesis/model/UpdateQueueRecordsVisibilityResult.h>
+#include <aws/kinesis/model/UpdateQueueResult.h>
 #include <aws/kinesis/model/UpdateShardCountResult.h>
 #include <aws/kinesis/model/UpdateStreamWarmThroughputResult.h>
 /* End of service model headers required in KinesisClient header */
@@ -78,20 +95,27 @@ class RetryStrategy;
 }  // namespace Client
 
 namespace Kinesis {
-using KinesisClientConfiguration = Aws::Client::GenericClientConfiguration;
 using KinesisEndpointProviderBase = Aws::Kinesis::Endpoint::KinesisEndpointProviderBase;
 using KinesisEndpointProvider = Aws::Kinesis::Endpoint::KinesisEndpointProvider;
 
 namespace Model {
 /* Service model forward declarations required in KinesisClient header */
+class AcknowledgeDeadLetterQueueRecordsRequest;
+class AcknowledgeQueueRecordsRequest;
 class AddTagsToStreamRequest;
+class CreateChannelRequest;
+class CreateQueueRequest;
 class CreateStreamRequest;
 class DecreaseStreamRetentionPeriodRequest;
+class DeleteChannelRequest;
+class DeleteQueueRequest;
 class DeleteResourcePolicyRequest;
 class DeleteStreamRequest;
 class DeregisterStreamConsumerRequest;
 class DescribeAccountSettingsRequest;
+class DescribeChannelRequest;
 class DescribeLimitsRequest;
+class DescribeQueueRequest;
 class DescribeStreamRequest;
 class DescribeStreamConsumerRequest;
 class DescribeStreamSummaryRequest;
@@ -101,6 +125,8 @@ class GetRecordsRequest;
 class GetResourcePolicyRequest;
 class GetShardIteratorRequest;
 class IncreaseStreamRetentionPeriodRequest;
+class ListChannelsRequest;
+class ListQueuesRequest;
 class ListShardsRequest;
 class ListStreamConsumersRequest;
 class ListStreamsRequest;
@@ -110,8 +136,11 @@ class MergeShardsRequest;
 class PutRecordRequest;
 class PutRecordsRequest;
 class PutResourcePolicyRequest;
+class ReceiveDeadLetterQueueRecordsRequest;
+class ReceiveQueueRecordsRequest;
 class RegisterStreamConsumerRequest;
 class RemoveTagsFromStreamRequest;
+class RestoreDeadLetterQueueRecordsRequest;
 class SplitShardRequest;
 class StartStreamEncryptionRequest;
 class StopStreamEncryptionRequest;
@@ -119,21 +148,34 @@ class SubscribeToShardRequest;
 class TagResourceRequest;
 class UntagResourceRequest;
 class UpdateAccountSettingsRequest;
+class UpdateChannelRequest;
+class UpdateDeadLetterQueueRecordsVisibilityRequest;
 class UpdateMaxRecordSizeRequest;
+class UpdateQueueRequest;
+class UpdateQueueRecordsVisibilityRequest;
 class UpdateShardCountRequest;
 class UpdateStreamModeRequest;
+class UpdateStreamRecordDistributionStrategyRequest;
 class UpdateStreamWarmThroughputRequest;
 /* End of service model forward declarations required in KinesisClient header */
 
 /* Service model Outcome class definitions */
+typedef Aws::Utils::Outcome<AcknowledgeDeadLetterQueueRecordsResult, KinesisError> AcknowledgeDeadLetterQueueRecordsOutcome;
+typedef Aws::Utils::Outcome<AcknowledgeQueueRecordsResult, KinesisError> AcknowledgeQueueRecordsOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> AddTagsToStreamOutcome;
+typedef Aws::Utils::Outcome<CreateChannelResult, KinesisError> CreateChannelOutcome;
+typedef Aws::Utils::Outcome<CreateQueueResult, KinesisError> CreateQueueOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> CreateStreamOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> DecreaseStreamRetentionPeriodOutcome;
+typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> DeleteChannelOutcome;
+typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> DeleteQueueOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> DeleteResourcePolicyOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> DeleteStreamOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> DeregisterStreamConsumerOutcome;
 typedef Aws::Utils::Outcome<DescribeAccountSettingsResult, KinesisError> DescribeAccountSettingsOutcome;
+typedef Aws::Utils::Outcome<DescribeChannelResult, KinesisError> DescribeChannelOutcome;
 typedef Aws::Utils::Outcome<DescribeLimitsResult, KinesisError> DescribeLimitsOutcome;
+typedef Aws::Utils::Outcome<DescribeQueueResult, KinesisError> DescribeQueueOutcome;
 typedef Aws::Utils::Outcome<DescribeStreamResult, KinesisError> DescribeStreamOutcome;
 typedef Aws::Utils::Outcome<DescribeStreamConsumerResult, KinesisError> DescribeStreamConsumerOutcome;
 typedef Aws::Utils::Outcome<DescribeStreamSummaryResult, KinesisError> DescribeStreamSummaryOutcome;
@@ -143,6 +185,8 @@ typedef Aws::Utils::Outcome<GetRecordsResult, KinesisError> GetRecordsOutcome;
 typedef Aws::Utils::Outcome<GetResourcePolicyResult, KinesisError> GetResourcePolicyOutcome;
 typedef Aws::Utils::Outcome<GetShardIteratorResult, KinesisError> GetShardIteratorOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> IncreaseStreamRetentionPeriodOutcome;
+typedef Aws::Utils::Outcome<ListChannelsResult, KinesisError> ListChannelsOutcome;
+typedef Aws::Utils::Outcome<ListQueuesResult, KinesisError> ListQueuesOutcome;
 typedef Aws::Utils::Outcome<ListShardsResult, KinesisError> ListShardsOutcome;
 typedef Aws::Utils::Outcome<ListStreamConsumersResult, KinesisError> ListStreamConsumersOutcome;
 typedef Aws::Utils::Outcome<ListStreamsResult, KinesisError> ListStreamsOutcome;
@@ -152,8 +196,11 @@ typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> MergeShardsOutcome;
 typedef Aws::Utils::Outcome<PutRecordResult, KinesisError> PutRecordOutcome;
 typedef Aws::Utils::Outcome<PutRecordsResult, KinesisError> PutRecordsOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> PutResourcePolicyOutcome;
+typedef Aws::Utils::Outcome<ReceiveDeadLetterQueueRecordsResult, KinesisError> ReceiveDeadLetterQueueRecordsOutcome;
+typedef Aws::Utils::Outcome<ReceiveQueueRecordsResult, KinesisError> ReceiveQueueRecordsOutcome;
 typedef Aws::Utils::Outcome<RegisterStreamConsumerResult, KinesisError> RegisterStreamConsumerOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> RemoveTagsFromStreamOutcome;
+typedef Aws::Utils::Outcome<RestoreDeadLetterQueueRecordsResult, KinesisError> RestoreDeadLetterQueueRecordsOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> SplitShardOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> StartStreamEncryptionOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> StopStreamEncryptionOutcome;
@@ -161,21 +208,34 @@ typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> SubscribeToShardOutcome
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> TagResourceOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> UntagResourceOutcome;
 typedef Aws::Utils::Outcome<UpdateAccountSettingsResult, KinesisError> UpdateAccountSettingsOutcome;
+typedef Aws::Utils::Outcome<UpdateChannelResult, KinesisError> UpdateChannelOutcome;
+typedef Aws::Utils::Outcome<UpdateDeadLetterQueueRecordsVisibilityResult, KinesisError> UpdateDeadLetterQueueRecordsVisibilityOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> UpdateMaxRecordSizeOutcome;
+typedef Aws::Utils::Outcome<UpdateQueueResult, KinesisError> UpdateQueueOutcome;
+typedef Aws::Utils::Outcome<UpdateQueueRecordsVisibilityResult, KinesisError> UpdateQueueRecordsVisibilityOutcome;
 typedef Aws::Utils::Outcome<UpdateShardCountResult, KinesisError> UpdateShardCountOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> UpdateStreamModeOutcome;
+typedef Aws::Utils::Outcome<Aws::NoResult, KinesisError> UpdateStreamRecordDistributionStrategyOutcome;
 typedef Aws::Utils::Outcome<UpdateStreamWarmThroughputResult, KinesisError> UpdateStreamWarmThroughputOutcome;
 /* End of service model Outcome class definitions */
 
 /* Service model Outcome callable definitions */
+typedef std::future<AcknowledgeDeadLetterQueueRecordsOutcome> AcknowledgeDeadLetterQueueRecordsOutcomeCallable;
+typedef std::future<AcknowledgeQueueRecordsOutcome> AcknowledgeQueueRecordsOutcomeCallable;
 typedef std::future<AddTagsToStreamOutcome> AddTagsToStreamOutcomeCallable;
+typedef std::future<CreateChannelOutcome> CreateChannelOutcomeCallable;
+typedef std::future<CreateQueueOutcome> CreateQueueOutcomeCallable;
 typedef std::future<CreateStreamOutcome> CreateStreamOutcomeCallable;
 typedef std::future<DecreaseStreamRetentionPeriodOutcome> DecreaseStreamRetentionPeriodOutcomeCallable;
+typedef std::future<DeleteChannelOutcome> DeleteChannelOutcomeCallable;
+typedef std::future<DeleteQueueOutcome> DeleteQueueOutcomeCallable;
 typedef std::future<DeleteResourcePolicyOutcome> DeleteResourcePolicyOutcomeCallable;
 typedef std::future<DeleteStreamOutcome> DeleteStreamOutcomeCallable;
 typedef std::future<DeregisterStreamConsumerOutcome> DeregisterStreamConsumerOutcomeCallable;
 typedef std::future<DescribeAccountSettingsOutcome> DescribeAccountSettingsOutcomeCallable;
+typedef std::future<DescribeChannelOutcome> DescribeChannelOutcomeCallable;
 typedef std::future<DescribeLimitsOutcome> DescribeLimitsOutcomeCallable;
+typedef std::future<DescribeQueueOutcome> DescribeQueueOutcomeCallable;
 typedef std::future<DescribeStreamOutcome> DescribeStreamOutcomeCallable;
 typedef std::future<DescribeStreamConsumerOutcome> DescribeStreamConsumerOutcomeCallable;
 typedef std::future<DescribeStreamSummaryOutcome> DescribeStreamSummaryOutcomeCallable;
@@ -185,6 +245,8 @@ typedef std::future<GetRecordsOutcome> GetRecordsOutcomeCallable;
 typedef std::future<GetResourcePolicyOutcome> GetResourcePolicyOutcomeCallable;
 typedef std::future<GetShardIteratorOutcome> GetShardIteratorOutcomeCallable;
 typedef std::future<IncreaseStreamRetentionPeriodOutcome> IncreaseStreamRetentionPeriodOutcomeCallable;
+typedef std::future<ListChannelsOutcome> ListChannelsOutcomeCallable;
+typedef std::future<ListQueuesOutcome> ListQueuesOutcomeCallable;
 typedef std::future<ListShardsOutcome> ListShardsOutcomeCallable;
 typedef std::future<ListStreamConsumersOutcome> ListStreamConsumersOutcomeCallable;
 typedef std::future<ListStreamsOutcome> ListStreamsOutcomeCallable;
@@ -194,8 +256,11 @@ typedef std::future<MergeShardsOutcome> MergeShardsOutcomeCallable;
 typedef std::future<PutRecordOutcome> PutRecordOutcomeCallable;
 typedef std::future<PutRecordsOutcome> PutRecordsOutcomeCallable;
 typedef std::future<PutResourcePolicyOutcome> PutResourcePolicyOutcomeCallable;
+typedef std::future<ReceiveDeadLetterQueueRecordsOutcome> ReceiveDeadLetterQueueRecordsOutcomeCallable;
+typedef std::future<ReceiveQueueRecordsOutcome> ReceiveQueueRecordsOutcomeCallable;
 typedef std::future<RegisterStreamConsumerOutcome> RegisterStreamConsumerOutcomeCallable;
 typedef std::future<RemoveTagsFromStreamOutcome> RemoveTagsFromStreamOutcomeCallable;
+typedef std::future<RestoreDeadLetterQueueRecordsOutcome> RestoreDeadLetterQueueRecordsOutcomeCallable;
 typedef std::future<SplitShardOutcome> SplitShardOutcomeCallable;
 typedef std::future<StartStreamEncryptionOutcome> StartStreamEncryptionOutcomeCallable;
 typedef std::future<StopStreamEncryptionOutcome> StopStreamEncryptionOutcomeCallable;
@@ -203,9 +268,14 @@ typedef std::future<SubscribeToShardOutcome> SubscribeToShardOutcomeCallable;
 typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
 typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
 typedef std::future<UpdateAccountSettingsOutcome> UpdateAccountSettingsOutcomeCallable;
+typedef std::future<UpdateChannelOutcome> UpdateChannelOutcomeCallable;
+typedef std::future<UpdateDeadLetterQueueRecordsVisibilityOutcome> UpdateDeadLetterQueueRecordsVisibilityOutcomeCallable;
 typedef std::future<UpdateMaxRecordSizeOutcome> UpdateMaxRecordSizeOutcomeCallable;
+typedef std::future<UpdateQueueOutcome> UpdateQueueOutcomeCallable;
+typedef std::future<UpdateQueueRecordsVisibilityOutcome> UpdateQueueRecordsVisibilityOutcomeCallable;
 typedef std::future<UpdateShardCountOutcome> UpdateShardCountOutcomeCallable;
 typedef std::future<UpdateStreamModeOutcome> UpdateStreamModeOutcomeCallable;
+typedef std::future<UpdateStreamRecordDistributionStrategyOutcome> UpdateStreamRecordDistributionStrategyOutcomeCallable;
 typedef std::future<UpdateStreamWarmThroughputOutcome> UpdateStreamWarmThroughputOutcomeCallable;
 /* End of service model Outcome callable definitions */
 }  // namespace Model
@@ -213,9 +283,22 @@ typedef std::future<UpdateStreamWarmThroughputOutcome> UpdateStreamWarmThroughpu
 class KinesisClient;
 
 /* Service model async handlers definitions */
+typedef std::function<void(const KinesisClient*, const Model::AcknowledgeDeadLetterQueueRecordsRequest&,
+                           const Model::AcknowledgeDeadLetterQueueRecordsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    AcknowledgeDeadLetterQueueRecordsResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::AcknowledgeQueueRecordsRequest&, const Model::AcknowledgeQueueRecordsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    AcknowledgeQueueRecordsResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::AddTagsToStreamRequest&, const Model::AddTagsToStreamOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     AddTagsToStreamResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::CreateChannelRequest&, const Model::CreateChannelOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateChannelResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::CreateQueueRequest&, const Model::CreateQueueOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateQueueResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::CreateStreamRequest&, const Model::CreateStreamOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateStreamResponseReceivedHandler;
@@ -223,6 +306,12 @@ typedef std::function<void(const KinesisClient*, const Model::DecreaseStreamRete
                            const Model::DecreaseStreamRetentionPeriodOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DecreaseStreamRetentionPeriodResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::DeleteChannelRequest&, const Model::DeleteChannelOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteChannelResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::DeleteQueueRequest&, const Model::DeleteQueueOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteQueueResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::DeleteResourcePolicyRequest&, const Model::DeleteResourcePolicyOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteResourcePolicyResponseReceivedHandler;
@@ -235,9 +324,15 @@ typedef std::function<void(const KinesisClient*, const Model::DeregisterStreamCo
 typedef std::function<void(const KinesisClient*, const Model::DescribeAccountSettingsRequest&, const Model::DescribeAccountSettingsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DescribeAccountSettingsResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::DescribeChannelRequest&, const Model::DescribeChannelOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DescribeChannelResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::DescribeLimitsRequest&, const Model::DescribeLimitsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DescribeLimitsResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::DescribeQueueRequest&, const Model::DescribeQueueOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DescribeQueueResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::DescribeStreamRequest&, const Model::DescribeStreamOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DescribeStreamResponseReceivedHandler;
@@ -266,6 +361,12 @@ typedef std::function<void(const KinesisClient*, const Model::IncreaseStreamRete
                            const Model::IncreaseStreamRetentionPeriodOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     IncreaseStreamRetentionPeriodResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::ListChannelsRequest&, const Model::ListChannelsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListChannelsResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::ListQueuesRequest&, const Model::ListQueuesOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListQueuesResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::ListShardsRequest&, const Model::ListShardsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListShardsResponseReceivedHandler;
@@ -293,12 +394,23 @@ typedef std::function<void(const KinesisClient*, const Model::PutRecordsRequest&
 typedef std::function<void(const KinesisClient*, const Model::PutResourcePolicyRequest&, const Model::PutResourcePolicyOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     PutResourcePolicyResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::ReceiveDeadLetterQueueRecordsRequest&,
+                           const Model::ReceiveDeadLetterQueueRecordsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ReceiveDeadLetterQueueRecordsResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::ReceiveQueueRecordsRequest&, const Model::ReceiveQueueRecordsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ReceiveQueueRecordsResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::RegisterStreamConsumerRequest&, const Model::RegisterStreamConsumerOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     RegisterStreamConsumerResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::RemoveTagsFromStreamRequest&, const Model::RemoveTagsFromStreamOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     RemoveTagsFromStreamResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::RestoreDeadLetterQueueRecordsRequest&,
+                           const Model::RestoreDeadLetterQueueRecordsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    RestoreDeadLetterQueueRecordsResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::SplitShardRequest&, const Model::SplitShardOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     SplitShardResponseReceivedHandler;
@@ -320,15 +432,33 @@ typedef std::function<void(const KinesisClient*, const Model::UntagResourceReque
 typedef std::function<void(const KinesisClient*, const Model::UpdateAccountSettingsRequest&, const Model::UpdateAccountSettingsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateAccountSettingsResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::UpdateChannelRequest&, const Model::UpdateChannelOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateChannelResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::UpdateDeadLetterQueueRecordsVisibilityRequest&,
+                           const Model::UpdateDeadLetterQueueRecordsVisibilityOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateDeadLetterQueueRecordsVisibilityResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::UpdateMaxRecordSizeRequest&, const Model::UpdateMaxRecordSizeOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateMaxRecordSizeResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::UpdateQueueRequest&, const Model::UpdateQueueOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateQueueResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::UpdateQueueRecordsVisibilityRequest&,
+                           const Model::UpdateQueueRecordsVisibilityOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateQueueRecordsVisibilityResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::UpdateShardCountRequest&, const Model::UpdateShardCountOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateShardCountResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::UpdateStreamModeRequest&, const Model::UpdateStreamModeOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateStreamModeResponseReceivedHandler;
+typedef std::function<void(const KinesisClient*, const Model::UpdateStreamRecordDistributionStrategyRequest&,
+                           const Model::UpdateStreamRecordDistributionStrategyOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateStreamRecordDistributionStrategyResponseReceivedHandler;
 typedef std::function<void(const KinesisClient*, const Model::UpdateStreamWarmThroughputRequest&,
                            const Model::UpdateStreamWarmThroughputOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateStreamWarmThroughputResponseReceivedHandler;

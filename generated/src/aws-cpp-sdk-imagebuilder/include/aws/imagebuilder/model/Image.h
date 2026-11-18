@@ -39,11 +39,11 @@ namespace Model {
 
 /**
  * <p>An Image Builder image resource that keeps track of all of the settings used
- * to create, configure, and distribute output for that image. You must specify
- * exactly one recipe for the image – either a container recipe
- * (<code>containerRecipe</code>), which creates a container image, or an image
- * recipe (<code>imageRecipe</code>), which creates an AMI.</p><p><h3>See
- * Also:</h3>   <a
+ * to create, configure, and distribute output for that image. An image that Image
+ * Builder built from a recipe contains exactly one recipe – either a container
+ * recipe (<code>containerRecipe</code>), which creates a container image, or an
+ * image recipe (<code>imageRecipe</code>), which creates an AMI. Imported images
+ * don't contain a recipe.</p><p><h3>See Also:</h3>   <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/Image">AWS
  * API Reference</a></p>
  */
@@ -119,17 +119,16 @@ class Image {
    * <p>The semantic version of the image.</p>  <p>The semantic version has
    * four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can
    * assign values for the first three, and can filter on all of them.</p> <p>
-   * <b>Assignment:</b> For the first three nodes you can assign any positive integer
-   * value, including zero, with an upper limit of 2^30-1, or 1073741823 for each
-   * node. Image Builder automatically assigns the build number to the fourth
+   * <b>Assignment:</b> For the first three nodes, you can assign any positive
+   * integer value, including zero. The upper limit is 2^30-1, or 1073741823, for
+   * each node. Image Builder automatically assigns the build number to the fourth
    * node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to
    * the assignment requirements for the nodes that you can assign. For example, you
    * might choose a software version pattern, such as 1.0.0, or a date, such as
-   * 2021.01.01.</p> <p> <b>Filtering:</b> With semantic versioning, you have the
-   * flexibility to use wildcards (x) to specify the most recent versions or nodes
-   * when selecting the base image or components for your recipe. When you use a
-   * wildcard in any node, all nodes to the right of the first wildcard must also be
-   * wildcards.</p>
+   * 2021.01.01.</p> <p> <b>Filtering:</b> You can use wildcards (x) to specify the
+   * most recent versions or nodes when selecting the base image or components for
+   * your recipe. When you use a wildcard in any node, all nodes to the right of the
+   * first wildcard must also be wildcards.</p>
    */
   inline const Aws::String& GetVersion() const { return m_version; }
   inline bool VersionHasBeenSet() const { return m_versionHasBeenSet; }
@@ -255,7 +254,9 @@ class Image {
 
   ///@{
   /**
-   * <p>The name of the image pipeline that created this image.</p>
+   * <p>The name of the image pipeline that created this image. Image Builder doesn't
+   * return this field for new images. Use <code>sourcePipelineArn</code>
+   * instead.</p>
    */
   inline const Aws::String& GetSourcePipelineName() const { return m_sourcePipelineName; }
   inline bool SourcePipelineNameHasBeenSet() const { return m_sourcePipelineNameHasBeenSet; }
@@ -273,8 +274,8 @@ class Image {
 
   ///@{
   /**
-   * <p>The Amazon Resource Name (ARN) of the image pipeline that created this
-   * image.</p>
+   * <p>The Amazon Resource Name (ARN) of the image pipeline that created this image.
+   * This field is only present for images that a pipeline execution created.</p>
    */
   inline const Aws::String& GetSourcePipelineArn() const { return m_sourcePipelineArn; }
   inline bool SourcePipelineArnHasBeenSet() const { return m_sourcePipelineArnHasBeenSet; }
@@ -329,7 +330,8 @@ class Image {
 
   ///@{
   /**
-   * <p>The image tests that ran when that Image Builder created this image.</p>
+   * <p>The image test settings that Image Builder used when it created this
+   * image.</p>
    */
   inline const ImageTestsConfiguration& GetImageTestsConfiguration() const { return m_imageTestsConfiguration; }
   inline bool ImageTestsConfigurationHasBeenSet() const { return m_imageTestsConfigurationHasBeenSet; }
@@ -463,7 +465,8 @@ class Image {
 
   ///@{
   /**
-   * <p>Contains settings for vulnerability scans.</p>
+   * <p>The settings that determine whether and how Amazon Inspector scans this
+   * image.</p>
    */
   inline const ImageScanningConfiguration& GetImageScanningConfiguration() const { return m_imageScanningConfiguration; }
   inline bool ImageScanningConfigurationHasBeenSet() const { return m_imageScanningConfigurationHasBeenSet; }
@@ -538,7 +541,8 @@ class Image {
 
   ///@{
   /**
-   * <p>Contains the build and test workflows that are associated with the image.</p>
+   * <p>The build, test, and distribution workflow configurations that are associated
+   * with the image.</p>
    */
   inline const Aws::Vector<WorkflowConfiguration>& GetWorkflows() const { return m_workflows; }
   inline bool WorkflowsHasBeenSet() const { return m_workflowsHasBeenSet; }

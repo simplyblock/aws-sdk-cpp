@@ -62,7 +62,7 @@ class CloudWatchLogsSource {
   ///@{
   /**
    * <p>The list of CloudWatch log group names to read agent traces from. Maximum of
-   * 5 log groups.</p>
+   * 10 log groups.</p>
    */
   inline const Aws::Vector<Aws::String>& GetLogGroupNames() const { return m_logGroupNames; }
   inline bool LogGroupNamesHasBeenSet() const { return m_logGroupNamesHasBeenSet; }
@@ -80,6 +80,33 @@ class CloudWatchLogsSource {
   CloudWatchLogsSource& AddLogGroupNames(LogGroupNamesT&& value) {
     m_logGroupNamesHasBeenSet = true;
     m_logGroupNames.emplace_back(std::forward<LogGroupNamesT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The list of CloudWatch log group name prefixes to read agent traces from.
+   * Specify this instead of <code>logGroupNames</code> to match log groups by
+   * prefix. Maximum of 5 prefixes. Specify either <code>logGroupNames</code> or
+   * <code>logGroupNamePrefixes</code>, not both. One of the two is required.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetLogGroupNamePrefixes() const { return m_logGroupNamePrefixes; }
+  inline bool LogGroupNamePrefixesHasBeenSet() const { return m_logGroupNamePrefixesHasBeenSet; }
+  template <typename LogGroupNamePrefixesT = Aws::Vector<Aws::String>>
+  void SetLogGroupNamePrefixes(LogGroupNamePrefixesT&& value) {
+    m_logGroupNamePrefixesHasBeenSet = true;
+    m_logGroupNamePrefixes = std::forward<LogGroupNamePrefixesT>(value);
+  }
+  template <typename LogGroupNamePrefixesT = Aws::Vector<Aws::String>>
+  CloudWatchLogsSource& WithLogGroupNamePrefixes(LogGroupNamePrefixesT&& value) {
+    SetLogGroupNamePrefixes(std::forward<LogGroupNamePrefixesT>(value));
+    return *this;
+  }
+  template <typename LogGroupNamePrefixesT = Aws::String>
+  CloudWatchLogsSource& AddLogGroupNamePrefixes(LogGroupNamePrefixesT&& value) {
+    m_logGroupNamePrefixesHasBeenSet = true;
+    m_logGroupNamePrefixes.emplace_back(std::forward<LogGroupNamePrefixesT>(value));
     return *this;
   }
   ///@}
@@ -106,9 +133,12 @@ class CloudWatchLogsSource {
 
   Aws::Vector<Aws::String> m_logGroupNames;
 
+  Aws::Vector<Aws::String> m_logGroupNamePrefixes;
+
   CloudWatchFilterConfig m_filterConfig;
   bool m_serviceNamesHasBeenSet = false;
   bool m_logGroupNamesHasBeenSet = false;
+  bool m_logGroupNamePrefixesHasBeenSet = false;
   bool m_filterConfigHasBeenSet = false;
 };
 

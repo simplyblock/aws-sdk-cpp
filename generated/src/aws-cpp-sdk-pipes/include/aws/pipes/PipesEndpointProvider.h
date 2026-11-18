@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/pipes/PipesEndpointRules.h>
 #include <aws/pipes/Pipes_EXPORTS.h>
 
 namespace Aws {
 namespace Pipes {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using PipesClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using PipesBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using PipesEndpointProviderBase = EndpointProviderBase<PipesClientConfiguration, PipesBuiltInParameters, PipesClientContextParameters>;
 
-using PipesDefaultEpProviderBase = DefaultEndpointProvider<PipesClientConfiguration, PipesBuiltInParameters, PipesClientContextParameters>;
+using PipesDefaultEpProviderBase = BDDEndpointProvider<PipesClientConfiguration, PipesBuiltInParameters, PipesClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,8 +39,7 @@ class AWS_PIPES_API PipesEndpointProvider : public PipesDefaultEpProviderBase {
  public:
   using PipesResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  PipesEndpointProvider()
-      : PipesDefaultEpProviderBase(Aws::Pipes::PipesEndpointRules::GetRulesBlob(), Aws::Pipes::PipesEndpointRules::RulesBlobSize) {}
+  PipesEndpointProvider();
 
   ~PipesEndpointProvider() {}
 };

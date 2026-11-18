@@ -82,6 +82,10 @@ GetDbClusterResult& GetDbClusterResult::operator=(const Aws::AmazonWebServiceRes
     m_dbParameterGroupIdentifier = jsonValue.GetString("dbParameterGroupIdentifier");
     m_dbParameterGroupIdentifierHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("effectiveDbParameterGroupIdentifier")) {
+    m_effectiveDbParameterGroupIdentifier = jsonValue.GetString("effectiveDbParameterGroupIdentifier");
+    m_effectiveDbParameterGroupIdentifierHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("logDeliveryConfiguration")) {
     m_logDeliveryConfiguration = jsonValue.GetObject("logDeliveryConfiguration");
     m_logDeliveryConfigurationHasBeenSet = true;
@@ -121,9 +125,21 @@ GetDbClusterResult& GetDbClusterResult::operator=(const Aws::AmazonWebServiceRes
     m_failoverMode = FailoverModeMapper::GetFailoverModeForName(jsonValue.GetString("failoverMode"));
     m_failoverModeHasBeenSet = true;
   }
-  if (jsonValue.ValueExists("clusterConfiguration")) {
-    m_clusterConfiguration = jsonValue.GetObject("clusterConfiguration");
-    m_clusterConfigurationHasBeenSet = true;
+  if (jsonValue.ValueExists("deploymentConfiguration")) {
+    m_deploymentConfiguration = jsonValue.GetObject("deploymentConfiguration");
+    m_deploymentConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("dbBackupConfigurations")) {
+    Aws::Utils::Array<JsonView> dbBackupConfigurationsJsonList = jsonValue.GetArray("dbBackupConfigurations");
+    for (unsigned dbBackupConfigurationsIndex = 0; dbBackupConfigurationsIndex < dbBackupConfigurationsJsonList.GetLength();
+         ++dbBackupConfigurationsIndex) {
+      m_dbBackupConfigurations.push_back(dbBackupConfigurationsJsonList[dbBackupConfigurationsIndex].AsObject());
+    }
+    m_dbBackupConfigurationsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("kmsKeyId")) {
+    m_kmsKeyId = jsonValue.GetString("kmsKeyId");
+    m_kmsKeyIdHasBeenSet = true;
   }
 
   const auto& headers = result.GetHeaderValueCollection();

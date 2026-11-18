@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 #include <aws/marketplace-agreement/model/EstimatedTaxes.h>
 #include <aws/marketplace-agreement/model/Timing.h>
@@ -14,10 +15,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AgreementService {
 namespace Model {
@@ -30,9 +30,9 @@ namespace Model {
 class ExpectedCharge {
  public:
   AWS_AGREEMENTSERVICE_API ExpectedCharge() = default;
-  AWS_AGREEMENTSERVICE_API ExpectedCharge(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API ExpectedCharge& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_AGREEMENTSERVICE_API ExpectedCharge(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API ExpectedCharge& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -146,6 +146,24 @@ class ExpectedCharge {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The purchase order reference associated with the charge, if any.</p>
+   */
+  inline const Aws::String& GetPurchaseOrderReference() const { return m_purchaseOrderReference; }
+  inline bool PurchaseOrderReferenceHasBeenSet() const { return m_purchaseOrderReferenceHasBeenSet; }
+  template <typename PurchaseOrderReferenceT = Aws::String>
+  void SetPurchaseOrderReference(PurchaseOrderReferenceT&& value) {
+    m_purchaseOrderReferenceHasBeenSet = true;
+    m_purchaseOrderReference = std::forward<PurchaseOrderReferenceT>(value);
+  }
+  template <typename PurchaseOrderReferenceT = Aws::String>
+  ExpectedCharge& WithPurchaseOrderReference(PurchaseOrderReferenceT&& value) {
+    SetPurchaseOrderReference(std::forward<PurchaseOrderReferenceT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_id;
 
@@ -158,12 +176,15 @@ class ExpectedCharge {
   Timing m_timing{Timing::NOT_SET};
 
   EstimatedTaxes m_estimatedTaxes;
+
+  Aws::String m_purchaseOrderReference;
   bool m_idHasBeenSet = false;
   bool m_timeHasBeenSet = false;
   bool m_amountHasBeenSet = false;
   bool m_amountAfterTaxHasBeenSet = false;
   bool m_timingHasBeenSet = false;
   bool m_estimatedTaxesHasBeenSet = false;
+  bool m_purchaseOrderReferenceHasBeenSet = false;
 };
 
 }  // namespace Model

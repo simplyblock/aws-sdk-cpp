@@ -23,9 +23,11 @@
 #include <aws/marketplace-catalog/model/BatchDescribeEntitiesRequest.h>
 #include <aws/marketplace-catalog/model/CancelChangeSetRequest.h>
 #include <aws/marketplace-catalog/model/DeleteResourcePolicyRequest.h>
+#include <aws/marketplace-catalog/model/DescribeAssessmentRequest.h>
 #include <aws/marketplace-catalog/model/DescribeChangeSetRequest.h>
 #include <aws/marketplace-catalog/model/DescribeEntityRequest.h>
 #include <aws/marketplace-catalog/model/GetResourcePolicyRequest.h>
+#include <aws/marketplace-catalog/model/ListAssessmentsRequest.h>
 #include <aws/marketplace-catalog/model/ListChangeSetsRequest.h>
 #include <aws/marketplace-catalog/model/ListEntitiesRequest.h>
 #include <aws/marketplace-catalog/model/ListTagsForResourceRequest.h>
@@ -174,7 +176,8 @@ MarketplaceCatalogClient::InvokeOperationOutcome MarketplaceCatalogClient::Invok
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -188,7 +191,7 @@ MarketplaceCatalogClient::InvokeOperationOutcome MarketplaceCatalogClient::Invok
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -240,6 +243,17 @@ DeleteResourcePolicyOutcome MarketplaceCatalogClient::DeleteResourcePolicy(const
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? DeleteResourcePolicyOutcome(result.GetResultWithOwnership())
                             : DeleteResourcePolicyOutcome(std::move(result.GetError()));
+}
+
+DescribeAssessmentOutcome MarketplaceCatalogClient::DescribeAssessment(const DescribeAssessmentRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/DescribeAssessment");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DescribeAssessmentOutcome(result.GetResultWithOwnership())
+                            : DescribeAssessmentOutcome(std::move(result.GetError()));
 }
 
 DescribeChangeSetOutcome MarketplaceCatalogClient::DescribeChangeSet(const DescribeChangeSetRequest& request) const {
@@ -300,6 +314,17 @@ GetResourcePolicyOutcome MarketplaceCatalogClient::GetResourcePolicy(const GetRe
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
   return result.IsSuccess() ? GetResourcePolicyOutcome(result.GetResultWithOwnership())
                             : GetResourcePolicyOutcome(std::move(result.GetError()));
+}
+
+ListAssessmentsOutcome MarketplaceCatalogClient::ListAssessments(const ListAssessmentsRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/ListAssessments");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListAssessmentsOutcome(result.GetResultWithOwnership())
+                            : ListAssessmentsOutcome(std::move(result.GetError()));
 }
 
 ListChangeSetsOutcome MarketplaceCatalogClient::ListChangeSets(const ListChangeSetsRequest& request) const {

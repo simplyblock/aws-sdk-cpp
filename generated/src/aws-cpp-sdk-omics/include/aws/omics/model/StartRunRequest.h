@@ -13,6 +13,7 @@
 #include <aws/omics/model/CacheBehavior.h>
 #include <aws/omics/model/NetworkingMode.h>
 #include <aws/omics/model/RunLogLevel.h>
+#include <aws/omics/model/RunOutputUriPrefixMode.h>
 #include <aws/omics/model/RunRetentionMode.h>
 #include <aws/omics/model/ScratchStorageMode.h>
 #include <aws/omics/model/StorageType.h>
@@ -99,8 +100,9 @@ class StartRunRequest : public OmicsRequest {
    * Amazon Web Services HealthOmics, S3, Cloudwatch logs, and EC2. An example
    * <code>roleArn</code> is
    * <code>arn:aws:iam::123456789012:role/omics-service-role-serviceRole-W8O1XMPL7QZ</code>.
-   * In this example, the AWS account ID is <code>123456789012</code> and the role
-   * name is <code>omics-service-role-serviceRole-W8O1XMPL7QZ</code>.</p>
+   * In this example, the Amazon Web Services account ID is <code>123456789012</code>
+   * and the role name is
+   * <code>omics-service-role-serviceRole-W8O1XMPL7QZ</code>.</p>
    */
   inline const Aws::String& GetRoleArn() const { return m_roleArn; }
   inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
@@ -488,6 +490,25 @@ class StartRunRequest : public OmicsRequest {
 
   ///@{
   /**
+   * <p>Optional inline policy json for scoping down permissions via a session policy
+   * on the IAM role provided in the roleArn parameter.</p>
+   */
+  inline const Aws::String& GetSessionPolicy() const { return m_sessionPolicy; }
+  inline bool SessionPolicyHasBeenSet() const { return m_sessionPolicyHasBeenSet; }
+  template <typename SessionPolicyT = Aws::String>
+  void SetSessionPolicy(SessionPolicyT&& value) {
+    m_sessionPolicyHasBeenSet = true;
+    m_sessionPolicy = std::forward<SessionPolicyT>(value);
+  }
+  template <typename SessionPolicyT = Aws::String>
+  StartRunRequest& WithSessionPolicy(SessionPolicyT&& value) {
+    SetSessionPolicy(std::forward<SessionPolicyT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>Engine-specific settings for the workflow run. Use this field to specify
    * configuration options that are specific to the workflow engine (for example,
    * Nextflow profiles).</p>
@@ -502,6 +523,24 @@ class StartRunRequest : public OmicsRequest {
   template <typename EngineSettingsT = Aws::Utils::Document>
   StartRunRequest& WithEngineSettings(EngineSettingsT&& value) {
     SetEngineSettings(std::forward<EngineSettingsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>You can control the path prefixes that the service adds beneath
+   * <code>outputUri</code>. If you don't specify a value, the service uses
+   * <code>SERVICE_DEFINED</code>, which adds a run-specific prefix.</p>
+   */
+  inline RunOutputUriPrefixMode GetOutputUriPrefixMode() const { return m_outputUriPrefixMode; }
+  inline bool OutputUriPrefixModeHasBeenSet() const { return m_outputUriPrefixModeHasBeenSet; }
+  inline void SetOutputUriPrefixMode(RunOutputUriPrefixMode value) {
+    m_outputUriPrefixModeHasBeenSet = true;
+    m_outputUriPrefixMode = value;
+  }
+  inline StartRunRequest& WithOutputUriPrefixMode(RunOutputUriPrefixMode value) {
+    SetOutputUriPrefixMode(value);
     return *this;
   }
   ///@}
@@ -550,7 +589,11 @@ class StartRunRequest : public OmicsRequest {
 
   Aws::String m_configurationName;
 
+  Aws::String m_sessionPolicy;
+
   Aws::Utils::Document m_engineSettings;
+
+  RunOutputUriPrefixMode m_outputUriPrefixMode{RunOutputUriPrefixMode::NOT_SET};
   bool m_workflowIdHasBeenSet = false;
   bool m_workflowTypeHasBeenSet = false;
   bool m_runIdHasBeenSet = false;
@@ -573,7 +616,9 @@ class StartRunRequest : public OmicsRequest {
   bool m_networkingModeHasBeenSet = false;
   bool m_scratchStorageModeHasBeenSet = false;
   bool m_configurationNameHasBeenSet = false;
+  bool m_sessionPolicyHasBeenSet = false;
   bool m_engineSettingsHasBeenSet = false;
+  bool m_outputUriPrefixModeHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -47,6 +47,18 @@ VideoDescription& VideoDescription::operator=(JsonView jsonValue) {
     m_width = jsonValue.GetInteger("width");
     m_widthHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("cropRectangle")) {
+    m_cropRectangle = jsonValue.GetObject("cropRectangle");
+    m_cropRectangleHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("outputPositionRectangle")) {
+    m_outputPositionRectangle = jsonValue.GetObject("outputPositionRectangle");
+    m_outputPositionRectangleHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("border")) {
+    m_border = jsonValue.GetInteger("border");
+    m_borderHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -80,6 +92,18 @@ JsonValue VideoDescription::Jsonize() const {
 
   if (m_widthHasBeenSet) {
     payload.WithInteger("width", m_width);
+  }
+
+  if (m_cropRectangleHasBeenSet) {
+    payload.WithObject("cropRectangle", m_cropRectangle.Jsonize());
+  }
+
+  if (m_outputPositionRectangleHasBeenSet) {
+    payload.WithObject("outputPositionRectangle", m_outputPositionRectangle.Jsonize());
+  }
+
+  if (m_borderHasBeenSet) {
+    payload.WithInteger("border", m_border);
   }
 
   return payload;

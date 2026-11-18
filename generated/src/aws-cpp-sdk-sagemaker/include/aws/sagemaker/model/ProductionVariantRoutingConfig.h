@@ -5,6 +5,7 @@
 
 #pragma once
 #include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/sagemaker/model/PrefixAwareRoutingConfig.h>
 #include <aws/sagemaker/model/RoutingStrategy.h>
 
 #include <utility>
@@ -38,7 +39,23 @@ class ProductionVariantRoutingConfig {
    * <code>LEAST_OUTSTANDING_REQUESTS</code>: The endpoint routes requests to the
    * specific instances that have more capacity to process them.</p> </li> <li> <p>
    * <code>RANDOM</code>: The endpoint routes each request to a randomly chosen
-   * instance.</p> </li> </ul>
+   * instance.</p> </li> <li> <p> <code>PREFIX_AWARE</code>: The endpoint routes
+   * requests that share the same prompt prefix to the same instance and, when that
+   * instance hosts more than one copy of the invoked inference component, to the
+   * same copy. When the number of in-flight requests on the selected instance or
+   * copy reaches the <code>ConcurrencyThreshold</code> value, the endpoint routes
+   * the request to another copy on that instance or to another instance. The
+   * endpoint applies prefix-aware routing only when two or more instances can serve
+   * the request.</p> </li> <li> <p> <code>KV_AWARE</code>: The endpoint routes each
+   * request to an instance that already holds the start of the request's prompt in
+   * its key-value (KV) cache, and weighs the length of that match against how busy
+   * each instance is. On an endpoint with inference components, the endpoint chooses
+   * among the copies of the invoked inference component in the same way. When the
+   * endpoint can't find an instance or copy that holds the start of the prompt and
+   * isn't too busy, it chooses an instance as it does with
+   * <code>LEAST_OUTSTANDING_REQUESTS</code>. <code>KV_AWARE</code> works only with
+   * supported containers, such as the SageMaker AI vLLM Deep Learning Container.</p>
+   * </li> </ul>
    */
   inline RoutingStrategy GetRoutingStrategy() const { return m_routingStrategy; }
   inline bool RoutingStrategyHasBeenSet() const { return m_routingStrategyHasBeenSet; }
@@ -51,9 +68,31 @@ class ProductionVariantRoutingConfig {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The configuration for prefix-aware routing. Specify this parameter only when
+   * you set <code>RoutingStrategy</code> to <code>PREFIX_AWARE</code>.</p>
+   */
+  inline const PrefixAwareRoutingConfig& GetPrefixAwareRoutingConfig() const { return m_prefixAwareRoutingConfig; }
+  inline bool PrefixAwareRoutingConfigHasBeenSet() const { return m_prefixAwareRoutingConfigHasBeenSet; }
+  template <typename PrefixAwareRoutingConfigT = PrefixAwareRoutingConfig>
+  void SetPrefixAwareRoutingConfig(PrefixAwareRoutingConfigT&& value) {
+    m_prefixAwareRoutingConfigHasBeenSet = true;
+    m_prefixAwareRoutingConfig = std::forward<PrefixAwareRoutingConfigT>(value);
+  }
+  template <typename PrefixAwareRoutingConfigT = PrefixAwareRoutingConfig>
+  ProductionVariantRoutingConfig& WithPrefixAwareRoutingConfig(PrefixAwareRoutingConfigT&& value) {
+    SetPrefixAwareRoutingConfig(std::forward<PrefixAwareRoutingConfigT>(value));
+    return *this;
+  }
+  ///@}
  private:
   RoutingStrategy m_routingStrategy{RoutingStrategy::NOT_SET};
+
+  PrefixAwareRoutingConfig m_prefixAwareRoutingConfig;
   bool m_routingStrategyHasBeenSet = false;
+  bool m_prefixAwareRoutingConfigHasBeenSet = false;
 };
 
 }  // namespace Model

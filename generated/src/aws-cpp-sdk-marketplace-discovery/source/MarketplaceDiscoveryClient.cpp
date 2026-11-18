@@ -53,12 +53,13 @@ const char* MarketplaceDiscoveryClient::GetAllocationTag() { return ALLOCATION_T
 MarketplaceDiscoveryClient::MarketplaceDiscoveryClient(
     const MarketplaceDiscovery::MarketplaceDiscoveryClientConfiguration& clientConfiguration,
     std::shared_ptr<MarketplaceDiscoveryEndpointProviderBase> endpointProvider)
-    : BASECLASS(clientConfiguration,
-                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG,
-                                                 Aws::MakeShared<DefaultAWSCredentialsProviderChain>(
-                                                     ALLOCATION_TAG, clientConfiguration.ResolveCredentialProviderConfig()),
-                                                 SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-                Aws::MakeShared<MarketplaceDiscoveryErrorMarshaller>(ALLOCATION_TAG)),
+    : BASECLASS(
+          clientConfiguration,
+          Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(
+              ALLOCATION_TAG,
+              Aws::MakeShared<DefaultAWSCredentialsProviderChain>(ALLOCATION_TAG, clientConfiguration.ResolveCredentialProviderConfig()),
+              SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+          Aws::MakeShared<MarketplaceDiscoveryErrorMarshaller>(ALLOCATION_TAG)),
       m_clientConfiguration(clientConfiguration),
       m_endpointProvider(endpointProvider ? std::move(endpointProvider)
                                           : Aws::MakeShared<MarketplaceDiscoveryEndpointProvider>(ALLOCATION_TAG)) {
@@ -69,8 +70,9 @@ MarketplaceDiscoveryClient::MarketplaceDiscoveryClient(
     const AWSCredentials& credentials, std::shared_ptr<MarketplaceDiscoveryEndpointProviderBase> endpointProvider,
     const MarketplaceDiscovery::MarketplaceDiscoveryClientConfiguration& clientConfiguration)
     : BASECLASS(clientConfiguration,
-                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG, Aws::MakeShared<SimpleAWSCredentialsProvider>(ALLOCATION_TAG, credentials),
-                                                 SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+                Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(
+                    ALLOCATION_TAG, Aws::MakeShared<SimpleAWSCredentialsProvider>(ALLOCATION_TAG, credentials), SERVICE_NAME,
+                    Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
                 Aws::MakeShared<MarketplaceDiscoveryErrorMarshaller>(ALLOCATION_TAG)),
       m_clientConfiguration(clientConfiguration),
       m_endpointProvider(endpointProvider ? std::move(endpointProvider)
@@ -83,8 +85,8 @@ MarketplaceDiscoveryClient::MarketplaceDiscoveryClient(
     std::shared_ptr<MarketplaceDiscoveryEndpointProviderBase> endpointProvider,
     const MarketplaceDiscovery::MarketplaceDiscoveryClientConfiguration& clientConfiguration)
     : BASECLASS(clientConfiguration,
-                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG, credentialsProvider, SERVICE_NAME,
-                                                 Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+                Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(ALLOCATION_TAG, credentialsProvider, SERVICE_NAME,
+                                                                      Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
                 Aws::MakeShared<MarketplaceDiscoveryErrorMarshaller>(ALLOCATION_TAG)),
       m_clientConfiguration(clientConfiguration),
       m_endpointProvider(endpointProvider ? std::move(endpointProvider)
@@ -94,12 +96,13 @@ MarketplaceDiscoveryClient::MarketplaceDiscoveryClient(
 
 /* Legacy constructors due deprecation */
 MarketplaceDiscoveryClient::MarketplaceDiscoveryClient(const Aws::Client::ClientConfiguration& clientConfiguration)
-    : BASECLASS(clientConfiguration,
-                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG,
-                                                 Aws::MakeShared<DefaultAWSCredentialsProviderChain>(
-                                                     ALLOCATION_TAG, clientConfiguration.ResolveCredentialProviderConfig()),
-                                                 SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-                Aws::MakeShared<MarketplaceDiscoveryErrorMarshaller>(ALLOCATION_TAG)),
+    : BASECLASS(
+          clientConfiguration,
+          Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(
+              ALLOCATION_TAG,
+              Aws::MakeShared<DefaultAWSCredentialsProviderChain>(ALLOCATION_TAG, clientConfiguration.ResolveCredentialProviderConfig()),
+              SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+          Aws::MakeShared<MarketplaceDiscoveryErrorMarshaller>(ALLOCATION_TAG)),
       m_clientConfiguration(clientConfiguration),
       m_endpointProvider(Aws::MakeShared<MarketplaceDiscoveryEndpointProvider>(ALLOCATION_TAG)) {
   init(m_clientConfiguration);
@@ -108,8 +111,9 @@ MarketplaceDiscoveryClient::MarketplaceDiscoveryClient(const Aws::Client::Client
 MarketplaceDiscoveryClient::MarketplaceDiscoveryClient(const AWSCredentials& credentials,
                                                        const Aws::Client::ClientConfiguration& clientConfiguration)
     : BASECLASS(clientConfiguration,
-                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG, Aws::MakeShared<SimpleAWSCredentialsProvider>(ALLOCATION_TAG, credentials),
-                                                 SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+                Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(
+                    ALLOCATION_TAG, Aws::MakeShared<SimpleAWSCredentialsProvider>(ALLOCATION_TAG, credentials), SERVICE_NAME,
+                    Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
                 Aws::MakeShared<MarketplaceDiscoveryErrorMarshaller>(ALLOCATION_TAG)),
       m_clientConfiguration(clientConfiguration),
       m_endpointProvider(Aws::MakeShared<MarketplaceDiscoveryEndpointProvider>(ALLOCATION_TAG)) {
@@ -119,8 +123,8 @@ MarketplaceDiscoveryClient::MarketplaceDiscoveryClient(const AWSCredentials& cre
 MarketplaceDiscoveryClient::MarketplaceDiscoveryClient(const std::shared_ptr<AWSCredentialsProvider>& credentialsProvider,
                                                        const Aws::Client::ClientConfiguration& clientConfiguration)
     : BASECLASS(clientConfiguration,
-                Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG, credentialsProvider, SERVICE_NAME,
-                                                 Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
+                Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(ALLOCATION_TAG, credentialsProvider, SERVICE_NAME,
+                                                                      Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
                 Aws::MakeShared<MarketplaceDiscoveryErrorMarshaller>(ALLOCATION_TAG)),
       m_clientConfiguration(clientConfiguration),
       m_endpointProvider(Aws::MakeShared<MarketplaceDiscoveryEndpointProvider>(ALLOCATION_TAG)) {
@@ -174,7 +178,8 @@ MarketplaceDiscoveryClient::InvokeOperationOutcome MarketplaceDiscoveryClient::I
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -188,7 +193,7 @@ MarketplaceDiscoveryClient::InvokeOperationOutcome MarketplaceDiscoveryClient::I
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 

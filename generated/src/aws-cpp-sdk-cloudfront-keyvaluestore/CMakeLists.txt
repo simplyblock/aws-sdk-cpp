@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-cloudfront-keyvaluestore "C++ SDK for the AWS cloudfront-keyvaluestore service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-cloudfront-keyvaluestore "C++ SDK for Amazon CloudFront KeyValueStore" aws-cpp-sdk-core)
 
 file(GLOB AWS_CLOUDFRONT-KEYVALUESTORE_HEADERS
     "include/aws/cloudfront-keyvaluestore/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CLOUDFRONT-KEYVALUESTORE_HEADERS
 
 file(GLOB AWS_CLOUDFRONT-KEYVALUESTORE_MODEL_HEADERS
     "include/aws/cloudfront-keyvaluestore/model/*.h"
+)
+
+file(GLOB AWS_CLOUDFRONT-KEYVALUESTORE_INTERNAL_HEADERS
+    "include/aws/cloudfront-keyvaluestore/internal/*.h"
 )
 
 file(GLOB AWS_CLOUDFRONT-KEYVALUESTORE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CLOUDFRONT-KEYVALUESTORE_MODEL_SOURCE
 
 file(GLOB CLOUDFRONT-KEYVALUESTORE_UNIFIED_HEADERS
     ${AWS_CLOUDFRONT-KEYVALUESTORE_HEADERS}
+    ${AWS_CLOUDFRONT-KEYVALUESTORE_INTERNAL_HEADERS}
     ${AWS_CLOUDFRONT-KEYVALUESTORE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\cloudfront-keyvaluestore" FILES ${AWS_CLOUDFRONT-KEYVALUESTORE_HEADERS})
+        source_group("Header Files\\aws\\cloudfront-keyvaluestore\\internal" FILES ${AWS_CLOUDFRONT-KEYVALUESTORE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\cloudfront-keyvaluestore\\model" FILES ${AWS_CLOUDFRONT-KEYVALUESTORE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CLOUDFRONT-KEYVALUESTORE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CLOUDFRONT-KEYVALUESTORE_MODEL_SOURCE})

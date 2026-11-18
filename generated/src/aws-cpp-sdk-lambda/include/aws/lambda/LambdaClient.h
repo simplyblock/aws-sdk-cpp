@@ -24,11 +24,16 @@ namespace Lambda {
  * and logging. With Lambda, you can run code for virtually any type of application
  * or backend service. For more information about the Lambda service, see <a
  * href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html">What is
- * Lambda</a> in the <b>Lambda Developer Guide</b>.</p> <p>The <i>Lambda API
- * Reference</i> provides information about each of the API methods, including
- * details about the parameters in each API request and response. </p> <p/> <p>You
- * can use Software Development Kits (SDKs), Integrated Development Environment
- * (IDE) Toolkits, and command line tools to access the API. For installation
+ * Lambda</a> in the <b>Lambda Developer Guide</b>.</p> <p>Lambda Event Functions,
+ * previously known as Lambda functions, run your code in response to events and
+ * API calls. In the Lambda API, the Amazon Web Services SDKs, and the CLI, Event
+ * Functions are still called <i>functions</i>, for example in
+ * <code>CreateFunction</code> and <code>Invoke</code>. You don't need to change
+ * any existing code.</p> <p>The <i>Lambda API Reference</i> provides information
+ * about each of the API methods for Lambda Event Functions, including details
+ * about the parameters in each API request and response.</p> <p/> <p>You can use
+ * Software Development Kits (SDKs), Integrated Development Environment (IDE)
+ * Toolkits, and command line tools to access the API. For installation
  * instructions, see <a href="http://aws.amazon.com/tools/">Tools for Amazon Web
  * Services</a>. </p> <p>For a list of Region-specific endpoints that Lambda
  * supports, see <a
@@ -244,10 +249,10 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   /**
    * <p>Creates an <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html">alias</a>
-   * for a Lambda function version. Use aliases to provide clients with a function
-   * identifier that you can update to invoke a different version.</p> <p>You can
-   * also map an alias to split invocation requests between two versions. Use the
-   * <code>RoutingConfig</code> parameter to specify a second version and the
+   * for a Lambda Event Function version. Use aliases to provide clients with a
+   * function identifier that you can update to invoke a different version.</p>
+   * <p>You can also map an alias to split invocation requests between two versions.
+   * Use the <code>RoutingConfig</code> parameter to specify a second version and the
    * percentage of invocation requests that it receives.</p><p><h3>See Also:</h3>
    * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/CreateAlias">AWS
@@ -274,8 +279,8 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Creates a capacity provider that manages compute resources for Lambda
-   * functions</p><p><h3>See Also:</h3>   <a
+   * <p>Creates a capacity provider that manages compute resources for Lambda Event
+   * Functions</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/CreateCapacityProvider">AWS
    * API Reference</a></p>
    */
@@ -333,10 +338,10 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Creates a mapping between an event source and an Lambda function. Lambda
-   * reads items from the event source and invokes the function.</p> <p>For details
-   * about how to configure different event sources, see the following topics. </p>
-   * <ul> <li> <p> <a
+   * <p>Creates a mapping between an event source and an Lambda Event Function.
+   * Lambda reads items from the event source and invokes the function.</p> <p>For
+   * details about how to configure different event sources, see the following
+   * topics. </p> <ul> <li> <p> <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-dynamodb-eventsourcemapping">
    * Amazon DynamoDB Streams</a> </p> </li> <li> <p> <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html#services-kinesis-eventsourcemapping">
@@ -409,7 +414,7 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Creates a Lambda function. To create a function, you need a <a
+   * <p>Creates a Lambda Event Function. To create a function, you need a <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-package.html">deployment
    * package</a> and an <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html#lambda-intro-execution-role">execution
@@ -517,7 +522,7 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Deletes a Lambda function <a
+   * <p>Deletes a Lambda Event Function <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html">alias</a>.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/DeleteAlias">AWS
@@ -600,6 +605,42 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Deletes a completed Lambda <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html">durable
+   * execution</a> and its data. The execution must be in a terminal state
+   * (<code>SUCCEEDED</code>, <code>FAILED</code>, <code>STOPPED</code>, or
+   * <code>TIMED_OUT</code>). Otherwise, this operation returns a
+   * <code>ResourceConflictException</code>.</p> <p>The execution has
+   * <code>DELETING</code> status until the deletion finishes. For more information,
+   * see <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/durable-delete.html">Deleting
+   * durable executions</a>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/DeleteDurableExecution">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteDurableExecutionOutcome DeleteDurableExecution(const Model::DeleteDurableExecutionRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteDurableExecution that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteDurableExecutionRequestT = Model::DeleteDurableExecutionRequest>
+  Model::DeleteDurableExecutionOutcomeCallable DeleteDurableExecutionCallable(const DeleteDurableExecutionRequestT& request) const {
+    return SubmitCallable(&LambdaClient::DeleteDurableExecution, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteDurableExecution that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteDurableExecutionRequestT = Model::DeleteDurableExecutionRequest>
+  void DeleteDurableExecutionAsync(const DeleteDurableExecutionRequestT& request,
+                                   const DeleteDurableExecutionResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&LambdaClient::DeleteDurableExecution, request, handler, context);
+  }
+
+  /**
    * <p>Deletes an <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/intro-invocation-modes.html">event
    * source mapping</a>. You can get the identifier of a mapping from the output of
@@ -632,8 +673,8 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Deletes a Lambda function. To delete a specific function version, use the
-   * <code>Qualifier</code> parameter. Otherwise, all versions and aliases are
+   * <p>Deletes a Lambda Event Function. To delete a specific function version, use
+   * the <code>Qualifier</code> parameter. Otherwise, all versions and aliases are
    * deleted. This doesn't require the user to have explicit permissions for
    * <a>DeleteAlias</a>.</p>  <p>A deleted Lambda function cannot be recovered.
    * Ensure that you specify the correct function name and version before
@@ -695,8 +736,8 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Removes a concurrent execution limit from a function.</p><p><h3>See
-   * Also:</h3>   <a
+   * <p>Removes a concurrent execution limit from a Lambda Event
+   * Function.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/DeleteFunctionConcurrency">AWS
    * API Reference</a></p>
    */
@@ -844,6 +885,34 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Deletes a <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html">resource-based
+   * policy</a> from a Lambda resource.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/DeleteResourcePolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteResourcePolicyOutcome DeleteResourcePolicy(const Model::DeleteResourcePolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteResourcePolicy that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteResourcePolicyRequestT = Model::DeleteResourcePolicyRequest>
+  Model::DeleteResourcePolicyOutcomeCallable DeleteResourcePolicyCallable(const DeleteResourcePolicyRequestT& request) const {
+    return SubmitCallable(&LambdaClient::DeleteResourcePolicy, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteResourcePolicy that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteResourcePolicyRequestT = Model::DeleteResourcePolicyRequest>
+  void DeleteResourcePolicyAsync(const DeleteResourcePolicyRequestT& request, const DeleteResourcePolicyResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&LambdaClient::DeleteResourcePolicy, request, handler, context);
+  }
+
+  /**
    * <p>Retrieves details about your account's <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/limits.html">limits</a> and
    * usage in an Amazon Web Services Region.</p><p><h3>See Also:</h3>   <a
@@ -873,7 +942,7 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Returns details about a Lambda function <a
+   * <p>Returns details about a Lambda Event Function <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html">alias</a>.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/GetAlias">AWS API
@@ -1083,9 +1152,9 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Returns information about the function or function version, with a link to
-   * download the deployment package that's valid for 10 minutes. If you specify a
-   * function version, only details that are specific to that version are
+   * <p>Returns information about a Lambda Event Function or function version, with a
+   * link to download the deployment package that's valid for 10 minutes. If you
+   * specify a function version, only details that are specific to that version are
    * returned.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/GetFunction">AWS
    * API Reference</a></p>
@@ -1170,10 +1239,10 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Returns the version-specific settings of a Lambda function or version. The
-   * output includes only options that can vary between versions of a function. To
-   * modify these settings, use <a>UpdateFunctionConfiguration</a>.</p> <p>To get all
-   * of a function's details, including function-level settings, use
+   * <p>Returns the version-specific settings of a Lambda Event Function or version.
+   * The output includes only options that can vary between versions of a function.
+   * To modify these settings, use <a>UpdateFunctionConfiguration</a>.</p> <p>To get
+   * all of a function's details, including function-level settings, use
    * <a>GetFunction</a>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/GetFunctionConfiguration">AWS
    * API Reference</a></p>
@@ -1460,6 +1529,34 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Retrieves the <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html">resource-based
+   * policy</a> attached to a Lambda resource.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/GetResourcePolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetResourcePolicyOutcome GetResourcePolicy(const Model::GetResourcePolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetResourcePolicy that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetResourcePolicyRequestT = Model::GetResourcePolicyRequest>
+  Model::GetResourcePolicyOutcomeCallable GetResourcePolicyCallable(const GetResourcePolicyRequestT& request) const {
+    return SubmitCallable(&LambdaClient::GetResourcePolicy, request);
+  }
+
+  /**
+   * An Async wrapper for GetResourcePolicy that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetResourcePolicyRequestT = Model::GetResourcePolicyRequest>
+  void GetResourcePolicyAsync(const GetResourcePolicyRequestT& request, const GetResourcePolicyResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&LambdaClient::GetResourcePolicy, request, handler, context);
+  }
+
+  /**
    * <p>Retrieves the runtime management configuration for a function's version. If
    * the runtime update mode is <b>Manual</b>, this includes the ARN of the runtime
    * version and the runtime update mode. If the runtime update mode is <b>Auto</b>
@@ -1495,9 +1592,9 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Invokes a Lambda function. You can invoke a function synchronously (and wait
-   * for the response), or asynchronously. By default, Lambda invokes your function
-   * synchronously (i.e. the<code>InvocationType</code> is
+   * <p>Invokes a Lambda Event Function. You can invoke a function synchronously (and
+   * wait for the response), or asynchronously. By default, Lambda invokes your
+   * function synchronously (i.e. the<code>InvocationType</code> is
    * <code>RequestResponse</code>). To invoke a function asynchronously, set
    * <code>InvocationType</code> to <code>Event</code>. Lambda passes the
    * <code>ClientContext</code> object to your function for synchronous invocations
@@ -1565,8 +1662,8 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Configure your Lambda functions to stream response payloads back to clients.
-   * For more information, see <a
+   * <p>Configure your Lambda Event Functions to stream response payloads back to
+   * clients. For more information, see <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-response-streaming.html">Configuring
    * a Lambda function to stream responses</a>.</p> <p>This operation requires
    * permission for the <a
@@ -1603,7 +1700,7 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   /**
    * <p>Returns a list of <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html">aliases</a>
-   * for a Lambda function.</p><p><h3>See Also:</h3>   <a
+   * for a Lambda Event Function.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/ListAliases">AWS
    * API Reference</a></p>
    */
@@ -1749,8 +1846,9 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Retrieves a list of configurations for asynchronous invocation for a
-   * function.</p> <p>To configure options for asynchronous invocation, use
+   * <p>Retrieves a list of configurations for asynchronous invocation for a Lambda
+   * Event Function. To retrieve more configurations, use the <code>Marker</code>
+   * parameter.</p> <p>To configure options for asynchronous invocation, use
    * <a>PutFunctionEventInvokeConfig</a>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/ListFunctionEventInvokeConfigs">AWS
    * API Reference</a></p>
@@ -1838,8 +1936,8 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Returns a list of Lambda functions, with the version-specific configuration
-   * of each. Lambda returns up to 50 functions per call.</p> <p>Set
+   * <p>Returns a list of Lambda Event Functions, with the version-specific
+   * configuration of each. Lambda returns up to 50 functions per call.</p> <p>Set
    * <code>FunctionVersion</code> to <code>ALL</code> to include all published
    * versions of each function in addition to the unpublished version.</p>
    * <p>The <code>ListFunctions</code> operation returns a subset of the
@@ -2027,9 +2125,9 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
 
   /**
    * <p>Returns a list of <a
-   * href="https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html">versions</a>,
-   * with the version-specific configuration of each. Lambda returns up to 50
-   * versions per call.</p><p><h3>See Also:</h3>   <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html">versions</a>
+   * of a Lambda Event Function, with the version-specific configuration of each.
+   * Lambda returns up to 50 versions per call.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/ListVersionsByFunction">AWS
    * API Reference</a></p>
    */
@@ -2053,6 +2151,43 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
                                    const ListVersionsByFunctionResponseReceivedHandler& handler,
                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&LambdaClient::ListVersionsByFunction, request, handler, context);
+  }
+
+  /**
+   * <p>Pauses a running <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html">durable
+   * execution</a>. While an execution is paused, Lambda doesn't invoke your
+   * function, but pending operations such as waits and callbacks continue to
+   * complete.</p> <p>If an invocation is in progress, the execution status changes
+   * to <code>PAUSING</code> until the invocation reaches its next checkpoint, and
+   * then changes to <code>PAUSED</code>. This operation returns a successful
+   * response while the execution status is still <code>RUNNING</code>, and the
+   * status changes when Lambda processes the request. For more information about
+   * pausing executions, see <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/durable-pause-resume.html">Pausing
+   * and resuming durable executions</a>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/PauseDurableExecution">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::PauseDurableExecutionOutcome PauseDurableExecution(const Model::PauseDurableExecutionRequest& request) const;
+
+  /**
+   * A Callable wrapper for PauseDurableExecution that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename PauseDurableExecutionRequestT = Model::PauseDurableExecutionRequest>
+  Model::PauseDurableExecutionOutcomeCallable PauseDurableExecutionCallable(const PauseDurableExecutionRequestT& request) const {
+    return SubmitCallable(&LambdaClient::PauseDurableExecution, request);
+  }
+
+  /**
+   * An Async wrapper for PauseDurableExecution that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename PauseDurableExecutionRequestT = Model::PauseDurableExecutionRequest>
+  void PauseDurableExecutionAsync(const PauseDurableExecutionRequestT& request, const PauseDurableExecutionResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&LambdaClient::PauseDurableExecution, request, handler, context);
   }
 
   /**
@@ -2089,11 +2224,11 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   /**
    * <p>Creates a <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html">version</a>
-   * from the current code and configuration of a function. Use versions to create a
-   * snapshot of your function code and configuration that doesn't change.</p>
-   * <p>Lambda doesn't publish a version if the function's configuration and code
-   * haven't changed since the last version. Use <a>UpdateFunctionCode</a> or
-   * <a>UpdateFunctionConfiguration</a> to update the function before publishing a
+   * from the current code and configuration of a Lambda Event Function. Use versions
+   * to create a snapshot of your function code and configuration that doesn't
+   * change.</p> <p>Lambda doesn't publish a version if the function's configuration
+   * and code haven't changed since the last version. Use <a>UpdateFunctionCode</a>
+   * or <a>UpdateFunctionConfiguration</a> to update the function before publishing a
    * version.</p> <p>Clients can invoke versions directly or with an alias. To create
    * an alias, use <a>CreateAlias</a>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/PublishVersion">AWS
@@ -2151,16 +2286,16 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Sets the maximum number of simultaneous executions for a function, and
-   * reserves capacity for that concurrency level.</p> <p>Concurrency settings apply
-   * to the function as a whole, including all published versions and the unpublished
-   * version. Reserving concurrency both ensures that your function has capacity to
-   * process the specified number of events simultaneously, and prevents it from
-   * scaling beyond that level. Use <a>GetFunction</a> to see the current setting for
-   * a function.</p> <p>Use <a>GetAccountSettings</a> to see your Regional
-   * concurrency limit. You can reserve concurrency for as many functions as you
-   * like, as long as you leave at least 100 simultaneous executions unreserved for
-   * functions that aren't configured with a per-function limit. For more
+   * <p>Sets the maximum number of simultaneous executions for a Lambda Event
+   * Function, and reserves capacity for that concurrency level.</p> <p>Concurrency
+   * settings apply to the function as a whole, including all published versions and
+   * the unpublished version. Reserving concurrency both ensures that your function
+   * has capacity to process the specified number of events simultaneously, and
+   * prevents it from scaling beyond that level. Use <a>GetFunction</a> to see the
+   * current setting for a function.</p> <p>Use <a>GetAccountSettings</a> to see your
+   * Regional concurrency limit. You can reserve concurrency for as many functions as
+   * you like, as long as you leave at least 100 simultaneous executions unreserved
+   * for functions that aren't configured with a per-function limit. For more
    * information, see <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/invocation-scaling.html">Lambda
    * function scaling</a>.</p><p><h3>See Also:</h3>   <a
@@ -2238,18 +2373,19 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Sets your function's <a
+   * <p>Sets the <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/invocation-recursion.html">recursive
-   * loop detection</a> configuration.</p> <p>When you configure a Lambda function to
-   * output to the same service or resource that invokes the function, it's possible
-   * to create an infinite recursive loop. For example, a Lambda function might write
-   * a message to an Amazon Simple Queue Service (Amazon SQS) queue, which then
-   * invokes the same function. This invocation causes the function to write another
-   * message to the queue, which in turn invokes the function again.</p> <p>Lambda
-   * can detect certain types of recursive loops shortly after they occur. When
-   * Lambda detects a recursive loop and your function's recursive loop detection
-   * configuration is set to <code>Terminate</code>, it stops your function being
-   * invoked and notifies you.</p><p><h3>See Also:</h3>   <a
+   * loop detection</a> configuration for a Lambda Event Function.</p> <p>When you
+   * configure a Lambda function to output to the same service or resource that
+   * invokes the function, it's possible to create an infinite recursive loop. For
+   * example, a Lambda function might write a message to an Amazon Simple Queue
+   * Service (Amazon SQS) queue, which then invokes the same function. This
+   * invocation causes the function to write another message to the queue, which in
+   * turn invokes the function again.</p> <p>Lambda can detect certain types of
+   * recursive loops shortly after they occur. When Lambda detects a recursive loop
+   * and your function's recursive loop detection configuration is set to
+   * <code>Terminate</code>, it stops your function being invoked and notifies
+   * you.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/PutFunctionRecursionConfig">AWS
    * API Reference</a></p>
    */
@@ -2335,6 +2471,45 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
                                             const PutProvisionedConcurrencyConfigResponseReceivedHandler& handler,
                                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&LambdaClient::PutProvisionedConcurrencyConfig, request, handler, context);
+  }
+
+  /**
+   * <p>Adds a <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html">resource-based
+   * policy</a> to a Lambda resource. Resource-based policies grant access to other
+   * <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/permissions-function-cross-account.html">Amazon
+   * Web Services accounts</a>, <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/permissions-function-organization.html">organizations</a>,
+   * or <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/permissions-function-services.html">services</a>.
+   * Resource-based policies apply to a single Lambda resource (for example, a
+   * function, function version, or function alias).</p>  <p>This
+   * operation replaces any existing policy on the Lambda resource. If you previously
+   * added permissions using the <a>AddPermission</a> operation, the new policy
+   * overwrites those permissions.</p> <p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/PutResourcePolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::PutResourcePolicyOutcome PutResourcePolicy(const Model::PutResourcePolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for PutResourcePolicy that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename PutResourcePolicyRequestT = Model::PutResourcePolicyRequest>
+  Model::PutResourcePolicyOutcomeCallable PutResourcePolicyCallable(const PutResourcePolicyRequestT& request) const {
+    return SubmitCallable(&LambdaClient::PutResourcePolicy, request);
+  }
+
+  /**
+   * An Async wrapper for PutResourcePolicy that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename PutResourcePolicyRequestT = Model::PutResourcePolicyRequest>
+  void PutResourcePolicyAsync(const PutResourcePolicyRequestT& request, const PutResourcePolicyResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&LambdaClient::PutResourcePolicy, request, handler, context);
   }
 
   /**
@@ -2427,6 +2602,44 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   void RemovePermissionAsync(const RemovePermissionRequestT& request, const RemovePermissionResponseReceivedHandler& handler,
                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&LambdaClient::RemovePermission, request, handler, context);
+  }
+
+  /**
+   * <p>Resumes a paused <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html">durable
+   * execution</a>. If the pause interrupted an invocation, or an operation completed
+   * while the execution was paused, Lambda invokes your function. Otherwise, the
+   * execution continues to wait for its pending operations.</p> <p>If the execution
+   * status is <code>PAUSING</code>, this operation cancels the pause, and the
+   * in-progress invocation continues. This operation returns a successful response
+   * while the execution status is still <code>PAUSED</code> or <code>PAUSING</code>,
+   * and the status changes to <code>RUNNING</code> when Lambda processes the
+   * request. For more information about resuming executions, see <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/durable-pause-resume.html">Pausing
+   * and resuming durable executions</a>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/ResumeDurableExecution">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ResumeDurableExecutionOutcome ResumeDurableExecution(const Model::ResumeDurableExecutionRequest& request) const;
+
+  /**
+   * A Callable wrapper for ResumeDurableExecution that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ResumeDurableExecutionRequestT = Model::ResumeDurableExecutionRequest>
+  Model::ResumeDurableExecutionOutcomeCallable ResumeDurableExecutionCallable(const ResumeDurableExecutionRequestT& request) const {
+    return SubmitCallable(&LambdaClient::ResumeDurableExecution, request);
+  }
+
+  /**
+   * An Async wrapper for ResumeDurableExecution that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ResumeDurableExecutionRequestT = Model::ResumeDurableExecutionRequest>
+  void ResumeDurableExecutionAsync(const ResumeDurableExecutionRequestT& request,
+                                   const ResumeDurableExecutionResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&LambdaClient::ResumeDurableExecution, request, handler, context);
   }
 
   /**
@@ -2523,7 +2736,7 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Stops a running <a
+   * <p>Stops a running or paused <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html">durable
    * execution</a>. The execution transitions to STOPPED status and cannot be
    * resumed. Any in-progress operations are terminated.</p><p><h3>See Also:</h3>
@@ -2609,7 +2822,7 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Updates the configuration of a Lambda function <a
+   * <p>Updates the configuration of a Lambda Event Function <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html">alias</a>.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/UpdateAlias">AWS
@@ -2769,7 +2982,7 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Updates a Lambda function's code. If code signing is enabled for the
+   * <p>Updates a Lambda Event Function's code. If code signing is enabled for the
    * function, the code package must be signed by a trusted publisher. For more
    * information, see <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html">Configuring
@@ -2815,11 +3028,11 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Modify the version-specific settings of a Lambda function.</p> <p>When you
-   * update a function, Lambda provisions an instance of the function and its
-   * supporting resources. If your function connects to a VPC, this process can take
-   * a minute. During this time, you can't modify the function, but you can still
-   * invoke it. The <code>LastUpdateStatus</code>,
+   * <p>Modifies the version-specific settings of a Lambda Event Function.</p>
+   * <p>When you update a function, Lambda provisions an instance of the function and
+   * its supporting resources. If your function connects to a VPC, this process can
+   * take a minute. During this time, you can't modify the function, but you can
+   * still invoke it. The <code>LastUpdateStatus</code>,
    * <code>LastUpdateStatusReason</code>, and <code>LastUpdateStatusReasonCode</code>
    * fields in the response from <a>GetFunctionConfiguration</a> indicate when the
    * update is complete and the function is processing events with the new
@@ -2890,8 +3103,8 @@ class AWS_LAMBDA_API LambdaClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Updates the configuration for a Lambda function URL.</p><p><h3>See Also:</h3>
-   * <a
+   * <p>Updates the configuration for a function URL of a Lambda Event
+   * Function.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/UpdateFunctionUrlConfig">AWS
    * API Reference</a></p>
    */

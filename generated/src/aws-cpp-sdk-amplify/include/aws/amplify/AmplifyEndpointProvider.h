@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/amplify/AmplifyEndpointRules.h>
 #include <aws/amplify/Amplify_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace Amplify {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using AmplifyClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using AmplifyEndpointProviderBase =
     EndpointProviderBase<AmplifyClientConfiguration, AmplifyBuiltInParameters, AmplifyClientContextParameters>;
 
 using AmplifyDefaultEpProviderBase =
-    DefaultEndpointProvider<AmplifyClientConfiguration, AmplifyBuiltInParameters, AmplifyClientContextParameters>;
+    BDDEndpointProvider<AmplifyClientConfiguration, AmplifyBuiltInParameters, AmplifyClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_AMPLIFY_API AmplifyEndpointProvider : public AmplifyDefaultEpProviderB
  public:
   using AmplifyResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  AmplifyEndpointProvider()
-      : AmplifyDefaultEpProviderBase(Aws::Amplify::AmplifyEndpointRules::GetRulesBlob(),
-                                     Aws::Amplify::AmplifyEndpointRules::RulesBlobSize) {}
+  AmplifyEndpointProvider();
 
   ~AmplifyEndpointProvider() {}
 };

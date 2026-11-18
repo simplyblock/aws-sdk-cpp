@@ -4,12 +4,11 @@
  */
 
 #pragma once
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/s3control/S3ControlClientConfiguration.h>
-#include <aws/s3control/S3ControlEndpointRules.h>
 #include <aws/s3control/S3Control_EXPORTS.h>
 
 namespace Aws {
@@ -17,7 +16,7 @@ namespace S3Control {
 namespace Endpoint {
 using S3ControlClientConfiguration = Aws::S3Control::S3ControlClientConfiguration;
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 class AWS_S3CONTROL_API S3ControlClientContextParameters : public Aws::Endpoint::ClientContextParameters {
@@ -36,6 +35,10 @@ class AWS_S3CONTROL_API S3ControlBuiltInParameters : public Aws::Endpoint::Built
   virtual ~S3ControlBuiltInParameters() {};
   using Aws::Endpoint::BuiltInParameters::SetFromClientConfiguration;
   virtual void SetFromClientConfiguration(const S3ControlClientConfiguration& config);
+  virtual void SetFromClientConfiguration(const S3ControlClientConfiguration& config, const Aws::String& serviceName);
+
+ private:
+  void SetServiceSpecificParameters(const S3ControlClientConfiguration& config);
 };
 
 /**
@@ -47,7 +50,7 @@ using S3ControlEndpointProviderBase =
     EndpointProviderBase<S3ControlClientConfiguration, S3ControlBuiltInParameters, S3ControlClientContextParameters>;
 
 using S3ControlDefaultEpProviderBase =
-    DefaultEndpointProvider<S3ControlClientConfiguration, S3ControlBuiltInParameters, S3ControlClientContextParameters>;
+    BDDEndpointProvider<S3ControlClientConfiguration, S3ControlBuiltInParameters, S3ControlClientContextParameters>;
 
 }  // namespace Endpoint
 }  // namespace S3Control
@@ -60,9 +63,9 @@ AWS_S3CONTROL_EXTERN template class AWS_S3CONTROL_API
     Aws::Endpoint::EndpointProviderBase<S3Control::Endpoint::S3ControlClientConfiguration, S3Control::Endpoint::S3ControlBuiltInParameters,
                                         S3Control::Endpoint::S3ControlClientContextParameters>;
 
-AWS_S3CONTROL_EXTERN template class AWS_S3CONTROL_API Aws::Endpoint::DefaultEndpointProvider<
-    S3Control::Endpoint::S3ControlClientConfiguration, S3Control::Endpoint::S3ControlBuiltInParameters,
-    S3Control::Endpoint::S3ControlClientContextParameters>;
+AWS_S3CONTROL_EXTERN template class AWS_S3CONTROL_API
+    Aws::Endpoint::BDDEndpointProvider<S3Control::Endpoint::S3ControlClientConfiguration, S3Control::Endpoint::S3ControlBuiltInParameters,
+                                       S3Control::Endpoint::S3ControlClientContextParameters>;
 }  // namespace Endpoint
 
 namespace S3Control {
@@ -74,9 +77,7 @@ class AWS_S3CONTROL_API S3ControlEndpointProvider : public S3ControlDefaultEpPro
  public:
   using S3ControlResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  S3ControlEndpointProvider()
-      : S3ControlDefaultEpProviderBase(Aws::S3Control::S3ControlEndpointRules::GetRulesBlob(),
-                                       Aws::S3Control::S3ControlEndpointRules::RulesBlobSize) {}
+  S3ControlEndpointProvider();
 
   ~S3ControlEndpointProvider() {}
 };

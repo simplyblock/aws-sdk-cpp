@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/swf/SWFEndpointRules.h>
 #include <aws/swf/SWF_EXPORTS.h>
 
 namespace Aws {
 namespace SWF {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SWFClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using SWFBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using SWFEndpointProviderBase = EndpointProviderBase<SWFClientConfiguration, SWFBuiltInParameters, SWFClientContextParameters>;
 
-using SWFDefaultEpProviderBase = DefaultEndpointProvider<SWFClientConfiguration, SWFBuiltInParameters, SWFClientContextParameters>;
+using SWFDefaultEpProviderBase = BDDEndpointProvider<SWFClientConfiguration, SWFBuiltInParameters, SWFClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_SWF_API SWFEndpointProvider : public SWFDefaultEpProviderBase {
  public:
   using SWFResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SWFEndpointProvider() : SWFDefaultEpProviderBase(Aws::SWF::SWFEndpointRules::GetRulesBlob(), Aws::SWF::SWFEndpointRules::RulesBlobSize) {}
+  SWFEndpointProvider();
 
   ~SWFEndpointProvider() {}
 };

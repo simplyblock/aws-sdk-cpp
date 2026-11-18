@@ -5,10 +5,12 @@
 
 #pragma once
 #include <aws/securityagent/SecurityAgent_EXPORTS.h>
+#include <aws/securityagent/model/AzureDevOpsRepositoryResource.h>
 #include <aws/securityagent/model/BitbucketRepositoryResource.h>
 #include <aws/securityagent/model/ConfluenceDocumentResource.h>
 #include <aws/securityagent/model/GitHubRepositoryResource.h>
 #include <aws/securityagent/model/GitLabRepositoryResource.h>
+#include <aws/securityagent/model/JiraProjectResource.h>
 
 #include <utility>
 
@@ -101,6 +103,42 @@ class IntegratedResource {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The Azure DevOps repository resource information.</p>
+   */
+  inline const AzureDevOpsRepositoryResource& GetAzureDevOpsRepository() const { return m_azureDevOpsRepository; }
+  inline bool AzureDevOpsRepositoryHasBeenSet() const { return m_azureDevOpsRepositoryHasBeenSet; }
+  template <typename AzureDevOpsRepositoryT = AzureDevOpsRepositoryResource>
+  void SetAzureDevOpsRepository(AzureDevOpsRepositoryT&& value) {
+    m_azureDevOpsRepositoryHasBeenSet = true;
+    m_azureDevOpsRepository = std::forward<AzureDevOpsRepositoryT>(value);
+  }
+  template <typename AzureDevOpsRepositoryT = AzureDevOpsRepositoryResource>
+  IntegratedResource& WithAzureDevOpsRepository(AzureDevOpsRepositoryT&& value) {
+    SetAzureDevOpsRepository(std::forward<AzureDevOpsRepositoryT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Jira project resource information.</p>
+   */
+  inline const JiraProjectResource& GetJiraProject() const { return m_jiraProject; }
+  inline bool JiraProjectHasBeenSet() const { return m_jiraProjectHasBeenSet; }
+  template <typename JiraProjectT = JiraProjectResource>
+  void SetJiraProject(JiraProjectT&& value) {
+    m_jiraProjectHasBeenSet = true;
+    m_jiraProject = std::forward<JiraProjectT>(value);
+  }
+  template <typename JiraProjectT = JiraProjectResource>
+  IntegratedResource& WithJiraProject(JiraProjectT&& value) {
+    SetJiraProject(std::forward<JiraProjectT>(value));
+    return *this;
+  }
+  ///@}
  private:
   GitHubRepositoryResource m_githubRepository;
 
@@ -109,10 +147,16 @@ class IntegratedResource {
   BitbucketRepositoryResource m_bitbucketRepository;
 
   ConfluenceDocumentResource m_confluenceDocument;
+
+  AzureDevOpsRepositoryResource m_azureDevOpsRepository;
+
+  JiraProjectResource m_jiraProject;
   bool m_githubRepositoryHasBeenSet = false;
   bool m_gitlabRepositoryHasBeenSet = false;
   bool m_bitbucketRepositoryHasBeenSet = false;
   bool m_confluenceDocumentHasBeenSet = false;
+  bool m_azureDevOpsRepositoryHasBeenSet = false;
+  bool m_jiraProjectHasBeenSet = false;
 };
 
 }  // namespace Model

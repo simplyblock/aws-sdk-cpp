@@ -9,6 +9,8 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/emr-containers/EMRContainers_EXPORTS.h>
 #include <aws/emr-containers/model/ContainerProvider.h>
+#include <aws/emr-containers/model/SchedulerConfiguration.h>
+#include <aws/emr-containers/model/SchedulerStatus.h>
 #include <aws/emr-containers/model/VirtualClusterState.h>
 
 #include <utility>
@@ -188,6 +190,61 @@ class VirtualCluster {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Specifies whether the virtual cluster has session support enabled. </p>
+   */
+  inline bool GetSessionEnabled() const { return m_sessionEnabled; }
+  inline bool SessionEnabledHasBeenSet() const { return m_sessionEnabledHasBeenSet; }
+  inline void SetSessionEnabled(bool value) {
+    m_sessionEnabledHasBeenSet = true;
+    m_sessionEnabled = value;
+  }
+  inline VirtualCluster& WithSessionEnabled(bool value) {
+    SetSessionEnabled(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The scheduler configuration (concurrency and queue limits) applied to the
+   * virtual cluster. The service does not return this field when no scheduler limits
+   * are configured.</p>
+   */
+  inline const SchedulerConfiguration& GetSchedulerConfiguration() const { return m_schedulerConfiguration; }
+  inline bool SchedulerConfigurationHasBeenSet() const { return m_schedulerConfigurationHasBeenSet; }
+  template <typename SchedulerConfigurationT = SchedulerConfiguration>
+  void SetSchedulerConfiguration(SchedulerConfigurationT&& value) {
+    m_schedulerConfigurationHasBeenSet = true;
+    m_schedulerConfiguration = std::forward<SchedulerConfigurationT>(value);
+  }
+  template <typename SchedulerConfigurationT = SchedulerConfiguration>
+  VirtualCluster& WithSchedulerConfiguration(SchedulerConfigurationT&& value) {
+    SetSchedulerConfiguration(std::forward<SchedulerConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The current in-queue and concurrent job-run counts for the virtual
+   * cluster.</p>
+   */
+  inline const SchedulerStatus& GetSchedulerStatus() const { return m_schedulerStatus; }
+  inline bool SchedulerStatusHasBeenSet() const { return m_schedulerStatusHasBeenSet; }
+  template <typename SchedulerStatusT = SchedulerStatus>
+  void SetSchedulerStatus(SchedulerStatusT&& value) {
+    m_schedulerStatusHasBeenSet = true;
+    m_schedulerStatus = std::forward<SchedulerStatusT>(value);
+  }
+  template <typename SchedulerStatusT = SchedulerStatus>
+  VirtualCluster& WithSchedulerStatus(SchedulerStatusT&& value) {
+    SetSchedulerStatus(std::forward<SchedulerStatusT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_id;
 
@@ -204,6 +261,12 @@ class VirtualCluster {
   Aws::Map<Aws::String, Aws::String> m_tags;
 
   Aws::String m_securityConfigurationId;
+
+  bool m_sessionEnabled{false};
+
+  SchedulerConfiguration m_schedulerConfiguration;
+
+  SchedulerStatus m_schedulerStatus;
   bool m_idHasBeenSet = false;
   bool m_nameHasBeenSet = false;
   bool m_arnHasBeenSet = false;
@@ -212,6 +275,9 @@ class VirtualCluster {
   bool m_createdAtHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
   bool m_securityConfigurationIdHasBeenSet = false;
+  bool m_sessionEnabledHasBeenSet = false;
+  bool m_schedulerConfigurationHasBeenSet = false;
+  bool m_schedulerStatusHasBeenSet = false;
 };
 
 }  // namespace Model

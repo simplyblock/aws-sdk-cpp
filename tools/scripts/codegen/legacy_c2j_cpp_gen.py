@@ -17,8 +17,8 @@ import zipfile
 from concurrent.futures import ProcessPoolExecutor, wait, FIRST_COMPLETED, ALL_COMPLETED
 from pathlib import Path
 
-from codegen.include_tests_util import IncludeTestsUtil
 from codegen.model_utils import ServiceModel
+from codegen.smithy_cpp_gen import bdd_endpoint_services
 
 SMITHY_SUPPORTED_CLIENTS = [
     "dynamodb",
@@ -56,9 +56,12 @@ class LegacyC2jCppGen(object):
     """
     GENERATOR_JAR = "target/aws-client-generator-1.0-SNAPSHOT-jar-with-dependencies.jar"
 
-    def __init__(self, args: dict, c2j_models: dict):
+    def __init__(self, args: dict, c2j_models: dict, skip_model_services: set = None):
         self.debug = args.get("debug", False)
         self.c2j_models = c2j_models
+        self.skip_model_services = skip_model_services or set()
+        self.use_smithy_bdd_endpoints = args.get("use_smithy_bdd_endpoints", False)
+        self.bdd_endpoint_services = bdd_endpoint_services() if self.use_smithy_bdd_endpoints else set()
 
         generator_location = args["path_to_generator"] or DEFAULT_GENERATOR_LOCATION
         generator_location = str(Path(generator_location).absolute())
@@ -150,8 +153,6 @@ class LegacyC2jCppGen(object):
         if len(failures):
             return -1
 
-        self._create_smithy_namespace_mapping(self.c2j_models)
-
         print(f"Code generation done, (re)generated {len(done)} packages.")  # Including defaults and partitions
         
         return 0
@@ -191,6 +192,16 @@ class LegacyC2jCppGen(object):
 
         if service_name in SMITHY_SUPPORTED_CLIENTS or model_files.use_smithy:
             run_command += ["--use-smithy-client"]
+
+        if service_name in self.skip_model_services:
+            run_command += ["--skip-model-generation"]
+            if self.debug:
+                print(f"  Skipping C2J model generation for {service_name} (using Smithy models)")
+
+        if service_name in self.bdd_endpoint_services:
+            run_command += ["--skip-endpoint-rules-blob"]
+            if self.debug:
+                print(f"  Skipping C2J endpoint-rules blob for {service_name} (using Smithy BDD endpoints)")
 
         for key, val in kwargs.items():
             run_command += [f"--{key}", val]
@@ -258,9 +269,9 @@ class LegacyC2jCppGen(object):
 
         if model_files.endpoint_rule_set and model_files.endpoint_tests:
             self._generate_client_endpoint_tests(service_name, model_files, f"{output_dir}/tests", tmp_dir)
-            IncludeTestsUtil.generate(service_name,
-                                      f"{output_dir}/src/aws-cpp-sdk-{service_name}",
-                                      f"{output_dir}/tests/{service_name}-gen-tests")
+            # NOTE: the include test is generated later (in run_code_generation.main), after the
+            # Smithy pass writes model/*.h. Generating it here would miss those headers for
+            # --use-smithy-models services, whose model generation C2J skips.
 
         return service_name, status
 
@@ -363,20 +374,3 @@ class LegacyC2jCppGen(object):
         output_zip_file = self.run_generator_once(f"core/{component_name}", run_command, output_filename)
 
         return self.extract_zip(output_zip_file, f"core/{component_name}", output_dir, None)
-
-    def _create_smithy_namespace_mapping(self, c2j_models: dict):
-        mapping = {}
-        for service, model_files in c2j_models.items():
-            full_model_file_path = f"{self.path_to_api_definitions}/{model_files.c2j_model}"
-            with open(full_model_file_path, 'r') as f:
-                model = json.load(f)
-            abbreviation = model.get("metadata", {}).get("serviceAbbreviation")
-            if abbreviation:
-                mapping[service] = abbreviation
-        # add customization for s3-crt
-        mapping["s3-crt"] = "S3Crt"
-        output_path = f"{self.path_to_api_definitions}/../smithy/mapping/smithy-namespace-mapping.json"
-        tmp_path = output_path + ".tmp"
-        with open(tmp_path, 'w') as f:
-            json.dump(mapping, f, indent=2)
-        os.replace(tmp_path, output_path)

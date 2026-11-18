@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -32,6 +32,7 @@
 #include <aws/ssm/model/DescribeMaintenanceWindowExecutionTaskInvocationsPaginationTraits.h>
 #include <aws/ssm/model/DescribeAssociationExecutionTargetsPaginationTraits.h>
 #include <aws/ssm/model/DescribePatchBaselinesPaginationTraits.h>
+#include <aws/ssm/model/ListCloudConnectorsPaginationTraits.h>
 #include <aws/ssm/model/DescribeMaintenanceWindowTasksPaginationTraits.h>
 #include <aws/ssm/model/ListAssociationVersionsPaginationTraits.h>
 #include <aws/ssm/model/ListComplianceSummariesPaginationTraits.h>
@@ -42,6 +43,7 @@
 #include <aws/ssm/model/ListCommandsPaginationTraits.h>
 #include <aws/ssm/model/DescribePatchPropertiesPaginationTraits.h>
 #include <aws/ssm/model/GetInventorySchemaPaginationTraits.h>
+#include <aws/ssm/model/ValidateCloudConnectorPaginationTraits.h>
 #include <aws/ssm/model/DescribeEffectiveInstanceAssociationsPaginationTraits.h>
 #include <aws/ssm/model/DescribeInstancePatchesPaginationTraits.h>
 #include <aws/ssm/model/ListComplianceItemsPaginationTraits.h>
@@ -67,6 +69,6 @@ class SSMPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(SSMPaginationCompilationTest, SSMPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

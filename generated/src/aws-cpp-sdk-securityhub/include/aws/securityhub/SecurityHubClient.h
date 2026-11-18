@@ -605,6 +605,43 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Cancels a findings export job that is in progress. Security Hub transitions a
+   * running job to the <code>CANCELLED</code> state and returns the
+   * <code>ExportJobId</code> and its new <code>Status</code>. Canceling a job that
+   * is already in the <code>CANCELLED</code> state succeeds and returns the same
+   * result, so you can safely retry a cancel request.</p> <p>You can't cancel an
+   * export job that has already reached a terminal <code>SUCCEEDED</code> or
+   * <code>FAILED</code> state; in that case, this operation returns a
+   * <code>ConflictException</code>. If no export job matches the
+   * <code>ExportJobId</code> that you provide, this operation returns a
+   * <code>ResourceNotFoundException</code>.</p> <p>The <code>Status</code> value
+   * returned by this operation reflects the cancellation immediately, even though
+   * the job can take a short time to stop completely.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/CancelExportJobV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CancelExportJobV2Outcome CancelExportJobV2(const Model::CancelExportJobV2Request& request) const;
+
+  /**
+   * A Callable wrapper for CancelExportJobV2 that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CancelExportJobV2RequestT = Model::CancelExportJobV2Request>
+  Model::CancelExportJobV2OutcomeCallable CancelExportJobV2Callable(const CancelExportJobV2RequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::CancelExportJobV2, request);
+  }
+
+  /**
+   * An Async wrapper for CancelExportJobV2 that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename CancelExportJobV2RequestT = Model::CancelExportJobV2Request>
+  void CancelExportJobV2Async(const CancelExportJobV2RequestT& request, const CancelExportJobV2ResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::CancelExportJobV2, request, handler, context);
+  }
+
+  /**
    * <p>Creates a custom action target in Security Hub CSPM.</p> <p>You can use
    * custom actions on findings and insights in Security Hub CSPM to trigger target
    * actions in Amazon CloudWatch Events.</p><p><h3>See Also:</h3>   <a
@@ -741,6 +778,34 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
                                       const CreateConfigurationPolicyResponseReceivedHandler& handler,
                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&SecurityHubClient::CreateConfigurationPolicy, request, handler, context);
+  }
+
+  /**
+   * <p>Creates a connector to a third-party cloud provider in Security Hub CSPM. A
+   * connector establishes a connection between Security Hub CSPM and a third-party
+   * cloud provider, enabling Security Hub CSPM to ingest security findings and
+   * resource data from the connected environment.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/CreateConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateConnectorOutcome CreateConnector(const Model::CreateConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateConnector that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename CreateConnectorRequestT = Model::CreateConnectorRequest>
+  Model::CreateConnectorOutcomeCallable CreateConnectorCallable(const CreateConnectorRequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::CreateConnector, request);
+  }
+
+  /**
+   * An Async wrapper for CreateConnector that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename CreateConnectorRequestT = Model::CreateConnectorRequest>
+  void CreateConnectorAsync(const CreateConnectorRequestT& request, const CreateConnectorResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::CreateConnector, request, handler, context);
   }
 
   /**
@@ -1060,6 +1125,33 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
                                       const DeleteConfigurationPolicyResponseReceivedHandler& handler,
                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&SecurityHubClient::DeleteConfigurationPolicy, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a CSPM connector. When you delete a connector, Security Hub CSPM
+   * stops ingesting findings and resource data from the connected cloud provider
+   * environment.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/DeleteConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteConnectorOutcome DeleteConnector(const Model::DeleteConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteConnector that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DeleteConnectorRequestT = Model::DeleteConnectorRequest>
+  Model::DeleteConnectorOutcomeCallable DeleteConnectorCallable(const DeleteConnectorRequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::DeleteConnector, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteConnector that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DeleteConnectorRequestT = Model::DeleteConnectorRequest>
+  void DeleteConnectorAsync(const DeleteConnectorRequestT& request, const DeleteConnectorResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::DeleteConnector, request, handler, context);
   }
 
   /**
@@ -1544,8 +1636,42 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Disables an opt-in feature for the calling account in the current Amazon Web
+   * Services Region. The operation is idempotent. If the feature is already
+   * disabled, no changes are made. You cannot disable a feature that is managed by
+   * an organization policy.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/DisableSecurityHubFeatureV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DisableSecurityHubFeatureV2Outcome DisableSecurityHubFeatureV2(
+      const Model::DisableSecurityHubFeatureV2Request& request) const;
+
+  /**
+   * A Callable wrapper for DisableSecurityHubFeatureV2 that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename DisableSecurityHubFeatureV2RequestT = Model::DisableSecurityHubFeatureV2Request>
+  Model::DisableSecurityHubFeatureV2OutcomeCallable DisableSecurityHubFeatureV2Callable(
+      const DisableSecurityHubFeatureV2RequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::DisableSecurityHubFeatureV2, request);
+  }
+
+  /**
+   * An Async wrapper for DisableSecurityHubFeatureV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DisableSecurityHubFeatureV2RequestT = Model::DisableSecurityHubFeatureV2Request>
+  void DisableSecurityHubFeatureV2Async(const DisableSecurityHubFeatureV2RequestT& request,
+                                        const DisableSecurityHubFeatureV2ResponseReceivedHandler& handler,
+                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::DisableSecurityHubFeatureV2, request, handler, context);
+  }
+
+  /**
    * <p>Disable the service for the current Amazon Web Services Region or specified
-   * Amazon Web Services Region.</p><p><h3>See Also:</h3>   <a
+   * Amazon Web Services Region. Disabling the service also disables all opt-in
+   * features that are currently enabled in that Region.</p><p><h3>See Also:</h3>
+   * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/DisableSecurityHubV2">AWS
    * API Reference</a></p>
    */
@@ -1737,6 +1863,39 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                               const EnableSecurityHubRequestT& request = {}) const {
     return SubmitAsync(&SecurityHubClient::EnableSecurityHub, request, handler, context);
+  }
+
+  /**
+   * <p>Enables an opt-in feature for the calling account in the current Amazon Web
+   * Services Region. The service must be enabled before you can enable a feature.
+   * The operation is idempotent. If the feature is already enabled, no changes are
+   * made. You cannot enable a feature that is managed by an organization
+   * policy.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/EnableSecurityHubFeatureV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::EnableSecurityHubFeatureV2Outcome EnableSecurityHubFeatureV2(
+      const Model::EnableSecurityHubFeatureV2Request& request) const;
+
+  /**
+   * A Callable wrapper for EnableSecurityHubFeatureV2 that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename EnableSecurityHubFeatureV2RequestT = Model::EnableSecurityHubFeatureV2Request>
+  Model::EnableSecurityHubFeatureV2OutcomeCallable EnableSecurityHubFeatureV2Callable(
+      const EnableSecurityHubFeatureV2RequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::EnableSecurityHubFeatureV2, request);
+  }
+
+  /**
+   * An Async wrapper for EnableSecurityHubFeatureV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename EnableSecurityHubFeatureV2RequestT = Model::EnableSecurityHubFeatureV2Request>
+  void EnableSecurityHubFeatureV2Async(const EnableSecurityHubFeatureV2RequestT& request,
+                                       const EnableSecurityHubFeatureV2ResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::EnableSecurityHubFeatureV2, request, handler, context);
   }
 
   /**
@@ -1943,6 +2102,32 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Retrieves details for a CSPM connector based on the connector
+   * ID.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/GetConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetConnectorOutcome GetConnector(const Model::GetConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetConnector that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetConnectorRequestT = Model::GetConnectorRequest>
+  Model::GetConnectorOutcomeCallable GetConnectorCallable(const GetConnectorRequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::GetConnector, request);
+  }
+
+  /**
+   * An Async wrapper for GetConnector that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetConnectorRequestT = Model::GetConnectorRequest>
+  void GetConnectorAsync(const GetConnectorRequestT& request, const GetConnectorResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::GetConnector, request, handler, context);
+  }
+
+  /**
    * <p>Grants permission to retrieve details for a connectorV2 based on connector
    * id.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/GetConnectorV2">AWS
@@ -1994,6 +2179,43 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                 const GetEnabledStandardsRequestT& request = {}) const {
     return SubmitAsync(&SecurityHubClient::GetEnabledStandards, request, handler, context);
+  }
+
+  /**
+   * <p>Returns the details of a single findings export job, including its current
+   * <code>Status</code>, the <code>Destination</code> it writes to, the
+   * <code>OutputConfiguration</code> it was started with, and its
+   * <code>StartedAt</code> and <code>EndedAt</code> timestamps. Use this operation
+   * to poll an export job that you started with <code>StartExportJobV2</code> until
+   * it reaches a terminal state (<code>SUCCEEDED</code>, <code>FAILED</code>, or
+   * <code>CANCELLED</code>).</p> <p>If the job failed, the response includes a
+   * <code>FailureCode</code> and <code>FailureMessage</code> that describe the
+   * reason. Input values such as <code>Scopes</code> and <code>Filters</code> are
+   * echoed back as they were submitted, with relative date ranges returned
+   * unresolved. If no export job matches the <code>ExportJobId</code> that you
+   * provide, this operation returns a
+   * <code>ResourceNotFoundException</code>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/GetExportJobV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetExportJobV2Outcome GetExportJobV2(const Model::GetExportJobV2Request& request) const;
+
+  /**
+   * A Callable wrapper for GetExportJobV2 that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetExportJobV2RequestT = Model::GetExportJobV2Request>
+  Model::GetExportJobV2OutcomeCallable GetExportJobV2Callable(const GetExportJobV2RequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::GetExportJobV2, request);
+  }
+
+  /**
+   * An Async wrapper for GetExportJobV2 that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetExportJobV2RequestT = Model::GetExportJobV2Request>
+  void GetExportJobV2Async(const GetExportJobV2RequestT& request, const GetExportJobV2ResponseReceivedHandler& handler,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::GetExportJobV2, request, handler, context);
   }
 
   /**
@@ -2343,13 +2565,50 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Retrieves remediation targets for the account, or for all member accounts if
+   * the caller is the delegated administrator. Results are sorted by priority,
+   * highest first, and are paginated. Use <code>TargetUid</code> or
+   * <code>MetadataUid</code> to scope the request to a single target or
+   * finding.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/GetRemediationsV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetRemediationsV2Outcome GetRemediationsV2(const Model::GetRemediationsV2Request& request = {}) const;
+
+  /**
+   * A Callable wrapper for GetRemediationsV2 that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetRemediationsV2RequestT = Model::GetRemediationsV2Request>
+  Model::GetRemediationsV2OutcomeCallable GetRemediationsV2Callable(const GetRemediationsV2RequestT& request = {}) const {
+    return SubmitCallable(&SecurityHubClient::GetRemediationsV2, request);
+  }
+
+  /**
+   * An Async wrapper for GetRemediationsV2 that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetRemediationsV2RequestT = Model::GetRemediationsV2Request>
+  void GetRemediationsV2Async(const GetRemediationsV2ResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                              const GetRemediationsV2RequestT& request = {}) const {
+    return SubmitAsync(&SecurityHubClient::GetRemediationsV2, request, handler, context);
+  }
+
+  /**
    * <p>Retrieves statistical information about Amazon Web Services resources and
    * their associated security findings.</p> <p>You can use the <code>Scopes</code>
    * parameter to define the data boundary for the query. Currently,
    * <code>Scopes</code> supports <code>AwsOrganizations</code>, which lets you
    * aggregate resources from your entire organization or from specific
    * organizational units. Only the delegated administrator account can use
-   * <code>Scopes</code>.</p><p><h3>See Also:</h3>   <a
+   * <code>Scopes</code>.</p> <p>If you set <code>GroupByField</code> to
+   * <code>ResourceSubCategory</code>,
+   * <code>ResourceInfo.AIDetails.HostResourceType</code>, or
+   * <code>ResourceInfo.AIDetails.CanonicalId</code>, you must include a
+   * <code>ResourceCategory</code> string filter with comparison set to
+   * <code>EQUALS</code> and value <code>AI/ML</code> in the corresponding
+   * <code>ResourceGroupByRule</code>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/GetResourcesStatisticsV2">AWS
    * API Reference</a></p>
    */
@@ -2413,7 +2672,18 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
    * resource attributes. You can use <code>Scopes</code> and <code>Filters</code>
    * independently or together. When both are provided, <code>Scopes</code> narrows
    * the data set first, and then <code>Filters</code> refines results within that
-   * scoped data set.</p><p><h3>See Also:</h3>   <a
+   * scoped data set.</p> <p>For AI/ML resources, the response includes the
+   * <code>ResourceSubCategory</code> field. For self-hosted AI resources and their
+   * host resources, the response also includes <code>ResourceInfo</code> with
+   * AI-specific details. Self-hosted AI resources use a <code>ResourceType</code>
+   * with the <code>SelfHosted::AI::</code> prefix, such as
+   * <code>SelfHosted::AI::Model</code>, <code>SelfHosted::AI::Agent</code>,
+   * <code>SelfHosted::AI::InferenceEndpoint</code>, and
+   * <code>SelfHosted::AI::ExternalEndpoint</code>.</p> <p>If you filter by
+   * <code>ResourceSubCategory</code>, you must also include a
+   * <code>ResourceCategory</code> string filter with comparison set to
+   * <code>EQUALS</code> and value <code>AI/ML</code> in the same
+   * request.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/GetResourcesV2">AWS
    * API Reference</a></p>
    */
@@ -2467,6 +2737,127 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
                                          const GetSecurityControlDefinitionResponseReceivedHandler& handler,
                                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&SecurityHubClient::GetSecurityControlDefinition, request, handler, context);
+  }
+
+  /**
+   * <p>Returns a list of resources that contain a specific software package. You
+   * identify the package with <code>PackageName</code> and <code>PackageType</code>.
+   * To narrow the results to one version of the package, include
+   * <code>PackageVersion</code>.</p> <p>You can use the <code>Scopes</code>
+   * parameter to define the data boundary for the query. Currently,
+   * <code>Scopes</code> supports <code>AwsOrganizations</code>. With
+   * <code>AwsOrganizations</code>, you can retrieve resources from your entire
+   * organization or from specific organizational units. Only the delegated
+   * administrator account can use <code>Scopes</code>.</p> <p>You can use the
+   * <code>Filters</code> parameter to further refine results based on resource
+   * attributes, such as <code>ResourceType</code> or <code>Region</code>.</p>
+   * <p>This operation returns paginated results. To retrieve additional results, use
+   * the <code>NextToken</code> value from the previous response.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/GetSoftwareResourcesV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetSoftwareResourcesV2Outcome GetSoftwareResourcesV2(const Model::GetSoftwareResourcesV2Request& request) const;
+
+  /**
+   * A Callable wrapper for GetSoftwareResourcesV2 that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetSoftwareResourcesV2RequestT = Model::GetSoftwareResourcesV2Request>
+  Model::GetSoftwareResourcesV2OutcomeCallable GetSoftwareResourcesV2Callable(const GetSoftwareResourcesV2RequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::GetSoftwareResourcesV2, request);
+  }
+
+  /**
+   * An Async wrapper for GetSoftwareResourcesV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetSoftwareResourcesV2RequestT = Model::GetSoftwareResourcesV2Request>
+  void GetSoftwareResourcesV2Async(const GetSoftwareResourcesV2RequestT& request,
+                                   const GetSoftwareResourcesV2ResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::GetSoftwareResourcesV2, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves aggregated counts of software packages installed on your resources,
+   * grouped by a field that you specify. For example, you can return the most common
+   * package types or the accounts with the most installed packages.</p> <p>Each
+   * count is the number of package-to-resource pairs that match the grouping value.
+   * A package installed on three resources contributes three to the count.</p>
+   * <p>You can use the <code>Scopes</code> parameter to define the data boundary for
+   * the query. Currently, <code>Scopes</code> supports
+   * <code>AwsOrganizations</code>. With <code>AwsOrganizations</code>, you can
+   * aggregate software from your entire organization or from specific organizational
+   * units. Only the delegated administrator account can use <code>Scopes</code>.</p>
+   * <p>This operation doesn't paginate. Use <code>MaxStatisticResults</code> to
+   * control how many grouping values are returned.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/GetSoftwareStatisticsV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetSoftwareStatisticsV2Outcome GetSoftwareStatisticsV2(const Model::GetSoftwareStatisticsV2Request& request) const;
+
+  /**
+   * A Callable wrapper for GetSoftwareStatisticsV2 that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetSoftwareStatisticsV2RequestT = Model::GetSoftwareStatisticsV2Request>
+  Model::GetSoftwareStatisticsV2OutcomeCallable GetSoftwareStatisticsV2Callable(const GetSoftwareStatisticsV2RequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::GetSoftwareStatisticsV2, request);
+  }
+
+  /**
+   * An Async wrapper for GetSoftwareStatisticsV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetSoftwareStatisticsV2RequestT = Model::GetSoftwareStatisticsV2Request>
+  void GetSoftwareStatisticsV2Async(const GetSoftwareStatisticsV2RequestT& request,
+                                    const GetSoftwareStatisticsV2ResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::GetSoftwareStatisticsV2, request, handler, context);
+  }
+
+  /**
+   * <p>Returns a list of software packages installed on your resources. Each result
+   * identifies a package by name, version, and type, and includes the number of
+   * resources that contain that package.</p> <p>You can use the <code>Scopes</code>
+   * parameter to define the data boundary for the query. Currently,
+   * <code>Scopes</code> supports <code>AwsOrganizations</code>. With
+   * <code>AwsOrganizations</code>, you can retrieve software from your entire
+   * organization or from specific organizational units. Only the delegated
+   * administrator account can use <code>Scopes</code>.</p> <p>You can use the
+   * <code>Filters</code> parameter to refine results based on package and resource
+   * attributes. You can use <code>Scopes</code> and <code>Filters</code>
+   * independently or together. When both are provided, <code>Scopes</code> narrows
+   * the data set first, and then <code>Filters</code> refines results within that
+   * scoped data set.</p> <p>To list the resources that contain a specific package,
+   * use <code>GetSoftwareResourcesV2</code>. To get counts of software grouped by a
+   * field, use <code>GetSoftwareStatisticsV2</code>.</p> <p>This operation returns
+   * paginated results. To retrieve additional results, use the
+   * <code>NextToken</code> value from the previous response.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/GetSoftwareV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetSoftwareV2Outcome GetSoftwareV2(const Model::GetSoftwareV2Request& request = {}) const;
+
+  /**
+   * A Callable wrapper for GetSoftwareV2 that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetSoftwareV2RequestT = Model::GetSoftwareV2Request>
+  Model::GetSoftwareV2OutcomeCallable GetSoftwareV2Callable(const GetSoftwareV2RequestT& request = {}) const {
+    return SubmitCallable(&SecurityHubClient::GetSoftwareV2, request);
+  }
+
+  /**
+   * An Async wrapper for GetSoftwareV2 that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetSoftwareV2RequestT = Model::GetSoftwareV2Request>
+  void GetSoftwareV2Async(const GetSoftwareV2ResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                          const GetSoftwareV2RequestT& request = {}) const {
+    return SubmitAsync(&SecurityHubClient::GetSoftwareV2, request, handler, context);
   }
 
   /**
@@ -2654,6 +3045,33 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Lists the CSPM connectors and their metadata for the calling
+   * account.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/ListConnectors">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListConnectorsOutcome ListConnectors(const Model::ListConnectorsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListConnectors that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListConnectorsRequestT = Model::ListConnectorsRequest>
+  Model::ListConnectorsOutcomeCallable ListConnectorsCallable(const ListConnectorsRequestT& request = {}) const {
+    return SubmitCallable(&SecurityHubClient::ListConnectors, request);
+  }
+
+  /**
+   * An Async wrapper for ListConnectors that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListConnectorsRequestT = Model::ListConnectorsRequest>
+  void ListConnectorsAsync(const ListConnectorsResponseReceivedHandler& handler,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                           const ListConnectorsRequestT& request = {}) const {
+    return SubmitAsync(&SecurityHubClient::ListConnectors, request, handler, context);
+  }
+
+  /**
    * <p>Grants permission to retrieve a list of connectorsV2 and their metadata for
    * the calling account.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/ListConnectorsV2">AWS
@@ -2712,6 +3130,73 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Returns the findings export jobs in your account as a paginated list of
+   * <code>ExportSummary</code> objects. You can filter the results by job
+   * <code>Status</code> or <code>DataType</code>.</p> <p>To page through the
+   * results, use the <code>MaxResults</code> and <code>NextToken</code> parameters.
+   * If the response includes a <code>NextToken</code> value, pass it in a subsequent
+   * request to retrieve the next page of results.</p> <p>Each
+   * <code>ExportSummary</code> reports the output <code>Format</code> of the job but
+   * not its full <code>OutputConfiguration</code>. To retrieve the filters and
+   * selected fields that a job was started with, call
+   * <code>GetExportJobV2</code>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/ListExportJobsV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListExportJobsV2Outcome ListExportJobsV2(const Model::ListExportJobsV2Request& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListExportJobsV2 that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListExportJobsV2RequestT = Model::ListExportJobsV2Request>
+  Model::ListExportJobsV2OutcomeCallable ListExportJobsV2Callable(const ListExportJobsV2RequestT& request = {}) const {
+    return SubmitCallable(&SecurityHubClient::ListExportJobsV2, request);
+  }
+
+  /**
+   * An Async wrapper for ListExportJobsV2 that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListExportJobsV2RequestT = Model::ListExportJobsV2Request>
+  void ListExportJobsV2Async(const ListExportJobsV2ResponseReceivedHandler& handler,
+                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                             const ListExportJobsV2RequestT& request = {}) const {
+    return SubmitAsync(&SecurityHubClient::ListExportJobsV2, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the exposure findings tied to a specific remediation target.
+   * Results are sorted by previous severity, highest first, and are
+   * paginated.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/ListExposuresByRemediationV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListExposuresByRemediationV2Outcome ListExposuresByRemediationV2(
+      const Model::ListExposuresByRemediationV2Request& request) const;
+
+  /**
+   * A Callable wrapper for ListExposuresByRemediationV2 that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename ListExposuresByRemediationV2RequestT = Model::ListExposuresByRemediationV2Request>
+  Model::ListExposuresByRemediationV2OutcomeCallable ListExposuresByRemediationV2Callable(
+      const ListExposuresByRemediationV2RequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::ListExposuresByRemediationV2, request);
+  }
+
+  /**
+   * An Async wrapper for ListExposuresByRemediationV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListExposuresByRemediationV2RequestT = Model::ListExposuresByRemediationV2Request>
+  void ListExposuresByRemediationV2Async(const ListExposuresByRemediationV2RequestT& request,
+                                         const ListExposuresByRemediationV2ResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::ListExposuresByRemediationV2, request, handler, context);
+  }
+
+  /**
    * <p>If cross-Region aggregation is enabled, then
    * <code>ListFindingAggregators</code> returns the Amazon Resource Name (ARN) of
    * the finding aggregator. You can run this operation from any Amazon Web Services
@@ -2739,6 +3224,36 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                    const ListFindingAggregatorsRequestT& request = {}) const {
     return SubmitAsync(&SecurityHubClient::ListFindingAggregators, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the free trial status of Security Hub features. A delegated Security
+   * Hub administrator can list the status for accounts in its organization. Any
+   * other account can list the status only for itself. Free trial status remains
+   * available after a feature is disabled.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/ListFreeTrialStatusesV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListFreeTrialStatusesV2Outcome ListFreeTrialStatusesV2(const Model::ListFreeTrialStatusesV2Request& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListFreeTrialStatusesV2 that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListFreeTrialStatusesV2RequestT = Model::ListFreeTrialStatusesV2Request>
+  Model::ListFreeTrialStatusesV2OutcomeCallable ListFreeTrialStatusesV2Callable(const ListFreeTrialStatusesV2RequestT& request = {}) const {
+    return SubmitCallable(&SecurityHubClient::ListFreeTrialStatusesV2, request);
+  }
+
+  /**
+   * An Async wrapper for ListFreeTrialStatusesV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListFreeTrialStatusesV2RequestT = Model::ListFreeTrialStatusesV2Request>
+  void ListFreeTrialStatusesV2Async(const ListFreeTrialStatusesV2ResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                    const ListFreeTrialStatusesV2RequestT& request = {}) const {
+    return SubmitAsync(&SecurityHubClient::ListFreeTrialStatusesV2, request, handler, context);
   }
 
   /**
@@ -3020,6 +3535,62 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Starts an ad hoc export job that writes Security Hub findings to an Amazon
+   * Simple Storage Service (Amazon S3) bucket that you own. Because the export runs
+   * asynchronously, this operation returns only the <code>ExportJobId</code> of the
+   * new job; it doesn't wait for the export to finish. Use
+   * <code>GetExportJobV2</code> to poll the job, and <code>ListExportJobsV2</code>
+   * to view the export jobs in your account.</p> <p>Security Hub allows only one
+   * export job in the <code>RUNNING</code> state per account at a time. If an export
+   * job is already running, this operation returns a
+   * <code>ServiceQuotaExceededException</code>. Wait for the running job to finish,
+   * or cancel it with <code>CancelExportJobV2</code>, before you start a new
+   * one.</p> <p>Specify the destination bucket and Amazon Web Services Key
+   * Management Service (Amazon Web Services KMS) key in the <code>Destination</code>
+   * parameter, and the output format (<code>CSV</code> or <code>OCSF_JSON</code>),
+   * optional filters, and field selection in the <code>OutputConfiguration</code>
+   * parameter. Before you call this operation, you must grant Security Hub
+   * permission to write to your bucket and use your Amazon Web Services KMS key by
+   * adding the bucket policy and key policy statements shown in the Examples
+   * section.</p> <p>Two identities use your Amazon Web Services KMS key, and each
+   * needs its own permission. Security Hub uses the key when it writes the export
+   * objects to your bucket. The IAM principal that calls
+   * <code>StartExportJobV2</code> must also have <code>kms:GenerateDataKey</code>
+   * and <code>kms:Decrypt</code> permissions on the key. The Examples section shows
+   * both grants.</p> <p>A delegated administrator can use the optional
+   * <code>Scopes</code> parameter to export findings for specific organizations or
+   * organizational units (OUs).</p> <p>To make the request idempotent, provide a
+   * <code>ClientToken</code>. If you retry a <code>StartExportJobV2</code> request
+   * with the same <code>ClientToken</code> and the same request parameters, Security
+   * Hub returns the <code>ExportJobId</code> of the original job instead of starting
+   * a new one. If you reuse a <code>ClientToken</code> with different request
+   * parameters, this operation returns a
+   * <code>ConflictException</code>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/StartExportJobV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartExportJobV2Outcome StartExportJobV2(const Model::StartExportJobV2Request& request) const;
+
+  /**
+   * A Callable wrapper for StartExportJobV2 that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StartExportJobV2RequestT = Model::StartExportJobV2Request>
+  Model::StartExportJobV2OutcomeCallable StartExportJobV2Callable(const StartExportJobV2RequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::StartExportJobV2, request);
+  }
+
+  /**
+   * An Async wrapper for StartExportJobV2 that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename StartExportJobV2RequestT = Model::StartExportJobV2Request>
+  void StartExportJobV2Async(const StartExportJobV2RequestT& request, const StartExportJobV2ResponseReceivedHandler& handler,
+                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::StartExportJobV2, request, handler, context);
+  }
+
+  /**
    * <p>Adds one or more tags to a resource.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/TagResource">AWS
    * API Reference</a></p>
@@ -3178,6 +3749,32 @@ class AWS_SECURITYHUB_API SecurityHubClient : public Aws::Client::AWSJsonClient,
                                       const UpdateConfigurationPolicyResponseReceivedHandler& handler,
                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&SecurityHubClient::UpdateConfigurationPolicy, request, handler, context);
+  }
+
+  /**
+   * <p>Updates a CSPM connector's configuration, such as the scope or regions for
+   * the connected cloud provider.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/UpdateConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateConnectorOutcome UpdateConnector(const Model::UpdateConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateConnector that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename UpdateConnectorRequestT = Model::UpdateConnectorRequest>
+  Model::UpdateConnectorOutcomeCallable UpdateConnectorCallable(const UpdateConnectorRequestT& request) const {
+    return SubmitCallable(&SecurityHubClient::UpdateConnector, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateConnector that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename UpdateConnectorRequestT = Model::UpdateConnectorRequest>
+  void UpdateConnectorAsync(const UpdateConnectorRequestT& request, const UpdateConnectorResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SecurityHubClient::UpdateConnector, request, handler, context);
   }
 
   /**

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-evs "C++ SDK for the AWS evs service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-evs "C++ SDK for Amazon Elastic VMware Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_EVS_HEADERS
     "include/aws/evs/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_EVS_HEADERS
 
 file(GLOB AWS_EVS_MODEL_HEADERS
     "include/aws/evs/model/*.h"
+)
+
+file(GLOB AWS_EVS_INTERNAL_HEADERS
+    "include/aws/evs/internal/*.h"
 )
 
 file(GLOB AWS_EVS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_EVS_MODEL_SOURCE
 
 file(GLOB EVS_UNIFIED_HEADERS
     ${AWS_EVS_HEADERS}
+    ${AWS_EVS_INTERNAL_HEADERS}
     ${AWS_EVS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\evs" FILES ${AWS_EVS_HEADERS})
+        source_group("Header Files\\aws\\evs\\internal" FILES ${AWS_EVS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\evs\\model" FILES ${AWS_EVS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_EVS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_EVS_MODEL_SOURCE})

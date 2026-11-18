@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -18,13 +18,19 @@
 #include <aws/securityhub/model/GetFindingsV2PaginationTraits.h>
 #include <aws/securityhub/model/GetInsightsPaginationTraits.h>
 #include <aws/securityhub/model/GetRecommendedPolicyV2PaginationTraits.h>
+#include <aws/securityhub/model/GetRemediationsV2PaginationTraits.h>
 #include <aws/securityhub/model/GetResourcesTrendsV2PaginationTraits.h>
 #include <aws/securityhub/model/GetResourcesV2PaginationTraits.h>
+#include <aws/securityhub/model/GetSoftwareResourcesV2PaginationTraits.h>
+#include <aws/securityhub/model/GetSoftwareV2PaginationTraits.h>
 #include <aws/securityhub/model/ListAggregatorsV2PaginationTraits.h>
 #include <aws/securityhub/model/ListConfigurationPoliciesPaginationTraits.h>
 #include <aws/securityhub/model/ListConfigurationPolicyAssociationsPaginationTraits.h>
 #include <aws/securityhub/model/ListEnabledProductsForImportPaginationTraits.h>
+#include <aws/securityhub/model/ListExportJobsV2PaginationTraits.h>
+#include <aws/securityhub/model/ListExposuresByRemediationV2PaginationTraits.h>
 #include <aws/securityhub/model/ListFindingAggregatorsPaginationTraits.h>
+#include <aws/securityhub/model/ListFreeTrialStatusesV2PaginationTraits.h>
 #include <aws/securityhub/model/ListInvitationsPaginationTraits.h>
 #include <aws/securityhub/model/ListMembersPaginationTraits.h>
 #include <aws/securityhub/model/ListOrganizationAdminAccountsPaginationTraits.h>
@@ -61,11 +67,18 @@ using GetInsightsPaginator = Aws::Utils::Pagination::Paginator<SecurityHubClient
 using GetRecommendedPolicyV2Paginator =
     Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::GetRecommendedPolicyV2Request,
                                       Pagination::GetRecommendedPolicyV2PaginationTraits<SecurityHubClient>>;
+using GetRemediationsV2Paginator = Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::GetRemediationsV2Request,
+                                                                     Pagination::GetRemediationsV2PaginationTraits<SecurityHubClient>>;
 using GetResourcesTrendsV2Paginator =
     Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::GetResourcesTrendsV2Request,
                                       Pagination::GetResourcesTrendsV2PaginationTraits<SecurityHubClient>>;
 using GetResourcesV2Paginator = Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::GetResourcesV2Request,
                                                                   Pagination::GetResourcesV2PaginationTraits<SecurityHubClient>>;
+using GetSoftwareResourcesV2Paginator =
+    Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::GetSoftwareResourcesV2Request,
+                                      Pagination::GetSoftwareResourcesV2PaginationTraits<SecurityHubClient>>;
+using GetSoftwareV2Paginator = Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::GetSoftwareV2Request,
+                                                                 Pagination::GetSoftwareV2PaginationTraits<SecurityHubClient>>;
 using ListAggregatorsV2Paginator = Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::ListAggregatorsV2Request,
                                                                      Pagination::ListAggregatorsV2PaginationTraits<SecurityHubClient>>;
 using ListConfigurationPoliciesPaginator =
@@ -77,9 +90,17 @@ using ListConfigurationPolicyAssociationsPaginator =
 using ListEnabledProductsForImportPaginator =
     Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::ListEnabledProductsForImportRequest,
                                       Pagination::ListEnabledProductsForImportPaginationTraits<SecurityHubClient>>;
+using ListExportJobsV2Paginator = Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::ListExportJobsV2Request,
+                                                                    Pagination::ListExportJobsV2PaginationTraits<SecurityHubClient>>;
+using ListExposuresByRemediationV2Paginator =
+    Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::ListExposuresByRemediationV2Request,
+                                      Pagination::ListExposuresByRemediationV2PaginationTraits<SecurityHubClient>>;
 using ListFindingAggregatorsPaginator =
     Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::ListFindingAggregatorsRequest,
                                       Pagination::ListFindingAggregatorsPaginationTraits<SecurityHubClient>>;
+using ListFreeTrialStatusesV2Paginator =
+    Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::ListFreeTrialStatusesV2Request,
+                                      Pagination::ListFreeTrialStatusesV2PaginationTraits<SecurityHubClient>>;
 using ListInvitationsPaginator = Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::ListInvitationsRequest,
                                                                    Pagination::ListInvitationsPaginationTraits<SecurityHubClient>>;
 using ListMembersPaginator = Aws::Utils::Pagination::Paginator<SecurityHubClient, Model::ListMembersRequest,

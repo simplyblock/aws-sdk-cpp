@@ -168,6 +168,35 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Describes the effective resource limits for one or more Amazon Quick Sight
+   * users, including the limits that apply to each user based on their profile
+   * assignments.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/BatchDescribeUserLimits">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::BatchDescribeUserLimitsOutcome BatchDescribeUserLimits(const Model::BatchDescribeUserLimitsRequest& request) const;
+
+  /**
+   * A Callable wrapper for BatchDescribeUserLimits that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename BatchDescribeUserLimitsRequestT = Model::BatchDescribeUserLimitsRequest>
+  Model::BatchDescribeUserLimitsOutcomeCallable BatchDescribeUserLimitsCallable(const BatchDescribeUserLimitsRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::BatchDescribeUserLimits, request);
+  }
+
+  /**
+   * An Async wrapper for BatchDescribeUserLimits that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename BatchDescribeUserLimitsRequestT = Model::BatchDescribeUserLimitsRequest>
+  void BatchDescribeUserLimitsAsync(const BatchDescribeUserLimitsRequestT& request,
+                                    const BatchDescribeUserLimitsResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::BatchDescribeUserLimits, request, handler, context);
+  }
+
+  /**
    * <p>Cancels an ongoing ingestion of data into SPICE.</p><p><h3>See Also:</h3>
    * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CancelIngestion">AWS
@@ -379,6 +408,32 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Creates an approval policy in Quick Sight.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateApprovalPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateApprovalPolicyOutcome CreateApprovalPolicy(const Model::CreateApprovalPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateApprovalPolicy that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateApprovalPolicyRequestT = Model::CreateApprovalPolicyRequest>
+  Model::CreateApprovalPolicyOutcomeCallable CreateApprovalPolicyCallable(const CreateApprovalPolicyRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::CreateApprovalPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for CreateApprovalPolicy that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateApprovalPolicyRequestT = Model::CreateApprovalPolicyRequest>
+  void CreateApprovalPolicyAsync(const CreateApprovalPolicyRequestT& request, const CreateApprovalPolicyResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::CreateApprovalPolicy, request, handler, context);
+  }
+
+  /**
    * <p>Creates an Quick Sight brand.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateBrand">AWS
    * API Reference</a></p>
@@ -464,8 +519,7 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Creates a dataset. This operation doesn't support datasets that include
-   * uploaded files as a source.</p><p><h3>See Also:</h3>   <a
+   * <p>Creates a dataset.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateDataSet">AWS
    * API Reference</a></p>
    */
@@ -513,6 +567,35 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   void CreateDataSourceAsync(const CreateDataSourceRequestT& request, const CreateDataSourceResponseReceivedHandler& handler,
                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::CreateDataSource, request, handler, context);
+  }
+
+  /**
+   * <p>Creates a data loss prevention (DLP) setting configuration for an Amazon Web
+   * Services account. A DLP setting defines the DLP provider, the enforcement
+   * behavior, and the Quick capabilities that the setting applies to.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateDlpSetting">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateDlpSettingOutcome CreateDlpSetting(const Model::CreateDlpSettingRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateDlpSetting that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateDlpSettingRequestT = Model::CreateDlpSettingRequest>
+  Model::CreateDlpSettingOutcomeCallable CreateDlpSettingCallable(const CreateDlpSettingRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::CreateDlpSetting, request);
+  }
+
+  /**
+   * An Async wrapper for CreateDlpSetting that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename CreateDlpSettingRequestT = Model::CreateDlpSettingRequest>
+  void CreateDlpSettingAsync(const CreateDlpSettingRequestT& request, const CreateDlpSettingResponseReceivedHandler& handler,
+                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::CreateDlpSetting, request, handler, context);
   }
 
   /**
@@ -718,6 +801,68 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   void CreateIngestionAsync(const CreateIngestionRequestT& request, const CreateIngestionResponseReceivedHandler& handler,
                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::CreateIngestion, request, handler, context);
+  }
+
+  /**
+   * <p>Creates a knowledge base from a specified data source. Supported data source
+   * connector types include:</p> <ul> <li> <p> <code>S3_KNOWLEDGE_BASE</code> – Uses
+   * an Amazon S3 bucket as the data source.</p> </li> <li> <p>
+   * <code>WEB_CRAWLER</code> – Uses web pages indexed by the built-in web crawler as
+   * the data source.</p> </li> <li> <p> <code>GOOGLE_DRIVE</code> – Uses Google
+   * Drive as the data source. Supports service account authentication only.</p>
+   * </li> <li> <p> <code>SHAREPOINT</code> – Uses SharePoint as the data source.
+   * Supports two-legged OAuth only.</p> </li> <li> <p> <code>ONE_DRIVE</code> – Uses
+   * OneDrive as the data source. Supports two-legged OAuth only.</p> </li>
+   * </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateKnowledgeBase">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateKnowledgeBaseOutcome CreateKnowledgeBase(const Model::CreateKnowledgeBaseRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateKnowledgeBase that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateKnowledgeBaseRequestT = Model::CreateKnowledgeBaseRequest>
+  Model::CreateKnowledgeBaseOutcomeCallable CreateKnowledgeBaseCallable(const CreateKnowledgeBaseRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::CreateKnowledgeBase, request);
+  }
+
+  /**
+   * An Async wrapper for CreateKnowledgeBase that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename CreateKnowledgeBaseRequestT = Model::CreateKnowledgeBaseRequest>
+  void CreateKnowledgeBaseAsync(const CreateKnowledgeBaseRequestT& request, const CreateKnowledgeBaseResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::CreateKnowledgeBase, request, handler, context);
+  }
+
+  /**
+   * <p>Creates a limits profile that defines resource usage limits for Amazon Quick
+   * Sight users.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateLimitsProfile">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateLimitsProfileOutcome CreateLimitsProfile(const Model::CreateLimitsProfileRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateLimitsProfile that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateLimitsProfileRequestT = Model::CreateLimitsProfileRequest>
+  Model::CreateLimitsProfileOutcomeCallable CreateLimitsProfileCallable(const CreateLimitsProfileRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::CreateLimitsProfile, request);
+  }
+
+  /**
+   * An Async wrapper for CreateLimitsProfile that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename CreateLimitsProfileRequestT = Model::CreateLimitsProfileRequest>
+  void CreateLimitsProfileAsync(const CreateLimitsProfileRequestT& request, const CreateLimitsProfileResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::CreateLimitsProfile, request, handler, context);
   }
 
   /**
@@ -1033,6 +1178,31 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Creates a new Q topic.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateTopicV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateTopicV2Outcome CreateTopicV2(const Model::CreateTopicV2Request& request) const;
+
+  /**
+   * A Callable wrapper for CreateTopicV2 that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename CreateTopicV2RequestT = Model::CreateTopicV2Request>
+  Model::CreateTopicV2OutcomeCallable CreateTopicV2Callable(const CreateTopicV2RequestT& request) const {
+    return SubmitCallable(&QuickSightClient::CreateTopicV2, request);
+  }
+
+  /**
+   * An Async wrapper for CreateTopicV2 that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename CreateTopicV2RequestT = Model::CreateTopicV2Request>
+  void CreateTopicV2Async(const CreateTopicV2RequestT& request, const CreateTopicV2ResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::CreateTopicV2, request, handler, context);
+  }
+
+  /**
    * <p>Creates a new VPC connection.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateVPCConnection">AWS
    * API Reference</a></p>
@@ -1269,6 +1439,57 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Deletes an app.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteApp">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteAppOutcome DeleteApp(const Model::DeleteAppRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteApp that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DeleteAppRequestT = Model::DeleteAppRequest>
+  Model::DeleteAppOutcomeCallable DeleteAppCallable(const DeleteAppRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DeleteApp, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteApp that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DeleteAppRequestT = Model::DeleteAppRequest>
+  void DeleteAppAsync(const DeleteAppRequestT& request, const DeleteAppResponseReceivedHandler& handler,
+                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DeleteApp, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes an approval policy in Quick Sight.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteApprovalPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteApprovalPolicyOutcome DeleteApprovalPolicy(const Model::DeleteApprovalPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteApprovalPolicy that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteApprovalPolicyRequestT = Model::DeleteApprovalPolicyRequest>
+  Model::DeleteApprovalPolicyOutcomeCallable DeleteApprovalPolicyCallable(const DeleteApprovalPolicyRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DeleteApprovalPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteApprovalPolicy that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteApprovalPolicyRequestT = Model::DeleteApprovalPolicyRequest>
+  void DeleteApprovalPolicyAsync(const DeleteApprovalPolicyRequestT& request, const DeleteApprovalPolicyResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DeleteApprovalPolicy, request, handler, context);
+  }
+
+  /**
    *  <p>This API permanently deletes the specified Quick Sight brand.
    * When you delete a brand:</p> <ul> <li> <p>The brand and all its associated
    * branding elements are permanently removed</p> </li> <li> <p>Any applications or
@@ -1491,6 +1712,33 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Deletes a DLP setting configuration from an Amazon Web Services
+   * account.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteDlpSetting">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteDlpSettingOutcome DeleteDlpSetting(const Model::DeleteDlpSettingRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteDlpSetting that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteDlpSettingRequestT = Model::DeleteDlpSettingRequest>
+  Model::DeleteDlpSettingOutcomeCallable DeleteDlpSettingCallable(const DeleteDlpSettingRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DeleteDlpSetting, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteDlpSetting that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename DeleteDlpSettingRequestT = Model::DeleteDlpSettingRequest>
+  void DeleteDlpSettingAsync(const DeleteDlpSettingRequestT& request, const DeleteDlpSettingResponseReceivedHandler& handler,
+                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DeleteDlpSetting, request, handler, context);
+  }
+
+  /**
    * <p>Permanently deletes a flow from the specified Amazon Web Services account.
    * This operation cannot be undone.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteFlow">AWS
@@ -1705,6 +1953,32 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   void DeleteKnowledgeBaseAsync(const DeleteKnowledgeBaseRequestT& request, const DeleteKnowledgeBaseResponseReceivedHandler& handler,
                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::DeleteKnowledgeBase, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a limits profile.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteLimitsProfile">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteLimitsProfileOutcome DeleteLimitsProfile(const Model::DeleteLimitsProfileRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteLimitsProfile that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteLimitsProfileRequestT = Model::DeleteLimitsProfileRequest>
+  Model::DeleteLimitsProfileOutcomeCallable DeleteLimitsProfileCallable(const DeleteLimitsProfileRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DeleteLimitsProfile, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteLimitsProfile that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename DeleteLimitsProfileRequestT = Model::DeleteLimitsProfileRequest>
+  void DeleteLimitsProfileAsync(const DeleteLimitsProfileRequestT& request, const DeleteLimitsProfileResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DeleteLimitsProfile, request, handler, context);
   }
 
   /**
@@ -2028,6 +2302,31 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
                                        const DeleteTopicRefreshScheduleResponseReceivedHandler& handler,
                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::DeleteTopicRefreshSchedule, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a Q topic.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteTopicV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteTopicV2Outcome DeleteTopicV2(const Model::DeleteTopicV2Request& request) const;
+
+  /**
+   * A Callable wrapper for DeleteTopicV2 that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DeleteTopicV2RequestT = Model::DeleteTopicV2Request>
+  Model::DeleteTopicV2OutcomeCallable DeleteTopicV2Callable(const DeleteTopicV2RequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DeleteTopicV2, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteTopicV2 that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DeleteTopicV2RequestT = Model::DeleteTopicV2Request>
+  void DeleteTopicV2Async(const DeleteTopicV2RequestT& request, const DeleteTopicV2ResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DeleteTopicV2, request, handler, context);
   }
 
   /**
@@ -2502,6 +2801,85 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Describes an app.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeApp">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeAppOutcome DescribeApp(const Model::DescribeAppRequest& request) const;
+
+  /**
+   * A Callable wrapper for DescribeApp that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DescribeAppRequestT = Model::DescribeAppRequest>
+  Model::DescribeAppOutcomeCallable DescribeAppCallable(const DescribeAppRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DescribeApp, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeApp that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DescribeAppRequestT = Model::DescribeAppRequest>
+  void DescribeAppAsync(const DescribeAppRequestT& request, const DescribeAppResponseReceivedHandler& handler,
+                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DescribeApp, request, handler, context);
+  }
+
+  /**
+   * <p>Describes the resource permissions for an app.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeAppPermissions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeAppPermissionsOutcome DescribeAppPermissions(const Model::DescribeAppPermissionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for DescribeAppPermissions that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DescribeAppPermissionsRequestT = Model::DescribeAppPermissionsRequest>
+  Model::DescribeAppPermissionsOutcomeCallable DescribeAppPermissionsCallable(const DescribeAppPermissionsRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DescribeAppPermissions, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeAppPermissions that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeAppPermissionsRequestT = Model::DescribeAppPermissionsRequest>
+  void DescribeAppPermissionsAsync(const DescribeAppPermissionsRequestT& request,
+                                   const DescribeAppPermissionsResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DescribeAppPermissions, request, handler, context);
+  }
+
+  /**
+   * <p>Describes an approval policy in Quick Sight.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeApprovalPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeApprovalPolicyOutcome DescribeApprovalPolicy(const Model::DescribeApprovalPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for DescribeApprovalPolicy that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DescribeApprovalPolicyRequestT = Model::DescribeApprovalPolicyRequest>
+  Model::DescribeApprovalPolicyOutcomeCallable DescribeApprovalPolicyCallable(const DescribeApprovalPolicyRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DescribeApprovalPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeApprovalPolicy that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeApprovalPolicyRequestT = Model::DescribeApprovalPolicyRequest>
+  void DescribeApprovalPolicyAsync(const DescribeApprovalPolicyRequestT& request,
+                                   const DescribeApprovalPolicyResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DescribeApprovalPolicy, request, handler, context);
+  }
+
+  /**
    * <p>Describes an existing export job.</p> <p>Poll job descriptions after a job
    * starts to know the status of the job. When a job succeeds, a URL is provided to
    * download the exported assets' data from. Download URLs are valid for five
@@ -2918,8 +3296,7 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Describes a dataset. This operation doesn't support datasets that include
-   * uploaded files as a source.</p><p><h3>See Also:</h3>   <a
+   * <p>Describes a dataset.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDataSet">AWS
    * API Reference</a></p>
    */
@@ -3087,6 +3464,33 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
                                                 const DescribeDefaultQBusinessApplicationResponseReceivedHandler& handler,
                                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::DescribeDefaultQBusinessApplication, request, handler, context);
+  }
+
+  /**
+   * <p>Describes the full configuration of a DLP setting in an Amazon Web Services
+   * account.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDlpSetting">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeDlpSettingOutcome DescribeDlpSetting(const Model::DescribeDlpSettingRequest& request) const;
+
+  /**
+   * A Callable wrapper for DescribeDlpSetting that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DescribeDlpSettingRequestT = Model::DescribeDlpSettingRequest>
+  Model::DescribeDlpSettingOutcomeCallable DescribeDlpSettingCallable(const DescribeDlpSettingRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DescribeDlpSetting, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeDlpSetting that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename DescribeDlpSettingRequestT = Model::DescribeDlpSettingRequest>
+  void DescribeDlpSettingAsync(const DescribeDlpSettingRequestT& request, const DescribeDlpSettingResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DescribeDlpSetting, request, handler, context);
   }
 
   /**
@@ -3422,6 +3826,33 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Describes the properties of an existing limits profile.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeLimitsProfile">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeLimitsProfileOutcome DescribeLimitsProfile(const Model::DescribeLimitsProfileRequest& request) const;
+
+  /**
+   * A Callable wrapper for DescribeLimitsProfile that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DescribeLimitsProfileRequestT = Model::DescribeLimitsProfileRequest>
+  Model::DescribeLimitsProfileOutcomeCallable DescribeLimitsProfileCallable(const DescribeLimitsProfileRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DescribeLimitsProfile, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeLimitsProfile that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeLimitsProfileRequestT = Model::DescribeLimitsProfileRequest>
+  void DescribeLimitsProfileAsync(const DescribeLimitsProfileRequestT& request, const DescribeLimitsProfileResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DescribeLimitsProfile, request, handler, context);
+  }
+
+  /**
    * <p>Describes the current namespace.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeNamespace">AWS
    * API Reference</a></p>
@@ -3560,6 +3991,38 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
                                     const DescribeRefreshScheduleResponseReceivedHandler& handler,
                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::DescribeRefreshSchedule, request, handler, context);
+  }
+
+  /**
+   * <p>Describes the service role configuration for your Amazon Quick Sight
+   * account.</p> <p>Call this operation in the Amazon Web Services Region where your
+   * Amazon Quick Sight account is registered (the home Region).</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeResourcePermissions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeResourcePermissionsOutcome DescribeResourcePermissions(
+      const Model::DescribeResourcePermissionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for DescribeResourcePermissions that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename DescribeResourcePermissionsRequestT = Model::DescribeResourcePermissionsRequest>
+  Model::DescribeResourcePermissionsOutcomeCallable DescribeResourcePermissionsCallable(
+      const DescribeResourcePermissionsRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DescribeResourcePermissions, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeResourcePermissions that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeResourcePermissionsRequestT = Model::DescribeResourcePermissionsRequest>
+  void DescribeResourcePermissionsAsync(const DescribeResourcePermissionsRequestT& request,
+                                        const DescribeResourcePermissionsResponseReceivedHandler& handler,
+                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DescribeResourcePermissions, request, handler, context);
   }
 
   /**
@@ -3924,6 +4387,35 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Describes the permissions of a topic.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeTopicPermissionsV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeTopicPermissionsV2Outcome DescribeTopicPermissionsV2(
+      const Model::DescribeTopicPermissionsV2Request& request) const;
+
+  /**
+   * A Callable wrapper for DescribeTopicPermissionsV2 that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename DescribeTopicPermissionsV2RequestT = Model::DescribeTopicPermissionsV2Request>
+  Model::DescribeTopicPermissionsV2OutcomeCallable DescribeTopicPermissionsV2Callable(
+      const DescribeTopicPermissionsV2RequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DescribeTopicPermissionsV2, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeTopicPermissionsV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeTopicPermissionsV2RequestT = Model::DescribeTopicPermissionsV2Request>
+  void DescribeTopicPermissionsV2Async(const DescribeTopicPermissionsV2RequestT& request,
+                                       const DescribeTopicPermissionsV2ResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DescribeTopicPermissionsV2, request, handler, context);
+  }
+
+  /**
    * <p>Describes the status of a topic refresh.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeTopicRefresh">AWS
    * API Reference</a></p>
@@ -3976,6 +4468,31 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
                                          const DescribeTopicRefreshScheduleResponseReceivedHandler& handler,
                                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::DescribeTopicRefreshSchedule, request, handler, context);
+  }
+
+  /**
+   * <p>Describes a Q topic.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeTopicV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeTopicV2Outcome DescribeTopicV2(const Model::DescribeTopicV2Request& request) const;
+
+  /**
+   * A Callable wrapper for DescribeTopicV2 that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DescribeTopicV2RequestT = Model::DescribeTopicV2Request>
+  Model::DescribeTopicV2OutcomeCallable DescribeTopicV2Callable(const DescribeTopicV2RequestT& request) const {
+    return SubmitCallable(&QuickSightClient::DescribeTopicV2, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeTopicV2 that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DescribeTopicV2RequestT = Model::DescribeTopicV2Request>
+  void DescribeTopicV2Async(const DescribeTopicV2RequestT& request, const DescribeTopicV2ResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::DescribeTopicV2, request, handler, context);
   }
 
   /**
@@ -4459,6 +4976,63 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Lists all approval policies in the specified Quick Sight account. The results
+   * are paginated. If the response includes a <code>NextToken</code> value, pass it
+   * in a subsequent call to retrieve the next set of results.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ListApprovalPolicies">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListApprovalPoliciesOutcome ListApprovalPolicies(const Model::ListApprovalPoliciesRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListApprovalPolicies that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListApprovalPoliciesRequestT = Model::ListApprovalPoliciesRequest>
+  Model::ListApprovalPoliciesOutcomeCallable ListApprovalPoliciesCallable(const ListApprovalPoliciesRequestT& request = {}) const {
+    return SubmitCallable(&QuickSightClient::ListApprovalPolicies, request);
+  }
+
+  /**
+   * An Async wrapper for ListApprovalPolicies that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListApprovalPoliciesRequestT = Model::ListApprovalPoliciesRequest>
+  void ListApprovalPoliciesAsync(const ListApprovalPoliciesResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                 const ListApprovalPoliciesRequestT& request = {}) const {
+    return SubmitAsync(&QuickSightClient::ListApprovalPolicies, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the apps in an Amazon Web Services account. Results are paginated; use
+   * the <code>NextToken</code> parameter to retrieve additional
+   * results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ListApps">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListAppsOutcome ListApps(const Model::ListAppsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListApps that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListAppsRequestT = Model::ListAppsRequest>
+  Model::ListAppsOutcomeCallable ListAppsCallable(const ListAppsRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::ListApps, request);
+  }
+
+  /**
+   * An Async wrapper for ListApps that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListAppsRequestT = Model::ListAppsRequest>
+  void ListAppsAsync(const ListAppsRequestT& request, const ListAppsResponseReceivedHandler& handler,
+                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::ListApps, request, handler, context);
+  }
+
+  /**
    * <p>Lists all asset bundle export jobs that have been taken place in the last 14
    * days. Jobs created more than 14 days ago are deleted forever and are not
    * returned. If you are using the same job ID for multiple jobs,
@@ -4679,6 +5253,32 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   void ListDataSourcesAsync(const ListDataSourcesRequestT& request, const ListDataSourcesResponseReceivedHandler& handler,
                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::ListDataSources, request, handler, context);
+  }
+
+  /**
+   * <p>Lists all DLP settings in an Amazon Web Services account.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ListDlpSettings">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListDlpSettingsOutcome ListDlpSettings(const Model::ListDlpSettingsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListDlpSettings that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListDlpSettingsRequestT = Model::ListDlpSettingsRequest>
+  Model::ListDlpSettingsOutcomeCallable ListDlpSettingsCallable(const ListDlpSettingsRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::ListDlpSettings, request);
+  }
+
+  /**
+   * An Async wrapper for ListDlpSettings that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListDlpSettingsRequestT = Model::ListDlpSettingsRequest>
+  void ListDlpSettingsAsync(const ListDlpSettingsRequestT& request, const ListDlpSettingsResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::ListDlpSettings, request, handler, context);
   }
 
   /**
@@ -4978,6 +5578,35 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   void ListKnowledgeBasesAsync(const ListKnowledgeBasesRequestT& request, const ListKnowledgeBasesResponseReceivedHandler& handler,
                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::ListKnowledgeBases, request, handler, context);
+  }
+
+  /**
+   * <p>Lists all limits profiles in an Amazon Quick Sight account. Results are
+   * paginated. Use the <code>maxResults</code> parameter to limit the number of
+   * results returned in a single call, and use the <code>nextToken</code> parameter
+   * to retrieve the next page of results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ListLimitsProfiles">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListLimitsProfilesOutcome ListLimitsProfiles(const Model::ListLimitsProfilesRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListLimitsProfiles that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListLimitsProfilesRequestT = Model::ListLimitsProfilesRequest>
+  Model::ListLimitsProfilesOutcomeCallable ListLimitsProfilesCallable(const ListLimitsProfilesRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::ListLimitsProfiles, request);
+  }
+
+  /**
+   * An Async wrapper for ListLimitsProfiles that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListLimitsProfilesRequestT = Model::ListLimitsProfilesRequest>
+  void ListLimitsProfilesAsync(const ListLimitsProfilesRequestT& request, const ListLimitsProfilesResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::ListLimitsProfiles, request, handler, context);
   }
 
   /**
@@ -5435,6 +6064,32 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Lists all of the Q topics in the specified Amazon Web Services account in an
+   * Amazon Web Services Region.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ListTopicsV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListTopicsV2Outcome ListTopicsV2(const Model::ListTopicsV2Request& request) const;
+
+  /**
+   * A Callable wrapper for ListTopicsV2 that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListTopicsV2RequestT = Model::ListTopicsV2Request>
+  Model::ListTopicsV2OutcomeCallable ListTopicsV2Callable(const ListTopicsV2RequestT& request) const {
+    return SubmitCallable(&QuickSightClient::ListTopicsV2, request);
+  }
+
+  /**
+   * An Async wrapper for ListTopicsV2 that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListTopicsV2RequestT = Model::ListTopicsV2Request>
+  void ListTopicsV2Async(const ListTopicsV2RequestT& request, const ListTopicsV2ResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::ListTopicsV2, request, handler, context);
+  }
+
+  /**
    * <p>Lists the Amazon Quick Sight groups that an Amazon Quick Sight user is a
    * member of.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ListUserGroups">AWS
@@ -5755,6 +6410,34 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Searches for apps in an Amazon Web Services account using the specified
+   * filters. This operation is eventually consistent; the results might not reflect
+   * very recent updates. Results are paginated; use the <code>NextToken</code>
+   * parameter to retrieve additional results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SearchApps">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::SearchAppsOutcome SearchApps(const Model::SearchAppsRequest& request) const;
+
+  /**
+   * A Callable wrapper for SearchApps that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename SearchAppsRequestT = Model::SearchAppsRequest>
+  Model::SearchAppsOutcomeCallable SearchAppsCallable(const SearchAppsRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::SearchApps, request);
+  }
+
+  /**
+   * An Async wrapper for SearchApps that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename SearchAppsRequestT = Model::SearchAppsRequest>
+  void SearchAppsAsync(const SearchAppsRequestT& request, const SearchAppsResponseReceivedHandler& handler,
+                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::SearchApps, request, handler, context);
+  }
+
+  /**
    * <p>Searches for dashboards that belong to a user. </p>  <p>This operation
    * is eventually consistent. The results are best effort and may not reflect very
    * recent updates and changes.</p> <p><h3>See Also:</h3>   <a
@@ -5989,6 +6672,32 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   void SearchTopicsAsync(const SearchTopicsRequestT& request, const SearchTopicsResponseReceivedHandler& handler,
                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::SearchTopics, request, handler, context);
+  }
+
+  /**
+   * <p>Searches for any Q topic that exists in an Amazon Web Services
+   * account.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SearchTopicsV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::SearchTopicsV2Outcome SearchTopicsV2(const Model::SearchTopicsV2Request& request) const;
+
+  /**
+   * A Callable wrapper for SearchTopicsV2 that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename SearchTopicsV2RequestT = Model::SearchTopicsV2Request>
+  Model::SearchTopicsV2OutcomeCallable SearchTopicsV2Callable(const SearchTopicsV2RequestT& request) const {
+    return SubmitCallable(&QuickSightClient::SearchTopicsV2, request);
+  }
+
+  /**
+   * An Async wrapper for SearchTopicsV2 that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename SearchTopicsV2RequestT = Model::SearchTopicsV2Request>
+  void SearchTopicsV2Async(const SearchTopicsV2RequestT& request, const SearchTopicsV2ResponseReceivedHandler& handler,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::SearchTopicsV2, request, handler, context);
   }
 
   /**
@@ -6595,6 +7304,34 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates the resource permissions for an app. You can grant or revoke
+   * permissions and, optionally, change the app's visibility.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateAppPermissions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateAppPermissionsOutcome UpdateAppPermissions(const Model::UpdateAppPermissionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateAppPermissions that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateAppPermissionsRequestT = Model::UpdateAppPermissionsRequest>
+  Model::UpdateAppPermissionsOutcomeCallable UpdateAppPermissionsCallable(const UpdateAppPermissionsRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::UpdateAppPermissions, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateAppPermissions that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateAppPermissionsRequestT = Model::UpdateAppPermissionsRequest>
+  void UpdateAppPermissionsAsync(const UpdateAppPermissionsRequestT& request, const UpdateAppPermissionsResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::UpdateAppPermissions, request, handler, context);
+  }
+
+  /**
    * <p>Updates an Quick application with a token exchange grant. This operation only
    * supports Quick applications that are registered with IAM Identity
    * Center.</p><p><h3>See Also:</h3>   <a
@@ -6623,6 +7360,32 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
                                                     const UpdateApplicationWithTokenExchangeGrantResponseReceivedHandler& handler,
                                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::UpdateApplicationWithTokenExchangeGrant, request, handler, context);
+  }
+
+  /**
+   * <p>Updates an approval policy in Quick Sight.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateApprovalPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateApprovalPolicyOutcome UpdateApprovalPolicy(const Model::UpdateApprovalPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateApprovalPolicy that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateApprovalPolicyRequestT = Model::UpdateApprovalPolicyRequest>
+  Model::UpdateApprovalPolicyOutcomeCallable UpdateApprovalPolicyCallable(const UpdateApprovalPolicyRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::UpdateApprovalPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateApprovalPolicy that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateApprovalPolicyRequestT = Model::UpdateApprovalPolicyRequest>
+  void UpdateApprovalPolicyAsync(const UpdateApprovalPolicyRequestT& request, const UpdateApprovalPolicyResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::UpdateApprovalPolicy, request, handler, context);
   }
 
   /**
@@ -6877,8 +7640,7 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Updates a dataset. This operation doesn't support datasets that include
-   * uploaded files as a source. Partial updates are not supported by this
+   * <p>Updates a dataset. Partial updates are not supported by this
    * operation.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDataSet">AWS
    * API Reference</a></p>
@@ -7015,6 +7777,34 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
                                               const UpdateDefaultQBusinessApplicationResponseReceivedHandler& handler,
                                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::UpdateDefaultQBusinessApplication, request, handler, context);
+  }
+
+  /**
+   * <p>Updates an existing DLP setting configuration in an Amazon Web Services
+   * account. Fields that are omitted from the request retain their current
+   * values.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDlpSetting">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateDlpSettingOutcome UpdateDlpSetting(const Model::UpdateDlpSettingRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateDlpSetting that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateDlpSettingRequestT = Model::UpdateDlpSettingRequest>
+  Model::UpdateDlpSettingOutcomeCallable UpdateDlpSettingCallable(const UpdateDlpSettingRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::UpdateDlpSetting, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateDlpSetting that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename UpdateDlpSettingRequestT = Model::UpdateDlpSettingRequest>
+  void UpdateDlpSettingAsync(const UpdateDlpSettingRequestT& request, const UpdateDlpSettingResponseReceivedHandler& handler,
+                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::UpdateDlpSetting, request, handler, context);
   }
 
   /**
@@ -7271,6 +8061,33 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates the properties of an existing knowledge base.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateKnowledgeBase">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateKnowledgeBaseOutcome UpdateKnowledgeBase(const Model::UpdateKnowledgeBaseRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateKnowledgeBase that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateKnowledgeBaseRequestT = Model::UpdateKnowledgeBaseRequest>
+  Model::UpdateKnowledgeBaseOutcomeCallable UpdateKnowledgeBaseCallable(const UpdateKnowledgeBaseRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::UpdateKnowledgeBase, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateKnowledgeBase that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename UpdateKnowledgeBaseRequestT = Model::UpdateKnowledgeBaseRequest>
+  void UpdateKnowledgeBaseAsync(const UpdateKnowledgeBaseRequestT& request, const UpdateKnowledgeBaseResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::UpdateKnowledgeBase, request, handler, context);
+  }
+
+  /**
    * <p>Updates the resource permissions for a knowledge base.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateKnowledgeBasePermissions">AWS
@@ -7298,6 +8115,33 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
                                            const UpdateKnowledgeBasePermissionsResponseReceivedHandler& handler,
                                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::UpdateKnowledgeBasePermissions, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the properties of an existing limits profile.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateLimitsProfile">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateLimitsProfileOutcome UpdateLimitsProfile(const Model::UpdateLimitsProfileRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateLimitsProfile that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateLimitsProfileRequestT = Model::UpdateLimitsProfileRequest>
+  Model::UpdateLimitsProfileOutcomeCallable UpdateLimitsProfileCallable(const UpdateLimitsProfileRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::UpdateLimitsProfile, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateLimitsProfile that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename UpdateLimitsProfileRequestT = Model::UpdateLimitsProfileRequest>
+  void UpdateLimitsProfileAsync(const UpdateLimitsProfileRequestT& request, const UpdateLimitsProfileResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::UpdateLimitsProfile, request, handler, context);
   }
 
   /**
@@ -7456,6 +8300,42 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   void UpdateRefreshScheduleAsync(const UpdateRefreshScheduleRequestT& request, const UpdateRefreshScheduleResponseReceivedHandler& handler,
                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::UpdateRefreshSchedule, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the service role configuration that Amazon Quick Sight uses to access
+   * resources in your Amazon Web Services account. To use this operation, you must
+   * have the <code>quicksight:UpdateResourcePermissions</code> and
+   * <code>iam:PassRole</code> permissions.</p> <p>Call this operation in the Amazon
+   * Web Services Region where your Amazon Quick Sight account is registered (the
+   * home Region). You can switch from a role managed by Amazon Quick Sight to a
+   * customer-managed role, or replace one customer-managed role with another. You
+   * can't use this operation to switch back to a role managed by Amazon Quick
+   * Sight.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateResourcePermissions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateResourcePermissionsOutcome UpdateResourcePermissions(const Model::UpdateResourcePermissionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateResourcePermissions that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateResourcePermissionsRequestT = Model::UpdateResourcePermissionsRequest>
+  Model::UpdateResourcePermissionsOutcomeCallable UpdateResourcePermissionsCallable(
+      const UpdateResourcePermissionsRequestT& request) const {
+    return SubmitCallable(&QuickSightClient::UpdateResourcePermissions, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateResourcePermissions that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateResourcePermissionsRequestT = Model::UpdateResourcePermissionsRequest>
+  void UpdateResourcePermissionsAsync(const UpdateResourcePermissionsRequestT& request,
+                                      const UpdateResourcePermissionsResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::UpdateResourcePermissions, request, handler, context);
   }
 
   /**
@@ -7889,6 +8769,33 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates the permissions of a topic.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateTopicPermissionsV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateTopicPermissionsV2Outcome UpdateTopicPermissionsV2(const Model::UpdateTopicPermissionsV2Request& request) const;
+
+  /**
+   * A Callable wrapper for UpdateTopicPermissionsV2 that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateTopicPermissionsV2RequestT = Model::UpdateTopicPermissionsV2Request>
+  Model::UpdateTopicPermissionsV2OutcomeCallable UpdateTopicPermissionsV2Callable(const UpdateTopicPermissionsV2RequestT& request) const {
+    return SubmitCallable(&QuickSightClient::UpdateTopicPermissionsV2, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateTopicPermissionsV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateTopicPermissionsV2RequestT = Model::UpdateTopicPermissionsV2Request>
+  void UpdateTopicPermissionsV2Async(const UpdateTopicPermissionsV2RequestT& request,
+                                     const UpdateTopicPermissionsV2ResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::UpdateTopicPermissionsV2, request, handler, context);
+  }
+
+  /**
    * <p>Updates a topic refresh schedule.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateTopicRefreshSchedule">AWS
    * API Reference</a></p>
@@ -7915,6 +8822,31 @@ class AWS_QUICKSIGHT_API QuickSightClient : public Aws::Client::AWSJsonClient,
                                        const UpdateTopicRefreshScheduleResponseReceivedHandler& handler,
                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QuickSightClient::UpdateTopicRefreshSchedule, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the definition of a Q topic.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateTopicV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateTopicV2Outcome UpdateTopicV2(const Model::UpdateTopicV2Request& request) const;
+
+  /**
+   * A Callable wrapper for UpdateTopicV2 that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename UpdateTopicV2RequestT = Model::UpdateTopicV2Request>
+  Model::UpdateTopicV2OutcomeCallable UpdateTopicV2Callable(const UpdateTopicV2RequestT& request) const {
+    return SubmitCallable(&QuickSightClient::UpdateTopicV2, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateTopicV2 that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename UpdateTopicV2RequestT = Model::UpdateTopicV2Request>
+  void UpdateTopicV2Async(const UpdateTopicV2RequestT& request, const UpdateTopicV2ResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QuickSightClient::UpdateTopicV2, request, handler, context);
   }
 
   /**

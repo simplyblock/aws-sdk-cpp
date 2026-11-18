@@ -4,12 +4,11 @@
  */
 
 #pragma once
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/s3-crt/S3CrtClientConfiguration.h>
-#include <aws/s3-crt/S3CrtEndpointRules.h>
 #include <aws/s3-crt/S3Crt_EXPORTS.h>
 
 namespace Aws {
@@ -17,7 +16,7 @@ namespace S3Crt {
 namespace Endpoint {
 using S3CrtClientConfiguration = Aws::S3Crt::S3CrtClientConfiguration;
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 class AWS_S3CRT_API S3CrtClientContextParameters : public Aws::Endpoint::ClientContextParameters {
@@ -64,7 +63,7 @@ class AWS_S3CRT_API S3CrtBuiltInParameters : public Aws::Endpoint::BuiltInParame
   virtual void SetFromClientConfiguration(const S3CrtClientConfiguration& config, const Aws::String& serviceName);
 
  private:
-  void SetS3SpecificParameters(const S3CrtClientConfiguration& config);
+  void SetServiceSpecificParameters(const S3CrtClientConfiguration& config);
 };
 
 /**
@@ -74,7 +73,7 @@ class AWS_S3CRT_API S3CrtBuiltInParameters : public Aws::Endpoint::BuiltInParame
  */
 using S3CrtEndpointProviderBase = EndpointProviderBase<S3CrtClientConfiguration, S3CrtBuiltInParameters, S3CrtClientContextParameters>;
 
-using S3CrtDefaultEpProviderBase = DefaultEndpointProvider<S3CrtClientConfiguration, S3CrtBuiltInParameters, S3CrtClientContextParameters>;
+using S3CrtDefaultEpProviderBase = BDDEndpointProvider<S3CrtClientConfiguration, S3CrtBuiltInParameters, S3CrtClientContextParameters>;
 
 }  // namespace Endpoint
 }  // namespace S3Crt
@@ -86,7 +85,7 @@ namespace Endpoint {
 AWS_S3CRT_EXTERN template class AWS_S3CRT_API Aws::Endpoint::EndpointProviderBase<
     S3Crt::Endpoint::S3CrtClientConfiguration, S3Crt::Endpoint::S3CrtBuiltInParameters, S3Crt::Endpoint::S3CrtClientContextParameters>;
 
-AWS_S3CRT_EXTERN template class AWS_S3CRT_API Aws::Endpoint::DefaultEndpointProvider<
+AWS_S3CRT_EXTERN template class AWS_S3CRT_API Aws::Endpoint::BDDEndpointProvider<
     S3Crt::Endpoint::S3CrtClientConfiguration, S3Crt::Endpoint::S3CrtBuiltInParameters, S3Crt::Endpoint::S3CrtClientContextParameters>;
 }  // namespace Endpoint
 
@@ -99,8 +98,7 @@ class AWS_S3CRT_API S3CrtEndpointProvider : public S3CrtDefaultEpProviderBase {
  public:
   using S3CrtResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  S3CrtEndpointProvider()
-      : S3CrtDefaultEpProviderBase(Aws::S3Crt::S3CrtEndpointRules::GetRulesBlob(), Aws::S3Crt::S3CrtEndpointRules::RulesBlobSize) {}
+  S3CrtEndpointProvider();
 
   ~S3CrtEndpointProvider() {}
 };

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/payment-cryptography-data/PaymentCryptographyDataEndpointRules.h>
 #include <aws/payment-cryptography-data/PaymentCryptographyData_EXPORTS.h>
 
 namespace Aws {
 namespace PaymentCryptographyData {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using PaymentCryptographyDataClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using PaymentCryptographyDataEndpointProviderBase =
                          PaymentCryptographyDataClientContextParameters>;
 
 using PaymentCryptographyDataDefaultEpProviderBase =
-    DefaultEndpointProvider<PaymentCryptographyDataClientConfiguration, PaymentCryptographyDataBuiltInParameters,
-                            PaymentCryptographyDataClientContextParameters>;
+    BDDEndpointProvider<PaymentCryptographyDataClientConfiguration, PaymentCryptographyDataBuiltInParameters,
+                        PaymentCryptographyDataClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_PAYMENTCRYPTOGRAPHYDATA_API PaymentCryptographyDataEndpointProvider : 
  public:
   using PaymentCryptographyDataResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  PaymentCryptographyDataEndpointProvider()
-      : PaymentCryptographyDataDefaultEpProviderBase(Aws::PaymentCryptographyData::PaymentCryptographyDataEndpointRules::GetRulesBlob(),
-                                                     Aws::PaymentCryptographyData::PaymentCryptographyDataEndpointRules::RulesBlobSize) {}
+  PaymentCryptographyDataEndpointProvider();
 
   ~PaymentCryptographyDataEndpointProvider() {}
 };

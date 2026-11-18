@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-application-autoscaling "C++ SDK for the AWS application-autoscaling service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-application-autoscaling "C++ SDK for Application Auto Scaling" aws-cpp-sdk-core)
 
 file(GLOB AWS_APPLICATION-AUTOSCALING_HEADERS
     "include/aws/application-autoscaling/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_APPLICATION-AUTOSCALING_HEADERS
 
 file(GLOB AWS_APPLICATION-AUTOSCALING_MODEL_HEADERS
     "include/aws/application-autoscaling/model/*.h"
+)
+
+file(GLOB AWS_APPLICATION-AUTOSCALING_INTERNAL_HEADERS
+    "include/aws/application-autoscaling/internal/*.h"
 )
 
 file(GLOB AWS_APPLICATION-AUTOSCALING_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_APPLICATION-AUTOSCALING_MODEL_SOURCE
 
 file(GLOB APPLICATION-AUTOSCALING_UNIFIED_HEADERS
     ${AWS_APPLICATION-AUTOSCALING_HEADERS}
+    ${AWS_APPLICATION-AUTOSCALING_INTERNAL_HEADERS}
     ${AWS_APPLICATION-AUTOSCALING_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\application-autoscaling" FILES ${AWS_APPLICATION-AUTOSCALING_HEADERS})
+        source_group("Header Files\\aws\\application-autoscaling\\internal" FILES ${AWS_APPLICATION-AUTOSCALING_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\application-autoscaling\\model" FILES ${AWS_APPLICATION-AUTOSCALING_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_APPLICATION-AUTOSCALING_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_APPLICATION-AUTOSCALING_MODEL_SOURCE})

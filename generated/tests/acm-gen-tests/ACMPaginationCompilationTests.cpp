@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -13,6 +13,7 @@
 #include <aws/acm/model/ListAcmeExternalAccountBindingsPaginationTraits.h>
 #include <aws/acm/model/ListAcmeEndpointsPaginationTraits.h>
 #include <aws/acm/model/ListAcmeDomainValidationsPaginationTraits.h>
+#include <aws/acm/model/ListCertificateDomainValidationsPaginationTraits.h>
 #include <aws/acm/model/ListAcmeAccountsPaginationTraits.h>
 
 #include <aws/testing/AwsCppSdkGTestSuite.h>
@@ -23,6 +24,6 @@ class ACMPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(ACMPaginationCompilationTest, ACMPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

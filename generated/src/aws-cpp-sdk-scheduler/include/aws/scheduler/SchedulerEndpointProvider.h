@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/scheduler/SchedulerEndpointRules.h>
 #include <aws/scheduler/Scheduler_EXPORTS.h>
 
 namespace Aws {
 namespace Scheduler {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SchedulerClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using SchedulerEndpointProviderBase =
     EndpointProviderBase<SchedulerClientConfiguration, SchedulerBuiltInParameters, SchedulerClientContextParameters>;
 
 using SchedulerDefaultEpProviderBase =
-    DefaultEndpointProvider<SchedulerClientConfiguration, SchedulerBuiltInParameters, SchedulerClientContextParameters>;
+    BDDEndpointProvider<SchedulerClientConfiguration, SchedulerBuiltInParameters, SchedulerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_SCHEDULER_API SchedulerEndpointProvider : public SchedulerDefaultEpPro
  public:
   using SchedulerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SchedulerEndpointProvider()
-      : SchedulerDefaultEpProviderBase(Aws::Scheduler::SchedulerEndpointRules::GetRulesBlob(),
-                                       Aws::Scheduler::SchedulerEndpointRules::RulesBlobSize) {}
+  SchedulerEndpointProvider();
 
   ~SchedulerEndpointProvider() {}
 };

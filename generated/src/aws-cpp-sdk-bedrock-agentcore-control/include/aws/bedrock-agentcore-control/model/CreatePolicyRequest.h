@@ -54,8 +54,8 @@ class CreatePolicyRequest : public BedrockAgentCoreControlRequest {
 
   ///@{
   /**
-   * <p>The Cedar policy statement that defines the access control rules. This
-   * contains the actual policy logic written in Cedar policy language, specifying
+   * <p>The Cedar or Dogwood policy statement that defines the access control rules.
+   * This contains the actual policy logic written in Cedar or Dogwood, specifying
    * effect (permit or forbid), principals, actions, resources, and conditions for
    * agent behavior control.</p>
    */
@@ -162,9 +162,10 @@ class CreatePolicyRequest : public BedrockAgentCoreControlRequest {
   ///@{
   /**
    * <p>A unique, case-sensitive identifier to ensure the idempotency of the request.
-   * The AWS SDK automatically generates this token, so you don't need to provide it
-   * in most cases. If you retry a request with the same client token, the service
-   * returns the same response without creating a duplicate policy.</p>
+   * The Amazon Web Services SDK automatically generates this token, so you don't
+   * need to provide it in most cases. If you retry a request with the same client
+   * token, the service returns the same response without creating a duplicate
+   * policy.</p>
    */
   inline const Aws::String& GetClientToken() const { return m_clientToken; }
   inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }

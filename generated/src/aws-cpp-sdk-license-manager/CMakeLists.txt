@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-license-manager "C++ SDK for the AWS license-manager service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-license-manager "C++ SDK for AWS License Manager" aws-cpp-sdk-core)
 
 file(GLOB AWS_LICENSE-MANAGER_HEADERS
     "include/aws/license-manager/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LICENSE-MANAGER_HEADERS
 
 file(GLOB AWS_LICENSE-MANAGER_MODEL_HEADERS
     "include/aws/license-manager/model/*.h"
+)
+
+file(GLOB AWS_LICENSE-MANAGER_INTERNAL_HEADERS
+    "include/aws/license-manager/internal/*.h"
 )
 
 file(GLOB AWS_LICENSE-MANAGER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LICENSE-MANAGER_MODEL_SOURCE
 
 file(GLOB LICENSE-MANAGER_UNIFIED_HEADERS
     ${AWS_LICENSE-MANAGER_HEADERS}
+    ${AWS_LICENSE-MANAGER_INTERNAL_HEADERS}
     ${AWS_LICENSE-MANAGER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\license-manager" FILES ${AWS_LICENSE-MANAGER_HEADERS})
+        source_group("Header Files\\aws\\license-manager\\internal" FILES ${AWS_LICENSE-MANAGER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\license-manager\\model" FILES ${AWS_LICENSE-MANAGER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LICENSE-MANAGER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LICENSE-MANAGER_MODEL_SOURCE})

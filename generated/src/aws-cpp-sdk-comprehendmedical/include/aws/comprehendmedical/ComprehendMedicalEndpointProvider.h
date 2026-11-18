@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/comprehendmedical/ComprehendMedicalEndpointRules.h>
 #include <aws/comprehendmedical/ComprehendMedical_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ComprehendMedical {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ComprehendMedicalClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using ComprehendMedicalEndpointProviderBase = EndpointProviderBase<ComprehendMed
                                                                    ComprehendMedicalClientContextParameters>;
 
 using ComprehendMedicalDefaultEpProviderBase =
-    DefaultEndpointProvider<ComprehendMedicalClientConfiguration, ComprehendMedicalBuiltInParameters,
-                            ComprehendMedicalClientContextParameters>;
+    BDDEndpointProvider<ComprehendMedicalClientConfiguration, ComprehendMedicalBuiltInParameters, ComprehendMedicalClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_COMPREHENDMEDICAL_API ComprehendMedicalEndpointProvider : public Compr
  public:
   using ComprehendMedicalResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ComprehendMedicalEndpointProvider()
-      : ComprehendMedicalDefaultEpProviderBase(Aws::ComprehendMedical::ComprehendMedicalEndpointRules::GetRulesBlob(),
-                                               Aws::ComprehendMedical::ComprehendMedicalEndpointRules::RulesBlobSize) {}
+  ComprehendMedicalEndpointProvider();
 
   ~ComprehendMedicalEndpointProvider() {}
 };

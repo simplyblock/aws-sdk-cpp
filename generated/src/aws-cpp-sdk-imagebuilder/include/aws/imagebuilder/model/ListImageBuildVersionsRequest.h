@@ -32,8 +32,13 @@ class ListImageBuildVersionsRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The Amazon Resource Name (ARN) of the image whose build versions you want to
-   * retrieve.</p>
+   * <p>The Amazon Resource Name (ARN) of the image version whose build versions you
+   * want to retrieve. The ARN must specify an exact version
+   * (<code>&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</code>) - wildcards aren't
+   * allowed. This parameter is optional. If you don't specify it, Image Builder
+   * returns build versions for all of the images in your account.</p> <p>If the ARN
+   * that you specify doesn't exist, Image Builder returns an empty list rather than
+   * a <code>ResourceNotFoundException</code> error.</p>
    */
   inline const Aws::String& GetImageVersionArn() const { return m_imageVersionArn; }
   inline bool ImageVersionArnHasBeenSet() const { return m_imageVersionArnHasBeenSet; }
@@ -78,7 +83,10 @@ class ListImageBuildVersionsRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Specify the maximum number of items to return in a request.</p>
+   * <p>The maximum number of items to return in a single request. If you don't
+   * specify a value, Image Builder returns up to 25 items. The largest page size
+   * that you can request is 100 items. A page can contain fewer items than the
+   * maximum, with a <code>nextToken</code> to continue paging.</p>
    */
   inline int GetMaxResults() const { return m_maxResults; }
   inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
@@ -94,8 +102,8 @@ class ListImageBuildVersionsRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>A token to specify where to start paginating. This is the nextToken from a
-   * previously truncated response.</p>
+   * <p>A token to specify where to start paginating. Use the <code>nextToken</code>
+   * value from a previously truncated response.</p>
    */
   inline const Aws::String& GetNextToken() const { return m_nextToken; }
   inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }

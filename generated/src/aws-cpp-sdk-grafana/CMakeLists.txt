@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-grafana "C++ SDK for the AWS grafana service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-grafana "C++ SDK for Amazon Managed Grafana" aws-cpp-sdk-core)
 
 file(GLOB AWS_GRAFANA_HEADERS
     "include/aws/grafana/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_GRAFANA_HEADERS
 
 file(GLOB AWS_GRAFANA_MODEL_HEADERS
     "include/aws/grafana/model/*.h"
+)
+
+file(GLOB AWS_GRAFANA_INTERNAL_HEADERS
+    "include/aws/grafana/internal/*.h"
 )
 
 file(GLOB AWS_GRAFANA_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_GRAFANA_MODEL_SOURCE
 
 file(GLOB GRAFANA_UNIFIED_HEADERS
     ${AWS_GRAFANA_HEADERS}
+    ${AWS_GRAFANA_INTERNAL_HEADERS}
     ${AWS_GRAFANA_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\grafana" FILES ${AWS_GRAFANA_HEADERS})
+        source_group("Header Files\\aws\\grafana\\internal" FILES ${AWS_GRAFANA_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\grafana\\model" FILES ${AWS_GRAFANA_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_GRAFANA_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_GRAFANA_MODEL_SOURCE})

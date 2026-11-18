@@ -6,6 +6,7 @@ import org.gradle.api.logging.Logging
 import kotlin.streams.toList
 
 val logger = Logging.getLogger("MyLogger")
+val smithyVersion: String by project
 
 plugins {
     id("java-library")
@@ -18,22 +19,24 @@ repositories {
 }
 
 buildscript {
+    // buildscript is evaluated before script-body vals, so read the version from gradle.properties
+    val smithyVersion: String by project
     dependencies {
-        classpath("software.amazon.smithy:smithy-model:1.70.0")
-        classpath("software.amazon.smithy:smithy-aws-traits:1.70.0")
-        classpath("software.amazon.smithy:smithy-rules-engine:1.70.0")
+        classpath("software.amazon.smithy:smithy-model:$smithyVersion")
+        classpath("software.amazon.smithy:smithy-aws-traits:$smithyVersion")
+        classpath("software.amazon.smithy:smithy-rules-engine:$smithyVersion")
     }
 }
 
 dependencies {
     implementation(project(":smithy-cpp-codegen"))
-    implementation("software.amazon.smithy:smithy-aws-traits:1.70.0")
-    implementation("software.amazon.smithy:smithy-aws-cloudformation-traits:1.70.0")
-    implementation("software.amazon.smithy:smithy-aws-iam-traits:1.70.0")
-    implementation("software.amazon.smithy:smithy-aws-endpoints:1.70.0")
-    implementation("software.amazon.smithy:smithy-smoke-test-traits:1.70.0")
-    implementation("software.amazon.smithy:smithy-aws-smoke-test-model:1.70.0")
-    implementation("software.amazon.smithy:smithy-waiters:1.70.0")
+    implementation("software.amazon.smithy:smithy-aws-traits:$smithyVersion")
+    implementation("software.amazon.smithy:smithy-aws-cloudformation-traits:$smithyVersion")
+    implementation("software.amazon.smithy:smithy-aws-iam-traits:$smithyVersion")
+    implementation("software.amazon.smithy:smithy-aws-endpoints:$smithyVersion")
+    implementation("software.amazon.smithy:smithy-smoke-test-traits:$smithyVersion")
+    implementation("software.amazon.smithy:smithy-aws-smoke-test-model:$smithyVersion")
+    implementation("software.amazon.smithy:smithy-waiters:$smithyVersion")
 }
 
 tasks.register("generate-smithy-build") {
@@ -44,6 +47,10 @@ tasks.register("generate-smithy-build") {
         val filteredServiceList = filteredServices.split(",").map { it.trim() }.filter { it.isNotEmpty() }
         val c2jMapStr: String = project.findProperty("c2jMap")?.toString() ?: "{}"
         val namespaceMappings: String = project.findProperty("namespaceMappings")?.toString() ?: "{}"
+        val generateModels: Boolean = project.findProperty("generateModels")?.toString()?.toBoolean() ?: false
+        val generateEndpointRules: Boolean = project.findProperty("generateEndpointRules")?.toString()?.toBoolean() ?: false
+        val bddBytecoderPath: String = project.findProperty("bddBytecoderPath")?.toString() ?: ""
+        val pythonExecutable: String = project.findProperty("pythonExecutable")?.toString() ?: "python3"
 
         fileTree(models).filter { it.isFile }.files.forEach eachFile@{ file ->
             val model = Model.assembler()
@@ -58,19 +65,35 @@ tasks.register("generate-smithy-build") {
             
             if (filteredServiceList.isNotEmpty() && sdkId !in filteredServiceList) return@eachFile
             
+            var pluginsNode = Node.objectNode()
+                .withMember("smithy-cpp-codegen-paginators", Node.objectNodeBuilder()
+                    .withMember("c2jMap", Node.from(c2jMapStr))
+                    .withMember("namespaceMappings", Node.from(namespaceMappings))
+                    .build())
+                .withMember("smithy-cpp-codegen-waiters", Node.objectNodeBuilder()
+                    .withMember("c2jMap", Node.from(c2jMapStr))
+                    .withMember("namespaceMappings", Node.from(namespaceMappings))
+                    .build())
+            if (generateModels) {
+                pluginsNode = pluginsNode.withMember("smithy-cpp-codegen-models", Node.objectNodeBuilder()
+                    .withMember("c2jMap", Node.from(c2jMapStr))
+                    .withMember("namespaceMappings", Node.from(namespaceMappings))
+                    .build())
+            }
+            if (generateEndpointRules) {
+                pluginsNode = pluginsNode.withMember("smithy-cpp-codegen-endpoint-rules", Node.objectNodeBuilder()
+                    .withMember("c2jMap", Node.from(c2jMapStr))
+                    .withMember("namespaceMappings", Node.from(namespaceMappings))
+                    .withMember("bddBytecoderPath", Node.from(bddBytecoderPath))
+                    .withMember("pythonExecutable", Node.from(pythonExecutable))
+                    .build())
+            }
+
             val projectionContents = Node.objectNodeBuilder()
                 .withMember("imports", Node.fromStrings("${models.absolutePath}${File.separator}${file.name}"))
-                .withMember("plugins", Node.objectNode()
-                    .withMember("smithy-cpp-codegen-paginators", Node.objectNodeBuilder()
-                        .withMember("c2jMap", Node.from(c2jMapStr))
-                        .withMember("namespaceMappings", Node.from(namespaceMappings))
-                        .build())
-                    .withMember("smithy-cpp-codegen-waiters", Node.objectNodeBuilder()
-                        .withMember("c2jMap", Node.from(c2jMapStr))
-                        .withMember("namespaceMappings", Node.from(namespaceMappings))
-                        .build()))
+                .withMember("plugins", pluginsNode)
                 .build()
-            
+
             projectionsBuilder.withMember("$sdkId.${service.version.lowercase()}", projectionContents)
         }
         
@@ -78,16 +101,23 @@ tasks.register("generate-smithy-build") {
         val legacyServices = mapOf("importexport" to "ImportExport", "sdb" to "SimpleDB")
         legacyServices.forEach { (c2jName, serviceName) ->
             if (filteredServiceList.isEmpty() || c2jName in filteredServiceList) {
-                val mockProjectionContents = Node.objectNodeBuilder()
-                    .withMember("plugins", Node.objectNode()
-                        .withMember("smithy-cpp-codegen-paginators", Node.objectNodeBuilder()
-                            .withMember("c2jMap", Node.from(c2jMapStr))
-                            .withMember("namespaceMappings", Node.from(namespaceMappings))
-                            .build())
+                var legacyPluginsNode = Node.objectNode()
+                    .withMember("smithy-cpp-codegen-paginators", Node.objectNodeBuilder()
+                        .withMember("c2jMap", Node.from(c2jMapStr))
+                        .withMember("namespaceMappings", Node.from(namespaceMappings))
+                        .build())
                     .withMember("smithy-cpp-codegen-waiters", Node.objectNodeBuilder()
                         .withMember("c2jMap", Node.from(c2jMapStr))
                         .withMember("namespaceMappings", Node.from(namespaceMappings))
-                        .build()))
+                        .build())
+                if (generateModels) {
+                    legacyPluginsNode = legacyPluginsNode.withMember("smithy-cpp-codegen-models", Node.objectNodeBuilder()
+                        .withMember("c2jMap", Node.from(c2jMapStr))
+                        .withMember("namespaceMappings", Node.from(namespaceMappings))
+                        .build())
+                }
+                val mockProjectionContents = Node.objectNodeBuilder()
+                    .withMember("plugins", legacyPluginsNode)
                     .build()
                 projectionsBuilder.withMember("$c2jName.mock", mockProjectionContents)
             }
@@ -96,17 +126,32 @@ tasks.register("generate-smithy-build") {
         // S3-CRT: Uses S3 model but generates with S3Crt namespace
         if (filteredServiceList.isEmpty() || "s3-crt" in filteredServiceList) {
             fileTree(models).filter { it.isFile && it.name == "s3.json" }.files.firstOrNull()?.let { s3ModelFile ->
+                var s3CrtPluginsNode = Node.objectNode()
+                    .withMember("smithy-cpp-codegen-paginators", Node.objectNodeBuilder()
+                        .withMember("c2jMap", Node.from(c2jMapStr))
+                        .withMember("namespaceMappings", Node.from(namespaceMappings))
+                        .build())
+                    .withMember("smithy-cpp-codegen-waiters", Node.objectNodeBuilder()
+                        .withMember("c2jMap", Node.from(c2jMapStr))
+                        .withMember("namespaceMappings", Node.from(namespaceMappings))
+                        .build())
+                if (generateModels) {
+                    s3CrtPluginsNode = s3CrtPluginsNode.withMember("smithy-cpp-codegen-models", Node.objectNodeBuilder()
+                        .withMember("c2jMap", Node.from(c2jMapStr))
+                        .withMember("namespaceMappings", Node.from(namespaceMappings))
+                        .build())
+                }
+                if (generateEndpointRules) {
+                    s3CrtPluginsNode = s3CrtPluginsNode.withMember("smithy-cpp-codegen-endpoint-rules", Node.objectNodeBuilder()
+                        .withMember("c2jMap", Node.from(c2jMapStr))
+                        .withMember("namespaceMappings", Node.from(namespaceMappings))
+                        .withMember("bddBytecoderPath", Node.from(bddBytecoderPath))
+                        .withMember("pythonExecutable", Node.from(pythonExecutable))
+                        .build())
+                }
                 val s3CrtProjectionContents = Node.objectNodeBuilder()
                     .withMember("imports", Node.fromStrings(s3ModelFile.absolutePath))
-                    .withMember("plugins", Node.objectNode()
-                        .withMember("smithy-cpp-codegen-paginators", Node.objectNodeBuilder()
-                            .withMember("c2jMap", Node.from(c2jMapStr))
-                            .withMember("namespaceMappings", Node.from(namespaceMappings))
-                            .build())
-                        .withMember("smithy-cpp-codegen-waiters", Node.objectNodeBuilder()
-                            .withMember("c2jMap", Node.from(c2jMapStr))
-                            .withMember("namespaceMappings", Node.from(namespaceMappings))
-                            .build()))
+                    .withMember("plugins", s3CrtPluginsNode)
                     .build()
                 projectionsBuilder.withMember("s3-crt.2006-03-01", s3CrtProjectionContents)
             }

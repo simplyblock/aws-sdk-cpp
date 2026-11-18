@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -19,6 +19,8 @@
 #include <aws/backup/model/ListTieringConfigurationsPaginationTraits.h>
 #include <aws/backup/model/ListBackupJobsPaginationTraits.h>
 #include <aws/backup/model/ListFrameworksPaginationTraits.h>
+#include <aws/backup/model/ListBackupAccessPointsByRecoveryPointPaginationTraits.h>
+#include <aws/backup/model/ListBackupAccessPointsPaginationTraits.h>
 #include <aws/backup/model/ListRestoreTestingSelectionsPaginationTraits.h>
 #include <aws/backup/model/ListRecoveryPointsByLegalHoldPaginationTraits.h>
 #include <aws/backup/model/ListProtectedResourcesPaginationTraits.h>
@@ -30,6 +32,7 @@
 #include <aws/backup/model/ListCopyJobsPaginationTraits.h>
 #include <aws/backup/model/ListCopyJobSummariesPaginationTraits.h>
 #include <aws/backup/model/ListRecoveryPointsByBackupVaultPaginationTraits.h>
+#include <aws/backup/model/ListBackupAccessPointsByResourcePaginationTraits.h>
 #include <aws/backup/model/ListRestoreJobsPaginationTraits.h>
 #include <aws/backup/model/ListLegalHoldsPaginationTraits.h>
 #include <aws/backup/model/ListRestoreTestingPlansPaginationTraits.h>
@@ -46,6 +49,6 @@ class BackupPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(BackupPaginationCompilationTest, BackupPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

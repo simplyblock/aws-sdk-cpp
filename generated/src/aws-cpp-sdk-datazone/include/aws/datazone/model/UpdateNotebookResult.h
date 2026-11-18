@@ -12,8 +12,10 @@
 #include <aws/datazone/DataZone_EXPORTS.h>
 #include <aws/datazone/model/CellInformation.h>
 #include <aws/datazone/model/EnvironmentConfig.h>
+#include <aws/datazone/model/GitMetadata.h>
 #include <aws/datazone/model/NotebookError.h>
 #include <aws/datazone/model/NotebookStatus.h>
+#include <aws/datazone/model/NotebookType.h>
 
 #include <utility>
 
@@ -136,6 +138,21 @@ class UpdateNotebookResult {
   }
   inline UpdateNotebookResult& WithStatus(NotebookStatus value) {
     SetStatus(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The type of the notebook.</p>
+   */
+  inline NotebookType GetType() const { return m_type; }
+  inline void SetType(NotebookType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline UpdateNotebookResult& WithType(NotebookType value) {
+    SetType(value);
     return *this;
   }
   ///@}
@@ -374,6 +391,23 @@ class UpdateNotebookResult {
   ///@}
 
   ///@{
+  /**
+   * <p>The Git metadata associated with the notebook.</p>
+   */
+  inline const GitMetadata& GetGitMetadata() const { return m_gitMetadata; }
+  template <typename GitMetadataT = GitMetadata>
+  void SetGitMetadata(GitMetadataT&& value) {
+    m_gitMetadataHasBeenSet = true;
+    m_gitMetadata = std::forward<GitMetadataT>(value);
+  }
+  template <typename GitMetadataT = GitMetadata>
+  UpdateNotebookResult& WithGitMetadata(GitMetadataT&& value) {
+    SetGitMetadata(std::forward<GitMetadataT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -402,6 +436,8 @@ class UpdateNotebookResult {
 
   NotebookStatus m_status{NotebookStatus::NOT_SET};
 
+  NotebookType m_type{NotebookType::NOT_SET};
+
   Aws::String m_description;
 
   Aws::Utils::DateTime m_createdAt{};
@@ -428,6 +464,8 @@ class UpdateNotebookResult {
 
   NotebookError m_error;
 
+  GitMetadata m_gitMetadata;
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_idHasBeenSet = false;
@@ -436,6 +474,7 @@ class UpdateNotebookResult {
   bool m_domainIdHasBeenSet = false;
   bool m_cellOrderHasBeenSet = false;
   bool m_statusHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_createdAtHasBeenSet = false;
   bool m_createdByHasBeenSet = false;
@@ -449,6 +488,7 @@ class UpdateNotebookResult {
   bool m_parametersHasBeenSet = false;
   bool m_environmentConfigurationHasBeenSet = false;
   bool m_errorHasBeenSet = false;
+  bool m_gitMetadataHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

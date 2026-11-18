@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-states "C++ SDK for the AWS states service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-states "C++ SDK for AWS Step Functions" aws-cpp-sdk-core)
 
 file(GLOB AWS_STATES_HEADERS
     "include/aws/states/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_STATES_HEADERS
 
 file(GLOB AWS_STATES_MODEL_HEADERS
     "include/aws/states/model/*.h"
+)
+
+file(GLOB AWS_STATES_INTERNAL_HEADERS
+    "include/aws/states/internal/*.h"
 )
 
 file(GLOB AWS_STATES_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_STATES_MODEL_SOURCE
 
 file(GLOB STATES_UNIFIED_HEADERS
     ${AWS_STATES_HEADERS}
+    ${AWS_STATES_INTERNAL_HEADERS}
     ${AWS_STATES_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\states" FILES ${AWS_STATES_HEADERS})
+        source_group("Header Files\\aws\\states\\internal" FILES ${AWS_STATES_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\states\\model" FILES ${AWS_STATES_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_STATES_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_STATES_MODEL_SOURCE})

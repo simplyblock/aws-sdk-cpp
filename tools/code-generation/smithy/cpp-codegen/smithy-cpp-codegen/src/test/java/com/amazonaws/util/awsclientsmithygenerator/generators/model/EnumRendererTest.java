@@ -1,0 +1,418 @@
+/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+package com.amazonaws.util.awsclientsmithygenerator.generators.model;
+
+import com.amazonaws.util.awsclientsmithygenerator.generators.CppWriter;
+import org.junit.jupiter.api.Test;
+import software.amazon.smithy.model.shapes.EnumShape;
+import software.amazon.smithy.model.shapes.StringShape;
+import software.amazon.smithy.model.traits.EnumDefinition;
+import software.amazon.smithy.model.traits.EnumTrait;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class EnumRendererTest {
+
+    @Test
+    void renderHeader_producesEnumClass() {
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#Status")
+            .addMember("ACTIVE", "ACTIVE")
+            .addMember("INACTIVE", "INACTIVE")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderHeader(writer, enumShape, "TestService", "AWS_TESTSERVICE_API", "testservice");
+        String output = writer.toString();
+        assertTrue(output.contains("enum class Status {"),
+            "Missing enum class opening: " + output);
+        assertTrue(output.contains("NOT_SET,"),
+            "Missing NOT_SET: " + output);
+        assertTrue(output.contains("ACTIVE"),
+            "Missing ACTIVE: " + output);
+        assertTrue(output.contains("INACTIVE"),
+            "Missing INACTIVE: " + output);
+        assertTrue(output.contains("AWS_TESTSERVICE_API Status GetStatusForName(const Aws::String& name)"),
+            "Missing GetForName declaration: " + output);
+        assertTrue(output.contains("AWS_TESTSERVICE_API Aws::String GetNameForStatus(Status value)"),
+            "Missing GetNameFor declaration: " + output);
+    }
+
+    @Test
+    void renderHeader_capitalizesLowerCamelEnumName() {
+        // Some Smithy models (e.g. IAM) name enum shapes in lowerCamel; C2J normalizes to UpperCamel,
+        // so the C++ enum type, mapper namespace, and functions must all be capitalized.
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#statusType")
+            .addMember("Active", "Active")
+            .addMember("Inactive", "Inactive")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderHeader(writer, enumShape, "IAM", "AWS_IAM_API", "iam");
+        String output = writer.toString();
+        assertTrue(output.contains("enum class StatusType {"), "Enum type must be UpperCamel: " + output);
+        assertTrue(output.contains("namespace StatusTypeMapper {"), "Mapper namespace must be UpperCamel: " + output);
+        assertTrue(output.contains("GetStatusTypeForName"), "Mapper fn must be UpperCamel: " + output);
+        assertTrue(output.contains("GetNameForStatusType"), "Mapper fn must be UpperCamel: " + output);
+        assertFalse(output.contains("statusType"), "Must not emit lowerCamel enum name: " + output);
+    }
+
+    @Test
+    void renderSource_capitalizesLowerCamelEnumName() {
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#statusType")
+            .addMember("Active", "Active")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderSource(writer, enumShape, "IAM", "AWS_IAM_API", "iam");
+        String output = writer.toString();
+        assertTrue(output.contains("#include <aws/iam/model/StatusType.h>"), "Include must be UpperCamel: " + output);
+        assertTrue(output.contains("namespace StatusTypeMapper {"), "Mapper namespace must be UpperCamel: " + output);
+        assertTrue(output.contains("StatusType GetStatusTypeForName"), "Mapper fn must be UpperCamel: " + output);
+        assertFalse(output.contains("statusType"), "Must not emit lowerCamel enum name: " + output);
+    }
+
+    @Test
+    void renderHeader_includesExportsHeader() {
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#MyEnum")
+            .addMember("A", "A")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderHeader(writer, enumShape, "Kinesis", "AWS_KINESIS_API", "kinesis");
+        String output = writer.toString();
+        assertTrue(output.contains("#include <aws/kinesis/Kinesis_EXPORTS.h>"),
+            "Missing exports header include: " + output);
+    }
+
+    @Test
+    void renderHeader_doesNotSuffixPlatformValuesButStillSuffixesKeywords() {
+        // WINDOWS/LINUX/min/max ship bare (match C2J); a genuinely reserved word like GET still gets '_'.
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#Mixed")
+            .addMember("WINDOWS", "WINDOWS")
+            .addMember("LINUX", "LINUX")
+            .addMember("min", "min")
+            .addMember("max", "max")
+            .addMember("GET", "GET")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderHeader(writer, enumShape, "Svc", "AWS_SVC_API", "svc");
+        String out = writer.toString();
+        assertTrue(out.contains("NOT_SET, WINDOWS, LINUX, min, max, GET_"),
+            "WINDOWS/LINUX/min/max must be bare, GET_ still suffixed (C2J parity): " + out);
+        assertFalse(out.contains("WINDOWS_"), "WINDOWS must not be suffixed: " + out);
+        assertFalse(out.contains("LINUX_"), "LINUX must not be suffixed: " + out);
+        assertFalse(out.contains("min_"), "min must not be suffixed: " + out);
+        assertFalse(out.contains("max_"), "max must not be suffixed: " + out);
+    }
+
+    @Test
+    void renderHeader_capitalizesExportsPrefixForLowercaseNamespace() {
+        // Lowercase namespace (drs) must include the capitalized Drs_EXPORTS.h; namespace block stays lowercase.
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#E")
+            .addMember("A", "A")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderHeader(writer, enumShape, "drs", "AWS_DRS_API", "drs");
+        String out = writer.toString();
+        assertTrue(out.contains("#include <aws/drs/Drs_EXPORTS.h>"),
+            "EXPORTS include must use the capitalized class prefix: " + out);
+        assertTrue(out.contains("namespace drs {"),
+            "namespace block must stay lowercase: " + out);
+    }
+
+    @Test
+    void renderHeader_includesMapperNamespace() {
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#Color")
+            .addMember("RED", "RED")
+            .addMember("GREEN", "GREEN")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderHeader(writer, enumShape, "Svc", "AWS_SVC_API", "svc");
+        String output = writer.toString();
+        assertTrue(output.contains("namespace ColorMapper {"),
+            "Missing mapper namespace: " + output);
+        assertTrue(output.contains("}  // namespace ColorMapper"),
+            "Missing mapper namespace close: " + output);
+    }
+
+    @Test
+    void renderSource_producesHashConstants() {
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#Status")
+            .addMember("CREATING", "CREATING")
+            .addMember("ACTIVE", "ACTIVE")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderSource(writer, enumShape, "Kinesis", "AWS_KINESIS_API", "kinesis");
+        String output = writer.toString();
+        assertTrue(output.contains("CREATING_HASH = HashingUtils::HashString(\"CREATING\")"),
+            "Missing CREATING hash: " + output);
+        assertTrue(output.contains("ACTIVE_HASH = HashingUtils::HashString(\"ACTIVE\")"),
+            "Missing ACTIVE hash: " + output);
+    }
+
+    @Test
+    void renderSource_producesGetForNameFunction() {
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#Status")
+            .addMember("CREATING", "CREATING")
+            .addMember("ACTIVE", "ACTIVE")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderSource(writer, enumShape, "Kinesis", "AWS_KINESIS_API", "kinesis");
+        String output = writer.toString();
+        assertTrue(output.contains("Status GetStatusForName(const Aws::String& name)"),
+            "Missing GetForName function: " + output);
+        assertTrue(output.contains("if (hashCode == CREATING_HASH)"),
+            "Missing first if: " + output);
+        assertTrue(output.contains("else if (hashCode == ACTIVE_HASH)"),
+            "Missing else if: " + output);
+        assertTrue(output.contains("return Status::NOT_SET;"),
+            "Missing NOT_SET return: " + output);
+    }
+
+    @Test
+    void renderSource_producesGetNameForFunction() {
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#Status")
+            .addMember("CREATING", "CREATING")
+            .addMember("ACTIVE", "ACTIVE")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderSource(writer, enumShape, "Kinesis", "AWS_KINESIS_API", "kinesis");
+        String output = writer.toString();
+        assertTrue(output.contains("Aws::String GetNameForStatus(Status enumValue)"),
+            "Missing GetNameFor function: " + output);
+        assertTrue(output.contains("case Status::NOT_SET:"),
+            "Missing NOT_SET case: " + output);
+        assertTrue(output.contains("case Status::CREATING:"),
+            "Missing CREATING case: " + output);
+        assertTrue(output.contains("case Status::ACTIVE:"),
+            "Missing ACTIVE case: " + output);
+    }
+
+    @Test
+    void renderSource_includesOverflowContainer() {
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#Status")
+            .addMember("ACTIVE", "ACTIVE")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderSource(writer, enumShape, "Kinesis", "AWS_KINESIS_API", "kinesis");
+        String output = writer.toString();
+        assertTrue(output.contains("EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer()"),
+            "Missing overflow container in GetForName: " + output);
+        assertTrue(output.contains("overflowContainer->StoreOverflow(hashCode, name)"),
+            "Missing StoreOverflow: " + output);
+        assertTrue(output.contains("overflowContainer->RetrieveOverflow(static_cast<int>(enumValue))"),
+            "Missing RetrieveOverflow: " + output);
+    }
+
+    @Test
+    void getEnumValues_returnsOrderedValues() {
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#Color")
+            .addMember("RED", "RED")
+            .addMember("GREEN", "GREEN")
+            .addMember("BLUE", "BLUE")
+            .build();
+        List<String> values = EnumRenderer.getEnumValues(enumShape);
+        assertEquals(List.of("RED", "GREEN", "BLUE"), values);
+    }
+
+    @Test
+    void getEnumValues_sanitizesHyphensViaLegacyTrait() {
+        // Legacy @enum trait allows special characters in values
+        StringShape stringShape = StringShape.builder()
+            .id("com.example#Status")
+            .addTrait(EnumTrait.builder()
+                .addEnum(EnumDefinition.builder().value("in-progress").build())
+                .build())
+            .build();
+        List<String> values = EnumRenderer.getEnumValues(stringShape);
+        assertEquals(List.of("in_progress"), values);
+    }
+
+    @Test
+    void getEnumValues_sanitizesDotsColonsSpacesSlashesViaLegacyTrait() {
+        StringShape stringShape = StringShape.builder()
+            .id("com.example#Mixed")
+            .addTrait(EnumTrait.builder()
+                .addEnum(EnumDefinition.builder().value("a.b").build())
+                .addEnum(EnumDefinition.builder().value("c:d").build())
+                .addEnum(EnumDefinition.builder().value("e f").build())
+                .addEnum(EnumDefinition.builder().value("g/h").build())
+                .build())
+            .build();
+        List<String> values = EnumRenderer.getEnumValues(stringShape);
+        assertEquals(List.of("a_b", "c_d", "e_f", "g_h"), values);
+    }
+
+    @Test
+    void getEnumValues_sanitizesAsteriskPrefixViaLegacyTrait() {
+        // Real-world case: "*Other" (from partnercentral-selling CompetitorName)
+        StringShape stringShape = StringShape.builder()
+            .id("com.example#Wildcard")
+            .addTrait(EnumTrait.builder()
+                .addEnum(EnumDefinition.builder().value("*Other").build())
+                .build())
+            .build();
+        List<String> values = EnumRenderer.getEnumValues(stringShape);
+        // "*" is replaced with "_", producing "_Other" (matches C2J output)
+        assertEquals(List.of("_Other"), values);
+    }
+
+    @Test
+    void renderSource_wireValuesPreservedInStrings() {
+        // EnumShape with valid member names but different wire values
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#Status")
+            .addMember("IN_PROGRESS", "in-progress")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderSource(writer, enumShape, "Svc", "AWS_SVC_API", "svc");
+        String output = writer.toString();
+        // The hash constant uses the wire value
+        assertTrue(output.contains("HashString(\"in-progress\")"),
+            "Wire value should be preserved in HashString: " + output);
+        // The return statement also uses the wire value
+        assertTrue(output.contains("return \"in-progress\""),
+            "Wire value should be preserved in GetNameFor return: " + output);
+        // The C++ enum member uses sanitized wire value (in-progress -> in_progress)
+        assertTrue(output.contains("in_progress_HASH"),
+            "Sanitized wire value used for hash variable: " + output);
+        assertTrue(output.contains("return Status::in_progress"),
+            "Sanitized wire value used for enum member: " + output);
+    }
+
+    @Test
+    void renderHeader_legacyEnumTrait() {
+        StringShape stringShape = StringShape.builder()
+            .id("com.example#LegacyStatus")
+            .addTrait(EnumTrait.builder()
+                .addEnum(EnumDefinition.builder().value("ACTIVE").build())
+                .addEnum(EnumDefinition.builder().value("INACTIVE").build())
+                .build())
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderHeader(writer, stringShape, "Svc", "AWS_SVC_API", "svc");
+        String output = writer.toString();
+        assertTrue(output.contains("enum class LegacyStatus {"),
+            "Legacy enum trait should produce enum class opening: " + output);
+        assertTrue(output.contains("ACTIVE"),
+            "Legacy enum trait should have ACTIVE: " + output);
+        assertTrue(output.contains("INACTIVE"),
+            "Legacy enum trait should have INACTIVE: " + output);
+    }
+
+    @Test
+    void sanitizeEnumValue_handlesAllSpecialChars() {
+        assertEquals("a_b", EnumRenderer.sanitizeEnumValue("a-b"));
+        assertEquals("a_b", EnumRenderer.sanitizeEnumValue("a.b"));
+        assertEquals("a_b", EnumRenderer.sanitizeEnumValue("a:b"));
+        assertEquals("a_b", EnumRenderer.sanitizeEnumValue("a b"));
+        assertEquals("a_b", EnumRenderer.sanitizeEnumValue("a/b"));
+        assertEquals("_foo", EnumRenderer.sanitizeEnumValue("*foo"));
+        assertEquals("a_COMMA_b", EnumRenderer.sanitizeEnumValue("a,b"));
+        assertEquals("a_b", EnumRenderer.sanitizeEnumValue("a(b)"));
+        assertEquals("a_b", EnumRenderer.sanitizeEnumValue("a+b"));
+    }
+
+    @Test
+    void sanitizeEnumValue_collapsesMultipleUnderscores() {
+        assertEquals("a_b", EnumRenderer.sanitizeEnumValue("a--b"));
+        assertEquals("a_b", EnumRenderer.sanitizeEnumValue("a..b"));
+        assertEquals("a_b", EnumRenderer.sanitizeEnumValue("a- b"));
+    }
+
+    @Test
+    void sanitizeEnumValue_stripsTrailingUnderscore() {
+        assertEquals("foo", EnumRenderer.sanitizeEnumValue("foo-"));
+        assertEquals("foo", EnumRenderer.sanitizeEnumValue("foo."));
+    }
+
+    @Test
+    void sanitizeEnumValue_prependsUnderscoreForLeadingDigit() {
+        assertEquals("_123abc", EnumRenderer.sanitizeEnumValue("123abc"));
+        assertEquals("_0", EnumRenderer.sanitizeEnumValue("0"));
+    }
+
+    @Test
+    void sanitizeEnumValue_handlesNotSetCollision() {
+        assertEquals("NOT_SET_VALUE", EnumRenderer.sanitizeEnumValue("NOT_SET"));
+    }
+
+    @Test
+    void sanitizeEnumValue_handlesForbiddenWords() {
+        assertEquals("delete_", EnumRenderer.sanitizeEnumValue("delete"));
+        assertEquals("DELETE_", EnumRenderer.sanitizeEnumValue("DELETE"));
+        assertEquals("NULL_", EnumRenderer.sanitizeEnumValue("NULL"));
+        assertEquals("OVERFLOW_", EnumRenderer.sanitizeEnumValue("OVERFLOW"));
+    }
+
+    @Test
+    void sanitizeEnumValue_handlesCorrectedForbiddenWords() {
+        // Verify co_yield (was misspelled as co_yeild) is now correctly forbidden
+        assertEquals("co_yield_", EnumRenderer.sanitizeEnumValue("co_yield"));
+        // Verify module (was misspelled as moduel) is now correctly forbidden
+        assertEquals("module_", EnumRenderer.sanitizeEnumValue("module"));
+    }
+
+    @Test
+    void renderHeader_emitsWindowsUndefGuardForEc2InterfaceEnumValue() {
+        // EC2's NetworkInterfaceType has an `interface` value that collides with the Windows
+        // `interface` macro (<combaseapi.h>); C2J's ModelEnumHeader.vm #undef's it.
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#NetworkInterfaceType")
+            .addMember("interface", "interface")
+            .addMember("natGateway", "natGateway")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderHeader(writer, enumShape, "EC2", "AWS_EC2_API", "ec2");
+        String output = writer.toString();
+        assertTrue(output.contains("#if defined(_WIN32) && defined(interface)"),
+            "Missing Windows guard for `interface`: " + output);
+        assertTrue(output.contains("#undef interface"), "Missing #undef interface: " + output);
+        assertTrue(output.contains("#endif"), "Missing #endif: " + output);
+        // The guard must sit before the namespace block, matching C2J.
+        assertTrue(output.indexOf("#undef interface") < output.indexOf("namespace Aws {"),
+            "#undef must precede the namespace block: " + output);
+    }
+
+    @Test
+    void renderHeader_noWindowsUndefGuardForOtherServicesWithInterfaceValue() {
+        // The mapping is per-service: only EC2 gets the `interface` guard. A different service
+        // with the same enum value must not emit it (matches C2J's namespace-keyed mapping).
+        EnumShape enumShape = EnumShape.builder()
+            .id("com.example#SomeType")
+            .addMember("interface", "interface")
+            .build();
+        CppWriter writer = new CppWriter();
+        EnumRenderer.renderHeader(writer, enumShape, "TestService", "AWS_TESTSERVICE_API", "testservice");
+        String output = writer.toString();
+        assertFalse(output.contains("#undef interface"),
+            "Only EC2 should get the interface guard: " + output);
+    }
+
+    @Test
+    void predefinedWindowsSymbols_matchesC2jNamespaceKeyedMapping() {
+        // EC2 -> interface, DynamoDB -> IN, S3Crt -> IGNORE; order follows the value list.
+        assertEquals(List.of("interface"),
+            EnumRenderer.predefinedWindowsSymbols("EC2", List.of("natGateway", "interface", "efa")));
+        assertEquals(List.of("IN"),
+            EnumRenderer.predefinedWindowsSymbols("DynamoDB", List.of("EQ", "IN", "LE")));
+        assertEquals(List.of("IGNORE"),
+            EnumRenderer.predefinedWindowsSymbols("S3Crt", List.of("IGNORE")));
+        // No collisions -> empty.
+        assertTrue(EnumRenderer.predefinedWindowsSymbols("EC2", List.of("natGateway")).isEmpty());
+        // Unknown service -> empty even if a value matches another service's symbol.
+        assertTrue(EnumRenderer.predefinedWindowsSymbols("TestService", List.of("interface")).isEmpty());
+    }
+}

@@ -106,6 +106,42 @@ class UpdateWhatsAppFlowRequest : public SocialMessagingRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The updated HTTPS endpoint for a data exchange Flow.</p>
+   */
+  inline const Aws::String& GetEndpointUri() const { return m_endpointUri; }
+  inline bool EndpointUriHasBeenSet() const { return m_endpointUriHasBeenSet; }
+  template <typename EndpointUriT = Aws::String>
+  void SetEndpointUri(EndpointUriT&& value) {
+    m_endpointUriHasBeenSet = true;
+    m_endpointUri = std::forward<EndpointUriT>(value);
+  }
+  template <typename EndpointUriT = Aws::String>
+  UpdateWhatsAppFlowRequest& WithEndpointUri(EndpointUriT&& value) {
+    SetEndpointUri(std::forward<EndpointUriT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The ID of the Meta application to attach to the Flow.</p>
+   */
+  inline const Aws::String& GetMetaAppId() const { return m_metaAppId; }
+  inline bool MetaAppIdHasBeenSet() const { return m_metaAppIdHasBeenSet; }
+  template <typename MetaAppIdT = Aws::String>
+  void SetMetaAppId(MetaAppIdT&& value) {
+    m_metaAppIdHasBeenSet = true;
+    m_metaAppId = std::forward<MetaAppIdT>(value);
+  }
+  template <typename MetaAppIdT = Aws::String>
+  UpdateWhatsAppFlowRequest& WithMetaAppId(MetaAppIdT&& value) {
+    SetMetaAppId(std::forward<MetaAppIdT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_id;
 
@@ -114,10 +150,16 @@ class UpdateWhatsAppFlowRequest : public SocialMessagingRequest {
   Aws::String m_flowName;
 
   Aws::Vector<MetaFlowCategory> m_categories;
+
+  Aws::String m_endpointUri;
+
+  Aws::String m_metaAppId;
   bool m_idHasBeenSet = false;
   bool m_flowIdHasBeenSet = false;
   bool m_flowNameHasBeenSet = false;
   bool m_categoriesHasBeenSet = false;
+  bool m_endpointUriHasBeenSet = false;
+  bool m_metaAppIdHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -5,9 +5,13 @@
 #include <aws/core/Aws.h>
 #include <aws/AWSMigrationHub/MigrationHubClient.h>
 #include <aws/accessanalyzer/AccessAnalyzerClient.h>
+#include <aws/account-access-runtime/AccountAccessRuntimeClient.h>
+#include <aws/account-access/AccountAccessClient.h>
 #include <aws/account/AccountClient.h>
 #include <aws/acm-pca/ACMPCAClient.h>
 #include <aws/acm/ACMClient.h>
+#include <aws/agent-registry-control/AgentRegistryControlClient.h>
+#include <aws/agent-registry/AgentRegistryClient.h>
 #include <aws/aiops/AIOpsClient.h>
 #include <aws/amp/PrometheusServiceClient.h>
 #include <aws/amplify/AmplifyClient.h>
@@ -80,6 +84,7 @@
 #include <aws/cloudsearchdomain/CloudSearchDomainClient.h>
 #include <aws/cloudtrail-data/CloudTrailDataClient.h>
 #include <aws/cloudtrail/CloudTrailClient.h>
+#include <aws/cloudwatchomni/CloudWatchOmniClient.h>
 #include <aws/codeartifact/CodeArtifactClient.h>
 #include <aws/codebuild/CodeBuildClient.h>
 #include <aws/codecatalyst/CodeCatalystClient.h>
@@ -107,6 +112,8 @@
 #include <aws/connectcases/ConnectCasesClient.h>
 #include <aws/connecthealth/ConnectHealthClient.h>
 #include <aws/connectparticipant/ConnectParticipantClient.h>
+#include <aws/connectscheduling/ConnectSchedulingClient.h>
+#include <aws/continuum/ContinuumClient.h>
 #include <aws/controlcatalog/ControlCatalogClient.h>
 #include <aws/controltower/ControlTowerClient.h>
 #include <aws/cost-optimization-hub/CostOptimizationHubClient.h>
@@ -153,13 +160,13 @@
 #include <aws/email/SESClient.h>
 #include <aws/emr-containers/EMRContainersClient.h>
 #include <aws/emr-serverless/EMRServerlessClient.h>
+#include <aws/endusermessaging/EndUserMessagingClient.h>
 #include <aws/entityresolution/EntityResolutionClient.h>
 #include <aws/es/ElasticsearchServiceClient.h>
 #include <aws/eventbridge/EventBridgeClient.h>
+#include <aws/eventbridgev2/EventBridgeV2Client.h>
 #include <aws/events/CloudWatchEventsClient.h>
 #include <aws/evs/EVSClient.h>
-#include <aws/finspace-data/FinSpaceDataClient.h>
-#include <aws/finspace/FinspaceClient.h>
 #include <aws/firehose/FirehoseClient.h>
 #include <aws/fis/FISClient.h>
 #include <aws/fms/FMSClient.h>
@@ -183,6 +190,7 @@
 #include <aws/guardduty/GuardDutyClient.h>
 #include <aws/health/HealthClient.h>
 #include <aws/healthlake/HealthLakeClient.h>
+#include <aws/iam-toolbox/IAMToolboxClient.h>
 #include <aws/iam/IAMClient.h>
 #include <aws/identitystore/IdentityStoreClient.h>
 #include <aws/imagebuilder/ImagebuilderClient.h>
@@ -225,6 +233,7 @@
 #include <aws/lakeformation/LakeFormationClient.h>
 #include <aws/lambda-core/LambdaCoreClient.h>
 #include <aws/lambda-microvms/LambdaMicrovmsClient.h>
+#include <aws/lambda-web/LambdaWebClient.h>
 #include <aws/lambda/LambdaClient.h>
 #include <aws/launch-wizard/LaunchWizardClient.h>
 #include <aws/lex-models/LexModelBuildingServiceClient.h>
@@ -279,6 +288,7 @@
 #include <aws/neptune/NeptuneClient.h>
 #include <aws/neptunedata/NeptunedataClient.h>
 #include <aws/network-firewall/NetworkFirewallClient.h>
+#include <aws/network-security-manager/NetworkSecurityManagerClient.h>
 #include <aws/networkflowmonitor/NetworkFlowMonitorClient.h>
 #include <aws/networkmanager/NetworkManagerClient.h>
 #include <aws/networkmonitor/NetworkMonitorClient.h>
@@ -290,6 +300,7 @@
 #include <aws/odb/OdbClient.h>
 #include <aws/omics/OmicsClient.h>
 #include <aws/opensearch/OpenSearchServiceClient.h>
+#include <aws/opensearchmemory/OpenSearchMemoryClient.h>
 #include <aws/opensearchserverless/OpenSearchServerlessClient.h>
 #include <aws/organizations/OrganizationsClient.h>
 #include <aws/osis/OSISClient.h>
@@ -297,6 +308,7 @@
 #include <aws/partnercentral-account/PartnerCentralAccountClient.h>
 #include <aws/partnercentral-benefits/PartnerCentralBenefitsClient.h>
 #include <aws/partnercentral-channel/PartnerCentralChannelClient.h>
+#include <aws/partnercentral-revenue-measurement/PartnerCentralRevenueMeasurementClient.h>
 #include <aws/partnercentral-selling/PartnerCentralSellingClient.h>
 #include <aws/payment-cryptography-data/PaymentCryptographyDataClient.h>
 #include <aws/payment-cryptography/PaymentCryptographyClient.h>
@@ -312,6 +324,7 @@
 #include <aws/pinpoint/PinpointClient.h>
 #include <aws/pipes/PipesClient.h>
 #include <aws/polly/PollyClient.h>
+#include <aws/pricing-plan-manager/PricingPlanManagerClient.h>
 #include <aws/pricing/PricingClient.h>
 #include <aws/proton/ProtonClient.h>
 #include <aws/qapps/QAppsClient.h>
@@ -354,11 +367,13 @@
 #include <aws/sagemaker-edge/SagemakerEdgeManagerClient.h>
 #include <aws/sagemaker-featurestore-runtime/SageMakerFeatureStoreRuntimeClient.h>
 #include <aws/sagemaker-geospatial/SageMakerGeospatialClient.h>
+#include <aws/sagemaker-inference-router-runtime/SageMakerInferenceRouterRuntimeClient.h>
 #include <aws/sagemaker-metrics/SageMakerMetricsClient.h>
 #include <aws/sagemaker-runtime-http2/SageMakerRuntimeHTTP2Client.h>
 #include <aws/sagemaker-runtime/SageMakerRuntimeClient.h>
 #include <aws/sagemaker/SageMakerClient.h>
 #include <aws/sagemakerjobruntime/SagemakerJobRuntimeClient.h>
+#include <aws/sagemakertrainingsessionruntime/SageMakerTrainingSessionRuntimeClient.h>
 #include <aws/savingsplans/SavingsPlansClient.h>
 #include <aws/scheduler/SchedulerClient.h>
 #include <aws/schemas/SchemasClient.h>
@@ -409,7 +424,6 @@
 #include <aws/timestream-influxdb/TimestreamInfluxDBClient.h>
 #include <aws/timestream-query/TimestreamQueryClient.h>
 #include <aws/timestream-write/TimestreamWriteClient.h>
-#include <aws/tnb/TnbClient.h>
 #include <aws/transcribe/TranscribeServiceClient.h>
 #include <aws/transcribestreaming/TranscribeStreamingServiceClient.h>
 #include <aws/translate/TranslateClient.h>

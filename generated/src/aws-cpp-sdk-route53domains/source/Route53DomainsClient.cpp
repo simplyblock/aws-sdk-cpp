@@ -34,6 +34,7 @@
 #include <aws/route53domains/model/EnableDomainTransferLockRequest.h>
 #include <aws/route53domains/model/GetContactReachabilityStatusRequest.h>
 #include <aws/route53domains/model/GetDomainDetailRequest.h>
+#include <aws/route53domains/model/GetDomainPricesRequest.h>
 #include <aws/route53domains/model/GetDomainSuggestionsRequest.h>
 #include <aws/route53domains/model/GetOperationDetailRequest.h>
 #include <aws/route53domains/model/ListDomainsRequest.h>
@@ -46,6 +47,7 @@
 #include <aws/route53domains/model/RenewDomainRequest.h>
 #include <aws/route53domains/model/ResendContactReachabilityEmailRequest.h>
 #include <aws/route53domains/model/ResendOperationAuthorizationRequest.h>
+#include <aws/route53domains/model/RestoreDomainRequest.h>
 #include <aws/route53domains/model/RetrieveDomainAuthCodeRequest.h>
 #include <aws/route53domains/model/TransferDomainRequest.h>
 #include <aws/route53domains/model/TransferDomainToAnotherAwsAccountRequest.h>
@@ -190,7 +192,8 @@ Route53DomainsClient::InvokeOperationOutcome Route53DomainsClient::InvokeService
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -200,9 +203,12 @@ Route53DomainsClient::InvokeOperationOutcome Route53DomainsClient::InvokeService
         AWS_OPERATION_CHECK_SUCCESS_DYNAMIC(endpointResolutionOutcome, operationName, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE,
                                             endpointResolutionOutcome.GetError().GetMessage());
 
+        endpointResolutionOutcome.GetResult().AddPathSegments("/service/Route53Domains_v20140515/operation/");
+        endpointResolutionOutcome.GetResult().AddPathSegment(operationName);
+
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -294,6 +300,12 @@ GetDomainDetailOutcome Route53DomainsClient::GetDomainDetail(const GetDomainDeta
                             : GetDomainDetailOutcome(std::move(result.GetError()));
 }
 
+GetDomainPricesOutcome Route53DomainsClient::GetDomainPrices(const GetDomainPricesRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetDomainPricesOutcome(result.GetResultWithOwnership())
+                            : GetDomainPricesOutcome(std::move(result.GetError()));
+}
+
 GetDomainSuggestionsOutcome Route53DomainsClient::GetDomainSuggestions(const GetDomainSuggestionsRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetDomainSuggestionsOutcome(result.GetResultWithOwnership())
@@ -361,6 +373,11 @@ ResendOperationAuthorizationOutcome Route53DomainsClient::ResendOperationAuthori
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ResendOperationAuthorizationOutcome(result.GetResultWithOwnership())
                             : ResendOperationAuthorizationOutcome(std::move(result.GetError()));
+}
+
+RestoreDomainOutcome Route53DomainsClient::RestoreDomain(const RestoreDomainRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? RestoreDomainOutcome(result.GetResultWithOwnership()) : RestoreDomainOutcome(std::move(result.GetError()));
 }
 
 RetrieveDomainAuthCodeOutcome Route53DomainsClient::RetrieveDomainAuthCode(const RetrieveDomainAuthCodeRequest& request) const {

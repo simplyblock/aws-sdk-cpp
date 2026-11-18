@@ -20,6 +20,7 @@
 #include <aws/s3tables/S3TablesClient.h>
 #include <aws/s3tables/S3TablesEndpointProvider.h>
 #include <aws/s3tables/S3TablesErrorMarshaller.h>
+#include <aws/s3tables/model/CompleteTableMigrationRequest.h>
 #include <aws/s3tables/model/CreateNamespaceRequest.h>
 #include <aws/s3tables/model/CreateTableBucketRequest.h>
 #include <aws/s3tables/model/CreateTableRequest.h>
@@ -34,6 +35,7 @@
 #include <aws/s3tables/model/DeleteTableRequest.h>
 #include <aws/s3tables/model/GetNamespaceRequest.h>
 #include <aws/s3tables/model/GetTableBucketEncryptionRequest.h>
+#include <aws/s3tables/model/GetTableBucketLoggingRequest.h>
 #include <aws/s3tables/model/GetTableBucketMaintenanceConfigurationRequest.h>
 #include <aws/s3tables/model/GetTableBucketMetricsConfigurationRequest.h>
 #include <aws/s3tables/model/GetTableBucketPolicyRequest.h>
@@ -44,6 +46,7 @@
 #include <aws/s3tables/model/GetTableMaintenanceConfigurationRequest.h>
 #include <aws/s3tables/model/GetTableMaintenanceJobStatusRequest.h>
 #include <aws/s3tables/model/GetTableMetadataLocationRequest.h>
+#include <aws/s3tables/model/GetTableMigrationRequest.h>
 #include <aws/s3tables/model/GetTablePolicyRequest.h>
 #include <aws/s3tables/model/GetTableRecordExpirationConfigurationRequest.h>
 #include <aws/s3tables/model/GetTableRecordExpirationJobStatusRequest.h>
@@ -53,9 +56,11 @@
 #include <aws/s3tables/model/GetTableStorageClassRequest.h>
 #include <aws/s3tables/model/ListNamespacesRequest.h>
 #include <aws/s3tables/model/ListTableBucketsRequest.h>
+#include <aws/s3tables/model/ListTableMigrationsRequest.h>
 #include <aws/s3tables/model/ListTablesRequest.h>
 #include <aws/s3tables/model/ListTagsForResourceRequest.h>
 #include <aws/s3tables/model/PutTableBucketEncryptionRequest.h>
+#include <aws/s3tables/model/PutTableBucketLoggingRequest.h>
 #include <aws/s3tables/model/PutTableBucketMaintenanceConfigurationRequest.h>
 #include <aws/s3tables/model/PutTableBucketMetricsConfigurationRequest.h>
 #include <aws/s3tables/model/PutTableBucketPolicyRequest.h>
@@ -66,9 +71,12 @@
 #include <aws/s3tables/model/PutTableRecordExpirationConfigurationRequest.h>
 #include <aws/s3tables/model/PutTableReplicationRequest.h>
 #include <aws/s3tables/model/RenameTableRequest.h>
+#include <aws/s3tables/model/StartTableMigrationRequest.h>
+#include <aws/s3tables/model/SyncTableMigrationRequest.h>
 #include <aws/s3tables/model/TagResourceRequest.h>
 #include <aws/s3tables/model/UntagResourceRequest.h>
 #include <aws/s3tables/model/UpdateTableMetadataLocationRequest.h>
+#include <aws/s3tables/model/UpdateTableMigrationRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
 using namespace Aws;
@@ -205,7 +213,8 @@ S3TablesClient::InvokeOperationOutcome S3TablesClient::InvokeServiceOperation(
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -219,8 +228,25 @@ S3TablesClient::InvokeOperationOutcome S3TablesClient::InvokeServiceOperation(
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
+}
+
+CompleteTableMigrationOutcome S3TablesClient::CompleteTableMigration(const CompleteTableMigrationRequest& request) const {
+  if (!request.TableARNHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("CompleteTableMigration", "Required field: TableARN, is not set");
+    return CompleteTableMigrationOutcome(Aws::Client::AWSError<S3TablesErrors>(S3TablesErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                               "Missing required field [TableARN]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/complete-table-migration");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CompleteTableMigrationOutcome(result.GetResultWithOwnership())
+                            : CompleteTableMigrationOutcome(std::move(result.GetError()));
 }
 
 CreateNamespaceOutcome S3TablesClient::CreateNamespace(const CreateNamespaceRequest& request) const {
@@ -543,6 +569,25 @@ GetTableBucketEncryptionOutcome S3TablesClient::GetTableBucketEncryption(const G
                             : GetTableBucketEncryptionOutcome(std::move(result.GetError()));
 }
 
+GetTableBucketLoggingOutcome S3TablesClient::GetTableBucketLogging(const GetTableBucketLoggingRequest& request) const {
+  if (!request.TableBucketARNHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetTableBucketLogging", "Required field: TableBucketARN, is not set");
+    return GetTableBucketLoggingOutcome(Aws::Client::AWSError<S3TablesErrors>(S3TablesErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                              "Missing required field [TableBucketARN]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/buckets/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetTableBucketARN());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/logging");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetTableBucketLoggingOutcome(result.GetResultWithOwnership())
+                            : GetTableBucketLoggingOutcome(std::move(result.GetError()));
+}
+
 GetTableBucketMaintenanceConfigurationOutcome S3TablesClient::GetTableBucketMaintenanceConfiguration(
     const GetTableBucketMaintenanceConfigurationRequest& request) const {
   if (!request.TableBucketARNHasBeenSet()) {
@@ -763,6 +808,17 @@ GetTableMetadataLocationOutcome S3TablesClient::GetTableMetadataLocation(const G
                             : GetTableMetadataLocationOutcome(std::move(result.GetError()));
 }
 
+GetTableMigrationOutcome S3TablesClient::GetTableMigration(const GetTableMigrationRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/get-table-migration");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetTableMigrationOutcome(result.GetResultWithOwnership())
+                            : GetTableMigrationOutcome(std::move(result.GetError()));
+}
+
 GetTablePolicyOutcome S3TablesClient::GetTablePolicy(const GetTablePolicyRequest& request) const {
   if (!request.TableBucketARNHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetTablePolicy", "Required field: TableBucketARN, is not set");
@@ -922,6 +978,17 @@ ListTableBucketsOutcome S3TablesClient::ListTableBuckets(const ListTableBucketsR
                             : ListTableBucketsOutcome(std::move(result.GetError()));
 }
 
+ListTableMigrationsOutcome S3TablesClient::ListTableMigrations(const ListTableMigrationsRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/list-table-migrations");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListTableMigrationsOutcome(result.GetResultWithOwnership())
+                            : ListTableMigrationsOutcome(std::move(result.GetError()));
+}
+
 ListTablesOutcome S3TablesClient::ListTables(const ListTablesRequest& request) const {
   if (!request.TableBucketARNHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("ListTables", "Required field: TableBucketARN, is not set");
@@ -974,6 +1041,25 @@ PutTableBucketEncryptionOutcome S3TablesClient::PutTableBucketEncryption(const P
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
   return result.IsSuccess() ? PutTableBucketEncryptionOutcome(result.GetResultWithOwnership())
                             : PutTableBucketEncryptionOutcome(std::move(result.GetError()));
+}
+
+PutTableBucketLoggingOutcome S3TablesClient::PutTableBucketLogging(const PutTableBucketLoggingRequest& request) const {
+  if (!request.TableBucketARNHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("PutTableBucketLogging", "Required field: TableBucketARN, is not set");
+    return PutTableBucketLoggingOutcome(Aws::Client::AWSError<S3TablesErrors>(S3TablesErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                              "Missing required field [TableBucketARN]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/buckets/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetTableBucketARN());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/logging");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? PutTableBucketLoggingOutcome(result.GetResultWithOwnership())
+                            : PutTableBucketLoggingOutcome(std::move(result.GetError()));
 }
 
 PutTableBucketMaintenanceConfigurationOutcome S3TablesClient::PutTableBucketMaintenanceConfiguration(
@@ -1211,6 +1297,28 @@ RenameTableOutcome S3TablesClient::RenameTable(const RenameTableRequest& request
   return result.IsSuccess() ? RenameTableOutcome(result.GetResultWithOwnership()) : RenameTableOutcome(std::move(result.GetError()));
 }
 
+StartTableMigrationOutcome S3TablesClient::StartTableMigration(const StartTableMigrationRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/start-table-migration");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StartTableMigrationOutcome(result.GetResultWithOwnership())
+                            : StartTableMigrationOutcome(std::move(result.GetError()));
+}
+
+SyncTableMigrationOutcome S3TablesClient::SyncTableMigration(const SyncTableMigrationRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/sync-table-migration");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? SyncTableMigrationOutcome(result.GetResultWithOwnership())
+                            : SyncTableMigrationOutcome(std::move(result.GetError()));
+}
+
 TagResourceOutcome S3TablesClient::TagResource(const TagResourceRequest& request) const {
   if (!request.ResourceArnHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("TagResource", "Required field: ResourceArn, is not set");
@@ -1279,4 +1387,15 @@ UpdateTableMetadataLocationOutcome S3TablesClient::UpdateTableMetadataLocation(c
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
   return result.IsSuccess() ? UpdateTableMetadataLocationOutcome(result.GetResultWithOwnership())
                             : UpdateTableMetadataLocationOutcome(std::move(result.GetError()));
+}
+
+UpdateTableMigrationOutcome S3TablesClient::UpdateTableMigration(const UpdateTableMigrationRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/update-table-migration");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateTableMigrationOutcome(result.GetResultWithOwnership())
+                            : UpdateTableMigrationOutcome(std::move(result.GetError()));
 }

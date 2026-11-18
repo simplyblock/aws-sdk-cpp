@@ -97,6 +97,10 @@ Aws::String UpdateUserPoolRequest::SerializePayload() const {
     payload.WithObject("UserPoolAddOns", m_userPoolAddOns.Jsonize());
   }
 
+  if (m_dcrConfigurationHasBeenSet) {
+    payload.WithObject("DcrConfiguration", m_dcrConfiguration.Jsonize());
+  }
+
   if (m_accountRecoverySettingHasBeenSet) {
     payload.WithObject("AccountRecoverySetting", m_accountRecoverySetting.Jsonize());
   }
@@ -115,6 +119,14 @@ Aws::String UpdateUserPoolRequest::SerializePayload() const {
 
   if (m_issuerConfigurationHasBeenSet) {
     payload.WithObject("IssuerConfiguration", m_issuerConfiguration.Jsonize());
+  }
+
+  if (m_acrConfigurationHasBeenSet) {
+    JsonValue acrConfigurationJsonMap;
+    for (auto& acrConfigurationItem : m_acrConfiguration) {
+      acrConfigurationJsonMap.WithObject(acrConfigurationItem.first, acrConfigurationItem.second.Jsonize());
+    }
+    payload.WithObject("AcrConfiguration", std::move(acrConfigurationJsonMap));
   }
 
   return payload.View().WriteReadable();

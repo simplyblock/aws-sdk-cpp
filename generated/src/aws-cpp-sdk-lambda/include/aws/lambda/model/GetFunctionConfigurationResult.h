@@ -8,6 +8,7 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/lambda/Lambda_EXPORTS.h>
+#include <aws/lambda/model/AcceleratorConfig.h>
 #include <aws/lambda/model/Architecture.h>
 #include <aws/lambda/model/CapacityProviderConfig.h>
 #include <aws/lambda/model/DeadLetterConfig.h>
@@ -15,6 +16,7 @@
 #include <aws/lambda/model/EnvironmentResponse.h>
 #include <aws/lambda/model/EphemeralStorage.h>
 #include <aws/lambda/model/FileSystemConfig.h>
+#include <aws/lambda/model/FunctionRuntimeConfig.h>
 #include <aws/lambda/model/ImageConfigResponse.h>
 #include <aws/lambda/model/LastUpdateStatus.h>
 #include <aws/lambda/model/LastUpdateStatusReasonCode.h>
@@ -532,7 +534,7 @@ class GetFunctionConfigurationResult {
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html">Amazon
    * EFS file system</a> or an <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html">Amazon
-   * S3 Files file system</a>.</p>
+   * S3 file system</a>.</p>
    */
   inline const Aws::Vector<FileSystemConfig>& GetFileSystemConfigs() const { return m_fileSystemConfigs; }
   template <typename FileSystemConfigsT = Aws::Vector<FileSystemConfig>>
@@ -647,8 +649,9 @@ class GetFunctionConfigurationResult {
   ///@{
   /**
    * <p>The size of the function's <code>/tmp</code> directory in MB. The default
-   * value is 512, but can be any whole number between 512 and 10,240 MB. For more
-   * information, see <a
+   * value is 512, but can be any whole number between 512 and 10,240 MB. For
+   * functions that use <code>AcceleratorConfig</code>, the maximum is 32,768 MB. For
+   * more information, see <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage">Configuring
    * ephemeral storage (console)</a>.</p>
    */
@@ -793,6 +796,41 @@ class GetFunctionConfigurationResult {
   ///@}
 
   ///@{
+  /**
+   * <p>The customer-managed runtime configuration for your function. Specifies the
+   * customer-managed runtime and the runtime alias that your function uses.</p>
+   */
+  inline const FunctionRuntimeConfig& GetRuntimeConfig() const { return m_runtimeConfig; }
+  template <typename RuntimeConfigT = FunctionRuntimeConfig>
+  void SetRuntimeConfig(RuntimeConfigT&& value) {
+    m_runtimeConfigHasBeenSet = true;
+    m_runtimeConfig = std::forward<RuntimeConfigT>(value);
+  }
+  template <typename RuntimeConfigT = FunctionRuntimeConfig>
+  GetFunctionConfigurationResult& WithRuntimeConfig(RuntimeConfigT&& value) {
+    SetRuntimeConfig(std::forward<RuntimeConfigT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The accelerator resource settings for a Lambda execution environment.</p>
+   */
+  inline const AcceleratorConfig& GetAcceleratorConfig() const { return m_acceleratorConfig; }
+  template <typename AcceleratorConfigT = AcceleratorConfig>
+  void SetAcceleratorConfig(AcceleratorConfigT&& value) {
+    m_acceleratorConfigHasBeenSet = true;
+    m_acceleratorConfig = std::forward<AcceleratorConfigT>(value);
+  }
+  template <typename AcceleratorConfigT = AcceleratorConfig>
+  GetFunctionConfigurationResult& WithAcceleratorConfig(AcceleratorConfigT&& value) {
+    SetAcceleratorConfig(std::forward<AcceleratorConfigT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -889,6 +927,10 @@ class GetFunctionConfigurationResult {
 
   DurableConfig m_durableConfig;
 
+  FunctionRuntimeConfig m_runtimeConfig;
+
+  AcceleratorConfig m_acceleratorConfig;
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_functionNameHasBeenSet = false;
@@ -931,6 +973,8 @@ class GetFunctionConfigurationResult {
   bool m_capacityProviderConfigHasBeenSet = false;
   bool m_configSha256HasBeenSet = false;
   bool m_durableConfigHasBeenSet = false;
+  bool m_runtimeConfigHasBeenSet = false;
+  bool m_acceleratorConfigHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

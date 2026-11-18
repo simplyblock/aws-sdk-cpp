@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -19,13 +19,19 @@
 #include <aws/securityhub/model/GetFindingsV2PaginationTraits.h>
 #include <aws/securityhub/model/GetInsightsPaginationTraits.h>
 #include <aws/securityhub/model/GetRecommendedPolicyV2PaginationTraits.h>
+#include <aws/securityhub/model/GetRemediationsV2PaginationTraits.h>
 #include <aws/securityhub/model/GetResourcesTrendsV2PaginationTraits.h>
 #include <aws/securityhub/model/GetResourcesV2PaginationTraits.h>
+#include <aws/securityhub/model/GetSoftwareResourcesV2PaginationTraits.h>
+#include <aws/securityhub/model/GetSoftwareV2PaginationTraits.h>
 #include <aws/securityhub/model/ListAggregatorsV2PaginationTraits.h>
 #include <aws/securityhub/model/ListConfigurationPoliciesPaginationTraits.h>
 #include <aws/securityhub/model/ListConfigurationPolicyAssociationsPaginationTraits.h>
 #include <aws/securityhub/model/ListEnabledProductsForImportPaginationTraits.h>
+#include <aws/securityhub/model/ListExportJobsV2PaginationTraits.h>
+#include <aws/securityhub/model/ListExposuresByRemediationV2PaginationTraits.h>
 #include <aws/securityhub/model/ListFindingAggregatorsPaginationTraits.h>
+#include <aws/securityhub/model/ListFreeTrialStatusesV2PaginationTraits.h>
 #include <aws/securityhub/model/ListInvitationsPaginationTraits.h>
 #include <aws/securityhub/model/ListMembersPaginationTraits.h>
 #include <aws/securityhub/model/ListOrganizationAdminAccountsPaginationTraits.h>
@@ -182,6 +188,18 @@ class SecurityHubPaginationBase {
   }
 
   /**
+   * Create a paginator for GetRemediationsV2 operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetRemediationsV2Request,
+                                    Pagination::GetRemediationsV2PaginationTraits<DerivedClient>>
+  GetRemediationsV2Paginator(const Model::GetRemediationsV2Request& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetRemediationsV2Request,
+                                             Pagination::GetRemediationsV2PaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for GetResourcesTrendsV2 operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetResourcesTrendsV2Request,
@@ -202,6 +220,29 @@ class SecurityHubPaginationBase {
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetResourcesV2Request,
                                              Pagination::GetResourcesV2PaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
                                                                                                         request};
+  }
+
+  /**
+   * Create a paginator for GetSoftwareResourcesV2 operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetSoftwareResourcesV2Request,
+                                    Pagination::GetSoftwareResourcesV2PaginationTraits<DerivedClient>>
+  GetSoftwareResourcesV2Paginator(const Model::GetSoftwareResourcesV2Request& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetSoftwareResourcesV2Request,
+                                             Pagination::GetSoftwareResourcesV2PaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for GetSoftwareV2 operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetSoftwareV2Request, Pagination::GetSoftwareV2PaginationTraits<DerivedClient>>
+  GetSoftwareV2Paginator(const Model::GetSoftwareV2Request& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetSoftwareV2Request,
+                                             Pagination::GetSoftwareV2PaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                       request};
   }
 
   /**
@@ -253,6 +294,30 @@ class SecurityHubPaginationBase {
   }
 
   /**
+   * Create a paginator for ListExportJobsV2 operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListExportJobsV2Request,
+                                    Pagination::ListExportJobsV2PaginationTraits<DerivedClient>>
+  ListExportJobsV2Paginator(const Model::ListExportJobsV2Request& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListExportJobsV2Request,
+                                             Pagination::ListExportJobsV2PaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                          request};
+  }
+
+  /**
+   * Create a paginator for ListExposuresByRemediationV2 operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListExposuresByRemediationV2Request,
+                                    Pagination::ListExposuresByRemediationV2PaginationTraits<DerivedClient>>
+  ListExposuresByRemediationV2Paginator(const Model::ListExposuresByRemediationV2Request& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListExposuresByRemediationV2Request,
+                                             Pagination::ListExposuresByRemediationV2PaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for ListFindingAggregators operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListFindingAggregatorsRequest,
@@ -261,6 +326,18 @@ class SecurityHubPaginationBase {
     request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListFindingAggregatorsRequest,
                                              Pagination::ListFindingAggregatorsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListFreeTrialStatusesV2 operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListFreeTrialStatusesV2Request,
+                                    Pagination::ListFreeTrialStatusesV2PaginationTraits<DerivedClient>>
+  ListFreeTrialStatusesV2Paginator(const Model::ListFreeTrialStatusesV2Request& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListFreeTrialStatusesV2Request,
+                                             Pagination::ListFreeTrialStatusesV2PaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
   }
 

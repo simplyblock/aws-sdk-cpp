@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/apigatewaymanagementapi/ApiGatewayManagementApiEndpointRules.h>
 #include <aws/apigatewaymanagementapi/ApiGatewayManagementApi_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ApiGatewayManagementApi {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ApiGatewayManagementApiClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ApiGatewayManagementApiEndpointProviderBase =
                          ApiGatewayManagementApiClientContextParameters>;
 
 using ApiGatewayManagementApiDefaultEpProviderBase =
-    DefaultEndpointProvider<ApiGatewayManagementApiClientConfiguration, ApiGatewayManagementApiBuiltInParameters,
-                            ApiGatewayManagementApiClientContextParameters>;
+    BDDEndpointProvider<ApiGatewayManagementApiClientConfiguration, ApiGatewayManagementApiBuiltInParameters,
+                        ApiGatewayManagementApiClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_APIGATEWAYMANAGEMENTAPI_API ApiGatewayManagementApiEndpointProvider : 
  public:
   using ApiGatewayManagementApiResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ApiGatewayManagementApiEndpointProvider()
-      : ApiGatewayManagementApiDefaultEpProviderBase(Aws::ApiGatewayManagementApi::ApiGatewayManagementApiEndpointRules::GetRulesBlob(),
-                                                     Aws::ApiGatewayManagementApi::ApiGatewayManagementApiEndpointRules::RulesBlobSize) {}
+  ApiGatewayManagementApiEndpointProvider();
 
   ~ApiGatewayManagementApiEndpointProvider() {}
 };

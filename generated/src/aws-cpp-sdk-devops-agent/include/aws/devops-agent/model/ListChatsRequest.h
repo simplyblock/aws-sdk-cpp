@@ -7,6 +7,7 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/devops-agent/DevOpsAgentRequest.h>
 #include <aws/devops-agent/DevOpsAgent_EXPORTS.h>
+#include <aws/devops-agent/model/ChatArchiveStatus.h>
 
 #include <utility>
 
@@ -37,7 +38,9 @@ class ListChatsRequest : public DevOpsAgentRequest {
   AWS_DEVOPSAGENT_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
 
   ///@{
-
+  /**
+   * <p>The unique identifier for the agent space to list chats from.</p>
+   */
   inline const Aws::String& GetAgentSpaceId() const { return m_agentSpaceId; }
   inline bool AgentSpaceIdHasBeenSet() const { return m_agentSpaceIdHasBeenSet; }
   template <typename AgentSpaceIdT = Aws::String>
@@ -85,15 +88,35 @@ class ListChatsRequest : public DevOpsAgentRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The archive status to filter by. Use this parameter to list only archived
+   * chat executions or only active ones.</p>
+   */
+  inline ChatArchiveStatus GetArchiveStatus() const { return m_archiveStatus; }
+  inline bool ArchiveStatusHasBeenSet() const { return m_archiveStatusHasBeenSet; }
+  inline void SetArchiveStatus(ChatArchiveStatus value) {
+    m_archiveStatusHasBeenSet = true;
+    m_archiveStatus = value;
+  }
+  inline ListChatsRequest& WithArchiveStatus(ChatArchiveStatus value) {
+    SetArchiveStatus(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_agentSpaceId;
 
   int m_maxResults{0};
 
   Aws::String m_nextToken;
+
+  ChatArchiveStatus m_archiveStatus{ChatArchiveStatus::NOT_SET};
   bool m_agentSpaceIdHasBeenSet = false;
   bool m_maxResultsHasBeenSet = false;
   bool m_nextTokenHasBeenSet = false;
+  bool m_archiveStatusHasBeenSet = false;
 };
 
 }  // namespace Model

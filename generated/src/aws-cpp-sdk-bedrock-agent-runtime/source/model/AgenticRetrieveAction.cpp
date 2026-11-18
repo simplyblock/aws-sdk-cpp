@@ -18,9 +18,17 @@ namespace Model {
 AgenticRetrieveAction::AgenticRetrieveAction(JsonView jsonValue) { *this = jsonValue; }
 
 AgenticRetrieveAction& AgenticRetrieveAction::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("codeExecution")) {
+    m_codeExecution = jsonValue.GetObject("codeExecution");
+    m_codeExecutionHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("fullDocumentExpansion")) {
     m_fullDocumentExpansion = jsonValue.GetObject("fullDocumentExpansion");
     m_fullDocumentExpansionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("memoryRetrieve")) {
+    m_memoryRetrieve = jsonValue.GetObject("memoryRetrieve");
+    m_memoryRetrieveHasBeenSet = true;
   }
   if (jsonValue.ValueExists("retrieve")) {
     m_retrieve = jsonValue.GetObject("retrieve");
@@ -32,8 +40,16 @@ AgenticRetrieveAction& AgenticRetrieveAction::operator=(JsonView jsonValue) {
 JsonValue AgenticRetrieveAction::Jsonize() const {
   JsonValue payload;
 
+  if (m_codeExecutionHasBeenSet) {
+    payload.WithObject("codeExecution", m_codeExecution.Jsonize());
+  }
+
   if (m_fullDocumentExpansionHasBeenSet) {
     payload.WithObject("fullDocumentExpansion", m_fullDocumentExpansion.Jsonize());
+  }
+
+  if (m_memoryRetrieveHasBeenSet) {
+    payload.WithObject("memoryRetrieve", m_memoryRetrieve.Jsonize());
   }
 
   if (m_retrieveHasBeenSet) {

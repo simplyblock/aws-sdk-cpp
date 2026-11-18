@@ -7,16 +7,20 @@
 #include <aws/bedrock-agentcore-control/BedrockAgentCoreControlEndpointProvider.h>
 #include <aws/bedrock-agentcore-control/BedrockAgentCoreControlErrorMarshaller.h>
 #include <aws/bedrock-agentcore-control/model/AddDatasetExamplesRequest.h>
+#include <aws/bedrock-agentcore-control/model/BatchPutGatewayRateLimitsRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateAgentRuntimeEndpointRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateAgentRuntimeRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateApiKeyCredentialProviderRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateBrowserProfileRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateBrowserRequest.h>
+#include <aws/bedrock-agentcore-control/model/CreateCapacityProviderRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateCodeInterpreterRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateConfigurationBundleRequest.h>
+#include <aws/bedrock-agentcore-control/model/CreateConsentPortalRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateDatasetRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateDatasetVersionRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateEvaluatorRequest.h>
+#include <aws/bedrock-agentcore-control/model/CreateGatewayRateLimitRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateGatewayRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateGatewayRuleRequest.h>
 #include <aws/bedrock-agentcore-control/model/CreateGatewayTargetRequest.h>
@@ -38,11 +42,14 @@
 #include <aws/bedrock-agentcore-control/model/DeleteApiKeyCredentialProviderRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteBrowserProfileRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteBrowserRequest.h>
+#include <aws/bedrock-agentcore-control/model/DeleteCapacityProviderRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteCodeInterpreterRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteConfigurationBundleRequest.h>
+#include <aws/bedrock-agentcore-control/model/DeleteConsentPortalRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteDatasetExamplesRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteDatasetRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteEvaluatorRequest.h>
+#include <aws/bedrock-agentcore-control/model/DeleteGatewayRateLimitRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteGatewayRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteGatewayRuleRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteGatewayTargetRequest.h>
@@ -60,16 +67,20 @@
 #include <aws/bedrock-agentcore-control/model/DeleteRegistryRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteResourcePolicyRequest.h>
 #include <aws/bedrock-agentcore-control/model/DeleteWorkloadIdentityRequest.h>
+#include <aws/bedrock-agentcore-control/model/GetAgentInsightStoreRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetAgentRuntimeEndpointRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetAgentRuntimeRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetApiKeyCredentialProviderRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetBrowserProfileRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetBrowserRequest.h>
+#include <aws/bedrock-agentcore-control/model/GetCapacityProviderRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetCodeInterpreterRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetConfigurationBundleRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetConfigurationBundleVersionRequest.h>
+#include <aws/bedrock-agentcore-control/model/GetConsentPortalRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetDatasetRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetEvaluatorRequest.h>
+#include <aws/bedrock-agentcore-control/model/GetGatewayRateLimitRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetGatewayRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetGatewayRuleRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetGatewayTargetRequest.h>
@@ -92,19 +103,24 @@
 #include <aws/bedrock-agentcore-control/model/GetResourcePolicyRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetTokenVaultRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetWorkloadIdentityRequest.h>
+#include <aws/bedrock-agentcore-control/model/ListAgentInsightStoresRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListAgentRuntimeEndpointsRequest.h>
+#include <aws/bedrock-agentcore-control/model/ListAgentRuntimeVersionsByCapacityProviderRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListAgentRuntimeVersionsRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListAgentRuntimesRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListApiKeyCredentialProvidersRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListBrowserProfilesRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListBrowsersRequest.h>
+#include <aws/bedrock-agentcore-control/model/ListCapacityProvidersRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListCodeInterpretersRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListConfigurationBundleVersionsRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListConfigurationBundlesRequest.h>
+#include <aws/bedrock-agentcore-control/model/ListConsentPortalsRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListDatasetExamplesRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListDatasetVersionsRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListDatasetsRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListEvaluatorsRequest.h>
+#include <aws/bedrock-agentcore-control/model/ListGatewayRateLimitsRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListGatewayRulesRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListGatewayTargetsRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListGatewaysRequest.h>
@@ -129,19 +145,25 @@
 #include <aws/bedrock-agentcore-control/model/ListTagsForResourceRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListWorkloadIdentitiesRequest.h>
 #include <aws/bedrock-agentcore-control/model/PutResourcePolicyRequest.h>
+#include <aws/bedrock-agentcore-control/model/ResetTokenVaultKeyMaterialRequest.h>
+#include <aws/bedrock-agentcore-control/model/RotatePaymentConnectorCredentialsRequest.h>
 #include <aws/bedrock-agentcore-control/model/SetTokenVaultCMKRequest.h>
 #include <aws/bedrock-agentcore-control/model/StartPolicyGenerationRequest.h>
 #include <aws/bedrock-agentcore-control/model/SubmitRegistryRecordForApprovalRequest.h>
 #include <aws/bedrock-agentcore-control/model/SynchronizeGatewayTargetsRequest.h>
 #include <aws/bedrock-agentcore-control/model/TagResourceRequest.h>
 #include <aws/bedrock-agentcore-control/model/UntagResourceRequest.h>
+#include <aws/bedrock-agentcore-control/model/UpdateAgentInsightStoreRequest.h>
 #include <aws/bedrock-agentcore-control/model/UpdateAgentRuntimeEndpointRequest.h>
 #include <aws/bedrock-agentcore-control/model/UpdateAgentRuntimeRequest.h>
 #include <aws/bedrock-agentcore-control/model/UpdateApiKeyCredentialProviderRequest.h>
+#include <aws/bedrock-agentcore-control/model/UpdateCapacityProviderRequest.h>
 #include <aws/bedrock-agentcore-control/model/UpdateConfigurationBundleRequest.h>
+#include <aws/bedrock-agentcore-control/model/UpdateConsentPortalRequest.h>
 #include <aws/bedrock-agentcore-control/model/UpdateDatasetExamplesRequest.h>
 #include <aws/bedrock-agentcore-control/model/UpdateDatasetRequest.h>
 #include <aws/bedrock-agentcore-control/model/UpdateEvaluatorRequest.h>
+#include <aws/bedrock-agentcore-control/model/UpdateGatewayRateLimitRequest.h>
 #include <aws/bedrock-agentcore-control/model/UpdateGatewayRequest.h>
 #include <aws/bedrock-agentcore-control/model/UpdateGatewayRuleRequest.h>
 #include <aws/bedrock-agentcore-control/model/UpdateGatewayTargetRequest.h>
@@ -318,7 +340,8 @@ BedrockAgentCoreControlClient::InvokeOperationOutcome BedrockAgentCoreControlCli
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -332,7 +355,7 @@ BedrockAgentCoreControlClient::InvokeOperationOutcome BedrockAgentCoreControlCli
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -353,6 +376,26 @@ AddDatasetExamplesOutcome BedrockAgentCoreControlClient::AddDatasetExamples(cons
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? AddDatasetExamplesOutcome(result.GetResultWithOwnership())
                             : AddDatasetExamplesOutcome(std::move(result.GetError()));
+}
+
+BatchPutGatewayRateLimitsOutcome BedrockAgentCoreControlClient::BatchPutGatewayRateLimits(
+    const BatchPutGatewayRateLimitsRequest& request) const {
+  if (!request.GatewayIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("BatchPutGatewayRateLimits", "Required field: GatewayIdentifier, is not set");
+    return BatchPutGatewayRateLimitsOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GatewayIdentifier]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/gateways/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGatewayIdentifier());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/rate-limits/batch");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? BatchPutGatewayRateLimitsOutcome(result.GetResultWithOwnership())
+                            : BatchPutGatewayRateLimitsOutcome(std::move(result.GetError()));
 }
 
 CreateAgentRuntimeOutcome BedrockAgentCoreControlClient::CreateAgentRuntime(const CreateAgentRuntimeRequest& request) const {
@@ -419,6 +462,17 @@ CreateBrowserProfileOutcome BedrockAgentCoreControlClient::CreateBrowserProfile(
                             : CreateBrowserProfileOutcome(std::move(result.GetError()));
 }
 
+CreateCapacityProviderOutcome BedrockAgentCoreControlClient::CreateCapacityProvider(const CreateCapacityProviderRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/capacity-providers");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? CreateCapacityProviderOutcome(result.GetResultWithOwnership())
+                            : CreateCapacityProviderOutcome(std::move(result.GetError()));
+}
+
 CreateCodeInterpreterOutcome BedrockAgentCoreControlClient::CreateCodeInterpreter(const CreateCodeInterpreterRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -440,6 +494,17 @@ CreateConfigurationBundleOutcome BedrockAgentCoreControlClient::CreateConfigurat
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateConfigurationBundleOutcome(result.GetResultWithOwnership())
                             : CreateConfigurationBundleOutcome(std::move(result.GetError()));
+}
+
+CreateConsentPortalOutcome BedrockAgentCoreControlClient::CreateConsentPortal(const CreateConsentPortalRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/identities/CreateConsentPortal");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateConsentPortalOutcome(result.GetResultWithOwnership())
+                            : CreateConsentPortalOutcome(std::move(result.GetError()));
 }
 
 CreateDatasetOutcome BedrockAgentCoreControlClient::CreateDataset(const CreateDatasetRequest& request) const {
@@ -490,6 +555,25 @@ CreateGatewayOutcome BedrockAgentCoreControlClient::CreateGateway(const CreateGa
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateGatewayOutcome(result.GetResultWithOwnership()) : CreateGatewayOutcome(std::move(result.GetError()));
+}
+
+CreateGatewayRateLimitOutcome BedrockAgentCoreControlClient::CreateGatewayRateLimit(const CreateGatewayRateLimitRequest& request) const {
+  if (!request.GatewayIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("CreateGatewayRateLimit", "Required field: GatewayIdentifier, is not set");
+    return CreateGatewayRateLimitOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GatewayIdentifier]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/gateways/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGatewayIdentifier());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/rate-limits");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateGatewayRateLimitOutcome(result.GetResultWithOwnership())
+                            : CreateGatewayRateLimitOutcome(std::move(result.GetError()));
 }
 
 CreateGatewayRuleOutcome BedrockAgentCoreControlClient::CreateGatewayRule(const CreateGatewayRuleRequest& request) const {
@@ -795,6 +879,24 @@ DeleteBrowserProfileOutcome BedrockAgentCoreControlClient::DeleteBrowserProfile(
                             : DeleteBrowserProfileOutcome(std::move(result.GetError()));
 }
 
+DeleteCapacityProviderOutcome BedrockAgentCoreControlClient::DeleteCapacityProvider(const DeleteCapacityProviderRequest& request) const {
+  if (!request.CapacityProviderIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteCapacityProvider", "Required field: CapacityProviderId, is not set");
+    return DeleteCapacityProviderOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [CapacityProviderId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/capacity-providers/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetCapacityProviderId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteCapacityProviderOutcome(result.GetResultWithOwnership())
+                            : DeleteCapacityProviderOutcome(std::move(result.GetError()));
+}
+
 DeleteCodeInterpreterOutcome BedrockAgentCoreControlClient::DeleteCodeInterpreter(const DeleteCodeInterpreterRequest& request) const {
   if (!request.CodeInterpreterIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("DeleteCodeInterpreter", "Required field: CodeInterpreterId, is not set");
@@ -830,6 +932,17 @@ DeleteConfigurationBundleOutcome BedrockAgentCoreControlClient::DeleteConfigurat
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? DeleteConfigurationBundleOutcome(result.GetResultWithOwnership())
                             : DeleteConfigurationBundleOutcome(std::move(result.GetError()));
+}
+
+DeleteConsentPortalOutcome BedrockAgentCoreControlClient::DeleteConsentPortal(const DeleteConsentPortalRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/identities/DeleteConsentPortal");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteConsentPortalOutcome(result.GetResultWithOwnership())
+                            : DeleteConsentPortalOutcome(std::move(result.GetError()));
 }
 
 DeleteDatasetOutcome BedrockAgentCoreControlClient::DeleteDataset(const DeleteDatasetRequest& request) const {
@@ -901,6 +1014,31 @@ DeleteGatewayOutcome BedrockAgentCoreControlClient::DeleteGateway(const DeleteGa
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? DeleteGatewayOutcome(result.GetResultWithOwnership()) : DeleteGatewayOutcome(std::move(result.GetError()));
+}
+
+DeleteGatewayRateLimitOutcome BedrockAgentCoreControlClient::DeleteGatewayRateLimit(const DeleteGatewayRateLimitRequest& request) const {
+  if (!request.GatewayIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteGatewayRateLimit", "Required field: GatewayIdentifier, is not set");
+    return DeleteGatewayRateLimitOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GatewayIdentifier]", false));
+  }
+  if (!request.RateLimitIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteGatewayRateLimit", "Required field: RateLimitId, is not set");
+    return DeleteGatewayRateLimitOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [RateLimitId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/gateways/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGatewayIdentifier());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/rate-limits/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetRateLimitId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteGatewayRateLimitOutcome(result.GetResultWithOwnership())
+                            : DeleteGatewayRateLimitOutcome(std::move(result.GetError()));
 }
 
 DeleteGatewayRuleOutcome BedrockAgentCoreControlClient::DeleteGatewayRule(const DeleteGatewayRuleRequest& request) const {
@@ -1212,6 +1350,24 @@ DeleteWorkloadIdentityOutcome BedrockAgentCoreControlClient::DeleteWorkloadIdent
                             : DeleteWorkloadIdentityOutcome(std::move(result.GetError()));
 }
 
+GetAgentInsightStoreOutcome BedrockAgentCoreControlClient::GetAgentInsightStore(const GetAgentInsightStoreRequest& request) const {
+  if (!request.AgentInsightStoreIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAgentInsightStore", "Required field: AgentInsightStoreId, is not set");
+    return GetAgentInsightStoreOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [AgentInsightStoreId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/agent-insight-stores/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetAgentInsightStoreId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAgentInsightStoreOutcome(result.GetResultWithOwnership())
+                            : GetAgentInsightStoreOutcome(std::move(result.GetError()));
+}
+
 GetAgentRuntimeOutcome BedrockAgentCoreControlClient::GetAgentRuntime(const GetAgentRuntimeRequest& request) const {
   if (!request.AgentRuntimeIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetAgentRuntime", "Required field: AgentRuntimeId, is not set");
@@ -1302,6 +1458,24 @@ GetBrowserProfileOutcome BedrockAgentCoreControlClient::GetBrowserProfile(const 
                             : GetBrowserProfileOutcome(std::move(result.GetError()));
 }
 
+GetCapacityProviderOutcome BedrockAgentCoreControlClient::GetCapacityProvider(const GetCapacityProviderRequest& request) const {
+  if (!request.CapacityProviderIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetCapacityProvider", "Required field: CapacityProviderId, is not set");
+    return GetCapacityProviderOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [CapacityProviderId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/capacity-providers/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetCapacityProviderId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetCapacityProviderOutcome(result.GetResultWithOwnership())
+                            : GetCapacityProviderOutcome(std::move(result.GetError()));
+}
+
 GetCodeInterpreterOutcome BedrockAgentCoreControlClient::GetCodeInterpreter(const GetCodeInterpreterRequest& request) const {
   if (!request.CodeInterpreterIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetCodeInterpreter", "Required field: CodeInterpreterId, is not set");
@@ -1364,6 +1538,17 @@ GetConfigurationBundleVersionOutcome BedrockAgentCoreControlClient::GetConfigura
                             : GetConfigurationBundleVersionOutcome(std::move(result.GetError()));
 }
 
+GetConsentPortalOutcome BedrockAgentCoreControlClient::GetConsentPortal(const GetConsentPortalRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/identities/GetConsentPortal");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetConsentPortalOutcome(result.GetResultWithOwnership())
+                            : GetConsentPortalOutcome(std::move(result.GetError()));
+}
+
 GetDatasetOutcome BedrockAgentCoreControlClient::GetDataset(const GetDatasetRequest& request) const {
   if (!request.DatasetIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetDataset", "Required field: DatasetId, is not set");
@@ -1413,6 +1598,31 @@ GetGatewayOutcome BedrockAgentCoreControlClient::GetGateway(const GetGatewayRequ
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
   return result.IsSuccess() ? GetGatewayOutcome(result.GetResultWithOwnership()) : GetGatewayOutcome(std::move(result.GetError()));
+}
+
+GetGatewayRateLimitOutcome BedrockAgentCoreControlClient::GetGatewayRateLimit(const GetGatewayRateLimitRequest& request) const {
+  if (!request.GatewayIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetGatewayRateLimit", "Required field: GatewayIdentifier, is not set");
+    return GetGatewayRateLimitOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GatewayIdentifier]", false));
+  }
+  if (!request.RateLimitIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetGatewayRateLimit", "Required field: RateLimitId, is not set");
+    return GetGatewayRateLimitOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [RateLimitId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/gateways/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGatewayIdentifier());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/rate-limits/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetRateLimitId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetGatewayRateLimitOutcome(result.GetResultWithOwnership())
+                            : GetGatewayRateLimitOutcome(std::move(result.GetError()));
 }
 
 GetGatewayRuleOutcome BedrockAgentCoreControlClient::GetGatewayRule(const GetGatewayRuleRequest& request) const {
@@ -1827,6 +2037,17 @@ GetWorkloadIdentityOutcome BedrockAgentCoreControlClient::GetWorkloadIdentity(co
                             : GetWorkloadIdentityOutcome(std::move(result.GetError()));
 }
 
+ListAgentInsightStoresOutcome BedrockAgentCoreControlClient::ListAgentInsightStores(const ListAgentInsightStoresRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/agent-insight-stores");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListAgentInsightStoresOutcome(result.GetResultWithOwnership())
+                            : ListAgentInsightStoresOutcome(std::move(result.GetError()));
+}
+
 ListAgentRuntimeEndpointsOutcome BedrockAgentCoreControlClient::ListAgentRuntimeEndpoints(
     const ListAgentRuntimeEndpointsRequest& request) const {
   if (!request.AgentRuntimeIdHasBeenSet()) {
@@ -1865,6 +2086,26 @@ ListAgentRuntimeVersionsOutcome BedrockAgentCoreControlClient::ListAgentRuntimeV
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListAgentRuntimeVersionsOutcome(result.GetResultWithOwnership())
                             : ListAgentRuntimeVersionsOutcome(std::move(result.GetError()));
+}
+
+ListAgentRuntimeVersionsByCapacityProviderOutcome BedrockAgentCoreControlClient::ListAgentRuntimeVersionsByCapacityProvider(
+    const ListAgentRuntimeVersionsByCapacityProviderRequest& request) const {
+  if (!request.CapacityProviderIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListAgentRuntimeVersionsByCapacityProvider", "Required field: CapacityProviderId, is not set");
+    return ListAgentRuntimeVersionsByCapacityProviderOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [CapacityProviderId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/capacity-providers/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetCapacityProviderId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/runtime-versions");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListAgentRuntimeVersionsByCapacityProviderOutcome(result.GetResultWithOwnership())
+                            : ListAgentRuntimeVersionsByCapacityProviderOutcome(std::move(result.GetError()));
 }
 
 ListAgentRuntimesOutcome BedrockAgentCoreControlClient::ListAgentRuntimes(const ListAgentRuntimesRequest& request) const {
@@ -1911,6 +2152,17 @@ ListBrowsersOutcome BedrockAgentCoreControlClient::ListBrowsers(const ListBrowse
   return result.IsSuccess() ? ListBrowsersOutcome(result.GetResultWithOwnership()) : ListBrowsersOutcome(std::move(result.GetError()));
 }
 
+ListCapacityProvidersOutcome BedrockAgentCoreControlClient::ListCapacityProviders(const ListCapacityProvidersRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/capacity-providers");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListCapacityProvidersOutcome(result.GetResultWithOwnership())
+                            : ListCapacityProvidersOutcome(std::move(result.GetError()));
+}
+
 ListCodeInterpretersOutcome BedrockAgentCoreControlClient::ListCodeInterpreters(const ListCodeInterpretersRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -1954,6 +2206,17 @@ ListConfigurationBundlesOutcome BedrockAgentCoreControlClient::ListConfiguration
                             : ListConfigurationBundlesOutcome(std::move(result.GetError()));
 }
 
+ListConsentPortalsOutcome BedrockAgentCoreControlClient::ListConsentPortals(const ListConsentPortalsRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/identities/ListConsentPortals");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListConsentPortalsOutcome(result.GetResultWithOwnership())
+                            : ListConsentPortalsOutcome(std::move(result.GetError()));
+}
+
 ListDatasetExamplesOutcome BedrockAgentCoreControlClient::ListDatasetExamples(const ListDatasetExamplesRequest& request) const {
   if (!request.DatasetIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("ListDatasetExamples", "Required field: DatasetId, is not set");
@@ -1965,10 +2228,10 @@ ListDatasetExamplesOutcome BedrockAgentCoreControlClient::ListDatasetExamples(co
     (void)endpointResolutionOutcome;
     endpointResolutionOutcome.GetResult().AddPathSegments("/datasets/");
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDatasetId());
-    endpointResolutionOutcome.GetResult().AddPathSegments("/examples");
+    endpointResolutionOutcome.GetResult().AddPathSegments("/examples/list");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListDatasetExamplesOutcome(result.GetResultWithOwnership())
                             : ListDatasetExamplesOutcome(std::move(result.GetError()));
 }
@@ -1984,10 +2247,10 @@ ListDatasetVersionsOutcome BedrockAgentCoreControlClient::ListDatasetVersions(co
     (void)endpointResolutionOutcome;
     endpointResolutionOutcome.GetResult().AddPathSegments("/datasets/");
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDatasetId());
-    endpointResolutionOutcome.GetResult().AddPathSegments("/versions");
+    endpointResolutionOutcome.GetResult().AddPathSegments("/versions/list");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListDatasetVersionsOutcome(result.GetResultWithOwnership())
                             : ListDatasetVersionsOutcome(std::move(result.GetError()));
 }
@@ -1995,10 +2258,10 @@ ListDatasetVersionsOutcome BedrockAgentCoreControlClient::ListDatasetVersions(co
 ListDatasetsOutcome BedrockAgentCoreControlClient::ListDatasets(const ListDatasetsRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
-    endpointResolutionOutcome.GetResult().AddPathSegments("/datasets");
+    endpointResolutionOutcome.GetResult().AddPathSegments("/datasets/list");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListDatasetsOutcome(result.GetResultWithOwnership()) : ListDatasetsOutcome(std::move(result.GetError()));
 }
 
@@ -2010,6 +2273,25 @@ ListEvaluatorsOutcome BedrockAgentCoreControlClient::ListEvaluators(const ListEv
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListEvaluatorsOutcome(result.GetResultWithOwnership()) : ListEvaluatorsOutcome(std::move(result.GetError()));
+}
+
+ListGatewayRateLimitsOutcome BedrockAgentCoreControlClient::ListGatewayRateLimits(const ListGatewayRateLimitsRequest& request) const {
+  if (!request.GatewayIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListGatewayRateLimits", "Required field: GatewayIdentifier, is not set");
+    return ListGatewayRateLimitsOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GatewayIdentifier]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/gateways/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGatewayIdentifier());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/rate-limits");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListGatewayRateLimitsOutcome(result.GetResultWithOwnership())
+                            : ListGatewayRateLimitsOutcome(std::move(result.GetError()));
 }
 
 ListGatewayRulesOutcome BedrockAgentCoreControlClient::ListGatewayRules(const ListGatewayRulesRequest& request) const {
@@ -2386,6 +2668,45 @@ PutResourcePolicyOutcome BedrockAgentCoreControlClient::PutResourcePolicy(const 
                             : PutResourcePolicyOutcome(std::move(result.GetError()));
 }
 
+ResetTokenVaultKeyMaterialOutcome BedrockAgentCoreControlClient::ResetTokenVaultKeyMaterial(
+    const ResetTokenVaultKeyMaterialRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/identities/reset-token-vault-key-material");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ResetTokenVaultKeyMaterialOutcome(result.GetResultWithOwnership())
+                            : ResetTokenVaultKeyMaterialOutcome(std::move(result.GetError()));
+}
+
+RotatePaymentConnectorCredentialsOutcome BedrockAgentCoreControlClient::RotatePaymentConnectorCredentials(
+    const RotatePaymentConnectorCredentialsRequest& request) const {
+  if (!request.PaymentManagerIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("RotatePaymentConnectorCredentials", "Required field: PaymentManagerId, is not set");
+    return RotatePaymentConnectorCredentialsOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PaymentManagerId]", false));
+  }
+  if (!request.PaymentConnectorIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("RotatePaymentConnectorCredentials", "Required field: PaymentConnectorId, is not set");
+    return RotatePaymentConnectorCredentialsOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PaymentConnectorId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/payments/managers/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetPaymentManagerId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/connectors/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetPaymentConnectorId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/rotate-credentials");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? RotatePaymentConnectorCredentialsOutcome(result.GetResultWithOwnership())
+                            : RotatePaymentConnectorCredentialsOutcome(std::move(result.GetError()));
+}
+
 SetTokenVaultCMKOutcome BedrockAgentCoreControlClient::SetTokenVaultCMK(const SetTokenVaultCMKRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -2502,6 +2823,24 @@ UntagResourceOutcome BedrockAgentCoreControlClient::UntagResource(const UntagRes
   return result.IsSuccess() ? UntagResourceOutcome(result.GetResultWithOwnership()) : UntagResourceOutcome(std::move(result.GetError()));
 }
 
+UpdateAgentInsightStoreOutcome BedrockAgentCoreControlClient::UpdateAgentInsightStore(const UpdateAgentInsightStoreRequest& request) const {
+  if (!request.AgentInsightStoreIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateAgentInsightStore", "Required field: AgentInsightStoreId, is not set");
+    return UpdateAgentInsightStoreOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [AgentInsightStoreId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/agent-insight-stores/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetAgentInsightStoreId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? UpdateAgentInsightStoreOutcome(result.GetResultWithOwnership())
+                            : UpdateAgentInsightStoreOutcome(std::move(result.GetError()));
+}
+
 UpdateAgentRuntimeOutcome BedrockAgentCoreControlClient::UpdateAgentRuntime(const UpdateAgentRuntimeRequest& request) const {
   if (!request.AgentRuntimeIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("UpdateAgentRuntime", "Required field: AgentRuntimeId, is not set");
@@ -2558,6 +2897,24 @@ UpdateApiKeyCredentialProviderOutcome BedrockAgentCoreControlClient::UpdateApiKe
                             : UpdateApiKeyCredentialProviderOutcome(std::move(result.GetError()));
 }
 
+UpdateCapacityProviderOutcome BedrockAgentCoreControlClient::UpdateCapacityProvider(const UpdateCapacityProviderRequest& request) const {
+  if (!request.CapacityProviderIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateCapacityProvider", "Required field: CapacityProviderId, is not set");
+    return UpdateCapacityProviderOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [CapacityProviderId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/capacity-providers/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetCapacityProviderId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? UpdateCapacityProviderOutcome(result.GetResultWithOwnership())
+                            : UpdateCapacityProviderOutcome(std::move(result.GetError()));
+}
+
 UpdateConfigurationBundleOutcome BedrockAgentCoreControlClient::UpdateConfigurationBundle(
     const UpdateConfigurationBundleRequest& request) const {
   if (!request.BundleIdHasBeenSet()) {
@@ -2575,6 +2932,17 @@ UpdateConfigurationBundleOutcome BedrockAgentCoreControlClient::UpdateConfigurat
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
   return result.IsSuccess() ? UpdateConfigurationBundleOutcome(result.GetResultWithOwnership())
                             : UpdateConfigurationBundleOutcome(std::move(result.GetError()));
+}
+
+UpdateConsentPortalOutcome BedrockAgentCoreControlClient::UpdateConsentPortal(const UpdateConsentPortalRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/identities/UpdateConsentPortal");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateConsentPortalOutcome(result.GetResultWithOwnership())
+                            : UpdateConsentPortalOutcome(std::move(result.GetError()));
 }
 
 UpdateDatasetOutcome BedrockAgentCoreControlClient::UpdateDataset(const UpdateDatasetRequest& request) const {
@@ -2646,6 +3014,31 @@ UpdateGatewayOutcome BedrockAgentCoreControlClient::UpdateGateway(const UpdateGa
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
   return result.IsSuccess() ? UpdateGatewayOutcome(result.GetResultWithOwnership()) : UpdateGatewayOutcome(std::move(result.GetError()));
+}
+
+UpdateGatewayRateLimitOutcome BedrockAgentCoreControlClient::UpdateGatewayRateLimit(const UpdateGatewayRateLimitRequest& request) const {
+  if (!request.GatewayIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateGatewayRateLimit", "Required field: GatewayIdentifier, is not set");
+    return UpdateGatewayRateLimitOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GatewayIdentifier]", false));
+  }
+  if (!request.RateLimitIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateGatewayRateLimit", "Required field: RateLimitId, is not set");
+    return UpdateGatewayRateLimitOutcome(Aws::Client::AWSError<BedrockAgentCoreControlErrors>(
+        BedrockAgentCoreControlErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [RateLimitId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/gateways/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGatewayIdentifier());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/rate-limits/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetRateLimitId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateGatewayRateLimitOutcome(result.GetResultWithOwnership())
+                            : UpdateGatewayRateLimitOutcome(std::move(result.GetError()));
 }
 
 UpdateGatewayRuleOutcome BedrockAgentCoreControlClient::UpdateGatewayRule(const UpdateGatewayRuleRequest& request) const {

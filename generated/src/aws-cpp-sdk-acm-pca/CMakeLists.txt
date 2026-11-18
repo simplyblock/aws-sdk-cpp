@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-acm-pca "C++ SDK for the AWS acm-pca service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-acm-pca "C++ SDK for AWS Certificate Manager Private Certificate Authority" aws-cpp-sdk-core)
 
 file(GLOB AWS_ACM-PCA_HEADERS
     "include/aws/acm-pca/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ACM-PCA_HEADERS
 
 file(GLOB AWS_ACM-PCA_MODEL_HEADERS
     "include/aws/acm-pca/model/*.h"
+)
+
+file(GLOB AWS_ACM-PCA_INTERNAL_HEADERS
+    "include/aws/acm-pca/internal/*.h"
 )
 
 file(GLOB AWS_ACM-PCA_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ACM-PCA_MODEL_SOURCE
 
 file(GLOB ACM-PCA_UNIFIED_HEADERS
     ${AWS_ACM-PCA_HEADERS}
+    ${AWS_ACM-PCA_INTERNAL_HEADERS}
     ${AWS_ACM-PCA_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\acm-pca" FILES ${AWS_ACM-PCA_HEADERS})
+        source_group("Header Files\\aws\\acm-pca\\internal" FILES ${AWS_ACM-PCA_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\acm-pca\\model" FILES ${AWS_ACM-PCA_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ACM-PCA_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ACM-PCA_MODEL_SOURCE})

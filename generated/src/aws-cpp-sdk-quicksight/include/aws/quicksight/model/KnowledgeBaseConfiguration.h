@@ -34,7 +34,10 @@ class KnowledgeBaseConfiguration {
 
   ///@{
   /**
-   * <p>The template configuration for the knowledge base.</p>
+   * <p>The template configuration that defines how the data source connector crawls
+   * and indexes data for the knowledge base. The template structure varies by
+   * connector type. See <code>KbTemplateConfiguration</code> for connector-specific
+   * details.</p>
    */
   inline const KbTemplateConfiguration& GetTemplateConfiguration() const { return m_templateConfiguration; }
   inline bool TemplateConfigurationHasBeenSet() const { return m_templateConfigurationHasBeenSet; }
@@ -49,28 +52,9 @@ class KnowledgeBaseConfiguration {
     return *this;
   }
   ///@}
-
-  ///@{
-  /**
-   * <p>Indicates whether event notifications are enabled for the knowledge base.</p>
-   */
-  inline bool GetEventEnabled() const { return m_eventEnabled; }
-  inline bool EventEnabledHasBeenSet() const { return m_eventEnabledHasBeenSet; }
-  inline void SetEventEnabled(bool value) {
-    m_eventEnabledHasBeenSet = true;
-    m_eventEnabled = value;
-  }
-  inline KnowledgeBaseConfiguration& WithEventEnabled(bool value) {
-    SetEventEnabled(value);
-    return *this;
-  }
-  ///@}
  private:
   KbTemplateConfiguration m_templateConfiguration;
-
-  bool m_eventEnabled{false};
   bool m_templateConfigurationHasBeenSet = false;
-  bool m_eventEnabledHasBeenSet = false;
 };
 
 }  // namespace Model

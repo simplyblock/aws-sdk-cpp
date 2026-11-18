@@ -654,6 +654,16 @@ LogAlarm& LogAlarm::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>
                   }
                 }
                 m_actionLogLineRoleArnHasBeenSet = true;
+              }
+
+              else if (initialKeyStr == "WarmUpConfiguration") {
+                m_warmUpConfiguration = WarmUpConfiguration(decoder);
+                m_warmUpConfigurationHasBeenSet = true;
+              }
+
+              else if (initialKeyStr == "ActionConfiguration") {
+                m_actionConfiguration = ActionConfiguration(decoder);
+                m_actionConfigurationHasBeenSet = true;
               } else {
                 // Unknown key, skip the value
                 decoder->ConsumeNextWholeDataItem();
@@ -1304,6 +1314,16 @@ LogAlarm& LogAlarm::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>
                 }
               }
               m_actionLogLineRoleArnHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "WarmUpConfiguration") {
+              m_warmUpConfiguration = WarmUpConfiguration(decoder);
+              m_warmUpConfigurationHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "ActionConfiguration") {
+              m_actionConfiguration = ActionConfiguration(decoder);
+              m_actionConfigurationHasBeenSet = true;
             } else {
               // Unknown key, skip the value
               decoder->ConsumeNextWholeDataItem();
@@ -1384,6 +1404,12 @@ void LogAlarm::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
     mapSize++;
   }
   if (m_actionLogLineRoleArnHasBeenSet) {
+    mapSize++;
+  }
+  if (m_warmUpConfigurationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_actionConfigurationHasBeenSet) {
     mapSize++;
   }
 
@@ -1510,6 +1536,16 @@ void LogAlarm::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
   if (m_actionLogLineRoleArnHasBeenSet) {
     encoder.WriteText(Aws::Crt::ByteCursorFromCString("ActionLogLineRoleArn"));
     encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_actionLogLineRoleArn.c_str()));
+  }
+
+  if (m_warmUpConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WarmUpConfiguration"));
+    m_warmUpConfiguration.CborEncode(encoder);
+  }
+
+  if (m_actionConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ActionConfiguration"));
+    m_actionConfiguration.CborEncode(encoder);
   }
 }
 

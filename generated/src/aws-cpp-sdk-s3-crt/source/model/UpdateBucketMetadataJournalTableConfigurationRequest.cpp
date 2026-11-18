@@ -24,7 +24,7 @@ Aws::String UpdateBucketMetadataJournalTableConfigurationRequest::SerializePaylo
 
   m_journalTableConfiguration.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -88,4 +88,8 @@ Aws::String UpdateBucketMetadataJournalTableConfigurationRequest::GetChecksumAlg
   } else {
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
+}
+
+bool UpdateBucketMetadataJournalTableConfigurationRequest::ChecksumAlgorithmIsSet() const {
+  return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET;
 }

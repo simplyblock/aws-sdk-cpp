@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/marketplace-entitlement/MarketplaceEntitlementServiceEndpointRules.h>
 #include <aws/marketplace-entitlement/MarketplaceEntitlementService_EXPORTS.h>
 
 namespace Aws {
 namespace MarketplaceEntitlementService {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using MarketplaceEntitlementServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using MarketplaceEntitlementServiceEndpointProviderBase =
                          MarketplaceEntitlementServiceClientContextParameters>;
 
 using MarketplaceEntitlementServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<MarketplaceEntitlementServiceClientConfiguration, MarketplaceEntitlementServiceBuiltInParameters,
-                            MarketplaceEntitlementServiceClientContextParameters>;
+    BDDEndpointProvider<MarketplaceEntitlementServiceClientConfiguration, MarketplaceEntitlementServiceBuiltInParameters,
+                        MarketplaceEntitlementServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -45,10 +44,7 @@ class AWS_MARKETPLACEENTITLEMENTSERVICE_API MarketplaceEntitlementServiceEndpoin
  public:
   using MarketplaceEntitlementServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  MarketplaceEntitlementServiceEndpointProvider()
-      : MarketplaceEntitlementServiceDefaultEpProviderBase(
-            Aws::MarketplaceEntitlementService::MarketplaceEntitlementServiceEndpointRules::GetRulesBlob(),
-            Aws::MarketplaceEntitlementService::MarketplaceEntitlementServiceEndpointRules::RulesBlobSize) {}
+  MarketplaceEntitlementServiceEndpointProvider();
 
   ~MarketplaceEntitlementServiceEndpointProvider() {}
 };

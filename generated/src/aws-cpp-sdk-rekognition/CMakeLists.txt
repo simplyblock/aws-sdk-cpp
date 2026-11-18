@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-rekognition "C++ SDK for the AWS rekognition service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-rekognition "C++ SDK for Amazon Rekognition" aws-cpp-sdk-core)
 
 file(GLOB AWS_REKOGNITION_HEADERS
     "include/aws/rekognition/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_REKOGNITION_HEADERS
 
 file(GLOB AWS_REKOGNITION_MODEL_HEADERS
     "include/aws/rekognition/model/*.h"
+)
+
+file(GLOB AWS_REKOGNITION_INTERNAL_HEADERS
+    "include/aws/rekognition/internal/*.h"
 )
 
 file(GLOB AWS_REKOGNITION_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_REKOGNITION_MODEL_SOURCE
 
 file(GLOB REKOGNITION_UNIFIED_HEADERS
     ${AWS_REKOGNITION_HEADERS}
+    ${AWS_REKOGNITION_INTERNAL_HEADERS}
     ${AWS_REKOGNITION_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\rekognition" FILES ${AWS_REKOGNITION_HEADERS})
+        source_group("Header Files\\aws\\rekognition\\internal" FILES ${AWS_REKOGNITION_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\rekognition\\model" FILES ${AWS_REKOGNITION_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_REKOGNITION_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_REKOGNITION_MODEL_SOURCE})

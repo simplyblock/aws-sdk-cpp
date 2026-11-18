@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-sns "C++ SDK for the AWS sns service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-sns "C++ SDK for Amazon Simple Notification Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_SNS_HEADERS
     "include/aws/sns/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SNS_HEADERS
 
 file(GLOB AWS_SNS_MODEL_HEADERS
     "include/aws/sns/model/*.h"
+)
+
+file(GLOB AWS_SNS_INTERNAL_HEADERS
+    "include/aws/sns/internal/*.h"
 )
 
 file(GLOB AWS_SNS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SNS_MODEL_SOURCE
 
 file(GLOB SNS_UNIFIED_HEADERS
     ${AWS_SNS_HEADERS}
+    ${AWS_SNS_INTERNAL_HEADERS}
     ${AWS_SNS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\sns" FILES ${AWS_SNS_HEADERS})
+        source_group("Header Files\\aws\\sns\\internal" FILES ${AWS_SNS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\sns\\model" FILES ${AWS_SNS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SNS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SNS_MODEL_SOURCE})

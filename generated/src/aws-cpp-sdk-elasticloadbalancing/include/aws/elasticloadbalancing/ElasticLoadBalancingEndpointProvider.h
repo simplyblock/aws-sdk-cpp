@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticloadbalancing/ElasticLoadBalancingEndpointRules.h>
 #include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
 
 namespace Aws {
 namespace ElasticLoadBalancing {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ElasticLoadBalancingClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ElasticLoadBalancingEndpointProviderBase =
                          ElasticLoadBalancingClientContextParameters>;
 
 using ElasticLoadBalancingDefaultEpProviderBase =
-    DefaultEndpointProvider<ElasticLoadBalancingClientConfiguration, ElasticLoadBalancingBuiltInParameters,
-                            ElasticLoadBalancingClientContextParameters>;
+    BDDEndpointProvider<ElasticLoadBalancingClientConfiguration, ElasticLoadBalancingBuiltInParameters,
+                        ElasticLoadBalancingClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_ELASTICLOADBALANCING_API ElasticLoadBalancingEndpointProvider : public
  public:
   using ElasticLoadBalancingResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ElasticLoadBalancingEndpointProvider()
-      : ElasticLoadBalancingDefaultEpProviderBase(Aws::ElasticLoadBalancing::ElasticLoadBalancingEndpointRules::GetRulesBlob(),
-                                                  Aws::ElasticLoadBalancing::ElasticLoadBalancingEndpointRules::RulesBlobSize) {}
+  ElasticLoadBalancingEndpointProvider();
 
   ~ElasticLoadBalancingEndpointProvider() {}
 };

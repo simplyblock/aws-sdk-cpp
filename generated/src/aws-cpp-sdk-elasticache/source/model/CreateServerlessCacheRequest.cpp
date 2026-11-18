@@ -101,6 +101,22 @@ Aws::String CreateServerlessCacheRequest::SerializePayload() const {
     ss << "NetworkType=" << StringUtils::URLEncode(NetworkTypeMapper::GetNameForNetworkType(m_networkType)) << "&";
   }
 
+  if (m_connectionTypeHasBeenSet) {
+    ss << "ConnectionType=" << StringUtils::URLEncode(ConnectionTypeMapper::GetNameForConnectionType(m_connectionType)) << "&";
+  }
+
+  if (m_integrationsHasBeenSet) {
+    if (m_integrations.empty()) {
+      ss << "Integrations=&";
+    } else {
+      unsigned integrationsCount = 1;
+      for (auto& item : m_integrations) {
+        item.OutputToStream(ss, "Integrations.IntegrationRequest.", integrationsCount, "");
+        integrationsCount++;
+      }
+    }
+  }
+
   ss << "Version=2015-02-02";
   return ss.str();
 }

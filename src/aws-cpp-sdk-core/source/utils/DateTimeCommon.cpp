@@ -10,6 +10,7 @@
 #include <aws/core/utils/logging/LogMacros.h>
 #include <time.h>
 #include <cassert>
+#include <cstdint>
 #include <iostream>
 #include <cstring>
 #include <iomanip>
@@ -383,7 +384,7 @@ namespace {
 class DateParser
 {
 public:
-    DateParser(const char* toParse) : m_error(false), m_toParse(toParse), m_utcAssumed(true)
+    DateParser(const char* toParse) : m_error(false), m_toParse(toParse), m_utcAssumed(true), m_milliseconds(0)
     {
         m_parsedTimestamp = CreateZeroedTm();
         memset(m_tz, 0, 7);
@@ -394,6 +395,7 @@ public:
     virtual void Parse() = 0;
     bool WasParseSuccessful() const { return !m_error; }
     std::tm& GetParsedTimestamp() { return m_parsedTimestamp; }
+    int GetParsedMilliseconds() const { return m_milliseconds; }
     bool ShouldIAssumeThisIsUTC() const { return m_utcAssumed; }
     const char* GetParsedTimezone() const { return m_tz; }
 
@@ -404,6 +406,7 @@ protected:
     bool m_utcAssumed;
     // The size should be at least one byte greater than the maximum possible size so that we could use the last char to indicate the end of the string.
     char m_tz[7];
+    int m_milliseconds{0};
 };
 
 static const int MAX_LEN = 100;
@@ -477,7 +480,7 @@ public:
                     }
                     break;
                 case 2:
-                    if (isdigit(c))
+                    if (isdigit(c) && index - stateStartIndex < 2)
                     {
                         m_parsedTimestamp.tm_mday = m_parsedTimestamp.tm_mday * 10 + (c - '0');
                     }
@@ -525,7 +528,7 @@ public:
                         stateStartIndex = index + 1;
                         m_parsedTimestamp.tm_year += 2000 - 1900;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 4)
                     {
                         m_parsedTimestamp.tm_year = m_parsedTimestamp.tm_year * 10 + (c - '0');
                     }
@@ -540,7 +543,7 @@ public:
                         m_state = 6;
                         stateStartIndex = index + 1;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 2)
                     {
                         m_parsedTimestamp.tm_hour = m_parsedTimestamp.tm_hour * 10 + (c - '0');
                     }
@@ -555,7 +558,7 @@ public:
                         m_state = 7;
                         stateStartIndex = index + 1;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 2)
                     {
                         m_parsedTimestamp.tm_min = m_parsedTimestamp.tm_min * 10 + (c - '0');
                     }
@@ -570,7 +573,7 @@ public:
                         m_state = 8;
                         stateStartIndex = index + 1;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 2)
                     {
                         m_parsedTimestamp.tm_sec = m_parsedTimestamp.tm_sec * 10 + (c - '0');
                     }
@@ -746,7 +749,7 @@ public:
                         stateStartIndex = index + 1;
                         m_parsedTimestamp.tm_year -= 1900;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 4)
                     {
                         m_parsedTimestamp.tm_year = m_parsedTimestamp.tm_year * 10 + (c - '0');
                     }
@@ -762,7 +765,7 @@ public:
                         stateStartIndex = index + 1;
                         m_parsedTimestamp.tm_mon -= 1;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 2)
                     {
                         m_parsedTimestamp.tm_mon = m_parsedTimestamp.tm_mon * 10 + (c - '0');
                     }
@@ -778,7 +781,7 @@ public:
                         m_state = 3;
                         stateStartIndex = index + 1;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 2)
                     {
                         m_parsedTimestamp.tm_mday = m_parsedTimestamp.tm_mday * 10 + (c - '0');
                     }
@@ -794,7 +797,7 @@ public:
                         m_state = 4;
                         stateStartIndex = index + 1;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 2)
                     {
                         m_parsedTimestamp.tm_hour = m_parsedTimestamp.tm_hour * 10 + (c - '0');
                     }
@@ -810,7 +813,7 @@ public:
                         m_state = 5;
                         stateStartIndex = index + 1;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 2)
                     {
                         m_parsedTimestamp.tm_min = m_parsedTimestamp.tm_min * 10 + (c - '0');
                     }
@@ -832,7 +835,7 @@ public:
                         m_state = 6;
                         stateStartIndex = index + 1;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 2)
                     {
                         m_parsedTimestamp.tm_sec = m_parsedTimestamp.tm_sec * 10 + (c - '0');
                     }
@@ -850,6 +853,10 @@ public:
                         m_tz[0] = c;
                         m_state = 7;
                         stateStartIndex = index + 1;
+                    }
+                    else if (isdigit(c) && (index - stateStartIndex) < 3)
+                    {
+                        m_milliseconds = m_milliseconds * 10 + (c - '0');
                     }
                     else if(!isdigit(c))
                     {
@@ -983,7 +990,7 @@ public:
                         m_state = 3;
                         stateStartIndex = index + 1;
                     }
-                    else if (isdigit(c))
+                    else if (isdigit(c) && index - stateStartIndex < 2)
                     {
                         m_parsedTimestamp.tm_mday = m_parsedTimestamp.tm_mday * 10 + (c - '0');
                     }
@@ -1048,6 +1055,10 @@ public:
                         m_state = 7;
                         stateStartIndex = index + 1;
                     }
+                    else if (isdigit(c) && (index - stateStartIndex) < 3)
+                    {
+                        m_milliseconds = m_milliseconds * 10 + (c - '0');
+                    }
                     else if (!isdigit(c) || index - stateStartIndex > 3)
                     {
                         m_error = true;
@@ -1108,8 +1119,20 @@ private:
 
     int m_state;
 };
-    
-} // namespace 
+
+static bool IsSecondsSinceEpochRepresentable(std::time_t seconds)
+{
+    using SysClock = std::chrono::system_clock;
+    static const int64_t minSeconds = std::chrono::duration_cast<std::chrono::seconds>(
+        SysClock::time_point::min().time_since_epoch()).count();
+    static const int64_t maxSeconds = std::chrono::duration_cast<std::chrono::seconds>(
+        SysClock::time_point::max().time_since_epoch()).count();
+
+    const int64_t asInt64 = static_cast<int64_t>(seconds);
+    return asInt64 >= minSeconds && asInt64 <= maxSeconds;
+}
+
+} // namespace
 
 DateTime::DateTime(const std::chrono::system_clock::time_point& timepointToAssign) : m_time(timepointToAssign), m_valid(true)
 {
@@ -1129,8 +1152,17 @@ DateTime::DateTime(double secondsSinceEpoch) : m_valid(true)
 
 DateTime::DateTime(uint64_t secondsSinceEpoch) : m_valid(true)
 {
-  std::chrono::duration<uint64_t, std::chrono::seconds::period> timestamp(secondsSinceEpoch);
-  m_time = std::chrono::system_clock::time_point(timestamp);
+    const auto maxTime = (std::chrono::system_clock::time_point::max)();
+    const auto maxSeconds = std::chrono::duration_cast<std::chrono::seconds>(maxTime.time_since_epoch()).count();
+    
+    if (secondsSinceEpoch > static_cast<uint64_t>(maxSeconds))
+    {
+        m_time = maxTime;
+    }
+    else
+    {
+        m_time = std::chrono::system_clock::time_point(std::chrono::seconds(static_cast<std::chrono::seconds::rep>(secondsSinceEpoch)));
+    }
 }
 
 DateTime::DateTime(const Aws::String& timestamp, DateFormat format) : m_valid(true)
@@ -1425,6 +1457,7 @@ void DateTime::ConvertTimestampStringToTimePoint(const char* timestamp, DateForm
 {
     std::tm timeStruct;
     bool isUtc = true;
+    int milliseconds = 0;
 
     switch (format)
     {
@@ -1444,6 +1477,7 @@ void DateTime::ConvertTimestampStringToTimePoint(const char* timestamp, DateForm
         m_valid = parser.WasParseSuccessful();
         isUtc = parser.ShouldIAssumeThisIsUTC();
         timeStruct = parser.GetParsedTimestamp();
+        milliseconds = parser.GetParsedMilliseconds();
         break;
     }
     case DateFormat::ISO_8601_BASIC:
@@ -1453,6 +1487,7 @@ void DateTime::ConvertTimestampStringToTimePoint(const char* timestamp, DateForm
         m_valid = parser.WasParseSuccessful();
         isUtc = parser.ShouldIAssumeThisIsUTC();
         timeStruct = parser.GetParsedTimestamp();
+        milliseconds = parser.GetParsedMilliseconds();
         break;
     }
     case DateFormat::AutoDetect:
@@ -1473,6 +1508,7 @@ void DateTime::ConvertTimestampStringToTimePoint(const char* timestamp, DateForm
             m_valid = true;
             isUtc = isoParser.ShouldIAssumeThisIsUTC();
             timeStruct = isoParser.GetParsedTimestamp();
+            milliseconds = isoParser.GetParsedMilliseconds();
             break;
         }
         ISO_8601BasicDateParser isoBasicParser(timestamp);
@@ -1482,6 +1518,7 @@ void DateTime::ConvertTimestampStringToTimePoint(const char* timestamp, DateForm
             m_valid = true;
             isUtc = isoBasicParser.ShouldIAssumeThisIsUTC();
             timeStruct = isoBasicParser.GetParsedTimestamp();
+            milliseconds = isoBasicParser.GetParsedMilliseconds();
             break;
         }
         m_valid = false;
@@ -1503,7 +1540,17 @@ void DateTime::ConvertTimestampStringToTimePoint(const char* timestamp, DateForm
             AWS_LOGSTREAM_ERROR(CLASS_TAG, "Non-UTC timestamp detected. This is always a bug. Make the world a better place and fix whatever sent you this timestamp: " << timestamp)
             tt = std::mktime(&timeStruct);
         }
-        m_time = std::chrono::system_clock::from_time_t(tt);
+
+        if (IsSecondsSinceEpochRepresentable(tt))
+        {
+            m_time = std::chrono::system_clock::from_time_t(tt);
+            m_time += std::chrono::milliseconds(milliseconds);
+        }
+        else
+        {
+            AWS_LOGSTREAM_WARN(CLASS_TAG, "Parsed timestamp is outside the range representable by the system clock and cannot be converted: " << timestamp)
+            m_valid = false;
+        }
     }
 }
 

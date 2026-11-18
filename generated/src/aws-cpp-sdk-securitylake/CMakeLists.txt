@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-securitylake "C++ SDK for the AWS securitylake service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-securitylake "C++ SDK for Amazon Security Lake" aws-cpp-sdk-core)
 
 file(GLOB AWS_SECURITYLAKE_HEADERS
     "include/aws/securitylake/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SECURITYLAKE_HEADERS
 
 file(GLOB AWS_SECURITYLAKE_MODEL_HEADERS
     "include/aws/securitylake/model/*.h"
+)
+
+file(GLOB AWS_SECURITYLAKE_INTERNAL_HEADERS
+    "include/aws/securitylake/internal/*.h"
 )
 
 file(GLOB AWS_SECURITYLAKE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SECURITYLAKE_MODEL_SOURCE
 
 file(GLOB SECURITYLAKE_UNIFIED_HEADERS
     ${AWS_SECURITYLAKE_HEADERS}
+    ${AWS_SECURITYLAKE_INTERNAL_HEADERS}
     ${AWS_SECURITYLAKE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\securitylake" FILES ${AWS_SECURITYLAKE_HEADERS})
+        source_group("Header Files\\aws\\securitylake\\internal" FILES ${AWS_SECURITYLAKE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\securitylake\\model" FILES ${AWS_SECURITYLAKE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SECURITYLAKE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SECURITYLAKE_MODEL_SOURCE})

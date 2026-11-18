@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/states/SFNEndpointRules.h>
 #include <aws/states/SFN_EXPORTS.h>
 
 namespace Aws {
 namespace SFN {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SFNClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using SFNBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using SFNEndpointProviderBase = EndpointProviderBase<SFNClientConfiguration, SFNBuiltInParameters, SFNClientContextParameters>;
 
-using SFNDefaultEpProviderBase = DefaultEndpointProvider<SFNClientConfiguration, SFNBuiltInParameters, SFNClientContextParameters>;
+using SFNDefaultEpProviderBase = BDDEndpointProvider<SFNClientConfiguration, SFNBuiltInParameters, SFNClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_SFN_API SFNEndpointProvider : public SFNDefaultEpProviderBase {
  public:
   using SFNResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SFNEndpointProvider() : SFNDefaultEpProviderBase(Aws::SFN::SFNEndpointRules::GetRulesBlob(), Aws::SFN::SFNEndpointRules::RulesBlobSize) {}
+  SFNEndpointProvider();
 
   ~SFNEndpointProvider() {}
 };

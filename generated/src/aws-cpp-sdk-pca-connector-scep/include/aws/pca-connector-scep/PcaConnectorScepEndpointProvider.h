@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/pca-connector-scep/PcaConnectorScepEndpointRules.h>
 #include <aws/pca-connector-scep/PcaConnectorScep_EXPORTS.h>
 
 namespace Aws {
 namespace PcaConnectorScep {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using PcaConnectorScepClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using PcaConnectorScepEndpointProviderBase =
     EndpointProviderBase<PcaConnectorScepClientConfiguration, PcaConnectorScepBuiltInParameters, PcaConnectorScepClientContextParameters>;
 
 using PcaConnectorScepDefaultEpProviderBase =
-    DefaultEndpointProvider<PcaConnectorScepClientConfiguration, PcaConnectorScepBuiltInParameters,
-                            PcaConnectorScepClientContextParameters>;
+    BDDEndpointProvider<PcaConnectorScepClientConfiguration, PcaConnectorScepBuiltInParameters, PcaConnectorScepClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_PCACONNECTORSCEP_API PcaConnectorScepEndpointProvider : public PcaConn
  public:
   using PcaConnectorScepResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  PcaConnectorScepEndpointProvider()
-      : PcaConnectorScepDefaultEpProviderBase(Aws::PcaConnectorScep::PcaConnectorScepEndpointRules::GetRulesBlob(),
-                                              Aws::PcaConnectorScep::PcaConnectorScepEndpointRules::RulesBlobSize) {}
+  PcaConnectorScepEndpointProvider();
 
   ~PcaConnectorScepEndpointProvider() {}
 };

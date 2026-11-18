@@ -86,6 +86,10 @@ AutomationExecution& AutomationExecution::operator=(JsonView jsonValue) {
     m_failureMessage = jsonValue.GetString("FailureMessage");
     m_failureMessageHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("WarningMessage")) {
+    m_warningMessage = jsonValue.GetString("WarningMessage");
+    m_warningMessageHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("Mode")) {
     m_mode = ExecutionModeMapper::GetExecutionModeForName(jsonValue.GetString("Mode"));
     m_modeHasBeenSet = true;
@@ -219,6 +223,10 @@ AutomationExecution& AutomationExecution::operator=(JsonView jsonValue) {
     }
     m_variablesHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("TargetsSummary")) {
+    m_targetsSummary = jsonValue.GetObject("TargetsSummary");
+    m_targetsSummaryHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -292,6 +300,10 @@ JsonValue AutomationExecution::Jsonize() const {
 
   if (m_failureMessageHasBeenSet) {
     payload.WithString("FailureMessage", m_failureMessage);
+  }
+
+  if (m_warningMessageHasBeenSet) {
+    payload.WithString("WarningMessage", m_warningMessage);
   }
 
   if (m_modeHasBeenSet) {
@@ -427,6 +439,10 @@ JsonValue AutomationExecution::Jsonize() const {
       variablesJsonMap.WithArray(variablesItem.first, std::move(automationParameterValueListJsonList));
     }
     payload.WithObject("Variables", std::move(variablesJsonMap));
+  }
+
+  if (m_targetsSummaryHasBeenSet) {
+    payload.WithObject("TargetsSummary", m_targetsSummary.Jsonize());
   }
 
   return payload;

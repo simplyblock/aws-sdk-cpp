@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/partnercentral-benefits/PartnerCentralBenefitsEndpointRules.h>
 #include <aws/partnercentral-benefits/PartnerCentralBenefits_EXPORTS.h>
 
 namespace Aws {
 namespace PartnerCentralBenefits {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using PartnerCentralBenefitsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using PartnerCentralBenefitsEndpointProviderBase =
                          PartnerCentralBenefitsClientContextParameters>;
 
 using PartnerCentralBenefitsDefaultEpProviderBase =
-    DefaultEndpointProvider<PartnerCentralBenefitsClientConfiguration, PartnerCentralBenefitsBuiltInParameters,
-                            PartnerCentralBenefitsClientContextParameters>;
+    BDDEndpointProvider<PartnerCentralBenefitsClientConfiguration, PartnerCentralBenefitsBuiltInParameters,
+                        PartnerCentralBenefitsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_PARTNERCENTRALBENEFITS_API PartnerCentralBenefitsEndpointProvider : pu
  public:
   using PartnerCentralBenefitsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  PartnerCentralBenefitsEndpointProvider()
-      : PartnerCentralBenefitsDefaultEpProviderBase(Aws::PartnerCentralBenefits::PartnerCentralBenefitsEndpointRules::GetRulesBlob(),
-                                                    Aws::PartnerCentralBenefits::PartnerCentralBenefitsEndpointRules::RulesBlobSize) {}
+  PartnerCentralBenefitsEndpointProvider();
 
   ~PartnerCentralBenefitsEndpointProvider() {}
 };

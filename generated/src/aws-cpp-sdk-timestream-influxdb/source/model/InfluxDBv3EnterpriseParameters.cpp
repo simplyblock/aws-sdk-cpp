@@ -174,17 +174,13 @@ InfluxDBv3EnterpriseParameters& InfluxDBv3EnterpriseParameters::operator=(JsonVi
     m_hardDeleteDefaultDuration = jsonValue.GetObject("hardDeleteDefaultDuration");
     m_hardDeleteDefaultDurationHasBeenSet = true;
   }
-  if (jsonValue.ValueExists("ingestQueryInstances")) {
-    m_ingestQueryInstances = jsonValue.GetInteger("ingestQueryInstances");
-    m_ingestQueryInstancesHasBeenSet = true;
+  if (jsonValue.ValueExists("pluginRepositoryUrl")) {
+    m_pluginRepositoryUrl = jsonValue.GetString("pluginRepositoryUrl");
+    m_pluginRepositoryUrlHasBeenSet = true;
   }
-  if (jsonValue.ValueExists("queryOnlyInstances")) {
-    m_queryOnlyInstances = jsonValue.GetInteger("queryOnlyInstances");
-    m_queryOnlyInstancesHasBeenSet = true;
-  }
-  if (jsonValue.ValueExists("dedicatedCompactor")) {
-    m_dedicatedCompactor = jsonValue.GetBool("dedicatedCompactor");
-    m_dedicatedCompactorHasBeenSet = true;
+  if (jsonValue.ValueExists("pluginRepositorySecretArn")) {
+    m_pluginRepositorySecretArn = jsonValue.GetString("pluginRepositorySecretArn");
+    m_pluginRepositorySecretArnHasBeenSet = true;
   }
   if (jsonValue.ValueExists("compactionRowLimit")) {
     m_compactionRowLimit = jsonValue.GetInteger("compactionRowLimit");
@@ -225,6 +221,22 @@ InfluxDBv3EnterpriseParameters& InfluxDBv3EnterpriseParameters::operator=(JsonVi
   if (jsonValue.ValueExists("catalogSyncInterval")) {
     m_catalogSyncInterval = jsonValue.GetObject("catalogSyncInterval");
     m_catalogSyncIntervalHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("upgradePachaTree")) {
+    m_upgradePachaTree = jsonValue.GetBool("upgradePachaTree");
+    m_upgradePachaTreeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("walBufferSize")) {
+    m_walBufferSize = jsonValue.GetInt64("walBufferSize");
+    m_walBufferSizeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("snapshotSize")) {
+    m_snapshotSize = jsonValue.GetObject("snapshotSize");
+    m_snapshotSizeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("snapshotDuration")) {
+    m_snapshotDuration = jsonValue.GetObject("snapshotDuration");
+    m_snapshotDurationHasBeenSet = true;
   }
   return *this;
 }
@@ -388,16 +400,12 @@ JsonValue InfluxDBv3EnterpriseParameters::Jsonize() const {
     payload.WithObject("hardDeleteDefaultDuration", m_hardDeleteDefaultDuration.Jsonize());
   }
 
-  if (m_ingestQueryInstancesHasBeenSet) {
-    payload.WithInteger("ingestQueryInstances", m_ingestQueryInstances);
+  if (m_pluginRepositoryUrlHasBeenSet) {
+    payload.WithString("pluginRepositoryUrl", m_pluginRepositoryUrl);
   }
 
-  if (m_queryOnlyInstancesHasBeenSet) {
-    payload.WithInteger("queryOnlyInstances", m_queryOnlyInstances);
-  }
-
-  if (m_dedicatedCompactorHasBeenSet) {
-    payload.WithBool("dedicatedCompactor", m_dedicatedCompactor);
+  if (m_pluginRepositorySecretArnHasBeenSet) {
+    payload.WithString("pluginRepositorySecretArn", m_pluginRepositorySecretArn);
   }
 
   if (m_compactionRowLimitHasBeenSet) {
@@ -438,6 +446,22 @@ JsonValue InfluxDBv3EnterpriseParameters::Jsonize() const {
 
   if (m_catalogSyncIntervalHasBeenSet) {
     payload.WithObject("catalogSyncInterval", m_catalogSyncInterval.Jsonize());
+  }
+
+  if (m_upgradePachaTreeHasBeenSet) {
+    payload.WithBool("upgradePachaTree", m_upgradePachaTree);
+  }
+
+  if (m_walBufferSizeHasBeenSet) {
+    payload.WithInt64("walBufferSize", m_walBufferSize);
+  }
+
+  if (m_snapshotSizeHasBeenSet) {
+    payload.WithObject("snapshotSize", m_snapshotSize.Jsonize());
+  }
+
+  if (m_snapshotDurationHasBeenSet) {
+    payload.WithObject("snapshotDuration", m_snapshotDuration.Jsonize());
   }
 
   return payload;

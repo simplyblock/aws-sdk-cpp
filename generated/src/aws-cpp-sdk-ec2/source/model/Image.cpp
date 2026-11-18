@@ -169,6 +169,11 @@ Image& Image::operator=(const XmlNode& xmlNode) {
           StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(freeTierEligibleNode.GetText()).c_str()).c_str());
       m_freeTierEligibleHasBeenSet = true;
     }
+    XmlNode publicSsmParameterNameNode = resultNode.FirstChild("publicSsmParameterName");
+    if (!publicSsmParameterNameNode.IsNull()) {
+      m_publicSsmParameterName = Aws::Utils::Xml::DecodeEscapedXmlText(publicSsmParameterNameNode.GetText());
+      m_publicSsmParameterNameHasBeenSet = true;
+    }
     XmlNode imageWatermarksNode = resultNode.FirstChild("imageWatermarkSet");
     if (!imageWatermarksNode.IsNull()) {
       XmlNode imageWatermarksMember = imageWatermarksNode.FirstChild("item");
@@ -179,6 +184,16 @@ Image& Image::operator=(const XmlNode& xmlNode) {
       }
 
       m_imageWatermarksHasBeenSet = true;
+    }
+    XmlNode scanResultsNode = resultNode.FirstChild("scanResults");
+    if (!scanResultsNode.IsNull()) {
+      m_scanResults = scanResultsNode;
+      m_scanResultsHasBeenSet = true;
+    }
+    XmlNode instanceTypeSpecificationNode = resultNode.FirstChild("instanceTypeSpecification");
+    if (!instanceTypeSpecificationNode.IsNull()) {
+      m_instanceTypeSpecification = instanceTypeSpecificationNode;
+      m_instanceTypeSpecificationHasBeenSet = true;
     }
     XmlNode imageIdNode = resultNode.FirstChild("imageId");
     if (!imageIdNode.IsNull()) {
@@ -375,6 +390,11 @@ void Image::OutputToStream(Aws::OStream& oStream, const char* location, unsigned
     oStream << location << index << locationValue << ".FreeTierEligible=" << std::boolalpha << m_freeTierEligible << "&";
   }
 
+  if (m_publicSsmParameterNameHasBeenSet) {
+    oStream << location << index << locationValue << ".PublicSsmParameterName=" << StringUtils::URLEncode(m_publicSsmParameterName.c_str())
+            << "&";
+  }
+
   if (m_imageWatermarksHasBeenSet) {
     unsigned imageWatermarksIdx = 1;
     for (auto& item : m_imageWatermarks) {
@@ -382,6 +402,18 @@ void Image::OutputToStream(Aws::OStream& oStream, const char* location, unsigned
       imageWatermarksSs << location << index << locationValue << ".ImageWatermarkSet." << imageWatermarksIdx++;
       item.OutputToStream(oStream, imageWatermarksSs.str().c_str());
     }
+  }
+
+  if (m_scanResultsHasBeenSet) {
+    Aws::StringStream scanResultsLocationAndMemberSs;
+    scanResultsLocationAndMemberSs << location << index << locationValue << ".ScanResults";
+    m_scanResults.OutputToStream(oStream, scanResultsLocationAndMemberSs.str().c_str());
+  }
+
+  if (m_instanceTypeSpecificationHasBeenSet) {
+    Aws::StringStream instanceTypeSpecificationLocationAndMemberSs;
+    instanceTypeSpecificationLocationAndMemberSs << location << index << locationValue << ".InstanceTypeSpecification";
+    m_instanceTypeSpecification.OutputToStream(oStream, instanceTypeSpecificationLocationAndMemberSs.str().c_str());
   }
 
   if (m_imageIdHasBeenSet) {
@@ -533,6 +565,9 @@ void Image::OutputToStream(Aws::OStream& oStream, const char* location) const {
   if (m_freeTierEligibleHasBeenSet) {
     oStream << location << ".FreeTierEligible=" << std::boolalpha << m_freeTierEligible << "&";
   }
+  if (m_publicSsmParameterNameHasBeenSet) {
+    oStream << location << ".PublicSsmParameterName=" << StringUtils::URLEncode(m_publicSsmParameterName.c_str()) << "&";
+  }
   if (m_imageWatermarksHasBeenSet) {
     unsigned imageWatermarksIdx = 1;
     for (auto& item : m_imageWatermarks) {
@@ -540,6 +575,16 @@ void Image::OutputToStream(Aws::OStream& oStream, const char* location) const {
       imageWatermarksSs << location << ".ImageWatermarkSet." << imageWatermarksIdx++;
       item.OutputToStream(oStream, imageWatermarksSs.str().c_str());
     }
+  }
+  if (m_scanResultsHasBeenSet) {
+    Aws::String scanResultsLocationAndMember(location);
+    scanResultsLocationAndMember += ".ScanResults";
+    m_scanResults.OutputToStream(oStream, scanResultsLocationAndMember.c_str());
+  }
+  if (m_instanceTypeSpecificationHasBeenSet) {
+    Aws::String instanceTypeSpecificationLocationAndMember(location);
+    instanceTypeSpecificationLocationAndMember += ".InstanceTypeSpecification";
+    m_instanceTypeSpecification.OutputToStream(oStream, instanceTypeSpecificationLocationAndMember.c_str());
   }
   if (m_imageIdHasBeenSet) {
     oStream << location << ".ImageId=" << StringUtils::URLEncode(m_imageId.c_str()) << "&";

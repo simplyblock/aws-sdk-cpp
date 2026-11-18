@@ -216,13 +216,15 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
    * <p>Leverage the IAM context key <code>connect:PreferredUserArn</code> to
    * restrict contact association to specific preferred user.</p> </li> </ul> <p>
    * <b>Important things to know</b> </p> <ul> <li> <p>Use this API with chat, email,
-   * and task contacts. It does not support voice contacts.</p> </li> <li> <p>Use it
-   * to associate contacts with users regardless of their current state, including
-   * custom states. Ensure your application logic accounts for user availability
-   * before making associations.</p> </li> <li> <p>It honors the IAM context key
-   * <code>connect:PreferredUserArn</code> to prevent unauthorized contact
-   * associations.</p> </li> <li> <p>It respects the IAM context key
-   * <code>connect:PreferredUserArn</code> to enforce authorization controls and
+   * task, and voice contacts. For voice callbacks, this API does not support
+   * customer-first mode.</p> </li> <li> <p>This API can be used to offer a contact
+   * to an agent even if the agent is currently at maximum concurrency for the
+   * channel.</p> </li> <li> <p>Use it to associate contacts with users regardless of
+   * their current state, including custom states. Ensure your application logic
+   * accounts for user availability before making associations.</p> </li> <li> <p>It
+   * honors the IAM context key <code>connect:PreferredUserArn</code> to prevent
+   * unauthorized contact associations.</p> </li> <li> <p>It respects the IAM context
+   * key <code>connect:PreferredUserArn</code> to enforce authorization controls and
    * prevent unauthorized contact associations. Verify that your IAM policies are
    * properly configured to support your intended use cases.</p> </li> <li> <p>The
    * service quota <i>Queues per routing profile per instance</i> applies to manually
@@ -387,11 +389,12 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Associates a set of hours of operations with another hours of operation.
-   * Refer to Administrator Guide <a
-   * href="https://docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html">
-   * here </a> for more information on inheriting overrides from parent hours of
-   * operation(s).</p><p><h3>See Also:</h3>   <a
+   * <p>Associates a set of hours of operations with another hours of operation. For
+   * more information about inheriting overrides from parent hours of operation, see
+   * <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html">Hours
+   * of operation overrides</a> in the Administrator Guide.</p><p><h3>See Also:</h3>
+   * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/AssociateHoursOfOperations">AWS
    * API Reference</a></p>
    */
@@ -1230,6 +1233,34 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Creates an authorization code for the specified Connect Customer instance.
+   * The authorization code can be used to establish a session with scoped
+   * permissions defined by the specified scope parameters.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateAuthCode">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateAuthCodeOutcome CreateAuthCode(const Model::CreateAuthCodeRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateAuthCode that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename CreateAuthCodeRequestT = Model::CreateAuthCodeRequest>
+  Model::CreateAuthCodeOutcomeCallable CreateAuthCodeCallable(const CreateAuthCodeRequestT& request) const {
+    return SubmitCallable(&ConnectClient::CreateAuthCode, request);
+  }
+
+  /**
+   * An Async wrapper for CreateAuthCode that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename CreateAuthCodeRequestT = Model::CreateAuthCodeRequest>
+  void CreateAuthCodeAsync(const CreateAuthCodeRequestT& request, const CreateAuthCodeResponseReceivedHandler& handler,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::CreateAuthCode, request, handler, context);
+  }
+
+  /**
    *  <p>Only the VOICE, EMAIL, and TASK channels are supported. </p> <ul>
    * <li> <p>For VOICE: The supported initiation method is <code>TRANSFER</code>. The
    * contacts created with this initiation method have a subtype
@@ -1294,6 +1325,34 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   void CreateContactFlowAsync(const CreateContactFlowRequestT& request, const CreateContactFlowResponseReceivedHandler& handler,
                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::CreateContactFlow, request, handler, context);
+  }
+
+  /**
+   * <p>Creates a named alias that points to a specific version of a
+   * flow.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateContactFlowAlias">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateContactFlowAliasOutcome CreateContactFlowAlias(const Model::CreateContactFlowAliasRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateContactFlowAlias that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateContactFlowAliasRequestT = Model::CreateContactFlowAliasRequest>
+  Model::CreateContactFlowAliasOutcomeCallable CreateContactFlowAliasCallable(const CreateContactFlowAliasRequestT& request) const {
+    return SubmitCallable(&ConnectClient::CreateContactFlowAlias, request);
+  }
+
+  /**
+   * An Async wrapper for CreateContactFlowAlias that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateContactFlowAliasRequestT = Model::CreateContactFlowAliasRequest>
+  void CreateContactFlowAliasAsync(const CreateContactFlowAliasRequestT& request,
+                                   const CreateContactFlowAliasResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::CreateContactFlowAlias, request, handler, context);
   }
 
   /**
@@ -1389,9 +1448,7 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
    * <p>Publishes a new version of the flow provided. Versions are immutable and
    * monotonically increasing. If the <code>FlowContentSha256</code> provided is
    * different from the <code>FlowContentSha256</code> of the <code>$LATEST</code>
-   * published flow content, then an error is returned. This API only supports
-   * creating versions for flows of type <code>Campaign</code>.</p><p><h3>See
-   * Also:</h3>   <a
+   * published flow content, then an error is returned.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateContactFlowVersion">AWS
    * API Reference</a></p>
    */
@@ -1538,6 +1595,39 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Creates an extraction definition in the specified Connect Customer instance.
+   * An extraction definition specifies how structured data is extracted from
+   * customer interactions using generative AI, including the prompt hint that guides
+   * extraction and the behavior when a value cannot be found.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateExtractionDefinition">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateExtractionDefinitionOutcome CreateExtractionDefinition(
+      const Model::CreateExtractionDefinitionRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateExtractionDefinition that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename CreateExtractionDefinitionRequestT = Model::CreateExtractionDefinitionRequest>
+  Model::CreateExtractionDefinitionOutcomeCallable CreateExtractionDefinitionCallable(
+      const CreateExtractionDefinitionRequestT& request) const {
+    return SubmitCallable(&ConnectClient::CreateExtractionDefinition, request);
+  }
+
+  /**
+   * An Async wrapper for CreateExtractionDefinition that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateExtractionDefinitionRequestT = Model::CreateExtractionDefinitionRequest>
+  void CreateExtractionDefinitionAsync(const CreateExtractionDefinitionRequestT& request,
+                                       const CreateExtractionDefinitionResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::CreateExtractionDefinition, request, handler, context);
+  }
+
+  /**
    * <p>Creates hours of operation. </p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateHoursOfOperation">AWS
    * API Reference</a></p>
@@ -1660,6 +1750,34 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
                                          const CreateIntegrationAssociationResponseReceivedHandler& handler,
                                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::CreateIntegrationAssociation, request, handler, context);
+  }
+
+  /**
+   * <p>Creates a new metric definition for the specified Connect Customer instance.
+   * You can create custom metrics that use formulas referencing existing Amazon Web
+   * Services-managed metrics, optionally with filters applied.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateMetric">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateMetricOutcome CreateMetric(const Model::CreateMetricRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateMetric that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename CreateMetricRequestT = Model::CreateMetricRequest>
+  Model::CreateMetricOutcomeCallable CreateMetricCallable(const CreateMetricRequestT& request) const {
+    return SubmitCallable(&ConnectClient::CreateMetric, request);
+  }
+
+  /**
+   * An Async wrapper for CreateMetric that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename CreateMetricRequestT = Model::CreateMetricRequest>
+  void CreateMetricAsync(const CreateMetricRequestT& request, const CreateMetricResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::CreateMetric, request, handler, context);
   }
 
   /**
@@ -2394,6 +2512,38 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Deletes all active sessions for the specified entity in the specified Connect
+   * Customer instance. The operation supports only the <code>USER</code> entity
+   * type, so you can use it to sign out all of a user's active sessions. Use it when
+   * you need to end a user's access right away, for example when they leave your
+   * organization or you suspect that their credentials are
+   * compromised.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteAllEntitySessions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteAllEntitySessionsOutcome DeleteAllEntitySessions(const Model::DeleteAllEntitySessionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteAllEntitySessions that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteAllEntitySessionsRequestT = Model::DeleteAllEntitySessionsRequest>
+  Model::DeleteAllEntitySessionsOutcomeCallable DeleteAllEntitySessionsCallable(const DeleteAllEntitySessionsRequestT& request) const {
+    return SubmitCallable(&ConnectClient::DeleteAllEntitySessions, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteAllEntitySessions that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteAllEntitySessionsRequestT = Model::DeleteAllEntitySessionsRequest>
+  void DeleteAllEntitySessionsAsync(const DeleteAllEntitySessionsRequestT& request,
+                                    const DeleteAllEntitySessionsResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::DeleteAllEntitySessions, request, handler, context);
+  }
+
+  /**
    * <p>Deletes an attached file along with the underlying S3 Object.</p>
    * <p>The attached file is <b>permanently deleted</b> if S3 bucket versioning is
    * not enabled.</p> <p><h3>See Also:</h3>   <a
@@ -2419,6 +2569,42 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   void DeleteAttachedFileAsync(const DeleteAttachedFileRequestT& request, const DeleteAttachedFileResponseReceivedHandler& handler,
                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::DeleteAttachedFile, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes the specified fields containing personally identifiable information
+   * (PII) from a contact in the specified Connect Customer instance. We redact PII
+   * (such as customer endpoints, additional email recipients, and the email subject)
+   * from the contact and its associated contact trace record (CTR). The contact must
+   * be in a terminated state.</p>  <p> <b>This deletion is permanent and
+   * cannot be undone.</b> Performing this operation permanently deletes the
+   * specified PII. There is no retention period; you cannot recover the data after
+   * deletion. We remove only the fields that Connect Customer identifies and stores
+   * as PII. Any PII that you place in fields outside the scope of this operation
+   * remains your responsibility to remove.</p> <p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteContactData">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteContactDataOutcome DeleteContactData(const Model::DeleteContactDataRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteContactData that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteContactDataRequestT = Model::DeleteContactDataRequest>
+  Model::DeleteContactDataOutcomeCallable DeleteContactDataCallable(const DeleteContactDataRequestT& request) const {
+    return SubmitCallable(&ConnectClient::DeleteContactData, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteContactData that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename DeleteContactDataRequestT = Model::DeleteContactDataRequest>
+  void DeleteContactDataAsync(const DeleteContactDataRequestT& request, const DeleteContactDataResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::DeleteContactData, request, handler, context);
   }
 
   /**
@@ -2474,6 +2660,34 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   void DeleteContactFlowAsync(const DeleteContactFlowRequestT& request, const DeleteContactFlowResponseReceivedHandler& handler,
                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::DeleteContactFlow, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes an alias from a flow without deleting the version that the alias
+   * points to.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteContactFlowAlias">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteContactFlowAliasOutcome DeleteContactFlowAlias(const Model::DeleteContactFlowAliasRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteContactFlowAlias that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteContactFlowAliasRequestT = Model::DeleteContactFlowAliasRequest>
+  Model::DeleteContactFlowAliasOutcomeCallable DeleteContactFlowAliasCallable(const DeleteContactFlowAliasRequestT& request) const {
+    return SubmitCallable(&ConnectClient::DeleteContactFlowAlias, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteContactFlowAlias that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteContactFlowAliasRequestT = Model::DeleteContactFlowAliasRequest>
+  void DeleteContactFlowAliasAsync(const DeleteContactFlowAliasRequestT& request,
+                                   const DeleteContactFlowAliasResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::DeleteContactFlowAlias, request, handler, context);
   }
 
   /**
@@ -2709,6 +2923,36 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Deletes an extraction definition from the specified Connect Customer
+   * instance.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteExtractionDefinition">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteExtractionDefinitionOutcome DeleteExtractionDefinition(
+      const Model::DeleteExtractionDefinitionRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteExtractionDefinition that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename DeleteExtractionDefinitionRequestT = Model::DeleteExtractionDefinitionRequest>
+  Model::DeleteExtractionDefinitionOutcomeCallable DeleteExtractionDefinitionCallable(
+      const DeleteExtractionDefinitionRequestT& request) const {
+    return SubmitCallable(&ConnectClient::DeleteExtractionDefinition, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteExtractionDefinition that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteExtractionDefinitionRequestT = Model::DeleteExtractionDefinitionRequest>
+  void DeleteExtractionDefinitionAsync(const DeleteExtractionDefinitionRequestT& request,
+                                       const DeleteExtractionDefinitionResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::DeleteExtractionDefinition, request, handler, context);
+  }
+
+  /**
    * <p>Deletes an hours of operation.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteHoursOfOperation">AWS
    * API Reference</a></p>
@@ -2829,6 +3073,33 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
                                          const DeleteIntegrationAssociationResponseReceivedHandler& handler,
                                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::DeleteIntegrationAssociation, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes an existing metric from the specified Connect Customer instance. This
+   * operation fails with <code>ResourceConflictException</code> if the metric is
+   * currently in use in a dashboard.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteMetric">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteMetricOutcome DeleteMetric(const Model::DeleteMetricRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteMetric that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DeleteMetricRequestT = Model::DeleteMetricRequest>
+  Model::DeleteMetricOutcomeCallable DeleteMetricCallable(const DeleteMetricRequestT& request) const {
+    return SubmitCallable(&ConnectClient::DeleteMetric, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteMetric that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DeleteMetricRequestT = Model::DeleteMetricRequest>
+  void DeleteMetricAsync(const DeleteMetricRequestT& request, const DeleteMetricResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::DeleteMetric, request, handler, context);
   }
 
   /**
@@ -3080,6 +3351,32 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   void DeleteSecurityProfileAsync(const DeleteSecurityProfileRequestT& request, const DeleteSecurityProfileResponseReceivedHandler& handler,
                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::DeleteSecurityProfile, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a session for the specified Connect Customer instance.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteSessionOutcome DeleteSession(const Model::DeleteSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteSession that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DeleteSessionRequestT = Model::DeleteSessionRequest>
+  Model::DeleteSessionOutcomeCallable DeleteSessionCallable(const DeleteSessionRequestT& request) const {
+    return SubmitCallable(&ConnectClient::DeleteSession, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteSession that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DeleteSessionRequestT = Model::DeleteSessionRequest>
+  void DeleteSessionAsync(const DeleteSessionRequestT& request, const DeleteSessionResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::DeleteSession, request, handler, context);
   }
 
   /**
@@ -3625,6 +3922,34 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Returns information about a specific flow alias, including the version that
+   * it points to.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeContactFlowAlias">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeContactFlowAliasOutcome DescribeContactFlowAlias(const Model::DescribeContactFlowAliasRequest& request) const;
+
+  /**
+   * A Callable wrapper for DescribeContactFlowAlias that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DescribeContactFlowAliasRequestT = Model::DescribeContactFlowAliasRequest>
+  Model::DescribeContactFlowAliasOutcomeCallable DescribeContactFlowAliasCallable(const DescribeContactFlowAliasRequestT& request) const {
+    return SubmitCallable(&ConnectClient::DescribeContactFlowAlias, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeContactFlowAlias that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeContactFlowAliasRequestT = Model::DescribeContactFlowAliasRequest>
+  void DescribeContactFlowAliasAsync(const DescribeContactFlowAliasRequestT& request,
+                                     const DescribeContactFlowAliasResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::DescribeContactFlowAlias, request, handler, context);
+  }
+
+  /**
    * <p>Describes the specified flow module.</p> <p>Use the <code>$SAVED</code> alias
    * in the request to describe the <code>SAVED</code> content of a Flow. For
    * example, <code>arn:aws:.../contact-flow/{id}:$SAVED</code>. After a flow is
@@ -3805,6 +4130,36 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Describes an extraction definition in the specified Connect Customer
+   * instance.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeExtractionDefinition">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeExtractionDefinitionOutcome DescribeExtractionDefinition(
+      const Model::DescribeExtractionDefinitionRequest& request) const;
+
+  /**
+   * A Callable wrapper for DescribeExtractionDefinition that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename DescribeExtractionDefinitionRequestT = Model::DescribeExtractionDefinitionRequest>
+  Model::DescribeExtractionDefinitionOutcomeCallable DescribeExtractionDefinitionCallable(
+      const DescribeExtractionDefinitionRequestT& request) const {
+    return SubmitCallable(&ConnectClient::DescribeExtractionDefinition, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeExtractionDefinition that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeExtractionDefinitionRequestT = Model::DescribeExtractionDefinitionRequest>
+  void DescribeExtractionDefinitionAsync(const DescribeExtractionDefinitionRequestT& request,
+                                         const DescribeExtractionDefinitionResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::DescribeExtractionDefinition, request, handler, context);
+  }
+
+  /**
    * <p>Describes the hours of operation.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeHoursOfOperation">AWS
    * API Reference</a></p>
@@ -3951,6 +4306,32 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
                                           const DescribeInstanceStorageConfigResponseReceivedHandler& handler,
                                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::DescribeInstanceStorageConfig, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the full definition of an existing metric from the specified
+   * Connect Customer instance.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeMetric">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeMetricOutcome DescribeMetric(const Model::DescribeMetricRequest& request) const;
+
+  /**
+   * A Callable wrapper for DescribeMetric that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DescribeMetricRequestT = Model::DescribeMetricRequest>
+  Model::DescribeMetricOutcomeCallable DescribeMetricCallable(const DescribeMetricRequestT& request) const {
+    return SubmitCallable(&ConnectClient::DescribeMetric, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeMetric that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DescribeMetricRequestT = Model::DescribeMetricRequest>
+  void DescribeMetricAsync(const DescribeMetricRequestT& request, const DescribeMetricResponseReceivedHandler& handler,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::DescribeMetric, request, handler, context);
   }
 
   /**
@@ -4649,10 +5030,11 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
 
   /**
    * <p>Disassociates a set of hours of operations with another hours of operation.
-   * Refer to Administrator Guide <a
-   * href="https://docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html">
-   * here </a> for more information on inheriting overrides from parent hours of
-   * operation(s).</p><p><h3>See Also:</h3>   <a
+   * For more information about inheriting overrides from parent hours of operation,
+   * see <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html">Hours
+   * of operation overrides</a> in the Administrator Guide.</p><p><h3>See Also:</h3>
+   * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DisassociateHoursOfOperations">AWS
    * API Reference</a></p>
    */
@@ -5218,6 +5600,37 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   void GetContactMetricsAsync(const GetContactMetricsRequestT& request, const GetContactMetricsResponseReceivedHandler& handler,
                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::GetContactMetrics, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the current cross-region routing configuration for an Amazon
+   * Connect Global Resiliency instance enabled for global routing. This operation
+   * returns whether cross-region routing is currently enabled or disabled (isolated)
+   * for the instance.</p>  <p>This operation is available only for Amazon
+   * Connect Global Resiliency instances enabled for global routing.</p>
+   * <p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/GetCrossRegionRouting">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetCrossRegionRoutingOutcome GetCrossRegionRouting(const Model::GetCrossRegionRoutingRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetCrossRegionRouting that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetCrossRegionRoutingRequestT = Model::GetCrossRegionRoutingRequest>
+  Model::GetCrossRegionRoutingOutcomeCallable GetCrossRegionRoutingCallable(const GetCrossRegionRoutingRequestT& request) const {
+    return SubmitCallable(&ConnectClient::GetCrossRegionRouting, request);
+  }
+
+  /**
+   * An Async wrapper for GetCrossRegionRouting that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetCrossRegionRoutingRequestT = Model::GetCrossRegionRoutingRequest>
+  void GetCrossRegionRoutingAsync(const GetCrossRegionRoutingRequestT& request, const GetCrossRegionRoutingResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::GetCrossRegionRouting, request, handler, context);
   }
 
   /**
@@ -5923,8 +6336,8 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
    * <p>Provides information about the child hours of operations for the specified
    * parent hours of operation.</p> <p>For more information about child hours of
    * operations, see <a
-   * href="https://docs.aws.amazon.com/connect/latest/adminguide/">Link overrides
-   * from different hours of operation</a> in the <i> Administrator
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html">Link
+   * overrides from different hours of operation</a> in the <i> Administrator
    * Guide</i>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListChildHoursOfOperations">AWS
    * API Reference</a></p>
@@ -5979,6 +6392,34 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
                                    const ListContactEvaluationsResponseReceivedHandler& handler,
                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::ListContactEvaluations, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the aliases associated with a flow, including the version that each
+   * alias points to.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListContactFlowAliases">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListContactFlowAliasesOutcome ListContactFlowAliases(const Model::ListContactFlowAliasesRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListContactFlowAliases that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListContactFlowAliasesRequestT = Model::ListContactFlowAliasesRequest>
+  Model::ListContactFlowAliasesOutcomeCallable ListContactFlowAliasesCallable(const ListContactFlowAliasesRequestT& request) const {
+    return SubmitCallable(&ConnectClient::ListContactFlowAliases, request);
+  }
+
+  /**
+   * An Async wrapper for ListContactFlowAliases that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListContactFlowAliasesRequestT = Model::ListContactFlowAliasesRequest>
+  void ListContactFlowAliasesAsync(const ListContactFlowAliasesRequestT& request,
+                                   const ListContactFlowAliasesResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::ListContactFlowAliases, request, handler, context);
   }
 
   /**
@@ -6334,6 +6775,36 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Lists the available AI versions for evaluation forms in the specified Connect
+   * Customer instance.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListEvaluationFormAIVersions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListEvaluationFormAIVersionsOutcome ListEvaluationFormAIVersions(
+      const Model::ListEvaluationFormAIVersionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListEvaluationFormAIVersions that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename ListEvaluationFormAIVersionsRequestT = Model::ListEvaluationFormAIVersionsRequest>
+  Model::ListEvaluationFormAIVersionsOutcomeCallable ListEvaluationFormAIVersionsCallable(
+      const ListEvaluationFormAIVersionsRequestT& request) const {
+    return SubmitCallable(&ConnectClient::ListEvaluationFormAIVersions, request);
+  }
+
+  /**
+   * An Async wrapper for ListEvaluationFormAIVersions that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListEvaluationFormAIVersionsRequestT = Model::ListEvaluationFormAIVersionsRequest>
+  void ListEvaluationFormAIVersionsAsync(const ListEvaluationFormAIVersionsRequestT& request,
+                                         const ListEvaluationFormAIVersionsResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::ListEvaluationFormAIVersions, request, handler, context);
+  }
+
+  /**
    * <p>Lists versions of an evaluation form in the specified Connect Customer
    * instance.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListEvaluationFormVersions">AWS
@@ -6388,6 +6859,35 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   void ListEvaluationFormsAsync(const ListEvaluationFormsRequestT& request, const ListEvaluationFormsResponseReceivedHandler& handler,
                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::ListEvaluationForms, request, handler, context);
+  }
+
+  /**
+   * <p>Lists extraction definitions in the specified Connect Customer
+   * instance.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListExtractionDefinitions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListExtractionDefinitionsOutcome ListExtractionDefinitions(const Model::ListExtractionDefinitionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListExtractionDefinitions that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListExtractionDefinitionsRequestT = Model::ListExtractionDefinitionsRequest>
+  Model::ListExtractionDefinitionsOutcomeCallable ListExtractionDefinitionsCallable(
+      const ListExtractionDefinitionsRequestT& request) const {
+    return SubmitCallable(&ConnectClient::ListExtractionDefinitions, request);
+  }
+
+  /**
+   * An Async wrapper for ListExtractionDefinitions that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListExtractionDefinitionsRequestT = Model::ListExtractionDefinitionsRequest>
+  void ListExtractionDefinitionsAsync(const ListExtractionDefinitionsRequestT& request,
+                                      const ListExtractionDefinitionsResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::ListExtractionDefinitions, request, handler, context);
   }
 
   /**
@@ -6652,6 +7152,33 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   void ListLexBotsAsync(const ListLexBotsRequestT& request, const ListLexBotsResponseReceivedHandler& handler,
                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::ListLexBots, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves a paginated list of metric summaries for the specified Connect
+   * Customer instance. Use pagination to ensure that the operation returns quickly
+   * and successfully.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListMetrics">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListMetricsOutcome ListMetrics(const Model::ListMetricsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListMetrics that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListMetricsRequestT = Model::ListMetricsRequest>
+  Model::ListMetricsOutcomeCallable ListMetricsCallable(const ListMetricsRequestT& request) const {
+    return SubmitCallable(&ConnectClient::ListMetrics, request);
+  }
+
+  /**
+   * An Async wrapper for ListMetrics that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListMetricsRequestT = Model::ListMetricsRequest>
+  void ListMetricsAsync(const ListMetricsRequestT& request, const ListMetricsResponseReceivedHandler& handler,
+                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::ListMetrics, request, handler, context);
   }
 
   /**
@@ -6991,6 +7518,38 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Lists replication findings for resources of a specified resource type in a
+   * specified Connect Customer instance. A replication finding describes a single
+   * resource whose replication to one or more Regions is incomplete or has
+   * encountered an error. Results are returned in pages. This operation is available
+   * only for instances that are set up for Global Resiliency.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListReplicationFindings">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListReplicationFindingsOutcome ListReplicationFindings(const Model::ListReplicationFindingsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListReplicationFindings that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListReplicationFindingsRequestT = Model::ListReplicationFindingsRequest>
+  Model::ListReplicationFindingsOutcomeCallable ListReplicationFindingsCallable(const ListReplicationFindingsRequestT& request) const {
+    return SubmitCallable(&ConnectClient::ListReplicationFindings, request);
+  }
+
+  /**
+   * An Async wrapper for ListReplicationFindings that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListReplicationFindingsRequestT = Model::ListReplicationFindingsRequest>
+  void ListReplicationFindingsAsync(const ListReplicationFindingsRequestT& request,
+                                    const ListReplicationFindingsResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::ListReplicationFindings, request, handler, context);
+  }
+
+  /**
    * <p>Lists the manual assignment queues associated with a routing profile.</p> <p>
    * <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul>
    * <li> <p>This API returns list of queues where contacts can be manually assigned
@@ -7148,6 +7707,36 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   void ListSecurityKeysAsync(const ListSecurityKeysRequestT& request, const ListSecurityKeysResponseReceivedHandler& handler,
                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::ListSecurityKeys, request, handler, context);
+  }
+
+  /**
+   * <p>Returns a list of the allowed AI agents in a specific security
+   * profile.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListSecurityProfileAIAgents">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListSecurityProfileAIAgentsOutcome ListSecurityProfileAIAgents(
+      const Model::ListSecurityProfileAIAgentsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListSecurityProfileAIAgents that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename ListSecurityProfileAIAgentsRequestT = Model::ListSecurityProfileAIAgentsRequest>
+  Model::ListSecurityProfileAIAgentsOutcomeCallable ListSecurityProfileAIAgentsCallable(
+      const ListSecurityProfileAIAgentsRequestT& request) const {
+    return SubmitCallable(&ConnectClient::ListSecurityProfileAIAgents, request);
+  }
+
+  /**
+   * An Async wrapper for ListSecurityProfileAIAgents that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListSecurityProfileAIAgentsRequestT = Model::ListSecurityProfileAIAgentsRequest>
+  void ListSecurityProfileAIAgentsAsync(const ListSecurityProfileAIAgentsRequestT& request,
+                                        const ListSecurityProfileAIAgentsResponseReceivedHandler& handler,
+                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::ListSecurityProfileAIAgents, request, handler, context);
   }
 
   /**
@@ -7780,7 +8369,7 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Allows pausing an ongoing task contact.</p><p><h3>See Also:</h3>   <a
+   * <p>Pauses an ongoing task or email contact.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/PauseContact">AWS
    * API Reference</a></p>
    */
@@ -7915,7 +8504,7 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Allows resuming a task contact in a paused state.</p><p><h3>See Also:</h3>
+   * <p>Resumes a task or email contact in a paused state.</p><p><h3>See Also:</h3>
    * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ResumeContact">AWS
    * API Reference</a></p>
@@ -8300,6 +8889,33 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Searches for metrics in the specified Connect Customer instance using search
+   * criteria and optional tag-based filters. Use pagination to ensure that the
+   * operation returns quickly and successfully.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchMetrics">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::SearchMetricsOutcome SearchMetrics(const Model::SearchMetricsRequest& request) const;
+
+  /**
+   * A Callable wrapper for SearchMetrics that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename SearchMetricsRequestT = Model::SearchMetricsRequest>
+  Model::SearchMetricsOutcomeCallable SearchMetricsCallable(const SearchMetricsRequestT& request) const {
+    return SubmitCallable(&ConnectClient::SearchMetrics, request);
+  }
+
+  /**
+   * An Async wrapper for SearchMetrics that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename SearchMetricsRequestT = Model::SearchMetricsRequest>
+  void SearchMetricsAsync(const SearchMetricsRequestT& request, const SearchMetricsResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::SearchMetrics, request, handler, context);
+  }
+
+  /**
    * <p>Searches for notifications based on specified criteria and filters. Returns a
    * paginated list of notifications matching the search parameters, ordered by
    * descending creation time. Supports filtering by content and tags.</p><p><h3>See
@@ -8507,6 +9123,32 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   void SearchRoutingProfilesAsync(const SearchRoutingProfilesRequestT& request, const SearchRoutingProfilesResponseReceivedHandler& handler,
                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::SearchRoutingProfiles, request, handler, context);
+  }
+
+  /**
+   * <p>Searches rules in an Connect Customer instance, with optional
+   * filtering.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchRules">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::SearchRulesOutcome SearchRules(const Model::SearchRulesRequest& request) const;
+
+  /**
+   * A Callable wrapper for SearchRules that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename SearchRulesRequestT = Model::SearchRulesRequest>
+  Model::SearchRulesOutcomeCallable SearchRulesCallable(const SearchRulesRequestT& request) const {
+    return SubmitCallable(&ConnectClient::SearchRules, request);
+  }
+
+  /**
+   * An Async wrapper for SearchRules that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename SearchRulesRequestT = Model::SearchRulesRequest>
+  void SearchRulesAsync(const SearchRulesRequestT& request, const SearchRulesResponseReceivedHandler& handler,
+                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::SearchRules, request, handler, context);
   }
 
   /**
@@ -8841,13 +9483,51 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Starts a chat contact with an AI agent.</p> <p>Use the returned
+   * <code>ParticipantToken</code> with the <a
+   * href="https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html">CreateParticipantConnection</a>
+   * operation.</p> <p>For more information about chat, see the following topics in
+   * the <i>Connect Customer Administrator Guide</i>: </p> <ul> <li> <p> <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html">Concepts:
+   * Web and mobile messaging capabilities in Connect Customer</a> </p> </li> <li>
+   * <p> <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat">Connect
+   * Customer Chat security best practices</a> </p> </li> </ul><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartAssistantContact">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartAssistantContactOutcome StartAssistantContact(const Model::StartAssistantContactRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartAssistantContact that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StartAssistantContactRequestT = Model::StartAssistantContactRequest>
+  Model::StartAssistantContactOutcomeCallable StartAssistantContactCallable(const StartAssistantContactRequestT& request) const {
+    return SubmitCallable(&ConnectClient::StartAssistantContact, request);
+  }
+
+  /**
+   * An Async wrapper for StartAssistantContact that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename StartAssistantContactRequestT = Model::StartAssistantContactRequest>
+  void StartAssistantContactAsync(const StartAssistantContactRequestT& request, const StartAssistantContactResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::StartAssistantContact, request, handler, context);
+  }
+
+  /**
    * <p>Provides a pre-signed Amazon S3 URL in response for uploading your
-   * content.</p>  <p>You may only use this API to upload attachments to
-   * an <a
+   * content.</p>  <p>You may only use this API to upload attachments to a
+   * <a
    * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html">Connect
-   * Customer Case</a> or <a
+   * Customer Case</a>, <a
    * href="https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html">Connect
-   * Customer Email</a>. </p> <p><h3>See Also:</h3>   <a
+   * Customer Email</a>, or <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/concepts-getting-started-tasks.html">Connect
+   * Customer Task</a>. </p> <p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartAttachedFileUpload">AWS
    * API Reference</a></p>
    */
@@ -8881,10 +9561,13 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
    * is successfully created, clients must subscribe to the participant’s connection
    * for the created chat within 5 minutes. This is achieved by invoking <a
    * href="https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html">CreateParticipantConnection</a>
-   * with WEBSOCKET and CONNECTION_CREDENTIALS. </p> <p>A 429 error occurs in the
-   * following situations:</p> <ul> <li> <p>API rate limit is exceeded. API TPS
-   * throttling returns a <code>TooManyRequests</code> exception.</p> </li> <li>
-   * <p>The <a
+   * with WEBSOCKET and CONNECTION_CREDENTIALS. </p> <p>To receive connection
+   * information directly in the response, set <code>ConnectionTypes</code> on the
+   * request. To initiate real-time message streaming when the chat is created, set
+   * <code>ChatStreamingConfiguration</code> on the request. Both parameters are
+   * optional.</p> <p>A 429 error occurs in the following situations:</p> <ul> <li>
+   * <p>API rate limit is exceeded. API TPS throttling returns a
+   * <code>TooManyRequests</code> exception.</p> </li> <li> <p>The <a
    * href="https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html">quota
    * for concurrent active chats</a> is exceeded. Active chat throttling returns a
    * <code>LimitExceededException</code>.</p> </li> </ul> <p>If you use the
@@ -8967,9 +9650,7 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
    * the given evaluation form for the particular contact. The evaluation form
    * version used for the contact evaluation corresponds to the currently activated
    * version. If no version is activated for the evaluation form, the contact
-   * evaluation cannot be started. </p>  <p>Evaluations created through the
-   * public API do not contain answer values suggested from automation.</p>
-   * <p><h3>See Also:</h3>   <a
+   * evaluation cannot be started. </p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartContactEvaluation">AWS
    * API Reference</a></p>
    */
@@ -9680,8 +10361,8 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   /**
    * <p>Adds the specified tags to the specified resource.</p> <p>Some of the
    * supported resource types are agents, routing profiles, queues, quick connects,
-   * flows, agent statuses, hours of operation, phone numbers, security profiles, and
-   * task templates. For a complete list, see <a
+   * flows, agent statuses, hours of operation, phone numbers, security profiles,
+   * task templates, and custom metrics. For a complete list, see <a
    * href="https://docs.aws.amazon.com/connect/latest/adminguide/tagging.html">Tagging
    * resources in Connect Customer</a>.</p> <p>For sample policies that use tags, see
    * <a
@@ -9996,6 +10677,34 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates the name, description, or flow version associated with an
+   * alias.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateContactFlowAlias">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateContactFlowAliasOutcome UpdateContactFlowAlias(const Model::UpdateContactFlowAliasRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateContactFlowAlias that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateContactFlowAliasRequestT = Model::UpdateContactFlowAliasRequest>
+  Model::UpdateContactFlowAliasOutcomeCallable UpdateContactFlowAliasCallable(const UpdateContactFlowAliasRequestT& request) const {
+    return SubmitCallable(&ConnectClient::UpdateContactFlowAlias, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateContactFlowAlias that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateContactFlowAliasRequestT = Model::UpdateContactFlowAliasRequest>
+  void UpdateContactFlowAliasAsync(const UpdateContactFlowAliasRequestT& request,
+                                   const UpdateContactFlowAliasResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::UpdateContactFlowAlias, request, handler, context);
+  }
+
+  /**
    * <p>Updates the specified flow.</p> <p>You can also create and update flows using
    * the <a
    * href="https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html">Connect
@@ -10247,6 +10956,100 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates the task template association on an existing task contact. You can
+   * update the task template on a contact before assignment to support tasks that
+   * are created without a template (for example <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/connect-rules.html">Rules</a>
+   * or <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/set-disconnect-flow.html">disconnect
+   * flows</a>) or change the agent interaction form to represent the latest task
+   * data (for example an initial request that was submitted as a refund gets updated
+   * to an account cancellation and requires a new template).</p> <p>This operation
+   * can only be used with task contacts that are in progress and not connected to an
+   * agent. A task template can be updated a maximum of 5 times per contact.</p>
+   * <p>The task's references must be compatible with the fields of the target task
+   * template. If the target template has a required field, the task must have a
+   * corresponding reference with a matching name and compatible type. The following
+   * task template field types map to reference types:</p> <ul> <li> <p>
+   * <code>TEXT</code>, <code>TEXT_AREA</code>, <code>BOOLEAN</code>, and
+   * <code>SINGLE_SELECT</code> map to references of type <code>STRING</code>.</p>
+   * </li> <li> <p> <code>NUMBER</code> maps to references of type
+   * <code>NUMBER</code>.</p> </li> <li> <p> <code>DATE_TIME</code> maps to
+   * references of type <code>DATE</code>.</p> </li> <li> <p> <code>URL</code> maps
+   * to references of type <code>URL</code>.</p> </li> <li> <p> <code>EMAIL</code>
+   * maps to references of type <code>EMAIL</code>.</p> </li> </ul> <p>References
+   * corresponding to <code>TEXT</code> fields must be fewer than 512 characters.
+   * <code>TEXT_AREA</code> fields must be fewer than 4,096 characters.
+   * <code>BOOLEAN</code> fields must have a value of <code>true</code> or
+   * <code>false</code>.</p> <p>An <code>InvalidRequestException</code> occurs when
+   * <code>UpdateContactTaskTemplate</code> is called on a connected or terminated
+   * task, when it is called on non-task contacts, and when the task contact already
+   * uses the provided task template. A <code>PropertyValidationException</code>
+   * occurs when the task's references conflict with the task template's fields, for
+   * example if the task is missing a reference that matches a required field, or if
+   * the task has a reference that matches a required field's name but not its
+   * datatype.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateContactTaskTemplate">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateContactTaskTemplateOutcome UpdateContactTaskTemplate(const Model::UpdateContactTaskTemplateRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateContactTaskTemplate that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateContactTaskTemplateRequestT = Model::UpdateContactTaskTemplateRequest>
+  Model::UpdateContactTaskTemplateOutcomeCallable UpdateContactTaskTemplateCallable(
+      const UpdateContactTaskTemplateRequestT& request) const {
+    return SubmitCallable(&ConnectClient::UpdateContactTaskTemplate, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateContactTaskTemplate that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateContactTaskTemplateRequestT = Model::UpdateContactTaskTemplateRequest>
+  void UpdateContactTaskTemplateAsync(const UpdateContactTaskTemplateRequestT& request,
+                                      const UpdateContactTaskTemplateResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::UpdateContactTaskTemplate, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the cross-region routing configuration for an Amazon Connect Global
+   * Resiliency instance enabled for global routing. When invoked with
+   * <code>IsolatedAll</code> set to <code>true</code>, this operation disables
+   * cross-region routing, meaning contacts originating in one Region will no longer
+   * be routed to agents in another Region.</p>  <p>This operation is available
+   * only for Amazon Connect Global Resiliency instances enabled for global routing.
+   * Reporting and contact search continue to operate globally after you use this
+   * operation.</p> <p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateCrossRegionRouting">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateCrossRegionRoutingOutcome UpdateCrossRegionRouting(const Model::UpdateCrossRegionRoutingRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateCrossRegionRouting that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateCrossRegionRoutingRequestT = Model::UpdateCrossRegionRoutingRequest>
+  Model::UpdateCrossRegionRoutingOutcomeCallable UpdateCrossRegionRoutingCallable(const UpdateCrossRegionRoutingRequestT& request) const {
+    return SubmitCallable(&ConnectClient::UpdateCrossRegionRouting, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateCrossRegionRouting that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateCrossRegionRoutingRequestT = Model::UpdateCrossRegionRoutingRequest>
+  void UpdateCrossRegionRoutingAsync(const UpdateCrossRegionRoutingRequestT& request,
+                                     const UpdateCrossRegionRoutingResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::UpdateCrossRegionRouting, request, handler, context);
+  }
+
+  /**
    * <p>Updates all properties for an attribute using all properties from
    * CreateDataTableAttribute. There are no other granular update endpoints. It does
    * not act as a patch operation - all properties must be provided. System managed
@@ -10406,6 +11209,36 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates an extraction definition in the specified Connect Customer
+   * instance.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateExtractionDefinition">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateExtractionDefinitionOutcome UpdateExtractionDefinition(
+      const Model::UpdateExtractionDefinitionRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateExtractionDefinition that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename UpdateExtractionDefinitionRequestT = Model::UpdateExtractionDefinitionRequest>
+  Model::UpdateExtractionDefinitionOutcomeCallable UpdateExtractionDefinitionCallable(
+      const UpdateExtractionDefinitionRequestT& request) const {
+    return SubmitCallable(&ConnectClient::UpdateExtractionDefinition, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateExtractionDefinition that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateExtractionDefinitionRequestT = Model::UpdateExtractionDefinitionRequest>
+  void UpdateExtractionDefinitionAsync(const UpdateExtractionDefinitionRequestT& request,
+                                       const UpdateExtractionDefinitionResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::UpdateExtractionDefinition, request, handler, context);
+  }
+
+  /**
    * <p>Updates the hours of operation.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateHoursOfOperation">AWS
    * API Reference</a></p>
@@ -10522,6 +11355,60 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates the calculation, unit, and/or trend indicator of an existing metric
+   * in the specified Connect Customer instance.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateMetricContent">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateMetricContentOutcome UpdateMetricContent(const Model::UpdateMetricContentRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateMetricContent that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateMetricContentRequestT = Model::UpdateMetricContentRequest>
+  Model::UpdateMetricContentOutcomeCallable UpdateMetricContentCallable(const UpdateMetricContentRequestT& request) const {
+    return SubmitCallable(&ConnectClient::UpdateMetricContent, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateMetricContent that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename UpdateMetricContentRequestT = Model::UpdateMetricContentRequest>
+  void UpdateMetricContentAsync(const UpdateMetricContentRequestT& request, const UpdateMetricContentResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::UpdateMetricContent, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the name and/or description of an existing metric in the specified
+   * Connect Customer instance.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateMetricMetadata">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateMetricMetadataOutcome UpdateMetricMetadata(const Model::UpdateMetricMetadataRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateMetricMetadata that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateMetricMetadataRequestT = Model::UpdateMetricMetadataRequest>
+  Model::UpdateMetricMetadataOutcomeCallable UpdateMetricMetadataCallable(const UpdateMetricMetadataRequestT& request) const {
+    return SubmitCallable(&ConnectClient::UpdateMetricMetadata, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateMetricMetadata that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateMetricMetadataRequestT = Model::UpdateMetricMetadataRequest>
+  void UpdateMetricMetadataAsync(const UpdateMetricMetadataRequestT& request, const UpdateMetricMetadataResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::UpdateMetricMetadata, request, handler, context);
+  }
+
+  /**
    * <p>Updates the localized content of an existing notification. This operation
    * applies to all users for whom the notification was sent.</p><p><h3>See
    * Also:</h3>   <a
@@ -10549,6 +11436,39 @@ class AWS_CONNECT_API ConnectClient : public Aws::Client::AWSJsonClient,
                                       const UpdateNotificationContentResponseReceivedHandler& handler,
                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&ConnectClient::UpdateNotificationContent, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the draft outbound email message for a contact. Use this operation to
+   * save changes to an in-progress outbound email reply before you send it. This
+   * operation applies only to contacts with an <code>OUTBOUND</code> or
+   * <code>AGENT_REPLY</code> initiation method; it isn't supported for
+   * flow-initiated emails.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateOutboundEmailContactMessage">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateOutboundEmailContactMessageOutcome UpdateOutboundEmailContactMessage(
+      const Model::UpdateOutboundEmailContactMessageRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateOutboundEmailContactMessage that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename UpdateOutboundEmailContactMessageRequestT = Model::UpdateOutboundEmailContactMessageRequest>
+  Model::UpdateOutboundEmailContactMessageOutcomeCallable UpdateOutboundEmailContactMessageCallable(
+      const UpdateOutboundEmailContactMessageRequestT& request) const {
+    return SubmitCallable(&ConnectClient::UpdateOutboundEmailContactMessage, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateOutboundEmailContactMessage that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename UpdateOutboundEmailContactMessageRequestT = Model::UpdateOutboundEmailContactMessageRequest>
+  void UpdateOutboundEmailContactMessageAsync(const UpdateOutboundEmailContactMessageRequestT& request,
+                                              const UpdateOutboundEmailContactMessageResponseReceivedHandler& handler,
+                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&ConnectClient::UpdateOutboundEmailContactMessage, request, handler, context);
   }
 
   /**

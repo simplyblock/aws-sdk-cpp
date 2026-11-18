@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/omics/OmicsEndpointRules.h>
 #include <aws/omics/Omics_EXPORTS.h>
 
 namespace Aws {
 namespace Omics {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using OmicsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using OmicsBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using OmicsEndpointProviderBase = EndpointProviderBase<OmicsClientConfiguration, OmicsBuiltInParameters, OmicsClientContextParameters>;
 
-using OmicsDefaultEpProviderBase = DefaultEndpointProvider<OmicsClientConfiguration, OmicsBuiltInParameters, OmicsClientContextParameters>;
+using OmicsDefaultEpProviderBase = BDDEndpointProvider<OmicsClientConfiguration, OmicsBuiltInParameters, OmicsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,8 +39,7 @@ class AWS_OMICS_API OmicsEndpointProvider : public OmicsDefaultEpProviderBase {
  public:
   using OmicsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  OmicsEndpointProvider()
-      : OmicsDefaultEpProviderBase(Aws::Omics::OmicsEndpointRules::GetRulesBlob(), Aws::Omics::OmicsEndpointRules::RulesBlobSize) {}
+  OmicsEndpointProvider();
 
   ~OmicsEndpointProvider() {}
 };

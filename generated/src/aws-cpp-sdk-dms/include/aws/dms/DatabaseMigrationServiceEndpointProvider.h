@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/dms/DatabaseMigrationServiceEndpointRules.h>
 #include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 
 namespace Aws {
 namespace DatabaseMigrationService {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using DatabaseMigrationServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using DatabaseMigrationServiceEndpointProviderBase =
                          DatabaseMigrationServiceClientContextParameters>;
 
 using DatabaseMigrationServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<DatabaseMigrationServiceClientConfiguration, DatabaseMigrationServiceBuiltInParameters,
-                            DatabaseMigrationServiceClientContextParameters>;
+    BDDEndpointProvider<DatabaseMigrationServiceClientConfiguration, DatabaseMigrationServiceBuiltInParameters,
+                        DatabaseMigrationServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,10 +43,7 @@ class AWS_DATABASEMIGRATIONSERVICE_API DatabaseMigrationServiceEndpointProvider 
  public:
   using DatabaseMigrationServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  DatabaseMigrationServiceEndpointProvider()
-      : DatabaseMigrationServiceDefaultEpProviderBase(Aws::DatabaseMigrationService::DatabaseMigrationServiceEndpointRules::GetRulesBlob(),
-                                                      Aws::DatabaseMigrationService::DatabaseMigrationServiceEndpointRules::RulesBlobSize) {
-  }
+  DatabaseMigrationServiceEndpointProvider();
 
   ~DatabaseMigrationServiceEndpointProvider() {}
 };

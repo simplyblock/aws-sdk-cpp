@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -13,6 +13,7 @@
 #include <aws/dynamodb/model/ListImportsPaginationTraits.h>
 #include <aws/dynamodb/model/ListExportsPaginationTraits.h>
 #include <aws/dynamodb/model/QueryPaginationTraits.h>
+#include <aws/dynamodb/model/ListBulkOperationsPaginationTraits.h>
 #include <aws/dynamodb/model/ListTablesPaginationTraits.h>
 
 #include <aws/testing/AwsCppSdkGTestSuite.h>
@@ -23,6 +24,6 @@ class DynamoDBPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSui
 
 TEST_F(DynamoDBPaginationCompilationTest, DynamoDBPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

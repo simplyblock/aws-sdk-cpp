@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-route53globalresolver "C++ SDK for the AWS route53globalresolver service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-route53globalresolver "C++ SDK for Amazon Route 53 Global Resolver" aws-cpp-sdk-core)
 
 file(GLOB AWS_ROUTE53GLOBALRESOLVER_HEADERS
     "include/aws/route53globalresolver/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ROUTE53GLOBALRESOLVER_HEADERS
 
 file(GLOB AWS_ROUTE53GLOBALRESOLVER_MODEL_HEADERS
     "include/aws/route53globalresolver/model/*.h"
+)
+
+file(GLOB AWS_ROUTE53GLOBALRESOLVER_INTERNAL_HEADERS
+    "include/aws/route53globalresolver/internal/*.h"
 )
 
 file(GLOB AWS_ROUTE53GLOBALRESOLVER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ROUTE53GLOBALRESOLVER_MODEL_SOURCE
 
 file(GLOB ROUTE53GLOBALRESOLVER_UNIFIED_HEADERS
     ${AWS_ROUTE53GLOBALRESOLVER_HEADERS}
+    ${AWS_ROUTE53GLOBALRESOLVER_INTERNAL_HEADERS}
     ${AWS_ROUTE53GLOBALRESOLVER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\route53globalresolver" FILES ${AWS_ROUTE53GLOBALRESOLVER_HEADERS})
+        source_group("Header Files\\aws\\route53globalresolver\\internal" FILES ${AWS_ROUTE53GLOBALRESOLVER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\route53globalresolver\\model" FILES ${AWS_ROUTE53GLOBALRESOLVER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ROUTE53GLOBALRESOLVER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ROUTE53GLOBALRESOLVER_MODEL_SOURCE})

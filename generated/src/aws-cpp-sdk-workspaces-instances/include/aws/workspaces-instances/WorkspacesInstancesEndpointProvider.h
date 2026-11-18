@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/workspaces-instances/WorkspacesInstancesEndpointRules.h>
 #include <aws/workspaces-instances/WorkspacesInstances_EXPORTS.h>
 
 namespace Aws {
 namespace WorkspacesInstances {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using WorkspacesInstancesClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using WorkspacesInstancesEndpointProviderBase =
                          WorkspacesInstancesClientContextParameters>;
 
 using WorkspacesInstancesDefaultEpProviderBase =
-    DefaultEndpointProvider<WorkspacesInstancesClientConfiguration, WorkspacesInstancesBuiltInParameters,
-                            WorkspacesInstancesClientContextParameters>;
+    BDDEndpointProvider<WorkspacesInstancesClientConfiguration, WorkspacesInstancesBuiltInParameters,
+                        WorkspacesInstancesClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_WORKSPACESINSTANCES_API WorkspacesInstancesEndpointProvider : public W
  public:
   using WorkspacesInstancesResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  WorkspacesInstancesEndpointProvider()
-      : WorkspacesInstancesDefaultEpProviderBase(Aws::WorkspacesInstances::WorkspacesInstancesEndpointRules::GetRulesBlob(),
-                                                 Aws::WorkspacesInstances::WorkspacesInstancesEndpointRules::RulesBlobSize) {}
+  WorkspacesInstancesEndpointProvider();
 
   ~WorkspacesInstancesEndpointProvider() {}
 };

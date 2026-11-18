@@ -4,11 +4,13 @@
  */
 
 #pragma once
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/datasync/DataSync_EXPORTS.h>
 #include <aws/datasync/model/Atime.h>
 #include <aws/datasync/model/Gid.h>
 #include <aws/datasync/model/LogLevel.h>
 #include <aws/datasync/model/Mtime.h>
+#include <aws/datasync/model/ObjectMetadata.h>
 #include <aws/datasync/model/ObjectTags.h>
 #include <aws/datasync/model/OverwriteMode.h>
 #include <aws/datasync/model/PosixPermissions.h>
@@ -24,10 +26,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace DataSync {
 namespace Model {
@@ -49,9 +50,9 @@ namespace Model {
 class Options {
  public:
   AWS_DATASYNC_API Options() = default;
-  AWS_DATASYNC_API Options(Aws::Utils::Json::JsonView jsonValue);
-  AWS_DATASYNC_API Options& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_DATASYNC_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_DATASYNC_API Options(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_DATASYNC_API Options& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_DATASYNC_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -130,11 +131,13 @@ class Options {
    * attempts to preserve the original <code>Atime</code> attribute on all source
    * files (that is, the version before the <code>PREPARING</code> steps of the task
    * execution). This option is recommended.</p> </li> <li> <p> <code>NONE</code> -
-   * Ignores <code>Atime</code>.</p> </li> </ul>  <p>If <code>Atime</code> is
-   * set to <code>BEST_EFFORT</code>, <code>Mtime</code> must be set to
+   * Ignores <code>Atime</code>.</p> </li> </ul>  <p>The following applies only
+   * to Basic mode tasks:</p> <p>If <code>Atime</code> is set to
+   * <code>BEST_EFFORT</code>, <code>Mtime</code> must be set to
    * <code>PRESERVE</code>. </p> <p>If <code>Atime</code> is set to
    * <code>NONE</code>, <code>Mtime</code> must also be <code>NONE</code>. </p>
-   *
+   * <p>Enhanced mode tasks support configuring <code>Atime</code> independently of
+   * <code>Mtime</code>.</p>
    */
   inline Atime GetAtime() const { return m_atime; }
   inline bool AtimeHasBeenSet() const { return m_atimeHasBeenSet; }
@@ -155,11 +158,13 @@ class Options {
    * This option is required when you need to run the a task more than once.</p> <ul>
    * <li> <p> <code>PRESERVE</code> (default) - Preserves original
    * <code>Mtime</code>, which is recommended.</p> </li> <li> <p> <code>NONE</code> -
-   * Ignores <code>Mtime</code>.</p> </li> </ul>  <p>If <code>Mtime</code> is
-   * set to <code>PRESERVE</code>, <code>Atime</code> must be set to
+   * Ignores <code>Mtime</code>.</p> </li> </ul>  <p>The following applies only
+   * to Basic mode tasks:</p> <p>If <code>Mtime</code> is set to
+   * <code>PRESERVE</code>, <code>Atime</code> must be set to
    * <code>BEST_EFFORT</code>.</p> <p>If <code>Mtime</code> is set to
    * <code>NONE</code>, <code>Atime</code> must also be set to <code>NONE</code>.
-   * </p>
+   * </p> <p>Enhanced mode tasks don't support <code>Mtime</code> set to
+   * <code>NONE</code>.</p>
    */
   inline Mtime GetMtime() const { return m_mtime; }
   inline bool MtimeHasBeenSet() const { return m_mtimeHasBeenSet; }
@@ -436,6 +441,26 @@ class Options {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Specifies whether you want DataSync to <code>PRESERVE</code> object metadata
+   * (default behavior) when transferring between object storage systems. If you want
+   * your DataSync task to ignore object metadata, specify the <code>NONE</code>
+   * value.</p>  <p>Even if you specify <code>NONE</code>, metadata for the
+   * last modified time is still preserved.</p>
+   */
+  inline ObjectMetadata GetObjectMetadata() const { return m_objectMetadata; }
+  inline bool ObjectMetadataHasBeenSet() const { return m_objectMetadataHasBeenSet; }
+  inline void SetObjectMetadata(ObjectMetadata value) {
+    m_objectMetadataHasBeenSet = true;
+    m_objectMetadata = value;
+  }
+  inline Options& WithObjectMetadata(ObjectMetadata value) {
+    SetObjectMetadata(value);
+    return *this;
+  }
+  ///@}
  private:
   VerifyMode m_verifyMode{VerifyMode::NOT_SET};
 
@@ -466,6 +491,8 @@ class Options {
   SmbSecurityDescriptorCopyFlags m_securityDescriptorCopyFlags{SmbSecurityDescriptorCopyFlags::NOT_SET};
 
   ObjectTags m_objectTags{ObjectTags::NOT_SET};
+
+  ObjectMetadata m_objectMetadata{ObjectMetadata::NOT_SET};
   bool m_verifyModeHasBeenSet = false;
   bool m_overwriteModeHasBeenSet = false;
   bool m_atimeHasBeenSet = false;
@@ -481,6 +508,7 @@ class Options {
   bool m_transferModeHasBeenSet = false;
   bool m_securityDescriptorCopyFlagsHasBeenSet = false;
   bool m_objectTagsHasBeenSet = false;
+  bool m_objectMetadataHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/pinpoint/PinpointEndpointRules.h>
 #include <aws/pinpoint/Pinpoint_EXPORTS.h>
 
 namespace Aws {
 namespace Pinpoint {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using PinpointClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using PinpointEndpointProviderBase =
     EndpointProviderBase<PinpointClientConfiguration, PinpointBuiltInParameters, PinpointClientContextParameters>;
 
 using PinpointDefaultEpProviderBase =
-    DefaultEndpointProvider<PinpointClientConfiguration, PinpointBuiltInParameters, PinpointClientContextParameters>;
+    BDDEndpointProvider<PinpointClientConfiguration, PinpointBuiltInParameters, PinpointClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_PINPOINT_API PinpointEndpointProvider : public PinpointDefaultEpProvid
  public:
   using PinpointResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  PinpointEndpointProvider()
-      : PinpointDefaultEpProviderBase(Aws::Pinpoint::PinpointEndpointRules::GetRulesBlob(),
-                                      Aws::Pinpoint::PinpointEndpointRules::RulesBlobSize) {}
+  PinpointEndpointProvider();
 
   ~PinpointEndpointProvider() {}
 };

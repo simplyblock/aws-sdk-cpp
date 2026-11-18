@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/comprehend/ComprehendEndpointRules.h>
 #include <aws/comprehend/Comprehend_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace Comprehend {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ComprehendClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using ComprehendEndpointProviderBase =
     EndpointProviderBase<ComprehendClientConfiguration, ComprehendBuiltInParameters, ComprehendClientContextParameters>;
 
 using ComprehendDefaultEpProviderBase =
-    DefaultEndpointProvider<ComprehendClientConfiguration, ComprehendBuiltInParameters, ComprehendClientContextParameters>;
+    BDDEndpointProvider<ComprehendClientConfiguration, ComprehendBuiltInParameters, ComprehendClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_COMPREHEND_API ComprehendEndpointProvider : public ComprehendDefaultEp
  public:
   using ComprehendResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ComprehendEndpointProvider()
-      : ComprehendDefaultEpProviderBase(Aws::Comprehend::ComprehendEndpointRules::GetRulesBlob(),
-                                        Aws::Comprehend::ComprehendEndpointRules::RulesBlobSize) {}
+  ComprehendEndpointProvider();
 
   ~ComprehendEndpointProvider() {}
 };

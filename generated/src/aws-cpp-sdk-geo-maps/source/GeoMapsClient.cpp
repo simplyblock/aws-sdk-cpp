@@ -161,7 +161,8 @@ GeoMapsClient::InvokeOperationOutcome GeoMapsClient::InvokeServiceOperation(
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -175,7 +176,7 @@ GeoMapsClient::InvokeOperationOutcome GeoMapsClient::InvokeServiceOperation(
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -201,7 +202,8 @@ GetGlyphsOutcome GeoMapsClient::GetGlyphs(const GetGlyphsRequest& request) const
                                   {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetGlyphsOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<GetGlyphsOutcome>(
+      request, std::move(span),
       [&]() -> GetGlyphsOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -210,13 +212,13 @@ GetGlyphsOutcome GeoMapsClient::GetGlyphs(const GetGlyphsRequest& request) const
              {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
         AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetGlyphs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE,
                                     endpointResolutionOutcome.GetError().GetMessage());
-        endpointResolutionOutcome.GetResult().AddPathSegments("/glyphs/");
+        endpointResolutionOutcome.GetResult().AddPathSegments("/v2/glyphs/");
         endpointResolutionOutcome.GetResult().AddPathSegment(request.GetFontStack());
         endpointResolutionOutcome.GetResult().AddPathSegment(request.GetFontUnicodeRange());
         auto result = MakeRequestWithUnparsedResponse(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET);
         return result.IsSuccess() ? GetGlyphsOutcome(result.GetResultWithOwnership()) : GetGlyphsOutcome(std::move(result.GetError()));
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
        {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
@@ -253,7 +255,8 @@ GetSpritesOutcome GeoMapsClient::GetSprites(const GetSpritesRequest& request) co
                                   {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetSpritesOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<GetSpritesOutcome>(
+      request, std::move(span),
       [&]() -> GetSpritesOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -262,7 +265,7 @@ GetSpritesOutcome GeoMapsClient::GetSprites(const GetSpritesRequest& request) co
              {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
         AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetSprites, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE,
                                     endpointResolutionOutcome.GetError().GetMessage());
-        endpointResolutionOutcome.GetResult().AddPathSegments("/styles/");
+        endpointResolutionOutcome.GetResult().AddPathSegments("/v2/styles/");
         endpointResolutionOutcome.GetResult().AddPathSegment(MapStyleMapper::GetNameForMapStyle(request.GetStyle()));
         endpointResolutionOutcome.GetResult().AddPathSegment(ColorSchemeMapper::GetNameForColorScheme(request.GetColorScheme()));
         endpointResolutionOutcome.GetResult().AddPathSegment(VariantMapper::GetNameForVariant(request.GetVariant()));
@@ -271,7 +274,7 @@ GetSpritesOutcome GeoMapsClient::GetSprites(const GetSpritesRequest& request) co
         auto result = MakeRequestWithUnparsedResponse(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET);
         return result.IsSuccess() ? GetSpritesOutcome(result.GetResultWithOwnership()) : GetSpritesOutcome(std::move(result.GetError()));
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
        {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
@@ -303,7 +306,8 @@ GetStaticMapOutcome GeoMapsClient::GetStaticMap(const GetStaticMapRequest& reque
                                   {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetStaticMapOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<GetStaticMapOutcome>(
+      request, std::move(span),
       [&]() -> GetStaticMapOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -312,13 +316,13 @@ GetStaticMapOutcome GeoMapsClient::GetStaticMap(const GetStaticMapRequest& reque
              {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
         AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetStaticMap, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE,
                                     endpointResolutionOutcome.GetError().GetMessage());
-        endpointResolutionOutcome.GetResult().AddPathSegments("/static/");
+        endpointResolutionOutcome.GetResult().AddPathSegments("/v2/static/");
         endpointResolutionOutcome.GetResult().AddPathSegment(request.GetFileName());
         auto result = MakeRequestWithUnparsedResponse(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET);
         return result.IsSuccess() ? GetStaticMapOutcome(result.GetResultWithOwnership())
                                   : GetStaticMapOutcome(std::move(result.GetError()));
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
        {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
@@ -340,7 +344,8 @@ GetStyleDescriptorOutcome GeoMapsClient::GetStyleDescriptor(const GetStyleDescri
                                   {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetStyleDescriptorOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<GetStyleDescriptorOutcome>(
+      request, std::move(span),
       [&]() -> GetStyleDescriptorOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -349,14 +354,14 @@ GetStyleDescriptorOutcome GeoMapsClient::GetStyleDescriptor(const GetStyleDescri
              {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
         AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetStyleDescriptor, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE,
                                     endpointResolutionOutcome.GetError().GetMessage());
-        endpointResolutionOutcome.GetResult().AddPathSegments("/styles/");
+        endpointResolutionOutcome.GetResult().AddPathSegments("/v2/styles/");
         endpointResolutionOutcome.GetResult().AddPathSegment(MapStyleMapper::GetNameForMapStyle(request.GetStyle()));
         endpointResolutionOutcome.GetResult().AddPathSegments("/descriptor");
         auto result = MakeRequestWithUnparsedResponse(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET);
         return result.IsSuccess() ? GetStyleDescriptorOutcome(result.GetResultWithOwnership())
                                   : GetStyleDescriptorOutcome(std::move(result.GetError()));
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
        {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
@@ -393,7 +398,8 @@ GetTileOutcome GeoMapsClient::GetTile(const GetTileRequest& request) const {
                                   {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetTileOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<GetTileOutcome>(
+      request, std::move(span),
       [&]() -> GetTileOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -402,7 +408,7 @@ GetTileOutcome GeoMapsClient::GetTile(const GetTileRequest& request) const {
              {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
         AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetTile, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE,
                                     endpointResolutionOutcome.GetError().GetMessage());
-        endpointResolutionOutcome.GetResult().AddPathSegments("/tiles/");
+        endpointResolutionOutcome.GetResult().AddPathSegments("/v2/tiles/");
         endpointResolutionOutcome.GetResult().AddPathSegment(request.GetTileset());
         endpointResolutionOutcome.GetResult().AddPathSegment(request.GetZ());
         endpointResolutionOutcome.GetResult().AddPathSegment(request.GetX());
@@ -410,7 +416,7 @@ GetTileOutcome GeoMapsClient::GetTile(const GetTileRequest& request) const {
         auto result = MakeRequestWithUnparsedResponse(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET);
         return result.IsSuccess() ? GetTileOutcome(result.GetResultWithOwnership()) : GetTileOutcome(std::move(result.GetError()));
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
        {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }

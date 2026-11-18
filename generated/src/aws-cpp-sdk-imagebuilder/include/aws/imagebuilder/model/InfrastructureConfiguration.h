@@ -10,6 +10,7 @@
 #include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
 #include <aws/imagebuilder/model/InstanceMetadataOptions.h>
 #include <aws/imagebuilder/model/Logging.h>
+#include <aws/imagebuilder/model/ParentInstanceConfiguration.h>
 #include <aws/imagebuilder/model/Placement.h>
 
 #include <utility>
@@ -176,7 +177,9 @@ class InfrastructureConfiguration {
 
   ///@{
   /**
-   * <p>The logging configuration of the infrastructure configuration.</p>
+   * <p>The logging configuration of the infrastructure configuration. When you
+   * configure S3 logs, Image Builder writes logs from the build and test process to
+   * the specified bucket under the key prefix.</p>
    */
   inline const Logging& GetLogging() const { return m_logging; }
   inline bool LoggingHasBeenSet() const { return m_loggingHasBeenSet; }
@@ -212,8 +215,9 @@ class InfrastructureConfiguration {
 
   ///@{
   /**
-   * <p>The terminate instance on failure configuration of the infrastructure
-   * configuration.</p>
+   * <p>Indicates whether Image Builder terminates the build and test instances when
+   * the image build fails. When <code>false</code>, Image Builder retains the
+   * instance so that you can debug it.</p>
    */
   inline bool GetTerminateInstanceOnFailure() const { return m_terminateInstanceOnFailure; }
   inline bool TerminateInstanceOnFailureHasBeenSet() const { return m_terminateInstanceOnFailureHasBeenSet; }
@@ -229,11 +233,12 @@ class InfrastructureConfiguration {
 
   ///@{
   /**
-   * <p>The Amazon Resource Name (ARN) for the SNS topic to which we send image build
-   * event notifications.</p>  <p>EC2 Image Builder is unable to send
-   * notifications to SNS topics that are encrypted using keys from other accounts.
-   * The key that is used to encrypt the SNS topic must reside in the account that
-   * the Image Builder service runs under.</p>
+   * <p>The Amazon Resource Name (ARN) of the SNS topic to which Image Builder sends
+   * image build event notifications. Specify a standard topic. Image Builder doesn't
+   * support FIFO topics.</p>  <p>EC2 Image Builder can't send notifications to
+   * SNS topics that are encrypted using keys from other accounts. If your SNS topic
+   * is encrypted, the key must be owned by the same account that owns your Image
+   * Builder resources.</p>
    */
   inline const Aws::String& GetSnsTopicArn() const { return m_snsTopicArn; }
   inline bool SnsTopicArnHasBeenSet() const { return m_snsTopicArnHasBeenSet; }
@@ -287,7 +292,8 @@ class InfrastructureConfiguration {
 
   ///@{
   /**
-   * <p>The tags attached to the resource created by Image Builder.</p>
+   * <p>The metadata tags assigned to the Amazon EC2 build and test instances that
+   * Image Builder launches during image creation.</p>
    */
   inline const Aws::Map<Aws::String, Aws::String>& GetResourceTags() const { return m_resourceTags; }
   inline bool ResourceTagsHasBeenSet() const { return m_resourceTagsHasBeenSet; }
@@ -354,8 +360,9 @@ class InfrastructureConfiguration {
 
   ///@{
   /**
-   * <p>The instance placement settings that define where the instances that are
-   * launched from your image will run.</p>
+   * <p>The instance placement settings that define where the build and test
+   * instances that Image Builder launches during image creation run. These settings
+   * don't affect instances that you launch from the output image.</p>
    */
   inline const Placement& GetPlacement() const { return m_placement; }
   inline bool PlacementHasBeenSet() const { return m_placementHasBeenSet; }
@@ -367,6 +374,43 @@ class InfrastructureConfiguration {
   template <typename PlacementT = Placement>
   InfrastructureConfiguration& WithPlacement(PlacementT&& value) {
     SetPlacement(std::forward<PlacementT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Specifies whether Image Builder terminates build and test instances when
+   * image creation ends without a failure.</p>
+   */
+  inline bool GetTerminateInstanceOnCompletion() const { return m_terminateInstanceOnCompletion; }
+  inline bool TerminateInstanceOnCompletionHasBeenSet() const { return m_terminateInstanceOnCompletionHasBeenSet; }
+  inline void SetTerminateInstanceOnCompletion(bool value) {
+    m_terminateInstanceOnCompletionHasBeenSet = true;
+    m_terminateInstanceOnCompletion = value;
+  }
+  inline InfrastructureConfiguration& WithTerminateInstanceOnCompletion(bool value) {
+    SetTerminateInstanceOnCompletion(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Amazon EC2 Auto Scaling group that Image Builder takes the build instance
+   * from, instead of launching a new instance. This applies only to the build
+   * phase.</p>
+   */
+  inline const ParentInstanceConfiguration& GetParentInstance() const { return m_parentInstance; }
+  inline bool ParentInstanceHasBeenSet() const { return m_parentInstanceHasBeenSet; }
+  template <typename ParentInstanceT = ParentInstanceConfiguration>
+  void SetParentInstance(ParentInstanceT&& value) {
+    m_parentInstanceHasBeenSet = true;
+    m_parentInstance = std::forward<ParentInstanceT>(value);
+  }
+  template <typename ParentInstanceT = ParentInstanceConfiguration>
+  InfrastructureConfiguration& WithParentInstance(ParentInstanceT&& value) {
+    SetParentInstance(std::forward<ParentInstanceT>(value));
     return *this;
   }
   ///@}
@@ -404,6 +448,10 @@ class InfrastructureConfiguration {
   Aws::Map<Aws::String, Aws::String> m_tags;
 
   Placement m_placement;
+
+  bool m_terminateInstanceOnCompletion{false};
+
+  ParentInstanceConfiguration m_parentInstance;
   bool m_arnHasBeenSet = false;
   bool m_nameHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
@@ -421,6 +469,8 @@ class InfrastructureConfiguration {
   bool m_instanceMetadataOptionsHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
   bool m_placementHasBeenSet = false;
+  bool m_terminateInstanceOnCompletionHasBeenSet = false;
+  bool m_parentInstanceHasBeenSet = false;
 };
 
 }  // namespace Model

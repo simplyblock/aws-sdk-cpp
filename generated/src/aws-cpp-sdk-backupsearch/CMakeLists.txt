@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-backupsearch "C++ SDK for the AWS backupsearch service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-backupsearch "C++ SDK for AWS Backup Search" aws-cpp-sdk-core)
 
 file(GLOB AWS_BACKUPSEARCH_HEADERS
     "include/aws/backupsearch/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_BACKUPSEARCH_HEADERS
 
 file(GLOB AWS_BACKUPSEARCH_MODEL_HEADERS
     "include/aws/backupsearch/model/*.h"
+)
+
+file(GLOB AWS_BACKUPSEARCH_INTERNAL_HEADERS
+    "include/aws/backupsearch/internal/*.h"
 )
 
 file(GLOB AWS_BACKUPSEARCH_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_BACKUPSEARCH_MODEL_SOURCE
 
 file(GLOB BACKUPSEARCH_UNIFIED_HEADERS
     ${AWS_BACKUPSEARCH_HEADERS}
+    ${AWS_BACKUPSEARCH_INTERNAL_HEADERS}
     ${AWS_BACKUPSEARCH_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\backupsearch" FILES ${AWS_BACKUPSEARCH_HEADERS})
+        source_group("Header Files\\aws\\backupsearch\\internal" FILES ${AWS_BACKUPSEARCH_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\backupsearch\\model" FILES ${AWS_BACKUPSEARCH_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_BACKUPSEARCH_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_BACKUPSEARCH_MODEL_SOURCE})

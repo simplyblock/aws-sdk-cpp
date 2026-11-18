@@ -9,9 +9,11 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/opensearch/OpenSearchService_EXPORTS.h>
 #include <aws/opensearch/model/ChangeProgressStage.h>
+#include <aws/opensearch/model/ClonedBlueGreenUpgradeDetails.h>
 #include <aws/opensearch/model/ConfigChangeStatus.h>
 #include <aws/opensearch/model/InitiatedBy.h>
 #include <aws/opensearch/model/OverallChangeStatus.h>
+#include <aws/opensearch/model/ValidationFailure.h>
 
 #include <utility>
 
@@ -231,6 +233,74 @@ class ChangeProgressStatusDetails {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Details about a cloned blue/green upgrade, when the change is one.</p>
+   */
+  inline const ClonedBlueGreenUpgradeDetails& GetClonedBlueGreenUpgradeDetails() const { return m_clonedBlueGreenUpgradeDetails; }
+  inline bool ClonedBlueGreenUpgradeDetailsHasBeenSet() const { return m_clonedBlueGreenUpgradeDetailsHasBeenSet; }
+  template <typename ClonedBlueGreenUpgradeDetailsT = ClonedBlueGreenUpgradeDetails>
+  void SetClonedBlueGreenUpgradeDetails(ClonedBlueGreenUpgradeDetailsT&& value) {
+    m_clonedBlueGreenUpgradeDetailsHasBeenSet = true;
+    m_clonedBlueGreenUpgradeDetails = std::forward<ClonedBlueGreenUpgradeDetailsT>(value);
+  }
+  template <typename ClonedBlueGreenUpgradeDetailsT = ClonedBlueGreenUpgradeDetails>
+  ChangeProgressStatusDetails& WithClonedBlueGreenUpgradeDetails(ClonedBlueGreenUpgradeDetailsT&& value) {
+    SetClonedBlueGreenUpgradeDetails(std::forward<ClonedBlueGreenUpgradeDetailsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The validation failures that occurred as a result of the configuration
+   * change.</p>
+   */
+  inline const Aws::Vector<ValidationFailure>& GetValidationFailures() const { return m_validationFailures; }
+  inline bool ValidationFailuresHasBeenSet() const { return m_validationFailuresHasBeenSet; }
+  template <typename ValidationFailuresT = Aws::Vector<ValidationFailure>>
+  void SetValidationFailures(ValidationFailuresT&& value) {
+    m_validationFailuresHasBeenSet = true;
+    m_validationFailures = std::forward<ValidationFailuresT>(value);
+  }
+  template <typename ValidationFailuresT = Aws::Vector<ValidationFailure>>
+  ChangeProgressStatusDetails& WithValidationFailures(ValidationFailuresT&& value) {
+    SetValidationFailures(std::forward<ValidationFailuresT>(value));
+    return *this;
+  }
+  template <typename ValidationFailuresT = ValidationFailure>
+  ChangeProgressStatusDetails& AddValidationFailures(ValidationFailuresT&& value) {
+    m_validationFailuresHasBeenSet = true;
+    m_validationFailures.emplace_back(std::forward<ValidationFailuresT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The list of advisory warning codes that were accepted for the configuration
+   * change.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetAcceptedWarnings() const { return m_acceptedWarnings; }
+  inline bool AcceptedWarningsHasBeenSet() const { return m_acceptedWarningsHasBeenSet; }
+  template <typename AcceptedWarningsT = Aws::Vector<Aws::String>>
+  void SetAcceptedWarnings(AcceptedWarningsT&& value) {
+    m_acceptedWarningsHasBeenSet = true;
+    m_acceptedWarnings = std::forward<AcceptedWarningsT>(value);
+  }
+  template <typename AcceptedWarningsT = Aws::Vector<Aws::String>>
+  ChangeProgressStatusDetails& WithAcceptedWarnings(AcceptedWarningsT&& value) {
+    SetAcceptedWarnings(std::forward<AcceptedWarningsT>(value));
+    return *this;
+  }
+  template <typename AcceptedWarningsT = Aws::String>
+  ChangeProgressStatusDetails& AddAcceptedWarnings(AcceptedWarningsT&& value) {
+    m_acceptedWarningsHasBeenSet = true;
+    m_acceptedWarnings.emplace_back(std::forward<AcceptedWarningsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_changeId;
 
@@ -251,6 +321,12 @@ class ChangeProgressStatusDetails {
   ConfigChangeStatus m_configChangeStatus{ConfigChangeStatus::NOT_SET};
 
   InitiatedBy m_initiatedBy{InitiatedBy::NOT_SET};
+
+  ClonedBlueGreenUpgradeDetails m_clonedBlueGreenUpgradeDetails;
+
+  Aws::Vector<ValidationFailure> m_validationFailures;
+
+  Aws::Vector<Aws::String> m_acceptedWarnings;
   bool m_changeIdHasBeenSet = false;
   bool m_startTimeHasBeenSet = false;
   bool m_statusHasBeenSet = false;
@@ -261,6 +337,9 @@ class ChangeProgressStatusDetails {
   bool m_lastUpdatedTimeHasBeenSet = false;
   bool m_configChangeStatusHasBeenSet = false;
   bool m_initiatedByHasBeenSet = false;
+  bool m_clonedBlueGreenUpgradeDetailsHasBeenSet = false;
+  bool m_validationFailuresHasBeenSet = false;
+  bool m_acceptedWarningsHasBeenSet = false;
 };
 
 }  // namespace Model

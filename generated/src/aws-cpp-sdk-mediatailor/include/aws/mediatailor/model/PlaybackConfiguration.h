@@ -9,7 +9,10 @@
 #include <aws/mediatailor/MediaTailor_EXPORTS.h>
 #include <aws/mediatailor/model/AdConditioningConfiguration.h>
 #include <aws/mediatailor/model/AdDecisionServerConfiguration.h>
+#include <aws/mediatailor/model/AdsPersonalizationConcurrency.h>
+#include <aws/mediatailor/model/AdsPersonalizationTimeouts.h>
 #include <aws/mediatailor/model/AvailSuppression.h>
+#include <aws/mediatailor/model/BeaconingConfiguration.h>
 #include <aws/mediatailor/model/Bumper.h>
 #include <aws/mediatailor/model/CdnConfiguration.h>
 #include <aws/mediatailor/model/DashConfiguration.h>
@@ -19,6 +22,7 @@
 #include <aws/mediatailor/model/LivePreRollConfiguration.h>
 #include <aws/mediatailor/model/LogConfiguration.h>
 #include <aws/mediatailor/model/ManifestProcessingRules.h>
+#include <aws/mediatailor/model/YieldOptimizationConfiguration.h>
 
 #include <utility>
 
@@ -540,10 +544,31 @@ class PlaybackConfiguration {
 
   ///@{
   /**
+   * <p>Configuration for Yield Optimization, which fills unsold ad inventory in ad
+   * breaks with programmatic ads from Amazon Publisher Services (APS).</p>
+   */
+  inline const YieldOptimizationConfiguration& GetYieldOptimizationConfiguration() const { return m_yieldOptimizationConfiguration; }
+  inline bool YieldOptimizationConfigurationHasBeenSet() const { return m_yieldOptimizationConfigurationHasBeenSet; }
+  template <typename YieldOptimizationConfigurationT = YieldOptimizationConfiguration>
+  void SetYieldOptimizationConfiguration(YieldOptimizationConfigurationT&& value) {
+    m_yieldOptimizationConfigurationHasBeenSet = true;
+    m_yieldOptimizationConfiguration = std::forward<YieldOptimizationConfigurationT>(value);
+  }
+  template <typename YieldOptimizationConfigurationT = YieldOptimizationConfiguration>
+  PlaybackConfiguration& WithYieldOptimizationConfiguration(YieldOptimizationConfigurationT&& value) {
+    SetYieldOptimizationConfiguration(std::forward<YieldOptimizationConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>A map of lifecycle hook event names to function identifiers. The function
    * mapping specifies which function MediaTailor executes at each lifecycle hook
-   * during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code> and
-   * <code>PRE_ADS_REQUEST</code>. For more information, see <a
+   * during ad insertion. Valid keys are <code>PRE_SESSION_INITIALIZATION</code>,
+   * <code>POST_ORIGIN_RESPONSE</code>, <code>PRE_ADS_REQUEST</code>,
+   * <code>POST_ADS_RESPONSE</code>, and <code>PRE_MANIFEST_INSERTION</code>. For
+   * more information, see <a
    * href="https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-hooks.html">Functions
    * lifecycle hooks</a> in the <i>MediaTailor User Guide</i>.</p>
    */
@@ -562,6 +587,65 @@ class PlaybackConfiguration {
   inline PlaybackConfiguration& AddFunctionMapping(EventName key, Aws::String value) {
     m_functionMappingHasBeenSet = true;
     m_functionMapping.emplace(key, value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The timeout settings for ad decision server interactions. These settings
+   * control how long MediaTailor waits for ADS responses and the total time budget
+   * for ad personalization across live, VOD, and prefetch workflows.</p>
+   */
+  inline const AdsPersonalizationTimeouts& GetAdsPersonalizationTimeouts() const { return m_adsPersonalizationTimeouts; }
+  inline bool AdsPersonalizationTimeoutsHasBeenSet() const { return m_adsPersonalizationTimeoutsHasBeenSet; }
+  template <typename AdsPersonalizationTimeoutsT = AdsPersonalizationTimeouts>
+  void SetAdsPersonalizationTimeouts(AdsPersonalizationTimeoutsT&& value) {
+    m_adsPersonalizationTimeoutsHasBeenSet = true;
+    m_adsPersonalizationTimeouts = std::forward<AdsPersonalizationTimeoutsT>(value);
+  }
+  template <typename AdsPersonalizationTimeoutsT = AdsPersonalizationTimeouts>
+  PlaybackConfiguration& WithAdsPersonalizationTimeouts(AdsPersonalizationTimeoutsT&& value) {
+    SetAdsPersonalizationTimeouts(std::forward<AdsPersonalizationTimeoutsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The concurrency settings for ad decision server interactions. These settings
+   * control how many simultaneous ADS requests MediaTailor makes per manifest
+   * request.</p>
+   */
+  inline const AdsPersonalizationConcurrency& GetAdsPersonalizationConcurrency() const { return m_adsPersonalizationConcurrency; }
+  inline bool AdsPersonalizationConcurrencyHasBeenSet() const { return m_adsPersonalizationConcurrencyHasBeenSet; }
+  template <typename AdsPersonalizationConcurrencyT = AdsPersonalizationConcurrency>
+  void SetAdsPersonalizationConcurrency(AdsPersonalizationConcurrencyT&& value) {
+    m_adsPersonalizationConcurrencyHasBeenSet = true;
+    m_adsPersonalizationConcurrency = std::forward<AdsPersonalizationConcurrencyT>(value);
+  }
+  template <typename AdsPersonalizationConcurrencyT = AdsPersonalizationConcurrency>
+  PlaybackConfiguration& WithAdsPersonalizationConcurrency(AdsPersonalizationConcurrencyT&& value) {
+    SetAdsPersonalizationConcurrency(std::forward<AdsPersonalizationConcurrencyT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The beaconing configuration for this playback configuration, which controls
+   * whether MediaTailor includes beacons of its own in the ad tracking response.</p>
+   */
+  inline const BeaconingConfiguration& GetBeaconingConfiguration() const { return m_beaconingConfiguration; }
+  inline bool BeaconingConfigurationHasBeenSet() const { return m_beaconingConfigurationHasBeenSet; }
+  template <typename BeaconingConfigurationT = BeaconingConfiguration>
+  void SetBeaconingConfiguration(BeaconingConfigurationT&& value) {
+    m_beaconingConfigurationHasBeenSet = true;
+    m_beaconingConfiguration = std::forward<BeaconingConfigurationT>(value);
+  }
+  template <typename BeaconingConfigurationT = BeaconingConfiguration>
+  PlaybackConfiguration& WithBeaconingConfiguration(BeaconingConfigurationT&& value) {
+    SetBeaconingConfiguration(std::forward<BeaconingConfigurationT>(value));
     return *this;
   }
   ///@}
@@ -614,7 +698,15 @@ class PlaybackConfiguration {
 
   AdDecisionServerConfiguration m_adDecisionServerConfiguration;
 
+  YieldOptimizationConfiguration m_yieldOptimizationConfiguration;
+
   Aws::Map<EventName, Aws::String> m_functionMapping;
+
+  AdsPersonalizationTimeouts m_adsPersonalizationTimeouts;
+
+  AdsPersonalizationConcurrency m_adsPersonalizationConcurrency;
+
+  BeaconingConfiguration m_beaconingConfiguration;
   bool m_adDecisionServerUrlHasBeenSet = false;
   bool m_availSuppressionHasBeenSet = false;
   bool m_bumperHasBeenSet = false;
@@ -639,7 +731,11 @@ class PlaybackConfiguration {
   bool m_videoContentSourceUrlHasBeenSet = false;
   bool m_adConditioningConfigurationHasBeenSet = false;
   bool m_adDecisionServerConfigurationHasBeenSet = false;
+  bool m_yieldOptimizationConfigurationHasBeenSet = false;
   bool m_functionMappingHasBeenSet = false;
+  bool m_adsPersonalizationTimeoutsHasBeenSet = false;
+  bool m_adsPersonalizationConcurrencyHasBeenSet = false;
+  bool m_beaconingConfigurationHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -41,7 +41,7 @@ Aws::String PutObjectLegalHoldRequest::SerializePayload() const {
 
   m_legalHold.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -112,3 +112,5 @@ Aws::String PutObjectLegalHoldRequest::GetChecksumAlgorithmName() const {
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
 }
+
+bool PutObjectLegalHoldRequest::ChecksumAlgorithmIsSet() const { return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET; }

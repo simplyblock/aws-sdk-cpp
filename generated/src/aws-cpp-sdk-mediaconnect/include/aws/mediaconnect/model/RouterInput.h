@@ -239,7 +239,13 @@ class RouterInput {
 
   ///@{
   /**
-   * <p>The tier level of the router input.</p>
+   * <p>The tier level for the router input. The tier sets the maximum bitrate, in
+   * Mbps, for the router input. Valid values include the following:</p> <ul> <li>
+   * <p> <code>INPUT_20</code> – 20 Mbps</p> </li> <li> <p> <code>INPUT_50</code> –
+   * 50 Mbps</p> </li> <li> <p> <code>INPUT_100</code> – 100 Mbps</p> </li> <li> <p>
+   * <code>INPUT_250</code> – 250 Mbps</p> </li> <li> <p> <code>INPUT_500</code> –
+   * 500 Mbps</p> </li> </ul> <p>The 250 Mbps and 500 Mbps tiers are high-bitrate
+   * tiers that support TR-07 (JPEG XS) workflows.</p>
    */
   inline RouterInputTier GetTier() const { return m_tier; }
   inline bool TierHasBeenSet() const { return m_tierHasBeenSet; }
@@ -508,6 +514,31 @@ class RouterInput {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The Amazon Resource Names (ARNs) of one or more destination endpoints that
+   * are associated with this router input.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetAssociatedDestinationEndpointArns() const { return m_associatedDestinationEndpointArns; }
+  inline bool AssociatedDestinationEndpointArnsHasBeenSet() const { return m_associatedDestinationEndpointArnsHasBeenSet; }
+  template <typename AssociatedDestinationEndpointArnsT = Aws::Vector<Aws::String>>
+  void SetAssociatedDestinationEndpointArns(AssociatedDestinationEndpointArnsT&& value) {
+    m_associatedDestinationEndpointArnsHasBeenSet = true;
+    m_associatedDestinationEndpointArns = std::forward<AssociatedDestinationEndpointArnsT>(value);
+  }
+  template <typename AssociatedDestinationEndpointArnsT = Aws::Vector<Aws::String>>
+  RouterInput& WithAssociatedDestinationEndpointArns(AssociatedDestinationEndpointArnsT&& value) {
+    SetAssociatedDestinationEndpointArns(std::forward<AssociatedDestinationEndpointArnsT>(value));
+    return *this;
+  }
+  template <typename AssociatedDestinationEndpointArnsT = Aws::String>
+  RouterInput& AddAssociatedDestinationEndpointArns(AssociatedDestinationEndpointArnsT&& value) {
+    m_associatedDestinationEndpointArnsHasBeenSet = true;
+    m_associatedDestinationEndpointArns.emplace_back(std::forward<AssociatedDestinationEndpointArnsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_name;
 
@@ -560,6 +591,8 @@ class RouterInput {
   RouterContentQualityAnalysisType m_contentQualityAnalysisType{RouterContentQualityAnalysisType::NOT_SET};
 
   RouterContentQualityAnalysisConfiguration m_contentQualityAnalysisConfiguration;
+
+  Aws::Vector<Aws::String> m_associatedDestinationEndpointArns;
   bool m_nameHasBeenSet = false;
   bool m_arnHasBeenSet = false;
   bool m_idHasBeenSet = false;
@@ -586,6 +619,7 @@ class RouterInput {
   bool m_maintenanceScheduleHasBeenSet = false;
   bool m_contentQualityAnalysisTypeHasBeenSet = false;
   bool m_contentQualityAnalysisConfigurationHasBeenSet = false;
+  bool m_associatedDestinationEndpointArnsHasBeenSet = false;
 };
 
 }  // namespace Model

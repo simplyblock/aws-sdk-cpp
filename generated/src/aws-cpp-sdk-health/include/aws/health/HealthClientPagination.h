@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -13,6 +13,9 @@
 #include <aws/health/model/DescribeEventTypesPaginationTraits.h>
 #include <aws/health/model/DescribeEventsForOrganizationPaginationTraits.h>
 #include <aws/health/model/DescribeEventsPaginationTraits.h>
+#include <aws/health/model/DescribeServiceLifecyclePaginationTraits.h>
+#include <aws/health/model/DescribeTagsForOrganizationPaginationTraits.h>
+#include <aws/health/model/DescribeTagsPaginationTraits.h>
 
 namespace Aws {
 namespace Health {
@@ -36,6 +39,14 @@ using DescribeEventsForOrganizationPaginator =
                                       Pagination::DescribeEventsForOrganizationPaginationTraits<HealthClient>>;
 using DescribeEventTypesPaginator = Aws::Utils::Pagination::Paginator<HealthClient, Model::DescribeEventTypesRequest,
                                                                       Pagination::DescribeEventTypesPaginationTraits<HealthClient>>;
+using DescribeServiceLifecyclePaginator =
+    Aws::Utils::Pagination::Paginator<HealthClient, Model::DescribeServiceLifecycleRequest,
+                                      Pagination::DescribeServiceLifecyclePaginationTraits<HealthClient>>;
+using DescribeTagsPaginator =
+    Aws::Utils::Pagination::Paginator<HealthClient, Model::DescribeTagsRequest, Pagination::DescribeTagsPaginationTraits<HealthClient>>;
+using DescribeTagsForOrganizationPaginator =
+    Aws::Utils::Pagination::Paginator<HealthClient, Model::DescribeTagsForOrganizationRequest,
+                                      Pagination::DescribeTagsForOrganizationPaginationTraits<HealthClient>>;
 
 }  // namespace Health
 }  // namespace Aws

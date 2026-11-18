@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-lexv2-models "C++ SDK for the AWS lexv2-models service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-lexv2-models "C++ SDK for Amazon Lex Model Building V2" aws-cpp-sdk-core)
 
 file(GLOB AWS_LEXV2-MODELS_HEADERS
     "include/aws/lexv2-models/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LEXV2-MODELS_HEADERS
 
 file(GLOB AWS_LEXV2-MODELS_MODEL_HEADERS
     "include/aws/lexv2-models/model/*.h"
+)
+
+file(GLOB AWS_LEXV2-MODELS_INTERNAL_HEADERS
+    "include/aws/lexv2-models/internal/*.h"
 )
 
 file(GLOB AWS_LEXV2-MODELS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LEXV2-MODELS_MODEL_SOURCE
 
 file(GLOB LEXV2-MODELS_UNIFIED_HEADERS
     ${AWS_LEXV2-MODELS_HEADERS}
+    ${AWS_LEXV2-MODELS_INTERNAL_HEADERS}
     ${AWS_LEXV2-MODELS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\lexv2-models" FILES ${AWS_LEXV2-MODELS_HEADERS})
+        source_group("Header Files\\aws\\lexv2-models\\internal" FILES ${AWS_LEXV2-MODELS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\lexv2-models\\model" FILES ${AWS_LEXV2-MODELS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LEXV2-MODELS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LEXV2-MODELS_MODEL_SOURCE})

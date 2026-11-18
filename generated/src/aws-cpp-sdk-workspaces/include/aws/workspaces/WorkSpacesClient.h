@@ -7,7 +7,7 @@
 #include <aws/core/client/AWSClient.h>
 #include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/client/ClientConfiguration.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/WorkSpacesPaginationBase.h>
 #include <aws/workspaces/WorkSpacesServiceClientModel.h>
 #include <aws/workspaces/WorkSpacesWaiter.h>
@@ -40,12 +40,12 @@ namespace WorkSpaces {
  * href="https://docs.aws.amazon.com/cli/latest/reference/workspaces/index.html">WorkSpaces
  * section of the CLI Reference</a>.</p>
  */
-class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
+class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSRpcV2CborClient,
                                             public Aws::Client::ClientWithAsyncTemplateMethods<WorkSpacesClient>,
                                             public WorkSpacesPaginationBase<WorkSpacesClient>,
                                             public WorkSpacesWaiter<WorkSpacesClient> {
  public:
-  typedef Aws::Client::AWSJsonClient BASECLASS;
+  typedef Aws::Client::AWSRpcV2CborClient BASECLASS;
   static const char* GetServiceName();
   static const char* GetAllocationTag();
 
@@ -571,11 +571,11 @@ class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
    * Core. Contact your account team to be allow-listed to use this value. For more
    * information, see <a href="http://aws.amazon.com/workspaces/core/">Amazon
    * WorkSpaces Core</a>.</p> </li> <li> <p>You don't need to specify the
-   * <code>PCOIP</code> protocol for Linux bundles because <code>DCV</code> (formerly
-   * WSP) is the default protocol for those bundles.</p> </li> <li> <p>User-decoupled
-   * WorkSpaces are only supported by Amazon WorkSpaces Core.</p> </li> <li>
-   * <p>Review your running mode to ensure you are using one that is optimal for your
-   * needs and budget. For more information on switching running modes, see <a
+   * <code>PCOIP</code> protocol for Linux bundles because DCV (formerly WSP) is the
+   * default protocol for those bundles.</p> </li> <li> <p>User-decoupled WorkSpaces
+   * are only supported by Amazon WorkSpaces Core.</p> </li> <li> <p>Review your
+   * running mode to ensure you are using one that is optimal for your needs and
+   * budget. For more information on switching running modes, see <a
    * href="http://aws.amazon.com/workspaces-family/workspaces/faqs/#:~:text=Can%20I%20switch%20between%20hourly%20and%20monthly%20billing%20on%20WorkSpaces%20Personal%3F">
    * Can I switch between hourly and monthly billing?</a> </p> </li> </ul>
    * <p><h3>See Also:</h3>   <a
@@ -604,7 +604,13 @@ class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Creates a pool of WorkSpaces.</p><p><h3>See Also:</h3>   <a
+   *  <p>End of support notice: On December 31, 2027, Amazon Web Services will
+   * end support for Amazon WorkSpaces Pools. After December 31, 2027, you will no
+   * longer be able to access the Amazon WorkSpaces Pools console or Amazon
+   * WorkSpaces Pools resources. For more information, see <a
+   * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/wsp-pools-end-of-support.html">Amazon
+   * WorkSpaces Pools end of support</a>. </p>  <p>Creates a pool of
+   * WorkSpaces.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/CreateWorkspacesPool">AWS
    * API Reference</a></p>
    */
@@ -1594,8 +1600,14 @@ class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Retrieves a list that describes the streaming sessions for a specified
-   * pool.</p><p><h3>See Also:</h3>   <a
+   *  <p>End of support notice: On December 31, 2027, Amazon Web Services will
+   * end support for Amazon WorkSpaces Pools. After December 31, 2027, you will no
+   * longer be able to access the Amazon WorkSpaces Pools console or Amazon
+   * WorkSpaces Pools resources. For more information, see <a
+   * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/wsp-pools-end-of-support.html">Amazon
+   * WorkSpaces Pools end of support</a>. </p>  <p>Retrieves a list that
+   * describes the streaming sessions for a specified pool.</p><p><h3>See Also:</h3>
+   * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/DescribeWorkspacesPoolSessions">AWS
    * API Reference</a></p>
    */
@@ -1624,7 +1636,13 @@ class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Describes the specified WorkSpaces Pools.</p><p><h3>See Also:</h3>   <a
+   *  <p>End of support notice: On December 31, 2027, Amazon Web Services will
+   * end support for Amazon WorkSpaces Pools. After December 31, 2027, you will no
+   * longer be able to access the Amazon WorkSpaces Pools console or Amazon
+   * WorkSpaces Pools resources. For more information, see <a
+   * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/wsp-pools-end-of-support.html">Amazon
+   * WorkSpaces Pools end of support</a>. </p>  <p>Describes the specified
+   * WorkSpaces Pools.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/DescribeWorkspacesPools">AWS
    * API Reference</a></p>
    */
@@ -1950,7 +1968,9 @@ class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
    * <p>For available migration scenarios, details about what happens during
    * migration, and best practices, see <a
    * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/migrate-workspaces.html">Migrate
-   * a WorkSpace</a>.</p><p><h3>See Also:</h3>   <a
+   * a WorkSpace</a>.</p>  <p>If the source WorkSpace has nested virtualization
+   * enabled and the target bundle does not support nested virtualization, the
+   * migration fails.</p> <p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/MigrateWorkspace">AWS
    * API Reference</a></p>
    */
@@ -2523,9 +2543,15 @@ class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Starts the specified pool.</p> <p>You cannot start a pool unless it has a
-   * running mode of <code>AutoStop</code> and a state of
-   * <code>STOPPED</code>.</p><p><h3>See Also:</h3>   <a
+   *  <p>End of support notice: On December 31, 2027, Amazon Web Services will
+   * end support for Amazon WorkSpaces Pools. After December 31, 2027, you will no
+   * longer be able to access the Amazon WorkSpaces Pools console or Amazon
+   * WorkSpaces Pools resources. For more information, see <a
+   * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/wsp-pools-end-of-support.html">Amazon
+   * WorkSpaces Pools end of support</a>. </p>  <p>Starts the specified
+   * pool.</p> <p>You cannot start a pool unless it has a running mode of
+   * <code>AutoStop</code> and a state of <code>STOPPED</code>.</p><p><h3>See
+   * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/StartWorkspacesPool">AWS
    * API Reference</a></p>
    */
@@ -2579,9 +2605,15 @@ class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Stops the specified pool.</p> <p>You cannot stop a WorkSpace pool unless it
-   * has a running mode of <code>AutoStop</code> and a state of
-   * <code>AVAILABLE</code>, <code>IMPAIRED</code>, <code>UNHEALTHY</code>, or
+   *  <p>End of support notice: On December 31, 2027, Amazon Web Services will
+   * end support for Amazon WorkSpaces Pools. After December 31, 2027, you will no
+   * longer be able to access the Amazon WorkSpaces Pools console or Amazon
+   * WorkSpaces Pools resources. For more information, see <a
+   * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/wsp-pools-end-of-support.html">Amazon
+   * WorkSpaces Pools end of support</a>. </p>  <p>Stops the specified
+   * pool.</p> <p>You cannot stop a WorkSpace pool unless it has a running mode of
+   * <code>AutoStop</code> and a state of <code>AVAILABLE</code>,
+   * <code>IMPAIRED</code>, <code>UNHEALTHY</code>, or
    * <code>ERROR</code>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/StopWorkspacesPool">AWS
    * API Reference</a></p>
@@ -2656,7 +2688,13 @@ class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Terminates the specified pool.</p><p><h3>See Also:</h3>   <a
+   *  <p>End of support notice: On December 31, 2027, Amazon Web Services will
+   * end support for Amazon WorkSpaces Pools. After December 31, 2027, you will no
+   * longer be able to access the Amazon WorkSpaces Pools console or Amazon
+   * WorkSpaces Pools resources. For more information, see <a
+   * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/wsp-pools-end-of-support.html">Amazon
+   * WorkSpaces Pools end of support</a>. </p>  <p>Terminates the specified
+   * pool.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/TerminateWorkspacesPool">AWS
    * API Reference</a></p>
    */
@@ -2683,7 +2721,13 @@ class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Terminates the pool session.</p><p><h3>See Also:</h3>   <a
+   *  <p>End of support notice: On December 31, 2027, Amazon Web Services will
+   * end support for Amazon WorkSpaces Pools. After December 31, 2027, you will no
+   * longer be able to access the Amazon WorkSpaces Pools console or Amazon
+   * WorkSpaces Pools resources. For more information, see <a
+   * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/wsp-pools-end-of-support.html">Amazon
+   * WorkSpaces Pools end of support</a>. </p>  <p>Terminates the pool
+   * session.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/TerminateWorkspacesPoolSession">AWS
    * API Reference</a></p>
    */
@@ -2892,7 +2936,13 @@ class AWS_WORKSPACES_API WorkSpacesClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Updates the specified pool.</p><p><h3>See Also:</h3>   <a
+   *  <p>End of support notice: On December 31, 2027, Amazon Web Services will
+   * end support for Amazon WorkSpaces Pools. After December 31, 2027, you will no
+   * longer be able to access the Amazon WorkSpaces Pools console or Amazon
+   * WorkSpaces Pools resources. For more information, see <a
+   * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/wsp-pools-end-of-support.html">Amazon
+   * WorkSpaces Pools end of support</a>. </p>  <p>Updates the specified
+   * pool.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/UpdateWorkspacesPool">AWS
    * API Reference</a></p>
    */

@@ -6,21 +6,25 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/network-firewall/model/AvailabilityZoneMapping.h>
 #include <aws/network-firewall/model/EnabledAnalysisType.h>
 #include <aws/network-firewall/model/EncryptionConfiguration.h>
+#include <aws/network-firewall/model/NatGatewayCreateMapping.h>
+#include <aws/network-firewall/model/ProxySettings.h>
 #include <aws/network-firewall/model/SubnetMapping.h>
 #include <aws/network-firewall/model/Tag.h>
+#include <aws/network-firewall/model/TransparentFilteringNatScope.h>
+#include <aws/network-firewall/model/VpcEndpoint.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace NetworkFirewall {
 namespace Model {
@@ -44,9 +48,9 @@ namespace Model {
 class Firewall {
  public:
   AWS_NETWORKFIREWALL_API Firewall() = default;
-  AWS_NETWORKFIREWALL_API Firewall(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Firewall& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_NETWORKFIREWALL_API Firewall(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API Firewall& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -302,13 +306,13 @@ class Firewall {
    * <p>The number of <code>VpcEndpointAssociation</code> resources that use this
    * firewall. </p>
    */
-  inline int GetNumberOfAssociations() const { return m_numberOfAssociations; }
+  inline int64_t GetNumberOfAssociations() const { return m_numberOfAssociations; }
   inline bool NumberOfAssociationsHasBeenSet() const { return m_numberOfAssociationsHasBeenSet; }
-  inline void SetNumberOfAssociations(int value) {
+  inline void SetNumberOfAssociations(int64_t value) {
     m_numberOfAssociationsHasBeenSet = true;
     m_numberOfAssociations = value;
   }
-  inline Firewall& WithNumberOfAssociations(int value) {
+  inline Firewall& WithNumberOfAssociations(int64_t value) {
     SetNumberOfAssociations(value);
     return *this;
   }
@@ -420,6 +424,131 @@ class Firewall {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The NAT gateways that you specified for Network Firewall to create for a
+   * proxy mode firewall. To get the IDs and status of the NAT gateways that are
+   * attached to the firewall, see <code>NatGatewayAttachments</code> in the
+   * firewall's <code>SyncStates</code>.</p>
+   */
+  inline const Aws::Vector<NatGatewayCreateMapping>& GetNatGatewayCreateMappings() const { return m_natGatewayCreateMappings; }
+  inline bool NatGatewayCreateMappingsHasBeenSet() const { return m_natGatewayCreateMappingsHasBeenSet; }
+  template <typename NatGatewayCreateMappingsT = Aws::Vector<NatGatewayCreateMapping>>
+  void SetNatGatewayCreateMappings(NatGatewayCreateMappingsT&& value) {
+    m_natGatewayCreateMappingsHasBeenSet = true;
+    m_natGatewayCreateMappings = std::forward<NatGatewayCreateMappingsT>(value);
+  }
+  template <typename NatGatewayCreateMappingsT = Aws::Vector<NatGatewayCreateMapping>>
+  Firewall& WithNatGatewayCreateMappings(NatGatewayCreateMappingsT&& value) {
+    SetNatGatewayCreateMappings(std::forward<NatGatewayCreateMappingsT>(value));
+    return *this;
+  }
+  template <typename NatGatewayCreateMappingsT = NatGatewayCreateMapping>
+  Firewall& AddNatGatewayCreateMappings(NatGatewayCreateMappingsT&& value) {
+    m_natGatewayCreateMappingsHasBeenSet = true;
+    m_natGatewayCreateMappings.emplace_back(std::forward<NatGatewayCreateMappingsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The proxy settings of a proxy mode firewall: its listeners and, if you
+   * specified them, your own <code>CertificateArn</code> and
+   * <code>DomainName</code>.</p>
+   */
+  inline const ProxySettings& GetProxySettings() const { return m_proxySettings; }
+  inline bool ProxySettingsHasBeenSet() const { return m_proxySettingsHasBeenSet; }
+  template <typename ProxySettingsT = ProxySettings>
+  void SetProxySettings(ProxySettingsT&& value) {
+    m_proxySettingsHasBeenSet = true;
+    m_proxySettings = std::forward<ProxySettingsT>(value);
+  }
+  template <typename ProxySettingsT = ProxySettings>
+  Firewall& WithProxySettings(ProxySettingsT&& value) {
+    SetProxySettings(std::forward<ProxySettingsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The VPC and subnets for the endpoints of a proxy mode firewall.</p>
+   */
+  inline const VpcEndpoint& GetVpcEndpoint() const { return m_vpcEndpoint; }
+  inline bool VpcEndpointHasBeenSet() const { return m_vpcEndpointHasBeenSet; }
+  template <typename VpcEndpointT = VpcEndpoint>
+  void SetVpcEndpoint(VpcEndpointT&& value) {
+    m_vpcEndpointHasBeenSet = true;
+    m_vpcEndpoint = std::forward<VpcEndpointT>(value);
+  }
+  template <typename VpcEndpointT = VpcEndpoint>
+  Firewall& WithVpcEndpoint(VpcEndpointT&& value) {
+    SetVpcEndpoint(std::forward<VpcEndpointT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The unique identifier of the context store that the firewall uses to resolve
+   * context sets in its rule groups. Network Firewall discovers the context store
+   * from the transit gateway association in Network Manager. This field is only
+   * present for transit gateway-attached firewalls whose transit gateway is
+   * associated with a context store.</p>
+   */
+  inline const Aws::String& GetContextStoreId() const { return m_contextStoreId; }
+  inline bool ContextStoreIdHasBeenSet() const { return m_contextStoreIdHasBeenSet; }
+  template <typename ContextStoreIdT = Aws::String>
+  void SetContextStoreId(ContextStoreIdT&& value) {
+    m_contextStoreIdHasBeenSet = true;
+    m_contextStoreId = std::forward<ContextStoreIdT>(value);
+  }
+  template <typename ContextStoreIdT = Aws::String>
+  Firewall& WithContextStoreId(ContextStoreIdT&& value) {
+    SetContextStoreId(std::forward<ContextStoreIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Amazon Web Services account ID that owns the context store. This may be
+   * different from the firewall owner's account ID.</p>
+   */
+  inline const Aws::String& GetContextStoreOwnerAccountId() const { return m_contextStoreOwnerAccountId; }
+  inline bool ContextStoreOwnerAccountIdHasBeenSet() const { return m_contextStoreOwnerAccountIdHasBeenSet; }
+  template <typename ContextStoreOwnerAccountIdT = Aws::String>
+  void SetContextStoreOwnerAccountId(ContextStoreOwnerAccountIdT&& value) {
+    m_contextStoreOwnerAccountIdHasBeenSet = true;
+    m_contextStoreOwnerAccountId = std::forward<ContextStoreOwnerAccountIdT>(value);
+  }
+  template <typename ContextStoreOwnerAccountIdT = Aws::String>
+  Firewall& WithContextStoreOwnerAccountId(ContextStoreOwnerAccountIdT&& value) {
+    SetContextStoreOwnerAccountId(std::forward<ContextStoreOwnerAccountIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>How a proxy mode firewall handles traffic that isn't sent to its proxy
+   * listener. <code>NAT_ALL</code> sends this traffic out through the firewall's NAT
+   * gateway after inspection. <code>NAT_NONE</code> returns it to the firewall
+   * endpoint without address translation.</p>
+   */
+  inline TransparentFilteringNatScope GetTransparentFilteringNatScope() const { return m_transparentFilteringNatScope; }
+  inline bool TransparentFilteringNatScopeHasBeenSet() const { return m_transparentFilteringNatScopeHasBeenSet; }
+  inline void SetTransparentFilteringNatScope(TransparentFilteringNatScope value) {
+    m_transparentFilteringNatScopeHasBeenSet = true;
+    m_transparentFilteringNatScope = value;
+  }
+  inline Firewall& WithTransparentFilteringNatScope(TransparentFilteringNatScope value) {
+    SetTransparentFilteringNatScope(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_firewallName;
 
@@ -445,7 +574,7 @@ class Firewall {
 
   EncryptionConfiguration m_encryptionConfiguration;
 
-  int m_numberOfAssociations{0};
+  int64_t m_numberOfAssociations{0};
 
   Aws::Vector<EnabledAnalysisType> m_enabledAnalysisTypes;
 
@@ -456,6 +585,18 @@ class Firewall {
   Aws::Vector<AvailabilityZoneMapping> m_availabilityZoneMappings;
 
   bool m_availabilityZoneChangeProtection{false};
+
+  Aws::Vector<NatGatewayCreateMapping> m_natGatewayCreateMappings;
+
+  ProxySettings m_proxySettings;
+
+  VpcEndpoint m_vpcEndpoint;
+
+  Aws::String m_contextStoreId;
+
+  Aws::String m_contextStoreOwnerAccountId;
+
+  TransparentFilteringNatScope m_transparentFilteringNatScope{TransparentFilteringNatScope::NOT_SET};
   bool m_firewallNameHasBeenSet = false;
   bool m_firewallArnHasBeenSet = false;
   bool m_firewallPolicyArnHasBeenSet = false;
@@ -474,6 +615,12 @@ class Firewall {
   bool m_transitGatewayOwnerAccountIdHasBeenSet = false;
   bool m_availabilityZoneMappingsHasBeenSet = false;
   bool m_availabilityZoneChangeProtectionHasBeenSet = false;
+  bool m_natGatewayCreateMappingsHasBeenSet = false;
+  bool m_proxySettingsHasBeenSet = false;
+  bool m_vpcEndpointHasBeenSet = false;
+  bool m_contextStoreIdHasBeenSet = false;
+  bool m_contextStoreOwnerAccountIdHasBeenSet = false;
+  bool m_transparentFilteringNatScopeHasBeenSet = false;
 };
 
 }  // namespace Model

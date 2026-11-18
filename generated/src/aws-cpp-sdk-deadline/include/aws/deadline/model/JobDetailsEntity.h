@@ -8,7 +8,7 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/deadline/Deadline_EXPORTS.h>
-#include <aws/deadline/model/JobAttachmentSettings.h>
+#include <aws/deadline/model/JobDetailsJobAttachmentSettings.h>
 #include <aws/deadline/model/JobParameter.h>
 #include <aws/deadline/model/JobRunAsUser.h>
 #include <aws/deadline/model/PathMappingRule.h>
@@ -59,14 +59,14 @@ class JobDetailsEntity {
   /**
    * <p>The job attachment settings.</p>
    */
-  inline const JobAttachmentSettings& GetJobAttachmentSettings() const { return m_jobAttachmentSettings; }
+  inline const JobDetailsJobAttachmentSettings& GetJobAttachmentSettings() const { return m_jobAttachmentSettings; }
   inline bool JobAttachmentSettingsHasBeenSet() const { return m_jobAttachmentSettingsHasBeenSet; }
-  template <typename JobAttachmentSettingsT = JobAttachmentSettings>
+  template <typename JobAttachmentSettingsT = JobDetailsJobAttachmentSettings>
   void SetJobAttachmentSettings(JobAttachmentSettingsT&& value) {
     m_jobAttachmentSettingsHasBeenSet = true;
     m_jobAttachmentSettings = std::forward<JobAttachmentSettingsT>(value);
   }
-  template <typename JobAttachmentSettingsT = JobAttachmentSettings>
+  template <typename JobAttachmentSettingsT = JobDetailsJobAttachmentSettings>
   JobDetailsEntity& WithJobAttachmentSettings(JobAttachmentSettingsT&& value) {
     SetJobAttachmentSettings(std::forward<JobAttachmentSettingsT>(value));
     return *this;
@@ -171,6 +171,31 @@ class JobDetailsEntity {
 
   ///@{
   /**
+   * <p>The Open Job Description extensions that the job template uses. This value is
+   * used by the worker agent.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetExtensions() const { return m_extensions; }
+  inline bool ExtensionsHasBeenSet() const { return m_extensionsHasBeenSet; }
+  template <typename ExtensionsT = Aws::Vector<Aws::String>>
+  void SetExtensions(ExtensionsT&& value) {
+    m_extensionsHasBeenSet = true;
+    m_extensions = std::forward<ExtensionsT>(value);
+  }
+  template <typename ExtensionsT = Aws::Vector<Aws::String>>
+  JobDetailsEntity& WithExtensions(ExtensionsT&& value) {
+    SetExtensions(std::forward<ExtensionsT>(value));
+    return *this;
+  }
+  template <typename ExtensionsT = Aws::String>
+  JobDetailsEntity& AddExtensions(ExtensionsT&& value) {
+    m_extensionsHasBeenSet = true;
+    m_extensions.emplace_back(std::forward<ExtensionsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The path mapping rules.</p>
    */
   inline const Aws::Vector<PathMappingRule>& GetPathMappingRules() const { return m_pathMappingRules; }
@@ -195,7 +220,7 @@ class JobDetailsEntity {
  private:
   Aws::String m_jobId;
 
-  JobAttachmentSettings m_jobAttachmentSettings;
+  JobDetailsJobAttachmentSettings m_jobAttachmentSettings;
 
   JobRunAsUser m_jobRunAsUser;
 
@@ -207,6 +232,8 @@ class JobDetailsEntity {
 
   Aws::String m_schemaVersion;
 
+  Aws::Vector<Aws::String> m_extensions;
+
   Aws::Vector<PathMappingRule> m_pathMappingRules;
   bool m_jobIdHasBeenSet = false;
   bool m_jobAttachmentSettingsHasBeenSet = false;
@@ -215,6 +242,7 @@ class JobDetailsEntity {
   bool m_queueRoleArnHasBeenSet = false;
   bool m_parametersHasBeenSet = false;
   bool m_schemaVersionHasBeenSet = false;
+  bool m_extensionsHasBeenSet = false;
   bool m_pathMappingRulesHasBeenSet = false;
 };
 

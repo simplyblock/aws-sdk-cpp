@@ -28,7 +28,9 @@ enum class ExecutionBlockType {
   LambdaEventSourceMapping,
   AuroraServerlessScaling,
   AuroraProvisionedScaling,
-  NeptuneGlobalDatabase
+  NeptuneGlobalDatabase,
+  RdsSwitchoverReadReplica,
+  SSMSendCommand
 };
 
 namespace ExecutionBlockTypeMapper {

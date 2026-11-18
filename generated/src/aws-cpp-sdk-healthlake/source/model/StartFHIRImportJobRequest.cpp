@@ -43,6 +43,22 @@ Aws::String StartFHIRImportJobRequest::SerializePayload() const {
     payload.WithString("ValidationLevel", ValidationLevelMapper::GetNameForValidationLevel(m_validationLevel));
   }
 
+  if (m_profileIdHasBeenSet) {
+    payload.WithString("ProfileId", m_profileId);
+  }
+
+  if (m_inputFormatHasBeenSet) {
+    payload.WithString("InputFormat", m_inputFormat);
+  }
+
+  if (m_driftDetectionEnabledHasBeenSet) {
+    payload.WithBool("DriftDetectionEnabled", m_driftDetectionEnabled);
+  }
+
+  if (m_provenanceEnabledHasBeenSet) {
+    payload.WithBool("ProvenanceEnabled", m_provenanceEnabled);
+  }
+
   return payload.View().WriteReadable();
 }
 

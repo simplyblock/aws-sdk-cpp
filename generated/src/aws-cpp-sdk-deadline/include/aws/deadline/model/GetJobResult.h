@@ -28,13 +28,6 @@ class JsonValue;
 }  // namespace Utils
 namespace deadline {
 namespace Model {
-/**
- * <p>Mixin that adds an optional ARN field to response structures. Apply to
- * SummaryMixins (flows into Get, Summary, and BatchGet) and Create
- * outputs.</p><p><h3>See Also:</h3>   <a
- * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/GetJobResponse">AWS
- * API Reference</a></p>
- */
 class GetJobResult {
  public:
   AWS_DEADLINE_API GetJobResult() = default;
@@ -158,7 +151,8 @@ class GetJobResult {
 
   ///@{
   /**
-   * <p>The date and time the resource was updated.</p>
+   * <p>The date and time the resource was updated. Task status changes don't update
+   * this value.</p>
    */
   inline const Aws::Utils::DateTime& GetUpdatedAt() const { return m_updatedAt; }
   template <typename UpdatedAtT = Aws::Utils::DateTime>
@@ -192,7 +186,8 @@ class GetJobResult {
 
   ///@{
   /**
-   * <p>The date and time the resource started running.</p>
+   * <p>The date and time the resource started running. Requeuing the job doesn't
+   * change this value.</p>
    */
   inline const Aws::Utils::DateTime& GetStartedAt() const { return m_startedAt; }
   template <typename StartedAtT = Aws::Utils::DateTime>
@@ -209,7 +204,8 @@ class GetJobResult {
 
   ///@{
   /**
-   * <p>The date and time the resource ended running.</p>
+   * <p>The date and time the resource ended running. Returned only when the job has
+   * finished.</p>
    */
   inline const Aws::Utils::DateTime& GetEndedAt() const { return m_endedAt; }
   template <typename EndedAtT = Aws::Utils::DateTime>

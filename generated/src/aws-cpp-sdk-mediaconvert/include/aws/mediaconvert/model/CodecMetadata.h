@@ -6,9 +6,12 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediaconvert/MediaConvert_EXPORTS.h>
+#include <aws/mediaconvert/model/AspectRatio.h>
 #include <aws/mediaconvert/model/ColorPrimaries.h>
 #include <aws/mediaconvert/model/ContentLightLevel.h>
+#include <aws/mediaconvert/model/DolbyVisionMetadata.h>
 #include <aws/mediaconvert/model/FrameRate.h>
+#include <aws/mediaconvert/model/Hdr10PlusPresence.h>
 #include <aws/mediaconvert/model/MatrixCoefficients.h>
 #include <aws/mediaconvert/model/TransferCharacteristics.h>
 
@@ -29,7 +32,11 @@ namespace Model {
  * information provides detailed technical specifications about how the video was
  * encoded, including profile settings, resolution details, and color space
  * information that can help you understand the source video characteristics and
- * make informed encoding decisions.<p><h3>See Also:</h3>   <a
+ * make informed encoding decisions. These fields are returned for H.264 (AVC),
+ * H.265 (HEVC), and MPEG-2 video, and might not be returned for other codecs. For
+ * MPEG-TS and MPEG-PS inputs, color information (color primaries, transfer
+ * characteristics, and matrix coefficients) appears in these fields rather than in
+ * the top-level videoProperties.<p><h3>See Also:</h3>   <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/CodecMetadata">AWS
  * API Reference</a></p>
  */
@@ -138,6 +145,95 @@ class CodecMetadata {
 
   ///@{
   /**
+   * An aspect ratio expressed as a fraction with numerator and denominator values,
+   * reduced to lowest terms. Used for the sample (pixel) aspect ratio and the
+   * display aspect ratio of a video track. For example, a 720x576 anamorphic track
+   * has a sample aspect ratio of 64 / 45 and a display aspect ratio of 16 / 9. A
+   * video track can declare an aspect ratio in two independent places, and
+   * MediaConvert reports each one where it was found rather than choosing between
+   * them. The ratio declared by the container appears on the video track itself, and
+   * the ratio declared by the video essence appears under codecMetadata. When a file
+   * declares an aspect ratio in only one of the two places, the other is null; when
+   * it declares both and they disagree, you can compare them and decide which to
+   * use.
+   */
+  inline const AspectRatio& GetDisplayAspectRatio() const { return m_displayAspectRatio; }
+  inline bool DisplayAspectRatioHasBeenSet() const { return m_displayAspectRatioHasBeenSet; }
+  template <typename DisplayAspectRatioT = AspectRatio>
+  void SetDisplayAspectRatio(DisplayAspectRatioT&& value) {
+    m_displayAspectRatioHasBeenSet = true;
+    m_displayAspectRatio = std::forward<DisplayAspectRatioT>(value);
+  }
+  template <typename DisplayAspectRatioT = AspectRatio>
+  CodecMetadata& WithDisplayAspectRatio(DisplayAspectRatioT&& value) {
+    SetDisplayAspectRatio(std::forward<DisplayAspectRatioT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * Dolby Vision characteristics of the video track: the profile and level, and
+   * whether the RPU (dynamic metadata), base layer, and enhancement layer are
+   * present. Use this to distinguish Dolby Vision content from standard HEVC and to
+   * choose your encoding or passthrough settings. Omitted when the content is not
+   * Dolby Vision.
+   */
+  inline const DolbyVisionMetadata& GetDolbyVision() const { return m_dolbyVision; }
+  inline bool DolbyVisionHasBeenSet() const { return m_dolbyVisionHasBeenSet; }
+  template <typename DolbyVisionT = DolbyVisionMetadata>
+  void SetDolbyVision(DolbyVisionT&& value) {
+    m_dolbyVisionHasBeenSet = true;
+    m_dolbyVision = std::forward<DolbyVisionT>(value);
+  }
+  template <typename DolbyVisionT = DolbyVisionMetadata>
+  CodecMetadata& WithDolbyVision(DolbyVisionT&& value) {
+    SetDolbyVision(std::forward<DolbyVisionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * The field order of interlaced video, which indicates whether the top or bottom
+   * field is displayed first. Use this to select the correct deinterlacing behavior.
+   * One of "TopFieldFirst" or "BottomFieldFirst". This field is present only for
+   * interlaced video; it is omitted for progressive video and when the field order
+   * is not indicated by the source.
+   */
+  inline const Aws::String& GetFieldOrder() const { return m_fieldOrder; }
+  inline bool FieldOrderHasBeenSet() const { return m_fieldOrderHasBeenSet; }
+  template <typename FieldOrderT = Aws::String>
+  void SetFieldOrder(FieldOrderT&& value) {
+    m_fieldOrderHasBeenSet = true;
+    m_fieldOrder = std::forward<FieldOrderT>(value);
+  }
+  template <typename FieldOrderT = Aws::String>
+  CodecMetadata& WithFieldOrder(FieldOrderT&& value) {
+    SetFieldOrder(std::forward<FieldOrderT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * Indicates that HDR10+ (SMPTE ST 2094-40) dynamic metadata was detected in the
+   * HEVC bitstream. Present only when detected.
+   */
+  inline Hdr10PlusPresence GetHdr10PlusPresence() const { return m_hdr10PlusPresence; }
+  inline bool Hdr10PlusPresenceHasBeenSet() const { return m_hdr10PlusPresenceHasBeenSet; }
+  inline void SetHdr10PlusPresence(Hdr10PlusPresence value) {
+    m_hdr10PlusPresenceHasBeenSet = true;
+    m_hdr10PlusPresence = value;
+  }
+  inline CodecMetadata& WithHdr10PlusPresence(Hdr10PlusPresence value) {
+    SetHdr10PlusPresence(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * The height in pixels as coded by the codec. This represents the actual encoded
    * video height as specified in the video stream headers.
    */
@@ -233,6 +329,34 @@ class CodecMetadata {
 
   ///@{
   /**
+   * An aspect ratio expressed as a fraction with numerator and denominator values,
+   * reduced to lowest terms. Used for the sample (pixel) aspect ratio and the
+   * display aspect ratio of a video track. For example, a 720x576 anamorphic track
+   * has a sample aspect ratio of 64 / 45 and a display aspect ratio of 16 / 9. A
+   * video track can declare an aspect ratio in two independent places, and
+   * MediaConvert reports each one where it was found rather than choosing between
+   * them. The ratio declared by the container appears on the video track itself, and
+   * the ratio declared by the video essence appears under codecMetadata. When a file
+   * declares an aspect ratio in only one of the two places, the other is null; when
+   * it declares both and they disagree, you can compare them and decide which to
+   * use.
+   */
+  inline const AspectRatio& GetSampleAspectRatio() const { return m_sampleAspectRatio; }
+  inline bool SampleAspectRatioHasBeenSet() const { return m_sampleAspectRatioHasBeenSet; }
+  template <typename SampleAspectRatioT = AspectRatio>
+  void SetSampleAspectRatio(SampleAspectRatioT&& value) {
+    m_sampleAspectRatioHasBeenSet = true;
+    m_sampleAspectRatio = std::forward<SampleAspectRatioT>(value);
+  }
+  template <typename SampleAspectRatioT = AspectRatio>
+  CodecMetadata& WithSampleAspectRatio(SampleAspectRatioT&& value) {
+    SetSampleAspectRatio(std::forward<SampleAspectRatioT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * The scanning method specified in the video essence, indicating whether the video
    * uses progressive or interlaced scanning.
    */
@@ -295,6 +419,14 @@ class CodecMetadata {
 
   ContentLightLevel m_contentLightLevel;
 
+  AspectRatio m_displayAspectRatio;
+
+  DolbyVisionMetadata m_dolbyVision;
+
+  Aws::String m_fieldOrder;
+
+  Hdr10PlusPresence m_hdr10PlusPresence{Hdr10PlusPresence::NOT_SET};
+
   int m_height{0};
 
   Aws::String m_level;
@@ -304,6 +436,8 @@ class CodecMetadata {
   Aws::String m_profile;
 
   int m_rotation{0};
+
+  AspectRatio m_sampleAspectRatio;
 
   Aws::String m_scanType;
 
@@ -315,11 +449,16 @@ class CodecMetadata {
   bool m_codedFrameRateHasBeenSet = false;
   bool m_colorPrimariesHasBeenSet = false;
   bool m_contentLightLevelHasBeenSet = false;
+  bool m_displayAspectRatioHasBeenSet = false;
+  bool m_dolbyVisionHasBeenSet = false;
+  bool m_fieldOrderHasBeenSet = false;
+  bool m_hdr10PlusPresenceHasBeenSet = false;
   bool m_heightHasBeenSet = false;
   bool m_levelHasBeenSet = false;
   bool m_matrixCoefficientsHasBeenSet = false;
   bool m_profileHasBeenSet = false;
   bool m_rotationHasBeenSet = false;
+  bool m_sampleAspectRatioHasBeenSet = false;
   bool m_scanTypeHasBeenSet = false;
   bool m_transferCharacteristicsHasBeenSet = false;
   bool m_widthHasBeenSet = false;

@@ -7,13 +7,17 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/connectcampaignsv2/ConnectCampaignsV2Client.h>
+#include <aws/connectcampaignsv2/ConnectCampaignsV2ClientPagination.h>
 #include <aws/connectcampaignsv2/ConnectCampaignsV2EndpointProvider.h>
-#include <aws/connectcampaignsv2/ConnectCampaignsV2EndpointRules.h>
 #include <aws/connectcampaignsv2/ConnectCampaignsV2ErrorMarshaller.h>
 #include <aws/connectcampaignsv2/ConnectCampaignsV2Errors.h>
+#include <aws/connectcampaignsv2/ConnectCampaignsV2PaginationBase.h>
 #include <aws/connectcampaignsv2/ConnectCampaignsV2Request.h>
 #include <aws/connectcampaignsv2/ConnectCampaignsV2ServiceClientModel.h>
+#include <aws/connectcampaignsv2/ConnectCampaignsV2Waiter.h>
 #include <aws/connectcampaignsv2/ConnectCampaignsV2_EXPORTS.h>
+#include <aws/connectcampaignsv2/internal/ConnectCampaignsV2EndpointRules.h>
+#include <aws/connectcampaignsv2/model/AbandonmentRatePacingConfig.h>
 #include <aws/connectcampaignsv2/model/AccessDeniedException.h>
 #include <aws/connectcampaignsv2/model/AgentAction.h>
 #include <aws/connectcampaignsv2/model/AgentlessConfig.h>
@@ -35,6 +39,7 @@
 #include <aws/connectcampaignsv2/model/CommunicationTimeConfig.h>
 #include <aws/connectcampaignsv2/model/CommunicationTimeConfigType.h>
 #include <aws/connectcampaignsv2/model/ConflictException.h>
+#include <aws/connectcampaignsv2/model/ConnectionStartPoint.h>
 #include <aws/connectcampaignsv2/model/CreateCampaignRequest.h>
 #include <aws/connectcampaignsv2/model/CreateCampaignResult.h>
 #include <aws/connectcampaignsv2/model/CustomerProfilesIntegrationConfig.h>
@@ -94,8 +99,10 @@
 #include <aws/connectcampaignsv2/model/LambdaIntegrationConfig.h>
 #include <aws/connectcampaignsv2/model/LambdaIntegrationIdentifier.h>
 #include <aws/connectcampaignsv2/model/LambdaIntegrationSummary.h>
+#include <aws/connectcampaignsv2/model/ListCampaignsPaginationTraits.h>
 #include <aws/connectcampaignsv2/model/ListCampaignsRequest.h>
 #include <aws/connectcampaignsv2/model/ListCampaignsResult.h>
+#include <aws/connectcampaignsv2/model/ListConnectInstanceIntegrationsPaginationTraits.h>
 #include <aws/connectcampaignsv2/model/ListConnectInstanceIntegrationsRequest.h>
 #include <aws/connectcampaignsv2/model/ListConnectInstanceIntegrationsResult.h>
 #include <aws/connectcampaignsv2/model/ListTagsForResourceRequest.h>
@@ -105,6 +112,7 @@
 #include <aws/connectcampaignsv2/model/LocalTimeZoneDetectionType.h>
 #include <aws/connectcampaignsv2/model/OpenHours.h>
 #include <aws/connectcampaignsv2/model/OutboundRequest.h>
+#include <aws/connectcampaignsv2/model/PacingStrategy.h>
 #include <aws/connectcampaignsv2/model/PauseCampaignRequest.h>
 #include <aws/connectcampaignsv2/model/PredictiveConfig.h>
 #include <aws/connectcampaignsv2/model/PreviewConfig.h>

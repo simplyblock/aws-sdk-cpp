@@ -12,6 +12,7 @@
 
 #include <atomic>
 #include <condition_variable>
+#include <functional>
 #include <memory>
 #include <mutex>
 
@@ -23,6 +24,11 @@ namespace Aws
         {
             class RateLimiterInterface;
         } // namespace RateLimits
+
+        namespace Threading
+        {
+            class Executor;
+        } // namespace Threading
     } // namespace Utils
 
     namespace Http
@@ -90,6 +96,33 @@ namespace Aws
                 "creating a connection is not supported on this http client",
                 false};
             }
+
+            struct AttemptOutcome
+            {
+                bool shouldRetry;
+                std::chrono::milliseconds backoff;
+            };
+
+            using PrepareAttempt = std::function<std::shared_ptr<HttpRequest>()>;
+            using EvaluateAttempt = std::function<AttemptOutcome(std::shared_ptr<HttpResponse>)>;
+            using OnRetryableRequestComplete = std::function<void()>;
+
+            virtual Aws::Crt::Optional<Aws::Client::AWSError<Aws::Client::CoreErrors>> MakeRequestAsync(
+                const PrepareAttempt& prepareAttempt,
+                const EvaluateAttempt& evaluateAttempt,
+                const OnRetryableRequestComplete& onComplete,
+                std::shared_ptr<Aws::Utils::Threading::Executor> executor) const {
+              AWS_UNREFERENCED_PARAM(prepareAttempt);
+              AWS_UNREFERENCED_PARAM(evaluateAttempt);
+              AWS_UNREFERENCED_PARAM(onComplete);
+              AWS_UNREFERENCED_PARAM(executor);
+              return Aws::Client::AWSError<Aws::Client::CoreErrors>{Aws::Client::CoreErrors::NOT_IMPLEMENTED,
+                "NotImplemented",
+                "async requests are not supported on this http client",
+                false};
+            }
+
+            virtual bool SupportsAsyncRequests() const { return false; }
 
         protected:
             bool m_bad;

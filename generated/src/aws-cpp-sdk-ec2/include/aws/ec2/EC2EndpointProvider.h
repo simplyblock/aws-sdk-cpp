@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/EC2EndpointRules.h>
 #include <aws/ec2/EC2_EXPORTS.h>
 
 namespace Aws {
 namespace EC2 {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using EC2ClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using EC2BuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using EC2EndpointProviderBase = EndpointProviderBase<EC2ClientConfiguration, EC2BuiltInParameters, EC2ClientContextParameters>;
 
-using EC2DefaultEpProviderBase = DefaultEndpointProvider<EC2ClientConfiguration, EC2BuiltInParameters, EC2ClientContextParameters>;
+using EC2DefaultEpProviderBase = BDDEndpointProvider<EC2ClientConfiguration, EC2BuiltInParameters, EC2ClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_EC2_API EC2EndpointProvider : public EC2DefaultEpProviderBase {
  public:
   using EC2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  EC2EndpointProvider() : EC2DefaultEpProviderBase(Aws::EC2::EC2EndpointRules::GetRulesBlob(), Aws::EC2::EC2EndpointRules::RulesBlobSize) {}
+  EC2EndpointProvider();
 
   ~EC2EndpointProvider() {}
 };

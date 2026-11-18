@@ -4,12 +4,11 @@
  */
 
 #pragma once
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/dynamodbstreams/DynamoDBStreamsClientConfiguration.h>
-#include <aws/dynamodbstreams/DynamoDBStreamsEndpointRules.h>
 #include <aws/dynamodbstreams/DynamoDBStreams_EXPORTS.h>
 
 namespace Aws {
@@ -17,7 +16,7 @@ namespace DynamoDBStreams {
 namespace Endpoint {
 using DynamoDBStreamsClientConfiguration = Aws::DynamoDBStreams::DynamoDBStreamsClientConfiguration;
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using DynamoDBStreamsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -27,6 +26,10 @@ class AWS_DYNAMODBSTREAMS_API DynamoDBStreamsBuiltInParameters : public Aws::End
   virtual ~DynamoDBStreamsBuiltInParameters() {};
   using Aws::Endpoint::BuiltInParameters::SetFromClientConfiguration;
   virtual void SetFromClientConfiguration(const DynamoDBStreamsClientConfiguration& config);
+  virtual void SetFromClientConfiguration(const DynamoDBStreamsClientConfiguration& config, const Aws::String& serviceName);
+
+ private:
+  void SetServiceSpecificParameters(const DynamoDBStreamsClientConfiguration& config);
 };
 
 /**
@@ -38,7 +41,7 @@ using DynamoDBStreamsEndpointProviderBase =
     EndpointProviderBase<DynamoDBStreamsClientConfiguration, DynamoDBStreamsBuiltInParameters, DynamoDBStreamsClientContextParameters>;
 
 using DynamoDBStreamsDefaultEpProviderBase =
-    DefaultEndpointProvider<DynamoDBStreamsClientConfiguration, DynamoDBStreamsBuiltInParameters, DynamoDBStreamsClientContextParameters>;
+    BDDEndpointProvider<DynamoDBStreamsClientConfiguration, DynamoDBStreamsBuiltInParameters, DynamoDBStreamsClientContextParameters>;
 
 }  // namespace Endpoint
 }  // namespace DynamoDBStreams
@@ -51,7 +54,7 @@ AWS_DYNAMODBSTREAMS_EXTERN template class AWS_DYNAMODBSTREAMS_API Aws::Endpoint:
     DynamoDBStreams::Endpoint::DynamoDBStreamsClientConfiguration, DynamoDBStreams::Endpoint::DynamoDBStreamsBuiltInParameters,
     DynamoDBStreams::Endpoint::DynamoDBStreamsClientContextParameters>;
 
-AWS_DYNAMODBSTREAMS_EXTERN template class AWS_DYNAMODBSTREAMS_API Aws::Endpoint::DefaultEndpointProvider<
+AWS_DYNAMODBSTREAMS_EXTERN template class AWS_DYNAMODBSTREAMS_API Aws::Endpoint::BDDEndpointProvider<
     DynamoDBStreams::Endpoint::DynamoDBStreamsClientConfiguration, DynamoDBStreams::Endpoint::DynamoDBStreamsBuiltInParameters,
     DynamoDBStreams::Endpoint::DynamoDBStreamsClientContextParameters>;
 }  // namespace Endpoint
@@ -65,9 +68,7 @@ class AWS_DYNAMODBSTREAMS_API DynamoDBStreamsEndpointProvider : public DynamoDBS
  public:
   using DynamoDBStreamsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  DynamoDBStreamsEndpointProvider()
-      : DynamoDBStreamsDefaultEpProviderBase(Aws::DynamoDBStreams::DynamoDBStreamsEndpointRules::GetRulesBlob(),
-                                             Aws::DynamoDBStreams::DynamoDBStreamsEndpointRules::RulesBlobSize) {}
+  DynamoDBStreamsEndpointProvider();
 
   ~DynamoDBStreamsEndpointProvider() {}
 };

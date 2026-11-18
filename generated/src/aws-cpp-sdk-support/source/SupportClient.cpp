@@ -22,8 +22,10 @@
 #include <aws/support/SupportErrorMarshaller.h>
 #include <aws/support/model/AddAttachmentsToSetRequest.h>
 #include <aws/support/model/AddCommunicationToCaseRequest.h>
+#include <aws/support/model/CompleteAttachmentUploadRequest.h>
 #include <aws/support/model/CreateCaseRequest.h>
 #include <aws/support/model/DescribeAttachmentRequest.h>
+#include <aws/support/model/DescribeAttachmentUploadStatusRequest.h>
 #include <aws/support/model/DescribeCasesRequest.h>
 #include <aws/support/model/DescribeCommunicationsRequest.h>
 #include <aws/support/model/DescribeCreateCaseOptionsRequest.h>
@@ -34,6 +36,8 @@
 #include <aws/support/model/DescribeTrustedAdvisorCheckResultRequest.h>
 #include <aws/support/model/DescribeTrustedAdvisorCheckSummariesRequest.h>
 #include <aws/support/model/DescribeTrustedAdvisorChecksRequest.h>
+#include <aws/support/model/GetAttachmentDownloadLinkRequest.h>
+#include <aws/support/model/GetAttachmentUploadLinksRequest.h>
 #include <aws/support/model/RefreshTrustedAdvisorCheckRequest.h>
 #include <aws/support/model/ResolveCaseRequest.h>
 #include <smithy/tracing/TracingUtils.h>
@@ -171,7 +175,8 @@ SupportClient::InvokeOperationOutcome SupportClient::InvokeServiceOperation(cons
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -183,7 +188,7 @@ SupportClient::InvokeOperationOutcome SupportClient::InvokeServiceOperation(cons
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -199,6 +204,12 @@ AddCommunicationToCaseOutcome SupportClient::AddCommunicationToCase(const AddCom
                             : AddCommunicationToCaseOutcome(std::move(result.GetError()));
 }
 
+CompleteAttachmentUploadOutcome SupportClient::CompleteAttachmentUpload(const CompleteAttachmentUploadRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CompleteAttachmentUploadOutcome(result.GetResultWithOwnership())
+                            : CompleteAttachmentUploadOutcome(std::move(result.GetError()));
+}
+
 CreateCaseOutcome SupportClient::CreateCase(const CreateCaseRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateCaseOutcome(result.GetResultWithOwnership()) : CreateCaseOutcome(std::move(result.GetError()));
@@ -208,6 +219,13 @@ DescribeAttachmentOutcome SupportClient::DescribeAttachment(const DescribeAttach
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DescribeAttachmentOutcome(result.GetResultWithOwnership())
                             : DescribeAttachmentOutcome(std::move(result.GetError()));
+}
+
+DescribeAttachmentUploadStatusOutcome SupportClient::DescribeAttachmentUploadStatus(
+    const DescribeAttachmentUploadStatusRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DescribeAttachmentUploadStatusOutcome(result.GetResultWithOwnership())
+                            : DescribeAttachmentUploadStatusOutcome(std::move(result.GetError()));
 }
 
 DescribeCasesOutcome SupportClient::DescribeCases(const DescribeCasesRequest& request) const {
@@ -270,6 +288,18 @@ DescribeTrustedAdvisorChecksOutcome SupportClient::DescribeTrustedAdvisorChecks(
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DescribeTrustedAdvisorChecksOutcome(result.GetResultWithOwnership())
                             : DescribeTrustedAdvisorChecksOutcome(std::move(result.GetError()));
+}
+
+GetAttachmentDownloadLinkOutcome SupportClient::GetAttachmentDownloadLink(const GetAttachmentDownloadLinkRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetAttachmentDownloadLinkOutcome(result.GetResultWithOwnership())
+                            : GetAttachmentDownloadLinkOutcome(std::move(result.GetError()));
+}
+
+GetAttachmentUploadLinksOutcome SupportClient::GetAttachmentUploadLinks(const GetAttachmentUploadLinksRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetAttachmentUploadLinksOutcome(result.GetResultWithOwnership())
+                            : GetAttachmentUploadLinksOutcome(std::move(result.GetError()));
 }
 
 RefreshTrustedAdvisorCheckOutcome SupportClient::RefreshTrustedAdvisorCheck(const RefreshTrustedAdvisorCheckRequest& request) const {

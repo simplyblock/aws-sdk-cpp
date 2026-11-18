@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/cloudhsm/CloudHSMEndpointRules.h>
 #include <aws/cloudhsm/CloudHSM_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace CloudHSM {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using CloudHSMClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using CloudHSMEndpointProviderBase =
     EndpointProviderBase<CloudHSMClientConfiguration, CloudHSMBuiltInParameters, CloudHSMClientContextParameters>;
 
 using CloudHSMDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudHSMClientConfiguration, CloudHSMBuiltInParameters, CloudHSMClientContextParameters>;
+    BDDEndpointProvider<CloudHSMClientConfiguration, CloudHSMBuiltInParameters, CloudHSMClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_CLOUDHSM_API CloudHSMEndpointProvider : public CloudHSMDefaultEpProvid
  public:
   using CloudHSMResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  CloudHSMEndpointProvider()
-      : CloudHSMDefaultEpProviderBase(Aws::CloudHSM::CloudHSMEndpointRules::GetRulesBlob(),
-                                      Aws::CloudHSM::CloudHSMEndpointRules::RulesBlobSize) {}
+  CloudHSMEndpointProvider();
 
   ~CloudHSMEndpointProvider() {}
 };

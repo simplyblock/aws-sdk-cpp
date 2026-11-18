@@ -39,5 +39,13 @@ Aws::String UpdateRouterOutputRequest::SerializePayload() const {
     payload.WithObject("maintenanceConfiguration", m_maintenanceConfiguration.Jsonize());
   }
 
+  if (m_fabricConfigurationHasBeenSet) {
+    payload.WithObject("fabricConfiguration", m_fabricConfiguration.Jsonize());
+  }
+
+  if (m_processorsHasBeenSet) {
+    payload.WithObject("processors", m_processors.Jsonize());
+  }
+
   return payload.View().WriteReadable();
 }

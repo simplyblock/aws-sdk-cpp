@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-cleanrooms "C++ SDK for the AWS cleanrooms service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-cleanrooms "C++ SDK for AWS Clean Rooms Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_CLEANROOMS_HEADERS
     "include/aws/cleanrooms/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CLEANROOMS_HEADERS
 
 file(GLOB AWS_CLEANROOMS_MODEL_HEADERS
     "include/aws/cleanrooms/model/*.h"
+)
+
+file(GLOB AWS_CLEANROOMS_INTERNAL_HEADERS
+    "include/aws/cleanrooms/internal/*.h"
 )
 
 file(GLOB AWS_CLEANROOMS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CLEANROOMS_MODEL_SOURCE
 
 file(GLOB CLEANROOMS_UNIFIED_HEADERS
     ${AWS_CLEANROOMS_HEADERS}
+    ${AWS_CLEANROOMS_INTERNAL_HEADERS}
     ${AWS_CLEANROOMS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\cleanrooms" FILES ${AWS_CLEANROOMS_HEADERS})
+        source_group("Header Files\\aws\\cleanrooms\\internal" FILES ${AWS_CLEANROOMS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\cleanrooms\\model" FILES ${AWS_CLEANROOMS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CLEANROOMS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CLEANROOMS_MODEL_SOURCE})

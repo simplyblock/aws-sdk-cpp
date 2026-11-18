@@ -10,6 +10,8 @@
 #include <aws/securityagent/model/Assets.h>
 #include <aws/securityagent/model/CloudWatchLog.h>
 #include <aws/securityagent/model/CodeRemediationStrategy.h>
+#include <aws/securityagent/model/ReportDestination.h>
+#include <aws/securityagent/model/ReportFilters.h>
 #include <aws/securityagent/model/ValidationMode.h>
 
 #include <utility>
@@ -181,6 +183,61 @@ class CodeReview {
 
   ///@{
   /**
+   * <p>The maximum number of billable task hours allowed for jobs started from this
+   * code review. If a job reaches the configured limit, it is gracefully stopped. If
+   * not set, jobs run to completion with no budget cap.</p>
+   */
+  inline double GetMaxTaskHours() const { return m_maxTaskHours; }
+  inline bool MaxTaskHoursHasBeenSet() const { return m_maxTaskHoursHasBeenSet; }
+  inline void SetMaxTaskHours(double value) {
+    m_maxTaskHoursHasBeenSet = true;
+    m_maxTaskHours = value;
+  }
+  inline CodeReview& WithMaxTaskHours(double value) {
+    SetMaxTaskHours(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The destination for publishing scan reports to an integrated document
+   * provider.</p>
+   */
+  inline const ReportDestination& GetReportDestination() const { return m_reportDestination; }
+  inline bool ReportDestinationHasBeenSet() const { return m_reportDestinationHasBeenSet; }
+  template <typename ReportDestinationT = ReportDestination>
+  void SetReportDestination(ReportDestinationT&& value) {
+    m_reportDestinationHasBeenSet = true;
+    m_reportDestination = std::forward<ReportDestinationT>(value);
+  }
+  template <typename ReportDestinationT = ReportDestination>
+  CodeReview& WithReportDestination(ReportDestinationT&& value) {
+    SetReportDestination(std::forward<ReportDestinationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The report-generation filters applied when the report is exported.</p>
+   */
+  inline const ReportFilters& GetReportFilters() const { return m_reportFilters; }
+  inline bool ReportFiltersHasBeenSet() const { return m_reportFiltersHasBeenSet; }
+  template <typename ReportFiltersT = ReportFilters>
+  void SetReportFilters(ReportFiltersT&& value) {
+    m_reportFiltersHasBeenSet = true;
+    m_reportFilters = std::forward<ReportFiltersT>(value);
+  }
+  template <typename ReportFiltersT = ReportFilters>
+  CodeReview& WithReportFilters(ReportFiltersT&& value) {
+    SetReportFilters(std::forward<ReportFiltersT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The date and time the code review was created, in UTC format.</p>
    */
   inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
@@ -231,6 +288,12 @@ class CodeReview {
 
   ValidationMode m_validationMode{ValidationMode::NOT_SET};
 
+  double m_maxTaskHours{0.0};
+
+  ReportDestination m_reportDestination;
+
+  ReportFilters m_reportFilters;
+
   Aws::Utils::DateTime m_createdAt{};
 
   Aws::Utils::DateTime m_updatedAt{};
@@ -242,6 +305,9 @@ class CodeReview {
   bool m_logConfigHasBeenSet = false;
   bool m_codeRemediationStrategyHasBeenSet = false;
   bool m_validationModeHasBeenSet = false;
+  bool m_maxTaskHoursHasBeenSet = false;
+  bool m_reportDestinationHasBeenSet = false;
+  bool m_reportFiltersHasBeenSet = false;
   bool m_createdAtHasBeenSet = false;
   bool m_updatedAtHasBeenSet = false;
 };

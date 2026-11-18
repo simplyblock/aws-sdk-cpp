@@ -1,11 +1,20 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
 
 #pragma once
 
+#include <aws/billing/model/GetCreditAllocationHistoryPaginationTraits.h>
+#include <aws/billing/model/ListBillingViewSegmentsPaginationTraits.h>
 #include <aws/billing/model/ListBillingViewsPaginationTraits.h>
+#include <aws/billing/model/ListBusinessSupportAccountChargesPaginationTraits.h>
+#include <aws/billing/model/ListBusinessSupportSubscriptionHistoryPaginationTraits.h>
+#include <aws/billing/model/ListContractsPaginationTraits.h>
+#include <aws/billing/model/ListContractualInvestmentAttestationsPaginationTraits.h>
+#include <aws/billing/model/ListContractualInvestmentSummariesPaginationTraits.h>
+#include <aws/billing/model/ListContractualInvestmentsPaginationTraits.h>
+#include <aws/billing/model/ListEnterpriseSupportLinkedAccountChargesPaginationTraits.h>
 #include <aws/billing/model/ListSourceViewsForBillingViewPaginationTraits.h>
 #include <aws/core/client/UserAgent.h>
 #include <aws/core/utils/pagination/Paginator.h>
@@ -19,6 +28,18 @@ template <typename DerivedClient>
 class BillingPaginationBase {
  public:
   /**
+   * Create a paginator for GetCreditAllocationHistory operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetCreditAllocationHistoryRequest,
+                                    Pagination::GetCreditAllocationHistoryPaginationTraits<DerivedClient>>
+  GetCreditAllocationHistoryPaginator(const Model::GetCreditAllocationHistoryRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetCreditAllocationHistoryRequest,
+                                             Pagination::GetCreditAllocationHistoryPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for ListBillingViews operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListBillingViewsRequest,
@@ -28,6 +49,101 @@ class BillingPaginationBase {
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListBillingViewsRequest,
                                              Pagination::ListBillingViewsPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
                                                                                                           request};
+  }
+
+  /**
+   * Create a paginator for ListBillingViewSegments operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListBillingViewSegmentsRequest,
+                                    Pagination::ListBillingViewSegmentsPaginationTraits<DerivedClient>>
+  ListBillingViewSegmentsPaginator(const Model::ListBillingViewSegmentsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListBillingViewSegmentsRequest,
+                                             Pagination::ListBillingViewSegmentsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListBusinessSupportAccountCharges operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListBusinessSupportAccountChargesRequest,
+                                    Pagination::ListBusinessSupportAccountChargesPaginationTraits<DerivedClient>>
+  ListBusinessSupportAccountChargesPaginator(const Model::ListBusinessSupportAccountChargesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListBusinessSupportAccountChargesRequest,
+                                             Pagination::ListBusinessSupportAccountChargesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListBusinessSupportSubscriptionHistory operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListBusinessSupportSubscriptionHistoryRequest,
+                                    Pagination::ListBusinessSupportSubscriptionHistoryPaginationTraits<DerivedClient>>
+  ListBusinessSupportSubscriptionHistoryPaginator(const Model::ListBusinessSupportSubscriptionHistoryRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListBusinessSupportSubscriptionHistoryRequest,
+                                             Pagination::ListBusinessSupportSubscriptionHistoryPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListContracts operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContractsRequest, Pagination::ListContractsPaginationTraits<DerivedClient>>
+  ListContractsPaginator(const Model::ListContractsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContractsRequest,
+                                             Pagination::ListContractsPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                       request};
+  }
+
+  /**
+   * Create a paginator for ListContractualInvestmentAttestations operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContractualInvestmentAttestationsRequest,
+                                    Pagination::ListContractualInvestmentAttestationsPaginationTraits<DerivedClient>>
+  ListContractualInvestmentAttestationsPaginator(const Model::ListContractualInvestmentAttestationsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContractualInvestmentAttestationsRequest,
+                                             Pagination::ListContractualInvestmentAttestationsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListContractualInvestments operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContractualInvestmentsRequest,
+                                    Pagination::ListContractualInvestmentsPaginationTraits<DerivedClient>>
+  ListContractualInvestmentsPaginator(const Model::ListContractualInvestmentsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContractualInvestmentsRequest,
+                                             Pagination::ListContractualInvestmentsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListContractualInvestmentSummaries operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContractualInvestmentSummariesRequest,
+                                    Pagination::ListContractualInvestmentSummariesPaginationTraits<DerivedClient>>
+  ListContractualInvestmentSummariesPaginator(const Model::ListContractualInvestmentSummariesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContractualInvestmentSummariesRequest,
+                                             Pagination::ListContractualInvestmentSummariesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListEnterpriseSupportLinkedAccountCharges operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListEnterpriseSupportLinkedAccountChargesRequest,
+                                    Pagination::ListEnterpriseSupportLinkedAccountChargesPaginationTraits<DerivedClient>>
+  ListEnterpriseSupportLinkedAccountChargesPaginator(const Model::ListEnterpriseSupportLinkedAccountChargesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListEnterpriseSupportLinkedAccountChargesRequest,
+                                             Pagination::ListEnterpriseSupportLinkedAccountChargesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
   }
 
   /**

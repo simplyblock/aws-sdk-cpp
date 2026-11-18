@@ -35,12 +35,25 @@ Aws::String UpdateDbClusterRequest::SerializePayload() const {
     payload.WithString("dbInstanceType", DbInstanceTypeMapper::GetNameForDbInstanceType(m_dbInstanceType));
   }
 
+  if (m_deploymentConfigurationHasBeenSet) {
+    payload.WithObject("deploymentConfiguration", m_deploymentConfiguration.Jsonize());
+  }
+
   if (m_failoverModeHasBeenSet) {
     payload.WithString("failoverMode", FailoverModeMapper::GetNameForFailoverMode(m_failoverMode));
   }
 
   if (m_maintenanceScheduleHasBeenSet) {
     payload.WithObject("maintenanceSchedule", m_maintenanceSchedule.Jsonize());
+  }
+
+  if (m_dbBackupConfigurationsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> dbBackupConfigurationsJsonList(m_dbBackupConfigurations.size());
+    for (unsigned dbBackupConfigurationsIndex = 0; dbBackupConfigurationsIndex < dbBackupConfigurationsJsonList.GetLength();
+         ++dbBackupConfigurationsIndex) {
+      dbBackupConfigurationsJsonList[dbBackupConfigurationsIndex].AsObject(m_dbBackupConfigurations[dbBackupConfigurationsIndex].Jsonize());
+    }
+    payload.WithArray("dbBackupConfigurations", std::move(dbBackupConfigurationsJsonList));
   }
 
   return payload.View().WriteReadable();

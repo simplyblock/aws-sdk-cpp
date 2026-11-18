@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-lakeformation "C++ SDK for the AWS lakeformation service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-lakeformation "C++ SDK for AWS Lake Formation" aws-cpp-sdk-core)
 
 file(GLOB AWS_LAKEFORMATION_HEADERS
     "include/aws/lakeformation/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LAKEFORMATION_HEADERS
 
 file(GLOB AWS_LAKEFORMATION_MODEL_HEADERS
     "include/aws/lakeformation/model/*.h"
+)
+
+file(GLOB AWS_LAKEFORMATION_INTERNAL_HEADERS
+    "include/aws/lakeformation/internal/*.h"
 )
 
 file(GLOB AWS_LAKEFORMATION_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LAKEFORMATION_MODEL_SOURCE
 
 file(GLOB LAKEFORMATION_UNIFIED_HEADERS
     ${AWS_LAKEFORMATION_HEADERS}
+    ${AWS_LAKEFORMATION_INTERNAL_HEADERS}
     ${AWS_LAKEFORMATION_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\lakeformation" FILES ${AWS_LAKEFORMATION_HEADERS})
+        source_group("Header Files\\aws\\lakeformation\\internal" FILES ${AWS_LAKEFORMATION_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\lakeformation\\model" FILES ${AWS_LAKEFORMATION_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LAKEFORMATION_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LAKEFORMATION_MODEL_SOURCE})

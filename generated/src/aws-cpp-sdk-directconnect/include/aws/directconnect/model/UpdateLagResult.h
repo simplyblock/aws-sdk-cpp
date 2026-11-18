@@ -7,7 +7,9 @@
 #include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/directconnect/DirectConnect_EXPORTS.h>
+#include <aws/directconnect/model/BillingMode.h>
 #include <aws/directconnect/model/Connection.h>
 #include <aws/directconnect/model/HasLogicalRedundancy.h>
 #include <aws/directconnect/model/LagState.h>
@@ -16,15 +18,14 @@
 #include <aws/directconnect/model/Tag.h>
 
 #include <utility>
-
 namespace Aws {
 template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
 namespace Utils {
-namespace Json {
-class JsonValue;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace DirectConnect {
 namespace Model {
@@ -37,8 +38,8 @@ namespace Model {
 class UpdateLagResult {
  public:
   AWS_DIRECTCONNECT_API UpdateLagResult() = default;
-  AWS_DIRECTCONNECT_API UpdateLagResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-  AWS_DIRECTCONNECT_API UpdateLagResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DIRECTCONNECT_API UpdateLagResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_DIRECTCONNECT_API UpdateLagResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
   ///@{
   /**
@@ -65,12 +66,12 @@ class UpdateLagResult {
    * speed is 1 Gbps or 10 Gbps, or two when the port speed is 100 Gbps or 400
    * Gbps.</p>
    */
-  inline int GetNumberOfConnections() const { return m_numberOfConnections; }
-  inline void SetNumberOfConnections(int value) {
+  inline int64_t GetNumberOfConnections() const { return m_numberOfConnections; }
+  inline void SetNumberOfConnections(int64_t value) {
     m_numberOfConnectionsHasBeenSet = true;
     m_numberOfConnections = value;
   }
-  inline UpdateLagResult& WithNumberOfConnections(int value) {
+  inline UpdateLagResult& WithNumberOfConnections(int64_t value) {
     SetNumberOfConnections(value);
     return *this;
   }
@@ -190,12 +191,12 @@ class UpdateLagResult {
    * <p>The minimum number of physical dedicated connections that must be operational
    * for the LAG itself to be operational.</p>
    */
-  inline int GetMinimumLinks() const { return m_minimumLinks; }
-  inline void SetMinimumLinks(int value) {
+  inline int64_t GetMinimumLinks() const { return m_minimumLinks; }
+  inline void SetMinimumLinks(int64_t value) {
     m_minimumLinksHasBeenSet = true;
     m_minimumLinks = value;
   }
-  inline UpdateLagResult& WithMinimumLinks(int value) {
+  inline UpdateLagResult& WithMinimumLinks(int64_t value) {
     SetMinimumLinks(value);
     return *this;
   }
@@ -422,6 +423,74 @@ class UpdateLagResult {
 
   ///@{
   /**
+   * <p>The total number of inbound IPv4 route prefixes you can allocate across the
+   * virtual interfaces on the LAG. Not applicable to LAGs that are interconnects and
+   * support hosted connections.</p>
+   */
+  inline int64_t GetPrefixPoolSizeIpv4() const { return m_prefixPoolSizeIpv4; }
+  inline void SetPrefixPoolSizeIpv4(int64_t value) {
+    m_prefixPoolSizeIpv4HasBeenSet = true;
+    m_prefixPoolSizeIpv4 = value;
+  }
+  inline UpdateLagResult& WithPrefixPoolSizeIpv4(int64_t value) {
+    SetPrefixPoolSizeIpv4(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The total number of inbound IPv6 route prefixes you can allocate across the
+   * virtual interfaces on the LAG. Not applicable to LAGs that are interconnects and
+   * support hosted connections.</p>
+   */
+  inline int64_t GetPrefixPoolSizeIpv6() const { return m_prefixPoolSizeIpv6; }
+  inline void SetPrefixPoolSizeIpv6(int64_t value) {
+    m_prefixPoolSizeIpv6HasBeenSet = true;
+    m_prefixPoolSizeIpv6 = value;
+  }
+  inline UpdateLagResult& WithPrefixPoolSizeIpv6(int64_t value) {
+    SetPrefixPoolSizeIpv6(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The number of inbound IPv4 route prefixes in the LAG prefix pool not yet
+   * allocated to a virtual interface. Not applicable to LAGs that are interconnects
+   * and support hosted connections.</p>
+   */
+  inline int64_t GetPrefixPoolUnallocatedCountIpv4() const { return m_prefixPoolUnallocatedCountIpv4; }
+  inline void SetPrefixPoolUnallocatedCountIpv4(int64_t value) {
+    m_prefixPoolUnallocatedCountIpv4HasBeenSet = true;
+    m_prefixPoolUnallocatedCountIpv4 = value;
+  }
+  inline UpdateLagResult& WithPrefixPoolUnallocatedCountIpv4(int64_t value) {
+    SetPrefixPoolUnallocatedCountIpv4(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The number of inbound IPv6 route prefixes in the LAG prefix pool not yet
+   * allocated to a virtual interface. Not applicable to LAGs that are interconnects
+   * and support hosted connections.</p>
+   */
+  inline int64_t GetPrefixPoolUnallocatedCountIpv6() const { return m_prefixPoolUnallocatedCountIpv6; }
+  inline void SetPrefixPoolUnallocatedCountIpv6(int64_t value) {
+    m_prefixPoolUnallocatedCountIpv6HasBeenSet = true;
+    m_prefixPoolUnallocatedCountIpv6 = value;
+  }
+  inline UpdateLagResult& WithPrefixPoolUnallocatedCountIpv6(int64_t value) {
+    SetPrefixPoolUnallocatedCountIpv6(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The rate limiter status for the LAG, including how many rate limiters are in
    * use and the maximum allowed.</p>
    */
@@ -434,6 +503,21 @@ class UpdateLagResult {
   template <typename RateLimiterStatusT = RateLimiterStatus>
   UpdateLagResult& WithRateLimiterStatus(RateLimiterStatusT&& value) {
     SetRateLimiterStatus(std::forward<RateLimiterStatusT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The billing mode of the LAG.</p>
+   */
+  inline BillingMode GetBillingMode() const { return m_billingMode; }
+  inline void SetBillingMode(BillingMode value) {
+    m_billingModeHasBeenSet = true;
+    m_billingMode = value;
+  }
+  inline UpdateLagResult& WithBillingMode(BillingMode value) {
+    SetBillingMode(value);
     return *this;
   }
   ///@}
@@ -457,7 +541,7 @@ class UpdateLagResult {
  private:
   Aws::String m_connectionsBandwidth;
 
-  int m_numberOfConnections{0};
+  int64_t m_numberOfConnections{0};
 
   Aws::String m_lagId;
 
@@ -471,7 +555,7 @@ class UpdateLagResult {
 
   Aws::String m_region;
 
-  int m_minimumLinks{0};
+  int64_t m_minimumLinks{0};
 
   Aws::String m_awsDevice;
 
@@ -497,7 +581,17 @@ class UpdateLagResult {
 
   Aws::Vector<MacSecKey> m_macSecKeys;
 
+  int64_t m_prefixPoolSizeIpv4{0};
+
+  int64_t m_prefixPoolSizeIpv6{0};
+
+  int64_t m_prefixPoolUnallocatedCountIpv4{0};
+
+  int64_t m_prefixPoolUnallocatedCountIpv6{0};
+
   RateLimiterStatus m_rateLimiterStatus;
+
+  BillingMode m_billingMode{BillingMode::NOT_SET};
 
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
@@ -522,7 +616,12 @@ class UpdateLagResult {
   bool m_macSecCapableHasBeenSet = false;
   bool m_encryptionModeHasBeenSet = false;
   bool m_macSecKeysHasBeenSet = false;
+  bool m_prefixPoolSizeIpv4HasBeenSet = false;
+  bool m_prefixPoolSizeIpv6HasBeenSet = false;
+  bool m_prefixPoolUnallocatedCountIpv4HasBeenSet = false;
+  bool m_prefixPoolUnallocatedCountIpv6HasBeenSet = false;
   bool m_rateLimiterStatusHasBeenSet = false;
+  bool m_billingModeHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

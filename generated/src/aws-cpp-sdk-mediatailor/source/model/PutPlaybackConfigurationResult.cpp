@@ -129,12 +129,28 @@ PutPlaybackConfigurationResult& PutPlaybackConfigurationResult::operator=(const 
     m_adDecisionServerConfiguration = jsonValue.GetObject("AdDecisionServerConfiguration");
     m_adDecisionServerConfigurationHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("YieldOptimizationConfiguration")) {
+    m_yieldOptimizationConfiguration = jsonValue.GetObject("YieldOptimizationConfiguration");
+    m_yieldOptimizationConfigurationHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("FunctionMapping")) {
     Aws::Map<Aws::String, JsonView> functionMappingJsonMap = jsonValue.GetObject("FunctionMapping").GetAllObjects();
     for (auto& functionMappingItem : functionMappingJsonMap) {
       m_functionMapping[EventNameMapper::GetEventNameForName(functionMappingItem.first)] = functionMappingItem.second.AsString();
     }
     m_functionMappingHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AdsPersonalizationTimeouts")) {
+    m_adsPersonalizationTimeouts = jsonValue.GetObject("AdsPersonalizationTimeouts");
+    m_adsPersonalizationTimeoutsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AdsPersonalizationConcurrency")) {
+    m_adsPersonalizationConcurrency = jsonValue.GetObject("AdsPersonalizationConcurrency");
+    m_adsPersonalizationConcurrencyHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("BeaconingConfiguration")) {
+    m_beaconingConfiguration = jsonValue.GetObject("BeaconingConfiguration");
+    m_beaconingConfigurationHasBeenSet = true;
   }
 
   const auto& headers = result.GetHeaderValueCollection();

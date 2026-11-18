@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/signin/SigninEndpointRules.h>
 #include <aws/signin/Signin_EXPORTS.h>
 
 namespace Aws {
 namespace Signin {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SigninClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,8 +30,7 @@ using SigninBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using SigninEndpointProviderBase = EndpointProviderBase<SigninClientConfiguration, SigninBuiltInParameters, SigninClientContextParameters>;
 
-using SigninDefaultEpProviderBase =
-    DefaultEndpointProvider<SigninClientConfiguration, SigninBuiltInParameters, SigninClientContextParameters>;
+using SigninDefaultEpProviderBase = BDDEndpointProvider<SigninClientConfiguration, SigninBuiltInParameters, SigninClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -41,8 +39,7 @@ class AWS_SIGNIN_API SigninEndpointProvider : public SigninDefaultEpProviderBase
  public:
   using SigninResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SigninEndpointProvider()
-      : SigninDefaultEpProviderBase(Aws::Signin::SigninEndpointRules::GetRulesBlob(), Aws::Signin::SigninEndpointRules::RulesBlobSize) {}
+  SigninEndpointProvider();
 
   ~SigninEndpointProvider() {}
 };

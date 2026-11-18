@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/machinelearning/MachineLearningEndpointRules.h>
 #include <aws/machinelearning/MachineLearning_EXPORTS.h>
 
 namespace Aws {
 namespace MachineLearning {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using MachineLearningClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using MachineLearningEndpointProviderBase =
     EndpointProviderBase<MachineLearningClientConfiguration, MachineLearningBuiltInParameters, MachineLearningClientContextParameters>;
 
 using MachineLearningDefaultEpProviderBase =
-    DefaultEndpointProvider<MachineLearningClientConfiguration, MachineLearningBuiltInParameters, MachineLearningClientContextParameters>;
+    BDDEndpointProvider<MachineLearningClientConfiguration, MachineLearningBuiltInParameters, MachineLearningClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_MACHINELEARNING_API MachineLearningEndpointProvider : public MachineLe
  public:
   using MachineLearningResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  MachineLearningEndpointProvider()
-      : MachineLearningDefaultEpProviderBase(Aws::MachineLearning::MachineLearningEndpointRules::GetRulesBlob(),
-                                             Aws::MachineLearning::MachineLearningEndpointRules::RulesBlobSize) {}
+  MachineLearningEndpointProvider();
 
   ~MachineLearningEndpointProvider() {}
 };

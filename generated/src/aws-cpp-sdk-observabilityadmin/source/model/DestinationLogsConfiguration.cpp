@@ -30,6 +30,15 @@ DestinationLogsConfiguration& DestinationLogsConfiguration::operator=(JsonView j
     m_logGroupNameConfiguration = jsonValue.GetObject("LogGroupNameConfiguration");
     m_logGroupNameConfigurationHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("TagPropagationConfiguration")) {
+    m_tagPropagationConfiguration = jsonValue.GetObject("TagPropagationConfiguration");
+    m_tagPropagationConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("LogGroupDeletionProtection")) {
+    m_logGroupDeletionProtection =
+        DeletionProtectionMapper::GetDeletionProtectionForName(jsonValue.GetString("LogGroupDeletionProtection"));
+    m_logGroupDeletionProtectionHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -46,6 +55,14 @@ JsonValue DestinationLogsConfiguration::Jsonize() const {
 
   if (m_logGroupNameConfigurationHasBeenSet) {
     payload.WithObject("LogGroupNameConfiguration", m_logGroupNameConfiguration.Jsonize());
+  }
+
+  if (m_tagPropagationConfigurationHasBeenSet) {
+    payload.WithObject("TagPropagationConfiguration", m_tagPropagationConfiguration.Jsonize());
+  }
+
+  if (m_logGroupDeletionProtectionHasBeenSet) {
+    payload.WithString("LogGroupDeletionProtection", DeletionProtectionMapper::GetNameForDeletionProtection(m_logGroupDeletionProtection));
   }
 
   return payload;

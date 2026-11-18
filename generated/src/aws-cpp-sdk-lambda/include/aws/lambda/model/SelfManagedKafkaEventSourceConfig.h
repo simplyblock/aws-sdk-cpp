@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/lambda/Lambda_EXPORTS.h>
+#include <aws/lambda/model/KafkaEventSourceMappingConsumptionMode.h>
 #include <aws/lambda/model/KafkaSchemaRegistryConfig.h>
 
 #include <utility>
@@ -73,12 +74,44 @@ class SelfManagedKafkaEventSourceConfig {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The mode that Lambda uses to consume records from your self-managed Apache
+   * Kafka topic. Valid values are the following:</p> <ul> <li> <p>
+   * <code>Stream</code> (default) – Lambda consumes records using a Kafka consumer
+   * group and preserves the order of records within each partition.</p> </li> <li>
+   * <p> <code>Queue</code> – Lambda consumes records using a Kafka share group.
+   * Multiple consumers can process records from the same partition concurrently, so
+   * Lambda doesn't preserve per-partition order. To use Queue mode, your cluster
+   * must run Apache Kafka version 4.2 or later with share groups enabled.</p> </li>
+   * </ul> <p>If you omit this parameter, Lambda uses <code>Stream</code>.</p> <p>You
+   * cannot change <code>ConsumptionMode</code> after you create the event source
+   * mapping. To use a different consumption mode, create a new event source
+   * mapping.</p> <p>When <code>ConsumptionMode</code> is <code>Queue</code>, the
+   * <code>StartingPosition</code>, <code>StartingPositionTimestamp</code>, and
+   * <code>MaximumBatchingWindowInSeconds</code> parameters are not supported.</p>
+   */
+  inline KafkaEventSourceMappingConsumptionMode GetConsumptionMode() const { return m_consumptionMode; }
+  inline bool ConsumptionModeHasBeenSet() const { return m_consumptionModeHasBeenSet; }
+  inline void SetConsumptionMode(KafkaEventSourceMappingConsumptionMode value) {
+    m_consumptionModeHasBeenSet = true;
+    m_consumptionMode = value;
+  }
+  inline SelfManagedKafkaEventSourceConfig& WithConsumptionMode(KafkaEventSourceMappingConsumptionMode value) {
+    SetConsumptionMode(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_consumerGroupId;
 
   KafkaSchemaRegistryConfig m_schemaRegistryConfig;
+
+  KafkaEventSourceMappingConsumptionMode m_consumptionMode{KafkaEventSourceMappingConsumptionMode::NOT_SET};
   bool m_consumerGroupIdHasBeenSet = false;
   bool m_schemaRegistryConfigHasBeenSet = false;
+  bool m_consumptionModeHasBeenSet = false;
 };
 
 }  // namespace Model

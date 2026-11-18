@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -10,10 +10,14 @@
 #include <aws/guardduty/model/DescribeOrganizationConfigurationPaginationTraits.h>
 #include <aws/guardduty/model/GetUsageStatisticsPaginationTraits.h>
 #include <aws/guardduty/model/ListCoveragePaginationTraits.h>
+#include <aws/guardduty/model/ListCustomDetectionRuleAssociationsPaginationTraits.h>
+#include <aws/guardduty/model/ListCustomDetectionRuleOrgConfigurationsPaginationTraits.h>
+#include <aws/guardduty/model/ListCustomDetectionRulesPaginationTraits.h>
 #include <aws/guardduty/model/ListDetectorsPaginationTraits.h>
 #include <aws/guardduty/model/ListFiltersPaginationTraits.h>
 #include <aws/guardduty/model/ListFindingsPaginationTraits.h>
 #include <aws/guardduty/model/ListIPSetsPaginationTraits.h>
+#include <aws/guardduty/model/ListInvestigationRecordsPaginationTraits.h>
 #include <aws/guardduty/model/ListInvestigationsPaginationTraits.h>
 #include <aws/guardduty/model/ListInvitationsPaginationTraits.h>
 #include <aws/guardduty/model/ListMalwareScansPaginationTraits.h>
@@ -36,12 +40,24 @@ using GetUsageStatisticsPaginator = Aws::Utils::Pagination::Paginator<GuardDutyC
                                                                       Pagination::GetUsageStatisticsPaginationTraits<GuardDutyClient>>;
 using ListCoveragePaginator = Aws::Utils::Pagination::Paginator<GuardDutyClient, Model::ListCoverageRequest,
                                                                 Pagination::ListCoveragePaginationTraits<GuardDutyClient>>;
+using ListCustomDetectionRuleAssociationsPaginator =
+    Aws::Utils::Pagination::Paginator<GuardDutyClient, Model::ListCustomDetectionRuleAssociationsRequest,
+                                      Pagination::ListCustomDetectionRuleAssociationsPaginationTraits<GuardDutyClient>>;
+using ListCustomDetectionRuleOrgConfigurationsPaginator =
+    Aws::Utils::Pagination::Paginator<GuardDutyClient, Model::ListCustomDetectionRuleOrgConfigurationsRequest,
+                                      Pagination::ListCustomDetectionRuleOrgConfigurationsPaginationTraits<GuardDutyClient>>;
+using ListCustomDetectionRulesPaginator =
+    Aws::Utils::Pagination::Paginator<GuardDutyClient, Model::ListCustomDetectionRulesRequest,
+                                      Pagination::ListCustomDetectionRulesPaginationTraits<GuardDutyClient>>;
 using ListDetectorsPaginator = Aws::Utils::Pagination::Paginator<GuardDutyClient, Model::ListDetectorsRequest,
                                                                  Pagination::ListDetectorsPaginationTraits<GuardDutyClient>>;
 using ListFiltersPaginator =
     Aws::Utils::Pagination::Paginator<GuardDutyClient, Model::ListFiltersRequest, Pagination::ListFiltersPaginationTraits<GuardDutyClient>>;
 using ListFindingsPaginator = Aws::Utils::Pagination::Paginator<GuardDutyClient, Model::ListFindingsRequest,
                                                                 Pagination::ListFindingsPaginationTraits<GuardDutyClient>>;
+using ListInvestigationRecordsPaginator =
+    Aws::Utils::Pagination::Paginator<GuardDutyClient, Model::ListInvestigationRecordsRequest,
+                                      Pagination::ListInvestigationRecordsPaginationTraits<GuardDutyClient>>;
 using ListInvestigationsPaginator = Aws::Utils::Pagination::Paginator<GuardDutyClient, Model::ListInvestigationsRequest,
                                                                       Pagination::ListInvestigationsPaginationTraits<GuardDutyClient>>;
 using ListInvitationsPaginator = Aws::Utils::Pagination::Paginator<GuardDutyClient, Model::ListInvitationsRequest,

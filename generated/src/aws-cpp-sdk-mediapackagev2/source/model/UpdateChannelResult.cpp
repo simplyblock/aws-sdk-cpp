@@ -22,6 +22,18 @@ UpdateChannelResult::UpdateChannelResult(const Aws::AmazonWebServiceResult<JsonV
 UpdateChannelResult& UpdateChannelResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
   m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
+  if (jsonValue.ValueExists("MultiviewConfiguration")) {
+    m_multiviewConfiguration = jsonValue.GetObject("MultiviewConfiguration");
+    m_multiviewConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AttachedMultiviewChannels")) {
+    Aws::Utils::Array<JsonView> attachedMultiviewChannelsJsonList = jsonValue.GetArray("AttachedMultiviewChannels");
+    for (unsigned attachedMultiviewChannelsIndex = 0; attachedMultiviewChannelsIndex < attachedMultiviewChannelsJsonList.GetLength();
+         ++attachedMultiviewChannelsIndex) {
+      m_attachedMultiviewChannels.push_back(attachedMultiviewChannelsJsonList[attachedMultiviewChannelsIndex].AsString());
+    }
+    m_attachedMultiviewChannelsHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("Arn")) {
     m_arn = jsonValue.GetString("Arn");
     m_arnHasBeenSet = true;
@@ -75,6 +87,10 @@ UpdateChannelResult& UpdateChannelResult::operator=(const Aws::AmazonWebServiceR
   if (jsonValue.ValueExists("OutputHeaderConfiguration")) {
     m_outputHeaderConfiguration = jsonValue.GetObject("OutputHeaderConfiguration");
     m_outputHeaderConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("OutputLockingMode")) {
+    m_outputLockingMode = OutputLockingModeMapper::GetOutputLockingModeForName(jsonValue.GetString("OutputLockingMode"));
+    m_outputLockingModeHasBeenSet = true;
   }
 
   const auto& headers = result.GetHeaderValueCollection();

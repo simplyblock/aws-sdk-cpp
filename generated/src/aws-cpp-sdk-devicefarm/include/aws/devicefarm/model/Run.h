@@ -19,9 +19,11 @@
 #include <aws/devicefarm/model/ExecutionResult.h>
 #include <aws/devicefarm/model/ExecutionResultCode.h>
 #include <aws/devicefarm/model/ExecutionStatus.h>
+#include <aws/devicefarm/model/InsightsType.h>
 #include <aws/devicefarm/model/Location.h>
 #include <aws/devicefarm/model/NetworkProfile.h>
 #include <aws/devicefarm/model/Radios.h>
+#include <aws/devicefarm/model/RunInsights.h>
 #include <aws/devicefarm/model/TestType.h>
 #include <aws/devicefarm/model/VpcConfig.h>
 
@@ -615,6 +617,26 @@ class Run {
 
   ///@{
   /**
+   * <p>The ARN of the test package the run was scheduled with. This field is not
+   * returned for test types that do not use a test package, such as
+   * <code>BUILTIN_FUZZ</code>.</p>
+   */
+  inline const Aws::String& GetTestPackageArn() const { return m_testPackageArn; }
+  inline bool TestPackageArnHasBeenSet() const { return m_testPackageArnHasBeenSet; }
+  template <typename TestPackageArnT = Aws::String>
+  void SetTestPackageArn(TestPackageArnT&& value) {
+    m_testPackageArnHasBeenSet = true;
+    m_testPackageArn = std::forward<TestPackageArnT>(value);
+  }
+  template <typename TestPackageArnT = Aws::String>
+  Run& WithTestPackageArn(TestPackageArnT&& value) {
+    SetTestPackageArn(std::forward<TestPackageArnT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The results of a device filter used to select the devices for a test run.</p>
    */
   inline const DeviceSelectionResult& GetDeviceSelectionResult() const { return m_deviceSelectionResult; }
@@ -690,6 +712,49 @@ class Run {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The types of insights requested for the run.</p>
+   */
+  inline const Aws::Vector<InsightsType>& GetInsightsTypes() const { return m_insightsTypes; }
+  inline bool InsightsTypesHasBeenSet() const { return m_insightsTypesHasBeenSet; }
+  template <typename InsightsTypesT = Aws::Vector<InsightsType>>
+  void SetInsightsTypes(InsightsTypesT&& value) {
+    m_insightsTypesHasBeenSet = true;
+    m_insightsTypes = std::forward<InsightsTypesT>(value);
+  }
+  template <typename InsightsTypesT = Aws::Vector<InsightsType>>
+  Run& WithInsightsTypes(InsightsTypesT&& value) {
+    SetInsightsTypes(std::forward<InsightsTypesT>(value));
+    return *this;
+  }
+  inline Run& AddInsightsTypes(InsightsType value) {
+    m_insightsTypesHasBeenSet = true;
+    m_insightsTypes.push_back(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The insights for the run, including the report status and job-level metrics.
+   * This field contains data only if you specified <code>insightsTypes</code> when
+   * you scheduled the run.</p>
+   */
+  inline const RunInsights& GetInsights() const { return m_insights; }
+  inline bool InsightsHasBeenSet() const { return m_insightsHasBeenSet; }
+  template <typename InsightsT = RunInsights>
+  void SetInsights(InsightsT&& value) {
+    m_insightsHasBeenSet = true;
+    m_insights = std::forward<InsightsT>(value);
+  }
+  template <typename InsightsT = RunInsights>
+  Run& WithInsights(InsightsT&& value) {
+    SetInsights(std::forward<InsightsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_arn;
 
@@ -753,6 +818,8 @@ class Run {
 
   Aws::String m_testSpecArn;
 
+  Aws::String m_testPackageArn;
+
   DeviceSelectionResult m_deviceSelectionResult;
 
   VpcConfig m_vpcConfig;
@@ -760,6 +827,10 @@ class Run {
   Aws::String m_executionRoleArn;
 
   Aws::Vector<EnvironmentVariable> m_environmentVariables;
+
+  Aws::Vector<InsightsType> m_insightsTypes;
+
+  RunInsights m_insights;
   bool m_arnHasBeenSet = false;
   bool m_nameHasBeenSet = false;
   bool m_typeHasBeenSet = false;
@@ -791,10 +862,13 @@ class Run {
   bool m_webUrlHasBeenSet = false;
   bool m_skipAppResignHasBeenSet = false;
   bool m_testSpecArnHasBeenSet = false;
+  bool m_testPackageArnHasBeenSet = false;
   bool m_deviceSelectionResultHasBeenSet = false;
   bool m_vpcConfigHasBeenSet = false;
   bool m_executionRoleArnHasBeenSet = false;
   bool m_environmentVariablesHasBeenSet = false;
+  bool m_insightsTypesHasBeenSet = false;
+  bool m_insightsHasBeenSet = false;
 };
 
 }  // namespace Model

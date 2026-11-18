@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-verifiedpermissions "C++ SDK for the AWS verifiedpermissions service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-verifiedpermissions "C++ SDK for Amazon Verified Permissions" aws-cpp-sdk-core)
 
 file(GLOB AWS_VERIFIEDPERMISSIONS_HEADERS
     "include/aws/verifiedpermissions/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_VERIFIEDPERMISSIONS_HEADERS
 
 file(GLOB AWS_VERIFIEDPERMISSIONS_MODEL_HEADERS
     "include/aws/verifiedpermissions/model/*.h"
+)
+
+file(GLOB AWS_VERIFIEDPERMISSIONS_INTERNAL_HEADERS
+    "include/aws/verifiedpermissions/internal/*.h"
 )
 
 file(GLOB AWS_VERIFIEDPERMISSIONS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_VERIFIEDPERMISSIONS_MODEL_SOURCE
 
 file(GLOB VERIFIEDPERMISSIONS_UNIFIED_HEADERS
     ${AWS_VERIFIEDPERMISSIONS_HEADERS}
+    ${AWS_VERIFIEDPERMISSIONS_INTERNAL_HEADERS}
     ${AWS_VERIFIEDPERMISSIONS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\verifiedpermissions" FILES ${AWS_VERIFIEDPERMISSIONS_HEADERS})
+        source_group("Header Files\\aws\\verifiedpermissions\\internal" FILES ${AWS_VERIFIEDPERMISSIONS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\verifiedpermissions\\model" FILES ${AWS_VERIFIEDPERMISSIONS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_VERIFIEDPERMISSIONS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_VERIFIEDPERMISSIONS_MODEL_SOURCE})

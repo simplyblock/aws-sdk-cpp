@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/route53-recovery-readiness/Route53RecoveryReadinessEndpointRules.h>
 #include <aws/route53-recovery-readiness/Route53RecoveryReadiness_EXPORTS.h>
 
 namespace Aws {
 namespace Route53RecoveryReadiness {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using Route53RecoveryReadinessClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using Route53RecoveryReadinessEndpointProviderBase =
                          Route53RecoveryReadinessClientContextParameters>;
 
 using Route53RecoveryReadinessDefaultEpProviderBase =
-    DefaultEndpointProvider<Route53RecoveryReadinessClientConfiguration, Route53RecoveryReadinessBuiltInParameters,
-                            Route53RecoveryReadinessClientContextParameters>;
+    BDDEndpointProvider<Route53RecoveryReadinessClientConfiguration, Route53RecoveryReadinessBuiltInParameters,
+                        Route53RecoveryReadinessClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,10 +43,7 @@ class AWS_ROUTE53RECOVERYREADINESS_API Route53RecoveryReadinessEndpointProvider 
  public:
   using Route53RecoveryReadinessResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  Route53RecoveryReadinessEndpointProvider()
-      : Route53RecoveryReadinessDefaultEpProviderBase(Aws::Route53RecoveryReadiness::Route53RecoveryReadinessEndpointRules::GetRulesBlob(),
-                                                      Aws::Route53RecoveryReadiness::Route53RecoveryReadinessEndpointRules::RulesBlobSize) {
-  }
+  Route53RecoveryReadinessEndpointProvider();
 
   ~Route53RecoveryReadinessEndpointProvider() {}
 };

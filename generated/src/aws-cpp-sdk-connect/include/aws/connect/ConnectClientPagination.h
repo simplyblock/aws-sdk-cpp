@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -17,6 +17,7 @@
 #include <aws/connect/model/ListBotsPaginationTraits.h>
 #include <aws/connect/model/ListChildHoursOfOperationsPaginationTraits.h>
 #include <aws/connect/model/ListContactEvaluationsPaginationTraits.h>
+#include <aws/connect/model/ListContactFlowAliasesPaginationTraits.h>
 #include <aws/connect/model/ListContactFlowModuleAliasesPaginationTraits.h>
 #include <aws/connect/model/ListContactFlowModuleVersionsPaginationTraits.h>
 #include <aws/connect/model/ListContactFlowModulesPaginationTraits.h>
@@ -29,8 +30,10 @@
 #include <aws/connect/model/ListDataTablesPaginationTraits.h>
 #include <aws/connect/model/ListDefaultVocabulariesPaginationTraits.h>
 #include <aws/connect/model/ListEntitySecurityProfilesPaginationTraits.h>
+#include <aws/connect/model/ListEvaluationFormAIVersionsPaginationTraits.h>
 #include <aws/connect/model/ListEvaluationFormVersionsPaginationTraits.h>
 #include <aws/connect/model/ListEvaluationFormsPaginationTraits.h>
+#include <aws/connect/model/ListExtractionDefinitionsPaginationTraits.h>
 #include <aws/connect/model/ListFlowAssociationsPaginationTraits.h>
 #include <aws/connect/model/ListHoursOfOperationOverridesPaginationTraits.h>
 #include <aws/connect/model/ListHoursOfOperationsPaginationTraits.h>
@@ -40,6 +43,7 @@
 #include <aws/connect/model/ListIntegrationAssociationsPaginationTraits.h>
 #include <aws/connect/model/ListLambdaFunctionsPaginationTraits.h>
 #include <aws/connect/model/ListLexBotsPaginationTraits.h>
+#include <aws/connect/model/ListMetricsPaginationTraits.h>
 #include <aws/connect/model/ListPhoneNumbersPaginationTraits.h>
 #include <aws/connect/model/ListPhoneNumbersV2PaginationTraits.h>
 #include <aws/connect/model/ListPredefinedAttributesPaginationTraits.h>
@@ -48,11 +52,13 @@
 #include <aws/connect/model/ListQueuesPaginationTraits.h>
 #include <aws/connect/model/ListQuickConnectsPaginationTraits.h>
 #include <aws/connect/model/ListRealtimeContactAnalysisSegmentsV2PaginationTraits.h>
+#include <aws/connect/model/ListReplicationFindingsPaginationTraits.h>
 #include <aws/connect/model/ListRoutingProfileManualAssignmentQueuesPaginationTraits.h>
 #include <aws/connect/model/ListRoutingProfileQueuesPaginationTraits.h>
 #include <aws/connect/model/ListRoutingProfilesPaginationTraits.h>
 #include <aws/connect/model/ListRulesPaginationTraits.h>
 #include <aws/connect/model/ListSecurityKeysPaginationTraits.h>
+#include <aws/connect/model/ListSecurityProfileAIAgentsPaginationTraits.h>
 #include <aws/connect/model/ListSecurityProfileApplicationsPaginationTraits.h>
 #include <aws/connect/model/ListSecurityProfileFlowModulesPaginationTraits.h>
 #include <aws/connect/model/ListSecurityProfilePermissionsPaginationTraits.h>
@@ -77,12 +83,14 @@
 #include <aws/connect/model/SearchDataTablesPaginationTraits.h>
 #include <aws/connect/model/SearchHoursOfOperationOverridesPaginationTraits.h>
 #include <aws/connect/model/SearchHoursOfOperationsPaginationTraits.h>
+#include <aws/connect/model/SearchMetricsPaginationTraits.h>
 #include <aws/connect/model/SearchPredefinedAttributesPaginationTraits.h>
 #include <aws/connect/model/SearchPromptsPaginationTraits.h>
 #include <aws/connect/model/SearchQueuesPaginationTraits.h>
 #include <aws/connect/model/SearchQuickConnectsPaginationTraits.h>
 #include <aws/connect/model/SearchResourceTagsPaginationTraits.h>
 #include <aws/connect/model/SearchRoutingProfilesPaginationTraits.h>
+#include <aws/connect/model/SearchRulesPaginationTraits.h>
 #include <aws/connect/model/SearchSecurityProfilesPaginationTraits.h>
 #include <aws/connect/model/SearchTestCasesPaginationTraits.h>
 #include <aws/connect/model/SearchUserHierarchyGroupsPaginationTraits.h>
@@ -125,6 +133,9 @@ using ListChildHoursOfOperationsPaginator =
 using ListContactEvaluationsPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListContactEvaluationsRequest,
                                       Pagination::ListContactEvaluationsPaginationTraits<ConnectClient>>;
+using ListContactFlowAliasesPaginator =
+    Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListContactFlowAliasesRequest,
+                                      Pagination::ListContactFlowAliasesPaginationTraits<ConnectClient>>;
 using ListContactFlowModuleAliasesPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListContactFlowModuleAliasesRequest,
                                       Pagination::ListContactFlowModuleAliasesPaginationTraits<ConnectClient>>;
@@ -157,11 +168,17 @@ using ListDefaultVocabulariesPaginator =
 using ListEntitySecurityProfilesPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListEntitySecurityProfilesRequest,
                                       Pagination::ListEntitySecurityProfilesPaginationTraits<ConnectClient>>;
+using ListEvaluationFormAIVersionsPaginator =
+    Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListEvaluationFormAIVersionsRequest,
+                                      Pagination::ListEvaluationFormAIVersionsPaginationTraits<ConnectClient>>;
 using ListEvaluationFormsPaginator = Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListEvaluationFormsRequest,
                                                                        Pagination::ListEvaluationFormsPaginationTraits<ConnectClient>>;
 using ListEvaluationFormVersionsPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListEvaluationFormVersionsRequest,
                                       Pagination::ListEvaluationFormVersionsPaginationTraits<ConnectClient>>;
+using ListExtractionDefinitionsPaginator =
+    Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListExtractionDefinitionsRequest,
+                                      Pagination::ListExtractionDefinitionsPaginationTraits<ConnectClient>>;
 using ListFlowAssociationsPaginator = Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListFlowAssociationsRequest,
                                                                         Pagination::ListFlowAssociationsPaginationTraits<ConnectClient>>;
 using ListHoursOfOperationOverridesPaginator =
@@ -184,6 +201,8 @@ using ListLambdaFunctionsPaginator = Aws::Utils::Pagination::Paginator<ConnectCl
                                                                        Pagination::ListLambdaFunctionsPaginationTraits<ConnectClient>>;
 using ListLexBotsPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListLexBotsRequest, Pagination::ListLexBotsPaginationTraits<ConnectClient>>;
+using ListMetricsPaginator =
+    Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListMetricsRequest, Pagination::ListMetricsPaginationTraits<ConnectClient>>;
 using ListPhoneNumbersPaginator = Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListPhoneNumbersRequest,
                                                                     Pagination::ListPhoneNumbersPaginationTraits<ConnectClient>>;
 using ListPhoneNumbersV2Paginator = Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListPhoneNumbersV2Request,
@@ -203,6 +222,9 @@ using ListQuickConnectsPaginator = Aws::Utils::Pagination::Paginator<ConnectClie
 using ListRealtimeContactAnalysisSegmentsV2Paginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListRealtimeContactAnalysisSegmentsV2Request,
                                       Pagination::ListRealtimeContactAnalysisSegmentsV2PaginationTraits<ConnectClient>>;
+using ListReplicationFindingsPaginator =
+    Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListReplicationFindingsRequest,
+                                      Pagination::ListReplicationFindingsPaginationTraits<ConnectClient>>;
 using ListRoutingProfileManualAssignmentQueuesPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListRoutingProfileManualAssignmentQueuesRequest,
                                       Pagination::ListRoutingProfileManualAssignmentQueuesPaginationTraits<ConnectClient>>;
@@ -215,6 +237,9 @@ using ListRulesPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListRulesRequest, Pagination::ListRulesPaginationTraits<ConnectClient>>;
 using ListSecurityKeysPaginator = Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListSecurityKeysRequest,
                                                                     Pagination::ListSecurityKeysPaginationTraits<ConnectClient>>;
+using ListSecurityProfileAIAgentsPaginator =
+    Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListSecurityProfileAIAgentsRequest,
+                                      Pagination::ListSecurityProfileAIAgentsPaginationTraits<ConnectClient>>;
 using ListSecurityProfileApplicationsPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::ListSecurityProfileApplicationsRequest,
                                       Pagination::ListSecurityProfileApplicationsPaginationTraits<ConnectClient>>;
@@ -273,6 +298,8 @@ using SearchHoursOfOperationOverridesPaginator =
 using SearchHoursOfOperationsPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::SearchHoursOfOperationsRequest,
                                       Pagination::SearchHoursOfOperationsPaginationTraits<ConnectClient>>;
+using SearchMetricsPaginator =
+    Aws::Utils::Pagination::Paginator<ConnectClient, Model::SearchMetricsRequest, Pagination::SearchMetricsPaginationTraits<ConnectClient>>;
 using SearchPredefinedAttributesPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::SearchPredefinedAttributesRequest,
                                       Pagination::SearchPredefinedAttributesPaginationTraits<ConnectClient>>;
@@ -286,6 +313,8 @@ using SearchResourceTagsPaginator = Aws::Utils::Pagination::Paginator<ConnectCli
                                                                       Pagination::SearchResourceTagsPaginationTraits<ConnectClient>>;
 using SearchRoutingProfilesPaginator = Aws::Utils::Pagination::Paginator<ConnectClient, Model::SearchRoutingProfilesRequest,
                                                                          Pagination::SearchRoutingProfilesPaginationTraits<ConnectClient>>;
+using SearchRulesPaginator =
+    Aws::Utils::Pagination::Paginator<ConnectClient, Model::SearchRulesRequest, Pagination::SearchRulesPaginationTraits<ConnectClient>>;
 using SearchSecurityProfilesPaginator =
     Aws::Utils::Pagination::Paginator<ConnectClient, Model::SearchSecurityProfilesRequest,
                                       Pagination::SearchSecurityProfilesPaginationTraits<ConnectClient>>;

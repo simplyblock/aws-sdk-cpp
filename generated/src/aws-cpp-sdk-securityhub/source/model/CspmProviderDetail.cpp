@@ -1,0 +1,48 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/securityhub/model/CspmProviderDetail.h>
+
+#include <utility>
+
+using namespace Aws::Utils::Json;
+using namespace Aws::Utils;
+
+namespace Aws {
+namespace SecurityHub {
+namespace Model {
+
+CspmProviderDetail::CspmProviderDetail(JsonView jsonValue) { *this = jsonValue; }
+
+CspmProviderDetail& CspmProviderDetail::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Azure")) {
+    m_azure = jsonValue.GetObject("Azure");
+    m_azureHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("GCP")) {
+    m_gCP = jsonValue.GetObject("GCP");
+    m_gCPHasBeenSet = true;
+  }
+  return *this;
+}
+
+JsonValue CspmProviderDetail::Jsonize() const {
+  JsonValue payload;
+
+  if (m_azureHasBeenSet) {
+    payload.WithObject("Azure", m_azure.Jsonize());
+  }
+
+  if (m_gCPHasBeenSet) {
+    payload.WithObject("GCP", m_gCP.Jsonize());
+  }
+
+  return payload;
+}
+
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

@@ -33,11 +33,13 @@
 #include <aws/securityhub/model/BatchUpdateFindingsV2Request.h>
 #include <aws/securityhub/model/BatchUpdateFindingsV2Result.h>
 #include <aws/securityhub/model/BatchUpdateStandardsControlAssociationsResult.h>
+#include <aws/securityhub/model/CancelExportJobV2Result.h>
 #include <aws/securityhub/model/CreateActionTargetResult.h>
 #include <aws/securityhub/model/CreateAggregatorV2Result.h>
 #include <aws/securityhub/model/CreateAutomationRuleResult.h>
 #include <aws/securityhub/model/CreateAutomationRuleV2Result.h>
 #include <aws/securityhub/model/CreateConfigurationPolicyResult.h>
+#include <aws/securityhub/model/CreateConnectorResult.h>
 #include <aws/securityhub/model/CreateConnectorV2Result.h>
 #include <aws/securityhub/model/CreateFindingAggregatorResult.h>
 #include <aws/securityhub/model/CreateInsightResult.h>
@@ -48,6 +50,7 @@
 #include <aws/securityhub/model/DeleteAggregatorV2Result.h>
 #include <aws/securityhub/model/DeleteAutomationRuleV2Result.h>
 #include <aws/securityhub/model/DeleteConfigurationPolicyResult.h>
+#include <aws/securityhub/model/DeleteConnectorResult.h>
 #include <aws/securityhub/model/DeleteConnectorV2Result.h>
 #include <aws/securityhub/model/DeleteFindingAggregatorResult.h>
 #include <aws/securityhub/model/DeleteInsightResult.h>
@@ -70,6 +73,7 @@
 #include <aws/securityhub/model/DescribeStandardsResult.h>
 #include <aws/securityhub/model/DisableImportFindingsForProductResult.h>
 #include <aws/securityhub/model/DisableOrganizationAdminAccountResult.h>
+#include <aws/securityhub/model/DisableSecurityHubFeatureV2Result.h>
 #include <aws/securityhub/model/DisableSecurityHubRequest.h>
 #include <aws/securityhub/model/DisableSecurityHubResult.h>
 #include <aws/securityhub/model/DisableSecurityHubV2Request.h>
@@ -79,6 +83,7 @@
 #include <aws/securityhub/model/DisassociateMembersResult.h>
 #include <aws/securityhub/model/EnableImportFindingsForProductResult.h>
 #include <aws/securityhub/model/EnableOrganizationAdminAccountResult.h>
+#include <aws/securityhub/model/EnableSecurityHubFeatureV2Result.h>
 #include <aws/securityhub/model/EnableSecurityHubRequest.h>
 #include <aws/securityhub/model/EnableSecurityHubResult.h>
 #include <aws/securityhub/model/EnableSecurityHubV2Request.h>
@@ -90,9 +95,11 @@
 #include <aws/securityhub/model/GetAutomationRuleV2Result.h>
 #include <aws/securityhub/model/GetConfigurationPolicyAssociationResult.h>
 #include <aws/securityhub/model/GetConfigurationPolicyResult.h>
+#include <aws/securityhub/model/GetConnectorResult.h>
 #include <aws/securityhub/model/GetConnectorV2Result.h>
 #include <aws/securityhub/model/GetEnabledStandardsRequest.h>
 #include <aws/securityhub/model/GetEnabledStandardsResult.h>
+#include <aws/securityhub/model/GetExportJobV2Result.h>
 #include <aws/securityhub/model/GetFindingAggregatorResult.h>
 #include <aws/securityhub/model/GetFindingHistoryResult.h>
 #include <aws/securityhub/model/GetFindingStatisticsV2Result.h>
@@ -108,11 +115,17 @@
 #include <aws/securityhub/model/GetInvitationsCountResult.h>
 #include <aws/securityhub/model/GetMembersResult.h>
 #include <aws/securityhub/model/GetRecommendedPolicyV2Result.h>
+#include <aws/securityhub/model/GetRemediationsV2Request.h>
+#include <aws/securityhub/model/GetRemediationsV2Result.h>
 #include <aws/securityhub/model/GetResourcesStatisticsV2Result.h>
 #include <aws/securityhub/model/GetResourcesTrendsV2Result.h>
 #include <aws/securityhub/model/GetResourcesV2Request.h>
 #include <aws/securityhub/model/GetResourcesV2Result.h>
 #include <aws/securityhub/model/GetSecurityControlDefinitionResult.h>
+#include <aws/securityhub/model/GetSoftwareResourcesV2Result.h>
+#include <aws/securityhub/model/GetSoftwareStatisticsV2Result.h>
+#include <aws/securityhub/model/GetSoftwareV2Request.h>
+#include <aws/securityhub/model/GetSoftwareV2Result.h>
 #include <aws/securityhub/model/InviteMembersResult.h>
 #include <aws/securityhub/model/ListAggregatorsV2Request.h>
 #include <aws/securityhub/model/ListAggregatorsV2Result.h>
@@ -124,12 +137,19 @@
 #include <aws/securityhub/model/ListConfigurationPoliciesResult.h>
 #include <aws/securityhub/model/ListConfigurationPolicyAssociationsRequest.h>
 #include <aws/securityhub/model/ListConfigurationPolicyAssociationsResult.h>
+#include <aws/securityhub/model/ListConnectorsRequest.h>
+#include <aws/securityhub/model/ListConnectorsResult.h>
 #include <aws/securityhub/model/ListConnectorsV2Request.h>
 #include <aws/securityhub/model/ListConnectorsV2Result.h>
 #include <aws/securityhub/model/ListEnabledProductsForImportRequest.h>
 #include <aws/securityhub/model/ListEnabledProductsForImportResult.h>
+#include <aws/securityhub/model/ListExportJobsV2Request.h>
+#include <aws/securityhub/model/ListExportJobsV2Result.h>
+#include <aws/securityhub/model/ListExposuresByRemediationV2Result.h>
 #include <aws/securityhub/model/ListFindingAggregatorsRequest.h>
 #include <aws/securityhub/model/ListFindingAggregatorsResult.h>
+#include <aws/securityhub/model/ListFreeTrialStatusesV2Request.h>
+#include <aws/securityhub/model/ListFreeTrialStatusesV2Result.h>
 #include <aws/securityhub/model/ListInvitationsRequest.h>
 #include <aws/securityhub/model/ListInvitationsResult.h>
 #include <aws/securityhub/model/ListMembersRequest.h>
@@ -143,12 +163,14 @@
 #include <aws/securityhub/model/RegisterConnectorV2Result.h>
 #include <aws/securityhub/model/StartConfigurationPolicyAssociationResult.h>
 #include <aws/securityhub/model/StartConfigurationPolicyDisassociationResult.h>
+#include <aws/securityhub/model/StartExportJobV2Result.h>
 #include <aws/securityhub/model/TagResourceResult.h>
 #include <aws/securityhub/model/UntagResourceResult.h>
 #include <aws/securityhub/model/UpdateActionTargetResult.h>
 #include <aws/securityhub/model/UpdateAggregatorV2Result.h>
 #include <aws/securityhub/model/UpdateAutomationRuleV2Result.h>
 #include <aws/securityhub/model/UpdateConfigurationPolicyResult.h>
+#include <aws/securityhub/model/UpdateConnectorResult.h>
 #include <aws/securityhub/model/UpdateConnectorV2Result.h>
 #include <aws/securityhub/model/UpdateFindingAggregatorResult.h>
 #include <aws/securityhub/model/UpdateFindingsResult.h>
@@ -204,11 +226,13 @@ class BatchUpdateAutomationRulesRequest;
 class BatchUpdateFindingsRequest;
 class BatchUpdateFindingsV2Request;
 class BatchUpdateStandardsControlAssociationsRequest;
+class CancelExportJobV2Request;
 class CreateActionTargetRequest;
 class CreateAggregatorV2Request;
 class CreateAutomationRuleRequest;
 class CreateAutomationRuleV2Request;
 class CreateConfigurationPolicyRequest;
+class CreateConnectorRequest;
 class CreateConnectorV2Request;
 class CreateFindingAggregatorRequest;
 class CreateInsightRequest;
@@ -219,6 +243,7 @@ class DeleteActionTargetRequest;
 class DeleteAggregatorV2Request;
 class DeleteAutomationRuleV2Request;
 class DeleteConfigurationPolicyRequest;
+class DeleteConnectorRequest;
 class DeleteConnectorV2Request;
 class DeleteFindingAggregatorRequest;
 class DeleteInsightRequest;
@@ -235,12 +260,14 @@ class DescribeStandardsControlsRequest;
 class DisableImportFindingsForProductRequest;
 class DisableOrganizationAdminAccountRequest;
 class DisableSecurityHubRequest;
+class DisableSecurityHubFeatureV2Request;
 class DisableSecurityHubV2Request;
 class DisassociateFromAdministratorAccountRequest;
 class DisassociateMembersRequest;
 class EnableImportFindingsForProductRequest;
 class EnableOrganizationAdminAccountRequest;
 class EnableSecurityHubRequest;
+class EnableSecurityHubFeatureV2Request;
 class EnableSecurityHubV2Request;
 class GenerateRecommendedPolicyV2Request;
 class GetAdministratorAccountRequest;
@@ -248,8 +275,10 @@ class GetAggregatorV2Request;
 class GetAutomationRuleV2Request;
 class GetConfigurationPolicyRequest;
 class GetConfigurationPolicyAssociationRequest;
+class GetConnectorRequest;
 class GetConnectorV2Request;
 class GetEnabledStandardsRequest;
+class GetExportJobV2Request;
 class GetFindingAggregatorRequest;
 class GetFindingHistoryRequest;
 class GetFindingStatisticsV2Request;
@@ -261,19 +290,27 @@ class GetInsightsRequest;
 class GetInvitationsCountRequest;
 class GetMembersRequest;
 class GetRecommendedPolicyV2Request;
+class GetRemediationsV2Request;
 class GetResourcesStatisticsV2Request;
 class GetResourcesTrendsV2Request;
 class GetResourcesV2Request;
 class GetSecurityControlDefinitionRequest;
+class GetSoftwareResourcesV2Request;
+class GetSoftwareStatisticsV2Request;
+class GetSoftwareV2Request;
 class InviteMembersRequest;
 class ListAggregatorsV2Request;
 class ListAutomationRulesRequest;
 class ListAutomationRulesV2Request;
 class ListConfigurationPoliciesRequest;
 class ListConfigurationPolicyAssociationsRequest;
+class ListConnectorsRequest;
 class ListConnectorsV2Request;
 class ListEnabledProductsForImportRequest;
+class ListExportJobsV2Request;
+class ListExposuresByRemediationV2Request;
 class ListFindingAggregatorsRequest;
+class ListFreeTrialStatusesV2Request;
 class ListInvitationsRequest;
 class ListMembersRequest;
 class ListOrganizationAdminAccountsRequest;
@@ -283,12 +320,14 @@ class ListTagsForResourceRequest;
 class RegisterConnectorV2Request;
 class StartConfigurationPolicyAssociationRequest;
 class StartConfigurationPolicyDisassociationRequest;
+class StartExportJobV2Request;
 class TagResourceRequest;
 class UntagResourceRequest;
 class UpdateActionTargetRequest;
 class UpdateAggregatorV2Request;
 class UpdateAutomationRuleV2Request;
 class UpdateConfigurationPolicyRequest;
+class UpdateConnectorRequest;
 class UpdateConnectorV2Request;
 class UpdateFindingAggregatorRequest;
 class UpdateFindingsRequest;
@@ -313,11 +352,13 @@ typedef Aws::Utils::Outcome<BatchUpdateAutomationRulesResult, SecurityHubError> 
 typedef Aws::Utils::Outcome<BatchUpdateFindingsResult, SecurityHubError> BatchUpdateFindingsOutcome;
 typedef Aws::Utils::Outcome<BatchUpdateFindingsV2Result, SecurityHubError> BatchUpdateFindingsV2Outcome;
 typedef Aws::Utils::Outcome<BatchUpdateStandardsControlAssociationsResult, SecurityHubError> BatchUpdateStandardsControlAssociationsOutcome;
+typedef Aws::Utils::Outcome<CancelExportJobV2Result, SecurityHubError> CancelExportJobV2Outcome;
 typedef Aws::Utils::Outcome<CreateActionTargetResult, SecurityHubError> CreateActionTargetOutcome;
 typedef Aws::Utils::Outcome<CreateAggregatorV2Result, SecurityHubError> CreateAggregatorV2Outcome;
 typedef Aws::Utils::Outcome<CreateAutomationRuleResult, SecurityHubError> CreateAutomationRuleOutcome;
 typedef Aws::Utils::Outcome<CreateAutomationRuleV2Result, SecurityHubError> CreateAutomationRuleV2Outcome;
 typedef Aws::Utils::Outcome<CreateConfigurationPolicyResult, SecurityHubError> CreateConfigurationPolicyOutcome;
+typedef Aws::Utils::Outcome<CreateConnectorResult, SecurityHubError> CreateConnectorOutcome;
 typedef Aws::Utils::Outcome<CreateConnectorV2Result, SecurityHubError> CreateConnectorV2Outcome;
 typedef Aws::Utils::Outcome<CreateFindingAggregatorResult, SecurityHubError> CreateFindingAggregatorOutcome;
 typedef Aws::Utils::Outcome<CreateInsightResult, SecurityHubError> CreateInsightOutcome;
@@ -328,6 +369,7 @@ typedef Aws::Utils::Outcome<DeleteActionTargetResult, SecurityHubError> DeleteAc
 typedef Aws::Utils::Outcome<DeleteAggregatorV2Result, SecurityHubError> DeleteAggregatorV2Outcome;
 typedef Aws::Utils::Outcome<DeleteAutomationRuleV2Result, SecurityHubError> DeleteAutomationRuleV2Outcome;
 typedef Aws::Utils::Outcome<DeleteConfigurationPolicyResult, SecurityHubError> DeleteConfigurationPolicyOutcome;
+typedef Aws::Utils::Outcome<DeleteConnectorResult, SecurityHubError> DeleteConnectorOutcome;
 typedef Aws::Utils::Outcome<DeleteConnectorV2Result, SecurityHubError> DeleteConnectorV2Outcome;
 typedef Aws::Utils::Outcome<DeleteFindingAggregatorResult, SecurityHubError> DeleteFindingAggregatorOutcome;
 typedef Aws::Utils::Outcome<DeleteInsightResult, SecurityHubError> DeleteInsightOutcome;
@@ -344,12 +386,14 @@ typedef Aws::Utils::Outcome<DescribeStandardsControlsResult, SecurityHubError> D
 typedef Aws::Utils::Outcome<DisableImportFindingsForProductResult, SecurityHubError> DisableImportFindingsForProductOutcome;
 typedef Aws::Utils::Outcome<DisableOrganizationAdminAccountResult, SecurityHubError> DisableOrganizationAdminAccountOutcome;
 typedef Aws::Utils::Outcome<DisableSecurityHubResult, SecurityHubError> DisableSecurityHubOutcome;
+typedef Aws::Utils::Outcome<DisableSecurityHubFeatureV2Result, SecurityHubError> DisableSecurityHubFeatureV2Outcome;
 typedef Aws::Utils::Outcome<DisableSecurityHubV2Result, SecurityHubError> DisableSecurityHubV2Outcome;
 typedef Aws::Utils::Outcome<DisassociateFromAdministratorAccountResult, SecurityHubError> DisassociateFromAdministratorAccountOutcome;
 typedef Aws::Utils::Outcome<DisassociateMembersResult, SecurityHubError> DisassociateMembersOutcome;
 typedef Aws::Utils::Outcome<EnableImportFindingsForProductResult, SecurityHubError> EnableImportFindingsForProductOutcome;
 typedef Aws::Utils::Outcome<EnableOrganizationAdminAccountResult, SecurityHubError> EnableOrganizationAdminAccountOutcome;
 typedef Aws::Utils::Outcome<EnableSecurityHubResult, SecurityHubError> EnableSecurityHubOutcome;
+typedef Aws::Utils::Outcome<EnableSecurityHubFeatureV2Result, SecurityHubError> EnableSecurityHubFeatureV2Outcome;
 typedef Aws::Utils::Outcome<EnableSecurityHubV2Result, SecurityHubError> EnableSecurityHubV2Outcome;
 typedef Aws::Utils::Outcome<GenerateRecommendedPolicyV2Result, SecurityHubError> GenerateRecommendedPolicyV2Outcome;
 typedef Aws::Utils::Outcome<GetAdministratorAccountResult, SecurityHubError> GetAdministratorAccountOutcome;
@@ -357,8 +401,10 @@ typedef Aws::Utils::Outcome<GetAggregatorV2Result, SecurityHubError> GetAggregat
 typedef Aws::Utils::Outcome<GetAutomationRuleV2Result, SecurityHubError> GetAutomationRuleV2Outcome;
 typedef Aws::Utils::Outcome<GetConfigurationPolicyResult, SecurityHubError> GetConfigurationPolicyOutcome;
 typedef Aws::Utils::Outcome<GetConfigurationPolicyAssociationResult, SecurityHubError> GetConfigurationPolicyAssociationOutcome;
+typedef Aws::Utils::Outcome<GetConnectorResult, SecurityHubError> GetConnectorOutcome;
 typedef Aws::Utils::Outcome<GetConnectorV2Result, SecurityHubError> GetConnectorV2Outcome;
 typedef Aws::Utils::Outcome<GetEnabledStandardsResult, SecurityHubError> GetEnabledStandardsOutcome;
+typedef Aws::Utils::Outcome<GetExportJobV2Result, SecurityHubError> GetExportJobV2Outcome;
 typedef Aws::Utils::Outcome<GetFindingAggregatorResult, SecurityHubError> GetFindingAggregatorOutcome;
 typedef Aws::Utils::Outcome<GetFindingHistoryResult, SecurityHubError> GetFindingHistoryOutcome;
 typedef Aws::Utils::Outcome<GetFindingStatisticsV2Result, SecurityHubError> GetFindingStatisticsV2Outcome;
@@ -370,19 +416,27 @@ typedef Aws::Utils::Outcome<GetInsightsResult, SecurityHubError> GetInsightsOutc
 typedef Aws::Utils::Outcome<GetInvitationsCountResult, SecurityHubError> GetInvitationsCountOutcome;
 typedef Aws::Utils::Outcome<GetMembersResult, SecurityHubError> GetMembersOutcome;
 typedef Aws::Utils::Outcome<GetRecommendedPolicyV2Result, SecurityHubError> GetRecommendedPolicyV2Outcome;
+typedef Aws::Utils::Outcome<GetRemediationsV2Result, SecurityHubError> GetRemediationsV2Outcome;
 typedef Aws::Utils::Outcome<GetResourcesStatisticsV2Result, SecurityHubError> GetResourcesStatisticsV2Outcome;
 typedef Aws::Utils::Outcome<GetResourcesTrendsV2Result, SecurityHubError> GetResourcesTrendsV2Outcome;
 typedef Aws::Utils::Outcome<GetResourcesV2Result, SecurityHubError> GetResourcesV2Outcome;
 typedef Aws::Utils::Outcome<GetSecurityControlDefinitionResult, SecurityHubError> GetSecurityControlDefinitionOutcome;
+typedef Aws::Utils::Outcome<GetSoftwareResourcesV2Result, SecurityHubError> GetSoftwareResourcesV2Outcome;
+typedef Aws::Utils::Outcome<GetSoftwareStatisticsV2Result, SecurityHubError> GetSoftwareStatisticsV2Outcome;
+typedef Aws::Utils::Outcome<GetSoftwareV2Result, SecurityHubError> GetSoftwareV2Outcome;
 typedef Aws::Utils::Outcome<InviteMembersResult, SecurityHubError> InviteMembersOutcome;
 typedef Aws::Utils::Outcome<ListAggregatorsV2Result, SecurityHubError> ListAggregatorsV2Outcome;
 typedef Aws::Utils::Outcome<ListAutomationRulesResult, SecurityHubError> ListAutomationRulesOutcome;
 typedef Aws::Utils::Outcome<ListAutomationRulesV2Result, SecurityHubError> ListAutomationRulesV2Outcome;
 typedef Aws::Utils::Outcome<ListConfigurationPoliciesResult, SecurityHubError> ListConfigurationPoliciesOutcome;
 typedef Aws::Utils::Outcome<ListConfigurationPolicyAssociationsResult, SecurityHubError> ListConfigurationPolicyAssociationsOutcome;
+typedef Aws::Utils::Outcome<ListConnectorsResult, SecurityHubError> ListConnectorsOutcome;
 typedef Aws::Utils::Outcome<ListConnectorsV2Result, SecurityHubError> ListConnectorsV2Outcome;
 typedef Aws::Utils::Outcome<ListEnabledProductsForImportResult, SecurityHubError> ListEnabledProductsForImportOutcome;
+typedef Aws::Utils::Outcome<ListExportJobsV2Result, SecurityHubError> ListExportJobsV2Outcome;
+typedef Aws::Utils::Outcome<ListExposuresByRemediationV2Result, SecurityHubError> ListExposuresByRemediationV2Outcome;
 typedef Aws::Utils::Outcome<ListFindingAggregatorsResult, SecurityHubError> ListFindingAggregatorsOutcome;
+typedef Aws::Utils::Outcome<ListFreeTrialStatusesV2Result, SecurityHubError> ListFreeTrialStatusesV2Outcome;
 typedef Aws::Utils::Outcome<ListInvitationsResult, SecurityHubError> ListInvitationsOutcome;
 typedef Aws::Utils::Outcome<ListMembersResult, SecurityHubError> ListMembersOutcome;
 typedef Aws::Utils::Outcome<ListOrganizationAdminAccountsResult, SecurityHubError> ListOrganizationAdminAccountsOutcome;
@@ -392,12 +446,14 @@ typedef Aws::Utils::Outcome<ListTagsForResourceResult, SecurityHubError> ListTag
 typedef Aws::Utils::Outcome<RegisterConnectorV2Result, SecurityHubError> RegisterConnectorV2Outcome;
 typedef Aws::Utils::Outcome<StartConfigurationPolicyAssociationResult, SecurityHubError> StartConfigurationPolicyAssociationOutcome;
 typedef Aws::Utils::Outcome<StartConfigurationPolicyDisassociationResult, SecurityHubError> StartConfigurationPolicyDisassociationOutcome;
+typedef Aws::Utils::Outcome<StartExportJobV2Result, SecurityHubError> StartExportJobV2Outcome;
 typedef Aws::Utils::Outcome<TagResourceResult, SecurityHubError> TagResourceOutcome;
 typedef Aws::Utils::Outcome<UntagResourceResult, SecurityHubError> UntagResourceOutcome;
 typedef Aws::Utils::Outcome<UpdateActionTargetResult, SecurityHubError> UpdateActionTargetOutcome;
 typedef Aws::Utils::Outcome<UpdateAggregatorV2Result, SecurityHubError> UpdateAggregatorV2Outcome;
 typedef Aws::Utils::Outcome<UpdateAutomationRuleV2Result, SecurityHubError> UpdateAutomationRuleV2Outcome;
 typedef Aws::Utils::Outcome<UpdateConfigurationPolicyResult, SecurityHubError> UpdateConfigurationPolicyOutcome;
+typedef Aws::Utils::Outcome<UpdateConnectorResult, SecurityHubError> UpdateConnectorOutcome;
 typedef Aws::Utils::Outcome<UpdateConnectorV2Result, SecurityHubError> UpdateConnectorV2Outcome;
 typedef Aws::Utils::Outcome<UpdateFindingAggregatorResult, SecurityHubError> UpdateFindingAggregatorOutcome;
 typedef Aws::Utils::Outcome<UpdateFindingsResult, SecurityHubError> UpdateFindingsOutcome;
@@ -422,11 +478,13 @@ typedef std::future<BatchUpdateAutomationRulesOutcome> BatchUpdateAutomationRule
 typedef std::future<BatchUpdateFindingsOutcome> BatchUpdateFindingsOutcomeCallable;
 typedef std::future<BatchUpdateFindingsV2Outcome> BatchUpdateFindingsV2OutcomeCallable;
 typedef std::future<BatchUpdateStandardsControlAssociationsOutcome> BatchUpdateStandardsControlAssociationsOutcomeCallable;
+typedef std::future<CancelExportJobV2Outcome> CancelExportJobV2OutcomeCallable;
 typedef std::future<CreateActionTargetOutcome> CreateActionTargetOutcomeCallable;
 typedef std::future<CreateAggregatorV2Outcome> CreateAggregatorV2OutcomeCallable;
 typedef std::future<CreateAutomationRuleOutcome> CreateAutomationRuleOutcomeCallable;
 typedef std::future<CreateAutomationRuleV2Outcome> CreateAutomationRuleV2OutcomeCallable;
 typedef std::future<CreateConfigurationPolicyOutcome> CreateConfigurationPolicyOutcomeCallable;
+typedef std::future<CreateConnectorOutcome> CreateConnectorOutcomeCallable;
 typedef std::future<CreateConnectorV2Outcome> CreateConnectorV2OutcomeCallable;
 typedef std::future<CreateFindingAggregatorOutcome> CreateFindingAggregatorOutcomeCallable;
 typedef std::future<CreateInsightOutcome> CreateInsightOutcomeCallable;
@@ -437,6 +495,7 @@ typedef std::future<DeleteActionTargetOutcome> DeleteActionTargetOutcomeCallable
 typedef std::future<DeleteAggregatorV2Outcome> DeleteAggregatorV2OutcomeCallable;
 typedef std::future<DeleteAutomationRuleV2Outcome> DeleteAutomationRuleV2OutcomeCallable;
 typedef std::future<DeleteConfigurationPolicyOutcome> DeleteConfigurationPolicyOutcomeCallable;
+typedef std::future<DeleteConnectorOutcome> DeleteConnectorOutcomeCallable;
 typedef std::future<DeleteConnectorV2Outcome> DeleteConnectorV2OutcomeCallable;
 typedef std::future<DeleteFindingAggregatorOutcome> DeleteFindingAggregatorOutcomeCallable;
 typedef std::future<DeleteInsightOutcome> DeleteInsightOutcomeCallable;
@@ -453,12 +512,14 @@ typedef std::future<DescribeStandardsControlsOutcome> DescribeStandardsControlsO
 typedef std::future<DisableImportFindingsForProductOutcome> DisableImportFindingsForProductOutcomeCallable;
 typedef std::future<DisableOrganizationAdminAccountOutcome> DisableOrganizationAdminAccountOutcomeCallable;
 typedef std::future<DisableSecurityHubOutcome> DisableSecurityHubOutcomeCallable;
+typedef std::future<DisableSecurityHubFeatureV2Outcome> DisableSecurityHubFeatureV2OutcomeCallable;
 typedef std::future<DisableSecurityHubV2Outcome> DisableSecurityHubV2OutcomeCallable;
 typedef std::future<DisassociateFromAdministratorAccountOutcome> DisassociateFromAdministratorAccountOutcomeCallable;
 typedef std::future<DisassociateMembersOutcome> DisassociateMembersOutcomeCallable;
 typedef std::future<EnableImportFindingsForProductOutcome> EnableImportFindingsForProductOutcomeCallable;
 typedef std::future<EnableOrganizationAdminAccountOutcome> EnableOrganizationAdminAccountOutcomeCallable;
 typedef std::future<EnableSecurityHubOutcome> EnableSecurityHubOutcomeCallable;
+typedef std::future<EnableSecurityHubFeatureV2Outcome> EnableSecurityHubFeatureV2OutcomeCallable;
 typedef std::future<EnableSecurityHubV2Outcome> EnableSecurityHubV2OutcomeCallable;
 typedef std::future<GenerateRecommendedPolicyV2Outcome> GenerateRecommendedPolicyV2OutcomeCallable;
 typedef std::future<GetAdministratorAccountOutcome> GetAdministratorAccountOutcomeCallable;
@@ -466,8 +527,10 @@ typedef std::future<GetAggregatorV2Outcome> GetAggregatorV2OutcomeCallable;
 typedef std::future<GetAutomationRuleV2Outcome> GetAutomationRuleV2OutcomeCallable;
 typedef std::future<GetConfigurationPolicyOutcome> GetConfigurationPolicyOutcomeCallable;
 typedef std::future<GetConfigurationPolicyAssociationOutcome> GetConfigurationPolicyAssociationOutcomeCallable;
+typedef std::future<GetConnectorOutcome> GetConnectorOutcomeCallable;
 typedef std::future<GetConnectorV2Outcome> GetConnectorV2OutcomeCallable;
 typedef std::future<GetEnabledStandardsOutcome> GetEnabledStandardsOutcomeCallable;
+typedef std::future<GetExportJobV2Outcome> GetExportJobV2OutcomeCallable;
 typedef std::future<GetFindingAggregatorOutcome> GetFindingAggregatorOutcomeCallable;
 typedef std::future<GetFindingHistoryOutcome> GetFindingHistoryOutcomeCallable;
 typedef std::future<GetFindingStatisticsV2Outcome> GetFindingStatisticsV2OutcomeCallable;
@@ -479,19 +542,27 @@ typedef std::future<GetInsightsOutcome> GetInsightsOutcomeCallable;
 typedef std::future<GetInvitationsCountOutcome> GetInvitationsCountOutcomeCallable;
 typedef std::future<GetMembersOutcome> GetMembersOutcomeCallable;
 typedef std::future<GetRecommendedPolicyV2Outcome> GetRecommendedPolicyV2OutcomeCallable;
+typedef std::future<GetRemediationsV2Outcome> GetRemediationsV2OutcomeCallable;
 typedef std::future<GetResourcesStatisticsV2Outcome> GetResourcesStatisticsV2OutcomeCallable;
 typedef std::future<GetResourcesTrendsV2Outcome> GetResourcesTrendsV2OutcomeCallable;
 typedef std::future<GetResourcesV2Outcome> GetResourcesV2OutcomeCallable;
 typedef std::future<GetSecurityControlDefinitionOutcome> GetSecurityControlDefinitionOutcomeCallable;
+typedef std::future<GetSoftwareResourcesV2Outcome> GetSoftwareResourcesV2OutcomeCallable;
+typedef std::future<GetSoftwareStatisticsV2Outcome> GetSoftwareStatisticsV2OutcomeCallable;
+typedef std::future<GetSoftwareV2Outcome> GetSoftwareV2OutcomeCallable;
 typedef std::future<InviteMembersOutcome> InviteMembersOutcomeCallable;
 typedef std::future<ListAggregatorsV2Outcome> ListAggregatorsV2OutcomeCallable;
 typedef std::future<ListAutomationRulesOutcome> ListAutomationRulesOutcomeCallable;
 typedef std::future<ListAutomationRulesV2Outcome> ListAutomationRulesV2OutcomeCallable;
 typedef std::future<ListConfigurationPoliciesOutcome> ListConfigurationPoliciesOutcomeCallable;
 typedef std::future<ListConfigurationPolicyAssociationsOutcome> ListConfigurationPolicyAssociationsOutcomeCallable;
+typedef std::future<ListConnectorsOutcome> ListConnectorsOutcomeCallable;
 typedef std::future<ListConnectorsV2Outcome> ListConnectorsV2OutcomeCallable;
 typedef std::future<ListEnabledProductsForImportOutcome> ListEnabledProductsForImportOutcomeCallable;
+typedef std::future<ListExportJobsV2Outcome> ListExportJobsV2OutcomeCallable;
+typedef std::future<ListExposuresByRemediationV2Outcome> ListExposuresByRemediationV2OutcomeCallable;
 typedef std::future<ListFindingAggregatorsOutcome> ListFindingAggregatorsOutcomeCallable;
+typedef std::future<ListFreeTrialStatusesV2Outcome> ListFreeTrialStatusesV2OutcomeCallable;
 typedef std::future<ListInvitationsOutcome> ListInvitationsOutcomeCallable;
 typedef std::future<ListMembersOutcome> ListMembersOutcomeCallable;
 typedef std::future<ListOrganizationAdminAccountsOutcome> ListOrganizationAdminAccountsOutcomeCallable;
@@ -501,12 +572,14 @@ typedef std::future<ListTagsForResourceOutcome> ListTagsForResourceOutcomeCallab
 typedef std::future<RegisterConnectorV2Outcome> RegisterConnectorV2OutcomeCallable;
 typedef std::future<StartConfigurationPolicyAssociationOutcome> StartConfigurationPolicyAssociationOutcomeCallable;
 typedef std::future<StartConfigurationPolicyDisassociationOutcome> StartConfigurationPolicyDisassociationOutcomeCallable;
+typedef std::future<StartExportJobV2Outcome> StartExportJobV2OutcomeCallable;
 typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
 typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
 typedef std::future<UpdateActionTargetOutcome> UpdateActionTargetOutcomeCallable;
 typedef std::future<UpdateAggregatorV2Outcome> UpdateAggregatorV2OutcomeCallable;
 typedef std::future<UpdateAutomationRuleV2Outcome> UpdateAutomationRuleV2OutcomeCallable;
 typedef std::future<UpdateConfigurationPolicyOutcome> UpdateConfigurationPolicyOutcomeCallable;
+typedef std::future<UpdateConnectorOutcome> UpdateConnectorOutcomeCallable;
 typedef std::future<UpdateConnectorV2Outcome> UpdateConnectorV2OutcomeCallable;
 typedef std::future<UpdateFindingAggregatorOutcome> UpdateFindingAggregatorOutcomeCallable;
 typedef std::future<UpdateFindingsOutcome> UpdateFindingsOutcomeCallable;
@@ -564,6 +637,9 @@ typedef std::function<void(const SecurityHubClient*, const Model::BatchUpdateSta
                            const Model::BatchUpdateStandardsControlAssociationsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     BatchUpdateStandardsControlAssociationsResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::CancelExportJobV2Request&, const Model::CancelExportJobV2Outcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CancelExportJobV2ResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::CreateActionTargetRequest&, const Model::CreateActionTargetOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateActionTargetResponseReceivedHandler;
@@ -579,6 +655,9 @@ typedef std::function<void(const SecurityHubClient*, const Model::CreateAutomati
 typedef std::function<void(const SecurityHubClient*, const Model::CreateConfigurationPolicyRequest&,
                            const Model::CreateConfigurationPolicyOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateConfigurationPolicyResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::CreateConnectorRequest&, const Model::CreateConnectorOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateConnectorResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::CreateConnectorV2Request&, const Model::CreateConnectorV2Outcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateConnectorV2ResponseReceivedHandler;
@@ -609,6 +688,9 @@ typedef std::function<void(const SecurityHubClient*, const Model::DeleteAutomati
 typedef std::function<void(const SecurityHubClient*, const Model::DeleteConfigurationPolicyRequest&,
                            const Model::DeleteConfigurationPolicyOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteConfigurationPolicyResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::DeleteConnectorRequest&, const Model::DeleteConnectorOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteConnectorResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::DeleteConnectorV2Request&, const Model::DeleteConnectorV2Outcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteConnectorV2ResponseReceivedHandler;
@@ -660,6 +742,9 @@ typedef std::function<void(const SecurityHubClient*, const Model::DisableOrganiz
 typedef std::function<void(const SecurityHubClient*, const Model::DisableSecurityHubRequest&, const Model::DisableSecurityHubOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DisableSecurityHubResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::DisableSecurityHubFeatureV2Request&,
+                           const Model::DisableSecurityHubFeatureV2Outcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DisableSecurityHubFeatureV2ResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::DisableSecurityHubV2Request&, const Model::DisableSecurityHubV2Outcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DisableSecurityHubV2ResponseReceivedHandler;
@@ -681,6 +766,9 @@ typedef std::function<void(const SecurityHubClient*, const Model::EnableOrganiza
 typedef std::function<void(const SecurityHubClient*, const Model::EnableSecurityHubRequest&, const Model::EnableSecurityHubOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     EnableSecurityHubResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::EnableSecurityHubFeatureV2Request&,
+                           const Model::EnableSecurityHubFeatureV2Outcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    EnableSecurityHubFeatureV2ResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::EnableSecurityHubV2Request&, const Model::EnableSecurityHubV2Outcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     EnableSecurityHubV2ResponseReceivedHandler;
@@ -703,12 +791,18 @@ typedef std::function<void(const SecurityHubClient*, const Model::GetConfigurati
                            const Model::GetConfigurationPolicyAssociationOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetConfigurationPolicyAssociationResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::GetConnectorRequest&, const Model::GetConnectorOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetConnectorResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::GetConnectorV2Request&, const Model::GetConnectorV2Outcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetConnectorV2ResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::GetEnabledStandardsRequest&, const Model::GetEnabledStandardsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetEnabledStandardsResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::GetExportJobV2Request&, const Model::GetExportJobV2Outcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetExportJobV2ResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::GetFindingAggregatorRequest&, const Model::GetFindingAggregatorOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetFindingAggregatorResponseReceivedHandler;
@@ -742,6 +836,9 @@ typedef std::function<void(const SecurityHubClient*, const Model::GetMembersRequ
 typedef std::function<void(const SecurityHubClient*, const Model::GetRecommendedPolicyV2Request&,
                            const Model::GetRecommendedPolicyV2Outcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetRecommendedPolicyV2ResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::GetRemediationsV2Request&, const Model::GetRemediationsV2Outcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetRemediationsV2ResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::GetResourcesStatisticsV2Request&,
                            const Model::GetResourcesStatisticsV2Outcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetResourcesStatisticsV2ResponseReceivedHandler;
@@ -755,6 +852,15 @@ typedef std::function<void(const SecurityHubClient*, const Model::GetSecurityCon
                            const Model::GetSecurityControlDefinitionOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetSecurityControlDefinitionResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::GetSoftwareResourcesV2Request&,
+                           const Model::GetSoftwareResourcesV2Outcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetSoftwareResourcesV2ResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::GetSoftwareStatisticsV2Request&,
+                           const Model::GetSoftwareStatisticsV2Outcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetSoftwareStatisticsV2ResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::GetSoftwareV2Request&, const Model::GetSoftwareV2Outcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetSoftwareV2ResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::InviteMembersRequest&, const Model::InviteMembersOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     InviteMembersResponseReceivedHandler;
@@ -774,6 +880,9 @@ typedef std::function<void(const SecurityHubClient*, const Model::ListConfigurat
                            const Model::ListConfigurationPolicyAssociationsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListConfigurationPolicyAssociationsResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::ListConnectorsRequest&, const Model::ListConnectorsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListConnectorsResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::ListConnectorsV2Request&, const Model::ListConnectorsV2Outcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListConnectorsV2ResponseReceivedHandler;
@@ -781,9 +890,19 @@ typedef std::function<void(const SecurityHubClient*, const Model::ListEnabledPro
                            const Model::ListEnabledProductsForImportOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListEnabledProductsForImportResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::ListExportJobsV2Request&, const Model::ListExportJobsV2Outcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListExportJobsV2ResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::ListExposuresByRemediationV2Request&,
+                           const Model::ListExposuresByRemediationV2Outcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListExposuresByRemediationV2ResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::ListFindingAggregatorsRequest&,
                            const Model::ListFindingAggregatorsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListFindingAggregatorsResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::ListFreeTrialStatusesV2Request&,
+                           const Model::ListFreeTrialStatusesV2Outcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListFreeTrialStatusesV2ResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::ListInvitationsRequest&, const Model::ListInvitationsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListInvitationsResponseReceivedHandler;
@@ -816,6 +935,9 @@ typedef std::function<void(const SecurityHubClient*, const Model::StartConfigura
                            const Model::StartConfigurationPolicyDisassociationOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     StartConfigurationPolicyDisassociationResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::StartExportJobV2Request&, const Model::StartExportJobV2Outcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    StartExportJobV2ResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::TagResourceRequest&, const Model::TagResourceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     TagResourceResponseReceivedHandler;
@@ -834,6 +956,9 @@ typedef std::function<void(const SecurityHubClient*, const Model::UpdateAutomati
 typedef std::function<void(const SecurityHubClient*, const Model::UpdateConfigurationPolicyRequest&,
                            const Model::UpdateConfigurationPolicyOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateConfigurationPolicyResponseReceivedHandler;
+typedef std::function<void(const SecurityHubClient*, const Model::UpdateConnectorRequest&, const Model::UpdateConnectorOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateConnectorResponseReceivedHandler;
 typedef std::function<void(const SecurityHubClient*, const Model::UpdateConnectorV2Request&, const Model::UpdateConnectorV2Outcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateConnectorV2ResponseReceivedHandler;

@@ -8,6 +8,7 @@
 #include <aws/healthlake/HealthLakeRequest.h>
 #include <aws/healthlake/HealthLake_EXPORTS.h>
 #include <aws/healthlake/model/AnalyticsConfiguration.h>
+#include <aws/healthlake/model/BackupConfiguration.h>
 #include <aws/healthlake/model/IdentityProviderConfiguration.h>
 #include <aws/healthlake/model/NlpConfiguration.h>
 #include <aws/healthlake/model/ProfileConfiguration.h>
@@ -72,24 +73,6 @@ class UpdateFHIRDatastoreRequest : public HealthLakeRequest {
 
   ///@{
   /**
-   * <p>The natural language processing (NLP) configuration for the data store.</p>
-   */
-  inline const NlpConfiguration& GetNlpConfiguration() const { return m_nlpConfiguration; }
-  inline bool NlpConfigurationHasBeenSet() const { return m_nlpConfigurationHasBeenSet; }
-  template <typename NlpConfigurationT = NlpConfiguration>
-  void SetNlpConfiguration(NlpConfigurationT&& value) {
-    m_nlpConfigurationHasBeenSet = true;
-    m_nlpConfiguration = std::forward<NlpConfigurationT>(value);
-  }
-  template <typename NlpConfigurationT = NlpConfiguration>
-  UpdateFHIRDatastoreRequest& WithNlpConfiguration(NlpConfigurationT&& value) {
-    SetNlpConfiguration(std::forward<NlpConfigurationT>(value));
-    return *this;
-  }
-  ///@}
-
-  ///@{
-  /**
    * <p>The analytics configuration for the data store.</p>
    */
   inline const AnalyticsConfiguration& GetAnalyticsConfiguration() const { return m_analyticsConfiguration; }
@@ -102,6 +85,24 @@ class UpdateFHIRDatastoreRequest : public HealthLakeRequest {
   template <typename AnalyticsConfigurationT = AnalyticsConfiguration>
   UpdateFHIRDatastoreRequest& WithAnalyticsConfiguration(AnalyticsConfigurationT&& value) {
     SetAnalyticsConfiguration(std::forward<AnalyticsConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The natural language processing (NLP) configuration for the data store.</p>
+   */
+  inline const NlpConfiguration& GetNlpConfiguration() const { return m_nlpConfiguration; }
+  inline bool NlpConfigurationHasBeenSet() const { return m_nlpConfigurationHasBeenSet; }
+  template <typename NlpConfigurationT = NlpConfiguration>
+  void SetNlpConfiguration(NlpConfigurationT&& value) {
+    m_nlpConfigurationHasBeenSet = true;
+    m_nlpConfiguration = std::forward<NlpConfigurationT>(value);
+  }
+  template <typename NlpConfigurationT = NlpConfiguration>
+  UpdateFHIRDatastoreRequest& WithNlpConfiguration(NlpConfigurationT&& value) {
+    SetNlpConfiguration(std::forward<NlpConfigurationT>(value));
     return *this;
   }
   ///@}
@@ -141,24 +142,45 @@ class UpdateFHIRDatastoreRequest : public HealthLakeRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The backup configuration for the data store.</p>
+   */
+  inline const BackupConfiguration& GetBackupConfiguration() const { return m_backupConfiguration; }
+  inline bool BackupConfigurationHasBeenSet() const { return m_backupConfigurationHasBeenSet; }
+  template <typename BackupConfigurationT = BackupConfiguration>
+  void SetBackupConfiguration(BackupConfigurationT&& value) {
+    m_backupConfigurationHasBeenSet = true;
+    m_backupConfiguration = std::forward<BackupConfigurationT>(value);
+  }
+  template <typename BackupConfigurationT = BackupConfiguration>
+  UpdateFHIRDatastoreRequest& WithBackupConfiguration(BackupConfigurationT&& value) {
+    SetBackupConfiguration(std::forward<BackupConfigurationT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_datastoreId;
 
   Aws::String m_datastoreName;
 
-  NlpConfiguration m_nlpConfiguration;
-
   AnalyticsConfiguration m_analyticsConfiguration;
+
+  NlpConfiguration m_nlpConfiguration;
 
   ProfileConfiguration m_profileConfiguration;
 
   IdentityProviderConfiguration m_identityProviderConfiguration;
+
+  BackupConfiguration m_backupConfiguration;
   bool m_datastoreIdHasBeenSet = false;
   bool m_datastoreNameHasBeenSet = false;
-  bool m_nlpConfigurationHasBeenSet = false;
   bool m_analyticsConfigurationHasBeenSet = false;
+  bool m_nlpConfigurationHasBeenSet = false;
   bool m_profileConfigurationHasBeenSet = false;
   bool m_identityProviderConfigurationHasBeenSet = false;
+  bool m_backupConfigurationHasBeenSet = false;
 };
 
 }  // namespace Model

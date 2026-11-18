@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -36,11 +36,13 @@
 #include <aws/glue/model/ListCrawlersPaginationTraits.h>
 #include <aws/glue/model/ListDataQualityResultsPaginationTraits.h>
 #include <aws/glue/model/ListUsageProfilesPaginationTraits.h>
+#include <aws/glue/model/ListDataQualityResultsV2PaginationTraits.h>
 #include <aws/glue/model/GetCrawlersPaginationTraits.h>
 #include <aws/glue/model/ListGlossariesPaginationTraits.h>
 #include <aws/glue/model/ListJobsPaginationTraits.h>
 #include <aws/glue/model/ListWorkflowsPaginationTraits.h>
 #include <aws/glue/model/ListIterableFormsPaginationTraits.h>
+#include <aws/glue/model/ListDataQualityEvaluationConfigsPaginationTraits.h>
 #include <aws/glue/model/ListDataQualityRulesetsPaginationTraits.h>
 #include <aws/glue/model/GetMLTransformsPaginationTraits.h>
 #include <aws/glue/model/ListAssetTypesPaginationTraits.h>
@@ -69,6 +71,6 @@ class GluePaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(GluePaginationCompilationTest, GluePaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

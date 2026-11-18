@@ -28,13 +28,6 @@ class JsonValue;
 }  // namespace Utils
 namespace deadline {
 namespace Model {
-/**
- * <p>Mixin that adds an optional ARN field to response structures. Apply to
- * SummaryMixins (flows into Get, Summary, and BatchGet) and Create
- * outputs.</p><p><h3>See Also:</h3>   <a
- * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/GetBudgetResponse">AWS
- * API Reference</a></p>
- */
 class GetBudgetResult {
  public:
   AWS_DEADLINE_API GetBudgetResult() = default;
@@ -77,9 +70,10 @@ class GetBudgetResult {
 
   ///@{
   /**
-   * <p>The status of the budget.</p> <ul> <li> <p> <code>ACTIVE</code>–Get a budget
-   * being evaluated.</p> </li> <li> <p> <code>INACTIVE</code>–Get an inactive
-   * budget. This can include expired, canceled, or deleted statuses.</p> </li> </ul>
+   * <p>The status of the budget.</p> <ul> <li> <p> <code>ACTIVE</code> - Get a
+   * budget being evaluated.</p> </li> <li> <p> <code>INACTIVE</code> - Get an
+   * inactive budget. This can include expired, canceled, or deleted statuses.</p>
+   * </li> </ul>
    */
   inline BudgetStatus GetStatus() const { return m_status; }
   inline void SetStatus(BudgetStatus value) {

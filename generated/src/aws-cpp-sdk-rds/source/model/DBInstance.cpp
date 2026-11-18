@@ -602,6 +602,22 @@ DBInstance& DBInstance::operator=(const XmlNode& xmlNode) {
       m_storageVolumeStatus = Aws::Utils::Xml::DecodeEscapedXmlText(storageVolumeStatusNode.GetText());
       m_storageVolumeStatusHasBeenSet = true;
     }
+    XmlNode storageOperationStatusNode = resultNode.FirstChild("StorageOperationStatus");
+    if (!storageOperationStatusNode.IsNull()) {
+      m_storageOperationStatus = Aws::Utils::Xml::DecodeEscapedXmlText(storageOperationStatusNode.GetText());
+      m_storageOperationStatusHasBeenSet = true;
+    }
+    XmlNode storageOperationPercentProgressNode = resultNode.FirstChild("StorageOperationPercentProgress");
+    if (!storageOperationPercentProgressNode.IsNull()) {
+      m_storageOperationPercentProgress = StringUtils::ConvertToInt32(
+          StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(storageOperationPercentProgressNode.GetText()).c_str()).c_str());
+      m_storageOperationPercentProgressHasBeenSet = true;
+    }
+    XmlNode dBCapacityReservationIdentifierNode = resultNode.FirstChild("DBCapacityReservationIdentifier");
+    if (!dBCapacityReservationIdentifierNode.IsNull()) {
+      m_dBCapacityReservationIdentifier = Aws::Utils::Xml::DecodeEscapedXmlText(dBCapacityReservationIdentifierNode.GetText());
+      m_dBCapacityReservationIdentifierHasBeenSet = true;
+    }
   }
 
   return *this;
@@ -1090,6 +1106,20 @@ void DBInstance::OutputToStream(Aws::OStream& oStream, const char* location, uns
     oStream << location << index << locationValue << ".StorageVolumeStatus=" << StringUtils::URLEncode(m_storageVolumeStatus.c_str())
             << "&";
   }
+
+  if (m_storageOperationStatusHasBeenSet) {
+    oStream << location << index << locationValue << ".StorageOperationStatus=" << StringUtils::URLEncode(m_storageOperationStatus.c_str())
+            << "&";
+  }
+
+  if (m_storageOperationPercentProgressHasBeenSet) {
+    oStream << location << index << locationValue << ".StorageOperationPercentProgress=" << m_storageOperationPercentProgress << "&";
+  }
+
+  if (m_dBCapacityReservationIdentifierHasBeenSet) {
+    oStream << location << index << locationValue
+            << ".DBCapacityReservationIdentifier=" << StringUtils::URLEncode(m_dBCapacityReservationIdentifier.c_str()) << "&";
+  }
 }
 
 void DBInstance::OutputToStream(Aws::OStream& oStream, const char* location) const {
@@ -1462,6 +1492,15 @@ void DBInstance::OutputToStream(Aws::OStream& oStream, const char* location) con
   }
   if (m_storageVolumeStatusHasBeenSet) {
     oStream << location << ".StorageVolumeStatus=" << StringUtils::URLEncode(m_storageVolumeStatus.c_str()) << "&";
+  }
+  if (m_storageOperationStatusHasBeenSet) {
+    oStream << location << ".StorageOperationStatus=" << StringUtils::URLEncode(m_storageOperationStatus.c_str()) << "&";
+  }
+  if (m_storageOperationPercentProgressHasBeenSet) {
+    oStream << location << ".StorageOperationPercentProgress=" << m_storageOperationPercentProgress << "&";
+  }
+  if (m_dBCapacityReservationIdentifierHasBeenSet) {
+    oStream << location << ".DBCapacityReservationIdentifier=" << StringUtils::URLEncode(m_dBCapacityReservationIdentifier.c_str()) << "&";
   }
 }
 

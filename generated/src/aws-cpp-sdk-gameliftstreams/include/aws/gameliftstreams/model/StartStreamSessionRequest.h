@@ -10,6 +10,7 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/gameliftstreams/GameLiftStreamsRequest.h>
 #include <aws/gameliftstreams/GameLiftStreams_EXPORTS.h>
+#include <aws/gameliftstreams/model/DisplayConfiguration.h>
 #include <aws/gameliftstreams/model/PerformanceStatsConfiguration.h>
 #include <aws/gameliftstreams/model/Protocol.h>
 
@@ -334,6 +335,49 @@ class StartStreamSessionRequest : public GameLiftStreamsRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The ARN of an AWS Identity and Access Management (IAM) role that Amazon
+   * GameLift Streams assumes on your behalf during the stream session. The role
+   * grants Amazon GameLift Streams permission to obtain temporary credentials for
+   * your application. The role's trust policy must allow the
+   * <code>gameliftstreams.amazonaws.com</code> service principal to assume it. The
+   * role name must start with <code>GameLiftStreams-</code>.</p>
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  StartStreamSessionRequest& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The configuration for the stream session's virtual monitor, including the
+   * resolution settings.</p> <p>If not specified, Amazon GameLift Streams uses the
+   * default resolution of 1920 × 1080.</p>
+   */
+  inline const DisplayConfiguration& GetDisplayConfiguration() const { return m_displayConfiguration; }
+  inline bool DisplayConfigurationHasBeenSet() const { return m_displayConfigurationHasBeenSet; }
+  template <typename DisplayConfigurationT = DisplayConfiguration>
+  void SetDisplayConfiguration(DisplayConfigurationT&& value) {
+    m_displayConfigurationHasBeenSet = true;
+    m_displayConfiguration = std::forward<DisplayConfigurationT>(value);
+  }
+  template <typename DisplayConfigurationT = DisplayConfiguration>
+  StartStreamSessionRequest& WithDisplayConfiguration(DisplayConfigurationT&& value) {
+    SetDisplayConfiguration(std::forward<DisplayConfigurationT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
@@ -360,6 +404,10 @@ class StartStreamSessionRequest : public GameLiftStreamsRequest {
   Aws::Map<Aws::String, Aws::String> m_additionalEnvironmentVariables;
 
   PerformanceStatsConfiguration m_performanceStatsConfiguration;
+
+  Aws::String m_roleArn;
+
+  DisplayConfiguration m_displayConfiguration;
   bool m_clientTokenHasBeenSet = true;
   bool m_descriptionHasBeenSet = false;
   bool m_identifierHasBeenSet = false;
@@ -373,6 +421,8 @@ class StartStreamSessionRequest : public GameLiftStreamsRequest {
   bool m_additionalLaunchArgsHasBeenSet = false;
   bool m_additionalEnvironmentVariablesHasBeenSet = false;
   bool m_performanceStatsConfigurationHasBeenSet = false;
+  bool m_roleArnHasBeenSet = false;
+  bool m_displayConfigurationHasBeenSet = false;
 };
 
 }  // namespace Model

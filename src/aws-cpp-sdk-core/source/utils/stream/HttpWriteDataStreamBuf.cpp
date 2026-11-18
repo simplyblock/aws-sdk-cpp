@@ -14,12 +14,8 @@ const char* WRITE_DATA_BUF_LOG_NAME = "HttpWriteDataStreamBuf";
 
 Aws::Utils::Stream::HttpWriteDataStreamBuf::HttpWriteDataStreamBuf(const std::shared_ptr<Aws::Http::HttpClient>& client,
                                                                    size_t bufferLength,
-                                                                   size_t requestTimeoutMs)
-    : m_client{client}, m_buffer{bufferLength} {
-  if (requestTimeoutMs > 0) {
-    m_hasDeadline = true;
-    m_deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(requestTimeoutMs);
-  }
+                                                                   uint64_t requestTimeoutMs)
+    : m_client{client}, m_buffer{bufferLength}, m_writeTimeout{requestTimeoutMs} {
   ResetPutArea();
 }
 
@@ -43,20 +39,24 @@ Aws::Crt::Optional<Aws::Client::AWSError<Aws::Client::CoreErrors>> Aws::Utils::S
   // Callback captures stack locals by reference. This is safe because
   // we block on acquireCondition.wait() below, keeping the stack frame
   // alive until the callback has fired.
-  m_client->AcquireConnection(request,
-                              [&acquireMutex, &acquireCondition, &connectionAcquired, &error, this](
-                                  std::shared_ptr<Aws::Http::Connection> connection, int errorCode) -> void {
-                                {
-                                  std::unique_lock<std::mutex> const lock{acquireMutex};
-                                  if (errorCode != AWS_ERROR_SUCCESS) {
-                                    error =
-                                        Aws::Client::AWSError<Aws::Client::CoreErrors>(Aws::Client::CoreErrors::NETWORK_CONNECTION, false);
-                                  }
-                                  m_connection = std::move(connection);
-                                  connectionAcquired = true;
-                                }
-                                acquireCondition.notify_all();
-                              });
+  auto acquireError = m_client->AcquireConnection(request,
+                                                  [&acquireMutex, &acquireCondition, &connectionAcquired, &error, this](
+                                                      std::shared_ptr<Aws::Http::Connection> connection, int errorCode) -> void {
+                                                    {
+                                                      std::unique_lock<std::mutex> const lock{acquireMutex};
+                                                      if (errorCode != AWS_ERROR_SUCCESS) {
+                                                        error = Aws::Client::AWSError<Aws::Client::CoreErrors>(
+                                                            Aws::Client::CoreErrors::NETWORK_CONNECTION, false);
+                                                      }
+                                                      m_connection = std::move(connection);
+                                                      connectionAcquired = true;
+                                                    }
+                                                    acquireCondition.notify_all();
+                                                  });
+
+  if (acquireError.has_value()) {
+    return acquireError;
+  }
 
   std::unique_lock<std::mutex> lock{acquireMutex};
   acquireCondition.wait(lock, [&connectionAcquired]() -> bool { return connectionAcquired; });
@@ -104,11 +104,49 @@ std::shared_ptr<Aws::Http::HttpResponse> Aws::Utils::Stream::HttpWriteDataStream
 }
 
 void Aws::Utils::Stream::HttpWriteDataStreamBuf::WaitForStreamComplete() {
-  std::unique_lock<std::mutex> lock{m_shutdownMutex};
-  if (m_state == STATE::UNINITIALIZED) {
-    return;
+  bool timedOut = false;
+  {
+    std::unique_lock<std::mutex> lock{m_shutdownMutex};
+    if (m_state == STATE::UNINITIALIZED) {
+      return;
+    }
+    if (m_writeTimeout.count() > 0 && !m_responseStarted) {
+      const auto deadline = std::chrono::steady_clock::now() + m_writeTimeout;
+      if (!m_shutdownCondition.wait_until(lock, deadline,
+              [this]() -> bool { return m_streamComplete || m_responseStarted; })) {
+        m_writeError = true;
+        timedOut = true;
+      }
+    }
   }
+
+  if (timedOut) {
+    CloseConnection();
+  }
+
+  std::unique_lock<std::mutex> lock{m_shutdownMutex};
   m_shutdownCondition.wait(lock, [this]() -> bool { return m_streamComplete; });
+  m_stream.reset();
+  m_connection.reset();
+}
+
+void Aws::Utils::Stream::HttpWriteDataStreamBuf::NotifyResponseStarted() {
+  {
+    std::unique_lock<std::mutex> const lock{m_shutdownMutex};
+    m_responseStarted = true;
+  }
+  m_shutdownCondition.notify_all();
+}
+
+void Aws::Utils::Stream::HttpWriteDataStreamBuf::CloseConnection() {
+  std::shared_ptr<Aws::Http::Connection> connection;
+  {
+    std::unique_lock<std::mutex> const lock{m_shutdownMutex};
+    connection = m_connection;
+  }
+  if (connection) {
+    connection->Close();
+  }
 }
 
 std::streambuf::int_type Aws::Utils::Stream::HttpWriteDataStreamBuf::overflow(std::streambuf::int_type c) {
@@ -153,6 +191,13 @@ bool Aws::Utils::Stream::HttpWriteDataStreamBuf::SendBuffer(bool endStream) {
     return false;
   }
 
+  {
+    std::unique_lock<std::mutex> const lock{m_shutdownMutex};
+    if (m_streamComplete || !m_stream) {
+      return false;
+    }
+  }
+
   auto data = Aws::MakeShared<Aws::StringStream>(WRITE_DATA_BUF_LOG_NAME);
   data->write(pbase(), pptr() - pbase());
 
@@ -168,17 +213,23 @@ bool Aws::Utils::Stream::HttpWriteDataStreamBuf::SendBuffer(bool endStream) {
       },
       endStream);
 
-  std::unique_lock<std::mutex> lock{m_writeMutex};
-  if (m_hasDeadline) {
-    bool completed = m_writeComplete.wait_until(lock, m_deadline,
-        [this]() -> bool { return !m_writeInProgress; });
-    if (!completed) {
-      m_writeError = true;
-      m_writeInProgress = false;
-      ResetPutArea();
-      return false;
+  bool timedOut = false;
+  {
+    std::unique_lock<std::mutex> lock{m_writeMutex};
+    if (m_writeTimeout.count() > 0) {
+      const auto deadline = std::chrono::steady_clock::now() + m_writeTimeout;
+      if (!m_writeComplete.wait_until(lock, deadline, [this]() -> bool { return !m_writeInProgress; })) {
+        m_writeError = true;
+        timedOut = true;
+      }
+    } else {
+      m_writeComplete.wait(lock, [this]() -> bool { return !m_writeInProgress; });
     }
-  } else {
+  }
+
+  if (timedOut) {
+    CloseConnection();
+    std::unique_lock<std::mutex> lock{m_writeMutex};
     m_writeComplete.wait(lock, [this]() -> bool { return !m_writeInProgress; });
   }
 

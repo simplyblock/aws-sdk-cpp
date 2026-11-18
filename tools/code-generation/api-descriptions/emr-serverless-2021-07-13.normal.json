@@ -1012,6 +1012,16 @@
       "pattern":".*\\S.*",
       "sensitive":true
     },
+    "FlexExecution":{
+      "type":"structure",
+      "members":{
+        "enabled":{
+          "shape":"Boolean",
+          "documentation":"<p>Enables Amazon EMR Serverless Flex capacity for the job run and defaults to false. If set to true, the job run uses Flex capacity.</p>"
+        }
+      },
+      "documentation":"<p>The Amazon EMR Serverless Flex settings for the job run.</p>"
+    },
     "GetApplicationRequest":{
       "type":"structure",
       "required":["applicationId"],
@@ -1138,6 +1148,12 @@
           "documentation":"<p>The type of resource to access the dashboard for. Currently, only <code>Session</code> is supported.</p>",
           "location":"querystring",
           "locationName":"resourceType"
+        },
+        "accessSystemProfileLogs":{
+          "shape":"Boolean",
+          "documentation":"<p>Allows access to system profile logs for Lake Formation-enabled sessions. Default is false.</p>",
+          "location":"querystring",
+          "locationName":"accessSystemProfileLogs"
         }
       }
     },
@@ -1528,7 +1544,7 @@
         },
         "executionTimeoutMinutes":{
           "shape":"Duration",
-          "documentation":"<p>Returns the job run timeout value from the <code>StartJobRun</code> call. If no timeout was specified, then it returns the default timeout of 720 minutes.</p>",
+          "documentation":"<p>Returns the job run timeout value from the <code>StartJobRun</code> call. If you didn't specify a timeout, this value defaults to 720 minutes.</p> <p>For BATCH mode job runs, the maximum value is 10080 minutes (7 days) starting with Amazon EMR release 7.11.</p>",
           "box":true
         },
         "billedResourceUtilization":{
@@ -1571,6 +1587,10 @@
         "workerTypeSpecifications":{
           "shape":"WorkerTypeSpecificationMap",
           "documentation":"<p>The specification applied to each worker type. Includes the JobRun-level ImageConfiguration when the applicationLevelDigestResolution is false for the application.</p>"
+        },
+        "flexExecution":{
+          "shape":"FlexExecution",
+          "documentation":"<p>The Amazon EMR Serverless Flex settings for the job run.</p>"
         }
       },
       "documentation":"<p>Information about a job run. A job run is a unit of work, such as a Spark JAR, Hive query, or SparkSQL query, that you submit to an Amazon EMR Serverless application.</p>"
@@ -1650,6 +1670,10 @@
         "attempt":{
           "shape":"AttemptNumber",
           "documentation":"<p>The attempt number of the job run execution.</p>"
+        },
+        "flexExecution":{
+          "shape":"FlexExecution",
+          "documentation":"<p>The Amazon EMR Serverless Flex settings for the job run attempt.</p>"
         }
       },
       "documentation":"<p>The summary of attributes associated with a job run attempt.</p>"
@@ -1783,6 +1807,10 @@
         "attemptUpdatedAt":{
           "shape":"Date",
           "documentation":"<p>The date and time of when the job run attempt was last updated.</p>"
+        },
+        "flexExecution":{
+          "shape":"FlexExecution",
+          "documentation":"<p>The Amazon EMR Serverless Flex settings for the job run.</p>"
         }
       },
       "documentation":"<p>The summary of attributes associated with a job run.</p>"
@@ -2210,7 +2238,7 @@
       "type":"string",
       "max":1024,
       "min":60,
-      "pattern":"arn:(aws[a-zA-Z0-9-]*):emr-serverless:.+:(\\d{12}):\\/applications\\/[0-9a-zA-Z]+(\\/jobruns\\/[0-9a-zA-Z]+)?"
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):emr-serverless:.+:(\\d{12}):\\/applications\\/[0-9a-zA-Z]+(\\/jobruns\\/[0-9a-zA-Z]+|\\/sessions\\/[0-9a-zA-Z]+)?"
     },
     "ResourceId":{
       "type":"string",
@@ -2636,7 +2664,7 @@
         },
         "executionTimeoutMinutes":{
           "shape":"Duration",
-          "documentation":"<p>The maximum duration for the job run to run. If the job run runs beyond this duration, it will be automatically cancelled.</p>",
+          "documentation":"<p>The maximum duration, in minutes, for the job run. If the job run exceeds this duration, Amazon EMR Serverless cancels it automatically.</p> <p>For BATCH mode job runs, the maximum value is 10080 minutes (7 days) starting with Amazon EMR release 7.11. Setting a value of 0 to disable the timeout is no longer supported for BATCH mode job runs.</p>",
           "box":true
         },
         "name":{
@@ -2650,6 +2678,10 @@
         "retryPolicy":{
           "shape":"RetryPolicy",
           "documentation":"<p>The retry policy when job run starts.</p>"
+        },
+        "flexExecution":{
+          "shape":"FlexExecution",
+          "documentation":"<p>The Amazon EMR Serverless Flex settings for the job run. If you don't specify these settings, the job run doesn't use Flex capacity.</p>"
         }
       }
     },

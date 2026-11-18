@@ -12,6 +12,7 @@
 #include <aws/deadline/model/Ec2EbsVolume.h>
 #include <aws/deadline/model/FleetAmountCapability.h>
 #include <aws/deadline/model/FleetAttributeCapability.h>
+#include <aws/deadline/model/FleetSoftwareAddOn.h>
 #include <aws/deadline/model/MemoryMiBRange.h>
 #include <aws/deadline/model/ServiceManagedFleetOperatingSystemFamily.h>
 #include <aws/deadline/model/VCpuCountRange.h>
@@ -147,7 +148,9 @@ class ServiceManagedEc2InstanceCapabilities {
 
   ///@{
   /**
-   * <p>The allowable Amazon EC2 instance types.</p>
+   * <p>The allowable Amazon EC2 instance types.</p>  <p>If you specify
+   * <code>allowedInstanceTypes</code>, you can't specify
+   * <code>excludedInstanceTypes</code>.</p>
    */
   inline const Aws::Vector<Aws::String>& GetAllowedInstanceTypes() const { return m_allowedInstanceTypes; }
   inline bool AllowedInstanceTypesHasBeenSet() const { return m_allowedInstanceTypesHasBeenSet; }
@@ -171,7 +174,9 @@ class ServiceManagedEc2InstanceCapabilities {
 
   ///@{
   /**
-   * <p>The instance types to exclude from the fleet.</p>
+   * <p>The instance types to exclude from the fleet.</p>  <p>If you specify
+   * <code>excludedInstanceTypes</code>, you can't specify
+   * <code>allowedInstanceTypes</code>.</p>
    */
   inline const Aws::Vector<Aws::String>& GetExcludedInstanceTypes() const { return m_excludedInstanceTypes; }
   inline bool ExcludedInstanceTypesHasBeenSet() const { return m_excludedInstanceTypesHasBeenSet; }
@@ -240,6 +245,31 @@ class ServiceManagedEc2InstanceCapabilities {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The software add-ons that the service installs on worker hosts when they
+   * launch.</p>
+   */
+  inline const Aws::Vector<FleetSoftwareAddOn>& GetSoftwareAddOns() const { return m_softwareAddOns; }
+  inline bool SoftwareAddOnsHasBeenSet() const { return m_softwareAddOnsHasBeenSet; }
+  template <typename SoftwareAddOnsT = Aws::Vector<FleetSoftwareAddOn>>
+  void SetSoftwareAddOns(SoftwareAddOnsT&& value) {
+    m_softwareAddOnsHasBeenSet = true;
+    m_softwareAddOns = std::forward<SoftwareAddOnsT>(value);
+  }
+  template <typename SoftwareAddOnsT = Aws::Vector<FleetSoftwareAddOn>>
+  ServiceManagedEc2InstanceCapabilities& WithSoftwareAddOns(SoftwareAddOnsT&& value) {
+    SetSoftwareAddOns(std::forward<SoftwareAddOnsT>(value));
+    return *this;
+  }
+  template <typename SoftwareAddOnsT = FleetSoftwareAddOn>
+  ServiceManagedEc2InstanceCapabilities& AddSoftwareAddOns(SoftwareAddOnsT&& value) {
+    m_softwareAddOnsHasBeenSet = true;
+    m_softwareAddOns.emplace_back(std::forward<SoftwareAddOnsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   VCpuCountRange m_vCpuCount;
 
@@ -260,6 +290,8 @@ class ServiceManagedEc2InstanceCapabilities {
   Aws::Vector<FleetAmountCapability> m_customAmounts;
 
   Aws::Vector<FleetAttributeCapability> m_customAttributes;
+
+  Aws::Vector<FleetSoftwareAddOn> m_softwareAddOns;
   bool m_vCpuCountHasBeenSet = false;
   bool m_memoryMiBHasBeenSet = false;
   bool m_osFamilyHasBeenSet = false;
@@ -270,6 +302,7 @@ class ServiceManagedEc2InstanceCapabilities {
   bool m_excludedInstanceTypesHasBeenSet = false;
   bool m_customAmountsHasBeenSet = false;
   bool m_customAttributesHasBeenSet = false;
+  bool m_softwareAddOnsHasBeenSet = false;
 };
 
 }  // namespace Model

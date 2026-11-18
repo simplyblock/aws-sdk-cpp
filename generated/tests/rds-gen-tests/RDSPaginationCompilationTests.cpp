@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -15,6 +15,7 @@
 #include <aws/rds/model/DescribeEngineDefaultClusterParametersPaginationTraits.h>
 #include <aws/rds/model/DescribeTenantDatabasesPaginationTraits.h>
 #include <aws/rds/model/DownloadDBLogFilePortionPaginationTraits.h>
+#include <aws/rds/model/DescribeDBCapacityReservationsPaginationTraits.h>
 #include <aws/rds/model/DescribeExportTasksPaginationTraits.h>
 #include <aws/rds/model/DescribeDBClustersPaginationTraits.h>
 #include <aws/rds/model/DescribeDBClusterSnapshotsPaginationTraits.h>
@@ -59,6 +60,6 @@ class RDSPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(RDSPaginationCompilationTest, RDSPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

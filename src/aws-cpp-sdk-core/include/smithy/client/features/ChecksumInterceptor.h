@@ -76,6 +76,7 @@ class ChecksumInterceptor : public smithy::interceptor::Interceptor {
     // Add RequestChecksum
     addChecksumConfigurationFeatures(request);
     if ((!request.GetChecksumAlgorithmName().empty() && m_requestChecksumCalculation == RequestChecksumCalculation::WHEN_SUPPORTED) ||
+        (request.ChecksumAlgorithmIsSet() && m_requestChecksumCalculation == RequestChecksumCalculation::WHEN_REQUIRED) ||
         request.RequestChecksumRequired()) {
       Aws::String checksumAlgorithmName = Aws::Utils::StringUtils::ToLower(request.GetChecksumAlgorithmName().c_str());
       // Check if user has provided the checksum algorithm
@@ -150,10 +151,10 @@ class ChecksumInterceptor : public smithy::interceptor::Interceptor {
  private:
   void addChecksumFeatureForChecksumName(const Aws::String& checksumName, const Aws::AmazonWebServiceRequest& request) {
     if (checksumName == "crc32") {
-      request.AddUserAgentFeature(Aws::Client::UserAgentFeature::FLEXIBLE_CHECKSUMS_REQ_CRC32C);
+      request.AddUserAgentFeature(Aws::Client::UserAgentFeature::FLEXIBLE_CHECKSUMS_REQ_CRC32);
     } else if (checksumName == "crc32c") {
       request.AddUserAgentFeature(Aws::Client::UserAgentFeature::FLEXIBLE_CHECKSUMS_REQ_CRC32C);
-    } else if (checksumName == "crc64") {
+    } else if (checksumName == "crc64nvme") {
       request.AddUserAgentFeature(Aws::Client::UserAgentFeature::FLEXIBLE_CHECKSUMS_REQ_CRC64);
     } else if (checksumName == "sha1") {
       request.AddUserAgentFeature(Aws::Client::UserAgentFeature::FLEXIBLE_CHECKSUMS_REQ_SHA1);

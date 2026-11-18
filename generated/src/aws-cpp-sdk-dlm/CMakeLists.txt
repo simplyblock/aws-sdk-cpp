@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-dlm "C++ SDK for the AWS dlm service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-dlm "C++ SDK for Amazon Data Lifecycle Manager" aws-cpp-sdk-core)
 
 file(GLOB AWS_DLM_HEADERS
     "include/aws/dlm/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_DLM_HEADERS
 
 file(GLOB AWS_DLM_MODEL_HEADERS
     "include/aws/dlm/model/*.h"
+)
+
+file(GLOB AWS_DLM_INTERNAL_HEADERS
+    "include/aws/dlm/internal/*.h"
 )
 
 file(GLOB AWS_DLM_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_DLM_MODEL_SOURCE
 
 file(GLOB DLM_UNIFIED_HEADERS
     ${AWS_DLM_HEADERS}
+    ${AWS_DLM_INTERNAL_HEADERS}
     ${AWS_DLM_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\dlm" FILES ${AWS_DLM_HEADERS})
+        source_group("Header Files\\aws\\dlm\\internal" FILES ${AWS_DLM_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\dlm\\model" FILES ${AWS_DLM_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_DLM_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_DLM_MODEL_SOURCE})

@@ -49,6 +49,10 @@ CreateNetworkMigrationDefinitionResult& CreateNetworkMigrationDefinitionResult::
     }
     m_sourceConfigurationsHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("definitionType")) {
+    m_definitionType = DefinitionTypeMapper::GetDefinitionTypeForName(jsonValue.GetString("definitionType"));
+    m_definitionTypeHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("targetS3Configuration")) {
     m_targetS3Configuration = jsonValue.GetObject("targetS3Configuration");
     m_targetS3ConfigurationHasBeenSet = true;
@@ -60,6 +64,18 @@ CreateNetworkMigrationDefinitionResult& CreateNetworkMigrationDefinitionResult::
   if (jsonValue.ValueExists("targetDeployment")) {
     m_targetDeployment = TargetDeploymentMapper::GetTargetDeploymentForName(jsonValue.GetString("targetDeployment"));
     m_targetDeploymentHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("vpcProvisioningStrategy")) {
+    m_vpcProvisioningStrategy =
+        VpcProvisioningStrategyMapper::GetVpcProvisioningStrategyForName(jsonValue.GetString("vpcProvisioningStrategy"));
+    m_vpcProvisioningStrategyHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("cidrMappings")) {
+    Aws::Utils::Array<JsonView> cidrMappingsJsonList = jsonValue.GetArray("cidrMappings");
+    for (unsigned cidrMappingsIndex = 0; cidrMappingsIndex < cidrMappingsJsonList.GetLength(); ++cidrMappingsIndex) {
+      m_cidrMappings.push_back(cidrMappingsJsonList[cidrMappingsIndex].AsObject());
+    }
+    m_cidrMappingsHasBeenSet = true;
   }
   if (jsonValue.ValueExists("createdAt")) {
     m_createdAt = jsonValue.GetDouble("createdAt");

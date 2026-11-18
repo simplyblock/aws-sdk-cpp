@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/redshift/RedshiftEndpointRules.h>
 #include <aws/redshift/Redshift_EXPORTS.h>
 
 namespace Aws {
 namespace Redshift {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using RedshiftClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using RedshiftEndpointProviderBase =
     EndpointProviderBase<RedshiftClientConfiguration, RedshiftBuiltInParameters, RedshiftClientContextParameters>;
 
 using RedshiftDefaultEpProviderBase =
-    DefaultEndpointProvider<RedshiftClientConfiguration, RedshiftBuiltInParameters, RedshiftClientContextParameters>;
+    BDDEndpointProvider<RedshiftClientConfiguration, RedshiftBuiltInParameters, RedshiftClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_REDSHIFT_API RedshiftEndpointProvider : public RedshiftDefaultEpProvid
  public:
   using RedshiftResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  RedshiftEndpointProvider()
-      : RedshiftDefaultEpProviderBase(Aws::Redshift::RedshiftEndpointRules::GetRulesBlob(),
-                                      Aws::Redshift::RedshiftEndpointRules::RulesBlobSize) {}
+  RedshiftEndpointProvider();
 
   ~RedshiftEndpointProvider() {}
 };

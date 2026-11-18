@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-codeartifact "C++ SDK for the AWS codeartifact service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-codeartifact "C++ SDK for CodeArtifact" aws-cpp-sdk-core)
 
 file(GLOB AWS_CODEARTIFACT_HEADERS
     "include/aws/codeartifact/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CODEARTIFACT_HEADERS
 
 file(GLOB AWS_CODEARTIFACT_MODEL_HEADERS
     "include/aws/codeartifact/model/*.h"
+)
+
+file(GLOB AWS_CODEARTIFACT_INTERNAL_HEADERS
+    "include/aws/codeartifact/internal/*.h"
 )
 
 file(GLOB AWS_CODEARTIFACT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CODEARTIFACT_MODEL_SOURCE
 
 file(GLOB CODEARTIFACT_UNIFIED_HEADERS
     ${AWS_CODEARTIFACT_HEADERS}
+    ${AWS_CODEARTIFACT_INTERNAL_HEADERS}
     ${AWS_CODEARTIFACT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\codeartifact" FILES ${AWS_CODEARTIFACT_HEADERS})
+        source_group("Header Files\\aws\\codeartifact\\internal" FILES ${AWS_CODEARTIFACT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\codeartifact\\model" FILES ${AWS_CODEARTIFACT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CODEARTIFACT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CODEARTIFACT_MODEL_SOURCE})

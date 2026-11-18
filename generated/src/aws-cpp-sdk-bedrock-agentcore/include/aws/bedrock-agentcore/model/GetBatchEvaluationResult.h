@@ -7,11 +7,13 @@
 #include <aws/bedrock-agentcore/BedrockAgentCore_EXPORTS.h>
 #include <aws/bedrock-agentcore/model/BatchEvaluationStatus.h>
 #include <aws/bedrock-agentcore/model/DataSourceConfig.h>
+#include <aws/bedrock-agentcore/model/DatasetExecutionDetails.h>
 #include <aws/bedrock-agentcore/model/EvaluationJobResults.h>
 #include <aws/bedrock-agentcore/model/Evaluator.h>
 #include <aws/bedrock-agentcore/model/ExecutionSummaryClusteringResultContent.h>
 #include <aws/bedrock-agentcore/model/FailureAnalysisResultContent.h>
 #include <aws/bedrock-agentcore/model/Insight.h>
+#include <aws/bedrock-agentcore/model/InsightResult.h>
 #include <aws/bedrock-agentcore/model/OutputConfig.h>
 #include <aws/bedrock-agentcore/model/UserIntentClusteringResultContent.h>
 #include <aws/core/http/HttpResponse.h>
@@ -222,6 +224,33 @@ class GetBatchEvaluationResult {
 
   ///@{
   /**
+   * <p>The insights generated when the batch evaluation includes the
+   * <code>Builtin.FailureAnalysis</code> evaluator. Each insight groups related
+   * failures found across the evaluated sessions. An empty list means that no
+   * failures were found. If the analysis fails, this field is omitted and
+   * <code>errorDetails</code> describes the error.</p>
+   */
+  inline const Aws::Vector<InsightResult>& GetInsightResults() const { return m_insightResults; }
+  template <typename InsightResultsT = Aws::Vector<InsightResult>>
+  void SetInsightResults(InsightResultsT&& value) {
+    m_insightResultsHasBeenSet = true;
+    m_insightResults = std::forward<InsightResultsT>(value);
+  }
+  template <typename InsightResultsT = Aws::Vector<InsightResult>>
+  GetBatchEvaluationResult& WithInsightResults(InsightResultsT&& value) {
+    SetInsightResults(std::forward<InsightResultsT>(value));
+    return *this;
+  }
+  template <typename InsightResultsT = InsightResult>
+  GetBatchEvaluationResult& AddInsightResults(InsightResultsT&& value) {
+    m_insightResultsHasBeenSet = true;
+    m_insightResults.emplace_back(std::forward<InsightResultsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The failure analysis results from insights, containing categorized failure
    * clusters with root causes and recommendations.</p>
    */
@@ -349,6 +378,26 @@ class GetBatchEvaluationResult {
   ///@}
 
   ///@{
+  /**
+   * <p>The details of the dataset and agent that the batch evaluation ran, including
+   * the dataset version and agent runtime version that the service resolved when the
+   * batch evaluation started. This field is present only if the batch evaluation was
+   * started with a <code>datasetExecutionConfig</code>.</p>
+   */
+  inline const DatasetExecutionDetails& GetDatasetExecutionDetails() const { return m_datasetExecutionDetails; }
+  template <typename DatasetExecutionDetailsT = DatasetExecutionDetails>
+  void SetDatasetExecutionDetails(DatasetExecutionDetailsT&& value) {
+    m_datasetExecutionDetailsHasBeenSet = true;
+    m_datasetExecutionDetails = std::forward<DatasetExecutionDetailsT>(value);
+  }
+  template <typename DatasetExecutionDetailsT = DatasetExecutionDetails>
+  GetBatchEvaluationResult& WithDatasetExecutionDetails(DatasetExecutionDetailsT&& value) {
+    SetDatasetExecutionDetails(std::forward<DatasetExecutionDetailsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -385,6 +434,8 @@ class GetBatchEvaluationResult {
 
   EvaluationJobResults m_evaluationResults;
 
+  Aws::Vector<InsightResult> m_insightResults;
+
   FailureAnalysisResultContent m_failureAnalysisResult;
 
   UserIntentClusteringResultContent m_userIntentResult;
@@ -399,6 +450,8 @@ class GetBatchEvaluationResult {
 
   Aws::String m_kmsKeyArn;
 
+  DatasetExecutionDetails m_datasetExecutionDetails;
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_batchEvaluationIdHasBeenSet = false;
@@ -411,6 +464,7 @@ class GetBatchEvaluationResult {
   bool m_dataSourceConfigHasBeenSet = false;
   bool m_outputConfigHasBeenSet = false;
   bool m_evaluationResultsHasBeenSet = false;
+  bool m_insightResultsHasBeenSet = false;
   bool m_failureAnalysisResultHasBeenSet = false;
   bool m_userIntentResultHasBeenSet = false;
   bool m_executionSummaryResultHasBeenSet = false;
@@ -418,6 +472,7 @@ class GetBatchEvaluationResult {
   bool m_descriptionHasBeenSet = false;
   bool m_updatedAtHasBeenSet = false;
   bool m_kmsKeyArnHasBeenSet = false;
+  bool m_datasetExecutionDetailsHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

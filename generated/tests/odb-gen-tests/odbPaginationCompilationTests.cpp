@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -8,16 +8,20 @@
 
 #include <aws/odb/OdbClientPagination.h>
 #include <aws/odb/OdbPaginationBase.h>
+#include <aws/odb/model/ListExadbVmClustersPaginationTraits.h>
 #include <aws/odb/model/ListAutonomousDatabasesPaginationTraits.h>
+#include <aws/odb/model/ListGiMinorVersionsPaginationTraits.h>
 #include <aws/odb/model/ListOdbPeeringConnectionsPaginationTraits.h>
 #include <aws/odb/model/ListDbSystemShapesPaginationTraits.h>
 #include <aws/odb/model/ListSystemVersionsPaginationTraits.h>
 #include <aws/odb/model/ListAutonomousDatabaseClonesPaginationTraits.h>
 #include <aws/odb/model/ListAutonomousVirtualMachinesPaginationTraits.h>
 #include <aws/odb/model/ListGiVersionsPaginationTraits.h>
+#include <aws/odb/model/ListFlexComponentsPaginationTraits.h>
 #include <aws/odb/model/ListAutonomousDatabaseBackupsPaginationTraits.h>
 #include <aws/odb/model/ListAutonomousDatabaseVersionsPaginationTraits.h>
 #include <aws/odb/model/ListCloudVmClustersPaginationTraits.h>
+#include <aws/odb/model/ListExascaleDbStorageVaultsPaginationTraits.h>
 #include <aws/odb/model/ListAutonomousDatabasePeersPaginationTraits.h>
 #include <aws/odb/model/ListCloudAutonomousVmClustersPaginationTraits.h>
 #include <aws/odb/model/ListAutonomousDatabaseCharacterSetsPaginationTraits.h>
@@ -34,6 +38,6 @@ class odbPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(odbPaginationCompilationTest, odbPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

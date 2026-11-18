@@ -77,7 +77,7 @@ class Record {
    * Data Streams, which does not inspect, interpret, or change the data in the blob
    * in any way. When the data blob (the payload before base64-encoding) is added to
    * the partition key size, the total size must not exceed the maximum record size
-   * (1 MiB).</p>
+   * (10 MiB).</p>
    */
   inline const Aws::Utils::ByteBuffer& GetData() const { return m_data; }
   inline bool DataHasBeenSet() const { return m_dataHasBeenSet; }
@@ -96,6 +96,10 @@ class Record {
   ///@{
   /**
    * <p>Identifies which shard in the stream the data record is assigned to.</p>
+   * <p>For a stream that uses the <code>AUTO</code> record distribution strategy,
+   * this value is not returned if the producer did not provide a partition key when
+   * writing the record. If the producer provided a partition key, the original value
+   * is returned even though it was not used to determine shard placement.</p>
    */
   inline const Aws::String& GetPartitionKey() const { return m_partitionKey; }
   inline bool PartitionKeyHasBeenSet() const { return m_partitionKeyHasBeenSet; }

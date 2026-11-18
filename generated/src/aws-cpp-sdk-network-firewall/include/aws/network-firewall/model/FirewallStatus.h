@@ -6,9 +6,11 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/network-firewall/model/CapacityUsageSummary.h>
 #include <aws/network-firewall/model/ConfigurationSyncState.h>
+#include <aws/network-firewall/model/ContextStoreSyncState.h>
 #include <aws/network-firewall/model/FirewallStatusValue.h>
 #include <aws/network-firewall/model/SyncState.h>
 #include <aws/network-firewall/model/TransitGatewayAttachmentSyncState.h>
@@ -17,10 +19,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace NetworkFirewall {
 namespace Model {
@@ -39,9 +40,9 @@ namespace Model {
 class FirewallStatus {
  public:
   AWS_NETWORKFIREWALL_API FirewallStatus() = default;
-  AWS_NETWORKFIREWALL_API FirewallStatus(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API FirewallStatus& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_NETWORKFIREWALL_API FirewallStatus(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API FirewallStatus& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -160,6 +161,26 @@ class FirewallStatus {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The synchronization state of the context sets in the firewall's rule groups
+   * with the firewall's context store. This field is only present when the firewall
+   * has a context store and its rule groups reference context sets.</p>
+   */
+  inline const ContextStoreSyncState& GetContextStoreSyncState() const { return m_contextStoreSyncState; }
+  inline bool ContextStoreSyncStateHasBeenSet() const { return m_contextStoreSyncStateHasBeenSet; }
+  template <typename ContextStoreSyncStateT = ContextStoreSyncState>
+  void SetContextStoreSyncState(ContextStoreSyncStateT&& value) {
+    m_contextStoreSyncStateHasBeenSet = true;
+    m_contextStoreSyncState = std::forward<ContextStoreSyncStateT>(value);
+  }
+  template <typename ContextStoreSyncStateT = ContextStoreSyncState>
+  FirewallStatus& WithContextStoreSyncState(ContextStoreSyncStateT&& value) {
+    SetContextStoreSyncState(std::forward<ContextStoreSyncStateT>(value));
+    return *this;
+  }
+  ///@}
  private:
   FirewallStatusValue m_status{FirewallStatusValue::NOT_SET};
 
@@ -170,11 +191,14 @@ class FirewallStatus {
   CapacityUsageSummary m_capacityUsageSummary;
 
   TransitGatewayAttachmentSyncState m_transitGatewayAttachmentSyncState;
+
+  ContextStoreSyncState m_contextStoreSyncState;
   bool m_statusHasBeenSet = false;
   bool m_configurationSyncStateSummaryHasBeenSet = false;
   bool m_syncStatesHasBeenSet = false;
   bool m_capacityUsageSummaryHasBeenSet = false;
   bool m_transitGatewayAttachmentSyncStateHasBeenSet = false;
+  bool m_contextStoreSyncStateHasBeenSet = false;
 };
 
 }  // namespace Model

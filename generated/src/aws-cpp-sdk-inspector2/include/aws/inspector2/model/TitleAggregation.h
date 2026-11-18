@@ -87,7 +87,10 @@ class TitleAggregation {
 
   ///@{
   /**
-   * <p>The resource type to aggregate on.</p>
+   * <p>The resource type to aggregate on. For Google Cloud Platform (GCP) resources,
+   * the resource type is <code>compute.googleapis.com/Instance</code>,
+   * <code>cloudfunctions.googleapis.com/Function</code>, or
+   * <code>artifactregistry.googleapis.com/DockerImage</code>.</p>
    */
   inline AggregationResourceType GetResourceType() const { return m_resourceType; }
   inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
@@ -97,6 +100,22 @@ class TitleAggregation {
   }
   inline TitleAggregation& WithResourceType(AggregationResourceType value) {
     SetResourceType(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The type of finding to aggregate on.</p>
+   */
+  inline AggregationFindingType GetFindingType() const { return m_findingType; }
+  inline bool FindingTypeHasBeenSet() const { return m_findingTypeHasBeenSet; }
+  inline void SetFindingType(AggregationFindingType value) {
+    m_findingTypeHasBeenSet = true;
+    m_findingType = value;
+  }
+  inline TitleAggregation& WithFindingType(AggregationFindingType value) {
+    SetFindingType(value);
     return *this;
   }
   ///@}
@@ -132,22 +151,6 @@ class TitleAggregation {
     return *this;
   }
   ///@}
-
-  ///@{
-  /**
-   * <p>The type of finding to aggregate on.</p>
-   */
-  inline AggregationFindingType GetFindingType() const { return m_findingType; }
-  inline bool FindingTypeHasBeenSet() const { return m_findingTypeHasBeenSet; }
-  inline void SetFindingType(AggregationFindingType value) {
-    m_findingTypeHasBeenSet = true;
-    m_findingType = value;
-  }
-  inline TitleAggregation& WithFindingType(AggregationFindingType value) {
-    SetFindingType(value);
-    return *this;
-  }
-  ///@}
  private:
   Aws::Vector<StringFilter> m_titles;
 
@@ -155,17 +158,17 @@ class TitleAggregation {
 
   AggregationResourceType m_resourceType{AggregationResourceType::NOT_SET};
 
+  AggregationFindingType m_findingType{AggregationFindingType::NOT_SET};
+
   SortOrder m_sortOrder{SortOrder::NOT_SET};
 
   TitleSortBy m_sortBy{TitleSortBy::NOT_SET};
-
-  AggregationFindingType m_findingType{AggregationFindingType::NOT_SET};
   bool m_titlesHasBeenSet = false;
   bool m_vulnerabilityIdsHasBeenSet = false;
   bool m_resourceTypeHasBeenSet = false;
+  bool m_findingTypeHasBeenSet = false;
   bool m_sortOrderHasBeenSet = false;
   bool m_sortByHasBeenSet = false;
-  bool m_findingTypeHasBeenSet = false;
 };
 
 }  // namespace Model

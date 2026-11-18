@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/translate/TranslateEndpointRules.h>
 #include <aws/translate/Translate_EXPORTS.h>
 
 namespace Aws {
 namespace Translate {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using TranslateClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using TranslateEndpointProviderBase =
     EndpointProviderBase<TranslateClientConfiguration, TranslateBuiltInParameters, TranslateClientContextParameters>;
 
 using TranslateDefaultEpProviderBase =
-    DefaultEndpointProvider<TranslateClientConfiguration, TranslateBuiltInParameters, TranslateClientContextParameters>;
+    BDDEndpointProvider<TranslateClientConfiguration, TranslateBuiltInParameters, TranslateClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_TRANSLATE_API TranslateEndpointProvider : public TranslateDefaultEpPro
  public:
   using TranslateResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  TranslateEndpointProvider()
-      : TranslateDefaultEpProviderBase(Aws::Translate::TranslateEndpointRules::GetRulesBlob(),
-                                       Aws::Translate::TranslateEndpointRules::RulesBlobSize) {}
+  TranslateEndpointProvider();
 
   ~TranslateEndpointProvider() {}
 };

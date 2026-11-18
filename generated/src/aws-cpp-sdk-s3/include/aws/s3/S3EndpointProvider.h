@@ -4,12 +4,11 @@
  */
 
 #pragma once
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/s3/S3ClientConfiguration.h>
-#include <aws/s3/S3EndpointRules.h>
 #include <aws/s3/S3_EXPORTS.h>
 
 namespace Aws {
@@ -17,7 +16,7 @@ namespace S3 {
 namespace Endpoint {
 using S3ClientConfiguration = Aws::S3::S3ClientConfiguration;
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 class AWS_S3_API S3ClientContextParameters : public Aws::Endpoint::ClientContextParameters {
@@ -64,7 +63,7 @@ class AWS_S3_API S3BuiltInParameters : public Aws::Endpoint::BuiltInParameters {
   virtual void SetFromClientConfiguration(const S3ClientConfiguration& config, const Aws::String& serviceName);
 
  private:
-  void SetS3SpecificParameters(const S3ClientConfiguration& config);
+  void SetServiceSpecificParameters(const S3ClientConfiguration& config);
 };
 
 /**
@@ -74,7 +73,7 @@ class AWS_S3_API S3BuiltInParameters : public Aws::Endpoint::BuiltInParameters {
  */
 using S3EndpointProviderBase = EndpointProviderBase<S3ClientConfiguration, S3BuiltInParameters, S3ClientContextParameters>;
 
-using S3DefaultEpProviderBase = DefaultEndpointProvider<S3ClientConfiguration, S3BuiltInParameters, S3ClientContextParameters>;
+using S3DefaultEpProviderBase = BDDEndpointProvider<S3ClientConfiguration, S3BuiltInParameters, S3ClientContextParameters>;
 
 }  // namespace Endpoint
 }  // namespace S3
@@ -86,7 +85,7 @@ namespace Endpoint {
 AWS_S3_EXTERN template class AWS_S3_API Aws::Endpoint::EndpointProviderBase<
     S3::Endpoint::S3ClientConfiguration, S3::Endpoint::S3BuiltInParameters, S3::Endpoint::S3ClientContextParameters>;
 
-AWS_S3_EXTERN template class AWS_S3_API Aws::Endpoint::DefaultEndpointProvider<
+AWS_S3_EXTERN template class AWS_S3_API Aws::Endpoint::BDDEndpointProvider<
     S3::Endpoint::S3ClientConfiguration, S3::Endpoint::S3BuiltInParameters, S3::Endpoint::S3ClientContextParameters>;
 }  // namespace Endpoint
 
@@ -99,7 +98,7 @@ class AWS_S3_API S3EndpointProvider : public S3DefaultEpProviderBase {
  public:
   using S3ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  S3EndpointProvider() : S3DefaultEpProviderBase(Aws::S3::S3EndpointRules::GetRulesBlob(), Aws::S3::S3EndpointRules::RulesBlobSize) {}
+  S3EndpointProvider();
 
   ~S3EndpointProvider() {}
 };

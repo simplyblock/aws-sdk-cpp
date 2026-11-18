@@ -20,6 +20,7 @@
 #include <aws/ssm/model/StepExecution.h>
 #include <aws/ssm/model/Target.h>
 #include <aws/ssm/model/TargetLocation.h>
+#include <aws/ssm/model/TargetsSummary.h>
 
 #include <utility>
 
@@ -260,6 +261,25 @@ class AutomationExecution {
   template <typename FailureMessageT = Aws::String>
   AutomationExecution& WithFailureMessage(FailureMessageT&& value) {
     SetFailureMessage(std::forward<FailureMessageT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>A message that describes a non-critical issue that occurred during the
+   * automation execution.</p>
+   */
+  inline const Aws::String& GetWarningMessage() const { return m_warningMessage; }
+  inline bool WarningMessageHasBeenSet() const { return m_warningMessageHasBeenSet; }
+  template <typename WarningMessageT = Aws::String>
+  void SetWarningMessage(WarningMessageT&& value) {
+    m_warningMessageHasBeenSet = true;
+    m_warningMessage = std::forward<WarningMessageT>(value);
+  }
+  template <typename WarningMessageT = Aws::String>
+  AutomationExecution& WithWarningMessage(WarningMessageT&& value) {
+    SetWarningMessage(std::forward<WarningMessageT>(value));
     return *this;
   }
   ///@}
@@ -739,6 +759,25 @@ class AutomationExecution {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>A summary of the child executions that a rate control execution started for
+   * its targets. This field is returned only for rate control executions.</p>
+   */
+  inline const TargetsSummary& GetTargetsSummary() const { return m_targetsSummary; }
+  inline bool TargetsSummaryHasBeenSet() const { return m_targetsSummaryHasBeenSet; }
+  template <typename TargetsSummaryT = TargetsSummary>
+  void SetTargetsSummary(TargetsSummaryT&& value) {
+    m_targetsSummaryHasBeenSet = true;
+    m_targetsSummary = std::forward<TargetsSummaryT>(value);
+  }
+  template <typename TargetsSummaryT = TargetsSummary>
+  AutomationExecution& WithTargetsSummary(TargetsSummaryT&& value) {
+    SetTargetsSummary(std::forward<TargetsSummaryT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_automationExecutionId;
 
@@ -761,6 +800,8 @@ class AutomationExecution {
   Aws::Map<Aws::String, Aws::Vector<Aws::String>> m_outputs;
 
   Aws::String m_failureMessage;
+
+  Aws::String m_warningMessage;
 
   ExecutionMode m_mode{ExecutionMode::NOT_SET};
 
@@ -809,6 +850,8 @@ class AutomationExecution {
   Aws::String m_changeRequestName;
 
   Aws::Map<Aws::String, Aws::Vector<Aws::String>> m_variables;
+
+  TargetsSummary m_targetsSummary;
   bool m_automationExecutionIdHasBeenSet = false;
   bool m_documentNameHasBeenSet = false;
   bool m_documentVersionHasBeenSet = false;
@@ -820,6 +863,7 @@ class AutomationExecution {
   bool m_parametersHasBeenSet = false;
   bool m_outputsHasBeenSet = false;
   bool m_failureMessageHasBeenSet = false;
+  bool m_warningMessageHasBeenSet = false;
   bool m_modeHasBeenSet = false;
   bool m_parentAutomationExecutionIdHasBeenSet = false;
   bool m_executedByHasBeenSet = false;
@@ -844,6 +888,7 @@ class AutomationExecution {
   bool m_associationIdHasBeenSet = false;
   bool m_changeRequestNameHasBeenSet = false;
   bool m_variablesHasBeenSet = false;
+  bool m_targetsSummaryHasBeenSet = false;
 };
 
 }  // namespace Model

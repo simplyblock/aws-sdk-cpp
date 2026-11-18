@@ -15,6 +15,10 @@ using namespace Aws::Utils;
 Aws::String CreateNetworkMigrationDefinitionRequest::SerializePayload() const {
   JsonValue payload;
 
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("clientToken", m_clientToken);
+  }
+
   if (m_nameHasBeenSet) {
     payload.WithString("name", m_name);
   }
@@ -32,6 +36,10 @@ Aws::String CreateNetworkMigrationDefinitionRequest::SerializePayload() const {
     payload.WithArray("sourceConfigurations", std::move(sourceConfigurationsJsonList));
   }
 
+  if (m_definitionTypeHasBeenSet) {
+    payload.WithString("definitionType", DefinitionTypeMapper::GetNameForDefinitionType(m_definitionType));
+  }
+
   if (m_targetS3ConfigurationHasBeenSet) {
     payload.WithObject("targetS3Configuration", m_targetS3Configuration.Jsonize());
   }
@@ -42,6 +50,19 @@ Aws::String CreateNetworkMigrationDefinitionRequest::SerializePayload() const {
 
   if (m_targetDeploymentHasBeenSet) {
     payload.WithString("targetDeployment", TargetDeploymentMapper::GetNameForTargetDeployment(m_targetDeployment));
+  }
+
+  if (m_vpcProvisioningStrategyHasBeenSet) {
+    payload.WithString("vpcProvisioningStrategy",
+                       VpcProvisioningStrategyMapper::GetNameForVpcProvisioningStrategy(m_vpcProvisioningStrategy));
+  }
+
+  if (m_cidrMappingsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> cidrMappingsJsonList(m_cidrMappings.size());
+    for (unsigned cidrMappingsIndex = 0; cidrMappingsIndex < cidrMappingsJsonList.GetLength(); ++cidrMappingsIndex) {
+      cidrMappingsJsonList[cidrMappingsIndex].AsObject(m_cidrMappings[cidrMappingsIndex].Jsonize());
+    }
+    payload.WithArray("cidrMappings", std::move(cidrMappingsJsonList));
   }
 
   if (m_tagsHasBeenSet) {

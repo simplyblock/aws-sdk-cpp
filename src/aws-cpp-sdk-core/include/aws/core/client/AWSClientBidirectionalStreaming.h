@@ -70,8 +70,12 @@ void SubmitBidirectionalStreamingRequest(
   requestCopy->SetEventStreamHandler(requestCopy->GetEventStreamHandler());
 
   // Wire initial response handler on httpRequest (CRT reads it from there)
+  std::weak_ptr<Aws::Utils::Stream::HttpWriteDataStreamBuf> wBuf = writeDataStreamBuf;
   httpRequest->SetHeadersReceivedEventHandler(
-      [wReq](const Aws::Http::HttpRequest*, Aws::Http::HttpResponse* response) {
+      [wReq, wBuf](const Aws::Http::HttpRequest*, Aws::Http::HttpResponse* response) {
+        if (auto buf = wBuf.lock()) {
+          buf->NotifyResponseStarted();
+        }
         auto req = wReq.lock();
         if (!req || !response) return;
         auto& cb = req->GetEventStreamHandler().GetInitialResponseCallbackEx();
@@ -111,8 +115,8 @@ void SubmitBidirectionalStreamingRequest(
         }
         Aws::Utils::RAIICounter raiiGuard(client->m_operationsProcessed, &client->m_shutdownSignal);
 
-        writeDataStreamBuf->WaitForStreamComplete();
         auto response = writeDataStreamBuf->GetResponse();
+        writeDataStreamBuf->WaitForStreamComplete();
 
         // Flush any remaining buffered response data through the EventDecoderStream
         if (response) {

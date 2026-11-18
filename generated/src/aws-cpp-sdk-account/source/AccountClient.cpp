@@ -15,12 +15,15 @@
 #include <aws/account/model/GetContactInformationRequest.h>
 #include <aws/account/model/GetGovCloudAccountInformationRequest.h>
 #include <aws/account/model/GetPrimaryEmailRequest.h>
+#include <aws/account/model/GetPrimaryEmailUpdateStatusRequest.h>
 #include <aws/account/model/GetRegionOptStatusRequest.h>
 #include <aws/account/model/ListRegionsRequest.h>
 #include <aws/account/model/PutAccountNameRequest.h>
 #include <aws/account/model/PutAlternateContactRequest.h>
 #include <aws/account/model/PutContactInformationRequest.h>
+#include <aws/account/model/SendPhoneNumberVerificationRequest.h>
 #include <aws/account/model/StartPrimaryEmailUpdateRequest.h>
+#include <aws/account/model/VerifyPhoneNumberRequest.h>
 #include <aws/core/auth/AWSAuthSigner.h>
 #include <aws/core/auth/AWSCredentialsProviderChain.h>
 #include <aws/core/client/CoreErrors.h>
@@ -171,7 +174,8 @@ AccountClient::InvokeOperationOutcome AccountClient::InvokeServiceOperation(
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -185,7 +189,7 @@ AccountClient::InvokeOperationOutcome AccountClient::InvokeServiceOperation(
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -287,6 +291,17 @@ GetPrimaryEmailOutcome AccountClient::GetPrimaryEmail(const GetPrimaryEmailReque
                             : GetPrimaryEmailOutcome(std::move(result.GetError()));
 }
 
+GetPrimaryEmailUpdateStatusOutcome AccountClient::GetPrimaryEmailUpdateStatus(const GetPrimaryEmailUpdateStatusRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/getPrimaryEmailUpdateStatus");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetPrimaryEmailUpdateStatusOutcome(result.GetResultWithOwnership())
+                            : GetPrimaryEmailUpdateStatusOutcome(std::move(result.GetError()));
+}
+
 GetRegionOptStatusOutcome AccountClient::GetRegionOptStatus(const GetRegionOptStatusRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -340,6 +355,17 @@ PutContactInformationOutcome AccountClient::PutContactInformation(const PutConta
                             : PutContactInformationOutcome(std::move(result.GetError()));
 }
 
+SendPhoneNumberVerificationOutcome AccountClient::SendPhoneNumberVerification(const SendPhoneNumberVerificationRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/sendPhoneNumberVerification");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? SendPhoneNumberVerificationOutcome(result.GetResultWithOwnership())
+                            : SendPhoneNumberVerificationOutcome(std::move(result.GetError()));
+}
+
 StartPrimaryEmailUpdateOutcome AccountClient::StartPrimaryEmailUpdate(const StartPrimaryEmailUpdateRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -349,4 +375,15 @@ StartPrimaryEmailUpdateOutcome AccountClient::StartPrimaryEmailUpdate(const Star
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? StartPrimaryEmailUpdateOutcome(result.GetResultWithOwnership())
                             : StartPrimaryEmailUpdateOutcome(std::move(result.GetError()));
+}
+
+VerifyPhoneNumberOutcome AccountClient::VerifyPhoneNumber(const VerifyPhoneNumberRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/verifyPhoneNumber");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? VerifyPhoneNumberOutcome(result.GetResultWithOwnership())
+                            : VerifyPhoneNumberOutcome(std::move(result.GetError()));
 }

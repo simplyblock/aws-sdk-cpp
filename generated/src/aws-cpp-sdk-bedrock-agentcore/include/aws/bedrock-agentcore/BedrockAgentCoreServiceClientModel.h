@@ -29,6 +29,8 @@
 #include <aws/bedrock-agentcore/model/CreatePaymentSessionResult.h>
 #include <aws/bedrock-agentcore/model/DeleteABTestResult.h>
 #include <aws/bedrock-agentcore/model/DeleteBatchEvaluationResult.h>
+#include <aws/bedrock-agentcore/model/DeleteCapacityProviderSessionResult.h>
+#include <aws/bedrock-agentcore/model/DeleteDatasetGenerationResult.h>
 #include <aws/bedrock-agentcore/model/DeleteEventResult.h>
 #include <aws/bedrock-agentcore/model/DeleteMemoryRecordResult.h>
 #include <aws/bedrock-agentcore/model/DeletePaymentInstrumentResult.h>
@@ -37,9 +39,11 @@
 #include <aws/bedrock-agentcore/model/EvaluateResult.h>
 #include <aws/bedrock-agentcore/model/GetABTestResult.h>
 #include <aws/bedrock-agentcore/model/GetAgentCardResult.h>
+#include <aws/bedrock-agentcore/model/GetAgentInsightResult.h>
 #include <aws/bedrock-agentcore/model/GetBatchEvaluationResult.h>
 #include <aws/bedrock-agentcore/model/GetBrowserSessionResult.h>
 #include <aws/bedrock-agentcore/model/GetCodeInterpreterSessionResult.h>
+#include <aws/bedrock-agentcore/model/GetDatasetGenerationResult.h>
 #include <aws/bedrock-agentcore/model/GetEventResult.h>
 #include <aws/bedrock-agentcore/model/GetMemoryRecordResult.h>
 #include <aws/bedrock-agentcore/model/GetPaymentInstrumentBalanceResult.h>
@@ -52,15 +56,20 @@
 #include <aws/bedrock-agentcore/model/GetWorkloadAccessTokenForJWTResult.h>
 #include <aws/bedrock-agentcore/model/GetWorkloadAccessTokenForUserIdResult.h>
 #include <aws/bedrock-agentcore/model/GetWorkloadAccessTokenResult.h>
+#include <aws/bedrock-agentcore/model/IngestDataResult.h>
 #include <aws/bedrock-agentcore/model/InvokeAgentRuntimeResult.h>
 #include <aws/bedrock-agentcore/model/InvokeBrowserResult.h>
+#include <aws/bedrock-agentcore/model/InvokeWebSearchResult.h>
 #include <aws/bedrock-agentcore/model/ListABTestsRequest.h>
 #include <aws/bedrock-agentcore/model/ListABTestsResult.h>
 #include <aws/bedrock-agentcore/model/ListActorsResult.h>
+#include <aws/bedrock-agentcore/model/ListAgentInsightsRequest.h>
+#include <aws/bedrock-agentcore/model/ListAgentInsightsResult.h>
 #include <aws/bedrock-agentcore/model/ListBatchEvaluationsRequest.h>
 #include <aws/bedrock-agentcore/model/ListBatchEvaluationsResult.h>
 #include <aws/bedrock-agentcore/model/ListBrowserSessionsResult.h>
 #include <aws/bedrock-agentcore/model/ListCodeInterpreterSessionsResult.h>
+#include <aws/bedrock-agentcore/model/ListDatasetGenerationsResult.h>
 #include <aws/bedrock-agentcore/model/ListEventsResult.h>
 #include <aws/bedrock-agentcore/model/ListMemoryExtractionJobsResult.h>
 #include <aws/bedrock-agentcore/model/ListMemoryRecordsResult.h>
@@ -76,6 +85,7 @@
 #include <aws/bedrock-agentcore/model/StartBatchEvaluationResult.h>
 #include <aws/bedrock-agentcore/model/StartBrowserSessionResult.h>
 #include <aws/bedrock-agentcore/model/StartCodeInterpreterSessionResult.h>
+#include <aws/bedrock-agentcore/model/StartDatasetGenerationResult.h>
 #include <aws/bedrock-agentcore/model/StartMemoryExtractionJobResult.h>
 #include <aws/bedrock-agentcore/model/StartRecommendationResult.h>
 #include <aws/bedrock-agentcore/model/StopBatchEvaluationResult.h>
@@ -83,6 +93,7 @@
 #include <aws/bedrock-agentcore/model/StopCodeInterpreterSessionResult.h>
 #include <aws/bedrock-agentcore/model/StopRuntimeSessionResult.h>
 #include <aws/bedrock-agentcore/model/UpdateABTestResult.h>
+#include <aws/bedrock-agentcore/model/UpdateAgentInsightResult.h>
 #include <aws/bedrock-agentcore/model/UpdateBrowserStreamResult.h>
 #include <aws/core/NoResult.h>
 /* End of service model headers required in BedrockAgentCoreClient header */
@@ -128,6 +139,8 @@ class CreatePaymentInstrumentRequest;
 class CreatePaymentSessionRequest;
 class DeleteABTestRequest;
 class DeleteBatchEvaluationRequest;
+class DeleteCapacityProviderSessionRequest;
+class DeleteDatasetGenerationRequest;
 class DeleteEventRequest;
 class DeleteMemoryRecordRequest;
 class DeletePaymentInstrumentRequest;
@@ -136,9 +149,11 @@ class DeleteRecommendationRequest;
 class EvaluateRequest;
 class GetABTestRequest;
 class GetAgentCardRequest;
+class GetAgentInsightRequest;
 class GetBatchEvaluationRequest;
 class GetBrowserSessionRequest;
 class GetCodeInterpreterSessionRequest;
+class GetDatasetGenerationRequest;
 class GetEventRequest;
 class GetMemoryRecordRequest;
 class GetPaymentInstrumentRequest;
@@ -151,16 +166,20 @@ class GetResourcePaymentTokenRequest;
 class GetWorkloadAccessTokenRequest;
 class GetWorkloadAccessTokenForJWTRequest;
 class GetWorkloadAccessTokenForUserIdRequest;
+class IngestDataRequest;
 class InvokeAgentRuntimeRequest;
 class InvokeAgentRuntimeCommandRequest;
 class InvokeBrowserRequest;
 class InvokeCodeInterpreterRequest;
 class InvokeHarnessRequest;
+class InvokeWebSearchRequest;
 class ListABTestsRequest;
 class ListActorsRequest;
+class ListAgentInsightsRequest;
 class ListBatchEvaluationsRequest;
 class ListBrowserSessionsRequest;
 class ListCodeInterpreterSessionsRequest;
+class ListDatasetGenerationsRequest;
 class ListEventsRequest;
 class ListMemoryExtractionJobsRequest;
 class ListMemoryRecordsRequest;
@@ -175,6 +194,7 @@ class SearchRegistryRecordsRequest;
 class StartBatchEvaluationRequest;
 class StartBrowserSessionRequest;
 class StartCodeInterpreterSessionRequest;
+class StartDatasetGenerationRequest;
 class StartMemoryExtractionJobRequest;
 class StartRecommendationRequest;
 class StopBatchEvaluationRequest;
@@ -182,6 +202,7 @@ class StopBrowserSessionRequest;
 class StopCodeInterpreterSessionRequest;
 class StopRuntimeSessionRequest;
 class UpdateABTestRequest;
+class UpdateAgentInsightRequest;
 class UpdateBrowserStreamRequest;
 /* End of service model forward declarations required in BedrockAgentCoreClient header */
 
@@ -196,6 +217,8 @@ typedef Aws::Utils::Outcome<CreatePaymentInstrumentResult, BedrockAgentCoreError
 typedef Aws::Utils::Outcome<CreatePaymentSessionResult, BedrockAgentCoreError> CreatePaymentSessionOutcome;
 typedef Aws::Utils::Outcome<DeleteABTestResult, BedrockAgentCoreError> DeleteABTestOutcome;
 typedef Aws::Utils::Outcome<DeleteBatchEvaluationResult, BedrockAgentCoreError> DeleteBatchEvaluationOutcome;
+typedef Aws::Utils::Outcome<DeleteCapacityProviderSessionResult, BedrockAgentCoreError> DeleteCapacityProviderSessionOutcome;
+typedef Aws::Utils::Outcome<DeleteDatasetGenerationResult, BedrockAgentCoreError> DeleteDatasetGenerationOutcome;
 typedef Aws::Utils::Outcome<DeleteEventResult, BedrockAgentCoreError> DeleteEventOutcome;
 typedef Aws::Utils::Outcome<DeleteMemoryRecordResult, BedrockAgentCoreError> DeleteMemoryRecordOutcome;
 typedef Aws::Utils::Outcome<DeletePaymentInstrumentResult, BedrockAgentCoreError> DeletePaymentInstrumentOutcome;
@@ -204,9 +227,11 @@ typedef Aws::Utils::Outcome<DeleteRecommendationResult, BedrockAgentCoreError> D
 typedef Aws::Utils::Outcome<EvaluateResult, BedrockAgentCoreError> EvaluateOutcome;
 typedef Aws::Utils::Outcome<GetABTestResult, BedrockAgentCoreError> GetABTestOutcome;
 typedef Aws::Utils::Outcome<GetAgentCardResult, BedrockAgentCoreError> GetAgentCardOutcome;
+typedef Aws::Utils::Outcome<GetAgentInsightResult, BedrockAgentCoreError> GetAgentInsightOutcome;
 typedef Aws::Utils::Outcome<GetBatchEvaluationResult, BedrockAgentCoreError> GetBatchEvaluationOutcome;
 typedef Aws::Utils::Outcome<GetBrowserSessionResult, BedrockAgentCoreError> GetBrowserSessionOutcome;
 typedef Aws::Utils::Outcome<GetCodeInterpreterSessionResult, BedrockAgentCoreError> GetCodeInterpreterSessionOutcome;
+typedef Aws::Utils::Outcome<GetDatasetGenerationResult, BedrockAgentCoreError> GetDatasetGenerationOutcome;
 typedef Aws::Utils::Outcome<GetEventResult, BedrockAgentCoreError> GetEventOutcome;
 typedef Aws::Utils::Outcome<GetMemoryRecordResult, BedrockAgentCoreError> GetMemoryRecordOutcome;
 typedef Aws::Utils::Outcome<GetPaymentInstrumentResult, BedrockAgentCoreError> GetPaymentInstrumentOutcome;
@@ -219,16 +244,20 @@ typedef Aws::Utils::Outcome<GetResourcePaymentTokenResult, BedrockAgentCoreError
 typedef Aws::Utils::Outcome<GetWorkloadAccessTokenResult, BedrockAgentCoreError> GetWorkloadAccessTokenOutcome;
 typedef Aws::Utils::Outcome<GetWorkloadAccessTokenForJWTResult, BedrockAgentCoreError> GetWorkloadAccessTokenForJWTOutcome;
 typedef Aws::Utils::Outcome<GetWorkloadAccessTokenForUserIdResult, BedrockAgentCoreError> GetWorkloadAccessTokenForUserIdOutcome;
+typedef Aws::Utils::Outcome<IngestDataResult, BedrockAgentCoreError> IngestDataOutcome;
 typedef Aws::Utils::Outcome<InvokeAgentRuntimeResult, BedrockAgentCoreError> InvokeAgentRuntimeOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, BedrockAgentCoreError> InvokeAgentRuntimeCommandOutcome;
 typedef Aws::Utils::Outcome<InvokeBrowserResult, BedrockAgentCoreError> InvokeBrowserOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, BedrockAgentCoreError> InvokeCodeInterpreterOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, BedrockAgentCoreError> InvokeHarnessOutcome;
+typedef Aws::Utils::Outcome<InvokeWebSearchResult, BedrockAgentCoreError> InvokeWebSearchOutcome;
 typedef Aws::Utils::Outcome<ListABTestsResult, BedrockAgentCoreError> ListABTestsOutcome;
 typedef Aws::Utils::Outcome<ListActorsResult, BedrockAgentCoreError> ListActorsOutcome;
+typedef Aws::Utils::Outcome<ListAgentInsightsResult, BedrockAgentCoreError> ListAgentInsightsOutcome;
 typedef Aws::Utils::Outcome<ListBatchEvaluationsResult, BedrockAgentCoreError> ListBatchEvaluationsOutcome;
 typedef Aws::Utils::Outcome<ListBrowserSessionsResult, BedrockAgentCoreError> ListBrowserSessionsOutcome;
 typedef Aws::Utils::Outcome<ListCodeInterpreterSessionsResult, BedrockAgentCoreError> ListCodeInterpreterSessionsOutcome;
+typedef Aws::Utils::Outcome<ListDatasetGenerationsResult, BedrockAgentCoreError> ListDatasetGenerationsOutcome;
 typedef Aws::Utils::Outcome<ListEventsResult, BedrockAgentCoreError> ListEventsOutcome;
 typedef Aws::Utils::Outcome<ListMemoryExtractionJobsResult, BedrockAgentCoreError> ListMemoryExtractionJobsOutcome;
 typedef Aws::Utils::Outcome<ListMemoryRecordsResult, BedrockAgentCoreError> ListMemoryRecordsOutcome;
@@ -243,6 +272,7 @@ typedef Aws::Utils::Outcome<SearchRegistryRecordsResult, BedrockAgentCoreError> 
 typedef Aws::Utils::Outcome<StartBatchEvaluationResult, BedrockAgentCoreError> StartBatchEvaluationOutcome;
 typedef Aws::Utils::Outcome<StartBrowserSessionResult, BedrockAgentCoreError> StartBrowserSessionOutcome;
 typedef Aws::Utils::Outcome<StartCodeInterpreterSessionResult, BedrockAgentCoreError> StartCodeInterpreterSessionOutcome;
+typedef Aws::Utils::Outcome<StartDatasetGenerationResult, BedrockAgentCoreError> StartDatasetGenerationOutcome;
 typedef Aws::Utils::Outcome<StartMemoryExtractionJobResult, BedrockAgentCoreError> StartMemoryExtractionJobOutcome;
 typedef Aws::Utils::Outcome<StartRecommendationResult, BedrockAgentCoreError> StartRecommendationOutcome;
 typedef Aws::Utils::Outcome<StopBatchEvaluationResult, BedrockAgentCoreError> StopBatchEvaluationOutcome;
@@ -250,6 +280,7 @@ typedef Aws::Utils::Outcome<StopBrowserSessionResult, BedrockAgentCoreError> Sto
 typedef Aws::Utils::Outcome<StopCodeInterpreterSessionResult, BedrockAgentCoreError> StopCodeInterpreterSessionOutcome;
 typedef Aws::Utils::Outcome<StopRuntimeSessionResult, BedrockAgentCoreError> StopRuntimeSessionOutcome;
 typedef Aws::Utils::Outcome<UpdateABTestResult, BedrockAgentCoreError> UpdateABTestOutcome;
+typedef Aws::Utils::Outcome<UpdateAgentInsightResult, BedrockAgentCoreError> UpdateAgentInsightOutcome;
 typedef Aws::Utils::Outcome<UpdateBrowserStreamResult, BedrockAgentCoreError> UpdateBrowserStreamOutcome;
 /* End of service model Outcome class definitions */
 
@@ -264,6 +295,8 @@ typedef std::future<CreatePaymentInstrumentOutcome> CreatePaymentInstrumentOutco
 typedef std::future<CreatePaymentSessionOutcome> CreatePaymentSessionOutcomeCallable;
 typedef std::future<DeleteABTestOutcome> DeleteABTestOutcomeCallable;
 typedef std::future<DeleteBatchEvaluationOutcome> DeleteBatchEvaluationOutcomeCallable;
+typedef std::future<DeleteCapacityProviderSessionOutcome> DeleteCapacityProviderSessionOutcomeCallable;
+typedef std::future<DeleteDatasetGenerationOutcome> DeleteDatasetGenerationOutcomeCallable;
 typedef std::future<DeleteEventOutcome> DeleteEventOutcomeCallable;
 typedef std::future<DeleteMemoryRecordOutcome> DeleteMemoryRecordOutcomeCallable;
 typedef std::future<DeletePaymentInstrumentOutcome> DeletePaymentInstrumentOutcomeCallable;
@@ -272,9 +305,11 @@ typedef std::future<DeleteRecommendationOutcome> DeleteRecommendationOutcomeCall
 typedef std::future<EvaluateOutcome> EvaluateOutcomeCallable;
 typedef std::future<GetABTestOutcome> GetABTestOutcomeCallable;
 typedef std::future<GetAgentCardOutcome> GetAgentCardOutcomeCallable;
+typedef std::future<GetAgentInsightOutcome> GetAgentInsightOutcomeCallable;
 typedef std::future<GetBatchEvaluationOutcome> GetBatchEvaluationOutcomeCallable;
 typedef std::future<GetBrowserSessionOutcome> GetBrowserSessionOutcomeCallable;
 typedef std::future<GetCodeInterpreterSessionOutcome> GetCodeInterpreterSessionOutcomeCallable;
+typedef std::future<GetDatasetGenerationOutcome> GetDatasetGenerationOutcomeCallable;
 typedef std::future<GetEventOutcome> GetEventOutcomeCallable;
 typedef std::future<GetMemoryRecordOutcome> GetMemoryRecordOutcomeCallable;
 typedef std::future<GetPaymentInstrumentOutcome> GetPaymentInstrumentOutcomeCallable;
@@ -287,16 +322,20 @@ typedef std::future<GetResourcePaymentTokenOutcome> GetResourcePaymentTokenOutco
 typedef std::future<GetWorkloadAccessTokenOutcome> GetWorkloadAccessTokenOutcomeCallable;
 typedef std::future<GetWorkloadAccessTokenForJWTOutcome> GetWorkloadAccessTokenForJWTOutcomeCallable;
 typedef std::future<GetWorkloadAccessTokenForUserIdOutcome> GetWorkloadAccessTokenForUserIdOutcomeCallable;
+typedef std::future<IngestDataOutcome> IngestDataOutcomeCallable;
 typedef std::future<InvokeAgentRuntimeOutcome> InvokeAgentRuntimeOutcomeCallable;
 typedef std::future<InvokeAgentRuntimeCommandOutcome> InvokeAgentRuntimeCommandOutcomeCallable;
 typedef std::future<InvokeBrowserOutcome> InvokeBrowserOutcomeCallable;
 typedef std::future<InvokeCodeInterpreterOutcome> InvokeCodeInterpreterOutcomeCallable;
 typedef std::future<InvokeHarnessOutcome> InvokeHarnessOutcomeCallable;
+typedef std::future<InvokeWebSearchOutcome> InvokeWebSearchOutcomeCallable;
 typedef std::future<ListABTestsOutcome> ListABTestsOutcomeCallable;
 typedef std::future<ListActorsOutcome> ListActorsOutcomeCallable;
+typedef std::future<ListAgentInsightsOutcome> ListAgentInsightsOutcomeCallable;
 typedef std::future<ListBatchEvaluationsOutcome> ListBatchEvaluationsOutcomeCallable;
 typedef std::future<ListBrowserSessionsOutcome> ListBrowserSessionsOutcomeCallable;
 typedef std::future<ListCodeInterpreterSessionsOutcome> ListCodeInterpreterSessionsOutcomeCallable;
+typedef std::future<ListDatasetGenerationsOutcome> ListDatasetGenerationsOutcomeCallable;
 typedef std::future<ListEventsOutcome> ListEventsOutcomeCallable;
 typedef std::future<ListMemoryExtractionJobsOutcome> ListMemoryExtractionJobsOutcomeCallable;
 typedef std::future<ListMemoryRecordsOutcome> ListMemoryRecordsOutcomeCallable;
@@ -311,6 +350,7 @@ typedef std::future<SearchRegistryRecordsOutcome> SearchRegistryRecordsOutcomeCa
 typedef std::future<StartBatchEvaluationOutcome> StartBatchEvaluationOutcomeCallable;
 typedef std::future<StartBrowserSessionOutcome> StartBrowserSessionOutcomeCallable;
 typedef std::future<StartCodeInterpreterSessionOutcome> StartCodeInterpreterSessionOutcomeCallable;
+typedef std::future<StartDatasetGenerationOutcome> StartDatasetGenerationOutcomeCallable;
 typedef std::future<StartMemoryExtractionJobOutcome> StartMemoryExtractionJobOutcomeCallable;
 typedef std::future<StartRecommendationOutcome> StartRecommendationOutcomeCallable;
 typedef std::future<StopBatchEvaluationOutcome> StopBatchEvaluationOutcomeCallable;
@@ -318,6 +358,7 @@ typedef std::future<StopBrowserSessionOutcome> StopBrowserSessionOutcomeCallable
 typedef std::future<StopCodeInterpreterSessionOutcome> StopCodeInterpreterSessionOutcomeCallable;
 typedef std::future<StopRuntimeSessionOutcome> StopRuntimeSessionOutcomeCallable;
 typedef std::future<UpdateABTestOutcome> UpdateABTestOutcomeCallable;
+typedef std::future<UpdateAgentInsightOutcome> UpdateAgentInsightOutcomeCallable;
 typedef std::future<UpdateBrowserStreamOutcome> UpdateBrowserStreamOutcomeCallable;
 /* End of service model Outcome callable definitions */
 }  // namespace Model
@@ -355,6 +396,13 @@ typedef std::function<void(const BedrockAgentCoreClient*, const Model::DeleteABT
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::DeleteBatchEvaluationRequest&,
                            const Model::DeleteBatchEvaluationOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteBatchEvaluationResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreClient*, const Model::DeleteCapacityProviderSessionRequest&,
+                           const Model::DeleteCapacityProviderSessionOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteCapacityProviderSessionResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreClient*, const Model::DeleteDatasetGenerationRequest&,
+                           const Model::DeleteDatasetGenerationOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteDatasetGenerationResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::DeleteEventRequest&, const Model::DeleteEventOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteEventResponseReceivedHandler;
@@ -379,6 +427,9 @@ typedef std::function<void(const BedrockAgentCoreClient*, const Model::GetABTest
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::GetAgentCardRequest&, const Model::GetAgentCardOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetAgentCardResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreClient*, const Model::GetAgentInsightRequest&, const Model::GetAgentInsightOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetAgentInsightResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::GetBatchEvaluationRequest&, const Model::GetBatchEvaluationOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetBatchEvaluationResponseReceivedHandler;
@@ -388,6 +439,9 @@ typedef std::function<void(const BedrockAgentCoreClient*, const Model::GetBrowse
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::GetCodeInterpreterSessionRequest&,
                            const Model::GetCodeInterpreterSessionOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetCodeInterpreterSessionResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreClient*, const Model::GetDatasetGenerationRequest&,
+                           const Model::GetDatasetGenerationOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetDatasetGenerationResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::GetEventRequest&, const Model::GetEventOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetEventResponseReceivedHandler;
@@ -426,6 +480,9 @@ typedef std::function<void(const BedrockAgentCoreClient*, const Model::GetWorklo
                            const Model::GetWorkloadAccessTokenForUserIdOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetWorkloadAccessTokenForUserIdResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreClient*, const Model::IngestDataRequest&, const Model::IngestDataOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    IngestDataResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::InvokeAgentRuntimeRequest&, Model::InvokeAgentRuntimeOutcome,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     InvokeAgentRuntimeResponseReceivedHandler;
@@ -441,12 +498,18 @@ typedef std::function<void(const BedrockAgentCoreClient*, const Model::InvokeCod
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::InvokeHarnessRequest&, const Model::InvokeHarnessOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     InvokeHarnessResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreClient*, const Model::InvokeWebSearchRequest&, const Model::InvokeWebSearchOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    InvokeWebSearchResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::ListABTestsRequest&, const Model::ListABTestsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListABTestsResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::ListActorsRequest&, const Model::ListActorsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListActorsResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreClient*, const Model::ListAgentInsightsRequest&, const Model::ListAgentInsightsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListAgentInsightsResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::ListBatchEvaluationsRequest&,
                            const Model::ListBatchEvaluationsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListBatchEvaluationsResponseReceivedHandler;
@@ -456,6 +519,9 @@ typedef std::function<void(const BedrockAgentCoreClient*, const Model::ListBrows
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::ListCodeInterpreterSessionsRequest&,
                            const Model::ListCodeInterpreterSessionsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListCodeInterpreterSessionsResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreClient*, const Model::ListDatasetGenerationsRequest&,
+                           const Model::ListDatasetGenerationsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListDatasetGenerationsResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::ListEventsRequest&, const Model::ListEventsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListEventsResponseReceivedHandler;
@@ -498,6 +564,9 @@ typedef std::function<void(const BedrockAgentCoreClient*, const Model::StartBrow
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::StartCodeInterpreterSessionRequest&,
                            const Model::StartCodeInterpreterSessionOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     StartCodeInterpreterSessionResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreClient*, const Model::StartDatasetGenerationRequest&,
+                           const Model::StartDatasetGenerationOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    StartDatasetGenerationResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::StartMemoryExtractionJobRequest&,
                            const Model::StartMemoryExtractionJobOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     StartMemoryExtractionJobResponseReceivedHandler;
@@ -519,6 +588,9 @@ typedef std::function<void(const BedrockAgentCoreClient*, const Model::StopRunti
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::UpdateABTestRequest&, const Model::UpdateABTestOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateABTestResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreClient*, const Model::UpdateAgentInsightRequest&, const Model::UpdateAgentInsightOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateAgentInsightResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreClient*, const Model::UpdateBrowserStreamRequest&,
                            const Model::UpdateBrowserStreamOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateBrowserStreamResponseReceivedHandler;

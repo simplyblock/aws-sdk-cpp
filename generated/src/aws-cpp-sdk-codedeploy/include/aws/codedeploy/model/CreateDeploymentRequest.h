@@ -8,6 +8,8 @@
 #include <aws/codedeploy/CodeDeploy_EXPORTS.h>
 #include <aws/codedeploy/model/AlarmConfiguration.h>
 #include <aws/codedeploy/model/AutoRollbackConfiguration.h>
+#include <aws/codedeploy/model/DeploymentMode.h>
+#include <aws/codedeploy/model/EC2DeploymentOptions.h>
 #include <aws/codedeploy/model/FileExistsBehavior.h>
 #include <aws/codedeploy/model/RevisionLocation.h>
 #include <aws/codedeploy/model/TargetInstances.h>
@@ -252,6 +254,36 @@ class CreateDeploymentRequest : public CodeDeployRequest {
 
   ///@{
   /**
+   * <p>The type of deployment to create. Valid values are:</p> <ul> <li> <p>
+   * <code>STANDARD</code>: Deploys the specified revision. This is the default
+   * behavior if <code>deploymentMode</code> is not specified.</p> </li> <li> <p>
+   * <code>RESTART</code>: Restarts the application on the target instances using the
+   * revision from the deployment group's last successful deployment, without
+   * downloading a new revision. <code>RESTART</code> is supported only for
+   * EC2/On-premises in-place deployments.</p> <p>When <code>deploymentMode</code> is
+   * <code>RESTART</code>, the following apply:</p> <ul> <li> <p>The call is rejected
+   * for Amazon ECS and Lambda deployments.</p> </li> <li> <p>The
+   * <code>revision</code> parameter (including its <code>s3Location</code> and
+   * <code>gitHubLocation</code>) must not be specified, and is rejected if provided.
+   * The revision is resolved by the service from the deployment group's last
+   * successful deployment.</p> </li> <li> <p>The
+   * <code>updateOutdatedInstancesOnly</code> parameter must not be set to
+   * <code>true</code>, and is rejected if provided.</p> </li> </ul> </li> </ul>
+   */
+  inline DeploymentMode GetDeploymentMode() const { return m_deploymentMode; }
+  inline bool DeploymentModeHasBeenSet() const { return m_deploymentModeHasBeenSet; }
+  inline void SetDeploymentMode(DeploymentMode value) {
+    m_deploymentModeHasBeenSet = true;
+    m_deploymentMode = value;
+  }
+  inline CreateDeploymentRequest& WithDeploymentMode(DeploymentMode value) {
+    SetDeploymentMode(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>Allows you to specify information about alarms associated with a deployment.
    * The alarm configuration that you specify here will override the alarm
    * configuration at the deployment group level. Consider overriding the alarm
@@ -279,6 +311,22 @@ class CreateDeploymentRequest : public CodeDeployRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+
+  inline const EC2DeploymentOptions& GetEc2DeploymentOptions() const { return m_ec2DeploymentOptions; }
+  inline bool Ec2DeploymentOptionsHasBeenSet() const { return m_ec2DeploymentOptionsHasBeenSet; }
+  template <typename Ec2DeploymentOptionsT = EC2DeploymentOptions>
+  void SetEc2DeploymentOptions(Ec2DeploymentOptionsT&& value) {
+    m_ec2DeploymentOptionsHasBeenSet = true;
+    m_ec2DeploymentOptions = std::forward<Ec2DeploymentOptionsT>(value);
+  }
+  template <typename Ec2DeploymentOptionsT = EC2DeploymentOptions>
+  CreateDeploymentRequest& WithEc2DeploymentOptions(Ec2DeploymentOptionsT&& value) {
+    SetEc2DeploymentOptions(std::forward<Ec2DeploymentOptionsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_applicationName;
 
@@ -300,7 +348,11 @@ class CreateDeploymentRequest : public CodeDeployRequest {
 
   FileExistsBehavior m_fileExistsBehavior{FileExistsBehavior::NOT_SET};
 
+  DeploymentMode m_deploymentMode{DeploymentMode::NOT_SET};
+
   AlarmConfiguration m_overrideAlarmConfiguration;
+
+  EC2DeploymentOptions m_ec2DeploymentOptions;
   bool m_applicationNameHasBeenSet = false;
   bool m_deploymentGroupNameHasBeenSet = false;
   bool m_revisionHasBeenSet = false;
@@ -311,7 +363,9 @@ class CreateDeploymentRequest : public CodeDeployRequest {
   bool m_autoRollbackConfigurationHasBeenSet = false;
   bool m_updateOutdatedInstancesOnlyHasBeenSet = false;
   bool m_fileExistsBehaviorHasBeenSet = false;
+  bool m_deploymentModeHasBeenSet = false;
   bool m_overrideAlarmConfigurationHasBeenSet = false;
+  bool m_ec2DeploymentOptionsHasBeenSet = false;
 };
 
 }  // namespace Model

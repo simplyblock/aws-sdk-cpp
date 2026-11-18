@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/wisdom/ConnectWisdomServiceEndpointRules.h>
 #include <aws/wisdom/ConnectWisdomService_EXPORTS.h>
 
 namespace Aws {
 namespace ConnectWisdomService {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ConnectWisdomServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ConnectWisdomServiceEndpointProviderBase =
                          ConnectWisdomServiceClientContextParameters>;
 
 using ConnectWisdomServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<ConnectWisdomServiceClientConfiguration, ConnectWisdomServiceBuiltInParameters,
-                            ConnectWisdomServiceClientContextParameters>;
+    BDDEndpointProvider<ConnectWisdomServiceClientConfiguration, ConnectWisdomServiceBuiltInParameters,
+                        ConnectWisdomServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_CONNECTWISDOMSERVICE_API ConnectWisdomServiceEndpointProvider : public
  public:
   using ConnectWisdomServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ConnectWisdomServiceEndpointProvider()
-      : ConnectWisdomServiceDefaultEpProviderBase(Aws::ConnectWisdomService::ConnectWisdomServiceEndpointRules::GetRulesBlob(),
-                                                  Aws::ConnectWisdomService::ConnectWisdomServiceEndpointRules::RulesBlobSize) {}
+  ConnectWisdomServiceEndpointProvider();
 
   ~ConnectWisdomServiceEndpointProvider() {}
 };

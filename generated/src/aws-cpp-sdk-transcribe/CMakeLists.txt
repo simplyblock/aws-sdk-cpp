@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-transcribe "C++ SDK for the AWS transcribe service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-transcribe "C++ SDK for Amazon Transcribe Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_TRANSCRIBE_HEADERS
     "include/aws/transcribe/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_TRANSCRIBE_HEADERS
 
 file(GLOB AWS_TRANSCRIBE_MODEL_HEADERS
     "include/aws/transcribe/model/*.h"
+)
+
+file(GLOB AWS_TRANSCRIBE_INTERNAL_HEADERS
+    "include/aws/transcribe/internal/*.h"
 )
 
 file(GLOB AWS_TRANSCRIBE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_TRANSCRIBE_MODEL_SOURCE
 
 file(GLOB TRANSCRIBE_UNIFIED_HEADERS
     ${AWS_TRANSCRIBE_HEADERS}
+    ${AWS_TRANSCRIBE_INTERNAL_HEADERS}
     ${AWS_TRANSCRIBE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\transcribe" FILES ${AWS_TRANSCRIBE_HEADERS})
+        source_group("Header Files\\aws\\transcribe\\internal" FILES ${AWS_TRANSCRIBE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\transcribe\\model" FILES ${AWS_TRANSCRIBE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_TRANSCRIBE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_TRANSCRIBE_MODEL_SOURCE})

@@ -4,12 +4,11 @@
  */
 
 #pragma once
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/timestream-query/TimestreamQueryClientConfiguration.h>
-#include <aws/timestream-query/TimestreamQueryEndpointRules.h>
 #include <aws/timestream-query/TimestreamQuery_EXPORTS.h>
 
 namespace Aws {
@@ -17,7 +16,7 @@ namespace TimestreamQuery {
 namespace Endpoint {
 using TimestreamQueryClientConfiguration = Aws::TimestreamQuery::TimestreamQueryClientConfiguration;
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using TimestreamQueryClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -27,6 +26,7 @@ class AWS_TIMESTREAMQUERY_API TimestreamQueryBuiltInParameters : public Aws::End
   virtual ~TimestreamQueryBuiltInParameters() {};
   using Aws::Endpoint::BuiltInParameters::SetFromClientConfiguration;
   virtual void SetFromClientConfiguration(const TimestreamQueryClientConfiguration& config);
+  virtual void SetFromClientConfiguration(const TimestreamQueryClientConfiguration& config, const Aws::String& serviceName);
 };
 
 /**
@@ -38,7 +38,7 @@ using TimestreamQueryEndpointProviderBase =
     EndpointProviderBase<TimestreamQueryClientConfiguration, TimestreamQueryBuiltInParameters, TimestreamQueryClientContextParameters>;
 
 using TimestreamQueryDefaultEpProviderBase =
-    DefaultEndpointProvider<TimestreamQueryClientConfiguration, TimestreamQueryBuiltInParameters, TimestreamQueryClientContextParameters>;
+    BDDEndpointProvider<TimestreamQueryClientConfiguration, TimestreamQueryBuiltInParameters, TimestreamQueryClientContextParameters>;
 
 }  // namespace Endpoint
 }  // namespace TimestreamQuery
@@ -51,7 +51,7 @@ AWS_TIMESTREAMQUERY_EXTERN template class AWS_TIMESTREAMQUERY_API Aws::Endpoint:
     TimestreamQuery::Endpoint::TimestreamQueryClientConfiguration, TimestreamQuery::Endpoint::TimestreamQueryBuiltInParameters,
     TimestreamQuery::Endpoint::TimestreamQueryClientContextParameters>;
 
-AWS_TIMESTREAMQUERY_EXTERN template class AWS_TIMESTREAMQUERY_API Aws::Endpoint::DefaultEndpointProvider<
+AWS_TIMESTREAMQUERY_EXTERN template class AWS_TIMESTREAMQUERY_API Aws::Endpoint::BDDEndpointProvider<
     TimestreamQuery::Endpoint::TimestreamQueryClientConfiguration, TimestreamQuery::Endpoint::TimestreamQueryBuiltInParameters,
     TimestreamQuery::Endpoint::TimestreamQueryClientContextParameters>;
 }  // namespace Endpoint
@@ -65,9 +65,7 @@ class AWS_TIMESTREAMQUERY_API TimestreamQueryEndpointProvider : public Timestrea
  public:
   using TimestreamQueryResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  TimestreamQueryEndpointProvider()
-      : TimestreamQueryDefaultEpProviderBase(Aws::TimestreamQuery::TimestreamQueryEndpointRules::GetRulesBlob(),
-                                             Aws::TimestreamQuery::TimestreamQueryEndpointRules::RulesBlobSize) {}
+  TimestreamQueryEndpointProvider();
 
   ~TimestreamQueryEndpointProvider() {}
 };

@@ -32,12 +32,17 @@
 #include <aws/invoicing/model/ListInvoiceUnitsResult.h>
 #include <aws/invoicing/model/ListProcurementPortalPreferencesRequest.h>
 #include <aws/invoicing/model/ListProcurementPortalPreferencesResult.h>
+#include <aws/invoicing/model/ListProcurementPortalSuppliersResult.h>
+#include <aws/invoicing/model/ListProcurementPortalsRequest.h>
+#include <aws/invoicing/model/ListProcurementPortalsResult.h>
 #include <aws/invoicing/model/ListTagsForResourceResult.h>
 #include <aws/invoicing/model/PutProcurementPortalPreferenceResult.h>
+#include <aws/invoicing/model/SendProcurementPortalValidationResult.h>
 #include <aws/invoicing/model/TagResourceResult.h>
 #include <aws/invoicing/model/UntagResourceResult.h>
 #include <aws/invoicing/model/UpdateInvoiceUnitResult.h>
 #include <aws/invoicing/model/UpdateProcurementPortalPreferenceStatusResult.h>
+#include <aws/invoicing/model/VerifyProcurementPortalValidationResult.h>
 /* End of service model headers required in InvoicingClient header */
 
 namespace Aws {
@@ -82,12 +87,16 @@ class GetProcurementPortalPreferenceRequest;
 class ListInvoiceSummariesRequest;
 class ListInvoiceUnitsRequest;
 class ListProcurementPortalPreferencesRequest;
+class ListProcurementPortalSuppliersRequest;
+class ListProcurementPortalsRequest;
 class ListTagsForResourceRequest;
 class PutProcurementPortalPreferenceRequest;
+class SendProcurementPortalValidationRequest;
 class TagResourceRequest;
 class UntagResourceRequest;
 class UpdateInvoiceUnitRequest;
 class UpdateProcurementPortalPreferenceStatusRequest;
+class VerifyProcurementPortalValidationRequest;
 /* End of service model forward declarations required in InvoicingClient header */
 
 /* Service model Outcome class definitions */
@@ -102,12 +111,16 @@ typedef Aws::Utils::Outcome<GetProcurementPortalPreferenceResult, InvoicingError
 typedef Aws::Utils::Outcome<ListInvoiceSummariesResult, InvoicingError> ListInvoiceSummariesOutcome;
 typedef Aws::Utils::Outcome<ListInvoiceUnitsResult, InvoicingError> ListInvoiceUnitsOutcome;
 typedef Aws::Utils::Outcome<ListProcurementPortalPreferencesResult, InvoicingError> ListProcurementPortalPreferencesOutcome;
+typedef Aws::Utils::Outcome<ListProcurementPortalSuppliersResult, InvoicingError> ListProcurementPortalSuppliersOutcome;
+typedef Aws::Utils::Outcome<ListProcurementPortalsResult, InvoicingError> ListProcurementPortalsOutcome;
 typedef Aws::Utils::Outcome<ListTagsForResourceResult, InvoicingError> ListTagsForResourceOutcome;
 typedef Aws::Utils::Outcome<PutProcurementPortalPreferenceResult, InvoicingError> PutProcurementPortalPreferenceOutcome;
+typedef Aws::Utils::Outcome<SendProcurementPortalValidationResult, InvoicingError> SendProcurementPortalValidationOutcome;
 typedef Aws::Utils::Outcome<TagResourceResult, InvoicingError> TagResourceOutcome;
 typedef Aws::Utils::Outcome<UntagResourceResult, InvoicingError> UntagResourceOutcome;
 typedef Aws::Utils::Outcome<UpdateInvoiceUnitResult, InvoicingError> UpdateInvoiceUnitOutcome;
 typedef Aws::Utils::Outcome<UpdateProcurementPortalPreferenceStatusResult, InvoicingError> UpdateProcurementPortalPreferenceStatusOutcome;
+typedef Aws::Utils::Outcome<VerifyProcurementPortalValidationResult, InvoicingError> VerifyProcurementPortalValidationOutcome;
 /* End of service model Outcome class definitions */
 
 /* Service model Outcome callable definitions */
@@ -122,12 +135,16 @@ typedef std::future<GetProcurementPortalPreferenceOutcome> GetProcurementPortalP
 typedef std::future<ListInvoiceSummariesOutcome> ListInvoiceSummariesOutcomeCallable;
 typedef std::future<ListInvoiceUnitsOutcome> ListInvoiceUnitsOutcomeCallable;
 typedef std::future<ListProcurementPortalPreferencesOutcome> ListProcurementPortalPreferencesOutcomeCallable;
+typedef std::future<ListProcurementPortalSuppliersOutcome> ListProcurementPortalSuppliersOutcomeCallable;
+typedef std::future<ListProcurementPortalsOutcome> ListProcurementPortalsOutcomeCallable;
 typedef std::future<ListTagsForResourceOutcome> ListTagsForResourceOutcomeCallable;
 typedef std::future<PutProcurementPortalPreferenceOutcome> PutProcurementPortalPreferenceOutcomeCallable;
+typedef std::future<SendProcurementPortalValidationOutcome> SendProcurementPortalValidationOutcomeCallable;
 typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
 typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
 typedef std::future<UpdateInvoiceUnitOutcome> UpdateInvoiceUnitOutcomeCallable;
 typedef std::future<UpdateProcurementPortalPreferenceStatusOutcome> UpdateProcurementPortalPreferenceStatusOutcomeCallable;
+typedef std::future<VerifyProcurementPortalValidationOutcome> VerifyProcurementPortalValidationOutcomeCallable;
 /* End of service model Outcome callable definitions */
 }  // namespace Model
 
@@ -171,6 +188,13 @@ typedef std::function<void(const InvoicingClient*, const Model::ListProcurementP
                            const Model::ListProcurementPortalPreferencesOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListProcurementPortalPreferencesResponseReceivedHandler;
+typedef std::function<void(const InvoicingClient*, const Model::ListProcurementPortalSuppliersRequest&,
+                           const Model::ListProcurementPortalSuppliersOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListProcurementPortalSuppliersResponseReceivedHandler;
+typedef std::function<void(const InvoicingClient*, const Model::ListProcurementPortalsRequest&, const Model::ListProcurementPortalsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListProcurementPortalsResponseReceivedHandler;
 typedef std::function<void(const InvoicingClient*, const Model::ListTagsForResourceRequest&, const Model::ListTagsForResourceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListTagsForResourceResponseReceivedHandler;
@@ -178,6 +202,10 @@ typedef std::function<void(const InvoicingClient*, const Model::PutProcurementPo
                            const Model::PutProcurementPortalPreferenceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     PutProcurementPortalPreferenceResponseReceivedHandler;
+typedef std::function<void(const InvoicingClient*, const Model::SendProcurementPortalValidationRequest&,
+                           const Model::SendProcurementPortalValidationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    SendProcurementPortalValidationResponseReceivedHandler;
 typedef std::function<void(const InvoicingClient*, const Model::TagResourceRequest&, const Model::TagResourceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     TagResourceResponseReceivedHandler;
@@ -191,6 +219,10 @@ typedef std::function<void(const InvoicingClient*, const Model::UpdateProcuremen
                            const Model::UpdateProcurementPortalPreferenceStatusOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateProcurementPortalPreferenceStatusResponseReceivedHandler;
+typedef std::function<void(const InvoicingClient*, const Model::VerifyProcurementPortalValidationRequest&,
+                           const Model::VerifyProcurementPortalValidationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    VerifyProcurementPortalValidationResponseReceivedHandler;
 /* End of service model async handlers definitions */
 }  // namespace Invoicing
 }  // namespace Aws

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/route53/Route53EndpointRules.h>
 #include <aws/route53/Route53_EXPORTS.h>
 
 namespace Aws {
 namespace Route53 {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using Route53ClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using Route53EndpointProviderBase =
     EndpointProviderBase<Route53ClientConfiguration, Route53BuiltInParameters, Route53ClientContextParameters>;
 
 using Route53DefaultEpProviderBase =
-    DefaultEndpointProvider<Route53ClientConfiguration, Route53BuiltInParameters, Route53ClientContextParameters>;
+    BDDEndpointProvider<Route53ClientConfiguration, Route53BuiltInParameters, Route53ClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_ROUTE53_API Route53EndpointProvider : public Route53DefaultEpProviderB
  public:
   using Route53ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  Route53EndpointProvider()
-      : Route53DefaultEpProviderBase(Aws::Route53::Route53EndpointRules::GetRulesBlob(),
-                                     Aws::Route53::Route53EndpointRules::RulesBlobSize) {}
+  Route53EndpointProvider();
 
   ~Route53EndpointProvider() {}
 };

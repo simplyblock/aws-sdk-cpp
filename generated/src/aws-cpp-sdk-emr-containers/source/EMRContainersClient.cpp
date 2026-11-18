@@ -27,6 +27,7 @@
 #include <aws/emr-containers/model/CreateVirtualClusterRequest.h>
 #include <aws/emr-containers/model/DeleteJobTemplateRequest.h>
 #include <aws/emr-containers/model/DeleteManagedEndpointRequest.h>
+#include <aws/emr-containers/model/DeleteSecurityConfigurationRequest.h>
 #include <aws/emr-containers/model/DeleteVirtualClusterRequest.h>
 #include <aws/emr-containers/model/DescribeJobRunRequest.h>
 #include <aws/emr-containers/model/DescribeJobTemplateRequest.h>
@@ -43,6 +44,7 @@
 #include <aws/emr-containers/model/StartJobRunRequest.h>
 #include <aws/emr-containers/model/TagResourceRequest.h>
 #include <aws/emr-containers/model/UntagResourceRequest.h>
+#include <aws/emr-containers/model/UpdateVirtualClusterRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
 using namespace Aws;
@@ -180,7 +182,8 @@ EMRContainersClient::InvokeOperationOutcome EMRContainersClient::InvokeServiceOp
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -194,7 +197,7 @@ EMRContainersClient::InvokeOperationOutcome EMRContainersClient::InvokeServiceOp
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -316,6 +319,25 @@ DeleteManagedEndpointOutcome EMRContainersClient::DeleteManagedEndpoint(const De
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? DeleteManagedEndpointOutcome(result.GetResultWithOwnership())
                             : DeleteManagedEndpointOutcome(std::move(result.GetError()));
+}
+
+DeleteSecurityConfigurationOutcome EMRContainersClient::DeleteSecurityConfiguration(
+    const DeleteSecurityConfigurationRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteSecurityConfiguration", "Required field: Id, is not set");
+    return DeleteSecurityConfigurationOutcome(Aws::Client::AWSError<EMRContainersErrors>(
+        EMRContainersErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/securityconfigurations/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteSecurityConfigurationOutcome(result.GetResultWithOwnership())
+                            : DeleteSecurityConfigurationOutcome(std::move(result.GetError()));
 }
 
 DeleteVirtualClusterOutcome EMRContainersClient::DeleteVirtualCluster(const DeleteVirtualClusterRequest& request) const {
@@ -610,4 +632,22 @@ UntagResourceOutcome EMRContainersClient::UntagResource(const UntagResourceReque
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? UntagResourceOutcome(result.GetResultWithOwnership()) : UntagResourceOutcome(std::move(result.GetError()));
+}
+
+UpdateVirtualClusterOutcome EMRContainersClient::UpdateVirtualCluster(const UpdateVirtualClusterRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateVirtualCluster", "Required field: Id, is not set");
+    return UpdateVirtualClusterOutcome(Aws::Client::AWSError<EMRContainersErrors>(
+        EMRContainersErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/virtualclusters/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateVirtualClusterOutcome(result.GetResultWithOwnership())
+                            : UpdateVirtualClusterOutcome(std::move(result.GetError()));
 }

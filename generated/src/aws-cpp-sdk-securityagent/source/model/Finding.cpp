@@ -86,6 +86,10 @@ Finding& Finding::operator=(JsonView jsonValue) {
     m_attackScript = jsonValue.GetString("attackScript");
     m_attackScriptHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("remediationCode")) {
+    m_remediationCode = jsonValue.GetString("remediationCode");
+    m_remediationCodeHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("codeRemediationTask")) {
     m_codeRemediationTask = jsonValue.GetObject("codeRemediationTask");
     m_codeRemediationTaskHasBeenSet = true;
@@ -112,6 +116,22 @@ Finding& Finding::operator=(JsonView jsonValue) {
   if (jsonValue.ValueExists("alignmentRationale")) {
     m_alignmentRationale = jsonValue.GetString("alignmentRationale");
     m_alignmentRationaleHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("revalidationJobIds")) {
+    Aws::Utils::Array<JsonView> revalidationJobIdsJsonList = jsonValue.GetArray("revalidationJobIds");
+    for (unsigned revalidationJobIdsIndex = 0; revalidationJobIdsIndex < revalidationJobIdsJsonList.GetLength();
+         ++revalidationJobIdsIndex) {
+      m_revalidationJobIds.push_back(revalidationJobIdsJsonList[revalidationJobIdsIndex].AsString());
+    }
+    m_revalidationJobIdsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("originalFindingId")) {
+    m_originalFindingId = jsonValue.GetString("originalFindingId");
+    m_originalFindingIdHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("linkedIssue")) {
+    m_linkedIssue = jsonValue.GetObject("linkedIssue");
+    m_linkedIssueHasBeenSet = true;
   }
   if (jsonValue.ValueExists("createdAt")) {
     m_createdAt = jsonValue.GetString("createdAt");
@@ -195,6 +215,10 @@ JsonValue Finding::Jsonize() const {
     payload.WithString("attackScript", m_attackScript);
   }
 
+  if (m_remediationCodeHasBeenSet) {
+    payload.WithString("remediationCode", m_remediationCode);
+  }
+
   if (m_codeRemediationTaskHasBeenSet) {
     payload.WithObject("codeRemediationTask", m_codeRemediationTask.Jsonize());
   }
@@ -221,6 +245,23 @@ JsonValue Finding::Jsonize() const {
 
   if (m_alignmentRationaleHasBeenSet) {
     payload.WithString("alignmentRationale", m_alignmentRationale);
+  }
+
+  if (m_revalidationJobIdsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> revalidationJobIdsJsonList(m_revalidationJobIds.size());
+    for (unsigned revalidationJobIdsIndex = 0; revalidationJobIdsIndex < revalidationJobIdsJsonList.GetLength();
+         ++revalidationJobIdsIndex) {
+      revalidationJobIdsJsonList[revalidationJobIdsIndex].AsString(m_revalidationJobIds[revalidationJobIdsIndex]);
+    }
+    payload.WithArray("revalidationJobIds", std::move(revalidationJobIdsJsonList));
+  }
+
+  if (m_originalFindingIdHasBeenSet) {
+    payload.WithString("originalFindingId", m_originalFindingId);
+  }
+
+  if (m_linkedIssueHasBeenSet) {
+    payload.WithObject("linkedIssue", m_linkedIssue.Jsonize());
   }
 
   if (m_createdAtHasBeenSet) {

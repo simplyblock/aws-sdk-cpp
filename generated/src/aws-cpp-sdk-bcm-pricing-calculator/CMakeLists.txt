@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-bcm-pricing-calculator "C++ SDK for the AWS bcm-pricing-calculator service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-bcm-pricing-calculator "C++ SDK for AWS Billing and Cost Management Pricing Calculator" aws-cpp-sdk-core)
 
 file(GLOB AWS_BCM-PRICING-CALCULATOR_HEADERS
     "include/aws/bcm-pricing-calculator/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_BCM-PRICING-CALCULATOR_HEADERS
 
 file(GLOB AWS_BCM-PRICING-CALCULATOR_MODEL_HEADERS
     "include/aws/bcm-pricing-calculator/model/*.h"
+)
+
+file(GLOB AWS_BCM-PRICING-CALCULATOR_INTERNAL_HEADERS
+    "include/aws/bcm-pricing-calculator/internal/*.h"
 )
 
 file(GLOB AWS_BCM-PRICING-CALCULATOR_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_BCM-PRICING-CALCULATOR_MODEL_SOURCE
 
 file(GLOB BCM-PRICING-CALCULATOR_UNIFIED_HEADERS
     ${AWS_BCM-PRICING-CALCULATOR_HEADERS}
+    ${AWS_BCM-PRICING-CALCULATOR_INTERNAL_HEADERS}
     ${AWS_BCM-PRICING-CALCULATOR_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\bcm-pricing-calculator" FILES ${AWS_BCM-PRICING-CALCULATOR_HEADERS})
+        source_group("Header Files\\aws\\bcm-pricing-calculator\\internal" FILES ${AWS_BCM-PRICING-CALCULATOR_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\bcm-pricing-calculator\\model" FILES ${AWS_BCM-PRICING-CALCULATOR_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_BCM-PRICING-CALCULATOR_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_BCM-PRICING-CALCULATOR_MODEL_SOURCE})

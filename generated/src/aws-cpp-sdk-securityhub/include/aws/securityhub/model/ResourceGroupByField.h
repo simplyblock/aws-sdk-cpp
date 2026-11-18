@@ -10,7 +10,26 @@
 namespace Aws {
 namespace SecurityHub {
 namespace Model {
-enum class ResourceGroupByField { NOT_SET, AccountId, Region, ResourceCategory, ResourceType, ResourceName, FindingsSummary_FindingType };
+enum class ResourceGroupByField {
+  NOT_SET,
+  AccountId,
+  AccountName,
+  Region,
+  ResourceProvider,
+  ResourceOwnerAccountId,
+  ResourceOwnerOrgId,
+  ResourceCloudPartition,
+  ResourceRegion,
+  ResourceCategory,
+  ResourceType,
+  ResourceName,
+  FindingsSummary_FindingType,
+  ResourceSubCategory,
+  DiscoveryType,
+  ResourceInfo_AIDetails_HostResourceType,
+  ResourceInfo_AIDetails_CanonicalId,
+  ResourceCriticality
+};
 
 namespace ResourceGroupByFieldMapper {
 AWS_SECURITYHUB_API ResourceGroupByField GetResourceGroupByFieldForName(const Aws::String& name);

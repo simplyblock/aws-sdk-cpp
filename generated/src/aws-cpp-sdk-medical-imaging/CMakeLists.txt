@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-medical-imaging "C++ SDK for the AWS medical-imaging service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-medical-imaging "C++ SDK for AWS Health Imaging" aws-cpp-sdk-core)
 
 file(GLOB AWS_MEDICAL-IMAGING_HEADERS
     "include/aws/medical-imaging/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MEDICAL-IMAGING_HEADERS
 
 file(GLOB AWS_MEDICAL-IMAGING_MODEL_HEADERS
     "include/aws/medical-imaging/model/*.h"
+)
+
+file(GLOB AWS_MEDICAL-IMAGING_INTERNAL_HEADERS
+    "include/aws/medical-imaging/internal/*.h"
 )
 
 file(GLOB AWS_MEDICAL-IMAGING_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MEDICAL-IMAGING_MODEL_SOURCE
 
 file(GLOB MEDICAL-IMAGING_UNIFIED_HEADERS
     ${AWS_MEDICAL-IMAGING_HEADERS}
+    ${AWS_MEDICAL-IMAGING_INTERNAL_HEADERS}
     ${AWS_MEDICAL-IMAGING_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\medical-imaging" FILES ${AWS_MEDICAL-IMAGING_HEADERS})
+        source_group("Header Files\\aws\\medical-imaging\\internal" FILES ${AWS_MEDICAL-IMAGING_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\medical-imaging\\model" FILES ${AWS_MEDICAL-IMAGING_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MEDICAL-IMAGING_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MEDICAL-IMAGING_MODEL_SOURCE})

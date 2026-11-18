@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ssm-incidents "C++ SDK for the AWS ssm-incidents service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ssm-incidents "C++ SDK for AWS Systems Manager Incident Manager" aws-cpp-sdk-core)
 
 file(GLOB AWS_SSM-INCIDENTS_HEADERS
     "include/aws/ssm-incidents/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SSM-INCIDENTS_HEADERS
 
 file(GLOB AWS_SSM-INCIDENTS_MODEL_HEADERS
     "include/aws/ssm-incidents/model/*.h"
+)
+
+file(GLOB AWS_SSM-INCIDENTS_INTERNAL_HEADERS
+    "include/aws/ssm-incidents/internal/*.h"
 )
 
 file(GLOB AWS_SSM-INCIDENTS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SSM-INCIDENTS_MODEL_SOURCE
 
 file(GLOB SSM-INCIDENTS_UNIFIED_HEADERS
     ${AWS_SSM-INCIDENTS_HEADERS}
+    ${AWS_SSM-INCIDENTS_INTERNAL_HEADERS}
     ${AWS_SSM-INCIDENTS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ssm-incidents" FILES ${AWS_SSM-INCIDENTS_HEADERS})
+        source_group("Header Files\\aws\\ssm-incidents\\internal" FILES ${AWS_SSM-INCIDENTS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ssm-incidents\\model" FILES ${AWS_SSM-INCIDENTS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SSM-INCIDENTS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SSM-INCIDENTS_MODEL_SOURCE})

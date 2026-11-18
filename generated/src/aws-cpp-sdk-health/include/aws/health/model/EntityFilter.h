@@ -7,6 +7,7 @@
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/health/Health_EXPORTS.h>
 #include <aws/health/model/DateTimeRange.h>
 #include <aws/health/model/EntityStatusCode.h>
@@ -15,10 +16,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace Health {
 namespace Model {
@@ -33,9 +33,9 @@ namespace Model {
 class EntityFilter {
  public:
   AWS_HEALTH_API EntityFilter() = default;
-  AWS_HEALTH_API EntityFilter(Aws::Utils::Json::JsonView jsonValue);
-  AWS_HEALTH_API EntityFilter& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_HEALTH_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_HEALTH_API EntityFilter(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_HEALTH_API EntityFilter& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_HEALTH_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -138,25 +138,25 @@ class EntityFilter {
 
   ///@{
   /**
-   * <p>A map of entity tags attached to the affected entity.</p>
+   * <p>A map of resource tag key-value pairs to filter affected entities.</p>
    * <p>Currently, the <code>tags</code> property isn't supported.</p>
    */
-  inline const Aws::Vector<Aws::Map<Aws::String, Aws::String>>& GetTags() const { return m_tags; }
+  inline const Aws::Map<Aws::String, Aws::Vector<Aws::String>>& GetTags() const { return m_tags; }
   inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-  template <typename TagsT = Aws::Vector<Aws::Map<Aws::String, Aws::String>>>
+  template <typename TagsT = Aws::Map<Aws::String, Aws::Vector<Aws::String>>>
   void SetTags(TagsT&& value) {
     m_tagsHasBeenSet = true;
     m_tags = std::forward<TagsT>(value);
   }
-  template <typename TagsT = Aws::Vector<Aws::Map<Aws::String, Aws::String>>>
+  template <typename TagsT = Aws::Map<Aws::String, Aws::Vector<Aws::String>>>
   EntityFilter& WithTags(TagsT&& value) {
     SetTags(std::forward<TagsT>(value));
     return *this;
   }
-  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
-  EntityFilter& AddTags(TagsT&& value) {
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::Vector<Aws::String>>
+  EntityFilter& AddTags(TagsKeyT&& key, TagsValueT&& value) {
     m_tagsHasBeenSet = true;
-    m_tags.emplace_back(std::forward<TagsT>(value));
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
     return *this;
   }
   ///@}
@@ -193,7 +193,7 @@ class EntityFilter {
 
   Aws::Vector<DateTimeRange> m_lastUpdatedTimes;
 
-  Aws::Vector<Aws::Map<Aws::String, Aws::String>> m_tags;
+  Aws::Map<Aws::String, Aws::Vector<Aws::String>> m_tags;
 
   Aws::Vector<EntityStatusCode> m_statusCodes;
   bool m_eventArnsHasBeenSet = false;

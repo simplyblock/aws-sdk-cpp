@@ -5,6 +5,7 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/route53domains/Route53Domains_EXPORTS.h>
 #include <aws/route53domains/model/PriceWithCurrency.h>
 
@@ -12,30 +13,29 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace Route53Domains {
 namespace Model {
 
 /**
- * <p>Information about the domain price associated with a TLD.</p><p><h3>See
- * Also:</h3>   <a
+ * <p>Information about the prices associated with a TLD or a domain
+ * name.</p><p><h3>See Also:</h3>   <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/route53domains-2014-05-15/DomainPrice">AWS
  * API Reference</a></p>
  */
 class DomainPrice {
  public:
   AWS_ROUTE53DOMAINS_API DomainPrice() = default;
-  AWS_ROUTE53DOMAINS_API DomainPrice(Aws::Utils::Json::JsonView jsonValue);
-  AWS_ROUTE53DOMAINS_API DomainPrice& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_ROUTE53DOMAINS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_ROUTE53DOMAINS_API DomainPrice(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_ROUTE53DOMAINS_API DomainPrice& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_ROUTE53DOMAINS_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
-   * <p>The name of the TLD for which the prices apply.</p>
+   * <p>The TLD or domain name that the prices apply to.</p>
    */
   inline const Aws::String& GetName() const { return m_name; }
   inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }

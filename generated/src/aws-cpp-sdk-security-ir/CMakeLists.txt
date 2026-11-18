@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-security-ir "C++ SDK for the AWS security-ir service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-security-ir "C++ SDK for Security Incident Response" aws-cpp-sdk-core)
 
 file(GLOB AWS_SECURITY-IR_HEADERS
     "include/aws/security-ir/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SECURITY-IR_HEADERS
 
 file(GLOB AWS_SECURITY-IR_MODEL_HEADERS
     "include/aws/security-ir/model/*.h"
+)
+
+file(GLOB AWS_SECURITY-IR_INTERNAL_HEADERS
+    "include/aws/security-ir/internal/*.h"
 )
 
 file(GLOB AWS_SECURITY-IR_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SECURITY-IR_MODEL_SOURCE
 
 file(GLOB SECURITY-IR_UNIFIED_HEADERS
     ${AWS_SECURITY-IR_HEADERS}
+    ${AWS_SECURITY-IR_INTERNAL_HEADERS}
     ${AWS_SECURITY-IR_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\security-ir" FILES ${AWS_SECURITY-IR_HEADERS})
+        source_group("Header Files\\aws\\security-ir\\internal" FILES ${AWS_SECURITY-IR_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\security-ir\\model" FILES ${AWS_SECURITY-IR_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SECURITY-IR_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SECURITY-IR_MODEL_SOURCE})

@@ -9,12 +9,14 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+#include <aws/mediaconnect/model/FabricConfiguration.h>
 #include <aws/mediaconnect/model/MaintenanceConfiguration.h>
 #include <aws/mediaconnect/model/MaintenanceSchedule.h>
 #include <aws/mediaconnect/model/MaintenanceScheduleType.h>
 #include <aws/mediaconnect/model/MaintenanceType.h>
 #include <aws/mediaconnect/model/RouterOutputConfiguration.h>
 #include <aws/mediaconnect/model/RouterOutputMessage.h>
+#include <aws/mediaconnect/model/RouterOutputProcessors.h>
 #include <aws/mediaconnect/model/RouterOutputRoutedState.h>
 #include <aws/mediaconnect/model/RouterOutputState.h>
 #include <aws/mediaconnect/model/RouterOutputStreamDetails.h>
@@ -238,7 +240,13 @@ class RouterOutput {
 
   ///@{
   /**
-   * <p>The tier level of the router output.</p>
+   * <p>The tier level for the router output. The tier sets the maximum bitrate, in
+   * Mbps, for the router output. Valid values include the following:</p> <ul> <li>
+   * <p> <code>OUTPUT_20</code> – 20 Mbps</p> </li> <li> <p> <code>OUTPUT_50</code> –
+   * 50 Mbps</p> </li> <li> <p> <code>OUTPUT_100</code> – 100 Mbps</p> </li> <li> <p>
+   * <code>OUTPUT_250</code> – 250 Mbps</p> </li> <li> <p> <code>OUTPUT_500</code> –
+   * 500 Mbps</p> </li> </ul> <p>The 250 Mbps and 500 Mbps tiers are high-bitrate
+   * tiers that support TR-07 (JPEG XS) workflows.</p>
    */
   inline RouterOutputTier GetTier() const { return m_tier; }
   inline bool TierHasBeenSet() const { return m_tierHasBeenSet; }
@@ -457,6 +465,67 @@ class RouterOutput {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The fabric configuration settings for the router output.</p>
+   */
+  inline const FabricConfiguration& GetFabricConfiguration() const { return m_fabricConfiguration; }
+  inline bool FabricConfigurationHasBeenSet() const { return m_fabricConfigurationHasBeenSet; }
+  template <typename FabricConfigurationT = FabricConfiguration>
+  void SetFabricConfiguration(FabricConfigurationT&& value) {
+    m_fabricConfigurationHasBeenSet = true;
+    m_fabricConfiguration = std::forward<FabricConfigurationT>(value);
+  }
+  template <typename FabricConfigurationT = FabricConfiguration>
+  RouterOutput& WithFabricConfiguration(FabricConfigurationT&& value) {
+    SetFabricConfiguration(std::forward<FabricConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The processor settings for the router output.</p>
+   */
+  inline const RouterOutputProcessors& GetProcessors() const { return m_processors; }
+  inline bool ProcessorsHasBeenSet() const { return m_processorsHasBeenSet; }
+  template <typename ProcessorsT = RouterOutputProcessors>
+  void SetProcessors(ProcessorsT&& value) {
+    m_processorsHasBeenSet = true;
+    m_processors = std::forward<ProcessorsT>(value);
+  }
+  template <typename ProcessorsT = RouterOutputProcessors>
+  RouterOutput& WithProcessors(ProcessorsT&& value) {
+    SetProcessors(std::forward<ProcessorsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Amazon Resource Names (ARNs) of one or more source endpoints that are
+   * associated with this router output.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetAssociatedSourceEndpointArns() const { return m_associatedSourceEndpointArns; }
+  inline bool AssociatedSourceEndpointArnsHasBeenSet() const { return m_associatedSourceEndpointArnsHasBeenSet; }
+  template <typename AssociatedSourceEndpointArnsT = Aws::Vector<Aws::String>>
+  void SetAssociatedSourceEndpointArns(AssociatedSourceEndpointArnsT&& value) {
+    m_associatedSourceEndpointArnsHasBeenSet = true;
+    m_associatedSourceEndpointArns = std::forward<AssociatedSourceEndpointArnsT>(value);
+  }
+  template <typename AssociatedSourceEndpointArnsT = Aws::Vector<Aws::String>>
+  RouterOutput& WithAssociatedSourceEndpointArns(AssociatedSourceEndpointArnsT&& value) {
+    SetAssociatedSourceEndpointArns(std::forward<AssociatedSourceEndpointArnsT>(value));
+    return *this;
+  }
+  template <typename AssociatedSourceEndpointArnsT = Aws::String>
+  RouterOutput& AddAssociatedSourceEndpointArns(AssociatedSourceEndpointArnsT&& value) {
+    m_associatedSourceEndpointArnsHasBeenSet = true;
+    m_associatedSourceEndpointArns.emplace_back(std::forward<AssociatedSourceEndpointArnsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_name;
 
@@ -503,6 +572,12 @@ class RouterOutput {
   MaintenanceScheduleType m_maintenanceScheduleType{MaintenanceScheduleType::NOT_SET};
 
   MaintenanceSchedule m_maintenanceSchedule;
+
+  FabricConfiguration m_fabricConfiguration;
+
+  RouterOutputProcessors m_processors;
+
+  Aws::Vector<Aws::String> m_associatedSourceEndpointArns;
   bool m_nameHasBeenSet = false;
   bool m_arnHasBeenSet = false;
   bool m_idHasBeenSet = false;
@@ -526,6 +601,9 @@ class RouterOutput {
   bool m_maintenanceConfigurationHasBeenSet = false;
   bool m_maintenanceScheduleTypeHasBeenSet = false;
   bool m_maintenanceScheduleHasBeenSet = false;
+  bool m_fabricConfigurationHasBeenSet = false;
+  bool m_processorsHasBeenSet = false;
+  bool m_associatedSourceEndpointArnsHasBeenSet = false;
 };
 
 }  // namespace Model

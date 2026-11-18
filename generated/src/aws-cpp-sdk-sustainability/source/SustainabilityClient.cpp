@@ -22,6 +22,8 @@
 #include <aws/sustainability/SustainabilityErrorMarshaller.h>
 #include <aws/sustainability/model/GetEstimatedCarbonEmissionsDimensionValuesRequest.h>
 #include <aws/sustainability/model/GetEstimatedCarbonEmissionsRequest.h>
+#include <aws/sustainability/model/GetEstimatedWaterAllocationDimensionValuesRequest.h>
+#include <aws/sustainability/model/GetEstimatedWaterAllocationRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
 using namespace Aws;
@@ -163,7 +165,8 @@ SustainabilityClient::InvokeOperationOutcome SustainabilityClient::InvokeService
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -177,7 +180,7 @@ SustainabilityClient::InvokeOperationOutcome SustainabilityClient::InvokeService
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -203,4 +206,28 @@ GetEstimatedCarbonEmissionsDimensionValuesOutcome SustainabilityClient::GetEstim
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetEstimatedCarbonEmissionsDimensionValuesOutcome(result.GetResultWithOwnership())
                             : GetEstimatedCarbonEmissionsDimensionValuesOutcome(std::move(result.GetError()));
+}
+
+GetEstimatedWaterAllocationOutcome SustainabilityClient::GetEstimatedWaterAllocation(
+    const GetEstimatedWaterAllocationRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/estimated-water-allocation");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetEstimatedWaterAllocationOutcome(result.GetResultWithOwnership())
+                            : GetEstimatedWaterAllocationOutcome(std::move(result.GetError()));
+}
+
+GetEstimatedWaterAllocationDimensionValuesOutcome SustainabilityClient::GetEstimatedWaterAllocationDimensionValues(
+    const GetEstimatedWaterAllocationDimensionValuesRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/estimated-water-allocation-dimension-values");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetEstimatedWaterAllocationDimensionValuesOutcome(result.GetResultWithOwnership())
+                            : GetEstimatedWaterAllocationDimensionValuesOutcome(std::move(result.GetError()));
 }

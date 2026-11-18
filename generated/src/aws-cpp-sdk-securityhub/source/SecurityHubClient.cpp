@@ -33,11 +33,13 @@
 #include <aws/securityhub/model/BatchUpdateFindingsRequest.h>
 #include <aws/securityhub/model/BatchUpdateFindingsV2Request.h>
 #include <aws/securityhub/model/BatchUpdateStandardsControlAssociationsRequest.h>
+#include <aws/securityhub/model/CancelExportJobV2Request.h>
 #include <aws/securityhub/model/CreateActionTargetRequest.h>
 #include <aws/securityhub/model/CreateAggregatorV2Request.h>
 #include <aws/securityhub/model/CreateAutomationRuleRequest.h>
 #include <aws/securityhub/model/CreateAutomationRuleV2Request.h>
 #include <aws/securityhub/model/CreateConfigurationPolicyRequest.h>
+#include <aws/securityhub/model/CreateConnectorRequest.h>
 #include <aws/securityhub/model/CreateConnectorV2Request.h>
 #include <aws/securityhub/model/CreateFindingAggregatorRequest.h>
 #include <aws/securityhub/model/CreateInsightRequest.h>
@@ -48,6 +50,7 @@
 #include <aws/securityhub/model/DeleteAggregatorV2Request.h>
 #include <aws/securityhub/model/DeleteAutomationRuleV2Request.h>
 #include <aws/securityhub/model/DeleteConfigurationPolicyRequest.h>
+#include <aws/securityhub/model/DeleteConnectorRequest.h>
 #include <aws/securityhub/model/DeleteConnectorV2Request.h>
 #include <aws/securityhub/model/DeleteFindingAggregatorRequest.h>
 #include <aws/securityhub/model/DeleteInsightRequest.h>
@@ -63,12 +66,14 @@
 #include <aws/securityhub/model/DescribeStandardsRequest.h>
 #include <aws/securityhub/model/DisableImportFindingsForProductRequest.h>
 #include <aws/securityhub/model/DisableOrganizationAdminAccountRequest.h>
+#include <aws/securityhub/model/DisableSecurityHubFeatureV2Request.h>
 #include <aws/securityhub/model/DisableSecurityHubRequest.h>
 #include <aws/securityhub/model/DisableSecurityHubV2Request.h>
 #include <aws/securityhub/model/DisassociateFromAdministratorAccountRequest.h>
 #include <aws/securityhub/model/DisassociateMembersRequest.h>
 #include <aws/securityhub/model/EnableImportFindingsForProductRequest.h>
 #include <aws/securityhub/model/EnableOrganizationAdminAccountRequest.h>
+#include <aws/securityhub/model/EnableSecurityHubFeatureV2Request.h>
 #include <aws/securityhub/model/EnableSecurityHubRequest.h>
 #include <aws/securityhub/model/EnableSecurityHubV2Request.h>
 #include <aws/securityhub/model/GenerateRecommendedPolicyV2Request.h>
@@ -77,8 +82,10 @@
 #include <aws/securityhub/model/GetAutomationRuleV2Request.h>
 #include <aws/securityhub/model/GetConfigurationPolicyAssociationRequest.h>
 #include <aws/securityhub/model/GetConfigurationPolicyRequest.h>
+#include <aws/securityhub/model/GetConnectorRequest.h>
 #include <aws/securityhub/model/GetConnectorV2Request.h>
 #include <aws/securityhub/model/GetEnabledStandardsRequest.h>
+#include <aws/securityhub/model/GetExportJobV2Request.h>
 #include <aws/securityhub/model/GetFindingAggregatorRequest.h>
 #include <aws/securityhub/model/GetFindingHistoryRequest.h>
 #include <aws/securityhub/model/GetFindingStatisticsV2Request.h>
@@ -90,19 +97,27 @@
 #include <aws/securityhub/model/GetInvitationsCountRequest.h>
 #include <aws/securityhub/model/GetMembersRequest.h>
 #include <aws/securityhub/model/GetRecommendedPolicyV2Request.h>
+#include <aws/securityhub/model/GetRemediationsV2Request.h>
 #include <aws/securityhub/model/GetResourcesStatisticsV2Request.h>
 #include <aws/securityhub/model/GetResourcesTrendsV2Request.h>
 #include <aws/securityhub/model/GetResourcesV2Request.h>
 #include <aws/securityhub/model/GetSecurityControlDefinitionRequest.h>
+#include <aws/securityhub/model/GetSoftwareResourcesV2Request.h>
+#include <aws/securityhub/model/GetSoftwareStatisticsV2Request.h>
+#include <aws/securityhub/model/GetSoftwareV2Request.h>
 #include <aws/securityhub/model/InviteMembersRequest.h>
 #include <aws/securityhub/model/ListAggregatorsV2Request.h>
 #include <aws/securityhub/model/ListAutomationRulesRequest.h>
 #include <aws/securityhub/model/ListAutomationRulesV2Request.h>
 #include <aws/securityhub/model/ListConfigurationPoliciesRequest.h>
 #include <aws/securityhub/model/ListConfigurationPolicyAssociationsRequest.h>
+#include <aws/securityhub/model/ListConnectorsRequest.h>
 #include <aws/securityhub/model/ListConnectorsV2Request.h>
 #include <aws/securityhub/model/ListEnabledProductsForImportRequest.h>
+#include <aws/securityhub/model/ListExportJobsV2Request.h>
+#include <aws/securityhub/model/ListExposuresByRemediationV2Request.h>
 #include <aws/securityhub/model/ListFindingAggregatorsRequest.h>
+#include <aws/securityhub/model/ListFreeTrialStatusesV2Request.h>
 #include <aws/securityhub/model/ListInvitationsRequest.h>
 #include <aws/securityhub/model/ListMembersRequest.h>
 #include <aws/securityhub/model/ListOrganizationAdminAccountsRequest.h>
@@ -112,12 +127,14 @@
 #include <aws/securityhub/model/RegisterConnectorV2Request.h>
 #include <aws/securityhub/model/StartConfigurationPolicyAssociationRequest.h>
 #include <aws/securityhub/model/StartConfigurationPolicyDisassociationRequest.h>
+#include <aws/securityhub/model/StartExportJobV2Request.h>
 #include <aws/securityhub/model/TagResourceRequest.h>
 #include <aws/securityhub/model/UntagResourceRequest.h>
 #include <aws/securityhub/model/UpdateActionTargetRequest.h>
 #include <aws/securityhub/model/UpdateAggregatorV2Request.h>
 #include <aws/securityhub/model/UpdateAutomationRuleV2Request.h>
 #include <aws/securityhub/model/UpdateConfigurationPolicyRequest.h>
+#include <aws/securityhub/model/UpdateConnectorRequest.h>
 #include <aws/securityhub/model/UpdateConnectorV2Request.h>
 #include <aws/securityhub/model/UpdateFindingAggregatorRequest.h>
 #include <aws/securityhub/model/UpdateFindingsRequest.h>
@@ -262,7 +279,8 @@ SecurityHubClient::InvokeOperationOutcome SecurityHubClient::InvokeServiceOperat
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -276,7 +294,7 @@ SecurityHubClient::InvokeOperationOutcome SecurityHubClient::InvokeServiceOperat
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -427,6 +445,25 @@ BatchUpdateStandardsControlAssociationsOutcome SecurityHubClient::BatchUpdateSta
                             : BatchUpdateStandardsControlAssociationsOutcome(std::move(result.GetError()));
 }
 
+CancelExportJobV2Outcome SecurityHubClient::CancelExportJobV2(const CancelExportJobV2Request& request) const {
+  if (!request.ExportJobIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("CancelExportJobV2", "Required field: ExportJobId, is not set");
+    return CancelExportJobV2Outcome(Aws::Client::AWSError<SecurityHubErrors>(SecurityHubErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                             "Missing required field [ExportJobId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/exportjobsv2/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetExportJobId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/cancel");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CancelExportJobV2Outcome(result.GetResultWithOwnership())
+                            : CancelExportJobV2Outcome(std::move(result.GetError()));
+}
+
 CreateActionTargetOutcome SecurityHubClient::CreateActionTarget(const CreateActionTargetRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -480,6 +517,17 @@ CreateConfigurationPolicyOutcome SecurityHubClient::CreateConfigurationPolicy(co
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateConfigurationPolicyOutcome(result.GetResultWithOwnership())
                             : CreateConfigurationPolicyOutcome(std::move(result.GetError()));
+}
+
+CreateConnectorOutcome SecurityHubClient::CreateConnector(const CreateConnectorRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/connectors");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateConnectorOutcome(result.GetResultWithOwnership())
+                            : CreateConnectorOutcome(std::move(result.GetError()));
 }
 
 CreateConnectorV2Outcome SecurityHubClient::CreateConnectorV2(const CreateConnectorV2Request& request) const {
@@ -615,6 +663,24 @@ DeleteConfigurationPolicyOutcome SecurityHubClient::DeleteConfigurationPolicy(co
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? DeleteConfigurationPolicyOutcome(result.GetResultWithOwnership())
                             : DeleteConfigurationPolicyOutcome(std::move(result.GetError()));
+}
+
+DeleteConnectorOutcome SecurityHubClient::DeleteConnector(const DeleteConnectorRequest& request) const {
+  if (!request.ConnectorIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteConnector", "Required field: ConnectorId, is not set");
+    return DeleteConnectorOutcome(Aws::Client::AWSError<SecurityHubErrors>(SecurityHubErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                           "Missing required field [ConnectorId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/connectors/");
+    endpointResolutionOutcome.GetResult().AddPathSegments(request.GetConnectorId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteConnectorOutcome(result.GetResultWithOwnership())
+                            : DeleteConnectorOutcome(std::move(result.GetError()));
 }
 
 DeleteConnectorV2Outcome SecurityHubClient::DeleteConnectorV2(const DeleteConnectorV2Request& request) const {
@@ -828,6 +894,24 @@ DisableSecurityHubOutcome SecurityHubClient::DisableSecurityHub(const DisableSec
                             : DisableSecurityHubOutcome(std::move(result.GetError()));
 }
 
+DisableSecurityHubFeatureV2Outcome SecurityHubClient::DisableSecurityHubFeatureV2(const DisableSecurityHubFeatureV2Request& request) const {
+  if (!request.FeatureNameHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DisableSecurityHubFeatureV2", "Required field: FeatureName, is not set");
+    return DisableSecurityHubFeatureV2Outcome(Aws::Client::AWSError<SecurityHubErrors>(
+        SecurityHubErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [FeatureName]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/hubv2/feature/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(FeatureNameMapper::GetNameForFeatureName(request.GetFeatureName()));
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DisableSecurityHubFeatureV2Outcome(result.GetResultWithOwnership())
+                            : DisableSecurityHubFeatureV2Outcome(std::move(result.GetError()));
+}
+
 DisableSecurityHubV2Outcome SecurityHubClient::DisableSecurityHubV2(const DisableSecurityHubV2Request& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -895,6 +979,24 @@ EnableSecurityHubOutcome SecurityHubClient::EnableSecurityHub(const EnableSecuri
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? EnableSecurityHubOutcome(result.GetResultWithOwnership())
                             : EnableSecurityHubOutcome(std::move(result.GetError()));
+}
+
+EnableSecurityHubFeatureV2Outcome SecurityHubClient::EnableSecurityHubFeatureV2(const EnableSecurityHubFeatureV2Request& request) const {
+  if (!request.FeatureNameHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("EnableSecurityHubFeatureV2", "Required field: FeatureName, is not set");
+    return EnableSecurityHubFeatureV2Outcome(Aws::Client::AWSError<SecurityHubErrors>(
+        SecurityHubErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [FeatureName]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/hubv2/feature/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(FeatureNameMapper::GetNameForFeatureName(request.GetFeatureName()));
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? EnableSecurityHubFeatureV2Outcome(result.GetResultWithOwnership())
+                            : EnableSecurityHubFeatureV2Outcome(std::move(result.GetError()));
 }
 
 EnableSecurityHubV2Outcome SecurityHubClient::EnableSecurityHubV2(const EnableSecurityHubV2Request& request) const {
@@ -1003,6 +1105,23 @@ GetConfigurationPolicyAssociationOutcome SecurityHubClient::GetConfigurationPoli
                             : GetConfigurationPolicyAssociationOutcome(std::move(result.GetError()));
 }
 
+GetConnectorOutcome SecurityHubClient::GetConnector(const GetConnectorRequest& request) const {
+  if (!request.ConnectorIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetConnector", "Required field: ConnectorId, is not set");
+    return GetConnectorOutcome(Aws::Client::AWSError<SecurityHubErrors>(SecurityHubErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                        "Missing required field [ConnectorId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/connectors/");
+    endpointResolutionOutcome.GetResult().AddPathSegments(request.GetConnectorId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetConnectorOutcome(result.GetResultWithOwnership()) : GetConnectorOutcome(std::move(result.GetError()));
+}
+
 GetConnectorV2Outcome SecurityHubClient::GetConnectorV2(const GetConnectorV2Request& request) const {
   if (!request.ConnectorIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetConnectorV2", "Required field: ConnectorId, is not set");
@@ -1029,6 +1148,23 @@ GetEnabledStandardsOutcome SecurityHubClient::GetEnabledStandards(const GetEnabl
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetEnabledStandardsOutcome(result.GetResultWithOwnership())
                             : GetEnabledStandardsOutcome(std::move(result.GetError()));
+}
+
+GetExportJobV2Outcome SecurityHubClient::GetExportJobV2(const GetExportJobV2Request& request) const {
+  if (!request.ExportJobIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetExportJobV2", "Required field: ExportJobId, is not set");
+    return GetExportJobV2Outcome(Aws::Client::AWSError<SecurityHubErrors>(SecurityHubErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                          "Missing required field [ExportJobId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/exportjobsv2/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetExportJobId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetExportJobV2Outcome(result.GetResultWithOwnership()) : GetExportJobV2Outcome(std::move(result.GetError()));
 }
 
 GetFindingAggregatorOutcome SecurityHubClient::GetFindingAggregator(const GetFindingAggregatorRequest& request) const {
@@ -1169,6 +1305,17 @@ GetRecommendedPolicyV2Outcome SecurityHubClient::GetRecommendedPolicyV2(const Ge
                             : GetRecommendedPolicyV2Outcome(std::move(result.GetError()));
 }
 
+GetRemediationsV2Outcome SecurityHubClient::GetRemediationsV2(const GetRemediationsV2Request& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/GetRemediationsV2");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetRemediationsV2Outcome(result.GetResultWithOwnership())
+                            : GetRemediationsV2Outcome(std::move(result.GetError()));
+}
+
 GetResourcesStatisticsV2Outcome SecurityHubClient::GetResourcesStatisticsV2(const GetResourcesStatisticsV2Request& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -1217,6 +1364,38 @@ GetSecurityControlDefinitionOutcome SecurityHubClient::GetSecurityControlDefinit
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
   return result.IsSuccess() ? GetSecurityControlDefinitionOutcome(result.GetResultWithOwnership())
                             : GetSecurityControlDefinitionOutcome(std::move(result.GetError()));
+}
+
+GetSoftwareResourcesV2Outcome SecurityHubClient::GetSoftwareResourcesV2(const GetSoftwareResourcesV2Request& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/softwarev2/resources");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetSoftwareResourcesV2Outcome(result.GetResultWithOwnership())
+                            : GetSoftwareResourcesV2Outcome(std::move(result.GetError()));
+}
+
+GetSoftwareStatisticsV2Outcome SecurityHubClient::GetSoftwareStatisticsV2(const GetSoftwareStatisticsV2Request& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/softwarev2/statistics");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetSoftwareStatisticsV2Outcome(result.GetResultWithOwnership())
+                            : GetSoftwareStatisticsV2Outcome(std::move(result.GetError()));
+}
+
+GetSoftwareV2Outcome SecurityHubClient::GetSoftwareV2(const GetSoftwareV2Request& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/softwarev2");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetSoftwareV2Outcome(result.GetResultWithOwnership()) : GetSoftwareV2Outcome(std::move(result.GetError()));
 }
 
 InviteMembersOutcome SecurityHubClient::InviteMembers(const InviteMembersRequest& request) const {
@@ -1285,6 +1464,16 @@ ListConfigurationPolicyAssociationsOutcome SecurityHubClient::ListConfigurationP
                             : ListConfigurationPolicyAssociationsOutcome(std::move(result.GetError()));
 }
 
+ListConnectorsOutcome SecurityHubClient::ListConnectors(const ListConnectorsRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/connectors");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListConnectorsOutcome(result.GetResultWithOwnership()) : ListConnectorsOutcome(std::move(result.GetError()));
+}
+
 ListConnectorsV2Outcome SecurityHubClient::ListConnectorsV2(const ListConnectorsV2Request& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -1308,6 +1497,29 @@ ListEnabledProductsForImportOutcome SecurityHubClient::ListEnabledProductsForImp
                             : ListEnabledProductsForImportOutcome(std::move(result.GetError()));
 }
 
+ListExportJobsV2Outcome SecurityHubClient::ListExportJobsV2(const ListExportJobsV2Request& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/exportjobsv2");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListExportJobsV2Outcome(result.GetResultWithOwnership())
+                            : ListExportJobsV2Outcome(std::move(result.GetError()));
+}
+
+ListExposuresByRemediationV2Outcome SecurityHubClient::ListExposuresByRemediationV2(
+    const ListExposuresByRemediationV2Request& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/ListExposuresByRemediationV2");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListExposuresByRemediationV2Outcome(result.GetResultWithOwnership())
+                            : ListExposuresByRemediationV2Outcome(std::move(result.GetError()));
+}
+
 ListFindingAggregatorsOutcome SecurityHubClient::ListFindingAggregators(const ListFindingAggregatorsRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -1317,6 +1529,17 @@ ListFindingAggregatorsOutcome SecurityHubClient::ListFindingAggregators(const Li
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
   return result.IsSuccess() ? ListFindingAggregatorsOutcome(result.GetResultWithOwnership())
                             : ListFindingAggregatorsOutcome(std::move(result.GetError()));
+}
+
+ListFreeTrialStatusesV2Outcome SecurityHubClient::ListFreeTrialStatusesV2(const ListFreeTrialStatusesV2Request& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/freetrial/statusv2/list");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListFreeTrialStatusesV2Outcome(result.GetResultWithOwnership())
+                            : ListFreeTrialStatusesV2Outcome(std::move(result.GetError()));
 }
 
 ListInvitationsOutcome SecurityHubClient::ListInvitations(const ListInvitationsRequest& request) const {
@@ -1435,6 +1658,17 @@ StartConfigurationPolicyDisassociationOutcome SecurityHubClient::StartConfigurat
                             : StartConfigurationPolicyDisassociationOutcome(std::move(result.GetError()));
 }
 
+StartExportJobV2Outcome SecurityHubClient::StartExportJobV2(const StartExportJobV2Request& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/exportjobsv2");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StartExportJobV2Outcome(result.GetResultWithOwnership())
+                            : StartExportJobV2Outcome(std::move(result.GetError()));
+}
+
 TagResourceOutcome SecurityHubClient::TagResource(const TagResourceRequest& request) const {
   if (!request.ResourceArnHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("TagResource", "Required field: ResourceArn, is not set");
@@ -1544,6 +1778,24 @@ UpdateConfigurationPolicyOutcome SecurityHubClient::UpdateConfigurationPolicy(co
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
   return result.IsSuccess() ? UpdateConfigurationPolicyOutcome(result.GetResultWithOwnership())
                             : UpdateConfigurationPolicyOutcome(std::move(result.GetError()));
+}
+
+UpdateConnectorOutcome SecurityHubClient::UpdateConnector(const UpdateConnectorRequest& request) const {
+  if (!request.ConnectorIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateConnector", "Required field: ConnectorId, is not set");
+    return UpdateConnectorOutcome(Aws::Client::AWSError<SecurityHubErrors>(SecurityHubErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                           "Missing required field [ConnectorId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/connectors/");
+    endpointResolutionOutcome.GetResult().AddPathSegments(request.GetConnectorId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateConnectorOutcome(result.GetResultWithOwnership())
+                            : UpdateConnectorOutcome(std::move(result.GetError()));
 }
 
 UpdateConnectorV2Outcome SecurityHubClient::UpdateConnectorV2(const UpdateConnectorV2Request& request) const {

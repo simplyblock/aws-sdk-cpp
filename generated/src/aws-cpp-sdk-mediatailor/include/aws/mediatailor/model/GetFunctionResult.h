@@ -8,10 +8,14 @@
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediatailor/MediaTailor_EXPORTS.h>
+#include <aws/mediatailor/model/AwsServiceRequestConfiguration.h>
+#include <aws/mediatailor/model/ConcurrentExecutorConfiguration.h>
 #include <aws/mediatailor/model/CustomOutputConfiguration.h>
 #include <aws/mediatailor/model/FunctionType.h>
+#include <aws/mediatailor/model/HlsTagProcessorConfiguration.h>
 #include <aws/mediatailor/model/HttpRequestConfiguration.h>
 #include <aws/mediatailor/model/SequentialExecutorConfiguration.h>
+#include <aws/mediatailor/model/VastRequestConfiguration.h>
 
 #include <utility>
 
@@ -105,6 +109,24 @@ class GetFunctionResult {
 
   ///@{
   /**
+   * <p>The configuration for an <code>AWS_SERVICE_REQUEST</code> function. Specifies
+   * the target service, target Region, and request parameters.</p>
+   */
+  inline const AwsServiceRequestConfiguration& GetAwsServiceRequestConfiguration() const { return m_awsServiceRequestConfiguration; }
+  template <typename AwsServiceRequestConfigurationT = AwsServiceRequestConfiguration>
+  void SetAwsServiceRequestConfiguration(AwsServiceRequestConfigurationT&& value) {
+    m_awsServiceRequestConfigurationHasBeenSet = true;
+    m_awsServiceRequestConfiguration = std::forward<AwsServiceRequestConfigurationT>(value);
+  }
+  template <typename AwsServiceRequestConfigurationT = AwsServiceRequestConfiguration>
+  GetFunctionResult& WithAwsServiceRequestConfiguration(AwsServiceRequestConfigurationT&& value) {
+    SetAwsServiceRequestConfiguration(std::forward<AwsServiceRequestConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The configuration for a <code>CUSTOM_OUTPUT</code> function.</p>
    */
   inline const CustomOutputConfiguration& GetCustomOutputConfiguration() const { return m_customOutputConfiguration; }
@@ -122,6 +144,23 @@ class GetFunctionResult {
 
   ///@{
   /**
+   * <p>The configuration for a <code>CONCURRENT_EXECUTOR</code> function.</p>
+   */
+  inline const ConcurrentExecutorConfiguration& GetConcurrentExecutorConfiguration() const { return m_concurrentExecutorConfiguration; }
+  template <typename ConcurrentExecutorConfigurationT = ConcurrentExecutorConfiguration>
+  void SetConcurrentExecutorConfiguration(ConcurrentExecutorConfigurationT&& value) {
+    m_concurrentExecutorConfigurationHasBeenSet = true;
+    m_concurrentExecutorConfiguration = std::forward<ConcurrentExecutorConfigurationT>(value);
+  }
+  template <typename ConcurrentExecutorConfigurationT = ConcurrentExecutorConfiguration>
+  GetFunctionResult& WithConcurrentExecutorConfiguration(ConcurrentExecutorConfigurationT&& value) {
+    SetConcurrentExecutorConfiguration(std::forward<ConcurrentExecutorConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The configuration for a <code>SEQUENTIAL_EXECUTOR</code> function.</p>
    */
   inline const SequentialExecutorConfiguration& GetSequentialExecutorConfiguration() const { return m_sequentialExecutorConfiguration; }
@@ -133,6 +172,40 @@ class GetFunctionResult {
   template <typename SequentialExecutorConfigurationT = SequentialExecutorConfiguration>
   GetFunctionResult& WithSequentialExecutorConfiguration(SequentialExecutorConfigurationT&& value) {
     SetSequentialExecutorConfiguration(std::forward<SequentialExecutorConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The configuration for a <code>VAST_REQUEST</code> function.</p>
+   */
+  inline const VastRequestConfiguration& GetVastRequestConfiguration() const { return m_vastRequestConfiguration; }
+  template <typename VastRequestConfigurationT = VastRequestConfiguration>
+  void SetVastRequestConfiguration(VastRequestConfigurationT&& value) {
+    m_vastRequestConfigurationHasBeenSet = true;
+    m_vastRequestConfiguration = std::forward<VastRequestConfigurationT>(value);
+  }
+  template <typename VastRequestConfigurationT = VastRequestConfiguration>
+  GetFunctionResult& WithVastRequestConfiguration(VastRequestConfigurationT&& value) {
+    SetVastRequestConfiguration(std::forward<VastRequestConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The configuration for an <code>HLS_TAG_PROCESSOR</code> function.</p>
+   */
+  inline const HlsTagProcessorConfiguration& GetHlsTagProcessorConfiguration() const { return m_hlsTagProcessorConfiguration; }
+  template <typename HlsTagProcessorConfigurationT = HlsTagProcessorConfiguration>
+  void SetHlsTagProcessorConfiguration(HlsTagProcessorConfigurationT&& value) {
+    m_hlsTagProcessorConfigurationHasBeenSet = true;
+    m_hlsTagProcessorConfiguration = std::forward<HlsTagProcessorConfigurationT>(value);
+  }
+  template <typename HlsTagProcessorConfigurationT = HlsTagProcessorConfiguration>
+  GetFunctionResult& WithHlsTagProcessorConfiguration(HlsTagProcessorConfigurationT&& value) {
+    SetHlsTagProcessorConfiguration(std::forward<HlsTagProcessorConfigurationT>(value));
     return *this;
   }
   ///@}
@@ -206,9 +279,17 @@ class GetFunctionResult {
 
   HttpRequestConfiguration m_httpRequestConfiguration;
 
+  AwsServiceRequestConfiguration m_awsServiceRequestConfiguration;
+
   CustomOutputConfiguration m_customOutputConfiguration;
 
+  ConcurrentExecutorConfiguration m_concurrentExecutorConfiguration;
+
   SequentialExecutorConfiguration m_sequentialExecutorConfiguration;
+
+  VastRequestConfiguration m_vastRequestConfiguration;
+
+  HlsTagProcessorConfiguration m_hlsTagProcessorConfiguration;
 
   Aws::Map<Aws::String, Aws::String> m_tags;
 
@@ -220,8 +301,12 @@ class GetFunctionResult {
   bool m_functionTypeHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_httpRequestConfigurationHasBeenSet = false;
+  bool m_awsServiceRequestConfigurationHasBeenSet = false;
   bool m_customOutputConfigurationHasBeenSet = false;
+  bool m_concurrentExecutorConfigurationHasBeenSet = false;
   bool m_sequentialExecutorConfigurationHasBeenSet = false;
+  bool m_vastRequestConfigurationHasBeenSet = false;
+  bool m_hlsTagProcessorConfigurationHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
   bool m_arnHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;

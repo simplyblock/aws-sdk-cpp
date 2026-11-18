@@ -8,11 +8,13 @@
 #include <aws/marketplace-catalog/model/AmiProductSort.h>
 #include <aws/marketplace-catalog/model/ContainerProductSort.h>
 #include <aws/marketplace-catalog/model/DataProductSort.h>
+#include <aws/marketplace-catalog/model/ExpressPrivateOfferConfigurationSort.h>
 #include <aws/marketplace-catalog/model/MachineLearningProductSort.h>
 #include <aws/marketplace-catalog/model/OfferSetSort.h>
 #include <aws/marketplace-catalog/model/OfferSort.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationSort.h>
 #include <aws/marketplace-catalog/model/SaaSProductSort.h>
+#include <aws/marketplace-catalog/model/SubsidiaryAuthorizationSort.h>
 
 #include <utility>
 
@@ -180,6 +182,44 @@ class EntityTypeSort {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>A sort for express private offer configurations.</p>
+   */
+  inline const ExpressPrivateOfferConfigurationSort& GetExpressPrivateOfferConfigurationSort() const {
+    return m_expressPrivateOfferConfigurationSort;
+  }
+  inline bool ExpressPrivateOfferConfigurationSortHasBeenSet() const { return m_expressPrivateOfferConfigurationSortHasBeenSet; }
+  template <typename ExpressPrivateOfferConfigurationSortT = ExpressPrivateOfferConfigurationSort>
+  void SetExpressPrivateOfferConfigurationSort(ExpressPrivateOfferConfigurationSortT&& value) {
+    m_expressPrivateOfferConfigurationSortHasBeenSet = true;
+    m_expressPrivateOfferConfigurationSort = std::forward<ExpressPrivateOfferConfigurationSortT>(value);
+  }
+  template <typename ExpressPrivateOfferConfigurationSortT = ExpressPrivateOfferConfigurationSort>
+  EntityTypeSort& WithExpressPrivateOfferConfigurationSort(ExpressPrivateOfferConfigurationSortT&& value) {
+    SetExpressPrivateOfferConfigurationSort(std::forward<ExpressPrivateOfferConfigurationSortT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>A sort for subsidiary authorizations.</p>
+   */
+  inline const SubsidiaryAuthorizationSort& GetSubsidiaryAuthorizationSort() const { return m_subsidiaryAuthorizationSort; }
+  inline bool SubsidiaryAuthorizationSortHasBeenSet() const { return m_subsidiaryAuthorizationSortHasBeenSet; }
+  template <typename SubsidiaryAuthorizationSortT = SubsidiaryAuthorizationSort>
+  void SetSubsidiaryAuthorizationSort(SubsidiaryAuthorizationSortT&& value) {
+    m_subsidiaryAuthorizationSortHasBeenSet = true;
+    m_subsidiaryAuthorizationSort = std::forward<SubsidiaryAuthorizationSortT>(value);
+  }
+  template <typename SubsidiaryAuthorizationSortT = SubsidiaryAuthorizationSort>
+  EntityTypeSort& WithSubsidiaryAuthorizationSort(SubsidiaryAuthorizationSortT&& value) {
+    SetSubsidiaryAuthorizationSort(std::forward<SubsidiaryAuthorizationSortT>(value));
+    return *this;
+  }
+  ///@}
  private:
   DataProductSort m_dataProductSort;
 
@@ -196,6 +236,10 @@ class EntityTypeSort {
   MachineLearningProductSort m_machineLearningProductSort;
 
   OfferSetSort m_offerSetSort;
+
+  ExpressPrivateOfferConfigurationSort m_expressPrivateOfferConfigurationSort;
+
+  SubsidiaryAuthorizationSort m_subsidiaryAuthorizationSort;
   bool m_dataProductSortHasBeenSet = false;
   bool m_saaSProductSortHasBeenSet = false;
   bool m_amiProductSortHasBeenSet = false;
@@ -204,6 +248,8 @@ class EntityTypeSort {
   bool m_resaleAuthorizationSortHasBeenSet = false;
   bool m_machineLearningProductSortHasBeenSet = false;
   bool m_offerSetSortHasBeenSet = false;
+  bool m_expressPrivateOfferConfigurationSortHasBeenSet = false;
+  bool m_subsidiaryAuthorizationSortHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -20,15 +20,18 @@
 #include <aws/secretsmanager/SecretsManagerClient.h>
 #include <aws/secretsmanager/SecretsManagerEndpointProvider.h>
 #include <aws/secretsmanager/SecretsManagerErrorMarshaller.h>
+#include <aws/secretsmanager/model/AssociateCrossAccountReplicaRequest.h>
 #include <aws/secretsmanager/model/BatchGetSecretValueRequest.h>
 #include <aws/secretsmanager/model/CancelRotateSecretRequest.h>
 #include <aws/secretsmanager/model/CreateSecretRequest.h>
 #include <aws/secretsmanager/model/DeleteResourcePolicyRequest.h>
 #include <aws/secretsmanager/model/DeleteSecretRequest.h>
 #include <aws/secretsmanager/model/DescribeSecretRequest.h>
+#include <aws/secretsmanager/model/DisassociateCrossAccountReplicaRequest.h>
 #include <aws/secretsmanager/model/GetRandomPasswordRequest.h>
 #include <aws/secretsmanager/model/GetResourcePolicyRequest.h>
 #include <aws/secretsmanager/model/GetSecretValueRequest.h>
+#include <aws/secretsmanager/model/ListResourcePoliciesRequest.h>
 #include <aws/secretsmanager/model/ListSecretVersionIdsRequest.h>
 #include <aws/secretsmanager/model/ListSecretsRequest.h>
 #include <aws/secretsmanager/model/PutResourcePolicyRequest.h>
@@ -179,7 +182,8 @@ SecretsManagerClient::InvokeOperationOutcome SecretsManagerClient::InvokeService
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -191,8 +195,15 @@ SecretsManagerClient::InvokeOperationOutcome SecretsManagerClient::InvokeService
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
+}
+
+AssociateCrossAccountReplicaOutcome SecretsManagerClient::AssociateCrossAccountReplica(
+    const AssociateCrossAccountReplicaRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? AssociateCrossAccountReplicaOutcome(result.GetResultWithOwnership())
+                            : AssociateCrossAccountReplicaOutcome(std::move(result.GetError()));
 }
 
 BatchGetSecretValueOutcome SecretsManagerClient::BatchGetSecretValue(const BatchGetSecretValueRequest& request) const {
@@ -228,6 +239,13 @@ DescribeSecretOutcome SecretsManagerClient::DescribeSecret(const DescribeSecretR
   return result.IsSuccess() ? DescribeSecretOutcome(result.GetResultWithOwnership()) : DescribeSecretOutcome(std::move(result.GetError()));
 }
 
+DisassociateCrossAccountReplicaOutcome SecretsManagerClient::DisassociateCrossAccountReplica(
+    const DisassociateCrossAccountReplicaRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DisassociateCrossAccountReplicaOutcome(result.GetResultWithOwnership())
+                            : DisassociateCrossAccountReplicaOutcome(std::move(result.GetError()));
+}
+
 GetRandomPasswordOutcome SecretsManagerClient::GetRandomPassword(const GetRandomPasswordRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetRandomPasswordOutcome(result.GetResultWithOwnership())
@@ -243,6 +261,12 @@ GetResourcePolicyOutcome SecretsManagerClient::GetResourcePolicy(const GetResour
 GetSecretValueOutcome SecretsManagerClient::GetSecretValue(const GetSecretValueRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetSecretValueOutcome(result.GetResultWithOwnership()) : GetSecretValueOutcome(std::move(result.GetError()));
+}
+
+ListResourcePoliciesOutcome SecretsManagerClient::ListResourcePolicies(const ListResourcePoliciesRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListResourcePoliciesOutcome(result.GetResultWithOwnership())
+                            : ListResourcePoliciesOutcome(std::move(result.GetError()));
 }
 
 ListSecretVersionIdsOutcome SecretsManagerClient::ListSecretVersionIds(const ListSecretVersionIdsRequest& request) const {

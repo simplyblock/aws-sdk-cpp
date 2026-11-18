@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-account "C++ SDK for the AWS account service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-account "C++ SDK for AWS Account" aws-cpp-sdk-core)
 
 file(GLOB AWS_ACCOUNT_HEADERS
     "include/aws/account/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ACCOUNT_HEADERS
 
 file(GLOB AWS_ACCOUNT_MODEL_HEADERS
     "include/aws/account/model/*.h"
+)
+
+file(GLOB AWS_ACCOUNT_INTERNAL_HEADERS
+    "include/aws/account/internal/*.h"
 )
 
 file(GLOB AWS_ACCOUNT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ACCOUNT_MODEL_SOURCE
 
 file(GLOB ACCOUNT_UNIFIED_HEADERS
     ${AWS_ACCOUNT_HEADERS}
+    ${AWS_ACCOUNT_INTERNAL_HEADERS}
     ${AWS_ACCOUNT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\account" FILES ${AWS_ACCOUNT_HEADERS})
+        source_group("Header Files\\aws\\account\\internal" FILES ${AWS_ACCOUNT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\account\\model" FILES ${AWS_ACCOUNT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ACCOUNT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ACCOUNT_MODEL_SOURCE})

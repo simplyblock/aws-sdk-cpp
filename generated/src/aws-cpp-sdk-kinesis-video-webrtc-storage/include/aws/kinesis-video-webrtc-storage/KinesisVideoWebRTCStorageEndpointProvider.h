@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/kinesis-video-webrtc-storage/KinesisVideoWebRTCStorageEndpointRules.h>
 #include <aws/kinesis-video-webrtc-storage/KinesisVideoWebRTCStorage_EXPORTS.h>
 
 namespace Aws {
 namespace KinesisVideoWebRTCStorage {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using KinesisVideoWebRTCStorageClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using KinesisVideoWebRTCStorageEndpointProviderBase =
                          KinesisVideoWebRTCStorageClientContextParameters>;
 
 using KinesisVideoWebRTCStorageDefaultEpProviderBase =
-    DefaultEndpointProvider<KinesisVideoWebRTCStorageClientConfiguration, KinesisVideoWebRTCStorageBuiltInParameters,
-                            KinesisVideoWebRTCStorageClientContextParameters>;
+    BDDEndpointProvider<KinesisVideoWebRTCStorageClientConfiguration, KinesisVideoWebRTCStorageBuiltInParameters,
+                        KinesisVideoWebRTCStorageClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,10 +43,7 @@ class AWS_KINESISVIDEOWEBRTCSTORAGE_API KinesisVideoWebRTCStorageEndpointProvide
  public:
   using KinesisVideoWebRTCStorageResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  KinesisVideoWebRTCStorageEndpointProvider()
-      : KinesisVideoWebRTCStorageDefaultEpProviderBase(
-            Aws::KinesisVideoWebRTCStorage::KinesisVideoWebRTCStorageEndpointRules::GetRulesBlob(),
-            Aws::KinesisVideoWebRTCStorage::KinesisVideoWebRTCStorageEndpointRules::RulesBlobSize) {}
+  KinesisVideoWebRTCStorageEndpointProvider();
 
   ~KinesisVideoWebRTCStorageEndpointProvider() {}
 };

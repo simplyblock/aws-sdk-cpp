@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/kafka/KafkaEndpointRules.h>
 #include <aws/kafka/Kafka_EXPORTS.h>
 
 namespace Aws {
 namespace Kafka {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using KafkaClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using KafkaBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using KafkaEndpointProviderBase = EndpointProviderBase<KafkaClientConfiguration, KafkaBuiltInParameters, KafkaClientContextParameters>;
 
-using KafkaDefaultEpProviderBase = DefaultEndpointProvider<KafkaClientConfiguration, KafkaBuiltInParameters, KafkaClientContextParameters>;
+using KafkaDefaultEpProviderBase = BDDEndpointProvider<KafkaClientConfiguration, KafkaBuiltInParameters, KafkaClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,8 +39,7 @@ class AWS_KAFKA_API KafkaEndpointProvider : public KafkaDefaultEpProviderBase {
  public:
   using KafkaResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  KafkaEndpointProvider()
-      : KafkaDefaultEpProviderBase(Aws::Kafka::KafkaEndpointRules::GetRulesBlob(), Aws::Kafka::KafkaEndpointRules::RulesBlobSize) {}
+  KafkaEndpointProvider();
 
   ~KafkaEndpointProvider() {}
 };

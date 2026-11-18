@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/signer/SignerEndpointRules.h>
 #include <aws/signer/Signer_EXPORTS.h>
 
 namespace Aws {
 namespace signer {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SignerClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,8 +30,7 @@ using SignerBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using SignerEndpointProviderBase = EndpointProviderBase<SignerClientConfiguration, SignerBuiltInParameters, SignerClientContextParameters>;
 
-using SignerDefaultEpProviderBase =
-    DefaultEndpointProvider<SignerClientConfiguration, SignerBuiltInParameters, SignerClientContextParameters>;
+using SignerDefaultEpProviderBase = BDDEndpointProvider<SignerClientConfiguration, SignerBuiltInParameters, SignerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -41,8 +39,7 @@ class AWS_SIGNER_API SignerEndpointProvider : public SignerDefaultEpProviderBase
  public:
   using SignerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SignerEndpointProvider()
-      : SignerDefaultEpProviderBase(Aws::signer::SignerEndpointRules::GetRulesBlob(), Aws::signer::SignerEndpointRules::RulesBlobSize) {}
+  SignerEndpointProvider();
 
   ~SignerEndpointProvider() {}
 };

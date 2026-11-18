@@ -363,6 +363,67 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Retrieves a list of data quality results for the specified result IDs. You
+   * can specify up to 100 result IDs in a single request.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetDataQualityResultV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::BatchGetDataQualityResultV2Outcome BatchGetDataQualityResultV2(
+      const Model::BatchGetDataQualityResultV2Request& request) const;
+
+  /**
+   * A Callable wrapper for BatchGetDataQualityResultV2 that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename BatchGetDataQualityResultV2RequestT = Model::BatchGetDataQualityResultV2Request>
+  Model::BatchGetDataQualityResultV2OutcomeCallable BatchGetDataQualityResultV2Callable(
+      const BatchGetDataQualityResultV2RequestT& request) const {
+    return SubmitCallable(&GlueClient::BatchGetDataQualityResultV2, request);
+  }
+
+  /**
+   * An Async wrapper for BatchGetDataQualityResultV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename BatchGetDataQualityResultV2RequestT = Model::BatchGetDataQualityResultV2Request>
+  void BatchGetDataQualityResultV2Async(const BatchGetDataQualityResultV2RequestT& request,
+                                        const BatchGetDataQualityResultV2ResponseReceivedHandler& handler,
+                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::BatchGetDataQualityResultV2, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the details of multiple evaluation runs in a single
+   * request.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetDataQualityRulesetEvaluationRun">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::BatchGetDataQualityRulesetEvaluationRunOutcome BatchGetDataQualityRulesetEvaluationRun(
+      const Model::BatchGetDataQualityRulesetEvaluationRunRequest& request) const;
+
+  /**
+   * A Callable wrapper for BatchGetDataQualityRulesetEvaluationRun that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename BatchGetDataQualityRulesetEvaluationRunRequestT = Model::BatchGetDataQualityRulesetEvaluationRunRequest>
+  Model::BatchGetDataQualityRulesetEvaluationRunOutcomeCallable BatchGetDataQualityRulesetEvaluationRunCallable(
+      const BatchGetDataQualityRulesetEvaluationRunRequestT& request) const {
+    return SubmitCallable(&GlueClient::BatchGetDataQualityRulesetEvaluationRun, request);
+  }
+
+  /**
+   * An Async wrapper for BatchGetDataQualityRulesetEvaluationRun that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename BatchGetDataQualityRulesetEvaluationRunRequestT = Model::BatchGetDataQualityRulesetEvaluationRunRequest>
+  void BatchGetDataQualityRulesetEvaluationRunAsync(const BatchGetDataQualityRulesetEvaluationRunRequestT& request,
+                                                    const BatchGetDataQualityRulesetEvaluationRunResponseReceivedHandler& handler,
+                                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::BatchGetDataQualityRulesetEvaluationRun, request, handler, context);
+  }
+
+  /**
    * <p>Returns a list of resource metadata for a given list of development endpoint
    * names. After calling the <code>ListDevEndpoints</code> operation, you can call
    * this operation to access the data to which you have been granted permissions.
@@ -988,6 +1049,42 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
                                    const CreateCustomEntityTypeResponseReceivedHandler& handler,
                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&GlueClient::CreateCustomEntityType, request, handler, context);
+  }
+
+  /**
+   * <p>Creates a data quality evaluation configuration, which evaluates the data
+   * quality of a collection of tables in the Glue Data Catalog once, on a schedule,
+   * or when table metadata changes. A configuration applies to a catalog, a
+   * database, or a single table, and evaluates every table in scope, including
+   * tables added later, without per-table setup.</p> <p>When configurations at more
+   * than one level apply to the same table, the most specific configuration applies.
+   * Each table is evaluated at most once an hour, whichever triggers you
+   * choose.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateDataQualityEvaluationConfig">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateDataQualityEvaluationConfigOutcome CreateDataQualityEvaluationConfig(
+      const Model::CreateDataQualityEvaluationConfigRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateDataQualityEvaluationConfig that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename CreateDataQualityEvaluationConfigRequestT = Model::CreateDataQualityEvaluationConfigRequest>
+  Model::CreateDataQualityEvaluationConfigOutcomeCallable CreateDataQualityEvaluationConfigCallable(
+      const CreateDataQualityEvaluationConfigRequestT& request) const {
+    return SubmitCallable(&GlueClient::CreateDataQualityEvaluationConfig, request);
+  }
+
+  /**
+   * An Async wrapper for CreateDataQualityEvaluationConfig that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename CreateDataQualityEvaluationConfigRequestT = Model::CreateDataQualityEvaluationConfigRequest>
+  void CreateDataQualityEvaluationConfigAsync(const CreateDataQualityEvaluationConfigRequestT& request,
+                                              const CreateDataQualityEvaluationConfigResponseReceivedHandler& handler,
+                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::CreateDataQualityEvaluationConfig, request, handler, context);
   }
 
   /**
@@ -2038,6 +2135,36 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
                                    const DeleteCustomEntityTypeResponseReceivedHandler& handler,
                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&GlueClient::DeleteCustomEntityType, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a data quality evaluation configuration.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteDataQualityEvaluationConfig">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteDataQualityEvaluationConfigOutcome DeleteDataQualityEvaluationConfig(
+      const Model::DeleteDataQualityEvaluationConfigRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteDataQualityEvaluationConfig that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename DeleteDataQualityEvaluationConfigRequestT = Model::DeleteDataQualityEvaluationConfigRequest>
+  Model::DeleteDataQualityEvaluationConfigOutcomeCallable DeleteDataQualityEvaluationConfigCallable(
+      const DeleteDataQualityEvaluationConfigRequestT& request) const {
+    return SubmitCallable(&GlueClient::DeleteDataQualityEvaluationConfig, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteDataQualityEvaluationConfig that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename DeleteDataQualityEvaluationConfigRequestT = Model::DeleteDataQualityEvaluationConfigRequest>
+  void DeleteDataQualityEvaluationConfigAsync(const DeleteDataQualityEvaluationConfigRequestT& request,
+                                              const DeleteDataQualityEvaluationConfigResponseReceivedHandler& handler,
+                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::DeleteDataQualityEvaluationConfig, request, handler, context);
   }
 
   /**
@@ -3587,6 +3714,67 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Retrieves the current export configuration for the Glue Data Catalog. The
+   * export configuration controls whether catalog metadata is exported to S3
+   * Tables.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataCatalogExportConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetDataCatalogExportConfigurationOutcome GetDataCatalogExportConfiguration(
+      const Model::GetDataCatalogExportConfigurationRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for GetDataCatalogExportConfiguration that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename GetDataCatalogExportConfigurationRequestT = Model::GetDataCatalogExportConfigurationRequest>
+  Model::GetDataCatalogExportConfigurationOutcomeCallable GetDataCatalogExportConfigurationCallable(
+      const GetDataCatalogExportConfigurationRequestT& request = {}) const {
+    return SubmitCallable(&GlueClient::GetDataCatalogExportConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for GetDataCatalogExportConfiguration that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename GetDataCatalogExportConfigurationRequestT = Model::GetDataCatalogExportConfigurationRequest>
+  void GetDataCatalogExportConfigurationAsync(const GetDataCatalogExportConfigurationResponseReceivedHandler& handler,
+                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                              const GetDataCatalogExportConfigurationRequestT& request = {}) const {
+    return SubmitAsync(&GlueClient::GetDataCatalogExportConfiguration, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves a data quality evaluation configuration.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataQualityEvaluationConfig">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetDataQualityEvaluationConfigOutcome GetDataQualityEvaluationConfig(
+      const Model::GetDataQualityEvaluationConfigRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetDataQualityEvaluationConfig that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename GetDataQualityEvaluationConfigRequestT = Model::GetDataQualityEvaluationConfigRequest>
+  Model::GetDataQualityEvaluationConfigOutcomeCallable GetDataQualityEvaluationConfigCallable(
+      const GetDataQualityEvaluationConfigRequestT& request) const {
+    return SubmitCallable(&GlueClient::GetDataQualityEvaluationConfig, request);
+  }
+
+  /**
+   * An Async wrapper for GetDataQualityEvaluationConfig that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename GetDataQualityEvaluationConfigRequestT = Model::GetDataQualityEvaluationConfigRequest>
+  void GetDataQualityEvaluationConfigAsync(const GetDataQualityEvaluationConfigRequestT& request,
+                                           const GetDataQualityEvaluationConfigResponseReceivedHandler& handler,
+                                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::GetDataQualityEvaluationConfig, request, handler, context);
+  }
+
+  /**
    * <p>Retrieve the training status of the model along with more information
    * (CompletedOn, StartedOn, FailureReason).</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataQualityModel">AWS
@@ -3667,6 +3855,34 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   void GetDataQualityResultAsync(const GetDataQualityResultRequestT& request, const GetDataQualityResultResponseReceivedHandler& handler,
                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&GlueClient::GetDataQualityResult, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the result of a data quality rule evaluation published from any
+   * supported data platform.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataQualityResultV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetDataQualityResultV2Outcome GetDataQualityResultV2(const Model::GetDataQualityResultV2Request& request) const;
+
+  /**
+   * A Callable wrapper for GetDataQualityResultV2 that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetDataQualityResultV2RequestT = Model::GetDataQualityResultV2Request>
+  Model::GetDataQualityResultV2OutcomeCallable GetDataQualityResultV2Callable(const GetDataQualityResultV2RequestT& request) const {
+    return SubmitCallable(&GlueClient::GetDataQualityResultV2, request);
+  }
+
+  /**
+   * An Async wrapper for GetDataQualityResultV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetDataQualityResultV2RequestT = Model::GetDataQualityResultV2Request>
+  void GetDataQualityResultV2Async(const GetDataQualityResultV2RequestT& request,
+                                   const GetDataQualityResultV2ResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::GetDataQualityResultV2, request, handler, context);
   }
 
   /**
@@ -4207,6 +4423,33 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   void GetJobRunsAsync(const GetJobRunsRequestT& request, const GetJobRunsResponseReceivedHandler& handler,
                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&GlueClient::GetJobRuns, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the current status and results of an upgrade
+   * analysis.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetJobUpgradeAnalysis">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetJobUpgradeAnalysisOutcome GetJobUpgradeAnalysis(const Model::GetJobUpgradeAnalysisRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetJobUpgradeAnalysis that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetJobUpgradeAnalysisRequestT = Model::GetJobUpgradeAnalysisRequest>
+  Model::GetJobUpgradeAnalysisOutcomeCallable GetJobUpgradeAnalysisCallable(const GetJobUpgradeAnalysisRequestT& request) const {
+    return SubmitCallable(&GlueClient::GetJobUpgradeAnalysis, request);
+  }
+
+  /**
+   * An Async wrapper for GetJobUpgradeAnalysis that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetJobUpgradeAnalysisRequestT = Model::GetJobUpgradeAnalysisRequest>
+  void GetJobUpgradeAnalysisAsync(const GetJobUpgradeAnalysisRequestT& request, const GetJobUpgradeAnalysisResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::GetJobUpgradeAnalysis, request, handler, context);
   }
 
   /**
@@ -4845,6 +5088,61 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   void GetStatementAsync(const GetStatementRequestT& request, const GetStatementResponseReceivedHandler& handler,
                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&GlueClient::GetStatement, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the system logs for a job run.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetSystemLogsForJobRun">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetSystemLogsForJobRunOutcome GetSystemLogsForJobRun(const Model::GetSystemLogsForJobRunRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetSystemLogsForJobRun that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetSystemLogsForJobRunRequestT = Model::GetSystemLogsForJobRunRequest>
+  Model::GetSystemLogsForJobRunOutcomeCallable GetSystemLogsForJobRunCallable(const GetSystemLogsForJobRunRequestT& request) const {
+    return SubmitCallable(&GlueClient::GetSystemLogsForJobRun, request);
+  }
+
+  /**
+   * An Async wrapper for GetSystemLogsForJobRun that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetSystemLogsForJobRunRequestT = Model::GetSystemLogsForJobRunRequest>
+  void GetSystemLogsForJobRunAsync(const GetSystemLogsForJobRunRequestT& request,
+                                   const GetSystemLogsForJobRunResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::GetSystemLogsForJobRun, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the system logs for an interactive session.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetSystemLogsForSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetSystemLogsForSessionOutcome GetSystemLogsForSession(const Model::GetSystemLogsForSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetSystemLogsForSession that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetSystemLogsForSessionRequestT = Model::GetSystemLogsForSessionRequest>
+  Model::GetSystemLogsForSessionOutcomeCallable GetSystemLogsForSessionCallable(const GetSystemLogsForSessionRequestT& request) const {
+    return SubmitCallable(&GlueClient::GetSystemLogsForSession, request);
+  }
+
+  /**
+   * An Async wrapper for GetSystemLogsForSession that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetSystemLogsForSessionRequestT = Model::GetSystemLogsForSessionRequest>
+  void GetSystemLogsForSessionAsync(const GetSystemLogsForSessionRequestT& request,
+                                    const GetSystemLogsForSessionResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::GetSystemLogsForSession, request, handler, context);
   }
 
   /**
@@ -5575,6 +5873,36 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Lists the data quality evaluation configurations in your account, optionally
+   * filtered by level.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListDataQualityEvaluationConfigs">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListDataQualityEvaluationConfigsOutcome ListDataQualityEvaluationConfigs(
+      const Model::ListDataQualityEvaluationConfigsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListDataQualityEvaluationConfigs that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename ListDataQualityEvaluationConfigsRequestT = Model::ListDataQualityEvaluationConfigsRequest>
+  Model::ListDataQualityEvaluationConfigsOutcomeCallable ListDataQualityEvaluationConfigsCallable(
+      const ListDataQualityEvaluationConfigsRequestT& request = {}) const {
+    return SubmitCallable(&GlueClient::ListDataQualityEvaluationConfigs, request);
+  }
+
+  /**
+   * An Async wrapper for ListDataQualityEvaluationConfigs that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename ListDataQualityEvaluationConfigsRequestT = Model::ListDataQualityEvaluationConfigsRequest>
+  void ListDataQualityEvaluationConfigsAsync(const ListDataQualityEvaluationConfigsResponseReceivedHandler& handler,
+                                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                             const ListDataQualityEvaluationConfigsRequestT& request = {}) const {
+    return SubmitAsync(&GlueClient::ListDataQualityEvaluationConfigs, request, handler, context);
+  }
+
+  /**
    * <p>Returns all data quality execution results for your account.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListDataQualityResults">AWS
@@ -5600,6 +5928,36 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                    const ListDataQualityResultsRequestT& request = {}) const {
     return SubmitAsync(&GlueClient::ListDataQualityResults, request, handler, context);
+  }
+
+  /**
+   * <p>Returns a paginated list of data quality execution results for your account,
+   * filtered by the specified criteria. Use the <code>NextToken</code> parameter to
+   * retrieve additional results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListDataQualityResultsV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListDataQualityResultsV2Outcome ListDataQualityResultsV2(const Model::ListDataQualityResultsV2Request& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListDataQualityResultsV2 that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListDataQualityResultsV2RequestT = Model::ListDataQualityResultsV2Request>
+  Model::ListDataQualityResultsV2OutcomeCallable ListDataQualityResultsV2Callable(
+      const ListDataQualityResultsV2RequestT& request = {}) const {
+    return SubmitCallable(&GlueClient::ListDataQualityResultsV2, request);
+  }
+
+  /**
+   * An Async wrapper for ListDataQualityResultsV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListDataQualityResultsV2RequestT = Model::ListDataQualityResultsV2Request>
+  void ListDataQualityResultsV2Async(const ListDataQualityResultsV2ResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                     const ListDataQualityResultsV2RequestT& request = {}) const {
+    return SubmitAsync(&GlueClient::ListDataQualityResultsV2, request, handler, context);
   }
 
   /**
@@ -5917,6 +6275,36 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
                                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                               const ListIntegrationResourcePropertiesRequestT& request = {}) const {
     return SubmitAsync(&GlueClient::ListIntegrationResourceProperties, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the integration table properties in your account. This operation
+   * supports filtering and pagination.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListIntegrationTableProperties">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListIntegrationTablePropertiesOutcome ListIntegrationTableProperties(
+      const Model::ListIntegrationTablePropertiesRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListIntegrationTableProperties that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename ListIntegrationTablePropertiesRequestT = Model::ListIntegrationTablePropertiesRequest>
+  Model::ListIntegrationTablePropertiesOutcomeCallable ListIntegrationTablePropertiesCallable(
+      const ListIntegrationTablePropertiesRequestT& request = {}) const {
+    return SubmitCallable(&GlueClient::ListIntegrationTableProperties, request);
+  }
+
+  /**
+   * An Async wrapper for ListIntegrationTableProperties that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename ListIntegrationTablePropertiesRequestT = Model::ListIntegrationTablePropertiesRequest>
+  void ListIntegrationTablePropertiesAsync(const ListIntegrationTablePropertiesResponseReceivedHandler& handler,
+                                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                           const ListIntegrationTablePropertiesRequestT& request = {}) const {
+    return SubmitAsync(&GlueClient::ListIntegrationTableProperties, request, handler, context);
   }
 
   /**
@@ -6320,6 +6708,37 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   *  <p>This operation is intended for internal use. Do not call it
+   * directly.</p>  <p>AWS Glue Data Quality uses this operation to publish a
+   * data quality result.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/PublishDataQualityResultV2">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::PublishDataQualityResultV2Outcome PublishDataQualityResultV2(
+      const Model::PublishDataQualityResultV2Request& request) const;
+
+  /**
+   * A Callable wrapper for PublishDataQualityResultV2 that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename PublishDataQualityResultV2RequestT = Model::PublishDataQualityResultV2Request>
+  Model::PublishDataQualityResultV2OutcomeCallable PublishDataQualityResultV2Callable(
+      const PublishDataQualityResultV2RequestT& request) const {
+    return SubmitCallable(&GlueClient::PublishDataQualityResultV2, request);
+  }
+
+  /**
+   * An Async wrapper for PublishDataQualityResultV2 that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename PublishDataQualityResultV2RequestT = Model::PublishDataQualityResultV2Request>
+  void PublishDataQualityResultV2Async(const PublishDataQualityResultV2RequestT& request,
+                                       const PublishDataQualityResultV2ResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::PublishDataQualityResultV2, request, handler, context);
+  }
+
+  /**
    * <p>Creates or updates an asset in Glue Data Catalog. If the asset already
    * exists, this operation updates it; otherwise, a new asset is
    * created.</p><p><h3>See Also:</h3>   <a
@@ -6429,6 +6848,37 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
                                              const PutDataCatalogEncryptionSettingsResponseReceivedHandler& handler,
                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&GlueClient::PutDataCatalogEncryptionSettings, request, handler, context);
+  }
+
+  /**
+   * <p>Creates or updates the export configuration for the Glue Data Catalog. Use
+   * this operation to enable or disable the export of catalog metadata to S3
+   * Tables.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/PutDataCatalogExportConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::PutDataCatalogExportConfigurationOutcome PutDataCatalogExportConfiguration(
+      const Model::PutDataCatalogExportConfigurationRequest& request) const;
+
+  /**
+   * A Callable wrapper for PutDataCatalogExportConfiguration that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename PutDataCatalogExportConfigurationRequestT = Model::PutDataCatalogExportConfigurationRequest>
+  Model::PutDataCatalogExportConfigurationOutcomeCallable PutDataCatalogExportConfigurationCallable(
+      const PutDataCatalogExportConfigurationRequestT& request) const {
+    return SubmitCallable(&GlueClient::PutDataCatalogExportConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for PutDataCatalogExportConfiguration that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename PutDataCatalogExportConfigurationRequestT = Model::PutDataCatalogExportConfigurationRequest>
+  void PutDataCatalogExportConfigurationAsync(const PutDataCatalogExportConfigurationRequestT& request,
+                                              const PutDataCatalogExportConfigurationResponseReceivedHandler& handler,
+                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::PutDataCatalogExportConfiguration, request, handler, context);
   }
 
   /**
@@ -7174,6 +7624,34 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Resumes an analysis that is waiting for upgrade consent.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/StartJobUpgradeAnalysis">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartJobUpgradeAnalysisOutcome StartJobUpgradeAnalysis(const Model::StartJobUpgradeAnalysisRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartJobUpgradeAnalysis that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StartJobUpgradeAnalysisRequestT = Model::StartJobUpgradeAnalysisRequest>
+  Model::StartJobUpgradeAnalysisOutcomeCallable StartJobUpgradeAnalysisCallable(const StartJobUpgradeAnalysisRequestT& request) const {
+    return SubmitCallable(&GlueClient::StartJobUpgradeAnalysis, request);
+  }
+
+  /**
+   * An Async wrapper for StartJobUpgradeAnalysis that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename StartJobUpgradeAnalysisRequestT = Model::StartJobUpgradeAnalysisRequest>
+  void StartJobUpgradeAnalysisAsync(const StartJobUpgradeAnalysisRequestT& request,
+                                    const StartJobUpgradeAnalysisResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::StartJobUpgradeAnalysis, request, handler, context);
+  }
+
+  /**
    * <p>Starts a task to estimate the quality of the transform. </p> <p>When you
    * provide label sets as examples of truth, Glue machine learning uses some of
    * those examples to learn from them. The rest of the labels are used as a test to
@@ -7249,8 +7727,8 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Starts a materialized view refresh task run, for a specified table and
-   * columns.</p><p><h3>See Also:</h3>   <a
+   * <p>Starts a materialized view refresh task run for a specified materialized
+   * view.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/StartMaterializedViewRefreshTaskRun">AWS
    * API Reference</a></p>
    */
@@ -7445,8 +7923,35 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Stops a materialized view refresh task run, for a specified table and
-   * columns.</p><p><h3>See Also:</h3>   <a
+   * <p>Stops an in-progress upgrade analysis.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/StopJobUpgradeAnalysis">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StopJobUpgradeAnalysisOutcome StopJobUpgradeAnalysis(const Model::StopJobUpgradeAnalysisRequest& request) const;
+
+  /**
+   * A Callable wrapper for StopJobUpgradeAnalysis that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StopJobUpgradeAnalysisRequestT = Model::StopJobUpgradeAnalysisRequest>
+  Model::StopJobUpgradeAnalysisOutcomeCallable StopJobUpgradeAnalysisCallable(const StopJobUpgradeAnalysisRequestT& request) const {
+    return SubmitCallable(&GlueClient::StopJobUpgradeAnalysis, request);
+  }
+
+  /**
+   * An Async wrapper for StopJobUpgradeAnalysis that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename StopJobUpgradeAnalysisRequestT = Model::StopJobUpgradeAnalysisRequest>
+  void StopJobUpgradeAnalysisAsync(const StopJobUpgradeAnalysisRequestT& request,
+                                   const StopJobUpgradeAnalysisResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::StopJobUpgradeAnalysis, request, handler, context);
+  }
+
+  /**
+   * <p>Stops a materialized view refresh task run for a specified materialized
+   * view.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/StopMaterializedViewRefreshTaskRun">AWS
    * API Reference</a></p>
    */
@@ -7911,6 +8416,36 @@ class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient,
   void UpdateCrawlerScheduleAsync(const UpdateCrawlerScheduleRequestT& request, const UpdateCrawlerScheduleResponseReceivedHandler& handler,
                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&GlueClient::UpdateCrawlerSchedule, request, handler, context);
+  }
+
+  /**
+   * <p>Updates a data quality evaluation configuration. Fields that you don't
+   * specify keep their current values.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateDataQualityEvaluationConfig">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateDataQualityEvaluationConfigOutcome UpdateDataQualityEvaluationConfig(
+      const Model::UpdateDataQualityEvaluationConfigRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateDataQualityEvaluationConfig that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename UpdateDataQualityEvaluationConfigRequestT = Model::UpdateDataQualityEvaluationConfigRequest>
+  Model::UpdateDataQualityEvaluationConfigOutcomeCallable UpdateDataQualityEvaluationConfigCallable(
+      const UpdateDataQualityEvaluationConfigRequestT& request) const {
+    return SubmitCallable(&GlueClient::UpdateDataQualityEvaluationConfig, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateDataQualityEvaluationConfig that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename UpdateDataQualityEvaluationConfigRequestT = Model::UpdateDataQualityEvaluationConfigRequest>
+  void UpdateDataQualityEvaluationConfigAsync(const UpdateDataQualityEvaluationConfigRequestT& request,
+                                              const UpdateDataQualityEvaluationConfigResponseReceivedHandler& handler,
+                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&GlueClient::UpdateDataQualityEvaluationConfig, request, handler, context);
   }
 
   /**

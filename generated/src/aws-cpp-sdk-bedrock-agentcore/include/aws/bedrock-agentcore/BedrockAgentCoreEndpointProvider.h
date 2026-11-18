@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/bedrock-agentcore/BedrockAgentCoreEndpointRules.h>
 #include <aws/bedrock-agentcore/BedrockAgentCore_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace BedrockAgentCore {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using BedrockAgentCoreClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using BedrockAgentCoreEndpointProviderBase =
     EndpointProviderBase<BedrockAgentCoreClientConfiguration, BedrockAgentCoreBuiltInParameters, BedrockAgentCoreClientContextParameters>;
 
 using BedrockAgentCoreDefaultEpProviderBase =
-    DefaultEndpointProvider<BedrockAgentCoreClientConfiguration, BedrockAgentCoreBuiltInParameters,
-                            BedrockAgentCoreClientContextParameters>;
+    BDDEndpointProvider<BedrockAgentCoreClientConfiguration, BedrockAgentCoreBuiltInParameters, BedrockAgentCoreClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_BEDROCKAGENTCORE_API BedrockAgentCoreEndpointProvider : public Bedrock
  public:
   using BedrockAgentCoreResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  BedrockAgentCoreEndpointProvider()
-      : BedrockAgentCoreDefaultEpProviderBase(Aws::BedrockAgentCore::BedrockAgentCoreEndpointRules::GetRulesBlob(),
-                                              Aws::BedrockAgentCore::BedrockAgentCoreEndpointRules::RulesBlobSize) {}
+  BedrockAgentCoreEndpointProvider();
 
   ~BedrockAgentCoreEndpointProvider() {}
 };

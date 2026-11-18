@@ -26,12 +26,15 @@ enum class ResourceType {
   AWS_BedrockAgentCore_Gateway,
   AWS_BedrockAgentCore_Memory,
   AWS_BedrockAgentCore_WorkloadIdentity,
+  AWS_BedrockAgentCore_PaymentManager,
   AWS_SecurityHub_Hub,
   AWS_CloudFront_Distribution,
   AWS_SecurityHub_HubV2,
   AWS_CloudWatch_OTelEnrichment,
   AWS_MSK_Cluster,
-  AWS_S3_Bucket
+  AWS_S3_Bucket,
+  AWS_Bedrock_KnowledgeBase,
+  AWS_XRay_TransactionSearchConfig
 };
 
 namespace ResourceTypeMapper {

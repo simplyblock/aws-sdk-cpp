@@ -60,12 +60,21 @@ static const int NetworkAccess_HASH = HashingUtils::HashString("NetworkAccess");
 static const int VendedLogs_HASH = HashingUtils::HashString("VendedLogs");
 static const int UpdatedTier_HASH = HashingUtils::HashString("UpdatedTier");
 static const int PreviousTier_HASH = HashingUtils::HashString("PreviousTier");
+static const int EnableCrossNamespace_HASH = HashingUtils::HashString("EnableCrossNamespace");
+static const int DisabledServices_HASH = HashingUtils::HashString("DisabledServices");
 static const int WarmPoolEnabled_HASH = HashingUtils::HashString("WarmPoolEnabled");
 static const int WarmPoolMaxGroupPreparedCapacity_HASH = HashingUtils::HashString("WarmPoolMaxGroupPreparedCapacity");
 static const int WarmPoolMinSize_HASH = HashingUtils::HashString("WarmPoolMinSize");
 static const int WarmPoolState_HASH = HashingUtils::HashString("WarmPoolState");
 static const int WarmPoolReuseOnScaleIn_HASH = HashingUtils::HashString("WarmPoolReuseOnScaleIn");
 static const int ControlPlaneEgressMode_HASH = HashingUtils::HashString("ControlPlaneEgressMode");
+static const int KubeApiServerConfig_HASH = HashingUtils::HashString("KubeApiServerConfig");
+static const int KubeSchedulerConfig_HASH = HashingUtils::HashString("KubeSchedulerConfig");
+static const int KubeControllerManagerConfig_HASH = HashingUtils::HashString("KubeControllerManagerConfig");
+static const int ActiveCertificateAuthority_HASH = HashingUtils::HashString("ActiveCertificateAuthority");
+static const int TrustedCertificateAuthorities_HASH = HashingUtils::HashString("TrustedCertificateAuthorities");
+static const int CertificateAuthorityId_HASH = HashingUtils::HashString("CertificateAuthorityId");
+static const int SigningStatus_HASH = HashingUtils::HashString("SigningStatus");
 
 UpdateParamType GetUpdateParamTypeForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -159,6 +168,10 @@ UpdateParamType GetUpdateParamTypeForName(const Aws::String& name) {
     return UpdateParamType::UpdatedTier;
   } else if (hashCode == PreviousTier_HASH) {
     return UpdateParamType::PreviousTier;
+  } else if (hashCode == EnableCrossNamespace_HASH) {
+    return UpdateParamType::EnableCrossNamespace;
+  } else if (hashCode == DisabledServices_HASH) {
+    return UpdateParamType::DisabledServices;
   } else if (hashCode == WarmPoolEnabled_HASH) {
     return UpdateParamType::WarmPoolEnabled;
   } else if (hashCode == WarmPoolMaxGroupPreparedCapacity_HASH) {
@@ -171,6 +184,20 @@ UpdateParamType GetUpdateParamTypeForName(const Aws::String& name) {
     return UpdateParamType::WarmPoolReuseOnScaleIn;
   } else if (hashCode == ControlPlaneEgressMode_HASH) {
     return UpdateParamType::ControlPlaneEgressMode;
+  } else if (hashCode == KubeApiServerConfig_HASH) {
+    return UpdateParamType::KubeApiServerConfig;
+  } else if (hashCode == KubeSchedulerConfig_HASH) {
+    return UpdateParamType::KubeSchedulerConfig;
+  } else if (hashCode == KubeControllerManagerConfig_HASH) {
+    return UpdateParamType::KubeControllerManagerConfig;
+  } else if (hashCode == ActiveCertificateAuthority_HASH) {
+    return UpdateParamType::ActiveCertificateAuthority;
+  } else if (hashCode == TrustedCertificateAuthorities_HASH) {
+    return UpdateParamType::TrustedCertificateAuthorities;
+  } else if (hashCode == CertificateAuthorityId_HASH) {
+    return UpdateParamType::CertificateAuthorityId;
+  } else if (hashCode == SigningStatus_HASH) {
+    return UpdateParamType::SigningStatus;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -275,6 +302,10 @@ Aws::String GetNameForUpdateParamType(UpdateParamType enumValue) {
       return "UpdatedTier";
     case UpdateParamType::PreviousTier:
       return "PreviousTier";
+    case UpdateParamType::EnableCrossNamespace:
+      return "EnableCrossNamespace";
+    case UpdateParamType::DisabledServices:
+      return "DisabledServices";
     case UpdateParamType::WarmPoolEnabled:
       return "WarmPoolEnabled";
     case UpdateParamType::WarmPoolMaxGroupPreparedCapacity:
@@ -287,6 +318,20 @@ Aws::String GetNameForUpdateParamType(UpdateParamType enumValue) {
       return "WarmPoolReuseOnScaleIn";
     case UpdateParamType::ControlPlaneEgressMode:
       return "ControlPlaneEgressMode";
+    case UpdateParamType::KubeApiServerConfig:
+      return "KubeApiServerConfig";
+    case UpdateParamType::KubeSchedulerConfig:
+      return "KubeSchedulerConfig";
+    case UpdateParamType::KubeControllerManagerConfig:
+      return "KubeControllerManagerConfig";
+    case UpdateParamType::ActiveCertificateAuthority:
+      return "ActiveCertificateAuthority";
+    case UpdateParamType::TrustedCertificateAuthorities:
+      return "TrustedCertificateAuthorities";
+    case UpdateParamType::CertificateAuthorityId:
+      return "CertificateAuthorityId";
+    case UpdateParamType::SigningStatus:
+      return "SigningStatus";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

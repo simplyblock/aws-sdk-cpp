@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/application-signals/ApplicationSignalsEndpointRules.h>
 #include <aws/application-signals/ApplicationSignals_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ApplicationSignals {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ApplicationSignalsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ApplicationSignalsEndpointProviderBase =
                          ApplicationSignalsClientContextParameters>;
 
 using ApplicationSignalsDefaultEpProviderBase =
-    DefaultEndpointProvider<ApplicationSignalsClientConfiguration, ApplicationSignalsBuiltInParameters,
-                            ApplicationSignalsClientContextParameters>;
+    BDDEndpointProvider<ApplicationSignalsClientConfiguration, ApplicationSignalsBuiltInParameters,
+                        ApplicationSignalsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_APPLICATIONSIGNALS_API ApplicationSignalsEndpointProvider : public App
  public:
   using ApplicationSignalsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ApplicationSignalsEndpointProvider()
-      : ApplicationSignalsDefaultEpProviderBase(Aws::ApplicationSignals::ApplicationSignalsEndpointRules::GetRulesBlob(),
-                                                Aws::ApplicationSignals::ApplicationSignalsEndpointRules::RulesBlobSize) {}
+  ApplicationSignalsEndpointProvider();
 
   ~ApplicationSignalsEndpointProvider() {}
 };

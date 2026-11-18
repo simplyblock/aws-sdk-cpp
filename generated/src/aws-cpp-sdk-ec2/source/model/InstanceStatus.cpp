@@ -79,6 +79,16 @@ InstanceStatus& InstanceStatus::operator=(const XmlNode& xmlNode) {
       m_attachedEbsStatus = attachedEbsStatusNode;
       m_attachedEbsStatusHasBeenSet = true;
     }
+    XmlNode applicationStatusNode = resultNode.FirstChild("applicationStatus");
+    if (!applicationStatusNode.IsNull()) {
+      m_applicationStatus = applicationStatusNode;
+      m_applicationStatusHasBeenSet = true;
+    }
+    XmlNode performanceStatusNode = resultNode.FirstChild("performanceStatus");
+    if (!performanceStatusNode.IsNull()) {
+      m_performanceStatus = performanceStatusNode;
+      m_performanceStatusHasBeenSet = true;
+    }
   }
 
   return *this;
@@ -139,6 +149,18 @@ void InstanceStatus::OutputToStream(Aws::OStream& oStream, const char* location,
     attachedEbsStatusLocationAndMemberSs << location << index << locationValue << ".AttachedEbsStatus";
     m_attachedEbsStatus.OutputToStream(oStream, attachedEbsStatusLocationAndMemberSs.str().c_str());
   }
+
+  if (m_applicationStatusHasBeenSet) {
+    Aws::StringStream applicationStatusLocationAndMemberSs;
+    applicationStatusLocationAndMemberSs << location << index << locationValue << ".ApplicationStatus";
+    m_applicationStatus.OutputToStream(oStream, applicationStatusLocationAndMemberSs.str().c_str());
+  }
+
+  if (m_performanceStatusHasBeenSet) {
+    Aws::StringStream performanceStatusLocationAndMemberSs;
+    performanceStatusLocationAndMemberSs << location << index << locationValue << ".PerformanceStatus";
+    m_performanceStatus.OutputToStream(oStream, performanceStatusLocationAndMemberSs.str().c_str());
+  }
 }
 
 void InstanceStatus::OutputToStream(Aws::OStream& oStream, const char* location) const {
@@ -186,6 +208,16 @@ void InstanceStatus::OutputToStream(Aws::OStream& oStream, const char* location)
     Aws::String attachedEbsStatusLocationAndMember(location);
     attachedEbsStatusLocationAndMember += ".AttachedEbsStatus";
     m_attachedEbsStatus.OutputToStream(oStream, attachedEbsStatusLocationAndMember.c_str());
+  }
+  if (m_applicationStatusHasBeenSet) {
+    Aws::String applicationStatusLocationAndMember(location);
+    applicationStatusLocationAndMember += ".ApplicationStatus";
+    m_applicationStatus.OutputToStream(oStream, applicationStatusLocationAndMember.c_str());
+  }
+  if (m_performanceStatusHasBeenSet) {
+    Aws::String performanceStatusLocationAndMember(location);
+    performanceStatusLocationAndMember += ".PerformanceStatus";
+    m_performanceStatus.OutputToStream(oStream, performanceStatusLocationAndMember.c_str());
   }
 }
 

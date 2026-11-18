@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-lambda-core "C++ SDK for the AWS lambda-core service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-lambda-core "C++ SDK for AWS Lambda Core" aws-cpp-sdk-core)
 
 file(GLOB AWS_LAMBDA-CORE_HEADERS
     "include/aws/lambda-core/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LAMBDA-CORE_HEADERS
 
 file(GLOB AWS_LAMBDA-CORE_MODEL_HEADERS
     "include/aws/lambda-core/model/*.h"
+)
+
+file(GLOB AWS_LAMBDA-CORE_INTERNAL_HEADERS
+    "include/aws/lambda-core/internal/*.h"
 )
 
 file(GLOB AWS_LAMBDA-CORE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LAMBDA-CORE_MODEL_SOURCE
 
 file(GLOB LAMBDA-CORE_UNIFIED_HEADERS
     ${AWS_LAMBDA-CORE_HEADERS}
+    ${AWS_LAMBDA-CORE_INTERNAL_HEADERS}
     ${AWS_LAMBDA-CORE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\lambda-core" FILES ${AWS_LAMBDA-CORE_HEADERS})
+        source_group("Header Files\\aws\\lambda-core\\internal" FILES ${AWS_LAMBDA-CORE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\lambda-core\\model" FILES ${AWS_LAMBDA-CORE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LAMBDA-CORE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LAMBDA-CORE_MODEL_SOURCE})

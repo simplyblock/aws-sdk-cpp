@@ -29,12 +29,15 @@ static const int AWS_BedrockAgentCore_CodeInterpreter_HASH = HashingUtils::HashS
 static const int AWS_BedrockAgentCore_Gateway_HASH = HashingUtils::HashString("AWS::BedrockAgentCore::Gateway");
 static const int AWS_BedrockAgentCore_Memory_HASH = HashingUtils::HashString("AWS::BedrockAgentCore::Memory");
 static const int AWS_BedrockAgentCore_WorkloadIdentity_HASH = HashingUtils::HashString("AWS::BedrockAgentCore::WorkloadIdentity");
+static const int AWS_BedrockAgentCore_PaymentManager_HASH = HashingUtils::HashString("AWS::BedrockAgentCore::PaymentManager");
 static const int AWS_SecurityHub_Hub_HASH = HashingUtils::HashString("AWS::SecurityHub::Hub");
 static const int AWS_CloudFront_Distribution_HASH = HashingUtils::HashString("AWS::CloudFront::Distribution");
 static const int AWS_SecurityHub_HubV2_HASH = HashingUtils::HashString("AWS::SecurityHub::HubV2");
 static const int AWS_CloudWatch_OTelEnrichment_HASH = HashingUtils::HashString("AWS::CloudWatch::OTelEnrichment");
 static const int AWS_MSK_Cluster_HASH = HashingUtils::HashString("AWS::MSK::Cluster");
 static const int AWS_S3_Bucket_HASH = HashingUtils::HashString("AWS::S3::Bucket");
+static const int AWS_Bedrock_KnowledgeBase_HASH = HashingUtils::HashString("AWS::Bedrock::KnowledgeBase");
+static const int AWS_XRay_TransactionSearchConfig_HASH = HashingUtils::HashString("AWS::XRay::TransactionSearchConfig");
 
 ResourceType GetResourceTypeForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -66,6 +69,8 @@ ResourceType GetResourceTypeForName(const Aws::String& name) {
     return ResourceType::AWS_BedrockAgentCore_Memory;
   } else if (hashCode == AWS_BedrockAgentCore_WorkloadIdentity_HASH) {
     return ResourceType::AWS_BedrockAgentCore_WorkloadIdentity;
+  } else if (hashCode == AWS_BedrockAgentCore_PaymentManager_HASH) {
+    return ResourceType::AWS_BedrockAgentCore_PaymentManager;
   } else if (hashCode == AWS_SecurityHub_Hub_HASH) {
     return ResourceType::AWS_SecurityHub_Hub;
   } else if (hashCode == AWS_CloudFront_Distribution_HASH) {
@@ -78,6 +83,10 @@ ResourceType GetResourceTypeForName(const Aws::String& name) {
     return ResourceType::AWS_MSK_Cluster;
   } else if (hashCode == AWS_S3_Bucket_HASH) {
     return ResourceType::AWS_S3_Bucket;
+  } else if (hashCode == AWS_Bedrock_KnowledgeBase_HASH) {
+    return ResourceType::AWS_Bedrock_KnowledgeBase;
+  } else if (hashCode == AWS_XRay_TransactionSearchConfig_HASH) {
+    return ResourceType::AWS_XRay_TransactionSearchConfig;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -120,6 +129,8 @@ Aws::String GetNameForResourceType(ResourceType enumValue) {
       return "AWS::BedrockAgentCore::Memory";
     case ResourceType::AWS_BedrockAgentCore_WorkloadIdentity:
       return "AWS::BedrockAgentCore::WorkloadIdentity";
+    case ResourceType::AWS_BedrockAgentCore_PaymentManager:
+      return "AWS::BedrockAgentCore::PaymentManager";
     case ResourceType::AWS_SecurityHub_Hub:
       return "AWS::SecurityHub::Hub";
     case ResourceType::AWS_CloudFront_Distribution:
@@ -132,6 +143,10 @@ Aws::String GetNameForResourceType(ResourceType enumValue) {
       return "AWS::MSK::Cluster";
     case ResourceType::AWS_S3_Bucket:
       return "AWS::S3::Bucket";
+    case ResourceType::AWS_Bedrock_KnowledgeBase:
+      return "AWS::Bedrock::KnowledgeBase";
+    case ResourceType::AWS_XRay_TransactionSearchConfig:
+      return "AWS::XRay::TransactionSearchConfig";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

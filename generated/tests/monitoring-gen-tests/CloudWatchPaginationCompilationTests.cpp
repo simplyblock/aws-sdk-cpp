@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -10,6 +10,7 @@
 #include <aws/monitoring/CloudWatchPaginationBase.h>
 #include <aws/monitoring/model/DescribeAlarmHistoryPaginationTraits.h>
 #include <aws/monitoring/model/ListManagedInsightRulesPaginationTraits.h>
+#include <aws/monitoring/model/ListMetricDataQueryDefinitionsPaginationTraits.h>
 #include <aws/monitoring/model/ListMetricsPaginationTraits.h>
 #include <aws/monitoring/model/ListMetricStreamsPaginationTraits.h>
 #include <aws/monitoring/model/DescribeAnomalyDetectorsPaginationTraits.h>
@@ -27,6 +28,6 @@ class CloudWatchPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestS
 
 TEST_F(CloudWatchPaginationCompilationTest, CloudWatchPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

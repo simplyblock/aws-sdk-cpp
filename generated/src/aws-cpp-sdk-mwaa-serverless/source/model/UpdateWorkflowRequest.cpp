@@ -23,6 +23,10 @@ Aws::String UpdateWorkflowRequest::SerializePayload() const {
     payload.WithObject("DefinitionS3Location", m_definitionS3Location.Jsonize());
   }
 
+  if (m_codeHasBeenSet) {
+    payload.WithObject("Code", m_code.Jsonize());
+  }
+
   if (m_roleArnHasBeenSet) {
     payload.WithString("RoleArn", m_roleArn);
   }
@@ -41,6 +45,10 @@ Aws::String UpdateWorkflowRequest::SerializePayload() const {
 
   if (m_networkConfigurationHasBeenSet) {
     payload.WithObject("NetworkConfiguration", m_networkConfiguration.Jsonize());
+  }
+
+  if (m_environmentHasBeenSet) {
+    payload.WithObject("Environment", m_environment.Jsonize());
   }
 
   if (m_triggerModeHasBeenSet) {

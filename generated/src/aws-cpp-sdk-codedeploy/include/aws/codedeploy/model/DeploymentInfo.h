@@ -10,9 +10,11 @@
 #include <aws/codedeploy/model/BlueGreenDeploymentConfiguration.h>
 #include <aws/codedeploy/model/ComputePlatform.h>
 #include <aws/codedeploy/model/DeploymentCreator.h>
+#include <aws/codedeploy/model/DeploymentMode.h>
 #include <aws/codedeploy/model/DeploymentOverview.h>
 #include <aws/codedeploy/model/DeploymentStatus.h>
 #include <aws/codedeploy/model/DeploymentStyle.h>
+#include <aws/codedeploy/model/EC2DeploymentOptions.h>
 #include <aws/codedeploy/model/ErrorInformation.h>
 #include <aws/codedeploy/model/FileExistsBehavior.h>
 #include <aws/codedeploy/model/LoadBalancerInfo.h>
@@ -23,15 +25,15 @@
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace CodeDeploy {
 namespace Model {
@@ -44,9 +46,9 @@ namespace Model {
 class DeploymentInfo {
  public:
   AWS_CODEDEPLOY_API DeploymentInfo() = default;
-  AWS_CODEDEPLOY_API DeploymentInfo(Aws::Utils::Json::JsonView jsonValue);
-  AWS_CODEDEPLOY_API DeploymentInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_CODEDEPLOY_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_CODEDEPLOY_API DeploymentInfo(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CODEDEPLOY_API DeploymentInfo& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CODEDEPLOY_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -535,6 +537,30 @@ class DeploymentInfo {
 
   ///@{
   /**
+   * <p>The deployment's type. Valid values are:</p> <ul> <li> <p>
+   * <code>STANDARD</code>: The deployment installed the specified revision.</p>
+   * </li> <li> <p> <code>RESTART</code>: The deployment restarted the application on
+   * the target instances using the revision from the deployment group's last
+   * successful deployment, without downloading a new revision.</p> </li> </ul>
+   * <p>This field is absent for deployments created before
+   * <code>deploymentMode</code> existed, and for <code>STANDARD</code> deployments.
+   * An absent value must not be interpreted as <code>STANDARD</code>; it simply
+   * means no value was recorded either way.</p>
+   */
+  inline DeploymentMode GetDeploymentMode() const { return m_deploymentMode; }
+  inline bool DeploymentModeHasBeenSet() const { return m_deploymentModeHasBeenSet; }
+  inline void SetDeploymentMode(DeploymentMode value) {
+    m_deploymentModeHasBeenSet = true;
+    m_deploymentMode = value;
+  }
+  inline DeploymentInfo& WithDeploymentMode(DeploymentMode value) {
+    SetDeploymentMode(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>Messages that contain information about the status of a deployment.</p>
    */
   inline const Aws::Vector<Aws::String>& GetDeploymentStatusMessages() const { return m_deploymentStatusMessages; }
@@ -624,6 +650,22 @@ class DeploymentInfo {
     return *this;
   }
   ///@}
+
+  ///@{
+
+  inline const EC2DeploymentOptions& GetEc2DeploymentOptions() const { return m_ec2DeploymentOptions; }
+  inline bool Ec2DeploymentOptionsHasBeenSet() const { return m_ec2DeploymentOptionsHasBeenSet; }
+  template <typename Ec2DeploymentOptionsT = EC2DeploymentOptions>
+  void SetEc2DeploymentOptions(Ec2DeploymentOptionsT&& value) {
+    m_ec2DeploymentOptionsHasBeenSet = true;
+    m_ec2DeploymentOptions = std::forward<Ec2DeploymentOptionsT>(value);
+  }
+  template <typename Ec2DeploymentOptionsT = EC2DeploymentOptions>
+  DeploymentInfo& WithEc2DeploymentOptions(Ec2DeploymentOptionsT&& value) {
+    SetEc2DeploymentOptions(std::forward<Ec2DeploymentOptionsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_applicationName;
 
@@ -675,6 +717,8 @@ class DeploymentInfo {
 
   FileExistsBehavior m_fileExistsBehavior{FileExistsBehavior::NOT_SET};
 
+  DeploymentMode m_deploymentMode{DeploymentMode::NOT_SET};
+
   Aws::Vector<Aws::String> m_deploymentStatusMessages;
 
   ComputePlatform m_computePlatform{ComputePlatform::NOT_SET};
@@ -684,6 +728,8 @@ class DeploymentInfo {
   RelatedDeployments m_relatedDeployments;
 
   AlarmConfiguration m_overrideAlarmConfiguration;
+
+  EC2DeploymentOptions m_ec2DeploymentOptions;
   bool m_applicationNameHasBeenSet = false;
   bool m_deploymentGroupNameHasBeenSet = false;
   bool m_deploymentConfigNameHasBeenSet = false;
@@ -709,11 +755,13 @@ class DeploymentInfo {
   bool m_loadBalancerInfoHasBeenSet = false;
   bool m_additionalDeploymentStatusInfoHasBeenSet = false;
   bool m_fileExistsBehaviorHasBeenSet = false;
+  bool m_deploymentModeHasBeenSet = false;
   bool m_deploymentStatusMessagesHasBeenSet = false;
   bool m_computePlatformHasBeenSet = false;
   bool m_externalIdHasBeenSet = false;
   bool m_relatedDeploymentsHasBeenSet = false;
   bool m_overrideAlarmConfigurationHasBeenSet = false;
+  bool m_ec2DeploymentOptionsHasBeenSet = false;
 };
 
 }  // namespace Model

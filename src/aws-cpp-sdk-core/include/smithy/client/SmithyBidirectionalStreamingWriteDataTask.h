@@ -71,7 +71,7 @@ class AWS_CORE_LOCAL SmithyBidirectionalStreamingWriteDataTask final {
         m_request.get(), m_request->GetServiceRequestName(), pExecutor, authResolver);
     ctx->m_method = Aws::Http::HttpMethod::HTTP_POST;
 
-    bool resolvedIdenity = m_client->ResolveIdentityAuth(
+    bool resolvedIdentity = m_client->ResolveIdentityAuth(
         ctx,
         [](AwsSmithyClientBase::HttpResponseOutcome&& outcome) {
           if (!outcome.IsSuccess()) {
@@ -80,7 +80,7 @@ class AWS_CORE_LOCAL SmithyBidirectionalStreamingWriteDataTask final {
         },
         EndpointUpdateCallback(m_endpointCallback));
 
-    if (!resolvedIdenity) {
+    if (!resolvedIdentity) {
       m_handler(m_client, *m_request,
           OutcomeT(Aws::Client::AWSError<Aws::Client::CoreErrors>(
               Aws::Client::CoreErrors::CLIENT_SIGNING_FAILURE, "", "Failed to resolve identity", false)),
@@ -118,8 +118,12 @@ class AWS_CORE_LOCAL SmithyBidirectionalStreamingWriteDataTask final {
 
     // Wire initial response handler on httpRequest (CRT reads it from here)
     std::weak_ptr<RequestT> wReq = m_request;
+    std::weak_ptr<Aws::Utils::Stream::HttpWriteDataStreamBuf> wBuf = m_writeDataStreamBuf;
     httpRequest->SetHeadersReceivedEventHandler(
-        [wReq](const Aws::Http::HttpRequest*, Aws::Http::HttpResponse* response) {
+        [wReq, wBuf](const Aws::Http::HttpRequest*, Aws::Http::HttpResponse* response) {
+          if (auto buf = wBuf.lock()) {
+            buf->NotifyResponseStarted();
+          }
           auto req = wReq.lock();
           if (!req || !response) return;
           auto& cb = req->GetEventStreamHandler().GetInitialResponseCallbackEx();
@@ -152,8 +156,8 @@ class AWS_CORE_LOCAL SmithyBidirectionalStreamingWriteDataTask final {
     m_sem->ReleaseAll();
 
     // Wait for stream to complete
-    m_writeDataStreamBuf->WaitForStreamComplete();
     auto response = m_writeDataStreamBuf->GetResponse();
+    m_writeDataStreamBuf->WaitForStreamComplete();
 
     // Flush any remaining buffered response data through the EventDecoderStream
     if (response) {

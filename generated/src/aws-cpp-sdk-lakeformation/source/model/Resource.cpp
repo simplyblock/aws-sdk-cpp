@@ -18,6 +18,10 @@ namespace Model {
 Resource::Resource(JsonView jsonValue) { *this = jsonValue; }
 
 Resource& Resource::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("AnyResource")) {
+    m_anyResource = jsonValue.GetObject("AnyResource");
+    m_anyResourceHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("Catalog")) {
     m_catalog = jsonValue.GetObject("Catalog");
     m_catalogHasBeenSet = true;
@@ -54,11 +58,23 @@ Resource& Resource::operator=(JsonView jsonValue) {
     m_lFTagExpression = jsonValue.GetObject("LFTagExpression");
     m_lFTagExpressionHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("RLSPolicy")) {
+    m_rLSPolicy = jsonValue.GetObject("RLSPolicy");
+    m_rLSPolicyHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("UserDefinedFunction")) {
+    m_userDefinedFunction = jsonValue.GetObject("UserDefinedFunction");
+    m_userDefinedFunctionHasBeenSet = true;
+  }
   return *this;
 }
 
 JsonValue Resource::Jsonize() const {
   JsonValue payload;
+
+  if (m_anyResourceHasBeenSet) {
+    payload.WithObject("AnyResource", m_anyResource.Jsonize());
+  }
 
   if (m_catalogHasBeenSet) {
     payload.WithObject("Catalog", m_catalog.Jsonize());
@@ -94,6 +110,14 @@ JsonValue Resource::Jsonize() const {
 
   if (m_lFTagExpressionHasBeenSet) {
     payload.WithObject("LFTagExpression", m_lFTagExpression.Jsonize());
+  }
+
+  if (m_rLSPolicyHasBeenSet) {
+    payload.WithObject("RLSPolicy", m_rLSPolicy.Jsonize());
+  }
+
+  if (m_userDefinedFunctionHasBeenSet) {
+    payload.WithObject("UserDefinedFunction", m_userDefinedFunction.Jsonize());
   }
 
   return payload;

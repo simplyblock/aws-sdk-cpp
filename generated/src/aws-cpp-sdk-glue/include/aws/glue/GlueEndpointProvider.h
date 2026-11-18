@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/glue/GlueEndpointRules.h>
 #include <aws/glue/Glue_EXPORTS.h>
 
 namespace Aws {
 namespace Glue {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using GlueClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using GlueBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using GlueEndpointProviderBase = EndpointProviderBase<GlueClientConfiguration, GlueBuiltInParameters, GlueClientContextParameters>;
 
-using GlueDefaultEpProviderBase = DefaultEndpointProvider<GlueClientConfiguration, GlueBuiltInParameters, GlueClientContextParameters>;
+using GlueDefaultEpProviderBase = BDDEndpointProvider<GlueClientConfiguration, GlueBuiltInParameters, GlueClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,8 +39,7 @@ class AWS_GLUE_API GlueEndpointProvider : public GlueDefaultEpProviderBase {
  public:
   using GlueResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  GlueEndpointProvider()
-      : GlueDefaultEpProviderBase(Aws::Glue::GlueEndpointRules::GetRulesBlob(), Aws::Glue::GlueEndpointRules::RulesBlobSize) {}
+  GlueEndpointProvider();
 
   ~GlueEndpointProvider() {}
 };

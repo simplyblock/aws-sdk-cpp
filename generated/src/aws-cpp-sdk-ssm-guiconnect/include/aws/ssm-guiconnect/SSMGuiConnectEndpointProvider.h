@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ssm-guiconnect/SSMGuiConnectEndpointRules.h>
 #include <aws/ssm-guiconnect/SSMGuiConnect_EXPORTS.h>
 
 namespace Aws {
 namespace SSMGuiConnect {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SSMGuiConnectClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using SSMGuiConnectEndpointProviderBase =
     EndpointProviderBase<SSMGuiConnectClientConfiguration, SSMGuiConnectBuiltInParameters, SSMGuiConnectClientContextParameters>;
 
 using SSMGuiConnectDefaultEpProviderBase =
-    DefaultEndpointProvider<SSMGuiConnectClientConfiguration, SSMGuiConnectBuiltInParameters, SSMGuiConnectClientContextParameters>;
+    BDDEndpointProvider<SSMGuiConnectClientConfiguration, SSMGuiConnectBuiltInParameters, SSMGuiConnectClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_SSMGUICONNECT_API SSMGuiConnectEndpointProvider : public SSMGuiConnect
  public:
   using SSMGuiConnectResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SSMGuiConnectEndpointProvider()
-      : SSMGuiConnectDefaultEpProviderBase(Aws::SSMGuiConnect::SSMGuiConnectEndpointRules::GetRulesBlob(),
-                                           Aws::SSMGuiConnect::SSMGuiConnectEndpointRules::RulesBlobSize) {}
+  SSMGuiConnectEndpointProvider();
 
   ~SSMGuiConnectEndpointProvider() {}
 };

@@ -58,6 +58,7 @@ file(GLOB ENDPOINT_INTERNAL_HEADERS "include/aws/core/endpoint/internal/*.h")
 file(GLOB MONITORING_HEADERS "include/aws/core/monitoring/*.h")
 file(GLOB PLATFORM_HEADERS "include/aws/core/platform/*.h")
 file(GLOB UTILS_HEADERS "include/aws/core/utils/*.h")
+file(GLOB UTILS_NUMERIC_HEADERS "include/aws/core/utils/numeric/*.h")
 file(GLOB UTILS_EVENT_HEADERS "include/aws/core/utils/event/*.h")
 file(GLOB UTILS_BASE64_HEADERS "include/aws/core/utils/base64/*.h")
 file(GLOB UTILS_CHECKSUM_HEADERS "include/aws/core/utils/checksum/*.h")
@@ -275,6 +276,7 @@ file(GLOB AWS_NATIVE_SDK_COMMON_HEADERS
   ${HTTP_CLIENT_HEADERS}
   ${PLATFORM_HEADERS}
   ${UTILS_HEADERS}
+  ${UTILS_NUMERIC_HEADERS}
   ${UTILS_EVENT_HEADERS}
   ${UTILS_BASE64_HEADERS}
   ${UTILS_CHECKSUM_HEADERS}
@@ -426,6 +428,7 @@ if(MSVC)
     source_group("Header Files\\aws\\core\\monitoring" FILES ${MONITORING_HEADERS})
     source_group("Header Files\\aws\\core\\platform" FILES ${PLATFORM_HEADERS})
     source_group("Header Files\\aws\\core\\utils" FILES ${UTILS_HEADERS})
+    source_group("Header Files\\aws\\core\\utils\\numeric" FILES ${UTILS_NUMERIC_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\base64" FILES ${UTILS_BASE64_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\checksum" FILES ${UTILS_CHECKSUM_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\crypto" FILES ${UTILS_CRYPTO_HEADERS})
@@ -705,7 +708,12 @@ install (FILES ${AWS_AUTH_SIGNER_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/c
 install (FILES ${AWS_AUTH_SIGNER_PROVIDER_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/auth/signer-provider)
 install (FILES ${AWS_AUTH_BEARER_TOKEN_PROVIDER_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/auth/bearer-token-provider)
 install (FILES ${AWS_CLIENT_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/client)
-install (FILES ${AWS_INTERNAL_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/internal)
+set(AWS_INSTALLED_INTERNAL_HEADERS ${AWS_INTERNAL_HEADERS})
+# Used only to build core; not part of the installed SDK.
+list(REMOVE_ITEM AWS_INSTALLED_INTERNAL_HEADERS
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/aws/core/internal/RetryErrorClassification.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/aws/core/internal/RetryStrategyImpl.h")
+install (FILES ${AWS_INSTALLED_INTERNAL_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/internal)
 install (FILES ${NET_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/net)
 install (FILES ${HTTP_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/http)
 install (FILES ${HTTP_STANDARD_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/http/standard)

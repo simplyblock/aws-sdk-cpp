@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-cur "C++ SDK for the AWS cur service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-cur "C++ SDK for AWS Cost and Usage Report Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_CUR_HEADERS
     "include/aws/cur/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CUR_HEADERS
 
 file(GLOB AWS_CUR_MODEL_HEADERS
     "include/aws/cur/model/*.h"
+)
+
+file(GLOB AWS_CUR_INTERNAL_HEADERS
+    "include/aws/cur/internal/*.h"
 )
 
 file(GLOB AWS_CUR_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CUR_MODEL_SOURCE
 
 file(GLOB CUR_UNIFIED_HEADERS
     ${AWS_CUR_HEADERS}
+    ${AWS_CUR_INTERNAL_HEADERS}
     ${AWS_CUR_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\cur" FILES ${AWS_CUR_HEADERS})
+        source_group("Header Files\\aws\\cur\\internal" FILES ${AWS_CUR_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\cur\\model" FILES ${AWS_CUR_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CUR_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CUR_MODEL_SOURCE})

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-s3vectors "C++ SDK for the AWS s3vectors service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-s3vectors "C++ SDK for Amazon S3 Vectors" aws-cpp-sdk-core)
 
 file(GLOB AWS_S3VECTORS_HEADERS
     "include/aws/s3vectors/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_S3VECTORS_HEADERS
 
 file(GLOB AWS_S3VECTORS_MODEL_HEADERS
     "include/aws/s3vectors/model/*.h"
+)
+
+file(GLOB AWS_S3VECTORS_INTERNAL_HEADERS
+    "include/aws/s3vectors/internal/*.h"
 )
 
 file(GLOB AWS_S3VECTORS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_S3VECTORS_MODEL_SOURCE
 
 file(GLOB S3VECTORS_UNIFIED_HEADERS
     ${AWS_S3VECTORS_HEADERS}
+    ${AWS_S3VECTORS_INTERNAL_HEADERS}
     ${AWS_S3VECTORS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\s3vectors" FILES ${AWS_S3VECTORS_HEADERS})
+        source_group("Header Files\\aws\\s3vectors\\internal" FILES ${AWS_S3VECTORS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\s3vectors\\model" FILES ${AWS_S3VECTORS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_S3VECTORS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_S3VECTORS_MODEL_SOURCE})

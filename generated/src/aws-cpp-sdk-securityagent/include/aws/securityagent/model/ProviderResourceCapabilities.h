@@ -5,10 +5,12 @@
 
 #pragma once
 #include <aws/securityagent/SecurityAgent_EXPORTS.h>
+#include <aws/securityagent/model/AzureDevOpsResourceCapabilities.h>
 #include <aws/securityagent/model/BitbucketResourceCapabilities.h>
 #include <aws/securityagent/model/ConfluenceResourceCapabilities.h>
 #include <aws/securityagent/model/GitHubResourceCapabilities.h>
 #include <aws/securityagent/model/GitLabResourceCapabilities.h>
+#include <aws/securityagent/model/JiraResourceCapabilities.h>
 
 #include <utility>
 
@@ -101,6 +103,42 @@ class ProviderResourceCapabilities {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The Azure DevOps-specific resource capabilities.</p>
+   */
+  inline const AzureDevOpsResourceCapabilities& GetAzureDevOps() const { return m_azureDevOps; }
+  inline bool AzureDevOpsHasBeenSet() const { return m_azureDevOpsHasBeenSet; }
+  template <typename AzureDevOpsT = AzureDevOpsResourceCapabilities>
+  void SetAzureDevOps(AzureDevOpsT&& value) {
+    m_azureDevOpsHasBeenSet = true;
+    m_azureDevOps = std::forward<AzureDevOpsT>(value);
+  }
+  template <typename AzureDevOpsT = AzureDevOpsResourceCapabilities>
+  ProviderResourceCapabilities& WithAzureDevOps(AzureDevOpsT&& value) {
+    SetAzureDevOps(std::forward<AzureDevOpsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Jira-specific resource capabilities.</p>
+   */
+  inline const JiraResourceCapabilities& GetJira() const { return m_jira; }
+  inline bool JiraHasBeenSet() const { return m_jiraHasBeenSet; }
+  template <typename JiraT = JiraResourceCapabilities>
+  void SetJira(JiraT&& value) {
+    m_jiraHasBeenSet = true;
+    m_jira = std::forward<JiraT>(value);
+  }
+  template <typename JiraT = JiraResourceCapabilities>
+  ProviderResourceCapabilities& WithJira(JiraT&& value) {
+    SetJira(std::forward<JiraT>(value));
+    return *this;
+  }
+  ///@}
  private:
   GitHubResourceCapabilities m_github;
 
@@ -109,10 +147,16 @@ class ProviderResourceCapabilities {
   BitbucketResourceCapabilities m_bitbucket;
 
   ConfluenceResourceCapabilities m_confluence;
+
+  AzureDevOpsResourceCapabilities m_azureDevOps;
+
+  JiraResourceCapabilities m_jira;
   bool m_githubHasBeenSet = false;
   bool m_gitlabHasBeenSet = false;
   bool m_bitbucketHasBeenSet = false;
   bool m_confluenceHasBeenSet = false;
+  bool m_azureDevOpsHasBeenSet = false;
+  bool m_jiraHasBeenSet = false;
 };
 
 }  // namespace Model

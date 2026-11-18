@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/cloudsearch/CloudSearchEndpointRules.h>
 #include <aws/cloudsearch/CloudSearch_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace CloudSearch {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using CloudSearchClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using CloudSearchEndpointProviderBase =
     EndpointProviderBase<CloudSearchClientConfiguration, CloudSearchBuiltInParameters, CloudSearchClientContextParameters>;
 
 using CloudSearchDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudSearchClientConfiguration, CloudSearchBuiltInParameters, CloudSearchClientContextParameters>;
+    BDDEndpointProvider<CloudSearchClientConfiguration, CloudSearchBuiltInParameters, CloudSearchClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_CLOUDSEARCH_API CloudSearchEndpointProvider : public CloudSearchDefaul
  public:
   using CloudSearchResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  CloudSearchEndpointProvider()
-      : CloudSearchDefaultEpProviderBase(Aws::CloudSearch::CloudSearchEndpointRules::GetRulesBlob(),
-                                         Aws::CloudSearch::CloudSearchEndpointRules::RulesBlobSize) {}
+  CloudSearchEndpointProvider();
 
   ~CloudSearchEndpointProvider() {}
 };

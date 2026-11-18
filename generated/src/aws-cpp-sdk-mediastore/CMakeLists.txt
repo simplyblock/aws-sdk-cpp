@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-mediastore "C++ SDK for the AWS mediastore service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-mediastore "C++ SDK for AWS Elemental MediaStore" aws-cpp-sdk-core)
 
 file(GLOB AWS_MEDIASTORE_HEADERS
     "include/aws/mediastore/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MEDIASTORE_HEADERS
 
 file(GLOB AWS_MEDIASTORE_MODEL_HEADERS
     "include/aws/mediastore/model/*.h"
+)
+
+file(GLOB AWS_MEDIASTORE_INTERNAL_HEADERS
+    "include/aws/mediastore/internal/*.h"
 )
 
 file(GLOB AWS_MEDIASTORE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MEDIASTORE_MODEL_SOURCE
 
 file(GLOB MEDIASTORE_UNIFIED_HEADERS
     ${AWS_MEDIASTORE_HEADERS}
+    ${AWS_MEDIASTORE_INTERNAL_HEADERS}
     ${AWS_MEDIASTORE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\mediastore" FILES ${AWS_MEDIASTORE_HEADERS})
+        source_group("Header Files\\aws\\mediastore\\internal" FILES ${AWS_MEDIASTORE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\mediastore\\model" FILES ${AWS_MEDIASTORE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MEDIASTORE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MEDIASTORE_MODEL_SOURCE})

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-sagemaker-runtime "C++ SDK for the AWS sagemaker-runtime service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-sagemaker-runtime "C++ SDK for Amazon SageMaker Runtime" aws-cpp-sdk-core)
 
 file(GLOB AWS_SAGEMAKER-RUNTIME_HEADERS
     "include/aws/sagemaker-runtime/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SAGEMAKER-RUNTIME_HEADERS
 
 file(GLOB AWS_SAGEMAKER-RUNTIME_MODEL_HEADERS
     "include/aws/sagemaker-runtime/model/*.h"
+)
+
+file(GLOB AWS_SAGEMAKER-RUNTIME_INTERNAL_HEADERS
+    "include/aws/sagemaker-runtime/internal/*.h"
 )
 
 file(GLOB AWS_SAGEMAKER-RUNTIME_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SAGEMAKER-RUNTIME_MODEL_SOURCE
 
 file(GLOB SAGEMAKER-RUNTIME_UNIFIED_HEADERS
     ${AWS_SAGEMAKER-RUNTIME_HEADERS}
+    ${AWS_SAGEMAKER-RUNTIME_INTERNAL_HEADERS}
     ${AWS_SAGEMAKER-RUNTIME_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\sagemaker-runtime" FILES ${AWS_SAGEMAKER-RUNTIME_HEADERS})
+        source_group("Header Files\\aws\\sagemaker-runtime\\internal" FILES ${AWS_SAGEMAKER-RUNTIME_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\sagemaker-runtime\\model" FILES ${AWS_SAGEMAKER-RUNTIME_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SAGEMAKER-RUNTIME_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SAGEMAKER-RUNTIME_MODEL_SOURCE})

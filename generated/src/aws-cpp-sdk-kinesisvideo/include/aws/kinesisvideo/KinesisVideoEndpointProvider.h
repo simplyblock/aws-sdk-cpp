@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/kinesisvideo/KinesisVideoEndpointRules.h>
 #include <aws/kinesisvideo/KinesisVideo_EXPORTS.h>
 
 namespace Aws {
 namespace KinesisVideo {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using KinesisVideoClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using KinesisVideoEndpointProviderBase =
     EndpointProviderBase<KinesisVideoClientConfiguration, KinesisVideoBuiltInParameters, KinesisVideoClientContextParameters>;
 
 using KinesisVideoDefaultEpProviderBase =
-    DefaultEndpointProvider<KinesisVideoClientConfiguration, KinesisVideoBuiltInParameters, KinesisVideoClientContextParameters>;
+    BDDEndpointProvider<KinesisVideoClientConfiguration, KinesisVideoBuiltInParameters, KinesisVideoClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_KINESISVIDEO_API KinesisVideoEndpointProvider : public KinesisVideoDef
  public:
   using KinesisVideoResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  KinesisVideoEndpointProvider()
-      : KinesisVideoDefaultEpProviderBase(Aws::KinesisVideo::KinesisVideoEndpointRules::GetRulesBlob(),
-                                          Aws::KinesisVideo::KinesisVideoEndpointRules::RulesBlobSize) {}
+  KinesisVideoEndpointProvider();
 
   ~KinesisVideoEndpointProvider() {}
 };

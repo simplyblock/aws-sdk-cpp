@@ -7,6 +7,7 @@
 #include <aws/connect/ConnectRequest.h>
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/model/TaskTemplateConstraints.h>
+#include <aws/connect/model/TaskTemplateContactHooks.h>
 #include <aws/connect/model/TaskTemplateDefaults.h>
 #include <aws/connect/model/TaskTemplateField.h>
 #include <aws/connect/model/TaskTemplateStatus.h>
@@ -93,7 +94,9 @@ class CreateTaskTemplateRequest : public ConnectRequest {
   ///@{
   /**
    * <p>The identifier of the flow that runs by default when a task is created by
-   * referencing this template.</p>
+   * referencing this template.</p> <p>Although this parameter is marked as optional,
+   * the request must contain either a <code>ContactFlowId</code> or a field of type
+   * <code>QUICK_CONNECT</code>.</p>
    */
   inline const Aws::String& GetContactFlowId() const { return m_contactFlowId; }
   inline bool ContactFlowIdHasBeenSet() const { return m_contactFlowIdHasBeenSet; }
@@ -130,7 +133,30 @@ class CreateTaskTemplateRequest : public ConnectRequest {
 
   ///@{
   /**
-   * <p>Constraints that are applicable to the fields listed.</p>
+   * <p>The event hooks that are set on tasks created by using this template.</p>
+   */
+  inline const TaskTemplateContactHooks& GetContactHooks() const { return m_contactHooks; }
+  inline bool ContactHooksHasBeenSet() const { return m_contactHooksHasBeenSet; }
+  template <typename ContactHooksT = TaskTemplateContactHooks>
+  void SetContactHooks(ContactHooksT&& value) {
+    m_contactHooksHasBeenSet = true;
+    m_contactHooks = std::forward<ContactHooksT>(value);
+  }
+  template <typename ContactHooksT = TaskTemplateContactHooks>
+  CreateTaskTemplateRequest& WithContactHooks(ContactHooksT&& value) {
+    SetContactHooks(std::forward<ContactHooksT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Constraints that are applicable to the fields listed. Although this parameter
+   * is marked as optional in the API model, the service requires it when calling
+   * <code>CreateTaskTemplate</code> or <code>UpdateTaskTemplate</code>. The
+   * <code>RequiredFields</code> array must contain at least one element, and the
+   * field of type <code>NAME</code> must be included in
+   * <code>RequiredFields</code>.</p>
    */
   inline const TaskTemplateConstraints& GetConstraints() const { return m_constraints; }
   inline bool ConstraintsHasBeenSet() const { return m_constraintsHasBeenSet; }
@@ -186,7 +212,10 @@ class CreateTaskTemplateRequest : public ConnectRequest {
 
   ///@{
   /**
-   * <p>Fields that are part of the template.</p>
+   * <p>Fields that are part of the template.</p> <p>The request must contain exactly
+   * one field of type <code>NAME</code>. This field must also be listed in the
+   * <code>RequiredFields</code> array within the <code>Constraints</code>
+   * parameter.</p>
    */
   inline const Aws::Vector<TaskTemplateField>& GetFields() const { return m_fields; }
   inline bool FieldsHasBeenSet() const { return m_fieldsHasBeenSet; }
@@ -240,6 +269,8 @@ class CreateTaskTemplateRequest : public ConnectRequest {
 
   Aws::String m_selfAssignFlowId;
 
+  TaskTemplateContactHooks m_contactHooks;
+
   TaskTemplateConstraints m_constraints;
 
   TaskTemplateDefaults m_defaults;
@@ -254,6 +285,7 @@ class CreateTaskTemplateRequest : public ConnectRequest {
   bool m_descriptionHasBeenSet = false;
   bool m_contactFlowIdHasBeenSet = false;
   bool m_selfAssignFlowIdHasBeenSet = false;
+  bool m_contactHooksHasBeenSet = false;
   bool m_constraintsHasBeenSet = false;
   bool m_defaultsHasBeenSet = false;
   bool m_statusHasBeenSet = false;

@@ -8,6 +8,7 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/lambda-core/LambdaCore_EXPORTS.h>
 #include <aws/lambda-core/model/ComputeResourceType.h>
+#include <aws/lambda-core/model/ElasticIpConfiguration.h>
 #include <aws/lambda-core/model/NetworkProtocol.h>
 
 #include <utility>
@@ -63,8 +64,8 @@ class NetworkConnectorVpcEgressConfiguration {
 
   ///@{
   /**
-   * <p>The IDs of the VPC security groups to attach to the ENIs. Specify 0 to 5
-   * security groups. All security groups must be in the same VPC as the subnets.</p>
+   * <p>The IDs of the VPC security groups to attach to the ENIs. All security groups
+   * must be in the same VPC as the subnets.</p>
    */
   inline const Aws::Vector<Aws::String>& GetSecurityGroupIds() const { return m_securityGroupIds; }
   inline bool SecurityGroupIdsHasBeenSet() const { return m_securityGroupIdsHasBeenSet; }
@@ -105,8 +106,9 @@ class NetworkConnectorVpcEgressConfiguration {
 
   ///@{
   /**
-   * <p>The types of Lambda compute resources that can use this connector. Currently,
-   * only <code>MicroVm</code> is supported.</p>
+   * <p>The types of Lambda compute resources that can use this connector. Valid
+   * values are <code>MicroVm</code> and <code>WebFunction</code>. Specify exactly
+   * one value.</p>
    */
   inline const Aws::Vector<ComputeResourceType>& GetAssociatedComputeResourceTypes() const { return m_associatedComputeResourceTypes; }
   inline bool AssociatedComputeResourceTypesHasBeenSet() const { return m_associatedComputeResourceTypesHasBeenSet; }
@@ -126,6 +128,27 @@ class NetworkConnectorVpcEgressConfiguration {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The Elastic IP configuration for the connector's ENIs. Specify
+   * <code>ServiceManaged</code> to have Lambda assign a service-managed Elastic IP
+   * address to each ENI. The operator role must allow
+   * <code>ec2:AllocateAddress</code> and <code>ec2:AssociateAddress</code>.</p>
+   */
+  inline const ElasticIpConfiguration& GetElasticIpConfiguration() const { return m_elasticIpConfiguration; }
+  inline bool ElasticIpConfigurationHasBeenSet() const { return m_elasticIpConfigurationHasBeenSet; }
+  template <typename ElasticIpConfigurationT = ElasticIpConfiguration>
+  void SetElasticIpConfiguration(ElasticIpConfigurationT&& value) {
+    m_elasticIpConfigurationHasBeenSet = true;
+    m_elasticIpConfiguration = std::forward<ElasticIpConfigurationT>(value);
+  }
+  template <typename ElasticIpConfigurationT = ElasticIpConfiguration>
+  NetworkConnectorVpcEgressConfiguration& WithElasticIpConfiguration(ElasticIpConfigurationT&& value) {
+    SetElasticIpConfiguration(std::forward<ElasticIpConfigurationT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::Vector<Aws::String> m_subnetIds;
 
@@ -134,10 +157,13 @@ class NetworkConnectorVpcEgressConfiguration {
   NetworkProtocol m_networkProtocol{NetworkProtocol::NOT_SET};
 
   Aws::Vector<ComputeResourceType> m_associatedComputeResourceTypes;
+
+  ElasticIpConfiguration m_elasticIpConfiguration;
   bool m_subnetIdsHasBeenSet = false;
   bool m_securityGroupIdsHasBeenSet = false;
   bool m_networkProtocolHasBeenSet = false;
   bool m_associatedComputeResourceTypesHasBeenSet = false;
+  bool m_elasticIpConfigurationHasBeenSet = false;
 };
 
 }  // namespace Model

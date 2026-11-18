@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -12,6 +12,8 @@
 #include <aws/mediaconnect/model/ListRouterNetworkInterfacesPaginationTraits.h>
 #include <aws/mediaconnect/model/ListRouterInputsPaginationTraits.h>
 #include <aws/mediaconnect/model/ListEntitlementsPaginationTraits.h>
+#include <aws/mediaconnect/model/ListDestinationEndpointsPaginationTraits.h>
+#include <aws/mediaconnect/model/ListSourceEndpointsPaginationTraits.h>
 #include <aws/mediaconnect/model/ListGatewaysPaginationTraits.h>
 #include <aws/mediaconnect/model/ListRouterOutputsPaginationTraits.h>
 #include <aws/mediaconnect/model/ListBridgesPaginationTraits.h>
@@ -27,6 +29,6 @@ class MediaConnectPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTes
 
 TEST_F(MediaConnectPaginationCompilationTest, MediaConnectPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

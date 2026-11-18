@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -32,6 +32,7 @@
 #include <aws/deadline/model/ListStepsPaginationTraits.h>
 #include <aws/deadline/model/ListSessionActionsPaginationTraits.h>
 #include <aws/deadline/model/ListQueueFleetAssociationsPaginationTraits.h>
+#include <aws/deadline/model/ListMembershipsPaginationTraits.h>
 #include <aws/deadline/model/ListSessionsPaginationTraits.h>
 #include <aws/deadline/model/ListSessionsForWorkerPaginationTraits.h>
 #include <aws/deadline/model/ListBudgetsPaginationTraits.h>
@@ -47,6 +48,6 @@ class deadlinePaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSui
 
 TEST_F(deadlinePaginationCompilationTest, deadlinePaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

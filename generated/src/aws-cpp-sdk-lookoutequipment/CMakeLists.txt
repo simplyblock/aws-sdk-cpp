@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-lookoutequipment "C++ SDK for the AWS lookoutequipment service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-lookoutequipment "C++ SDK for Amazon Lookout for Equipment" aws-cpp-sdk-core)
 
 file(GLOB AWS_LOOKOUTEQUIPMENT_HEADERS
     "include/aws/lookoutequipment/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LOOKOUTEQUIPMENT_HEADERS
 
 file(GLOB AWS_LOOKOUTEQUIPMENT_MODEL_HEADERS
     "include/aws/lookoutequipment/model/*.h"
+)
+
+file(GLOB AWS_LOOKOUTEQUIPMENT_INTERNAL_HEADERS
+    "include/aws/lookoutequipment/internal/*.h"
 )
 
 file(GLOB AWS_LOOKOUTEQUIPMENT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LOOKOUTEQUIPMENT_MODEL_SOURCE
 
 file(GLOB LOOKOUTEQUIPMENT_UNIFIED_HEADERS
     ${AWS_LOOKOUTEQUIPMENT_HEADERS}
+    ${AWS_LOOKOUTEQUIPMENT_INTERNAL_HEADERS}
     ${AWS_LOOKOUTEQUIPMENT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\lookoutequipment" FILES ${AWS_LOOKOUTEQUIPMENT_HEADERS})
+        source_group("Header Files\\aws\\lookoutequipment\\internal" FILES ${AWS_LOOKOUTEQUIPMENT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\lookoutequipment\\model" FILES ${AWS_LOOKOUTEQUIPMENT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LOOKOUTEQUIPMENT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LOOKOUTEQUIPMENT_MODEL_SOURCE})

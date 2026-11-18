@@ -30,6 +30,7 @@
 #include <aws/evs/model/DeleteEnvironmentHostRequest.h>
 #include <aws/evs/model/DeleteEnvironmentRequest.h>
 #include <aws/evs/model/DisassociateEipFromVlanRequest.h>
+#include <aws/evs/model/GetAccountSettingsRequest.h>
 #include <aws/evs/model/GetDepotUrlRequest.h>
 #include <aws/evs/model/GetEnvironmentRequest.h>
 #include <aws/evs/model/GetVersionsRequest.h>
@@ -39,6 +40,7 @@
 #include <aws/evs/model/ListEnvironmentsRequest.h>
 #include <aws/evs/model/ListTagsForResourceRequest.h>
 #include <aws/evs/model/ListVmEntitlementsRequest.h>
+#include <aws/evs/model/PutAccountSettingsRequest.h>
 #include <aws/evs/model/TagResourceRequest.h>
 #include <aws/evs/model/UntagResourceRequest.h>
 #include <aws/evs/model/UpdateEnvironmentConnectorRequest.h>
@@ -175,7 +177,8 @@ EVSClient::InvokeOperationOutcome EVSClient::InvokeServiceOperation(const Amazon
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -187,7 +190,7 @@ EVSClient::InvokeOperationOutcome EVSClient::InvokeServiceOperation(const Amazon
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -251,6 +254,12 @@ DisassociateEipFromVlanOutcome EVSClient::DisassociateEipFromVlan(const Disassoc
                             : DisassociateEipFromVlanOutcome(std::move(result.GetError()));
 }
 
+GetAccountSettingsOutcome EVSClient::GetAccountSettings(const GetAccountSettingsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetAccountSettingsOutcome(result.GetResultWithOwnership())
+                            : GetAccountSettingsOutcome(std::move(result.GetError()));
+}
+
 GetDepotUrlOutcome EVSClient::GetDepotUrl(const GetDepotUrlRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetDepotUrlOutcome(result.GetResultWithOwnership()) : GetDepotUrlOutcome(std::move(result.GetError()));
@@ -300,6 +309,12 @@ ListVmEntitlementsOutcome EVSClient::ListVmEntitlements(const ListVmEntitlements
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListVmEntitlementsOutcome(result.GetResultWithOwnership())
                             : ListVmEntitlementsOutcome(std::move(result.GetError()));
+}
+
+PutAccountSettingsOutcome EVSClient::PutAccountSettings(const PutAccountSettingsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? PutAccountSettingsOutcome(result.GetResultWithOwnership())
+                            : PutAccountSettingsOutcome(std::move(result.GetError()));
 }
 
 TagResourceOutcome EVSClient::TagResource(const TagResourceRequest& request) const {

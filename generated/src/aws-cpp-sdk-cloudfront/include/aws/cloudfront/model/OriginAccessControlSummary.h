@@ -91,8 +91,8 @@ class OriginAccessControlSummary {
   ///@{
   /**
    * <p>The signing protocol of the origin access control. The signing protocol
-   * determines how CloudFront signs (authenticates) requests. The only valid value
-   * is <code>sigv4</code>.</p>
+   * determines how CloudFront signs (authenticates) requests. The only valid values
+   * are <code>sigv4</code> and <code>sigv4a</code>.</p>
    */
   inline OriginAccessControlSigningProtocols GetSigningProtocol() const { return m_signingProtocol; }
   inline bool SigningProtocolHasBeenSet() const { return m_signingProtocolHasBeenSet; }
@@ -118,7 +118,10 @@ class OriginAccessControlSummary {
    * the viewer request contains the <code>Authorization</code> header, CloudFront
    * doesn't sign the origin request, but instead passes along the
    * <code>Authorization</code> header that it received in the viewer request.</p>
-   * </li> </ul>
+   * </li> <li> <p> <code>always-amz-auth</code> – CloudFront signs all origin
+   * requests with Amazon authentication headers, and forwards the viewer's
+   * <code>Authorization</code> header to the origin if one is present. This value is
+   * only valid with Lambda-Web origins.</p> </li> </ul>
    */
   inline OriginAccessControlSigningBehaviors GetSigningBehavior() const { return m_signingBehavior; }
   inline bool SigningBehaviorHasBeenSet() const { return m_signingBehaviorHasBeenSet; }

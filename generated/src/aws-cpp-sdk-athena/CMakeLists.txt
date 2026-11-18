@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-athena "C++ SDK for the AWS athena service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-athena "C++ SDK for Amazon Athena" aws-cpp-sdk-core)
 
 file(GLOB AWS_ATHENA_HEADERS
     "include/aws/athena/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ATHENA_HEADERS
 
 file(GLOB AWS_ATHENA_MODEL_HEADERS
     "include/aws/athena/model/*.h"
+)
+
+file(GLOB AWS_ATHENA_INTERNAL_HEADERS
+    "include/aws/athena/internal/*.h"
 )
 
 file(GLOB AWS_ATHENA_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ATHENA_MODEL_SOURCE
 
 file(GLOB ATHENA_UNIFIED_HEADERS
     ${AWS_ATHENA_HEADERS}
+    ${AWS_ATHENA_INTERNAL_HEADERS}
     ${AWS_ATHENA_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\athena" FILES ${AWS_ATHENA_HEADERS})
+        source_group("Header Files\\aws\\athena\\internal" FILES ${AWS_ATHENA_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\athena\\model" FILES ${AWS_ATHENA_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ATHENA_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ATHENA_MODEL_SOURCE})

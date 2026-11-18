@@ -10,23 +10,58 @@ import json
 import os
 import shutil
 import subprocess
+import sys
+from pathlib import Path
 from typing import List
 
 SMITHY_GENERATOR_LOCATION = "tools/code-generation/smithy/cpp-codegen"
 SMITHY_TO_C2J_MAP_FILE = "tools/code-generation/smithy/cpp-codegen/smithy2c2j_service_map.json"
-SMITHY_NAMPESPACE_MAPPING_FILE = "tools/code-generation/smithy/mapping/smithy-namespace-mapping.json"
+SMITHY_API_DESCRIPTIONS_DIR = "tools/code-generation/smithy/api-descriptions"
+BDD_BYTECODER_FILE = "crt/aws-crt-cpp/crt/aws-c-sdkutils/compiler/bdd-bytecoder.py"
+ENDPOINT_BDD_TRAIT = "smithy.rules#endpointBdd"
+
+
+def bdd_endpoint_services():
+    """C2J service names whose Smithy model carries the endpointBdd trait on its service shape,
+    i.e. the services the Smithy generator will emit a BDD blob for. C2J must skip its JSON
+    endpoint-rules blob for exactly this set; services outside it (legacy/mock, or models lacking
+    the trait) keep the JSON path. This MUST stay in sync with EndpointRulesCodegenPlugin's
+    service.hasTrait(ENDPOINT_BDD_TRAIT) check — divergence causes a missing GetRulesBlob() symbol."""
+    with open(os.path.abspath(SMITHY_TO_C2J_MAP_FILE), 'r') as file:
+        smithy_to_c2j = json.load(file)
+    descriptions_dir = Path(os.path.abspath(SMITHY_API_DESCRIPTIONS_DIR))
+    services = {
+        smithy_to_c2j.get(model.stem, model.stem)
+        for model in descriptions_dir.glob("*.json")
+        if _has_bdd_service_shape(model)
+    }
+    if "s3" in services:
+        services.add("s3-crt")
+    return services
+
+
+def _has_bdd_service_shape(model_path):
+    """True if any service shape in the Smithy model carries the endpointBdd trait."""
+    shapes = json.loads(model_path.read_text()).get("shapes", {}).values()
+    return any(
+        shape.get("type") == "service" and ENDPOINT_BDD_TRAIT in shape.get("traits", {})
+        for shape in shapes
+    )
 
 
 class SmithyCppGen(object):
     """Wrapper for Smithy C++ code generator for C++ SDK"""
 
-    def __init__(self, debug: bool, **kwargs):
+    def __init__(self, debug: bool, use_smithy_models: bool = False,
+                 smithy_model_services: set = None, use_smithy_bdd_endpoints: bool = False,
+                 **kwargs):
         self.debug = debug
+        self.use_smithy_models = use_smithy_models
+        self.smithy_model_services = smithy_model_services or set()
+        self.use_smithy_bdd_endpoints = use_smithy_bdd_endpoints
         with open(os.path.abspath(SMITHY_TO_C2J_MAP_FILE), 'r') as file:
             self.smithy_c2j_data = json.load(file)
             self.c2j_smithy_data = {value: key for key, value in self.smithy_c2j_data.items()}
-        with open(os.path.abspath(SMITHY_NAMPESPACE_MAPPING_FILE), 'r') as file:
-            self.smithy_namespace_mappings = json.load(file)
 
     def generate(self, clients_to_build: set):
         """Generate Smithy-based code for SDK clients"""
@@ -36,9 +71,18 @@ class SmithyCppGen(object):
         
         if self._generate_pagination(smithy_services, json.dumps(self.smithy_c2j_data)):
             target_dir = os.path.abspath("generated/src")
+            plugins_to_copy = ["smithy-cpp-codegen-paginators", "smithy-cpp-codegen-waiters"]
+            if self.use_smithy_models:
+                plugins_to_copy.append("smithy-cpp-codegen-models")
+                if self.debug:
+                    print(f"Including Smithy model files for: {sorted(self.smithy_model_services)}")
+            if self.use_smithy_bdd_endpoints:
+                plugins_to_copy.append("smithy-cpp-codegen-endpoint-rules")
+                if self.debug:
+                    print("Including Smithy-generated BDD endpoint-rules blob files")
             self._copy_cpp_codegen_contents(
                 os.path.abspath("tools/code-generation/smithy/cpp-codegen"),
-                ["smithy-cpp-codegen-paginators", "smithy-cpp-codegen-waiters"],
+                plugins_to_copy,
                 target_dir
             )
             return 0
@@ -49,9 +93,14 @@ class SmithyCppGen(object):
             "./gradlew",
             "build",
             "-PservicesFilter=" + ",".join(smithy_services),
-            "-Pc2jMap=" + smithy_c2j_data,
-            "-PnamespaceMappings=" + json.dumps(self.smithy_namespace_mappings)
+            "-Pc2jMap=" + smithy_c2j_data
         ]
+        if self.use_smithy_models:
+            smithy_codegen_command.append("-PgenerateModels=true")
+        if self.use_smithy_bdd_endpoints:
+            smithy_codegen_command.append("-PgenerateEndpointRules=true")
+            smithy_codegen_command.append("-PbddBytecoderPath=" + os.path.abspath(BDD_BYTECODER_FILE))
+            smithy_codegen_command.append("-PpythonExecutable=" + sys.executable)
         
         try:
             if self.debug:
@@ -96,7 +145,12 @@ class SmithyCppGen(object):
                 
                 # Map to c2j service name
                 c2j_service_name = self.smithy_c2j_data.get(smithy_service_name, smithy_service_name)
-                
+
+                # For model files, only copy if service is in the smithy_model_services set
+                if plugin_name == "smithy-cpp-codegen-models":
+                    if c2j_service_name not in self.smithy_model_services:
+                        continue
+
                 service_target_dir = os.path.join(target_dir, f"aws-cpp-sdk-{c2j_service_name}")
                 os.makedirs(service_target_dir, exist_ok=True)
                 

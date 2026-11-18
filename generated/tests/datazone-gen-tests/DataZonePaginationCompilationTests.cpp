@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -41,6 +41,7 @@
 #include <aws/datazone/model/ListProjectsPaginationTraits.h>
 #include <aws/datazone/model/ListEnvironmentProfilesPaginationTraits.h>
 #include <aws/datazone/model/ListSubscriptionsPaginationTraits.h>
+#include <aws/datazone/model/ListDesignationsPaginationTraits.h>
 #include <aws/datazone/model/ListProjectProfilesPaginationTraits.h>
 #include <aws/datazone/model/SearchTypesPaginationTraits.h>
 #include <aws/datazone/model/ListAccountsInAccountPoolPaginationTraits.h>
@@ -57,6 +58,6 @@ class DataZonePaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSui
 
 TEST_F(DataZonePaginationCompilationTest, DataZonePaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

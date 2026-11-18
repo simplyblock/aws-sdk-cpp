@@ -31,6 +31,10 @@ Aws::String GetShardIteratorRequest::SerializePayload() const {
     payload.WithString("SequenceNumber", m_sequenceNumber);
   }
 
+  if (m_timestampHasBeenSet) {
+    payload.WithDouble("Timestamp", m_timestamp.SecondsWithMSPrecision());
+  }
+
   return payload.View().WriteReadable();
 }
 
@@ -38,4 +42,14 @@ Aws::Http::HeaderValueCollection GetShardIteratorRequest::GetRequestSpecificHead
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "DynamoDBStreams_20120810.GetShardIterator"));
   return headers;
+}
+
+GetShardIteratorRequest::EndpointParameters GetShardIteratorRequest::GetEndpointContextParams() const {
+  EndpointParameters parameters;
+  // Operation context parameters
+  if (StreamArnHasBeenSet()) {
+    parameters.emplace_back(Aws::String("StreamArn"), this->GetStreamArn(),
+                            Aws::Endpoint::EndpointParameter::ParameterOrigin::OPERATION_CONTEXT);
+  }
+  return parameters;
 }

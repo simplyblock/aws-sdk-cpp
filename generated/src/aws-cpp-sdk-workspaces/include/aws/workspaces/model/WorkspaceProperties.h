@@ -5,6 +5,7 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/workspaces/WorkSpaces_EXPORTS.h>
 #include <aws/workspaces/model/Compute.h>
 #include <aws/workspaces/model/GlobalAcceleratorForWorkSpace.h>
@@ -16,10 +17,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace WorkSpaces {
 namespace Model {
@@ -32,9 +32,9 @@ namespace Model {
 class WorkspaceProperties {
  public:
   AWS_WORKSPACES_API WorkspaceProperties() = default;
-  AWS_WORKSPACES_API WorkspaceProperties(Aws::Utils::Json::JsonView jsonValue);
-  AWS_WORKSPACES_API WorkspaceProperties& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_WORKSPACES_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_WORKSPACES_API WorkspaceProperties(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_WORKSPACES_API WorkspaceProperties& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_WORKSPACES_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -67,13 +67,13 @@ class WorkspaceProperties {
    * <p>The time after a user logs off when WorkSpaces are automatically stopped.
    * Configured in 60-minute intervals.</p>
    */
-  inline int GetRunningModeAutoStopTimeoutInMinutes() const { return m_runningModeAutoStopTimeoutInMinutes; }
+  inline int64_t GetRunningModeAutoStopTimeoutInMinutes() const { return m_runningModeAutoStopTimeoutInMinutes; }
   inline bool RunningModeAutoStopTimeoutInMinutesHasBeenSet() const { return m_runningModeAutoStopTimeoutInMinutesHasBeenSet; }
-  inline void SetRunningModeAutoStopTimeoutInMinutes(int value) {
+  inline void SetRunningModeAutoStopTimeoutInMinutes(int64_t value) {
     m_runningModeAutoStopTimeoutInMinutesHasBeenSet = true;
     m_runningModeAutoStopTimeoutInMinutes = value;
   }
-  inline WorkspaceProperties& WithRunningModeAutoStopTimeoutInMinutes(int value) {
+  inline WorkspaceProperties& WithRunningModeAutoStopTimeoutInMinutes(int64_t value) {
     SetRunningModeAutoStopTimeoutInMinutes(value);
     return *this;
   }
@@ -86,13 +86,13 @@ class WorkspaceProperties {
    * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/modify-workspaces.html">Modify
    * a WorkSpace</a>.</p>
    */
-  inline int GetRootVolumeSizeGib() const { return m_rootVolumeSizeGib; }
+  inline int64_t GetRootVolumeSizeGib() const { return m_rootVolumeSizeGib; }
   inline bool RootVolumeSizeGibHasBeenSet() const { return m_rootVolumeSizeGibHasBeenSet; }
-  inline void SetRootVolumeSizeGib(int value) {
+  inline void SetRootVolumeSizeGib(int64_t value) {
     m_rootVolumeSizeGibHasBeenSet = true;
     m_rootVolumeSizeGib = value;
   }
-  inline WorkspaceProperties& WithRootVolumeSizeGib(int value) {
+  inline WorkspaceProperties& WithRootVolumeSizeGib(int64_t value) {
     SetRootVolumeSizeGib(value);
     return *this;
   }
@@ -105,13 +105,13 @@ class WorkspaceProperties {
    * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/modify-workspaces.html">Modify
    * a WorkSpace</a>.</p>
    */
-  inline int GetUserVolumeSizeGib() const { return m_userVolumeSizeGib; }
+  inline int64_t GetUserVolumeSizeGib() const { return m_userVolumeSizeGib; }
   inline bool UserVolumeSizeGibHasBeenSet() const { return m_userVolumeSizeGibHasBeenSet; }
-  inline void SetUserVolumeSizeGib(int value) {
+  inline void SetUserVolumeSizeGib(int64_t value) {
     m_userVolumeSizeGibHasBeenSet = true;
     m_userVolumeSizeGib = value;
   }
-  inline WorkspaceProperties& WithUserVolumeSizeGib(int value) {
+  inline WorkspaceProperties& WithUserVolumeSizeGib(int64_t value) {
     SetUserVolumeSizeGib(value);
     return *this;
   }
@@ -141,11 +141,11 @@ class WorkspaceProperties {
    * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/amazon-workspaces-protocols.html">
    * Protocols for Amazon WorkSpaces</a>.</p>  <ul> <li> <p>Only available for
    * WorkSpaces created with PCoIP bundles.</p> </li> <li> <p>The
-   * <code>Protocols</code> property is case sensitive. Ensure you use
-   * <code>PCOIP</code> or <code>DCV</code> (formerly WSP).</p> </li> <li>
-   * <p>Unavailable for Windows 7 WorkSpaces and WorkSpaces using GPU-based bundles
-   * (Graphics, GraphicsPro, Graphics.g4dn, GraphicsPro.g4dn, and Graphics.g6).</p>
-   * </li> </ul>
+   * <code>Protocols</code> property is case sensitive. Make sure you specify
+   * <code>PCOIP</code> or <code>WSP</code>. To use DCV, specify
+   * <code>WSP</code>.</p> </li> <li> <p>Unavailable for Windows 7 WorkSpaces and
+   * WorkSpaces using GPU-based bundles (Graphics, GraphicsPro, Graphics.g4dn,
+   * GraphicsPro.g4dn, Graphics.g6, and Graphics.g7).</p> </li> </ul>
    */
   inline const Aws::Vector<Protocol>& GetProtocols() const { return m_protocols; }
   inline bool ProtocolsHasBeenSet() const { return m_protocolsHasBeenSet; }
@@ -199,14 +199,33 @@ class WorkspaceProperties {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Specifies whether nested virtualization is enabled for the WorkSpace.</p>
+   * <p>For more information, see <a
+   * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/nested-virtualization.html">Nested
+   * virtualization for Amazon WorkSpaces</a>.</p>
+   */
+  inline bool GetNestedVirtualizationEnabled() const { return m_nestedVirtualizationEnabled; }
+  inline bool NestedVirtualizationEnabledHasBeenSet() const { return m_nestedVirtualizationEnabledHasBeenSet; }
+  inline void SetNestedVirtualizationEnabled(bool value) {
+    m_nestedVirtualizationEnabledHasBeenSet = true;
+    m_nestedVirtualizationEnabled = value;
+  }
+  inline WorkspaceProperties& WithNestedVirtualizationEnabled(bool value) {
+    SetNestedVirtualizationEnabled(value);
+    return *this;
+  }
+  ///@}
  private:
   RunningMode m_runningMode{RunningMode::NOT_SET};
 
-  int m_runningModeAutoStopTimeoutInMinutes{0};
+  int64_t m_runningModeAutoStopTimeoutInMinutes{0};
 
-  int m_rootVolumeSizeGib{0};
+  int64_t m_rootVolumeSizeGib{0};
 
-  int m_userVolumeSizeGib{0};
+  int64_t m_userVolumeSizeGib{0};
 
   Compute m_computeTypeName{Compute::NOT_SET};
 
@@ -215,6 +234,8 @@ class WorkspaceProperties {
   OperatingSystemName m_operatingSystemName{OperatingSystemName::NOT_SET};
 
   GlobalAcceleratorForWorkSpace m_globalAccelerator;
+
+  bool m_nestedVirtualizationEnabled{false};
   bool m_runningModeHasBeenSet = false;
   bool m_runningModeAutoStopTimeoutInMinutesHasBeenSet = false;
   bool m_rootVolumeSizeGibHasBeenSet = false;
@@ -223,6 +244,7 @@ class WorkspaceProperties {
   bool m_protocolsHasBeenSet = false;
   bool m_operatingSystemNameHasBeenSet = false;
   bool m_globalAcceleratorHasBeenSet = false;
+  bool m_nestedVirtualizationEnabledHasBeenSet = false;
 };
 
 }  // namespace Model

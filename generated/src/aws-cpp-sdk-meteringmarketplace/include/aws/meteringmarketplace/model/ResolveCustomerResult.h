@@ -7,6 +7,7 @@
 #include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/meteringmarketplace/MarketplaceMetering_EXPORTS.h>
+#include <aws/meteringmarketplace/model/Metadata.h>
 
 #include <utility>
 
@@ -24,8 +25,9 @@ namespace Model {
 /**
  * <p>The result of the <code>ResolveCustomer</code> operation. Contains the
  * <code>CustomerIdentifier</code> along with the
- * <code>CustomerAWSAccountId</code>, <code>ProductCode</code>, and
- * <code>LicenseArn</code>.</p><p><h3>See Also:</h3>   <a
+ * <code>CustomerAWSAccountId</code>, <code>ProductCode</code>,
+ * <code>LicenseArn</code>, and <code>Metadata</code>.</p><p><h3>See Also:</h3>
+ * <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/meteringmarketplace-2016-01-14/ResolveCustomerResult">AWS
  * API Reference</a></p>
  */
@@ -38,7 +40,9 @@ class ResolveCustomerResult {
   ///@{
   /**
    * <p>The <code>CustomerIdentifier</code> is used to identify an individual
-   * customer in your application.</p>
+   * customer in your application.</p>  <p>For new SaaS product
+   * integrations, this field is not populated. Use <code>CustomerAWSAccountId</code>
+   * and <code>LicenseArn</code> to identify customers instead.</p>
    */
   inline const Aws::String& GetCustomerIdentifier() const { return m_customerIdentifier; }
   template <typename CustomerIdentifierT = Aws::String>
@@ -115,6 +119,25 @@ class ResolveCustomerResult {
   ///@}
 
   ///@{
+  /**
+   * <p>The metadata associated with the resolved customer, including the
+   * <code>AgreementId</code> of the Amazon Web Services Marketplace agreement the
+   * customer accepted.</p>
+   */
+  inline const Metadata& GetMetadata() const { return m_metadata; }
+  template <typename MetadataT = Metadata>
+  void SetMetadata(MetadataT&& value) {
+    m_metadataHasBeenSet = true;
+    m_metadata = std::forward<MetadataT>(value);
+  }
+  template <typename MetadataT = Metadata>
+  ResolveCustomerResult& WithMetadata(MetadataT&& value) {
+    SetMetadata(std::forward<MetadataT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -139,12 +162,15 @@ class ResolveCustomerResult {
 
   Aws::String m_licenseArn;
 
+  Metadata m_metadata;
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_customerIdentifierHasBeenSet = false;
   bool m_productCodeHasBeenSet = false;
   bool m_customerAWSAccountIdHasBeenSet = false;
   bool m_licenseArnHasBeenSet = false;
+  bool m_metadataHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

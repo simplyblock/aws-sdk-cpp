@@ -19,11 +19,50 @@ namespace Organizations {
  * <p>Organizations is a web service that enables you to consolidate your multiple
  * Amazon Web Services accounts into an <i>organization</i> and centrally manage
  * your accounts and their resources.</p> <p>This guide provides descriptions of
- * the Organizations operations. For more information about using this service, see
- * the <a
+ * the Organizations API. For more information about using this service, see the <a
  * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html">Organizations
- * User Guide</a>.</p> <p> <b>Support and feedback for Organizations</b> </p> <p>We
- * welcome your feedback. You can post your feedback and questions in the <a
+ * User Guide</a>.</p> <p> <b>API version</b> </p> <p>This version of the
+ * Organizations API Reference documents the Organizations API version
+ * 2016-11-28.</p>  <p>As an alternative to using the API directly, you can
+ * use one of the Amazon Web Services SDKs, which consist of libraries and sample
+ * code for various programming languages and platforms (Java, Ruby, .NET, iOS,
+ * Android, and more). The SDKs provide a convenient way to create programmatic
+ * access to Organizations. For example, the SDKs take care of cryptographically
+ * signing requests, managing errors, and retrying requests automatically. For more
+ * information about the Amazon Web Services SDKs, including how to download and
+ * install them, see <a href="http://aws.amazon.com/tools/">Tools for Amazon Web
+ * Services</a>.</p>  <p>We recommend that you use the Amazon Web Services
+ * SDKs to make programmatic API calls to Organizations. However, you also can use
+ * the Organizations Query API to make direct calls to the Organizations web
+ * service. To learn more about the Organizations Query API, see <a
+ * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_query-requests.html">Calling
+ * the API by making HTTP Query requests</a> in the <i>Organizations User
+ * Guide</i>. Organizations supports GET and POST requests for all actions. That
+ * is, the API doesn't require you to use GET for some actions and POST for others.
+ * However, GET requests are subject to the limitation size of a URL. Therefore,
+ * for operations that require larger sizes, use a POST request.</p> <p> <b>Signing
+ * requests</b> </p> <p>When you send HTTP requests to Amazon Web Services, sign
+ * the requests so that Amazon Web Services can identify who sent them. You sign
+ * requests with your Amazon Web Services access key, which consists of an access
+ * key ID and a secret access key. We strongly recommend that you don't create an
+ * access key for your root account. Anyone who has the access key for your root
+ * account has unrestricted access to all the resources in your account. Instead,
+ * create an access key for an IAM user that has administrative permissions. As
+ * another option, use Amazon Web Services Security Token Service (Amazon Web
+ * Services STS) to generate temporary security credentials, and use those
+ * credentials to sign requests.</p> <p>To sign requests, we recommend that you use
+ * <a
+ * href="https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html">Signature
+ * Version 4</a>. If you have an existing application that uses Signature Version
+ * 2, you don't have to update it to use Signature Version 4. However, some
+ * operations now require Signature Version 4. The documentation for operations
+ * that require version 4 indicate this requirement.</p> <p>When you use the
+ * Command Line Interface (CLI) or one of the Amazon Web Services SDKs to make
+ * requests to Amazon Web Services, these tools automatically sign the requests for
+ * you with the access key that you specify when you configure the tools.</p> <p>In
+ * this release, each organization can have only one root.</p> <p> <b>Support and
+ * feedback for Organizations</b> </p> <p>We welcome your feedback. You can post
+ * your feedback and questions in the <a
  * href="https://forums.aws.amazon.com/forum.jspa?forumID=219">Organizations
  * support forum</a>. For more information about the Amazon Web Services Support
  * forums, see <a href="https://forums.aws.amazon.com/help.jspa">Forums
@@ -48,13 +87,20 @@ namespace Organizations {
  * endpoint:</p> <p> <code>--region us-east-1</code> <i>(from commercial Amazon Web
  * Services Regions outside of China)</i> </p> <p>or</p> <p> <code>--region
  * cn-northwest-1</code> <i>(from Amazon Web Services Regions in China)</i> </p>
- * </li> </ul> <p> <b>Recording API Requests</b> </p> <p>Organizations supports
- * CloudTrail, a service that records Amazon Web Services API calls for your Amazon
- * Web Services account and delivers log files to an Amazon S3 bucket. By using
- * information collected by CloudTrail, you can determine which requests the
- * Organizations service received, who made the request and when, and so on. For
- * more about Organizations and its support for CloudTrail, see <a
- * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_incident-response.html#orgs_cloudtrail-integration">Logging
+ * </li> </ul> <p> <b>How examples are presented</b> </p> <p>The JSON returned by
+ * the Organizations service as response to your requests arrives as a single long
+ * string without line breaks or formatting whitespace. The examples in this guide
+ * include both line breaks and whitespace to improve readability. When example
+ * input parameters also would result in long strings that would extend beyond the
+ * screen, we insert line breaks to enhance readability. Always submit the input as
+ * a single JSON text string.</p> <p> <b>Recording API Requests</b> </p>
+ * <p>Organizations supports CloudTrail, a service that records Amazon Web Services
+ * API calls for your Amazon Web Services account and delivers log files to an
+ * Amazon S3 bucket. By using information collected by CloudTrail, you can
+ * determine which requests the Organizations service received, who made the
+ * request and when, and so on. For more about Organizations and its support for
+ * CloudTrail, see <a
+ * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_security_incident-response.html#orgs_cloudtrail-integration">Logging
  * Organizations API calls with CloudTrail</a> in the <i>Organizations User
  * Guide</i>. To learn more about CloudTrail, including how to turn it on and find
  * your log files, see the <a
@@ -145,13 +191,21 @@ class AWS_ORGANIZATIONS_API OrganizationsClient : public Aws::Client::AWSJsonCli
    * is accepted, Organizations logs membership events in CloudTrail, available only
    * in the management account's event history. If the account was standalone and
    * joined a new organization, an <code>AccountJoinedOrganization</code> event is
-   * logged with <code>joinedMethod:Invited</code> and <code>joinedTime</code>
+   * logged with <code>joinedMethod:INVITED</code> and <code>joinedTime</code>
    * fields. If the account departed one organization and joined another, both an
    * <code>AccountDepartedOrganization</code> event with
-   * <code>departedMethod:Left</code> and <code>departedTime</code> and an
+   * <code>departureMethod:LEFT</code> and <code>departureTime</code> and an
    * <code>AccountJoinedOrganization</code> event with
-   * <code>joinedMethod:Invited</code> and <code>joinedTime</code> are logged in
-   * their respective management accounts.</p><p><h3>See Also:</h3>   <a
+   * <code>joinedMethod:INVITED</code> and <code>joinedTime</code> are logged in
+   * their respective management accounts.</p> <p>When a billing transfer
+   * (<code>TRANSFER_RESPONSIBILITY</code>) handshake is accepted, Organizations
+   * publishes a <code>ResponsibilityTransferAccepted</code> service event to
+   * CloudTrail. Each affected account receives this event, including upstream
+   * participants such as distributors in a chained transfer. For an example log
+   * entry, see <a
+   * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_cloudtrail-integration.html#Log-entries-accept-responsibility-transfer">Example
+   * log entries: AcceptResponsibilityTransfer</a> in the <i>Organizations User
+   * Guide</i>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/organizations-2016-11-28/AcceptHandshake">AWS
    * API Reference</a></p>
    */
@@ -205,6 +259,10 @@ class AWS_ORGANIZATIONS_API OrganizationsClient : public Aws::Client::AWSJsonCli
    * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_s3.html">S3_POLICY</a>
    * </p> </li> <li> <p> <a
    * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_network_security_director.html">NETWORK_SECURITY_DIRECTOR_POLICY</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_guardduty.html">GUARDDUTY_POLICY</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_security_hub_cspm.html">SECURITYHUB_CSPM_POLICY</a>
    * </p> </li> </ul> <p>You can only call this operation from the management account
    * or a member account that is a delegated administrator.</p><p><h3>See Also:</h3>
    * <a
@@ -307,8 +365,8 @@ class AWS_ORGANIZATIONS_API OrganizationsClient : public Aws::Client::AWSJsonCli
    * termination of the account after the 90-day waiting period, Organizations logs a
    * membership event in CloudTrail. The event is an
    * <code>AccountDepartedOrganization</code> event with
-   * <code>departedMethod:Cleaned</code> and <code>departedTime</code>. This event is
-   * available only in the management account's event history.</p><p><h3>See
+   * <code>departureMethod:CLEANED</code> and <code>departureTime</code>. This event
+   * is available only in the management account's event history.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/organizations-2016-11-28/CloseAccount">AWS
    * API Reference</a></p>
@@ -468,10 +526,10 @@ class AWS_ORGANIZATIONS_API OrganizationsClient : public Aws::Client::AWSJsonCli
    * though account initialization might still be in progress. You might need to wait
    * a few minutes before you can successfully access the account. To check the
    * status of the request, do one of the following:</p> <ul> <li> <p>Use the
-   * <code>OperationId</code> response element from this operation to provide as a
-   * parameter to the <a>DescribeCreateAccountStatus</a> operation.</p> </li> <li>
-   * <p>Check the CloudTrail log for the <code>CreateAccountResult</code> event. For
-   * information on using CloudTrail with Organizations, see <a
+   * <code>Id</code> response element from this operation to provide as a parameter
+   * to the <a>DescribeCreateAccountStatus</a> operation.</p> </li> <li> <p>Check the
+   * CloudTrail log for the <code>CreateAccountResult</code> event. For information
+   * on using CloudTrail with Organizations, see <a
    * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_security_incident-response.html">Logging
    * and monitoring in Organizations</a> in the <i>Organizations User Guide</i>.</p>
    * </li> </ul> <p>Additionally, the <code>AccountJoinedOrganization</code> event is
@@ -571,7 +629,7 @@ class AWS_ORGANIZATIONS_API OrganizationsClient : public Aws::Client::AWSJsonCli
    * you can't use organization policies.</p> <p>The
    * <code>AccountJoinedOrganization</code> event is logged in CloudTrail and is
    * available only in the management account's event history. This event includes
-   * <code>joinedMethod:Invited</code> and <code>joinedTime</code> fields to provide
+   * <code>joinedMethod:INVITED</code> and <code>joinedTime</code> fields to provide
    * context on how and when the account joined the organization.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/organizations-2016-11-28/CreateOrganization">AWS
@@ -704,7 +762,7 @@ class AWS_ORGANIZATIONS_API OrganizationsClient : public Aws::Client::AWSJsonCli
    * member accounts.</p> <p>When an organization is deleted, Organizations logs a
    * membership event in CloudTrail. The event is an
    * <code>AccountDepartedOrganization</code> event with
-   * <code>departedMethod:Left</code> and <code>departedTime</code>. This event is
+   * <code>departureMethod:LEFT</code> and <code>departureTime</code>. This event is
    * available only in the management account's event history.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/organizations-2016-11-28/DeleteOrganization">AWS
@@ -1507,7 +1565,7 @@ class AWS_ORGANIZATIONS_API OrganizationsClient : public Aws::Client::AWSJsonCli
    * operation from a member account.</p> <p>When an account leaves an organization,
    * Organizations logs a membership event in CloudTrail. The event is an
    * <code>AccountDepartedOrganization</code> event with
-   * <code>departedMethod:Left</code> and <code>departedTime</code>. This event is
+   * <code>departureMethod:LEFT</code> and <code>departureTime</code>. This event is
    * available only in the management account's event history.</p>  <ul>
    * <li> <p>The management account in an organization with all features enabled can
    * set service control policies (SCPs) that can restrict what administrators of
@@ -2381,13 +2439,13 @@ class AWS_ORGANIZATIONS_API OrganizationsClient : public Aws::Client::AWSJsonCli
    * instead.</p> <p>When an account is removed from an organization, Organizations
    * logs a membership event in CloudTrail. The event is an
    * <code>AccountDepartedOrganization</code> event with
-   * <code>departedMethod:Removed</code> and <code>departedTime</code>. This event is
-   * available only in the management account's event history.</p>  <ul>
-   * <li> <p>You can remove an account from your organization only if the account is
-   * configured with the information required to operate as a standalone account.
-   * When you create an account in an organization using the Organizations console,
-   * API, or CLI commands, the information required of standalone accounts is
-   * <i>not</i> automatically collected. For more information, see <a
+   * <code>departureMethod:REMOVED</code> and <code>departureTime</code>. This event
+   * is available only in the management account's event history.</p>
+   * <ul> <li> <p>You can remove an account from your organization only if the
+   * account is configured with the information required to operate as a standalone
+   * account. When you create an account in an organization using the Organizations
+   * console, API, or CLI commands, the information required of standalone accounts
+   * is <i>not</i> automatically collected. For more information, see <a
    * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_account-before-remove.html">Considerations
    * before removing an account from an organization</a> in the <i>Organizations User
    * Guide</i>.</p> </li> <li> <p>The account that you want to leave must not be a
@@ -2459,7 +2517,13 @@ class AWS_ORGANIZATIONS_API OrganizationsClient : public Aws::Client::AWSJsonCli
   /**
    * <p>Ends a transfer. A <i>transfer</i> is an arrangement between two management
    * accounts where one account designates the other with specified responsibilities
-   * for their organization.</p><p><h3>See Also:</h3>   <a
+   * for their organization.</p> <p>When a transfer ends, Organizations publishes a
+   * <code>ResponsibilityTransferTerminated</code> service event to CloudTrail. Each
+   * affected account receives this event, including upstream participants such as
+   * distributors in a chained transfer. For an example log entry, see <a
+   * href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_cloudtrail-integration.html#Log-entries-terminate-responsibility-transfer">Example
+   * log entries: TerminateResponsibilityTransfer</a> in the <i>Organizations User
+   * Guide</i>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/organizations-2016-11-28/TerminateResponsibilityTransfer">AWS
    * API Reference</a></p>
    */

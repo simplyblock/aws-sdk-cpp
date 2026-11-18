@@ -6,7 +6,9 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
+#include <aws/network-firewall/model/ContextSet.h>
 #include <aws/network-firewall/model/IPSet.h>
 #include <aws/network-firewall/model/PortSet.h>
 
@@ -14,10 +16,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace NetworkFirewall {
 namespace Model {
@@ -32,9 +33,9 @@ namespace Model {
 class RuleVariables {
  public:
   AWS_NETWORKFIREWALL_API RuleVariables() = default;
-  AWS_NETWORKFIREWALL_API RuleVariables(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API RuleVariables& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_NETWORKFIREWALL_API RuleVariables(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API RuleVariables& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -83,12 +84,40 @@ class RuleVariables {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>A list of context sets. Each context set lists resources from the context
+   * store that is associated with the firewall. </p>
+   */
+  inline const Aws::Map<Aws::String, ContextSet>& GetContextSets() const { return m_contextSets; }
+  inline bool ContextSetsHasBeenSet() const { return m_contextSetsHasBeenSet; }
+  template <typename ContextSetsT = Aws::Map<Aws::String, ContextSet>>
+  void SetContextSets(ContextSetsT&& value) {
+    m_contextSetsHasBeenSet = true;
+    m_contextSets = std::forward<ContextSetsT>(value);
+  }
+  template <typename ContextSetsT = Aws::Map<Aws::String, ContextSet>>
+  RuleVariables& WithContextSets(ContextSetsT&& value) {
+    SetContextSets(std::forward<ContextSetsT>(value));
+    return *this;
+  }
+  template <typename ContextSetsKeyT = Aws::String, typename ContextSetsValueT = ContextSet>
+  RuleVariables& AddContextSets(ContextSetsKeyT&& key, ContextSetsValueT&& value) {
+    m_contextSetsHasBeenSet = true;
+    m_contextSets.emplace(std::forward<ContextSetsKeyT>(key), std::forward<ContextSetsValueT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::Map<Aws::String, IPSet> m_iPSets;
 
   Aws::Map<Aws::String, PortSet> m_portSets;
+
+  Aws::Map<Aws::String, ContextSet> m_contextSets;
   bool m_iPSetsHasBeenSet = false;
   bool m_portSetsHasBeenSet = false;
+  bool m_contextSetsHasBeenSet = false;
 };
 
 }  // namespace Model

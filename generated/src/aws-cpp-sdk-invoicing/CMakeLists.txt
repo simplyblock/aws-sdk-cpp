@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-invoicing "C++ SDK for the AWS invoicing service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-invoicing "C++ SDK for AWS Invoicing" aws-cpp-sdk-core)
 
 file(GLOB AWS_INVOICING_HEADERS
     "include/aws/invoicing/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_INVOICING_HEADERS
 
 file(GLOB AWS_INVOICING_MODEL_HEADERS
     "include/aws/invoicing/model/*.h"
+)
+
+file(GLOB AWS_INVOICING_INTERNAL_HEADERS
+    "include/aws/invoicing/internal/*.h"
 )
 
 file(GLOB AWS_INVOICING_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_INVOICING_MODEL_SOURCE
 
 file(GLOB INVOICING_UNIFIED_HEADERS
     ${AWS_INVOICING_HEADERS}
+    ${AWS_INVOICING_INTERNAL_HEADERS}
     ${AWS_INVOICING_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\invoicing" FILES ${AWS_INVOICING_HEADERS})
+        source_group("Header Files\\aws\\invoicing\\internal" FILES ${AWS_INVOICING_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\invoicing\\model" FILES ${AWS_INVOICING_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_INVOICING_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_INVOICING_MODEL_SOURCE})

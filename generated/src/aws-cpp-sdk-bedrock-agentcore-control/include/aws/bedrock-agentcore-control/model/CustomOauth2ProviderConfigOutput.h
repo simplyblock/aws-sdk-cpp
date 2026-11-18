@@ -5,11 +5,13 @@
 
 #pragma once
 #include <aws/bedrock-agentcore-control/BedrockAgentCoreControl_EXPORTS.h>
+#include <aws/bedrock-agentcore-control/model/CertificateConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/ClientAuthenticationMethodType.h>
 #include <aws/bedrock-agentcore-control/model/Oauth2Discovery.h>
 #include <aws/bedrock-agentcore-control/model/OnBehalfOfTokenExchangeConfigType.h>
 #include <aws/bedrock-agentcore-control/model/PrivateEndpoint.h>
 #include <aws/bedrock-agentcore-control/model/PrivateEndpointOverride.h>
+#include <aws/bedrock-agentcore-control/model/PrivateKeyJwtConfig.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 
@@ -76,6 +78,41 @@ class CustomOauth2ProviderConfigOutput {
 
   ///@{
   /**
+   * <p>The configuration for on-behalf-of token exchange.</p>
+   */
+  inline const OnBehalfOfTokenExchangeConfigType& GetOnBehalfOfTokenExchangeConfig() const { return m_onBehalfOfTokenExchangeConfig; }
+  inline bool OnBehalfOfTokenExchangeConfigHasBeenSet() const { return m_onBehalfOfTokenExchangeConfigHasBeenSet; }
+  template <typename OnBehalfOfTokenExchangeConfigT = OnBehalfOfTokenExchangeConfigType>
+  void SetOnBehalfOfTokenExchangeConfig(OnBehalfOfTokenExchangeConfigT&& value) {
+    m_onBehalfOfTokenExchangeConfigHasBeenSet = true;
+    m_onBehalfOfTokenExchangeConfig = std::forward<OnBehalfOfTokenExchangeConfigT>(value);
+  }
+  template <typename OnBehalfOfTokenExchangeConfigT = OnBehalfOfTokenExchangeConfigType>
+  CustomOauth2ProviderConfigOutput& WithOnBehalfOfTokenExchangeConfig(OnBehalfOfTokenExchangeConfigT&& value) {
+    SetOnBehalfOfTokenExchangeConfig(std::forward<OnBehalfOfTokenExchangeConfigT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The client authentication method used when authenticating with the token
+   * endpoint.</p>
+   */
+  inline ClientAuthenticationMethodType GetClientAuthenticationMethod() const { return m_clientAuthenticationMethod; }
+  inline bool ClientAuthenticationMethodHasBeenSet() const { return m_clientAuthenticationMethodHasBeenSet; }
+  inline void SetClientAuthenticationMethod(ClientAuthenticationMethodType value) {
+    m_clientAuthenticationMethodHasBeenSet = true;
+    m_clientAuthenticationMethod = value;
+  }
+  inline CustomOauth2ProviderConfigOutput& WithClientAuthenticationMethod(ClientAuthenticationMethodType value) {
+    SetClientAuthenticationMethod(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The default private endpoint for the custom OAuth2 provider, enabling secure
    * connectivity through a VPC Lattice resource configuration.</p>
    */
@@ -120,35 +157,49 @@ class CustomOauth2ProviderConfigOutput {
 
   ///@{
   /**
-   * <p>The configuration for on-behalf-of token exchange.</p>
+   * <p>The private certificate authority (CA) configurations for the identity
+   * provider. Use this to have AgentCore Identity trust a private CA when
+   * establishing TLS connections to identity provider endpoints. You can specify
+   * only one certificate authority configuration in this list. Provide the
+   * certificate by reference to an Amazon S3 object or an Amazon Web Services
+   * Secrets Manager secret. You can use this only together with
+   * <code>privateEndpoint</code>.</p>
    */
-  inline const OnBehalfOfTokenExchangeConfigType& GetOnBehalfOfTokenExchangeConfig() const { return m_onBehalfOfTokenExchangeConfig; }
-  inline bool OnBehalfOfTokenExchangeConfigHasBeenSet() const { return m_onBehalfOfTokenExchangeConfigHasBeenSet; }
-  template <typename OnBehalfOfTokenExchangeConfigT = OnBehalfOfTokenExchangeConfigType>
-  void SetOnBehalfOfTokenExchangeConfig(OnBehalfOfTokenExchangeConfigT&& value) {
-    m_onBehalfOfTokenExchangeConfigHasBeenSet = true;
-    m_onBehalfOfTokenExchangeConfig = std::forward<OnBehalfOfTokenExchangeConfigT>(value);
+  inline const Aws::Vector<CertificateConfiguration>& GetCertificateConfigurations() const { return m_certificateConfigurations; }
+  inline bool CertificateConfigurationsHasBeenSet() const { return m_certificateConfigurationsHasBeenSet; }
+  template <typename CertificateConfigurationsT = Aws::Vector<CertificateConfiguration>>
+  void SetCertificateConfigurations(CertificateConfigurationsT&& value) {
+    m_certificateConfigurationsHasBeenSet = true;
+    m_certificateConfigurations = std::forward<CertificateConfigurationsT>(value);
   }
-  template <typename OnBehalfOfTokenExchangeConfigT = OnBehalfOfTokenExchangeConfigType>
-  CustomOauth2ProviderConfigOutput& WithOnBehalfOfTokenExchangeConfig(OnBehalfOfTokenExchangeConfigT&& value) {
-    SetOnBehalfOfTokenExchangeConfig(std::forward<OnBehalfOfTokenExchangeConfigT>(value));
+  template <typename CertificateConfigurationsT = Aws::Vector<CertificateConfiguration>>
+  CustomOauth2ProviderConfigOutput& WithCertificateConfigurations(CertificateConfigurationsT&& value) {
+    SetCertificateConfigurations(std::forward<CertificateConfigurationsT>(value));
+    return *this;
+  }
+  template <typename CertificateConfigurationsT = CertificateConfiguration>
+  CustomOauth2ProviderConfigOutput& AddCertificateConfigurations(CertificateConfigurationsT&& value) {
+    m_certificateConfigurationsHasBeenSet = true;
+    m_certificateConfigurations.emplace_back(std::forward<CertificateConfigurationsT>(value));
     return *this;
   }
   ///@}
 
   ///@{
   /**
-   * <p>The client authentication method used when authenticating with the token
-   * endpoint.</p>
+   * <p>The configuration for private_key_jwt client authentication used by this
+   * OAuth2 credential provider.</p>
    */
-  inline ClientAuthenticationMethodType GetClientAuthenticationMethod() const { return m_clientAuthenticationMethod; }
-  inline bool ClientAuthenticationMethodHasBeenSet() const { return m_clientAuthenticationMethodHasBeenSet; }
-  inline void SetClientAuthenticationMethod(ClientAuthenticationMethodType value) {
-    m_clientAuthenticationMethodHasBeenSet = true;
-    m_clientAuthenticationMethod = value;
+  inline const PrivateKeyJwtConfig& GetPrivateKeyJwtConfig() const { return m_privateKeyJwtConfig; }
+  inline bool PrivateKeyJwtConfigHasBeenSet() const { return m_privateKeyJwtConfigHasBeenSet; }
+  template <typename PrivateKeyJwtConfigT = PrivateKeyJwtConfig>
+  void SetPrivateKeyJwtConfig(PrivateKeyJwtConfigT&& value) {
+    m_privateKeyJwtConfigHasBeenSet = true;
+    m_privateKeyJwtConfig = std::forward<PrivateKeyJwtConfigT>(value);
   }
-  inline CustomOauth2ProviderConfigOutput& WithClientAuthenticationMethod(ClientAuthenticationMethodType value) {
-    SetClientAuthenticationMethod(value);
+  template <typename PrivateKeyJwtConfigT = PrivateKeyJwtConfig>
+  CustomOauth2ProviderConfigOutput& WithPrivateKeyJwtConfig(PrivateKeyJwtConfigT&& value) {
+    SetPrivateKeyJwtConfig(std::forward<PrivateKeyJwtConfigT>(value));
     return *this;
   }
   ///@}
@@ -157,19 +208,25 @@ class CustomOauth2ProviderConfigOutput {
 
   Aws::String m_clientId;
 
+  OnBehalfOfTokenExchangeConfigType m_onBehalfOfTokenExchangeConfig;
+
+  ClientAuthenticationMethodType m_clientAuthenticationMethod{ClientAuthenticationMethodType::NOT_SET};
+
   PrivateEndpoint m_privateEndpoint;
 
   Aws::Vector<PrivateEndpointOverride> m_privateEndpointOverrides;
 
-  OnBehalfOfTokenExchangeConfigType m_onBehalfOfTokenExchangeConfig;
+  Aws::Vector<CertificateConfiguration> m_certificateConfigurations;
 
-  ClientAuthenticationMethodType m_clientAuthenticationMethod{ClientAuthenticationMethodType::NOT_SET};
+  PrivateKeyJwtConfig m_privateKeyJwtConfig;
   bool m_oauthDiscoveryHasBeenSet = false;
   bool m_clientIdHasBeenSet = false;
-  bool m_privateEndpointHasBeenSet = false;
-  bool m_privateEndpointOverridesHasBeenSet = false;
   bool m_onBehalfOfTokenExchangeConfigHasBeenSet = false;
   bool m_clientAuthenticationMethodHasBeenSet = false;
+  bool m_privateEndpointHasBeenSet = false;
+  bool m_privateEndpointOverridesHasBeenSet = false;
+  bool m_certificateConfigurationsHasBeenSet = false;
+  bool m_privateKeyJwtConfigHasBeenSet = false;
 };
 
 }  // namespace Model

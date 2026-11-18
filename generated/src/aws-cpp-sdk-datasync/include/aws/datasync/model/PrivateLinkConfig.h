@@ -6,16 +6,16 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/datasync/DataSync_EXPORTS.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace DataSync {
 namespace Model {
@@ -31,13 +31,16 @@ namespace Model {
 class PrivateLinkConfig {
  public:
   AWS_DATASYNC_API PrivateLinkConfig() = default;
-  AWS_DATASYNC_API PrivateLinkConfig(Aws::Utils::Json::JsonView jsonValue);
-  AWS_DATASYNC_API PrivateLinkConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_DATASYNC_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_DATASYNC_API PrivateLinkConfig(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_DATASYNC_API PrivateLinkConfig& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_DATASYNC_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
-   * <p>Specifies the ID of the VPC endpoint that your agent connects to.</p>
+   * <p>Specifies the ID of the VPC service endpoint that's recorded for your agent.
+   * The endpoint ID is informational and isn't verified by DataSync. Your agent
+   * communicates through the private IP address in <code>PrivateLinkEndpoint</code>,
+   * which is set when you activate the agent.</p>
    */
   inline const Aws::String& GetVpcEndpointId() const { return m_vpcEndpointId; }
   inline bool VpcEndpointIdHasBeenSet() const { return m_vpcEndpointIdHasBeenSet; }
@@ -75,8 +78,10 @@ class PrivateLinkConfig {
 
   ///@{
   /**
-   * <p>Specifies the ARN of the subnet where your VPC endpoint is located. You can
-   * only specify one ARN.</p>
+   * <p>Specifies the ARN of the subnet where DataSync creates the network interfaces
+   * that handle data transfer traffic for your tasks. You can only specify one
+   * ARN.</p> <p>The subnet doesn't have to be the subnet that contains your VPC
+   * endpoint.</p>
    */
   inline const Aws::Vector<Aws::String>& GetSubnetArns() const { return m_subnetArns; }
   inline bool SubnetArnsHasBeenSet() const { return m_subnetArnsHasBeenSet; }

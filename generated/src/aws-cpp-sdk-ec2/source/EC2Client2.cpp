@@ -20,8 +20,25 @@
 #include <aws/ec2/EC2Client.h>
 #include <aws/ec2/EC2EndpointProvider.h>
 #include <aws/ec2/EC2ErrorMarshaller.h>
+#include <aws/ec2/model/DeleteIpamInternetRegistryAssociationRequest.h>
+#include <aws/ec2/model/DeleteIpamPolicyRequest.h>
+#include <aws/ec2/model/DeleteIpamPoolRequest.h>
+#include <aws/ec2/model/DeleteIpamPrefixListResolverRequest.h>
+#include <aws/ec2/model/DeleteIpamPrefixListResolverTargetRequest.h>
+#include <aws/ec2/model/DeleteIpamResourceDiscoveryRequest.h>
+#include <aws/ec2/model/DeleteIpamRoutingPolicyRegistrationRequest.h>
+#include <aws/ec2/model/DeleteIpamScopeRequest.h>
+#include <aws/ec2/model/DeleteKeyPairRequest.h>
+#include <aws/ec2/model/DeleteLaunchTemplateRequest.h>
+#include <aws/ec2/model/DeleteLaunchTemplateVersionsRequest.h>
+#include <aws/ec2/model/DeleteLocalGatewayRouteRequest.h>
+#include <aws/ec2/model/DeleteLocalGatewayRouteTableRequest.h>
+#include <aws/ec2/model/DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationRequest.h>
+#include <aws/ec2/model/DeleteLocalGatewayRouteTableVpcAssociationRequest.h>
 #include <aws/ec2/model/DeleteLocalGatewayVirtualInterfaceGroupRequest.h>
+#include <aws/ec2/model/DeleteLocalGatewayVirtualInterfaceRequest.h>
 #include <aws/ec2/model/DeleteManagedPrefixListRequest.h>
+#include <aws/ec2/model/DeleteMetricCategoryRequest.h>
 #include <aws/ec2/model/DeleteNatGatewayRequest.h>
 #include <aws/ec2/model/DeleteNetworkAclEntryRequest.h>
 #include <aws/ec2/model/DeleteNetworkAclRequest.h>
@@ -31,6 +48,7 @@
 #include <aws/ec2/model/DeleteNetworkInsightsPathRequest.h>
 #include <aws/ec2/model/DeleteNetworkInterfacePermissionRequest.h>
 #include <aws/ec2/model/DeleteNetworkInterfaceRequest.h>
+#include <aws/ec2/model/DeleteNetworkingFlexCostAllocationPoliciesRequest.h>
 #include <aws/ec2/model/DeletePlacementGroupRequest.h>
 #include <aws/ec2/model/DeletePublicIpv4PoolRequest.h>
 #include <aws/ec2/model/DeleteQueuedReservedInstancesRequest.h>
@@ -57,7 +75,9 @@
 #include <aws/ec2/model/DeleteTransitGatewayMeteringPolicyEntryRequest.h>
 #include <aws/ec2/model/DeleteTransitGatewayMeteringPolicyRequest.h>
 #include <aws/ec2/model/DeleteTransitGatewayMulticastDomainRequest.h>
+#include <aws/ec2/model/DeleteTransitGatewayNetworkFunctionAttachmentRequest.h>
 #include <aws/ec2/model/DeleteTransitGatewayPeeringAttachmentRequest.h>
+#include <aws/ec2/model/DeleteTransitGatewayPolicyTableEntryRequest.h>
 #include <aws/ec2/model/DeleteTransitGatewayPolicyTableRequest.h>
 #include <aws/ec2/model/DeleteTransitGatewayPrefixListReferenceRequest.h>
 #include <aws/ec2/model/DeleteTransitGatewayRequest.h>
@@ -95,31 +115,11 @@
 #include <aws/ec2/model/DescribeAddressesAttributeRequest.h>
 #include <aws/ec2/model/DescribeAddressesRequest.h>
 #include <aws/ec2/model/DescribeAggregateIdFormatRequest.h>
+#include <aws/ec2/model/DescribeApplicationStatusCheckAssociationsRequest.h>
+#include <aws/ec2/model/DescribeApplicationStatusChecksRequest.h>
+#include <aws/ec2/model/DescribeApplicationStatusRequest.h>
 #include <aws/ec2/model/DescribeAvailabilityZonesRequest.h>
 #include <aws/ec2/model/DescribeAwsNetworkPerformanceMetricSubscriptionsRequest.h>
-#include <aws/ec2/model/DescribeBundleTasksRequest.h>
-#include <aws/ec2/model/DescribeByoipCidrsRequest.h>
-#include <aws/ec2/model/DescribeCapacityBlockExtensionHistoryRequest.h>
-#include <aws/ec2/model/DescribeCapacityBlockExtensionOfferingsRequest.h>
-#include <aws/ec2/model/DescribeCapacityBlockOfferingsRequest.h>
-#include <aws/ec2/model/DescribeCapacityBlockStatusRequest.h>
-#include <aws/ec2/model/DescribeCapacityBlocksRequest.h>
-#include <aws/ec2/model/DescribeCapacityManagerDataExportsRequest.h>
-#include <aws/ec2/model/DescribeCapacityReservationBillingRequestsRequest.h>
-#include <aws/ec2/model/DescribeCapacityReservationCancellationQuotesRequest.h>
-#include <aws/ec2/model/DescribeCapacityReservationFleetsRequest.h>
-#include <aws/ec2/model/DescribeCapacityReservationTopologyRequest.h>
-#include <aws/ec2/model/DescribeCapacityReservationsRequest.h>
-#include <aws/ec2/model/DescribeCarrierGatewaysRequest.h>
-#include <aws/ec2/model/DescribeClassicLinkInstancesRequest.h>
-#include <aws/ec2/model/DescribeClientVpnAuthorizationRulesRequest.h>
-#include <aws/ec2/model/DescribeClientVpnConnectionsRequest.h>
-#include <aws/ec2/model/DescribeClientVpnEndpointsRequest.h>
-#include <aws/ec2/model/DescribeClientVpnRoutesRequest.h>
-#include <aws/ec2/model/DescribeClientVpnTargetNetworksRequest.h>
-#include <aws/ec2/model/DescribeCoipPoolsRequest.h>
-#include <aws/ec2/model/DescribeConversionTasksRequest.h>
-#include <aws/ec2/model/DescribeCustomerGatewaysRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
 using namespace Aws;
@@ -132,6 +132,106 @@ using namespace Aws::Utils::Xml;
 using namespace smithy::components::tracing;
 using ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
+DeleteIpamInternetRegistryAssociationOutcome EC2Client::DeleteIpamInternetRegistryAssociation(
+    const DeleteIpamInternetRegistryAssociationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteIpamInternetRegistryAssociationOutcome(result.GetResultWithOwnership())
+                            : DeleteIpamInternetRegistryAssociationOutcome(std::move(result.GetError()));
+}
+
+DeleteIpamPolicyOutcome EC2Client::DeleteIpamPolicy(const DeleteIpamPolicyRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteIpamPolicyOutcome(result.GetResultWithOwnership())
+                            : DeleteIpamPolicyOutcome(std::move(result.GetError()));
+}
+
+DeleteIpamPoolOutcome EC2Client::DeleteIpamPool(const DeleteIpamPoolRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteIpamPoolOutcome(result.GetResultWithOwnership()) : DeleteIpamPoolOutcome(std::move(result.GetError()));
+}
+
+DeleteIpamPrefixListResolverOutcome EC2Client::DeleteIpamPrefixListResolver(const DeleteIpamPrefixListResolverRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteIpamPrefixListResolverOutcome(result.GetResultWithOwnership())
+                            : DeleteIpamPrefixListResolverOutcome(std::move(result.GetError()));
+}
+
+DeleteIpamPrefixListResolverTargetOutcome EC2Client::DeleteIpamPrefixListResolverTarget(
+    const DeleteIpamPrefixListResolverTargetRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteIpamPrefixListResolverTargetOutcome(result.GetResultWithOwnership())
+                            : DeleteIpamPrefixListResolverTargetOutcome(std::move(result.GetError()));
+}
+
+DeleteIpamResourceDiscoveryOutcome EC2Client::DeleteIpamResourceDiscovery(const DeleteIpamResourceDiscoveryRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteIpamResourceDiscoveryOutcome(result.GetResultWithOwnership())
+                            : DeleteIpamResourceDiscoveryOutcome(std::move(result.GetError()));
+}
+
+DeleteIpamRoutingPolicyRegistrationOutcome EC2Client::DeleteIpamRoutingPolicyRegistration(
+    const DeleteIpamRoutingPolicyRegistrationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteIpamRoutingPolicyRegistrationOutcome(result.GetResultWithOwnership())
+                            : DeleteIpamRoutingPolicyRegistrationOutcome(std::move(result.GetError()));
+}
+
+DeleteIpamScopeOutcome EC2Client::DeleteIpamScope(const DeleteIpamScopeRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteIpamScopeOutcome(result.GetResultWithOwnership())
+                            : DeleteIpamScopeOutcome(std::move(result.GetError()));
+}
+
+DeleteKeyPairOutcome EC2Client::DeleteKeyPair(const DeleteKeyPairRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteKeyPairOutcome(result.GetResultWithOwnership()) : DeleteKeyPairOutcome(std::move(result.GetError()));
+}
+
+DeleteLaunchTemplateOutcome EC2Client::DeleteLaunchTemplate(const DeleteLaunchTemplateRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteLaunchTemplateOutcome(result.GetResultWithOwnership())
+                            : DeleteLaunchTemplateOutcome(std::move(result.GetError()));
+}
+
+DeleteLaunchTemplateVersionsOutcome EC2Client::DeleteLaunchTemplateVersions(const DeleteLaunchTemplateVersionsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteLaunchTemplateVersionsOutcome(result.GetResultWithOwnership())
+                            : DeleteLaunchTemplateVersionsOutcome(std::move(result.GetError()));
+}
+
+DeleteLocalGatewayRouteOutcome EC2Client::DeleteLocalGatewayRoute(const DeleteLocalGatewayRouteRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteLocalGatewayRouteOutcome(result.GetResultWithOwnership())
+                            : DeleteLocalGatewayRouteOutcome(std::move(result.GetError()));
+}
+
+DeleteLocalGatewayRouteTableOutcome EC2Client::DeleteLocalGatewayRouteTable(const DeleteLocalGatewayRouteTableRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteLocalGatewayRouteTableOutcome(result.GetResultWithOwnership())
+                            : DeleteLocalGatewayRouteTableOutcome(std::move(result.GetError()));
+}
+
+DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationOutcome EC2Client::DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociation(
+    const DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationOutcome(result.GetResultWithOwnership())
+                            : DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationOutcome(std::move(result.GetError()));
+}
+
+DeleteLocalGatewayRouteTableVpcAssociationOutcome EC2Client::DeleteLocalGatewayRouteTableVpcAssociation(
+    const DeleteLocalGatewayRouteTableVpcAssociationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteLocalGatewayRouteTableVpcAssociationOutcome(result.GetResultWithOwnership())
+                            : DeleteLocalGatewayRouteTableVpcAssociationOutcome(std::move(result.GetError()));
+}
+
+DeleteLocalGatewayVirtualInterfaceOutcome EC2Client::DeleteLocalGatewayVirtualInterface(
+    const DeleteLocalGatewayVirtualInterfaceRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteLocalGatewayVirtualInterfaceOutcome(result.GetResultWithOwnership())
+                            : DeleteLocalGatewayVirtualInterfaceOutcome(std::move(result.GetError()));
+}
+
 DeleteLocalGatewayVirtualInterfaceGroupOutcome EC2Client::DeleteLocalGatewayVirtualInterfaceGroup(
     const DeleteLocalGatewayVirtualInterfaceGroupRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
@@ -143,6 +243,12 @@ DeleteManagedPrefixListOutcome EC2Client::DeleteManagedPrefixList(const DeleteMa
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DeleteManagedPrefixListOutcome(result.GetResultWithOwnership())
                             : DeleteManagedPrefixListOutcome(std::move(result.GetError()));
+}
+
+DeleteMetricCategoryOutcome EC2Client::DeleteMetricCategory(const DeleteMetricCategoryRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteMetricCategoryOutcome(result.GetResultWithOwnership())
+                            : DeleteMetricCategoryOutcome(std::move(result.GetError()));
 }
 
 DeleteNatGatewayOutcome EC2Client::DeleteNatGateway(const DeleteNatGatewayRequest& request) const {
@@ -200,6 +306,13 @@ DeleteNetworkInterfacePermissionOutcome EC2Client::DeleteNetworkInterfacePermiss
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DeleteNetworkInterfacePermissionOutcome(result.GetResultWithOwnership())
                             : DeleteNetworkInterfacePermissionOutcome(std::move(result.GetError()));
+}
+
+DeleteNetworkingFlexCostAllocationPoliciesOutcome EC2Client::DeleteNetworkingFlexCostAllocationPolicies(
+    const DeleteNetworkingFlexCostAllocationPoliciesRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteNetworkingFlexCostAllocationPoliciesOutcome(result.GetResultWithOwnership())
+                            : DeleteNetworkingFlexCostAllocationPoliciesOutcome(std::move(result.GetError()));
 }
 
 DeletePlacementGroupOutcome EC2Client::DeletePlacementGroup(const DeletePlacementGroupRequest& request) const {
@@ -366,6 +479,13 @@ DeleteTransitGatewayMulticastDomainOutcome EC2Client::DeleteTransitGatewayMultic
                             : DeleteTransitGatewayMulticastDomainOutcome(std::move(result.GetError()));
 }
 
+DeleteTransitGatewayNetworkFunctionAttachmentOutcome EC2Client::DeleteTransitGatewayNetworkFunctionAttachment(
+    const DeleteTransitGatewayNetworkFunctionAttachmentRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteTransitGatewayNetworkFunctionAttachmentOutcome(result.GetResultWithOwnership())
+                            : DeleteTransitGatewayNetworkFunctionAttachmentOutcome(std::move(result.GetError()));
+}
+
 DeleteTransitGatewayPeeringAttachmentOutcome EC2Client::DeleteTransitGatewayPeeringAttachment(
     const DeleteTransitGatewayPeeringAttachmentRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
@@ -378,6 +498,13 @@ DeleteTransitGatewayPolicyTableOutcome EC2Client::DeleteTransitGatewayPolicyTabl
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DeleteTransitGatewayPolicyTableOutcome(result.GetResultWithOwnership())
                             : DeleteTransitGatewayPolicyTableOutcome(std::move(result.GetError()));
+}
+
+DeleteTransitGatewayPolicyTableEntryOutcome EC2Client::DeleteTransitGatewayPolicyTableEntry(
+    const DeleteTransitGatewayPolicyTableEntryRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteTransitGatewayPolicyTableEntryOutcome(result.GetResultWithOwnership())
+                            : DeleteTransitGatewayPolicyTableEntryOutcome(std::move(result.GetError()));
 }
 
 DeleteTransitGatewayPrefixListReferenceOutcome EC2Client::DeleteTransitGatewayPrefixListReference(
@@ -600,6 +727,26 @@ DescribeAggregateIdFormatOutcome EC2Client::DescribeAggregateIdFormat(const Desc
                             : DescribeAggregateIdFormatOutcome(std::move(result.GetError()));
 }
 
+DescribeApplicationStatusOutcome EC2Client::DescribeApplicationStatus(const DescribeApplicationStatusRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DescribeApplicationStatusOutcome(result.GetResultWithOwnership())
+                            : DescribeApplicationStatusOutcome(std::move(result.GetError()));
+}
+
+DescribeApplicationStatusCheckAssociationsOutcome EC2Client::DescribeApplicationStatusCheckAssociations(
+    const DescribeApplicationStatusCheckAssociationsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DescribeApplicationStatusCheckAssociationsOutcome(result.GetResultWithOwnership())
+                            : DescribeApplicationStatusCheckAssociationsOutcome(std::move(result.GetError()));
+}
+
+DescribeApplicationStatusChecksOutcome EC2Client::DescribeApplicationStatusChecks(
+    const DescribeApplicationStatusChecksRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DescribeApplicationStatusChecksOutcome(result.GetResultWithOwnership())
+                            : DescribeApplicationStatusChecksOutcome(std::move(result.GetError()));
+}
+
 DescribeAvailabilityZonesOutcome EC2Client::DescribeAvailabilityZones(const DescribeAvailabilityZonesRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DescribeAvailabilityZonesOutcome(result.GetResultWithOwnership())
@@ -611,152 +758,4 @@ DescribeAwsNetworkPerformanceMetricSubscriptionsOutcome EC2Client::DescribeAwsNe
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DescribeAwsNetworkPerformanceMetricSubscriptionsOutcome(result.GetResultWithOwnership())
                             : DescribeAwsNetworkPerformanceMetricSubscriptionsOutcome(std::move(result.GetError()));
-}
-
-DescribeBundleTasksOutcome EC2Client::DescribeBundleTasks(const DescribeBundleTasksRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeBundleTasksOutcome(result.GetResultWithOwnership())
-                            : DescribeBundleTasksOutcome(std::move(result.GetError()));
-}
-
-DescribeByoipCidrsOutcome EC2Client::DescribeByoipCidrs(const DescribeByoipCidrsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeByoipCidrsOutcome(result.GetResultWithOwnership())
-                            : DescribeByoipCidrsOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityBlockExtensionHistoryOutcome EC2Client::DescribeCapacityBlockExtensionHistory(
-    const DescribeCapacityBlockExtensionHistoryRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityBlockExtensionHistoryOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityBlockExtensionHistoryOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityBlockExtensionOfferingsOutcome EC2Client::DescribeCapacityBlockExtensionOfferings(
-    const DescribeCapacityBlockExtensionOfferingsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityBlockExtensionOfferingsOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityBlockExtensionOfferingsOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityBlockOfferingsOutcome EC2Client::DescribeCapacityBlockOfferings(
-    const DescribeCapacityBlockOfferingsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityBlockOfferingsOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityBlockOfferingsOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityBlockStatusOutcome EC2Client::DescribeCapacityBlockStatus(const DescribeCapacityBlockStatusRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityBlockStatusOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityBlockStatusOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityBlocksOutcome EC2Client::DescribeCapacityBlocks(const DescribeCapacityBlocksRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityBlocksOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityBlocksOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityManagerDataExportsOutcome EC2Client::DescribeCapacityManagerDataExports(
-    const DescribeCapacityManagerDataExportsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityManagerDataExportsOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityManagerDataExportsOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityReservationBillingRequestsOutcome EC2Client::DescribeCapacityReservationBillingRequests(
-    const DescribeCapacityReservationBillingRequestsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityReservationBillingRequestsOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityReservationBillingRequestsOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityReservationCancellationQuotesOutcome EC2Client::DescribeCapacityReservationCancellationQuotes(
-    const DescribeCapacityReservationCancellationQuotesRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityReservationCancellationQuotesOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityReservationCancellationQuotesOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityReservationFleetsOutcome EC2Client::DescribeCapacityReservationFleets(
-    const DescribeCapacityReservationFleetsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityReservationFleetsOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityReservationFleetsOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityReservationTopologyOutcome EC2Client::DescribeCapacityReservationTopology(
-    const DescribeCapacityReservationTopologyRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityReservationTopologyOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityReservationTopologyOutcome(std::move(result.GetError()));
-}
-
-DescribeCapacityReservationsOutcome EC2Client::DescribeCapacityReservations(const DescribeCapacityReservationsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCapacityReservationsOutcome(result.GetResultWithOwnership())
-                            : DescribeCapacityReservationsOutcome(std::move(result.GetError()));
-}
-
-DescribeCarrierGatewaysOutcome EC2Client::DescribeCarrierGateways(const DescribeCarrierGatewaysRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCarrierGatewaysOutcome(result.GetResultWithOwnership())
-                            : DescribeCarrierGatewaysOutcome(std::move(result.GetError()));
-}
-
-DescribeClassicLinkInstancesOutcome EC2Client::DescribeClassicLinkInstances(const DescribeClassicLinkInstancesRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeClassicLinkInstancesOutcome(result.GetResultWithOwnership())
-                            : DescribeClassicLinkInstancesOutcome(std::move(result.GetError()));
-}
-
-DescribeClientVpnAuthorizationRulesOutcome EC2Client::DescribeClientVpnAuthorizationRules(
-    const DescribeClientVpnAuthorizationRulesRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeClientVpnAuthorizationRulesOutcome(result.GetResultWithOwnership())
-                            : DescribeClientVpnAuthorizationRulesOutcome(std::move(result.GetError()));
-}
-
-DescribeClientVpnConnectionsOutcome EC2Client::DescribeClientVpnConnections(const DescribeClientVpnConnectionsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeClientVpnConnectionsOutcome(result.GetResultWithOwnership())
-                            : DescribeClientVpnConnectionsOutcome(std::move(result.GetError()));
-}
-
-DescribeClientVpnEndpointsOutcome EC2Client::DescribeClientVpnEndpoints(const DescribeClientVpnEndpointsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeClientVpnEndpointsOutcome(result.GetResultWithOwnership())
-                            : DescribeClientVpnEndpointsOutcome(std::move(result.GetError()));
-}
-
-DescribeClientVpnRoutesOutcome EC2Client::DescribeClientVpnRoutes(const DescribeClientVpnRoutesRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeClientVpnRoutesOutcome(result.GetResultWithOwnership())
-                            : DescribeClientVpnRoutesOutcome(std::move(result.GetError()));
-}
-
-DescribeClientVpnTargetNetworksOutcome EC2Client::DescribeClientVpnTargetNetworks(
-    const DescribeClientVpnTargetNetworksRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeClientVpnTargetNetworksOutcome(result.GetResultWithOwnership())
-                            : DescribeClientVpnTargetNetworksOutcome(std::move(result.GetError()));
-}
-
-DescribeCoipPoolsOutcome EC2Client::DescribeCoipPools(const DescribeCoipPoolsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCoipPoolsOutcome(result.GetResultWithOwnership())
-                            : DescribeCoipPoolsOutcome(std::move(result.GetError()));
-}
-
-DescribeConversionTasksOutcome EC2Client::DescribeConversionTasks(const DescribeConversionTasksRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeConversionTasksOutcome(result.GetResultWithOwnership())
-                            : DescribeConversionTasksOutcome(std::move(result.GetError()));
-}
-
-DescribeCustomerGatewaysOutcome EC2Client::DescribeCustomerGateways(const DescribeCustomerGatewaysRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeCustomerGatewaysOutcome(result.GetResultWithOwnership())
-                            : DescribeCustomerGatewaysOutcome(std::move(result.GetError()));
 }

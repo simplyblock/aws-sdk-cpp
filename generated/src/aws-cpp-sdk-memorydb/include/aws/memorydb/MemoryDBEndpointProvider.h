@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/memorydb/MemoryDBEndpointRules.h>
 #include <aws/memorydb/MemoryDB_EXPORTS.h>
 
 namespace Aws {
 namespace MemoryDB {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using MemoryDBClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using MemoryDBEndpointProviderBase =
     EndpointProviderBase<MemoryDBClientConfiguration, MemoryDBBuiltInParameters, MemoryDBClientContextParameters>;
 
 using MemoryDBDefaultEpProviderBase =
-    DefaultEndpointProvider<MemoryDBClientConfiguration, MemoryDBBuiltInParameters, MemoryDBClientContextParameters>;
+    BDDEndpointProvider<MemoryDBClientConfiguration, MemoryDBBuiltInParameters, MemoryDBClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_MEMORYDB_API MemoryDBEndpointProvider : public MemoryDBDefaultEpProvid
  public:
   using MemoryDBResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  MemoryDBEndpointProvider()
-      : MemoryDBDefaultEpProviderBase(Aws::MemoryDB::MemoryDBEndpointRules::GetRulesBlob(),
-                                      Aws::MemoryDB::MemoryDBEndpointRules::RulesBlobSize) {}
+  MemoryDBEndpointProvider();
 
   ~MemoryDBEndpointProvider() {}
 };

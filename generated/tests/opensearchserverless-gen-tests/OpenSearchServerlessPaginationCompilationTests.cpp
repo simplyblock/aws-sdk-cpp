@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -12,7 +12,9 @@
 #include <aws/opensearchserverless/model/ListAccessPoliciesPaginationTraits.h>
 #include <aws/opensearchserverless/model/ListCollectionsPaginationTraits.h>
 #include <aws/opensearchserverless/model/ListSecurityConfigsPaginationTraits.h>
+#include <aws/opensearchserverless/model/ListIngestionJobsPaginationTraits.h>
 #include <aws/opensearchserverless/model/ListCollectionGroupsPaginationTraits.h>
+#include <aws/opensearchserverless/model/ListIngestionStreamsPaginationTraits.h>
 #include <aws/opensearchserverless/model/ListLifecyclePoliciesPaginationTraits.h>
 #include <aws/opensearchserverless/model/ListSecurityPoliciesPaginationTraits.h>
 
@@ -24,6 +26,6 @@ class OpenSearchServerlessPaginationCompilationTest : public Aws::Testing::AwsCp
 
 TEST_F(OpenSearchServerlessPaginationCompilationTest, OpenSearchServerlessPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

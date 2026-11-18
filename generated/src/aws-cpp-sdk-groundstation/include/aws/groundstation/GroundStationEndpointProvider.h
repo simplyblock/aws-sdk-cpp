@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/groundstation/GroundStationEndpointRules.h>
 #include <aws/groundstation/GroundStation_EXPORTS.h>
 
 namespace Aws {
 namespace GroundStation {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using GroundStationClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using GroundStationEndpointProviderBase =
     EndpointProviderBase<GroundStationClientConfiguration, GroundStationBuiltInParameters, GroundStationClientContextParameters>;
 
 using GroundStationDefaultEpProviderBase =
-    DefaultEndpointProvider<GroundStationClientConfiguration, GroundStationBuiltInParameters, GroundStationClientContextParameters>;
+    BDDEndpointProvider<GroundStationClientConfiguration, GroundStationBuiltInParameters, GroundStationClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_GROUNDSTATION_API GroundStationEndpointProvider : public GroundStation
  public:
   using GroundStationResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  GroundStationEndpointProvider()
-      : GroundStationDefaultEpProviderBase(Aws::GroundStation::GroundStationEndpointRules::GetRulesBlob(),
-                                           Aws::GroundStation::GroundStationEndpointRules::RulesBlobSize) {}
+  GroundStationEndpointProvider();
 
   ~GroundStationEndpointProvider() {}
 };

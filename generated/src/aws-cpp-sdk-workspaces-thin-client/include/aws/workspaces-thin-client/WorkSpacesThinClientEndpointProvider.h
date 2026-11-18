@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/workspaces-thin-client/WorkSpacesThinClientEndpointRules.h>
 #include <aws/workspaces-thin-client/WorkSpacesThinClient_EXPORTS.h>
 
 namespace Aws {
 namespace WorkSpacesThinClient {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using WorkSpacesThinClientClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using WorkSpacesThinClientEndpointProviderBase =
                          WorkSpacesThinClientClientContextParameters>;
 
 using WorkSpacesThinClientDefaultEpProviderBase =
-    DefaultEndpointProvider<WorkSpacesThinClientClientConfiguration, WorkSpacesThinClientBuiltInParameters,
-                            WorkSpacesThinClientClientContextParameters>;
+    BDDEndpointProvider<WorkSpacesThinClientClientConfiguration, WorkSpacesThinClientBuiltInParameters,
+                        WorkSpacesThinClientClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_WORKSPACESTHINCLIENT_API WorkSpacesThinClientEndpointProvider : public
  public:
   using WorkSpacesThinClientResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  WorkSpacesThinClientEndpointProvider()
-      : WorkSpacesThinClientDefaultEpProviderBase(Aws::WorkSpacesThinClient::WorkSpacesThinClientEndpointRules::GetRulesBlob(),
-                                                  Aws::WorkSpacesThinClient::WorkSpacesThinClientEndpointRules::RulesBlobSize) {}
+  WorkSpacesThinClientEndpointProvider();
 
   ~WorkSpacesThinClientEndpointProvider() {}
 };

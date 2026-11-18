@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/inspector/InspectorEndpointRules.h>
 #include <aws/inspector/Inspector_EXPORTS.h>
 
 namespace Aws {
 namespace Inspector {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using InspectorClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using InspectorEndpointProviderBase =
     EndpointProviderBase<InspectorClientConfiguration, InspectorBuiltInParameters, InspectorClientContextParameters>;
 
 using InspectorDefaultEpProviderBase =
-    DefaultEndpointProvider<InspectorClientConfiguration, InspectorBuiltInParameters, InspectorClientContextParameters>;
+    BDDEndpointProvider<InspectorClientConfiguration, InspectorBuiltInParameters, InspectorClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_INSPECTOR_API InspectorEndpointProvider : public InspectorDefaultEpPro
  public:
   using InspectorResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  InspectorEndpointProvider()
-      : InspectorDefaultEpProviderBase(Aws::Inspector::InspectorEndpointRules::GetRulesBlob(),
-                                       Aws::Inspector::InspectorEndpointRules::RulesBlobSize) {}
+  InspectorEndpointProvider();
 
   ~InspectorEndpointProvider() {}
 };

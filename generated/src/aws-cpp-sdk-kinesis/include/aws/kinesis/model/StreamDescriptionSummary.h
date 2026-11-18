@@ -10,6 +10,7 @@
 #include <aws/kinesis/Kinesis_EXPORTS.h>
 #include <aws/kinesis/model/EncryptionType.h>
 #include <aws/kinesis/model/EnhancedMetrics.h>
+#include <aws/kinesis/model/RecordDistributionStrategy.h>
 #include <aws/kinesis/model/StreamModeDetails.h>
 #include <aws/kinesis/model/StreamStatus.h>
 #include <aws/kinesis/model/WarmThroughputObject.h>
@@ -124,8 +125,7 @@ class StreamDescriptionSummary {
   /**
    * <p> Specifies the capacity mode to which you want to set your data stream.
    * Currently, in Kinesis Data Streams, you can choose between an <b>on-demand</b>
-   * ycapacity mode and a <b>provisioned</b> capacity mode for your data streams.
-   * </p>
+   * capacity mode and a <b>provisioned</b> capacity mode for your data streams. </p>
    */
   inline const StreamModeDetails& GetStreamModeDetails() const { return m_streamModeDetails; }
   inline bool StreamModeDetailsHasBeenSet() const { return m_streamModeDetailsHasBeenSet; }
@@ -263,7 +263,10 @@ class StreamDescriptionSummary {
 
   ///@{
   /**
-   * <p>The number of enhanced fan-out consumers registered with the stream.</p>
+   * <p>The number of enhanced fan-out consumers registered with the stream. Queues
+   * are not included in this count, even though they share the stream's registered
+   * consumer limit with enhanced fan-out consumers. <code>QueueCount</code> reports
+   * the number of queues.</p>
    */
   inline int GetConsumerCount() const { return m_consumerCount; }
   inline bool ConsumerCountHasBeenSet() const { return m_consumerCountHasBeenSet; }
@@ -312,6 +315,59 @@ class StreamDescriptionSummary {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The number of channels associated with the stream.</p>
+   */
+  inline int GetChannelCount() const { return m_channelCount; }
+  inline bool ChannelCountHasBeenSet() const { return m_channelCountHasBeenSet; }
+  inline void SetChannelCount(int value) {
+    m_channelCountHasBeenSet = true;
+    m_channelCount = value;
+  }
+  inline StreamDescriptionSummary& WithChannelCount(int value) {
+    SetChannelCount(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The record distribution strategy that the stream currently uses. A value of
+   * <code>AUTO</code> indicates that Amazon Kinesis Data Streams distributes records
+   * across shards using service-managed algorithms. A value of
+   * <code>USER_PARTITION_KEY</code> indicates that shard placement is determined by
+   * the partition key that producers supply. This field is only present for streams
+   * that use the on-demand capacity mode.</p>
+   */
+  inline RecordDistributionStrategy GetRecordDistributionStrategy() const { return m_recordDistributionStrategy; }
+  inline bool RecordDistributionStrategyHasBeenSet() const { return m_recordDistributionStrategyHasBeenSet; }
+  inline void SetRecordDistributionStrategy(RecordDistributionStrategy value) {
+    m_recordDistributionStrategyHasBeenSet = true;
+    m_recordDistributionStrategy = value;
+  }
+  inline StreamDescriptionSummary& WithRecordDistributionStrategy(RecordDistributionStrategy value) {
+    SetRecordDistributionStrategy(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The number of queues created on the data stream.</p>
+   */
+  inline int GetQueueCount() const { return m_queueCount; }
+  inline bool QueueCountHasBeenSet() const { return m_queueCountHasBeenSet; }
+  inline void SetQueueCount(int value) {
+    m_queueCountHasBeenSet = true;
+    m_queueCount = value;
+  }
+  inline StreamDescriptionSummary& WithQueueCount(int value) {
+    SetQueueCount(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_streamName;
 
@@ -340,6 +396,12 @@ class StreamDescriptionSummary {
   WarmThroughputObject m_warmThroughput;
 
   int m_maxRecordSizeInKiB{0};
+
+  int m_channelCount{0};
+
+  RecordDistributionStrategy m_recordDistributionStrategy{RecordDistributionStrategy::NOT_SET};
+
+  int m_queueCount{0};
   bool m_streamNameHasBeenSet = false;
   bool m_streamARNHasBeenSet = false;
   bool m_streamIdHasBeenSet = false;
@@ -354,6 +416,9 @@ class StreamDescriptionSummary {
   bool m_consumerCountHasBeenSet = false;
   bool m_warmThroughputHasBeenSet = false;
   bool m_maxRecordSizeInKiBHasBeenSet = false;
+  bool m_channelCountHasBeenSet = false;
+  bool m_recordDistributionStrategyHasBeenSet = false;
+  bool m_queueCountHasBeenSet = false;
 };
 
 }  // namespace Model

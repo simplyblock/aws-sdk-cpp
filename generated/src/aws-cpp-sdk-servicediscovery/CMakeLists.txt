@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-servicediscovery "C++ SDK for the AWS servicediscovery service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-servicediscovery "C++ SDK for AWS Cloud Map" aws-cpp-sdk-core)
 
 file(GLOB AWS_SERVICEDISCOVERY_HEADERS
     "include/aws/servicediscovery/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SERVICEDISCOVERY_HEADERS
 
 file(GLOB AWS_SERVICEDISCOVERY_MODEL_HEADERS
     "include/aws/servicediscovery/model/*.h"
+)
+
+file(GLOB AWS_SERVICEDISCOVERY_INTERNAL_HEADERS
+    "include/aws/servicediscovery/internal/*.h"
 )
 
 file(GLOB AWS_SERVICEDISCOVERY_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SERVICEDISCOVERY_MODEL_SOURCE
 
 file(GLOB SERVICEDISCOVERY_UNIFIED_HEADERS
     ${AWS_SERVICEDISCOVERY_HEADERS}
+    ${AWS_SERVICEDISCOVERY_INTERNAL_HEADERS}
     ${AWS_SERVICEDISCOVERY_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\servicediscovery" FILES ${AWS_SERVICEDISCOVERY_HEADERS})
+        source_group("Header Files\\aws\\servicediscovery\\internal" FILES ${AWS_SERVICEDISCOVERY_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\servicediscovery\\model" FILES ${AWS_SERVICEDISCOVERY_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SERVICEDISCOVERY_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SERVICEDISCOVERY_MODEL_SOURCE})

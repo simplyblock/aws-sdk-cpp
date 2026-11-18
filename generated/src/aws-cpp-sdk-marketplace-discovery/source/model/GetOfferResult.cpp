@@ -22,6 +22,10 @@ GetOfferResult::GetOfferResult(const Aws::AmazonWebServiceResult<JsonValue>& res
 GetOfferResult& GetOfferResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
   m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
+  if (jsonValue.ValueExists("locale")) {
+    m_locale = jsonValue.GetString("locale");
+    m_localeHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("offerId")) {
     m_offerId = jsonValue.GetString("offerId");
     m_offerIdHasBeenSet = true;
@@ -34,10 +38,6 @@ GetOfferResult& GetOfferResult::operator=(const Aws::AmazonWebServiceResult<Json
     m_offerName = jsonValue.GetString("offerName");
     m_offerNameHasBeenSet = true;
   }
-  if (jsonValue.ValueExists("agreementProposalId")) {
-    m_agreementProposalId = jsonValue.GetString("agreementProposalId");
-    m_agreementProposalIdHasBeenSet = true;
-  }
   if (jsonValue.ValueExists("expirationTime")) {
     m_expirationTime = jsonValue.GetDouble("expirationTime");
     m_expirationTimeHasBeenSet = true;
@@ -49,6 +49,18 @@ GetOfferResult& GetOfferResult::operator=(const Aws::AmazonWebServiceResult<Json
   if (jsonValue.ValueExists("sellerOfRecord")) {
     m_sellerOfRecord = jsonValue.GetObject("sellerOfRecord");
     m_sellerOfRecordHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("associatedEntities")) {
+    Aws::Utils::Array<JsonView> associatedEntitiesJsonList = jsonValue.GetArray("associatedEntities");
+    for (unsigned associatedEntitiesIndex = 0; associatedEntitiesIndex < associatedEntitiesJsonList.GetLength();
+         ++associatedEntitiesIndex) {
+      m_associatedEntities.push_back(associatedEntitiesJsonList[associatedEntitiesIndex].AsObject());
+    }
+    m_associatedEntitiesHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("agreementProposalId")) {
+    m_agreementProposalId = jsonValue.GetString("agreementProposalId");
+    m_agreementProposalIdHasBeenSet = true;
   }
   if (jsonValue.ValueExists("replacementAgreementId")) {
     m_replacementAgreementId = jsonValue.GetString("replacementAgreementId");
@@ -64,14 +76,6 @@ GetOfferResult& GetOfferResult::operator=(const Aws::AmazonWebServiceResult<Json
       m_badges.push_back(badgesJsonList[badgesIndex].AsObject());
     }
     m_badgesHasBeenSet = true;
-  }
-  if (jsonValue.ValueExists("associatedEntities")) {
-    Aws::Utils::Array<JsonView> associatedEntitiesJsonList = jsonValue.GetArray("associatedEntities");
-    for (unsigned associatedEntitiesIndex = 0; associatedEntitiesIndex < associatedEntitiesJsonList.GetLength();
-         ++associatedEntitiesIndex) {
-      m_associatedEntities.push_back(associatedEntitiesJsonList[associatedEntitiesIndex].AsObject());
-    }
-    m_associatedEntitiesHasBeenSet = true;
   }
 
   const auto& headers = result.GetHeaderValueCollection();

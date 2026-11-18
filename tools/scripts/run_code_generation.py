@@ -10,6 +10,7 @@ from concurrent.futures import ProcessPoolExecutor, wait, FIRST_COMPLETED, ALL_C
 from pathlib import Path
 
 from codegen.legacy_c2j_cpp_gen import LegacyC2jCppGen, CLIENT_MODEL_FILE_LOCATION, ENDPOINT_RULES_LOCATION
+from codegen.include_tests_util import IncludeTestsUtil
 from codegen.model_utils import ModelUtils
 from codegen.protocol_tests_gen import ProtocolTestsGen
 from codegen.smoke_tests_gen import SmokeTestsGen
@@ -72,6 +73,24 @@ def parse_arguments() -> dict:
                         help="Run install test generation",
                         action="store_true")
 
+    parser.add_argument("--use-smithy-models",
+                        help="Use Smithy-generated model files instead of C2J for specified services. "
+                             "C2J skips model generation; Smithy codegen produces model files.",
+                        action="store_true")
+    parser.add_argument("--smithy-model-services",
+                        type=str,
+                        help="Comma-separated list of services to generate models from Smithy. "
+                             "Only effective with --use-smithy-models. "
+                             "Defaults to all services in --client_list if omitted.")
+    parser.add_argument("--disable-bdd-endpoints",
+                        dest="use_smithy_bdd_endpoints",
+                        help="Fall back to the C2J JSON endpoint ruleset instead of Smithy-generated BDD "
+                             "bytecode. By default C2J skips the JSON endpoint-rules blob and emits a "
+                             "BDD-backed provider, and Smithy codegen produces the compiled bytecode blob. "
+                             "Services whose Smithy model lacks the endpointBdd trait keep the JSON path "
+                             "either way.",
+                        action="store_false")
+
     args = vars(parser.parse_args())
     arg_map = {"debug": args.get("debug", False)}
 
@@ -131,6 +150,13 @@ def parse_arguments() -> dict:
     arg_map["generate_smoke_tests"] = args.get("generate_smoke_tests", None)
     arg_map["generate_protocol_tests"] = args.get("generate_protocol_tests", None)
     arg_map["generate_install_tests"] = args.get("generate_install_tests", None)
+    arg_map["use_smithy_models"] = args.get("use_smithy_models", False)
+    arg_map["use_smithy_bdd_endpoints"] = args.get("use_smithy_bdd_endpoints", True)
+    smithy_model_services_raw = args.get("smithy_model_services", None)
+    if smithy_model_services_raw:
+        arg_map["smithy_model_services"] = set(smithy_model_services_raw.replace(";", ",").split(","))
+    else:
+        arg_map["smithy_model_services"] = None
     if arg_map["debug"]:
         print("args=", arg_map)
     return arg_map
@@ -154,8 +180,21 @@ def main():
     if args["debug"]:
         print(f"Parallel executor thread count: {max_workers}")
 
+    # Determine which services use Smithy model generation
+    smithy_model_services = set()
+    if args.get("use_smithy_models"):
+        if args.get("smithy_model_services"):
+            smithy_model_services = args["smithy_model_services"]
+        elif args.get("client_list") and args["client_list"]:
+            smithy_model_services = set(args["client_list"])
+        else:
+            smithy_model_services = set(model_utils.models_to_generate.keys())
+        if args["debug"]:
+            print(f"Smithy model generation enabled for: {sorted(smithy_model_services)}")
+
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
-        c2j_gen = LegacyC2jCppGen(args, model_utils.models_to_generate)
+        c2j_gen = LegacyC2jCppGen(args, model_utils.models_to_generate,
+                                   skip_model_services=smithy_model_services)
         if c2j_gen.generate(executor, max_workers, args) != 0:
             print("ERROR: Failed to generate service client(s)!")
             return -1
@@ -164,6 +203,7 @@ def main():
             # Disable smithy generation for protocol tests
             protocol_args = args.copy()
             protocol_args["disable_smithy_generation"] = True
+            protocol_args["use_smithy_bdd_endpoints"] = False
             protocol_tests_generator = ProtocolTestsGen(protocol_args)
             if protocol_tests_generator.generate(executor, max_workers) != 0:
                 print("ERROR: Failed to generate protocol test(s)!")
@@ -174,11 +214,27 @@ def main():
     clients_to_build = model_utils.get_clients_to_build()
     
     if clients_to_build:
-        smithy_cpp_gen = SmithyCppGen(args["debug"])
+        smithy_cpp_gen = SmithyCppGen(args["debug"],
+                                      use_smithy_models=bool(smithy_model_services),
+                                      smithy_model_services=smithy_model_services,
+                                      use_smithy_bdd_endpoints=args.get("use_smithy_bdd_endpoints", False))
         if smithy_cpp_gen.generate(clients_to_build) != 0:
             print("ERROR: Failed to generate Smithy code!")
             return -1
     
+    # Generate include tests AFTER both the C2J and Smithy passes, so the client's include/ tree
+    # is complete. IncludeTestsUtil scans that tree on disk; C2J skips model generation for
+    # --use-smithy-models services (their model/*.h are written by the Smithy pass above), so
+    # generating include tests during the C2J pass would omit every model header.
+    if clients_to_build:
+        for client in clients_to_build:
+            service_client_dir = f"{args['output_location']}/src/aws-cpp-sdk-{client}"
+            test_output_dir = f"{args['output_location']}/tests/{client}-gen-tests"
+            # The gen-tests dir exists only for services that got endpoint tests generated, which
+            # is the same condition under which the include test was previously produced.
+            if os.path.isdir(service_client_dir) and os.path.isdir(test_output_dir):
+                IncludeTestsUtil.generate(client, service_client_dir, test_output_dir)
+
     if args["generate_smoke_tests"] and clients_to_build:
         smoke_tests_gen = SmokeTestsGen(args["debug"])
         if smoke_tests_gen.generate(clients_to_build) != 0:

@@ -7,6 +7,9 @@
 #include <aws/rest-json-protocol/model/InputAndOutputWithHeadersRequest.h>
 #include <aws/testing/AwsProtocolTestHelpers.h>
 
+#include <cmath>
+#include <limits>
+
 using InputAndOutputWithHeaders = AWS_PROTOCOL_TEST_SUITE;
 using RestJsonProtocolClient = Aws::RestJsonProtocol::RestJsonProtocolClient;
 using namespace Aws::RestJsonProtocol::Model;
@@ -138,8 +141,8 @@ AWS_PROTOCOL_TEST(InputAndOutputWithHeaders, RestJsonInputAndOutputWithTimestamp
     /* expectedResult = R"( {"headerTimestampList":[1576540098,1576540098]} )" */
     const Aws::Vector<Aws::Utils::DateTime>& resultHeaderTimestampListItem = result.GetHeaderTimestampList();
     EXPECT_EQ(2U, resultHeaderTimestampListItem.size());
-    EXPECT_EQ(Aws::Utils::DateTime(static_cast<int64_t>(1576540098)), resultHeaderTimestampListItem.at(0));
-    EXPECT_EQ(Aws::Utils::DateTime(static_cast<int64_t>(1576540098)), resultHeaderTimestampListItem.at(1));
+    EXPECT_EQ(Aws::Utils::DateTime(static_cast<double>(1576540098)), resultHeaderTimestampListItem.at(0));
+    EXPECT_EQ(Aws::Utils::DateTime(static_cast<double>(1576540098)), resultHeaderTimestampListItem.at(1));
   });
 }
 

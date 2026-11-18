@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-backup "C++ SDK for the AWS backup service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-backup "C++ SDK for AWS Backup" aws-cpp-sdk-core)
 
 file(GLOB AWS_BACKUP_HEADERS
     "include/aws/backup/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_BACKUP_HEADERS
 
 file(GLOB AWS_BACKUP_MODEL_HEADERS
     "include/aws/backup/model/*.h"
+)
+
+file(GLOB AWS_BACKUP_INTERNAL_HEADERS
+    "include/aws/backup/internal/*.h"
 )
 
 file(GLOB AWS_BACKUP_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_BACKUP_MODEL_SOURCE
 
 file(GLOB BACKUP_UNIFIED_HEADERS
     ${AWS_BACKUP_HEADERS}
+    ${AWS_BACKUP_INTERNAL_HEADERS}
     ${AWS_BACKUP_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\backup" FILES ${AWS_BACKUP_HEADERS})
+        source_group("Header Files\\aws\\backup\\internal" FILES ${AWS_BACKUP_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\backup\\model" FILES ${AWS_BACKUP_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_BACKUP_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_BACKUP_MODEL_SOURCE})

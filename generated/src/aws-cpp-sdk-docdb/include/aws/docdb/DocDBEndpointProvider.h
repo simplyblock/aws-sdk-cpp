@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/docdb/DocDBEndpointRules.h>
 #include <aws/docdb/DocDB_EXPORTS.h>
 
 namespace Aws {
 namespace DocDB {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using DocDBClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using DocDBBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using DocDBEndpointProviderBase = EndpointProviderBase<DocDBClientConfiguration, DocDBBuiltInParameters, DocDBClientContextParameters>;
 
-using DocDBDefaultEpProviderBase = DefaultEndpointProvider<DocDBClientConfiguration, DocDBBuiltInParameters, DocDBClientContextParameters>;
+using DocDBDefaultEpProviderBase = BDDEndpointProvider<DocDBClientConfiguration, DocDBBuiltInParameters, DocDBClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,8 +39,7 @@ class AWS_DOCDB_API DocDBEndpointProvider : public DocDBDefaultEpProviderBase {
  public:
   using DocDBResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  DocDBEndpointProvider()
-      : DocDBDefaultEpProviderBase(Aws::DocDB::DocDBEndpointRules::GetRulesBlob(), Aws::DocDB::DocDBEndpointRules::RulesBlobSize) {}
+  DocDBEndpointProvider();
 
   ~DocDBEndpointProvider() {}
 };

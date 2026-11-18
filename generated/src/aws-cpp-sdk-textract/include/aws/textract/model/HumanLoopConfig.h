@@ -5,6 +5,7 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/textract/Textract_EXPORTS.h>
 #include <aws/textract/model/HumanLoopDataAttributes.h>
 
@@ -12,10 +13,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace Textract {
 namespace Model {
@@ -23,16 +23,24 @@ namespace Model {
 /**
  * <p>Sets up the human review workflow the document will be sent to if one of the
  * conditions is met. You can also set certain attributes of the image before
- * review. </p><p><h3>See Also:</h3>   <a
+ * review. </p>  <p>Amazon Textract uses Amazon Augmented AI (A2I) to run the
+ * human review workflows that you specify in <code>HumanLoopConfig</code>. A2I
+ * entered maintenance mode in July 2026 and no longer accepts new customers. If
+ * your account is not an existing A2I customer, requests fail with an
+ * <code>InvalidParameterException</code>. For more information, see <a
+ * href="https://aws.amazon.com/about-aws/whats-new/2026/06/aws-service-availability/">AWS
+ * service availability</a>. If you're an existing A2I customer but receive this
+ * error, contact AWS Support and request assistance from the A2I team.</p>
+ * <p><h3>See Also:</h3>   <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/textract-2018-06-27/HumanLoopConfig">AWS
  * API Reference</a></p>
  */
 class HumanLoopConfig {
  public:
   AWS_TEXTRACT_API HumanLoopConfig() = default;
-  AWS_TEXTRACT_API HumanLoopConfig(Aws::Utils::Json::JsonView jsonValue);
-  AWS_TEXTRACT_API HumanLoopConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_TEXTRACT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_TEXTRACT_API HumanLoopConfig(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_TEXTRACT_API HumanLoopConfig& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_TEXTRACT_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**

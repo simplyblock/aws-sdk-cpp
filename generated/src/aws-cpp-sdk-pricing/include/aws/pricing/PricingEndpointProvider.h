@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/pricing/PricingEndpointRules.h>
 #include <aws/pricing/Pricing_EXPORTS.h>
 
 namespace Aws {
 namespace Pricing {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using PricingClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using PricingEndpointProviderBase =
     EndpointProviderBase<PricingClientConfiguration, PricingBuiltInParameters, PricingClientContextParameters>;
 
 using PricingDefaultEpProviderBase =
-    DefaultEndpointProvider<PricingClientConfiguration, PricingBuiltInParameters, PricingClientContextParameters>;
+    BDDEndpointProvider<PricingClientConfiguration, PricingBuiltInParameters, PricingClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_PRICING_API PricingEndpointProvider : public PricingDefaultEpProviderB
  public:
   using PricingResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  PricingEndpointProvider()
-      : PricingDefaultEpProviderBase(Aws::Pricing::PricingEndpointRules::GetRulesBlob(),
-                                     Aws::Pricing::PricingEndpointRules::RulesBlobSize) {}
+  PricingEndpointProvider();
 
   ~PricingEndpointProvider() {}
 };

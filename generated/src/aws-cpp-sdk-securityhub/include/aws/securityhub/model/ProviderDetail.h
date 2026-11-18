@@ -5,6 +5,8 @@
 
 #pragma once
 #include <aws/securityhub/SecurityHub_EXPORTS.h>
+#include <aws/securityhub/model/AzureDetail.h>
+#include <aws/securityhub/model/GcpDetail.h>
 #include <aws/securityhub/model/JiraCloudDetail.h>
 #include <aws/securityhub/model/ServiceNowDetail.h>
 
@@ -68,12 +70,54 @@ class ProviderDetail {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Details about a Microsoft Azure CSPM integration.</p>
+   */
+  inline const AzureDetail& GetAzure() const { return m_azure; }
+  inline bool AzureHasBeenSet() const { return m_azureHasBeenSet; }
+  template <typename AzureT = AzureDetail>
+  void SetAzure(AzureT&& value) {
+    m_azureHasBeenSet = true;
+    m_azure = std::forward<AzureT>(value);
+  }
+  template <typename AzureT = AzureDetail>
+  ProviderDetail& WithAzure(AzureT&& value) {
+    SetAzure(std::forward<AzureT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Details about a Google Cloud Platform (GCP) CSPM integration.</p>
+   */
+  inline const GcpDetail& GetGCP() const { return m_gCP; }
+  inline bool GCPHasBeenSet() const { return m_gCPHasBeenSet; }
+  template <typename GCPT = GcpDetail>
+  void SetGCP(GCPT&& value) {
+    m_gCPHasBeenSet = true;
+    m_gCP = std::forward<GCPT>(value);
+  }
+  template <typename GCPT = GcpDetail>
+  ProviderDetail& WithGCP(GCPT&& value) {
+    SetGCP(std::forward<GCPT>(value));
+    return *this;
+  }
+  ///@}
  private:
   JiraCloudDetail m_jiraCloud;
 
   ServiceNowDetail m_serviceNow;
+
+  AzureDetail m_azure;
+
+  GcpDetail m_gCP;
   bool m_jiraCloudHasBeenSet = false;
   bool m_serviceNowHasBeenSet = false;
+  bool m_azureHasBeenSet = false;
+  bool m_gCPHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -5,6 +5,7 @@
 
 #pragma once
 #include <aws/inspector2/Inspector2_EXPORTS.h>
+#include <aws/inspector2/model/CloudProvider.h>
 #include <aws/inspector2/model/Currency.h>
 #include <aws/inspector2/model/UsageType.h>
 
@@ -35,7 +36,21 @@ class Usage {
 
   ///@{
   /**
-   * <p>The type scan.</p>
+   * <p>The type of scan. Valid values:</p> <ul> <li> <p>Amazon Web Services –
+   * <code>EC2_INSTANCE_HOURS</code>, <code>EC2_AGENTLESS_INSTANCE_HOURS</code>,
+   * <code>EC2_AMI_HOURS</code>, <code>EC2_AMI_ONE_SHOT_SCAN</code>,
+   * <code>ECR_INITIAL_SCAN</code>, <code>ECR_RESCAN</code>,
+   * <code>LAMBDA_FUNCTION_HOURS</code>, <code>LAMBDA_FUNCTION_CODE_HOURS</code>,
+   * <code>CODE_REPOSITORY_SAST</code>, <code>CODE_REPOSITORY_IAC</code>, or
+   * <code>CODE_REPOSITORY_SCA</code>.</p> </li> <li> <p>Microsoft Azure –
+   * <code>AZURE_VM_AGENT_BASED_INSTANCE_HOURS</code>,
+   * <code>AZURE_CONTAINER_IMAGE_INITIAL_SCAN</code>,
+   * <code>AZURE_CONTAINER_IMAGE_RESCAN</code>, or
+   * <code>AZURE_SERVERLESS_FUNCTION_HOURS</code>.</p> </li> <li> <p>Google Cloud
+   * Platform (GCP) – <code>GCP_VM_AGENT_BASED_INSTANCE_HOURS</code>,
+   * <code>GCP_CONTAINER_IMAGE_INITIAL_SCAN</code>,
+   * <code>GCP_CONTAINER_IMAGE_RESCAN</code>, or <code>GCP_CLOUD_RUN_HOURS</code>
+   * (Cloud Run functions).</p> </li> </ul>
    */
   inline UsageType GetType() const { return m_type; }
   inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
@@ -96,6 +111,25 @@ class Usage {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The cloud provider associated with the usage information. Valid values:</p>
+   * <ul> <li> <p> <code>AWS</code> – Amazon Web Services resources.</p> </li> <li>
+   * <p> <code>AZURE</code> – Microsoft Azure resources.</p> </li> <li> <p>
+   * <code>GCP</code> – Google Cloud Platform (GCP) resources.</p> </li> </ul>
+   */
+  inline CloudProvider GetCloudProvider() const { return m_cloudProvider; }
+  inline bool CloudProviderHasBeenSet() const { return m_cloudProviderHasBeenSet; }
+  inline void SetCloudProvider(CloudProvider value) {
+    m_cloudProviderHasBeenSet = true;
+    m_cloudProvider = value;
+  }
+  inline Usage& WithCloudProvider(CloudProvider value) {
+    SetCloudProvider(value);
+    return *this;
+  }
+  ///@}
  private:
   UsageType m_type{UsageType::NOT_SET};
 
@@ -104,10 +138,13 @@ class Usage {
   double m_estimatedMonthlyCost{0.0};
 
   Currency m_currency{Currency::NOT_SET};
+
+  CloudProvider m_cloudProvider{CloudProvider::NOT_SET};
   bool m_typeHasBeenSet = false;
   bool m_totalHasBeenSet = false;
   bool m_estimatedMonthlyCostHasBeenSet = false;
   bool m_currencyHasBeenSet = false;
+  bool m_cloudProviderHasBeenSet = false;
 };
 
 }  // namespace Model

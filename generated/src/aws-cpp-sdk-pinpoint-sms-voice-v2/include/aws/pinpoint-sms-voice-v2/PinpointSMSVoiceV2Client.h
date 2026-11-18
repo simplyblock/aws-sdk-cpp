@@ -497,8 +497,8 @@ class AWS_PINPOINTSMSVOICEV2_API PinpointSMSVoiceV2Client : public Aws::Client::
 
   /**
    * <p>Create a new registration attachment to use for uploading a file or a URL to
-   * a file. The maximum file size is 500KB and valid file extensions are PDF, JPEG
-   * and PNG. For example, many sender ID registrations require a signed “letter of
+   * a file. The maximum file size is 5MB and valid file extensions are PDF, JPEG and
+   * PNG. For example, many sender ID registrations require a signed “letter of
    * authorization” (LOA) to be submitted.</p> <p>Use either
    * <code>AttachmentUrl</code> or <code>AttachmentBody</code> to upload your
    * attachment. If both are specified then an exception is returned.</p><p><h3>See
@@ -2193,6 +2193,40 @@ class AWS_PINPOINTSMSVOICEV2_API PinpointSMSVoiceV2Client : public Aws::Client::
   void GetResourcePolicyAsync(const GetResourcePolicyRequestT& request, const GetResourcePolicyResponseReceivedHandler& handler,
                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&PinpointSMSVoiceV2Client::GetResourcePolicy, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves a list of phone numbers that are available to request, based on the
+   * country, capabilities, and number type that you specify. You can optionally
+   * provide a number preference to return only numbers that match a specific digit
+   * pattern.</p> <p>If no numbers match your search, this operation returns an empty
+   * list rather than an error. This operation currently supports only
+   * <code>TEN_DLC</code> number types in the <code>US</code>.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-sms-voice-v2-2022-03-31/ListAvailablePhoneNumbers">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListAvailablePhoneNumbersOutcome ListAvailablePhoneNumbers(const Model::ListAvailablePhoneNumbersRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListAvailablePhoneNumbers that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListAvailablePhoneNumbersRequestT = Model::ListAvailablePhoneNumbersRequest>
+  Model::ListAvailablePhoneNumbersOutcomeCallable ListAvailablePhoneNumbersCallable(
+      const ListAvailablePhoneNumbersRequestT& request) const {
+    return SubmitCallable(&PinpointSMSVoiceV2Client::ListAvailablePhoneNumbers, request);
+  }
+
+  /**
+   * An Async wrapper for ListAvailablePhoneNumbers that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListAvailablePhoneNumbersRequestT = Model::ListAvailablePhoneNumbersRequest>
+  void ListAvailablePhoneNumbersAsync(const ListAvailablePhoneNumbersRequestT& request,
+                                      const ListAvailablePhoneNumbersResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&PinpointSMSVoiceV2Client::ListAvailablePhoneNumbers, request, handler, context);
   }
 
   /**

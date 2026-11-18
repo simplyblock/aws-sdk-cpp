@@ -6,16 +6,16 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace NetworkFirewall {
 namespace Model {
@@ -29,16 +29,16 @@ namespace Model {
 class RuleOption {
  public:
   AWS_NETWORKFIREWALL_API RuleOption() = default;
-  AWS_NETWORKFIREWALL_API RuleOption(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API RuleOption& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_NETWORKFIREWALL_API RuleOption(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API RuleOption& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
    * <p>The keyword for the Suricata compatible rule option. You must include a
    * <code>sid</code> (signature ID), and can optionally include other keywords. For
    * information about Suricata compatible keywords, see <a
-   * href="https://suricata.readthedocs.io/en/suricata-7.0.3/rules/intro.html#rule-options">Rule
+   * href="https://suricata.readthedocs.io/en/suricata-8.0.3/rules/intro.html#rule-options">Rule
    * options</a> in the Suricata documentation.</p>
    */
   inline const Aws::String& GetKeyword() const { return m_keyword; }
@@ -61,7 +61,7 @@ class RuleOption {
    * or more setting values, and the number of possible and required settings depends
    * on the <code>Keyword</code>. For more information about the settings for
    * specific options, see <a
-   * href="https://suricata.readthedocs.io/en/suricata-7.0.3/rules/intro.html#rule-options">Rule
+   * href="https://suricata.readthedocs.io/en/suricata-8.0.3/rules/intro.html#rule-options">Rule
    * options</a>.</p>
    */
   inline const Aws::Vector<Aws::String>& GetSettings() const { return m_settings; }

@@ -30,7 +30,14 @@ class ListImageScanFindingAggregationsRequest : public ImagebuilderRequest {
   AWS_IMAGEBUILDER_API Aws::String SerializePayload() const override;
 
   ///@{
-
+  /**
+   * <p>A filter name and value pair that determines the type of aggregation that
+   * Image Builder returns. Use one of the following filter names:</p> <ul> <li> <p>
+   * <code>imageBuildVersionArn</code> </p> </li> <li> <p>
+   * <code>imagePipelineArn</code> </p> </li> <li> <p> <code>vulnerabilityId</code>
+   * </p> </li> </ul> <p>If you don't specify a filter, Image Builder returns an
+   * aggregation for your account.</p>
+   */
   inline const Filter& GetFilter() const { return m_filter; }
   inline bool FilterHasBeenSet() const { return m_filterHasBeenSet; }
   template <typename FilterT = Filter>
@@ -47,8 +54,8 @@ class ListImageScanFindingAggregationsRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>A token to specify where to start paginating. This is the nextToken from a
-   * previously truncated response.</p>
+   * <p>A token to specify where to start paginating. Use the <code>nextToken</code>
+   * value from a previously truncated response.</p>
    */
   inline const Aws::String& GetNextToken() const { return m_nextToken; }
   inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }

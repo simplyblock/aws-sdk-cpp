@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-cloudcontrol "C++ SDK for the AWS cloudcontrol service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-cloudcontrol "C++ SDK for AWS Cloud Control API" aws-cpp-sdk-core)
 
 file(GLOB AWS_CLOUDCONTROL_HEADERS
     "include/aws/cloudcontrol/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CLOUDCONTROL_HEADERS
 
 file(GLOB AWS_CLOUDCONTROL_MODEL_HEADERS
     "include/aws/cloudcontrol/model/*.h"
+)
+
+file(GLOB AWS_CLOUDCONTROL_INTERNAL_HEADERS
+    "include/aws/cloudcontrol/internal/*.h"
 )
 
 file(GLOB AWS_CLOUDCONTROL_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CLOUDCONTROL_MODEL_SOURCE
 
 file(GLOB CLOUDCONTROL_UNIFIED_HEADERS
     ${AWS_CLOUDCONTROL_HEADERS}
+    ${AWS_CLOUDCONTROL_INTERNAL_HEADERS}
     ${AWS_CLOUDCONTROL_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\cloudcontrol" FILES ${AWS_CLOUDCONTROL_HEADERS})
+        source_group("Header Files\\aws\\cloudcontrol\\internal" FILES ${AWS_CLOUDCONTROL_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\cloudcontrol\\model" FILES ${AWS_CLOUDCONTROL_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CLOUDCONTROL_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CLOUDCONTROL_MODEL_SOURCE})

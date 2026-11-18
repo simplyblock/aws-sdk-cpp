@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/sagemaker-geospatial/SageMakerGeospatialEndpointRules.h>
 #include <aws/sagemaker-geospatial/SageMakerGeospatial_EXPORTS.h>
 
 namespace Aws {
 namespace SageMakerGeospatial {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SageMakerGeospatialClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using SageMakerGeospatialEndpointProviderBase =
                          SageMakerGeospatialClientContextParameters>;
 
 using SageMakerGeospatialDefaultEpProviderBase =
-    DefaultEndpointProvider<SageMakerGeospatialClientConfiguration, SageMakerGeospatialBuiltInParameters,
-                            SageMakerGeospatialClientContextParameters>;
+    BDDEndpointProvider<SageMakerGeospatialClientConfiguration, SageMakerGeospatialBuiltInParameters,
+                        SageMakerGeospatialClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_SAGEMAKERGEOSPATIAL_API SageMakerGeospatialEndpointProvider : public S
  public:
   using SageMakerGeospatialResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SageMakerGeospatialEndpointProvider()
-      : SageMakerGeospatialDefaultEpProviderBase(Aws::SageMakerGeospatial::SageMakerGeospatialEndpointRules::GetRulesBlob(),
-                                                 Aws::SageMakerGeospatial::SageMakerGeospatialEndpointRules::RulesBlobSize) {}
+  SageMakerGeospatialEndpointProvider();
 
   ~SageMakerGeospatialEndpointProvider() {}
 };

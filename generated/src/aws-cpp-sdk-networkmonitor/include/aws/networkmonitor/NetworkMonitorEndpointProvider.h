@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/networkmonitor/NetworkMonitorEndpointRules.h>
 #include <aws/networkmonitor/NetworkMonitor_EXPORTS.h>
 
 namespace Aws {
 namespace NetworkMonitor {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using NetworkMonitorClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using NetworkMonitorEndpointProviderBase =
     EndpointProviderBase<NetworkMonitorClientConfiguration, NetworkMonitorBuiltInParameters, NetworkMonitorClientContextParameters>;
 
 using NetworkMonitorDefaultEpProviderBase =
-    DefaultEndpointProvider<NetworkMonitorClientConfiguration, NetworkMonitorBuiltInParameters, NetworkMonitorClientContextParameters>;
+    BDDEndpointProvider<NetworkMonitorClientConfiguration, NetworkMonitorBuiltInParameters, NetworkMonitorClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_NETWORKMONITOR_API NetworkMonitorEndpointProvider : public NetworkMoni
  public:
   using NetworkMonitorResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  NetworkMonitorEndpointProvider()
-      : NetworkMonitorDefaultEpProviderBase(Aws::NetworkMonitor::NetworkMonitorEndpointRules::GetRulesBlob(),
-                                            Aws::NetworkMonitor::NetworkMonitorEndpointRules::RulesBlobSize) {}
+  NetworkMonitorEndpointProvider();
 
   ~NetworkMonitorEndpointProvider() {}
 };

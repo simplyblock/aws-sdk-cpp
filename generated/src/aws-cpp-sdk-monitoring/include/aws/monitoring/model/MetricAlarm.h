@@ -9,6 +9,7 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/crt/cbor/Cbor.h>
 #include <aws/monitoring/CloudWatch_EXPORTS.h>
+#include <aws/monitoring/model/ActionConfiguration.h>
 #include <aws/monitoring/model/ComparisonOperator.h>
 #include <aws/monitoring/model/Dimension.h>
 #include <aws/monitoring/model/EvaluationCriteria.h>
@@ -18,6 +19,7 @@
 #include <aws/monitoring/model/StandardUnit.h>
 #include <aws/monitoring/model/StateValue.h>
 #include <aws/monitoring/model/Statistic.h>
+#include <aws/monitoring/model/WarmUpConfiguration.h>
 
 #include <utility>
 
@@ -637,6 +639,29 @@ class MetricAlarm {
 
   ///@{
   /**
+   * <p>The warm-up configuration for the alarm. A warm-up period delays alarm
+   * evaluation after you create or update the alarm. During the warm-up period, the
+   * alarm stays in <code>INSUFFICIENT_DATA</code> and does not perform alarm
+   * actions.</p> <p>For more information, see <a
+   * href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-warm-up.html">Alarm
+   * warm-up periods</a> in the <i>Amazon CloudWatch User Guide</i>.</p>
+   */
+  inline const WarmUpConfiguration& GetWarmUpConfiguration() const { return m_warmUpConfiguration; }
+  inline bool WarmUpConfigurationHasBeenSet() const { return m_warmUpConfigurationHasBeenSet; }
+  template <typename WarmUpConfigurationT = WarmUpConfiguration>
+  void SetWarmUpConfiguration(WarmUpConfigurationT&& value) {
+    m_warmUpConfigurationHasBeenSet = true;
+    m_warmUpConfiguration = std::forward<WarmUpConfigurationT>(value);
+  }
+  template <typename WarmUpConfigurationT = WarmUpConfiguration>
+  MetricAlarm& WithWarmUpConfiguration(WarmUpConfigurationT&& value) {
+    SetWarmUpConfiguration(std::forward<WarmUpConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The evaluation criteria for the alarm.</p>
    */
   inline const EvaluationCriteria& GetEvaluationCriteria() const { return m_evaluationCriteria; }
@@ -665,6 +690,26 @@ class MetricAlarm {
   }
   inline MetricAlarm& WithEvaluationInterval(int64_t value) {
     SetEvaluationInterval(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Settings that change the content of the notifications and events that the
+   * alarm sends when its state changes. These settings apply to the alarm's actions,
+   * whichever state triggers them.</p>
+   */
+  inline const ActionConfiguration& GetActionConfiguration() const { return m_actionConfiguration; }
+  inline bool ActionConfigurationHasBeenSet() const { return m_actionConfigurationHasBeenSet; }
+  template <typename ActionConfigurationT = ActionConfiguration>
+  void SetActionConfiguration(ActionConfigurationT&& value) {
+    m_actionConfigurationHasBeenSet = true;
+    m_actionConfiguration = std::forward<ActionConfigurationT>(value);
+  }
+  template <typename ActionConfigurationT = ActionConfiguration>
+  MetricAlarm& WithActionConfiguration(ActionConfigurationT&& value) {
+    SetActionConfiguration(std::forward<ActionConfigurationT>(value));
     return *this;
   }
   ///@}
@@ -729,9 +774,13 @@ class MetricAlarm {
 
   EvaluationWindow m_evaluationWindow;
 
+  WarmUpConfiguration m_warmUpConfiguration;
+
   EvaluationCriteria m_evaluationCriteria;
 
   int64_t m_evaluationInterval{0};
+
+  ActionConfiguration m_actionConfiguration;
   bool m_alarmNameHasBeenSet = false;
   bool m_alarmArnHasBeenSet = false;
   bool m_alarmDescriptionHasBeenSet = false;
@@ -762,8 +811,10 @@ class MetricAlarm {
   bool m_evaluationStateHasBeenSet = false;
   bool m_stateTransitionedTimestampHasBeenSet = false;
   bool m_evaluationWindowHasBeenSet = false;
+  bool m_warmUpConfigurationHasBeenSet = false;
   bool m_evaluationCriteriaHasBeenSet = false;
   bool m_evaluationIntervalHasBeenSet = false;
+  bool m_actionConfigurationHasBeenSet = false;
 };
 
 }  // namespace Model

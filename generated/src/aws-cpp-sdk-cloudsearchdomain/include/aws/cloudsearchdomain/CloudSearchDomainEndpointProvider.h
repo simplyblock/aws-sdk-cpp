@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/cloudsearchdomain/CloudSearchDomainEndpointRules.h>
 #include <aws/cloudsearchdomain/CloudSearchDomain_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace CloudSearchDomain {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using CloudSearchDomainClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using CloudSearchDomainEndpointProviderBase = EndpointProviderBase<CloudSearchDo
                                                                    CloudSearchDomainClientContextParameters>;
 
 using CloudSearchDomainDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudSearchDomainClientConfiguration, CloudSearchDomainBuiltInParameters,
-                            CloudSearchDomainClientContextParameters>;
+    BDDEndpointProvider<CloudSearchDomainClientConfiguration, CloudSearchDomainBuiltInParameters, CloudSearchDomainClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_CLOUDSEARCHDOMAIN_API CloudSearchDomainEndpointProvider : public Cloud
  public:
   using CloudSearchDomainResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  CloudSearchDomainEndpointProvider()
-      : CloudSearchDomainDefaultEpProviderBase(Aws::CloudSearchDomain::CloudSearchDomainEndpointRules::GetRulesBlob(),
-                                               Aws::CloudSearchDomain::CloudSearchDomainEndpointRules::RulesBlobSize) {}
+  CloudSearchDomainEndpointProvider();
 
   ~CloudSearchDomainEndpointProvider() {}
 };

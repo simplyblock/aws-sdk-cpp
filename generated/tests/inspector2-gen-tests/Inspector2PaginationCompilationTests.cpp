@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -13,9 +13,12 @@
 #include <aws/inspector2/model/ListUsageTotalsPaginationTraits.h>
 #include <aws/inspector2/model/ListDelegatedAdminAccountsPaginationTraits.h>
 #include <aws/inspector2/model/ListFiltersPaginationTraits.h>
+#include <aws/inspector2/model/ListConnectorScanConfigurationsPaginationTraits.h>
 #include <aws/inspector2/model/SearchVulnerabilitiesPaginationTraits.h>
 #include <aws/inspector2/model/GetClustersForImagePaginationTraits.h>
+#include <aws/inspector2/model/ListConnectorsPaginationTraits.h>
 #include <aws/inspector2/model/ListMembersPaginationTraits.h>
+#include <aws/inspector2/model/ListOnDemandScansPaginationTraits.h>
 #include <aws/inspector2/model/ListCoverageStatisticsPaginationTraits.h>
 #include <aws/inspector2/model/ListFindingAggregationsPaginationTraits.h>
 #include <aws/inspector2/model/ListCisScanResultsAggregatedByTargetResourcePaginationTraits.h>
@@ -33,6 +36,6 @@ class Inspector2PaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestS
 
 TEST_F(Inspector2PaginationCompilationTest, Inspector2PaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

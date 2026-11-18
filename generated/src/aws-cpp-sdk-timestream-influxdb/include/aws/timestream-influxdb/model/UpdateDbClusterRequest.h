@@ -5,9 +5,12 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/timestream-influxdb/TimestreamInfluxDBRequest.h>
 #include <aws/timestream-influxdb/TimestreamInfluxDB_EXPORTS.h>
+#include <aws/timestream-influxdb/model/DbBackupConfiguration.h>
 #include <aws/timestream-influxdb/model/DbInstanceType.h>
+#include <aws/timestream-influxdb/model/DeploymentConfiguration.h>
 #include <aws/timestream-influxdb/model/FailoverMode.h>
 #include <aws/timestream-influxdb/model/LogDeliveryConfiguration.h>
 #include <aws/timestream-influxdb/model/MaintenanceSchedule.h>
@@ -106,7 +109,10 @@ class UpdateDbClusterRequest : public TimestreamInfluxDBRequest {
 
   ///@{
   /**
-   * <p>Update the DB cluster to use the specified DB instance Type.</p>
+   * <p>Update the DB cluster to use the specified DB instance Type.</p> <p>You can't
+   * specify both dbInstanceType and deploymentConfiguration in the same request.
+   * When you use deploymentConfiguration, the instance type is specified per node
+   * group.</p>
    */
   inline DbInstanceType GetDbInstanceType() const { return m_dbInstanceType; }
   inline bool DbInstanceTypeHasBeenSet() const { return m_dbInstanceTypeHasBeenSet; }
@@ -116,6 +122,29 @@ class UpdateDbClusterRequest : public TimestreamInfluxDBRequest {
   }
   inline UpdateDbClusterRequest& WithDbInstanceType(DbInstanceType value) {
     SetDbInstanceType(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The updated compute topology for the cluster, defined as a set of node
+   * groups. Use deploymentConfiguration to change the cluster's topology or scale
+   * its compute in a single call. You can't specify both deploymentConfiguration and
+   * dbInstanceType in the same request. When you provide a deployment configuration,
+   * Timestream for InfluxDB ignores any node-count parameters in the associated DB
+   * parameter group.</p>
+   */
+  inline const DeploymentConfiguration& GetDeploymentConfiguration() const { return m_deploymentConfiguration; }
+  inline bool DeploymentConfigurationHasBeenSet() const { return m_deploymentConfigurationHasBeenSet; }
+  template <typename DeploymentConfigurationT = DeploymentConfiguration>
+  void SetDeploymentConfiguration(DeploymentConfigurationT&& value) {
+    m_deploymentConfigurationHasBeenSet = true;
+    m_deploymentConfiguration = std::forward<DeploymentConfigurationT>(value);
+  }
+  template <typename DeploymentConfigurationT = DeploymentConfiguration>
+  UpdateDbClusterRequest& WithDeploymentConfiguration(DeploymentConfigurationT&& value) {
+    SetDeploymentConfiguration(std::forward<DeploymentConfigurationT>(value));
     return *this;
   }
   ///@}
@@ -154,6 +183,30 @@ class UpdateDbClusterRequest : public TimestreamInfluxDBRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>A list of backup configurations to update for the DB cluster.</p>
+   */
+  inline const Aws::Vector<DbBackupConfiguration>& GetDbBackupConfigurations() const { return m_dbBackupConfigurations; }
+  inline bool DbBackupConfigurationsHasBeenSet() const { return m_dbBackupConfigurationsHasBeenSet; }
+  template <typename DbBackupConfigurationsT = Aws::Vector<DbBackupConfiguration>>
+  void SetDbBackupConfigurations(DbBackupConfigurationsT&& value) {
+    m_dbBackupConfigurationsHasBeenSet = true;
+    m_dbBackupConfigurations = std::forward<DbBackupConfigurationsT>(value);
+  }
+  template <typename DbBackupConfigurationsT = Aws::Vector<DbBackupConfiguration>>
+  UpdateDbClusterRequest& WithDbBackupConfigurations(DbBackupConfigurationsT&& value) {
+    SetDbBackupConfigurations(std::forward<DbBackupConfigurationsT>(value));
+    return *this;
+  }
+  template <typename DbBackupConfigurationsT = DbBackupConfiguration>
+  UpdateDbClusterRequest& AddDbBackupConfigurations(DbBackupConfigurationsT&& value) {
+    m_dbBackupConfigurationsHasBeenSet = true;
+    m_dbBackupConfigurations.emplace_back(std::forward<DbBackupConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_dbClusterId;
 
@@ -165,16 +218,22 @@ class UpdateDbClusterRequest : public TimestreamInfluxDBRequest {
 
   DbInstanceType m_dbInstanceType{DbInstanceType::NOT_SET};
 
+  DeploymentConfiguration m_deploymentConfiguration;
+
   FailoverMode m_failoverMode{FailoverMode::NOT_SET};
 
   MaintenanceSchedule m_maintenanceSchedule;
+
+  Aws::Vector<DbBackupConfiguration> m_dbBackupConfigurations;
   bool m_dbClusterIdHasBeenSet = false;
   bool m_logDeliveryConfigurationHasBeenSet = false;
   bool m_dbParameterGroupIdentifierHasBeenSet = false;
   bool m_portHasBeenSet = false;
   bool m_dbInstanceTypeHasBeenSet = false;
+  bool m_deploymentConfigurationHasBeenSet = false;
   bool m_failoverModeHasBeenSet = false;
   bool m_maintenanceScheduleHasBeenSet = false;
+  bool m_dbBackupConfigurationsHasBeenSet = false;
 };
 
 }  // namespace Model

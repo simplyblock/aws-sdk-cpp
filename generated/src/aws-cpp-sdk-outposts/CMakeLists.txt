@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-outposts "C++ SDK for the AWS outposts service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-outposts "C++ SDK for AWS Outposts" aws-cpp-sdk-core)
 
 file(GLOB AWS_OUTPOSTS_HEADERS
     "include/aws/outposts/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_OUTPOSTS_HEADERS
 
 file(GLOB AWS_OUTPOSTS_MODEL_HEADERS
     "include/aws/outposts/model/*.h"
+)
+
+file(GLOB AWS_OUTPOSTS_INTERNAL_HEADERS
+    "include/aws/outposts/internal/*.h"
 )
 
 file(GLOB AWS_OUTPOSTS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_OUTPOSTS_MODEL_SOURCE
 
 file(GLOB OUTPOSTS_UNIFIED_HEADERS
     ${AWS_OUTPOSTS_HEADERS}
+    ${AWS_OUTPOSTS_INTERNAL_HEADERS}
     ${AWS_OUTPOSTS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\outposts" FILES ${AWS_OUTPOSTS_HEADERS})
+        source_group("Header Files\\aws\\outposts\\internal" FILES ${AWS_OUTPOSTS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\outposts\\model" FILES ${AWS_OUTPOSTS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_OUTPOSTS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_OUTPOSTS_MODEL_SOURCE})

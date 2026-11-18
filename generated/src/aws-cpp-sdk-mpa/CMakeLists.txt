@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-mpa "C++ SDK for the AWS mpa service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-mpa "C++ SDK for AWS Multi-party Approval" aws-cpp-sdk-core)
 
 file(GLOB AWS_MPA_HEADERS
     "include/aws/mpa/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MPA_HEADERS
 
 file(GLOB AWS_MPA_MODEL_HEADERS
     "include/aws/mpa/model/*.h"
+)
+
+file(GLOB AWS_MPA_INTERNAL_HEADERS
+    "include/aws/mpa/internal/*.h"
 )
 
 file(GLOB AWS_MPA_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MPA_MODEL_SOURCE
 
 file(GLOB MPA_UNIFIED_HEADERS
     ${AWS_MPA_HEADERS}
+    ${AWS_MPA_INTERNAL_HEADERS}
     ${AWS_MPA_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\mpa" FILES ${AWS_MPA_HEADERS})
+        source_group("Header Files\\aws\\mpa\\internal" FILES ${AWS_MPA_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\mpa\\model" FILES ${AWS_MPA_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MPA_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MPA_MODEL_SOURCE})

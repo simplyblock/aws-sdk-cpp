@@ -34,7 +34,12 @@ class ImportVmImageRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The name of the base image that is created by the import process.</p>
+   * <p>The name of the base image that is created by the import process. Image
+   * Builder generates the image ARN from a normalized form of the name, so names
+   * that differ only in case, spaces, or underscores count as the same name. If an
+   * image with the same name and semantic version already exists in your account in
+   * the same Amazon Web Services Region, the import creates a new build version for
+   * it.</p>
    */
   inline const Aws::String& GetName() const { return m_name; }
   inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
@@ -57,8 +62,8 @@ class ImportVmImageRequest : public ImagebuilderRequest {
    * <p>The semantic version has four nodes:
    * &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values
    * for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b>
-   * For the first three nodes you can assign any positive integer value, including
-   * zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder
+   * For the first three nodes, you can assign any positive integer value, including
+   * zero. The upper limit is 2^30-1, or 1073741823, for each node. Image Builder
    * automatically assigns the build number to the fourth node.</p> <p>
    * <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment
    * requirements for the nodes that you can assign. For example, you might choose a
@@ -134,9 +139,9 @@ class ImportVmImageRequest : public ImagebuilderRequest {
   ///@{
   /**
    * <p>The <code>importTaskId</code> (API) or <code>ImportTaskId</code> (CLI) from
-   * the Amazon EC2 VM import process. Image Builder retrieves information from the
-   * import process to pull in the AMI that is created from the VM source as the base
-   * image for your recipe.</p>
+   * the Amazon EC2 VM import process. The import task doesn't need to be complete
+   * when you call ImportVmImage - Image Builder monitors the task and finishes
+   * creating the image when the task completes.</p>
    */
   inline const Aws::String& GetVmImportTaskId() const { return m_vmImportTaskId; }
   inline bool VmImportTaskIdHasBeenSet() const { return m_vmImportTaskIdHasBeenSet; }
@@ -154,7 +159,9 @@ class ImportVmImageRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Define logging configuration for the image build process.</p>
+   * <p>The CloudWatch Logs log group where Image Builder sends the import logs. For
+   * ImportVmImage, the log group name must be within the
+   * <code>/aws/imagebuilder/</code> namespace.</p>
    */
   inline const ImageLoggingConfiguration& GetLoggingConfiguration() const { return m_loggingConfiguration; }
   inline bool LoggingConfigurationHasBeenSet() const { return m_loggingConfigurationHasBeenSet; }
@@ -196,8 +203,10 @@ class ImportVmImageRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Unique, case-sensitive identifier you provide to ensure idempotency of the
-   * request. For more information, see <a
+   * <p>A unique, case-sensitive identifier you provide to ensure that the operation
+   * runs no more than one time. If you retry a request with the same client token,
+   * Image Builder returns the original response without running the operation again.
+   * For more information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
    * idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>
    */

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/serverlessrepo/ServerlessApplicationRepositoryEndpointRules.h>
 #include <aws/serverlessrepo/ServerlessApplicationRepository_EXPORTS.h>
 
 namespace Aws {
 namespace ServerlessApplicationRepository {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ServerlessApplicationRepositoryClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ServerlessApplicationRepositoryEndpointProviderBase =
                          ServerlessApplicationRepositoryClientContextParameters>;
 
 using ServerlessApplicationRepositoryDefaultEpProviderBase =
-    DefaultEndpointProvider<ServerlessApplicationRepositoryClientConfiguration, ServerlessApplicationRepositoryBuiltInParameters,
-                            ServerlessApplicationRepositoryClientContextParameters>;
+    BDDEndpointProvider<ServerlessApplicationRepositoryClientConfiguration, ServerlessApplicationRepositoryBuiltInParameters,
+                        ServerlessApplicationRepositoryClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -45,10 +44,7 @@ class AWS_SERVERLESSAPPLICATIONREPOSITORY_API ServerlessApplicationRepositoryEnd
  public:
   using ServerlessApplicationRepositoryResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ServerlessApplicationRepositoryEndpointProvider()
-      : ServerlessApplicationRepositoryDefaultEpProviderBase(
-            Aws::ServerlessApplicationRepository::ServerlessApplicationRepositoryEndpointRules::GetRulesBlob(),
-            Aws::ServerlessApplicationRepository::ServerlessApplicationRepositoryEndpointRules::RulesBlobSize) {}
+  ServerlessApplicationRepositoryEndpointProvider();
 
   ~ServerlessApplicationRepositoryEndpointProvider() {}
 };

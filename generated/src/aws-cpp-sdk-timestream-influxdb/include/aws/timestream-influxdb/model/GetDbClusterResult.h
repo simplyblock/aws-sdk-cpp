@@ -9,11 +9,12 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/timestream-influxdb/TimestreamInfluxDB_EXPORTS.h>
-#include <aws/timestream-influxdb/model/ClusterConfiguration.h>
 #include <aws/timestream-influxdb/model/ClusterDeploymentType.h>
 #include <aws/timestream-influxdb/model/ClusterStatus.h>
+#include <aws/timestream-influxdb/model/DbBackupConfigurationOutput.h>
 #include <aws/timestream-influxdb/model/DbInstanceType.h>
 #include <aws/timestream-influxdb/model/DbStorageType.h>
+#include <aws/timestream-influxdb/model/DeploymentConfiguration.h>
 #include <aws/timestream-influxdb/model/EngineType.h>
 #include <aws/timestream-influxdb/model/FailoverMode.h>
 #include <aws/timestream-influxdb/model/LogDeliveryConfiguration.h>
@@ -283,6 +284,28 @@ class GetDbClusterResult {
 
   ///@{
   /**
+   * <p>The ID of the DB parameter group actually applied to your DB cluster. When
+   * the service applies optimized defaults, it creates a service-managed DB
+   * parameter group and this field reflects that group, while
+   * dbParameterGroupIdentifier reflects the customer-provided DB parameter group.
+   * When no service-managed DB parameter group is applied, this value matches
+   * dbParameterGroupIdentifier.</p>
+   */
+  inline const Aws::String& GetEffectiveDbParameterGroupIdentifier() const { return m_effectiveDbParameterGroupIdentifier; }
+  template <typename EffectiveDbParameterGroupIdentifierT = Aws::String>
+  void SetEffectiveDbParameterGroupIdentifier(EffectiveDbParameterGroupIdentifierT&& value) {
+    m_effectiveDbParameterGroupIdentifierHasBeenSet = true;
+    m_effectiveDbParameterGroupIdentifier = std::forward<EffectiveDbParameterGroupIdentifierT>(value);
+  }
+  template <typename EffectiveDbParameterGroupIdentifierT = Aws::String>
+  GetDbClusterResult& WithEffectiveDbParameterGroupIdentifier(EffectiveDbParameterGroupIdentifierT&& value) {
+    SetEffectiveDbParameterGroupIdentifier(std::forward<EffectiveDbParameterGroupIdentifierT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>Configuration for sending InfluxDB engine logs to send to specified S3
    * bucket.</p>
    */
@@ -435,17 +458,59 @@ class GetDbClusterResult {
 
   ///@{
   /**
-   * <p>Configuration for node modes in the DbCluster.</p>
+   * <p>The current compute topology of the cluster, as a set of node groups. The
+   * returned topology reflects the cluster's actual provisioned nodes.</p>
    */
-  inline const ClusterConfiguration& GetClusterConfiguration() const { return m_clusterConfiguration; }
-  template <typename ClusterConfigurationT = ClusterConfiguration>
-  void SetClusterConfiguration(ClusterConfigurationT&& value) {
-    m_clusterConfigurationHasBeenSet = true;
-    m_clusterConfiguration = std::forward<ClusterConfigurationT>(value);
+  inline const DeploymentConfiguration& GetDeploymentConfiguration() const { return m_deploymentConfiguration; }
+  template <typename DeploymentConfigurationT = DeploymentConfiguration>
+  void SetDeploymentConfiguration(DeploymentConfigurationT&& value) {
+    m_deploymentConfigurationHasBeenSet = true;
+    m_deploymentConfiguration = std::forward<DeploymentConfigurationT>(value);
   }
-  template <typename ClusterConfigurationT = ClusterConfiguration>
-  GetDbClusterResult& WithClusterConfiguration(ClusterConfigurationT&& value) {
-    SetClusterConfiguration(std::forward<ClusterConfigurationT>(value));
+  template <typename DeploymentConfigurationT = DeploymentConfiguration>
+  GetDbClusterResult& WithDeploymentConfiguration(DeploymentConfigurationT&& value) {
+    SetDeploymentConfiguration(std::forward<DeploymentConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The backup configurations for the DB cluster.</p>
+   */
+  inline const Aws::Vector<DbBackupConfigurationOutput>& GetDbBackupConfigurations() const { return m_dbBackupConfigurations; }
+  template <typename DbBackupConfigurationsT = Aws::Vector<DbBackupConfigurationOutput>>
+  void SetDbBackupConfigurations(DbBackupConfigurationsT&& value) {
+    m_dbBackupConfigurationsHasBeenSet = true;
+    m_dbBackupConfigurations = std::forward<DbBackupConfigurationsT>(value);
+  }
+  template <typename DbBackupConfigurationsT = Aws::Vector<DbBackupConfigurationOutput>>
+  GetDbClusterResult& WithDbBackupConfigurations(DbBackupConfigurationsT&& value) {
+    SetDbBackupConfigurations(std::forward<DbBackupConfigurationsT>(value));
+    return *this;
+  }
+  template <typename DbBackupConfigurationsT = DbBackupConfigurationOutput>
+  GetDbClusterResult& AddDbBackupConfigurations(DbBackupConfigurationsT&& value) {
+    m_dbBackupConfigurationsHasBeenSet = true;
+    m_dbBackupConfigurations.emplace_back(std::forward<DbBackupConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Amazon Web Services KMS key ARN used for encryption of the DB
+   * cluster.</p>
+   */
+  inline const Aws::String& GetKmsKeyId() const { return m_kmsKeyId; }
+  template <typename KmsKeyIdT = Aws::String>
+  void SetKmsKeyId(KmsKeyIdT&& value) {
+    m_kmsKeyIdHasBeenSet = true;
+    m_kmsKeyId = std::forward<KmsKeyIdT>(value);
+  }
+  template <typename KmsKeyIdT = Aws::String>
+  GetDbClusterResult& WithKmsKeyId(KmsKeyIdT&& value) {
+    SetKmsKeyId(std::forward<KmsKeyIdT>(value));
     return *this;
   }
   ///@}
@@ -497,6 +562,8 @@ class GetDbClusterResult {
 
   Aws::String m_dbParameterGroupIdentifier;
 
+  Aws::String m_effectiveDbParameterGroupIdentifier;
+
   LogDeliveryConfiguration m_logDeliveryConfiguration;
 
   MaintenanceSchedule m_maintenanceSchedule;
@@ -513,7 +580,11 @@ class GetDbClusterResult {
 
   FailoverMode m_failoverMode{FailoverMode::NOT_SET};
 
-  ClusterConfiguration m_clusterConfiguration;
+  DeploymentConfiguration m_deploymentConfiguration;
+
+  Aws::Vector<DbBackupConfigurationOutput> m_dbBackupConfigurations;
+
+  Aws::String m_kmsKeyId;
 
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
@@ -532,6 +603,7 @@ class GetDbClusterResult {
   bool m_engineTypeHasBeenSet = false;
   bool m_publiclyAccessibleHasBeenSet = false;
   bool m_dbParameterGroupIdentifierHasBeenSet = false;
+  bool m_effectiveDbParameterGroupIdentifierHasBeenSet = false;
   bool m_logDeliveryConfigurationHasBeenSet = false;
   bool m_maintenanceScheduleHasBeenSet = false;
   bool m_lastMaintenanceTimeHasBeenSet = false;
@@ -540,7 +612,9 @@ class GetDbClusterResult {
   bool m_vpcSubnetIdsHasBeenSet = false;
   bool m_vpcSecurityGroupIdsHasBeenSet = false;
   bool m_failoverModeHasBeenSet = false;
-  bool m_clusterConfigurationHasBeenSet = false;
+  bool m_deploymentConfigurationHasBeenSet = false;
+  bool m_dbBackupConfigurationsHasBeenSet = false;
+  bool m_kmsKeyIdHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

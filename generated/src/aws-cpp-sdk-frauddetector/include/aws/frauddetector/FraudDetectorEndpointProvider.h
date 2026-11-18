@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/frauddetector/FraudDetectorEndpointRules.h>
 #include <aws/frauddetector/FraudDetector_EXPORTS.h>
 
 namespace Aws {
 namespace FraudDetector {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using FraudDetectorClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using FraudDetectorEndpointProviderBase =
     EndpointProviderBase<FraudDetectorClientConfiguration, FraudDetectorBuiltInParameters, FraudDetectorClientContextParameters>;
 
 using FraudDetectorDefaultEpProviderBase =
-    DefaultEndpointProvider<FraudDetectorClientConfiguration, FraudDetectorBuiltInParameters, FraudDetectorClientContextParameters>;
+    BDDEndpointProvider<FraudDetectorClientConfiguration, FraudDetectorBuiltInParameters, FraudDetectorClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_FRAUDDETECTOR_API FraudDetectorEndpointProvider : public FraudDetector
  public:
   using FraudDetectorResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  FraudDetectorEndpointProvider()
-      : FraudDetectorDefaultEpProviderBase(Aws::FraudDetector::FraudDetectorEndpointRules::GetRulesBlob(),
-                                           Aws::FraudDetector::FraudDetectorEndpointRules::RulesBlobSize) {}
+  FraudDetectorEndpointProvider();
 
   ~FraudDetectorEndpointProvider() {}
 };

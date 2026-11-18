@@ -11,7 +11,9 @@
 #include <aws/mediapackagev2/Mediapackagev2_EXPORTS.h>
 #include <aws/mediapackagev2/model/InputSwitchConfiguration.h>
 #include <aws/mediapackagev2/model/InputType.h>
+#include <aws/mediapackagev2/model/MultiviewConfiguration.h>
 #include <aws/mediapackagev2/model/OutputHeaderConfiguration.h>
+#include <aws/mediapackagev2/model/OutputLockingMode.h>
 
 #include <utility>
 
@@ -96,13 +98,17 @@ class CreateChannelRequest : public Mediapackagev2Request {
 
   ///@{
   /**
-   * <p>The input type will be an immutable field which will be used to define
-   * whether the channel will allow CMAF ingest or HLS ingest. If unprovided, it will
-   * default to HLS to preserve current behavior.</p> <p>The allowed values are:</p>
-   * <ul> <li> <p> <code>HLS</code> - The HLS streaming specification (which defines
-   * M3U8 manifests and TS segments).</p> </li> <li> <p> <code>CMAF</code> - The
-   * DASH-IF CMAF Ingest specification (which defines CMAF segments with optional
-   * DASH manifests).</p> </li> </ul>
+   * <p>The input type is an immutable field. It defines whether the channel allows
+   * CMAF ingest, HLS ingest, or server-side multiview output. Multiview channels
+   * receive no ingest of their own. If unprovided, the value defaults to HLS.</p>
+   * <p>The allowed values are:</p> <ul> <li> <p> <code>HLS</code> - The HLS
+   * streaming specification (which defines M3U8 manifests and TS segments).</p>
+   * </li> <li> <p> <code>CMAF</code> - The DASH-IF CMAF Ingest specification (which
+   * defines CMAF segments with optional DASH manifests).</p> </li> <li> <p>
+   * <code>MULTIVIEW</code> – Server-side multiview. The channel receives no ingest
+   * of its own. Instead, it composites video from the source channels in its
+   * <code>MultiviewConfiguration</code> into a single tiled output stream.</p> </li>
+   * </ul>
    */
   inline InputType GetInputType() const { return m_inputType; }
   inline bool InputTypeHasBeenSet() const { return m_inputTypeHasBeenSet; }
@@ -176,6 +182,52 @@ class CreateChannelRequest : public Mediapackagev2Request {
 
   ///@{
   /**
+   * <p>The multiview configuration for the channel. This setting is required when
+   * <code>InputType</code> is <code>MULTIVIEW</code>, and can't be set for any other
+   * input type.</p>
+   */
+  inline const MultiviewConfiguration& GetMultiviewConfiguration() const { return m_multiviewConfiguration; }
+  inline bool MultiviewConfigurationHasBeenSet() const { return m_multiviewConfigurationHasBeenSet; }
+  template <typename MultiviewConfigurationT = MultiviewConfiguration>
+  void SetMultiviewConfiguration(MultiviewConfigurationT&& value) {
+    m_multiviewConfigurationHasBeenSet = true;
+    m_multiviewConfiguration = std::forward<MultiviewConfigurationT>(value);
+  }
+  template <typename MultiviewConfigurationT = MultiviewConfiguration>
+  CreateChannelRequest& WithMultiviewConfiguration(MultiviewConfigurationT&& value) {
+    SetMultiviewConfiguration(std::forward<MultiviewConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The output locking mode for the channel. This setting is only valid when
+   * <code>InputType</code> is <code>CMAF</code>. This value is immutable after
+   * channel creation. If you don't specify a value, the default is
+   * <code>EPOCH_LOCKED</code>.</p> <p>The allowed values are:</p> <ul> <li> <p>
+   * <code>EPOCH_LOCKED</code> - The channel uses epoch-locked behavior with
+   * deterministic sequence numbering and fixed segment boundaries aligned to epoch
+   * time. This mode supports cross-region synchronization and failover.</p> </li>
+   * <li> <p> <code>NON_EPOCH_LOCKED</code> - The channel uses non-epoch-locked
+   * behavior with duration-based segment combining and monotonically increasing
+   * sequence numbers starting from 0. This mode does not support cross-region
+   * synchronization or failover.</p> </li> </ul>
+   */
+  inline OutputLockingMode GetOutputLockingMode() const { return m_outputLockingMode; }
+  inline bool OutputLockingModeHasBeenSet() const { return m_outputLockingModeHasBeenSet; }
+  inline void SetOutputLockingMode(OutputLockingMode value) {
+    m_outputLockingModeHasBeenSet = true;
+    m_outputLockingMode = value;
+  }
+  inline CreateChannelRequest& WithOutputLockingMode(OutputLockingMode value) {
+    SetOutputLockingMode(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>A comma-separated list of tag key:value pairs that you define. For
    * example:</p> <p> <code>"Key1": "Value1",</code> </p> <p> <code>"Key2":
    * "Value2"</code> </p>
@@ -214,6 +266,10 @@ class CreateChannelRequest : public Mediapackagev2Request {
 
   OutputHeaderConfiguration m_outputHeaderConfiguration;
 
+  MultiviewConfiguration m_multiviewConfiguration;
+
+  OutputLockingMode m_outputLockingMode{OutputLockingMode::NOT_SET};
+
   Aws::Map<Aws::String, Aws::String> m_tags;
   bool m_channelGroupNameHasBeenSet = false;
   bool m_channelNameHasBeenSet = false;
@@ -222,6 +278,8 @@ class CreateChannelRequest : public Mediapackagev2Request {
   bool m_descriptionHasBeenSet = false;
   bool m_inputSwitchConfigurationHasBeenSet = false;
   bool m_outputHeaderConfigurationHasBeenSet = false;
+  bool m_multiviewConfigurationHasBeenSet = false;
+  bool m_outputLockingModeHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
 };
 

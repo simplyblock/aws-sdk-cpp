@@ -149,6 +149,25 @@ class AIRecommendationDeploymentConfiguration {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The minimum host (CPU) memory, in MiB, to reserve for each model copy when
+   * deploying the recommendation as an Inference Component. This value maps to the
+   * Inference Component's
+   * <code>ComputeResourceRequirements$MinMemoryRequiredInMb</code> field.</p>
+   */
+  inline int GetMinCpuMemoryRequiredInMb() const { return m_minCpuMemoryRequiredInMb; }
+  inline bool MinCpuMemoryRequiredInMbHasBeenSet() const { return m_minCpuMemoryRequiredInMbHasBeenSet; }
+  inline void SetMinCpuMemoryRequiredInMb(int value) {
+    m_minCpuMemoryRequiredInMbHasBeenSet = true;
+    m_minCpuMemoryRequiredInMb = value;
+  }
+  inline AIRecommendationDeploymentConfiguration& WithMinCpuMemoryRequiredInMb(int value) {
+    SetMinCpuMemoryRequiredInMb(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::Vector<AIRecommendationDeploymentS3Channel> m_s3;
 
@@ -161,12 +180,15 @@ class AIRecommendationDeploymentConfiguration {
   int m_copyCountPerInstance{0};
 
   Aws::Map<Aws::String, Aws::String> m_environmentVariables;
+
+  int m_minCpuMemoryRequiredInMb{0};
   bool m_s3HasBeenSet = false;
   bool m_imageUriHasBeenSet = false;
   bool m_instanceTypeHasBeenSet = false;
   bool m_instanceCountHasBeenSet = false;
   bool m_copyCountPerInstanceHasBeenSet = false;
   bool m_environmentVariablesHasBeenSet = false;
+  bool m_minCpuMemoryRequiredInMbHasBeenSet = false;
 };
 
 }  // namespace Model

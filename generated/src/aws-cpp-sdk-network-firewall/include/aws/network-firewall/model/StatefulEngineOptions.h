@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/network-firewall/model/FlowTimeouts.h>
 #include <aws/network-firewall/model/RuleOrder.h>
@@ -13,26 +14,29 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace NetworkFirewall {
 namespace Model {
 
 /**
  * <p>Configuration settings for the handling of the stateful rule groups in a
- * firewall policy. </p><p><h3>See Also:</h3>   <a
+ * firewall policy. </p>  <p>Updating any setting in
+ * <code>StatefulEngineOptions</code> may require a restart of the stateful engine
+ * in order to apply the changes. When this occurs, existing connections will be
+ * treated according to your stream exception policy configuration.</p>
+ * <p><h3>See Also:</h3>   <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/network-firewall-2020-11-12/StatefulEngineOptions">AWS
  * API Reference</a></p>
  */
 class StatefulEngineOptions {
  public:
   AWS_NETWORKFIREWALL_API StatefulEngineOptions() = default;
-  AWS_NETWORKFIREWALL_API StatefulEngineOptions(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API StatefulEngineOptions& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_NETWORKFIREWALL_API StatefulEngineOptions(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API StatefulEngineOptions& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**

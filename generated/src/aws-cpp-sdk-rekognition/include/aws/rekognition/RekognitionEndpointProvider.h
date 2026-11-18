@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/rekognition/RekognitionEndpointRules.h>
 #include <aws/rekognition/Rekognition_EXPORTS.h>
 
 namespace Aws {
 namespace Rekognition {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using RekognitionClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using RekognitionEndpointProviderBase =
     EndpointProviderBase<RekognitionClientConfiguration, RekognitionBuiltInParameters, RekognitionClientContextParameters>;
 
 using RekognitionDefaultEpProviderBase =
-    DefaultEndpointProvider<RekognitionClientConfiguration, RekognitionBuiltInParameters, RekognitionClientContextParameters>;
+    BDDEndpointProvider<RekognitionClientConfiguration, RekognitionBuiltInParameters, RekognitionClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_REKOGNITION_API RekognitionEndpointProvider : public RekognitionDefaul
  public:
   using RekognitionResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  RekognitionEndpointProvider()
-      : RekognitionDefaultEpProviderBase(Aws::Rekognition::RekognitionEndpointRules::GetRulesBlob(),
-                                         Aws::Rekognition::RekognitionEndpointRules::RulesBlobSize) {}
+  RekognitionEndpointProvider();
 
   ~RekognitionEndpointProvider() {}
 };

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-scheduler "C++ SDK for the AWS scheduler service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-scheduler "C++ SDK for Amazon EventBridge Scheduler" aws-cpp-sdk-core)
 
 file(GLOB AWS_SCHEDULER_HEADERS
     "include/aws/scheduler/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SCHEDULER_HEADERS
 
 file(GLOB AWS_SCHEDULER_MODEL_HEADERS
     "include/aws/scheduler/model/*.h"
+)
+
+file(GLOB AWS_SCHEDULER_INTERNAL_HEADERS
+    "include/aws/scheduler/internal/*.h"
 )
 
 file(GLOB AWS_SCHEDULER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SCHEDULER_MODEL_SOURCE
 
 file(GLOB SCHEDULER_UNIFIED_HEADERS
     ${AWS_SCHEDULER_HEADERS}
+    ${AWS_SCHEDULER_INTERNAL_HEADERS}
     ${AWS_SCHEDULER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\scheduler" FILES ${AWS_SCHEDULER_HEADERS})
+        source_group("Header Files\\aws\\scheduler\\internal" FILES ${AWS_SCHEDULER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\scheduler\\model" FILES ${AWS_SCHEDULER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SCHEDULER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SCHEDULER_MODEL_SOURCE})

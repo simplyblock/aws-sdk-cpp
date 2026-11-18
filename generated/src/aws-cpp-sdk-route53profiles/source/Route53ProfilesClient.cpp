@@ -35,6 +35,7 @@
 #include <aws/route53profiles/model/ListTagsForResourceRequest.h>
 #include <aws/route53profiles/model/TagResourceRequest.h>
 #include <aws/route53profiles/model/UntagResourceRequest.h>
+#include <aws/route53profiles/model/UpdateProfileAssociationRequest.h>
 #include <aws/route53profiles/model/UpdateProfileResourceAssociationRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
@@ -176,7 +177,8 @@ Route53ProfilesClient::InvokeOperationOutcome Route53ProfilesClient::InvokeServi
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -190,7 +192,7 @@ Route53ProfilesClient::InvokeOperationOutcome Route53ProfilesClient::InvokeServi
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -445,6 +447,24 @@ UntagResourceOutcome Route53ProfilesClient::UntagResource(const UntagResourceReq
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? UntagResourceOutcome(result.GetResultWithOwnership()) : UntagResourceOutcome(std::move(result.GetError()));
+}
+
+UpdateProfileAssociationOutcome Route53ProfilesClient::UpdateProfileAssociation(const UpdateProfileAssociationRequest& request) const {
+  if (!request.ProfileAssociationIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateProfileAssociation", "Required field: ProfileAssociationId, is not set");
+    return UpdateProfileAssociationOutcome(Aws::Client::AWSError<Route53ProfilesErrors>(
+        Route53ProfilesErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ProfileAssociationId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/profileassociation/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetProfileAssociationId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateProfileAssociationOutcome(result.GetResultWithOwnership())
+                            : UpdateProfileAssociationOutcome(std::move(result.GetError()));
 }
 
 UpdateProfileResourceAssociationOutcome Route53ProfilesClient::UpdateProfileResourceAssociation(

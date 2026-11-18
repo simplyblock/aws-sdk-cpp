@@ -9,6 +9,7 @@
 #include <aws/ec2/EC2Request.h>
 #include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/BlockDeviceMapping.h>
+#include <aws/ec2/model/BootModeOverrideValues.h>
 #include <aws/ec2/model/SnapshotLocationEnum.h>
 #include <aws/ec2/model/TagSpecification.h>
 
@@ -72,13 +73,19 @@ class CreateImageRequest : public EC2Request {
 
   ///@{
   /**
-   *  <p>Only supported for instances in Local Zones. If the source instance is
-   * not in a Local Zone, omit this parameter.</p>  <p>The Amazon S3 location
+   *  <p>Only supported for instances in Local Zones and for instances on
+   * Outposts that support local snapshots. If the source instance is not in one of
+   * these locations, omit this parameter.</p>  <p>The Amazon S3 location
    * where the snapshots will be stored.</p> <ul> <li> <p>To create local snapshots
-   * in the same Local Zone as the source instance, specify <code>local</code>.</p>
-   * </li> <li> <p>To create regional snapshots in the parent Region of the Local
-   * Zone, specify <code>regional</code> or omit this parameter.</p> </li> </ul>
-   * <p>Default: <code>regional</code> </p>
+   * in the same Local Zone or on the same Outpost as the source instance, specify
+   * <code>local</code>.</p> </li> <li> <p>To create regional snapshots in the parent
+   * Region of the Local Zone or Outpost, specify <code>regional</code>.</p> </li>
+   * </ul> <p>If the source instance is in a Local Zone and you omit this parameter,
+   * regional snapshots are created in the parent Region of the Local Zone.</p> <p>If
+   * the source instance is on an Outpost that supports local snapshots, this
+   * parameter is required. If you omit it, the request fails with an
+   * <code>InvalidParameterValue</code> error.</p> <p>Default: <code>regional</code>
+   * (for instances in Local Zones only)</p>
    */
   inline SnapshotLocationEnum GetSnapshotLocation() const { return m_snapshotLocation; }
   inline bool SnapshotLocationHasBeenSet() const { return m_snapshotLocationHasBeenSet; }
@@ -88,6 +95,34 @@ class CreateImageRequest : public EC2Request {
   }
   inline CreateImageRequest& WithSnapshotLocation(SnapshotLocationEnum value) {
     SetSnapshotLocation(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The boot mode of the new image, which overrides the default boot mode. By
+   * default, if you do not specify this parameter, the new image inherits the
+   * <code>boot-mode</code> from the source instance.</p> <p>A value of
+   * <code>uefi</code> indicates that the image only supports UEFI boot mode. You can
+   * specify this parameter only if the <code>current-instance-boot-mode</code> of
+   * the source instance is <code>uefi</code>. To find the <code>boot-mode</code> or
+   * <code>current-instance-boot-mode</code> of an instance, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html">DescribeInstances</a>.</p>
+   *  <p>The operating system contained in the AMI must be configured to
+   * support the specified boot mode.</p>  <p>For more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html">Instance
+   * launch behavior with Amazon EC2 boot modes</a> in the <i>Amazon EC2 User
+   * Guide</i>.</p>
+   */
+  inline BootModeOverrideValues GetBootModeOverride() const { return m_bootModeOverride; }
+  inline bool BootModeOverrideHasBeenSet() const { return m_bootModeOverrideHasBeenSet; }
+  inline void SetBootModeOverride(BootModeOverrideValues value) {
+    m_bootModeOverrideHasBeenSet = true;
+    m_bootModeOverride = value;
+  }
+  inline CreateImageRequest& WithBootModeOverride(BootModeOverrideValues value) {
+    SetBootModeOverride(value);
     return *this;
   }
   ///@}
@@ -229,6 +264,8 @@ class CreateImageRequest : public EC2Request {
 
   SnapshotLocationEnum m_snapshotLocation{SnapshotLocationEnum::NOT_SET};
 
+  BootModeOverrideValues m_bootModeOverride{BootModeOverrideValues::NOT_SET};
+
   bool m_dryRun{false};
 
   Aws::String m_instanceId;
@@ -242,6 +279,7 @@ class CreateImageRequest : public EC2Request {
   Aws::Vector<BlockDeviceMapping> m_blockDeviceMappings;
   bool m_tagSpecificationsHasBeenSet = false;
   bool m_snapshotLocationHasBeenSet = false;
+  bool m_bootModeOverrideHasBeenSet = false;
   bool m_dryRunHasBeenSet = false;
   bool m_instanceIdHasBeenSet = false;
   bool m_nameHasBeenSet = false;

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -17,6 +17,7 @@
 #include <aws/connect/model/ListBotsPaginationTraits.h>
 #include <aws/connect/model/ListChildHoursOfOperationsPaginationTraits.h>
 #include <aws/connect/model/ListContactEvaluationsPaginationTraits.h>
+#include <aws/connect/model/ListContactFlowAliasesPaginationTraits.h>
 #include <aws/connect/model/ListContactFlowModuleAliasesPaginationTraits.h>
 #include <aws/connect/model/ListContactFlowModuleVersionsPaginationTraits.h>
 #include <aws/connect/model/ListContactFlowModulesPaginationTraits.h>
@@ -29,8 +30,10 @@
 #include <aws/connect/model/ListDataTablesPaginationTraits.h>
 #include <aws/connect/model/ListDefaultVocabulariesPaginationTraits.h>
 #include <aws/connect/model/ListEntitySecurityProfilesPaginationTraits.h>
+#include <aws/connect/model/ListEvaluationFormAIVersionsPaginationTraits.h>
 #include <aws/connect/model/ListEvaluationFormVersionsPaginationTraits.h>
 #include <aws/connect/model/ListEvaluationFormsPaginationTraits.h>
+#include <aws/connect/model/ListExtractionDefinitionsPaginationTraits.h>
 #include <aws/connect/model/ListFlowAssociationsPaginationTraits.h>
 #include <aws/connect/model/ListHoursOfOperationOverridesPaginationTraits.h>
 #include <aws/connect/model/ListHoursOfOperationsPaginationTraits.h>
@@ -40,6 +43,7 @@
 #include <aws/connect/model/ListIntegrationAssociationsPaginationTraits.h>
 #include <aws/connect/model/ListLambdaFunctionsPaginationTraits.h>
 #include <aws/connect/model/ListLexBotsPaginationTraits.h>
+#include <aws/connect/model/ListMetricsPaginationTraits.h>
 #include <aws/connect/model/ListPhoneNumbersPaginationTraits.h>
 #include <aws/connect/model/ListPhoneNumbersV2PaginationTraits.h>
 #include <aws/connect/model/ListPredefinedAttributesPaginationTraits.h>
@@ -48,11 +52,13 @@
 #include <aws/connect/model/ListQueuesPaginationTraits.h>
 #include <aws/connect/model/ListQuickConnectsPaginationTraits.h>
 #include <aws/connect/model/ListRealtimeContactAnalysisSegmentsV2PaginationTraits.h>
+#include <aws/connect/model/ListReplicationFindingsPaginationTraits.h>
 #include <aws/connect/model/ListRoutingProfileManualAssignmentQueuesPaginationTraits.h>
 #include <aws/connect/model/ListRoutingProfileQueuesPaginationTraits.h>
 #include <aws/connect/model/ListRoutingProfilesPaginationTraits.h>
 #include <aws/connect/model/ListRulesPaginationTraits.h>
 #include <aws/connect/model/ListSecurityKeysPaginationTraits.h>
+#include <aws/connect/model/ListSecurityProfileAIAgentsPaginationTraits.h>
 #include <aws/connect/model/ListSecurityProfileApplicationsPaginationTraits.h>
 #include <aws/connect/model/ListSecurityProfileFlowModulesPaginationTraits.h>
 #include <aws/connect/model/ListSecurityProfilePermissionsPaginationTraits.h>
@@ -77,12 +83,14 @@
 #include <aws/connect/model/SearchDataTablesPaginationTraits.h>
 #include <aws/connect/model/SearchHoursOfOperationOverridesPaginationTraits.h>
 #include <aws/connect/model/SearchHoursOfOperationsPaginationTraits.h>
+#include <aws/connect/model/SearchMetricsPaginationTraits.h>
 #include <aws/connect/model/SearchPredefinedAttributesPaginationTraits.h>
 #include <aws/connect/model/SearchPromptsPaginationTraits.h>
 #include <aws/connect/model/SearchQueuesPaginationTraits.h>
 #include <aws/connect/model/SearchQuickConnectsPaginationTraits.h>
 #include <aws/connect/model/SearchResourceTagsPaginationTraits.h>
 #include <aws/connect/model/SearchRoutingProfilesPaginationTraits.h>
+#include <aws/connect/model/SearchRulesPaginationTraits.h>
 #include <aws/connect/model/SearchSecurityProfilesPaginationTraits.h>
 #include <aws/connect/model/SearchTestCasesPaginationTraits.h>
 #include <aws/connect/model/SearchUserHierarchyGroupsPaginationTraits.h>
@@ -244,6 +252,18 @@ class ConnectPaginationBase {
   }
 
   /**
+   * Create a paginator for ListContactFlowAliases operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContactFlowAliasesRequest,
+                                    Pagination::ListContactFlowAliasesPaginationTraits<DerivedClient>>
+  ListContactFlowAliasesPaginator(const Model::ListContactFlowAliasesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContactFlowAliasesRequest,
+                                             Pagination::ListContactFlowAliasesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for ListContactFlowModuleAliases operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContactFlowModuleAliasesRequest,
@@ -387,6 +407,18 @@ class ConnectPaginationBase {
   }
 
   /**
+   * Create a paginator for ListEvaluationFormAIVersions operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListEvaluationFormAIVersionsRequest,
+                                    Pagination::ListEvaluationFormAIVersionsPaginationTraits<DerivedClient>>
+  ListEvaluationFormAIVersionsPaginator(const Model::ListEvaluationFormAIVersionsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListEvaluationFormAIVersionsRequest,
+                                             Pagination::ListEvaluationFormAIVersionsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for ListEvaluationForms operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListEvaluationFormsRequest,
@@ -407,6 +439,18 @@ class ConnectPaginationBase {
     request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListEvaluationFormVersionsRequest,
                                              Pagination::ListEvaluationFormVersionsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListExtractionDefinitions operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListExtractionDefinitionsRequest,
+                                    Pagination::ListExtractionDefinitionsPaginationTraits<DerivedClient>>
+  ListExtractionDefinitionsPaginator(const Model::ListExtractionDefinitionsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListExtractionDefinitionsRequest,
+                                             Pagination::ListExtractionDefinitionsPaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
   }
 
@@ -517,6 +561,17 @@ class ConnectPaginationBase {
   }
 
   /**
+   * Create a paginator for ListMetrics operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListMetricsRequest, Pagination::ListMetricsPaginationTraits<DerivedClient>>
+  ListMetricsPaginator(const Model::ListMetricsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListMetricsRequest,
+                                             Pagination::ListMetricsPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                     request};
+  }
+
+  /**
    * Create a paginator for ListPhoneNumbers operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListPhoneNumbersRequest,
@@ -611,6 +666,18 @@ class ConnectPaginationBase {
   }
 
   /**
+   * Create a paginator for ListReplicationFindings operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListReplicationFindingsRequest,
+                                    Pagination::ListReplicationFindingsPaginationTraits<DerivedClient>>
+  ListReplicationFindingsPaginator(const Model::ListReplicationFindingsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListReplicationFindingsRequest,
+                                             Pagination::ListReplicationFindingsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for ListRoutingProfileManualAssignmentQueues operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListRoutingProfileManualAssignmentQueuesRequest,
@@ -666,6 +733,18 @@ class ConnectPaginationBase {
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListSecurityKeysRequest,
                                              Pagination::ListSecurityKeysPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
                                                                                                           request};
+  }
+
+  /**
+   * Create a paginator for ListSecurityProfileAIAgents operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListSecurityProfileAIAgentsRequest,
+                                    Pagination::ListSecurityProfileAIAgentsPaginationTraits<DerivedClient>>
+  ListSecurityProfileAIAgentsPaginator(const Model::ListSecurityProfileAIAgentsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListSecurityProfileAIAgentsRequest,
+                                             Pagination::ListSecurityProfileAIAgentsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
   }
 
   /**
@@ -949,6 +1028,17 @@ class ConnectPaginationBase {
   }
 
   /**
+   * Create a paginator for SearchMetrics operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::SearchMetricsRequest, Pagination::SearchMetricsPaginationTraits<DerivedClient>>
+  SearchMetricsPaginator(const Model::SearchMetricsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::SearchMetricsRequest,
+                                             Pagination::SearchMetricsPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                       request};
+  }
+
+  /**
    * Create a paginator for SearchPredefinedAttributes operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::SearchPredefinedAttributesRequest,
@@ -1016,6 +1106,17 @@ class ConnectPaginationBase {
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::SearchRoutingProfilesRequest,
                                              Pagination::SearchRoutingProfilesPaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for SearchRules operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::SearchRulesRequest, Pagination::SearchRulesPaginationTraits<DerivedClient>>
+  SearchRulesPaginator(const Model::SearchRulesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::SearchRulesRequest,
+                                             Pagination::SearchRulesPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                     request};
   }
 
   /**

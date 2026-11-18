@@ -26,6 +26,8 @@
 #include <aws/securityagent/model/BatchDeletePentestsRequest.h>
 #include <aws/securityagent/model/BatchDeleteSecurityRequirementsRequest.h>
 #include <aws/securityagent/model/BatchDeleteThreatModelsRequest.h>
+#include <aws/securityagent/model/BatchDisassociateFindingIssueRequest.h>
+#include <aws/securityagent/model/BatchExportFindingsRequest.h>
 #include <aws/securityagent/model/BatchGetAgentSpacesRequest.h>
 #include <aws/securityagent/model/BatchGetArtifactMetadataRequest.h>
 #include <aws/securityagent/model/BatchGetCodeReviewJobTasksRequest.h>
@@ -68,6 +70,7 @@
 #include <aws/securityagent/model/GetSecurityRequirementPackRequest.h>
 #include <aws/securityagent/model/ImportSecurityRequirementsRequest.h>
 #include <aws/securityagent/model/InitiateProviderRegistrationRequest.h>
+#include <aws/securityagent/model/ListActorMessagesRequest.h>
 #include <aws/securityagent/model/ListAgentSpacesRequest.h>
 #include <aws/securityagent/model/ListApplicationsRequest.h>
 #include <aws/securityagent/model/ListArtifactsRequest.h>
@@ -105,6 +108,7 @@
 #include <aws/securityagent/model/UpdateCodeReviewRequest.h>
 #include <aws/securityagent/model/UpdateFindingRequest.h>
 #include <aws/securityagent/model/UpdateIntegratedResourcesRequest.h>
+#include <aws/securityagent/model/UpdateIntegrationRequest.h>
 #include <aws/securityagent/model/UpdatePentestRequest.h>
 #include <aws/securityagent/model/UpdatePrivateConnectionCertificateRequest.h>
 #include <aws/securityagent/model/UpdateSecurityRequirementPackRequest.h>
@@ -249,7 +253,8 @@ SecurityAgentClient::InvokeOperationOutcome SecurityAgentClient::InvokeServiceOp
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -263,7 +268,7 @@ SecurityAgentClient::InvokeOperationOutcome SecurityAgentClient::InvokeServiceOp
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -332,6 +337,29 @@ BatchDeleteThreatModelsOutcome SecurityAgentClient::BatchDeleteThreatModels(cons
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? BatchDeleteThreatModelsOutcome(result.GetResultWithOwnership())
                             : BatchDeleteThreatModelsOutcome(std::move(result.GetError()));
+}
+
+BatchDisassociateFindingIssueOutcome SecurityAgentClient::BatchDisassociateFindingIssue(
+    const BatchDisassociateFindingIssueRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/BatchDisassociateFindingIssue");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? BatchDisassociateFindingIssueOutcome(result.GetResultWithOwnership())
+                            : BatchDisassociateFindingIssueOutcome(std::move(result.GetError()));
+}
+
+BatchExportFindingsOutcome SecurityAgentClient::BatchExportFindings(const BatchExportFindingsRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/BatchExportFindings");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? BatchExportFindingsOutcome(result.GetResultWithOwnership())
+                            : BatchExportFindingsOutcome(std::move(result.GetError()));
 }
 
 BatchGetAgentSpacesOutcome SecurityAgentClient::BatchGetAgentSpaces(const BatchGetAgentSpacesRequest& request) const {
@@ -796,6 +824,17 @@ InitiateProviderRegistrationOutcome SecurityAgentClient::InitiateProviderRegistr
                             : InitiateProviderRegistrationOutcome(std::move(result.GetError()));
 }
 
+ListActorMessagesOutcome SecurityAgentClient::ListActorMessages(const ListActorMessagesRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/ListActorMessages");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListActorMessagesOutcome(result.GetResultWithOwnership())
+                            : ListActorMessagesOutcome(std::move(result.GetError()));
+}
+
 ListAgentSpacesOutcome SecurityAgentClient::ListAgentSpaces(const ListAgentSpacesRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -1221,6 +1260,17 @@ UpdateIntegratedResourcesOutcome SecurityAgentClient::UpdateIntegratedResources(
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? UpdateIntegratedResourcesOutcome(result.GetResultWithOwnership())
                             : UpdateIntegratedResourcesOutcome(std::move(result.GetError()));
+}
+
+UpdateIntegrationOutcome SecurityAgentClient::UpdateIntegration(const UpdateIntegrationRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/UpdateIntegration");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateIntegrationOutcome(result.GetResultWithOwnership())
+                            : UpdateIntegrationOutcome(std::move(result.GetError()));
 }
 
 UpdatePentestOutcome SecurityAgentClient::UpdatePentest(const UpdatePentestRequest& request) const {

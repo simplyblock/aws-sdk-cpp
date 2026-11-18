@@ -8,12 +8,14 @@
 
 #include <aws/cloudsearchdomain/CloudSearchDomainClient.h>
 #include <aws/cloudsearchdomain/CloudSearchDomainEndpointProvider.h>
-#include <aws/cloudsearchdomain/CloudSearchDomainEndpointRules.h>
 #include <aws/cloudsearchdomain/CloudSearchDomainErrorMarshaller.h>
 #include <aws/cloudsearchdomain/CloudSearchDomainErrors.h>
+#include <aws/cloudsearchdomain/CloudSearchDomainPaginationBase.h>
 #include <aws/cloudsearchdomain/CloudSearchDomainRequest.h>
 #include <aws/cloudsearchdomain/CloudSearchDomainServiceClientModel.h>
+#include <aws/cloudsearchdomain/CloudSearchDomainWaiter.h>
 #include <aws/cloudsearchdomain/CloudSearchDomain_EXPORTS.h>
+#include <aws/cloudsearchdomain/internal/CloudSearchDomainEndpointRules.h>
 #include <aws/cloudsearchdomain/model/Bucket.h>
 #include <aws/cloudsearchdomain/model/BucketInfo.h>
 #include <aws/cloudsearchdomain/model/ContentType.h>

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/marketplace-agreement/AgreementServiceEndpointRules.h>
 #include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 
 namespace Aws {
 namespace AgreementService {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using AgreementServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using AgreementServiceEndpointProviderBase =
     EndpointProviderBase<AgreementServiceClientConfiguration, AgreementServiceBuiltInParameters, AgreementServiceClientContextParameters>;
 
 using AgreementServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<AgreementServiceClientConfiguration, AgreementServiceBuiltInParameters,
-                            AgreementServiceClientContextParameters>;
+    BDDEndpointProvider<AgreementServiceClientConfiguration, AgreementServiceBuiltInParameters, AgreementServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_AGREEMENTSERVICE_API AgreementServiceEndpointProvider : public Agreeme
  public:
   using AgreementServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  AgreementServiceEndpointProvider()
-      : AgreementServiceDefaultEpProviderBase(Aws::AgreementService::AgreementServiceEndpointRules::GetRulesBlob(),
-                                              Aws::AgreementService::AgreementServiceEndpointRules::RulesBlobSize) {}
+  AgreementServiceEndpointProvider();
 
   ~AgreementServiceEndpointProvider() {}
 };

@@ -7,7 +7,9 @@
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/directconnect/DirectConnect_EXPORTS.h>
+#include <aws/directconnect/model/BillingMode.h>
 #include <aws/directconnect/model/ConnectionState.h>
 #include <aws/directconnect/model/HasLogicalRedundancy.h>
 #include <aws/directconnect/model/MacSecKey.h>
@@ -18,10 +20,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace DirectConnect {
 namespace Model {
@@ -34,9 +35,9 @@ namespace Model {
 class Connection {
  public:
   AWS_DIRECTCONNECT_API Connection() = default;
-  AWS_DIRECTCONNECT_API Connection(Aws::Utils::Json::JsonView jsonValue);
-  AWS_DIRECTCONNECT_API Connection& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_DIRECTCONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_DIRECTCONNECT_API Connection(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_DIRECTCONNECT_API Connection& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_DIRECTCONNECT_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -181,13 +182,13 @@ class Connection {
   /**
    * <p>The ID of the VLAN.</p>
    */
-  inline int GetVlan() const { return m_vlan; }
+  inline int64_t GetVlan() const { return m_vlan; }
   inline bool VlanHasBeenSet() const { return m_vlanHasBeenSet; }
-  inline void SetVlan(int value) {
+  inline void SetVlan(int64_t value) {
     m_vlanHasBeenSet = true;
     m_vlan = value;
   }
-  inline Connection& WithVlan(int value) {
+  inline Connection& WithVlan(int64_t value) {
     SetVlan(value);
     return *this;
   }
@@ -497,6 +498,94 @@ class Connection {
   ///@}
 
   ///@{
+  /**
+   * <p>The total number of inbound IPv4 route prefixes you can allocate across the
+   * virtual interfaces on the connection. Not applicable to hosted connections or
+   * interconnects.</p>
+   */
+  inline int64_t GetPrefixPoolSizeIpv4() const { return m_prefixPoolSizeIpv4; }
+  inline bool PrefixPoolSizeIpv4HasBeenSet() const { return m_prefixPoolSizeIpv4HasBeenSet; }
+  inline void SetPrefixPoolSizeIpv4(int64_t value) {
+    m_prefixPoolSizeIpv4HasBeenSet = true;
+    m_prefixPoolSizeIpv4 = value;
+  }
+  inline Connection& WithPrefixPoolSizeIpv4(int64_t value) {
+    SetPrefixPoolSizeIpv4(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The total number of inbound IPv6 route prefixes you can allocate across the
+   * virtual interfaces on the connection. Not applicable to hosted connections or
+   * interconnects.</p>
+   */
+  inline int64_t GetPrefixPoolSizeIpv6() const { return m_prefixPoolSizeIpv6; }
+  inline bool PrefixPoolSizeIpv6HasBeenSet() const { return m_prefixPoolSizeIpv6HasBeenSet; }
+  inline void SetPrefixPoolSizeIpv6(int64_t value) {
+    m_prefixPoolSizeIpv6HasBeenSet = true;
+    m_prefixPoolSizeIpv6 = value;
+  }
+  inline Connection& WithPrefixPoolSizeIpv6(int64_t value) {
+    SetPrefixPoolSizeIpv6(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The number of inbound IPv4 route prefixes in the connection prefix pool not
+   * yet allocated to a virtual interface. Not applicable to hosted connections or
+   * interconnects.</p>
+   */
+  inline int64_t GetPrefixPoolUnallocatedCountIpv4() const { return m_prefixPoolUnallocatedCountIpv4; }
+  inline bool PrefixPoolUnallocatedCountIpv4HasBeenSet() const { return m_prefixPoolUnallocatedCountIpv4HasBeenSet; }
+  inline void SetPrefixPoolUnallocatedCountIpv4(int64_t value) {
+    m_prefixPoolUnallocatedCountIpv4HasBeenSet = true;
+    m_prefixPoolUnallocatedCountIpv4 = value;
+  }
+  inline Connection& WithPrefixPoolUnallocatedCountIpv4(int64_t value) {
+    SetPrefixPoolUnallocatedCountIpv4(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The number of inbound IPv6 route prefixes in the connection prefix pool not
+   * yet allocated to a virtual interface. Not applicable to hosted connections or
+   * interconnects.</p>
+   */
+  inline int64_t GetPrefixPoolUnallocatedCountIpv6() const { return m_prefixPoolUnallocatedCountIpv6; }
+  inline bool PrefixPoolUnallocatedCountIpv6HasBeenSet() const { return m_prefixPoolUnallocatedCountIpv6HasBeenSet; }
+  inline void SetPrefixPoolUnallocatedCountIpv6(int64_t value) {
+    m_prefixPoolUnallocatedCountIpv6HasBeenSet = true;
+    m_prefixPoolUnallocatedCountIpv6 = value;
+  }
+  inline Connection& WithPrefixPoolUnallocatedCountIpv6(int64_t value) {
+    SetPrefixPoolUnallocatedCountIpv6(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The billing mode of the connection.</p>
+   */
+  inline BillingMode GetBillingMode() const { return m_billingMode; }
+  inline bool BillingModeHasBeenSet() const { return m_billingModeHasBeenSet; }
+  inline void SetBillingMode(BillingMode value) {
+    m_billingModeHasBeenSet = true;
+    m_billingMode = value;
+  }
+  inline Connection& WithBillingMode(BillingMode value) {
+    SetBillingMode(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   inline bool RequestIdHasBeenSet() const { return m_requestIdHasBeenSet; }
@@ -526,7 +615,7 @@ class Connection {
 
   Aws::String m_bandwidth;
 
-  int m_vlan{0};
+  int64_t m_vlan{0};
 
   Aws::String m_partnerName;
 
@@ -560,6 +649,16 @@ class Connection {
 
   bool m_partnerInterconnectMacSecCapable{false};
 
+  int64_t m_prefixPoolSizeIpv4{0};
+
+  int64_t m_prefixPoolSizeIpv6{0};
+
+  int64_t m_prefixPoolUnallocatedCountIpv4{0};
+
+  int64_t m_prefixPoolUnallocatedCountIpv6{0};
+
+  BillingMode m_billingMode{BillingMode::NOT_SET};
+
   Aws::String m_requestId;
   bool m_ownerAccountHasBeenSet = false;
   bool m_connectionIdHasBeenSet = false;
@@ -585,6 +684,11 @@ class Connection {
   bool m_macSecKeysHasBeenSet = false;
   bool m_rateLimiterStatusHasBeenSet = false;
   bool m_partnerInterconnectMacSecCapableHasBeenSet = false;
+  bool m_prefixPoolSizeIpv4HasBeenSet = false;
+  bool m_prefixPoolSizeIpv6HasBeenSet = false;
+  bool m_prefixPoolUnallocatedCountIpv4HasBeenSet = false;
+  bool m_prefixPoolUnallocatedCountIpv6HasBeenSet = false;
+  bool m_billingModeHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

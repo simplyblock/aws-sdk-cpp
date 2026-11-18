@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-controltower "C++ SDK for the AWS controltower service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-controltower "C++ SDK for AWS Control Tower" aws-cpp-sdk-core)
 
 file(GLOB AWS_CONTROLTOWER_HEADERS
     "include/aws/controltower/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CONTROLTOWER_HEADERS
 
 file(GLOB AWS_CONTROLTOWER_MODEL_HEADERS
     "include/aws/controltower/model/*.h"
+)
+
+file(GLOB AWS_CONTROLTOWER_INTERNAL_HEADERS
+    "include/aws/controltower/internal/*.h"
 )
 
 file(GLOB AWS_CONTROLTOWER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CONTROLTOWER_MODEL_SOURCE
 
 file(GLOB CONTROLTOWER_UNIFIED_HEADERS
     ${AWS_CONTROLTOWER_HEADERS}
+    ${AWS_CONTROLTOWER_INTERNAL_HEADERS}
     ${AWS_CONTROLTOWER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\controltower" FILES ${AWS_CONTROLTOWER_HEADERS})
+        source_group("Header Files\\aws\\controltower\\internal" FILES ${AWS_CONTROLTOWER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\controltower\\model" FILES ${AWS_CONTROLTOWER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CONTROLTOWER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CONTROLTOWER_MODEL_SOURCE})

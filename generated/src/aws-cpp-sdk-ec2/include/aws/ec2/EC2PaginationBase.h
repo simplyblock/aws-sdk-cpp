@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -18,6 +18,7 @@
 #include <aws/ec2/model/DescribeCapacityBlocksPaginationTraits.h>
 #include <aws/ec2/model/DescribeCapacityManagerDataExportsPaginationTraits.h>
 #include <aws/ec2/model/DescribeCapacityReservationBillingRequestsPaginationTraits.h>
+#include <aws/ec2/model/DescribeCapacityReservationDateChangeQuotesPaginationTraits.h>
 #include <aws/ec2/model/DescribeCapacityReservationFleetsPaginationTraits.h>
 #include <aws/ec2/model/DescribeCapacityReservationsPaginationTraits.h>
 #include <aws/ec2/model/DescribeCarrierGatewaysPaginationTraits.h>
@@ -76,6 +77,7 @@
 #include <aws/ec2/model/DescribeMacHostsPaginationTraits.h>
 #include <aws/ec2/model/DescribeMacModificationTasksPaginationTraits.h>
 #include <aws/ec2/model/DescribeManagedPrefixListsPaginationTraits.h>
+#include <aws/ec2/model/DescribeMetricCategoriesPaginationTraits.h>
 #include <aws/ec2/model/DescribeMovingAddressesPaginationTraits.h>
 #include <aws/ec2/model/DescribeNatGatewaysPaginationTraits.h>
 #include <aws/ec2/model/DescribeNetworkAclsPaginationTraits.h>
@@ -85,6 +87,8 @@
 #include <aws/ec2/model/DescribeNetworkInsightsPathsPaginationTraits.h>
 #include <aws/ec2/model/DescribeNetworkInterfacePermissionsPaginationTraits.h>
 #include <aws/ec2/model/DescribeNetworkInterfacesPaginationTraits.h>
+#include <aws/ec2/model/DescribeNetworkingFlexCostAllocationPoliciesPaginationTraits.h>
+#include <aws/ec2/model/DescribeNetworkingFlexCostAllocationPolicyAssociationsPaginationTraits.h>
 #include <aws/ec2/model/DescribePrefixListsPaginationTraits.h>
 #include <aws/ec2/model/DescribePrincipalIdFormatPaginationTraits.h>
 #include <aws/ec2/model/DescribePublicIpv4PoolsPaginationTraits.h>
@@ -149,6 +153,7 @@
 #include <aws/ec2/model/GetCapacityManagerMetricDimensionsPaginationTraits.h>
 #include <aws/ec2/model/GetCapacityManagerMonitoredTagKeysPaginationTraits.h>
 #include <aws/ec2/model/GetGroupsForCapacityReservationPaginationTraits.h>
+#include <aws/ec2/model/GetImageFindingsPaginationTraits.h>
 #include <aws/ec2/model/GetInstanceTypesFromInstanceRequirementsPaginationTraits.h>
 #include <aws/ec2/model/GetIpamAddressHistoryPaginationTraits.h>
 #include <aws/ec2/model/GetIpamDiscoveredAccountsPaginationTraits.h>
@@ -167,6 +172,7 @@
 #include <aws/ec2/model/GetTransitGatewayAttachmentPropagationsPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayMulticastDomainAssociationsPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayPolicyTableAssociationsPaginationTraits.h>
+#include <aws/ec2/model/GetTransitGatewayPolicyTableEntriesPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayPrefixListReferencesPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayRouteTableAssociationsPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayRouteTablePropagationsPaginationTraits.h>
@@ -314,6 +320,18 @@ class EC2PaginationBase {
     request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::DescribeCapacityReservationBillingRequestsRequest,
                                              Pagination::DescribeCapacityReservationBillingRequestsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for DescribeCapacityReservationDateChangeQuotes operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::DescribeCapacityReservationDateChangeQuotesRequest,
+                                    Pagination::DescribeCapacityReservationDateChangeQuotesPaginationTraits<DerivedClient>>
+  DescribeCapacityReservationDateChangeQuotesPaginator(const Model::DescribeCapacityReservationDateChangeQuotesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::DescribeCapacityReservationDateChangeQuotesRequest,
+                                             Pagination::DescribeCapacityReservationDateChangeQuotesPaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
   }
 
@@ -1013,6 +1031,18 @@ class EC2PaginationBase {
   }
 
   /**
+   * Create a paginator for DescribeMetricCategories operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::DescribeMetricCategoriesRequest,
+                                    Pagination::DescribeMetricCategoriesPaginationTraits<DerivedClient>>
+  DescribeMetricCategoriesPaginator(const Model::DescribeMetricCategoriesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::DescribeMetricCategoriesRequest,
+                                             Pagination::DescribeMetricCategoriesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for DescribeMovingAddresses operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::DescribeMovingAddressesRequest,
@@ -1045,6 +1075,32 @@ class EC2PaginationBase {
     request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::DescribeNetworkAclsRequest,
                                              Pagination::DescribeNetworkAclsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for DescribeNetworkingFlexCostAllocationPolicies operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::DescribeNetworkingFlexCostAllocationPoliciesRequest,
+                                    Pagination::DescribeNetworkingFlexCostAllocationPoliciesPaginationTraits<DerivedClient>>
+  DescribeNetworkingFlexCostAllocationPoliciesPaginator(const Model::DescribeNetworkingFlexCostAllocationPoliciesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::DescribeNetworkingFlexCostAllocationPoliciesRequest,
+                                             Pagination::DescribeNetworkingFlexCostAllocationPoliciesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for DescribeNetworkingFlexCostAllocationPolicyAssociations operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest,
+                                    Pagination::DescribeNetworkingFlexCostAllocationPolicyAssociationsPaginationTraits<DerivedClient>>
+  DescribeNetworkingFlexCostAllocationPolicyAssociationsPaginator(
+      const Model::DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<
+        DerivedClient, Model::DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest,
+        Pagination::DescribeNetworkingFlexCostAllocationPolicyAssociationsPaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
   }
 
@@ -1889,6 +1945,18 @@ class EC2PaginationBase {
   }
 
   /**
+   * Create a paginator for GetImageFindings operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetImageFindingsRequest,
+                                    Pagination::GetImageFindingsPaginationTraits<DerivedClient>>
+  GetImageFindingsPaginator(const Model::GetImageFindingsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetImageFindingsRequest,
+                                             Pagination::GetImageFindingsPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                          request};
+  }
+
+  /**
    * Create a paginator for GetInstanceTypesFromInstanceRequirements operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetInstanceTypesFromInstanceRequirementsRequest,
@@ -2101,6 +2169,18 @@ class EC2PaginationBase {
     request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetTransitGatewayPolicyTableAssociationsRequest,
                                              Pagination::GetTransitGatewayPolicyTableAssociationsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for GetTransitGatewayPolicyTableEntries operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetTransitGatewayPolicyTableEntriesRequest,
+                                    Pagination::GetTransitGatewayPolicyTableEntriesPaginationTraits<DerivedClient>>
+  GetTransitGatewayPolicyTableEntriesPaginator(const Model::GetTransitGatewayPolicyTableEntriesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetTransitGatewayPolicyTableEntriesRequest,
+                                             Pagination::GetTransitGatewayPolicyTableEntriesPaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
   }
 

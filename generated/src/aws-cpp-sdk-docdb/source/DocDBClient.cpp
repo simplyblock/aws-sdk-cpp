@@ -55,6 +55,7 @@
 #include <aws/docdb/model/DescribeGlobalClustersRequest.h>
 #include <aws/docdb/model/DescribeOrderableDBInstanceOptionsRequest.h>
 #include <aws/docdb/model/DescribePendingMaintenanceActionsRequest.h>
+#include <aws/docdb/model/DescribeServerlessV2PlatformVersionsRequest.h>
 #include <aws/docdb/model/FailoverDBClusterRequest.h>
 #include <aws/docdb/model/FailoverGlobalClusterRequest.h>
 #include <aws/docdb/model/ListTagsForResourceRequest.h>
@@ -231,7 +232,8 @@ DocDBClient::InvokeOperationOutcome DocDBClient::InvokeServiceOperation(const Am
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -243,7 +245,7 @@ DocDBClient::InvokeOperationOutcome DocDBClient::InvokeServiceOperation(const Am
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 AddSourceIdentifierToSubscriptionOutcome DocDBClient::AddSourceIdentifierToSubscription(
@@ -491,6 +493,13 @@ DescribePendingMaintenanceActionsOutcome DocDBClient::DescribePendingMaintenance
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DescribePendingMaintenanceActionsOutcome(result.GetResultWithOwnership())
                             : DescribePendingMaintenanceActionsOutcome(std::move(result.GetError()));
+}
+
+DescribeServerlessV2PlatformVersionsOutcome DocDBClient::DescribeServerlessV2PlatformVersions(
+    const DescribeServerlessV2PlatformVersionsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DescribeServerlessV2PlatformVersionsOutcome(result.GetResultWithOwnership())
+                            : DescribeServerlessV2PlatformVersionsOutcome(std::move(result.GetError()));
 }
 
 FailoverDBClusterOutcome DocDBClient::FailoverDBCluster(const FailoverDBClusterRequest& request) const {

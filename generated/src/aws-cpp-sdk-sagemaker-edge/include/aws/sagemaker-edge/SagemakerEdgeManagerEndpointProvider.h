@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/sagemaker-edge/SagemakerEdgeManagerEndpointRules.h>
 #include <aws/sagemaker-edge/SagemakerEdgeManager_EXPORTS.h>
 
 namespace Aws {
 namespace SagemakerEdgeManager {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SagemakerEdgeManagerClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using SagemakerEdgeManagerEndpointProviderBase =
                          SagemakerEdgeManagerClientContextParameters>;
 
 using SagemakerEdgeManagerDefaultEpProviderBase =
-    DefaultEndpointProvider<SagemakerEdgeManagerClientConfiguration, SagemakerEdgeManagerBuiltInParameters,
-                            SagemakerEdgeManagerClientContextParameters>;
+    BDDEndpointProvider<SagemakerEdgeManagerClientConfiguration, SagemakerEdgeManagerBuiltInParameters,
+                        SagemakerEdgeManagerClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_SAGEMAKEREDGEMANAGER_API SagemakerEdgeManagerEndpointProvider : public
  public:
   using SagemakerEdgeManagerResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SagemakerEdgeManagerEndpointProvider()
-      : SagemakerEdgeManagerDefaultEpProviderBase(Aws::SagemakerEdgeManager::SagemakerEdgeManagerEndpointRules::GetRulesBlob(),
-                                                  Aws::SagemakerEdgeManager::SagemakerEdgeManagerEndpointRules::RulesBlobSize) {}
+  SagemakerEdgeManagerEndpointProvider();
 
   ~SagemakerEdgeManagerEndpointProvider() {}
 };

@@ -154,6 +154,10 @@ UserPoolType& UserPoolType::operator=(JsonView jsonValue) {
     m_userPoolAddOns = jsonValue.GetObject("UserPoolAddOns");
     m_userPoolAddOnsHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("DcrConfiguration")) {
+    m_dcrConfiguration = jsonValue.GetObject("DcrConfiguration");
+    m_dcrConfigurationHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("UsernameConfiguration")) {
     m_usernameConfiguration = jsonValue.GetObject("UsernameConfiguration");
     m_usernameConfigurationHasBeenSet = true;
@@ -177,6 +181,13 @@ UserPoolType& UserPoolType::operator=(JsonView jsonValue) {
   if (jsonValue.ValueExists("IssuerConfiguration")) {
     m_issuerConfiguration = jsonValue.GetObject("IssuerConfiguration");
     m_issuerConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AcrConfiguration")) {
+    Aws::Map<Aws::String, JsonView> acrConfigurationJsonMap = jsonValue.GetObject("AcrConfiguration").GetAllObjects();
+    for (auto& acrConfigurationItem : acrConfigurationJsonMap) {
+      m_acrConfiguration[acrConfigurationItem.first] = acrConfigurationItem.second.AsObject();
+    }
+    m_acrConfigurationHasBeenSet = true;
   }
   return *this;
 }
@@ -325,6 +336,10 @@ JsonValue UserPoolType::Jsonize() const {
     payload.WithObject("UserPoolAddOns", m_userPoolAddOns.Jsonize());
   }
 
+  if (m_dcrConfigurationHasBeenSet) {
+    payload.WithObject("DcrConfiguration", m_dcrConfiguration.Jsonize());
+  }
+
   if (m_usernameConfigurationHasBeenSet) {
     payload.WithObject("UsernameConfiguration", m_usernameConfiguration.Jsonize());
   }
@@ -347,6 +362,14 @@ JsonValue UserPoolType::Jsonize() const {
 
   if (m_issuerConfigurationHasBeenSet) {
     payload.WithObject("IssuerConfiguration", m_issuerConfiguration.Jsonize());
+  }
+
+  if (m_acrConfigurationHasBeenSet) {
+    JsonValue acrConfigurationJsonMap;
+    for (auto& acrConfigurationItem : m_acrConfiguration) {
+      acrConfigurationJsonMap.WithObject(acrConfigurationItem.first, acrConfigurationItem.second.Jsonize());
+    }
+    payload.WithObject("AcrConfiguration", std::move(acrConfigurationJsonMap));
   }
 
   return payload;

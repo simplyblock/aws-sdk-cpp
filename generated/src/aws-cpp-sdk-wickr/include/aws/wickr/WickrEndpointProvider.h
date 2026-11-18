@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/wickr/WickrEndpointRules.h>
 #include <aws/wickr/Wickr_EXPORTS.h>
 
 namespace Aws {
 namespace Wickr {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using WickrClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using WickrBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using WickrEndpointProviderBase = EndpointProviderBase<WickrClientConfiguration, WickrBuiltInParameters, WickrClientContextParameters>;
 
-using WickrDefaultEpProviderBase = DefaultEndpointProvider<WickrClientConfiguration, WickrBuiltInParameters, WickrClientContextParameters>;
+using WickrDefaultEpProviderBase = BDDEndpointProvider<WickrClientConfiguration, WickrBuiltInParameters, WickrClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,8 +39,7 @@ class AWS_WICKR_API WickrEndpointProvider : public WickrDefaultEpProviderBase {
  public:
   using WickrResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  WickrEndpointProvider()
-      : WickrDefaultEpProviderBase(Aws::Wickr::WickrEndpointRules::GetRulesBlob(), Aws::Wickr::WickrEndpointRules::RulesBlobSize) {}
+  WickrEndpointProvider();
 
   ~WickrEndpointProvider() {}
 };

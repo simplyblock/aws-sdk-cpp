@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/s3outposts/S3OutpostsEndpointRules.h>
 #include <aws/s3outposts/S3Outposts_EXPORTS.h>
 
 namespace Aws {
 namespace S3Outposts {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using S3OutpostsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using S3OutpostsEndpointProviderBase =
     EndpointProviderBase<S3OutpostsClientConfiguration, S3OutpostsBuiltInParameters, S3OutpostsClientContextParameters>;
 
 using S3OutpostsDefaultEpProviderBase =
-    DefaultEndpointProvider<S3OutpostsClientConfiguration, S3OutpostsBuiltInParameters, S3OutpostsClientContextParameters>;
+    BDDEndpointProvider<S3OutpostsClientConfiguration, S3OutpostsBuiltInParameters, S3OutpostsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_S3OUTPOSTS_API S3OutpostsEndpointProvider : public S3OutpostsDefaultEp
  public:
   using S3OutpostsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  S3OutpostsEndpointProvider()
-      : S3OutpostsDefaultEpProviderBase(Aws::S3Outposts::S3OutpostsEndpointRules::GetRulesBlob(),
-                                        Aws::S3Outposts::S3OutpostsEndpointRules::RulesBlobSize) {}
+  S3OutpostsEndpointProvider();
 
   ~S3OutpostsEndpointProvider() {}
 };

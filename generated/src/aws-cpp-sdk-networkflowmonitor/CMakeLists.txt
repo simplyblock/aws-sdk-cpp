@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-networkflowmonitor "C++ SDK for the AWS networkflowmonitor service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-networkflowmonitor "C++ SDK for Network Flow Monitor" aws-cpp-sdk-core)
 
 file(GLOB AWS_NETWORKFLOWMONITOR_HEADERS
     "include/aws/networkflowmonitor/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_NETWORKFLOWMONITOR_HEADERS
 
 file(GLOB AWS_NETWORKFLOWMONITOR_MODEL_HEADERS
     "include/aws/networkflowmonitor/model/*.h"
+)
+
+file(GLOB AWS_NETWORKFLOWMONITOR_INTERNAL_HEADERS
+    "include/aws/networkflowmonitor/internal/*.h"
 )
 
 file(GLOB AWS_NETWORKFLOWMONITOR_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_NETWORKFLOWMONITOR_MODEL_SOURCE
 
 file(GLOB NETWORKFLOWMONITOR_UNIFIED_HEADERS
     ${AWS_NETWORKFLOWMONITOR_HEADERS}
+    ${AWS_NETWORKFLOWMONITOR_INTERNAL_HEADERS}
     ${AWS_NETWORKFLOWMONITOR_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\networkflowmonitor" FILES ${AWS_NETWORKFLOWMONITOR_HEADERS})
+        source_group("Header Files\\aws\\networkflowmonitor\\internal" FILES ${AWS_NETWORKFLOWMONITOR_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\networkflowmonitor\\model" FILES ${AWS_NETWORKFLOWMONITOR_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_NETWORKFLOWMONITOR_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_NETWORKFLOWMONITOR_MODEL_SOURCE})

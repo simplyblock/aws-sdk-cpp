@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/imagebuilder/ImagebuilderEndpointRules.h>
 #include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
 
 namespace Aws {
 namespace imagebuilder {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ImagebuilderClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using ImagebuilderEndpointProviderBase =
     EndpointProviderBase<ImagebuilderClientConfiguration, ImagebuilderBuiltInParameters, ImagebuilderClientContextParameters>;
 
 using ImagebuilderDefaultEpProviderBase =
-    DefaultEndpointProvider<ImagebuilderClientConfiguration, ImagebuilderBuiltInParameters, ImagebuilderClientContextParameters>;
+    BDDEndpointProvider<ImagebuilderClientConfiguration, ImagebuilderBuiltInParameters, ImagebuilderClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_IMAGEBUILDER_API ImagebuilderEndpointProvider : public ImagebuilderDef
  public:
   using ImagebuilderResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ImagebuilderEndpointProvider()
-      : ImagebuilderDefaultEpProviderBase(Aws::imagebuilder::ImagebuilderEndpointRules::GetRulesBlob(),
-                                          Aws::imagebuilder::ImagebuilderEndpointRules::RulesBlobSize) {}
+  ImagebuilderEndpointProvider();
 
   ~ImagebuilderEndpointProvider() {}
 };

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -12,6 +12,7 @@
 #include <aws/bedrock-agentcore-control/model/ListConfigurationBundleVersionsPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListPolicyGenerationAssetsPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListPolicyEngineSummariesPaginationTraits.h>
+#include <aws/bedrock-agentcore-control/model/ListAgentInsightStoresPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListBrowsersPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListApiKeyCredentialProvidersPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListRegistryRecordsPaginationTraits.h>
@@ -27,6 +28,7 @@
 #include <aws/bedrock-agentcore-control/model/ListCodeInterpretersPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListOnlineEvaluationConfigsPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListAgentRuntimeEndpointsPaginationTraits.h>
+#include <aws/bedrock-agentcore-control/model/ListConsentPortalsPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListMemoriesPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListWorkloadIdentitiesPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListDatasetsPaginationTraits.h>
@@ -40,8 +42,11 @@
 #include <aws/bedrock-agentcore-control/model/ListHarnessVersionsPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListGatewayTargetsPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListBrowserProfilesPaginationTraits.h>
+#include <aws/bedrock-agentcore-control/model/ListGatewayRateLimitsPaginationTraits.h>
+#include <aws/bedrock-agentcore-control/model/ListAgentRuntimeVersionsByCapacityProviderPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListRegistriesPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListHarnessEndpointsPaginationTraits.h>
+#include <aws/bedrock-agentcore-control/model/ListCapacityProvidersPaginationTraits.h>
 #include <aws/bedrock-agentcore-control/model/ListConfigurationBundlesPaginationTraits.h>
 
 #include <aws/testing/AwsCppSdkGTestSuite.h>
@@ -52,6 +57,6 @@ class BedrockAgentCoreControlPaginationCompilationTest : public Aws::Testing::Aw
 
 TEST_F(BedrockAgentCoreControlPaginationCompilationTest, BedrockAgentCoreControlPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-s3tables "C++ SDK for the AWS s3tables service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-s3tables "C++ SDK for Amazon S3 Tables" aws-cpp-sdk-core)
 
 file(GLOB AWS_S3TABLES_HEADERS
     "include/aws/s3tables/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_S3TABLES_HEADERS
 
 file(GLOB AWS_S3TABLES_MODEL_HEADERS
     "include/aws/s3tables/model/*.h"
+)
+
+file(GLOB AWS_S3TABLES_INTERNAL_HEADERS
+    "include/aws/s3tables/internal/*.h"
 )
 
 file(GLOB AWS_S3TABLES_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_S3TABLES_MODEL_SOURCE
 
 file(GLOB S3TABLES_UNIFIED_HEADERS
     ${AWS_S3TABLES_HEADERS}
+    ${AWS_S3TABLES_INTERNAL_HEADERS}
     ${AWS_S3TABLES_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\s3tables" FILES ${AWS_S3TABLES_HEADERS})
+        source_group("Header Files\\aws\\s3tables\\internal" FILES ${AWS_S3TABLES_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\s3tables\\model" FILES ${AWS_S3TABLES_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_S3TABLES_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_S3TABLES_MODEL_SOURCE})

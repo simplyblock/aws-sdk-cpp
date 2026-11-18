@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-partnercentral-account "C++ SDK for the AWS partnercentral-account service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-partnercentral-account "C++ SDK for Partner Central Account API" aws-cpp-sdk-core)
 
 file(GLOB AWS_PARTNERCENTRAL-ACCOUNT_HEADERS
     "include/aws/partnercentral-account/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_PARTNERCENTRAL-ACCOUNT_HEADERS
 
 file(GLOB AWS_PARTNERCENTRAL-ACCOUNT_MODEL_HEADERS
     "include/aws/partnercentral-account/model/*.h"
+)
+
+file(GLOB AWS_PARTNERCENTRAL-ACCOUNT_INTERNAL_HEADERS
+    "include/aws/partnercentral-account/internal/*.h"
 )
 
 file(GLOB AWS_PARTNERCENTRAL-ACCOUNT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_PARTNERCENTRAL-ACCOUNT_MODEL_SOURCE
 
 file(GLOB PARTNERCENTRAL-ACCOUNT_UNIFIED_HEADERS
     ${AWS_PARTNERCENTRAL-ACCOUNT_HEADERS}
+    ${AWS_PARTNERCENTRAL-ACCOUNT_INTERNAL_HEADERS}
     ${AWS_PARTNERCENTRAL-ACCOUNT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\partnercentral-account" FILES ${AWS_PARTNERCENTRAL-ACCOUNT_HEADERS})
+        source_group("Header Files\\aws\\partnercentral-account\\internal" FILES ${AWS_PARTNERCENTRAL-ACCOUNT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\partnercentral-account\\model" FILES ${AWS_PARTNERCENTRAL-ACCOUNT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_PARTNERCENTRAL-ACCOUNT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_PARTNERCENTRAL-ACCOUNT_MODEL_SOURCE})

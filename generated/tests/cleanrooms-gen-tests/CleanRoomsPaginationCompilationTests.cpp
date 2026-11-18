@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -29,6 +29,7 @@
 #include <aws/cleanrooms/model/ListIdNamespaceAssociationsPaginationTraits.h>
 #include <aws/cleanrooms/model/ListCollaborationsPaginationTraits.h>
 #include <aws/cleanrooms/model/ListPrivacyBudgetTemplatesPaginationTraits.h>
+#include <aws/cleanrooms/model/ListAnalysisLogExportsPaginationTraits.h>
 #include <aws/cleanrooms/model/ListProtectedJobsPaginationTraits.h>
 
 #include <aws/testing/AwsCppSdkGTestSuite.h>
@@ -39,6 +40,6 @@ class CleanRoomsPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestS
 
 TEST_F(CleanRoomsPaginationCompilationTest, CleanRoomsPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

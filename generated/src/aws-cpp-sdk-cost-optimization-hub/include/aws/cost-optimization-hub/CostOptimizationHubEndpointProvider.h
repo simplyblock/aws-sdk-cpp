@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/cost-optimization-hub/CostOptimizationHubEndpointRules.h>
 #include <aws/cost-optimization-hub/CostOptimizationHub_EXPORTS.h>
 
 namespace Aws {
 namespace CostOptimizationHub {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using CostOptimizationHubClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using CostOptimizationHubEndpointProviderBase =
                          CostOptimizationHubClientContextParameters>;
 
 using CostOptimizationHubDefaultEpProviderBase =
-    DefaultEndpointProvider<CostOptimizationHubClientConfiguration, CostOptimizationHubBuiltInParameters,
-                            CostOptimizationHubClientContextParameters>;
+    BDDEndpointProvider<CostOptimizationHubClientConfiguration, CostOptimizationHubBuiltInParameters,
+                        CostOptimizationHubClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_COSTOPTIMIZATIONHUB_API CostOptimizationHubEndpointProvider : public C
  public:
   using CostOptimizationHubResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  CostOptimizationHubEndpointProvider()
-      : CostOptimizationHubDefaultEpProviderBase(Aws::CostOptimizationHub::CostOptimizationHubEndpointRules::GetRulesBlob(),
-                                                 Aws::CostOptimizationHub::CostOptimizationHubEndpointRules::RulesBlobSize) {}
+  CostOptimizationHubEndpointProvider();
 
   ~CostOptimizationHubEndpointProvider() {}
 };

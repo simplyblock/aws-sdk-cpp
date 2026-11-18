@@ -6,19 +6,20 @@
 #pragma once
 #include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/route53domains/Route53Domains_EXPORTS.h>
 #include <aws/route53domains/model/DomainAvailability.h>
+#include <aws/route53domains/model/PriceWithCurrency.h>
 
 #include <utility>
-
 namespace Aws {
 template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
 namespace Utils {
-namespace Json {
-class JsonValue;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace Route53Domains {
 namespace Model {
@@ -31,8 +32,8 @@ namespace Model {
 class CheckDomainAvailabilityResult {
  public:
   AWS_ROUTE53DOMAINS_API CheckDomainAvailabilityResult() = default;
-  AWS_ROUTE53DOMAINS_API CheckDomainAvailabilityResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-  AWS_ROUTE53DOMAINS_API CheckDomainAvailabilityResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ROUTE53DOMAINS_API CheckDomainAvailabilityResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_ROUTE53DOMAINS_API CheckDomainAvailabilityResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
   ///@{
   /**
@@ -68,6 +69,28 @@ class CheckDomainAvailabilityResult {
   ///@}
 
   ///@{
+  /**
+   * <p>The price to register the domain name, in the currency that
+   * <code>Currency</code> specifies. If the domain has registry premium pricing,
+   * this price is different from the standard rate for the TLD that
+   * <code>ListPrices</code> returns. Use <code>PriceType</code> to determine which
+   * rate applies.</p> <p>This element is returned only when
+   * <code>Availability</code> is <code>AVAILABLE</code>.</p>
+   */
+  inline const PriceWithCurrency& GetPrice() const { return m_price; }
+  template <typename PriceT = PriceWithCurrency>
+  void SetPrice(PriceT&& value) {
+    m_priceHasBeenSet = true;
+    m_price = std::forward<PriceT>(value);
+  }
+  template <typename PriceT = PriceWithCurrency>
+  CheckDomainAvailabilityResult& WithPrice(PriceT&& value) {
+    SetPrice(std::forward<PriceT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -86,9 +109,12 @@ class CheckDomainAvailabilityResult {
  private:
   DomainAvailability m_availability{DomainAvailability::NOT_SET};
 
+  PriceWithCurrency m_price;
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_availabilityHasBeenSet = false;
+  bool m_priceHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

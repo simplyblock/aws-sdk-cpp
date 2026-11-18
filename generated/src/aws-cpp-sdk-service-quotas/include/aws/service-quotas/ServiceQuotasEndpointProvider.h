@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/service-quotas/ServiceQuotasEndpointRules.h>
 #include <aws/service-quotas/ServiceQuotas_EXPORTS.h>
 
 namespace Aws {
 namespace ServiceQuotas {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ServiceQuotasClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using ServiceQuotasEndpointProviderBase =
     EndpointProviderBase<ServiceQuotasClientConfiguration, ServiceQuotasBuiltInParameters, ServiceQuotasClientContextParameters>;
 
 using ServiceQuotasDefaultEpProviderBase =
-    DefaultEndpointProvider<ServiceQuotasClientConfiguration, ServiceQuotasBuiltInParameters, ServiceQuotasClientContextParameters>;
+    BDDEndpointProvider<ServiceQuotasClientConfiguration, ServiceQuotasBuiltInParameters, ServiceQuotasClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_SERVICEQUOTAS_API ServiceQuotasEndpointProvider : public ServiceQuotas
  public:
   using ServiceQuotasResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ServiceQuotasEndpointProvider()
-      : ServiceQuotasDefaultEpProviderBase(Aws::ServiceQuotas::ServiceQuotasEndpointRules::GetRulesBlob(),
-                                           Aws::ServiceQuotas::ServiceQuotasEndpointRules::RulesBlobSize) {}
+  ServiceQuotasEndpointProvider();
 
   ~ServiceQuotasEndpointProvider() {}
 };

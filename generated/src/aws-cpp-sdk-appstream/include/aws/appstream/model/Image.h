@@ -9,6 +9,7 @@
 #include <aws/appstream/model/DynamicAppProvidersEnabled.h>
 #include <aws/appstream/model/ImagePermissions.h>
 #include <aws/appstream/model/ImageSharedWithOthers.h>
+#include <aws/appstream/model/ImageSoftwareMetadata.h>
 #include <aws/appstream/model/ImageState.h>
 #include <aws/appstream/model/ImageStateChangeReason.h>
 #include <aws/appstream/model/ImageType.h>
@@ -19,15 +20,15 @@
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AppStream {
 namespace Model {
@@ -40,9 +41,9 @@ namespace Model {
 class Image {
  public:
   AWS_APPSTREAM_API Image() = default;
-  AWS_APPSTREAM_API Image(Aws::Utils::Json::JsonView jsonValue);
-  AWS_APPSTREAM_API Image& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_APPSTREAM_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_APPSTREAM_API Image(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_APPSTREAM_API Image& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_APPSTREAM_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -474,6 +475,24 @@ class Image {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The software metadata associated with the image.</p>
+   */
+  inline const ImageSoftwareMetadata& GetImageSoftwareMetadata() const { return m_imageSoftwareMetadata; }
+  inline bool ImageSoftwareMetadataHasBeenSet() const { return m_imageSoftwareMetadataHasBeenSet; }
+  template <typename ImageSoftwareMetadataT = ImageSoftwareMetadata>
+  void SetImageSoftwareMetadata(ImageSoftwareMetadataT&& value) {
+    m_imageSoftwareMetadataHasBeenSet = true;
+    m_imageSoftwareMetadata = std::forward<ImageSoftwareMetadataT>(value);
+  }
+  template <typename ImageSoftwareMetadataT = ImageSoftwareMetadata>
+  Image& WithImageSoftwareMetadata(ImageSoftwareMetadataT&& value) {
+    SetImageSoftwareMetadata(std::forward<ImageSoftwareMetadataT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_name;
 
@@ -520,6 +539,8 @@ class Image {
   bool m_managedSoftwareIncluded{false};
 
   ImageType m_imageType{ImageType::NOT_SET};
+
+  ImageSoftwareMetadata m_imageSoftwareMetadata;
   bool m_nameHasBeenSet = false;
   bool m_arnHasBeenSet = false;
   bool m_baseImageArnHasBeenSet = false;
@@ -543,6 +564,7 @@ class Image {
   bool m_imageSharedWithOthersHasBeenSet = false;
   bool m_managedSoftwareIncludedHasBeenSet = false;
   bool m_imageTypeHasBeenSet = false;
+  bool m_imageSoftwareMetadataHasBeenSet = false;
 };
 
 }  // namespace Model

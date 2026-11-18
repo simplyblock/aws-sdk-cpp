@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-emr-containers "C++ SDK for the AWS emr-containers service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-emr-containers "C++ SDK for Amazon EMR Containers" aws-cpp-sdk-core)
 
 file(GLOB AWS_EMR-CONTAINERS_HEADERS
     "include/aws/emr-containers/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_EMR-CONTAINERS_HEADERS
 
 file(GLOB AWS_EMR-CONTAINERS_MODEL_HEADERS
     "include/aws/emr-containers/model/*.h"
+)
+
+file(GLOB AWS_EMR-CONTAINERS_INTERNAL_HEADERS
+    "include/aws/emr-containers/internal/*.h"
 )
 
 file(GLOB AWS_EMR-CONTAINERS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_EMR-CONTAINERS_MODEL_SOURCE
 
 file(GLOB EMR-CONTAINERS_UNIFIED_HEADERS
     ${AWS_EMR-CONTAINERS_HEADERS}
+    ${AWS_EMR-CONTAINERS_INTERNAL_HEADERS}
     ${AWS_EMR-CONTAINERS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\emr-containers" FILES ${AWS_EMR-CONTAINERS_HEADERS})
+        source_group("Header Files\\aws\\emr-containers\\internal" FILES ${AWS_EMR-CONTAINERS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\emr-containers\\model" FILES ${AWS_EMR-CONTAINERS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_EMR-CONTAINERS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_EMR-CONTAINERS_MODEL_SOURCE})

@@ -9,15 +9,15 @@
 #include <aws/codepipeline/model/PipelineType.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace CodePipeline {
 namespace Model {
@@ -30,9 +30,9 @@ namespace Model {
 class PipelineSummary {
  public:
   AWS_CODEPIPELINE_API PipelineSummary() = default;
-  AWS_CODEPIPELINE_API PipelineSummary(Aws::Utils::Json::JsonView jsonValue);
-  AWS_CODEPIPELINE_API PipelineSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_CODEPIPELINE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_CODEPIPELINE_API PipelineSummary(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CODEPIPELINE_API PipelineSummary& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CODEPIPELINE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -56,13 +56,13 @@ class PipelineSummary {
   /**
    * <p>The version number of the pipeline.</p>
    */
-  inline int GetVersion() const { return m_version; }
+  inline int64_t GetVersion() const { return m_version; }
   inline bool VersionHasBeenSet() const { return m_versionHasBeenSet; }
-  inline void SetVersion(int value) {
+  inline void SetVersion(int64_t value) {
     m_versionHasBeenSet = true;
     m_version = value;
   }
-  inline PipelineSummary& WithVersion(int value) {
+  inline PipelineSummary& WithVersion(int64_t value) {
     SetVersion(value);
     return *this;
   }
@@ -70,7 +70,7 @@ class PipelineSummary {
 
   ///@{
   /**
-   * <p>CodePipeline provides the following pipeline types, which differ in
+   * <p> CodePipeline provides the following pipeline types, which differ in
    * characteristics and price, so that you can tailor your pipeline features and
    * cost to the needs of your applications.</p> <ul> <li> <p>V1 type pipelines have
    * a JSON structure that contains standard pipeline, stage, and action-level
@@ -153,7 +153,7 @@ class PipelineSummary {
  private:
   Aws::String m_name;
 
-  int m_version{0};
+  int64_t m_version{0};
 
   PipelineType m_pipelineType{PipelineType::NOT_SET};
 

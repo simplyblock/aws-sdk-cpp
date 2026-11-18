@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/gameliftstreams/GameLiftStreamsEndpointRules.h>
 #include <aws/gameliftstreams/GameLiftStreams_EXPORTS.h>
 
 namespace Aws {
 namespace GameLiftStreams {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using GameLiftStreamsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using GameLiftStreamsEndpointProviderBase =
     EndpointProviderBase<GameLiftStreamsClientConfiguration, GameLiftStreamsBuiltInParameters, GameLiftStreamsClientContextParameters>;
 
 using GameLiftStreamsDefaultEpProviderBase =
-    DefaultEndpointProvider<GameLiftStreamsClientConfiguration, GameLiftStreamsBuiltInParameters, GameLiftStreamsClientContextParameters>;
+    BDDEndpointProvider<GameLiftStreamsClientConfiguration, GameLiftStreamsBuiltInParameters, GameLiftStreamsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_GAMELIFTSTREAMS_API GameLiftStreamsEndpointProvider : public GameLiftS
  public:
   using GameLiftStreamsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  GameLiftStreamsEndpointProvider()
-      : GameLiftStreamsDefaultEpProviderBase(Aws::GameLiftStreams::GameLiftStreamsEndpointRules::GetRulesBlob(),
-                                             Aws::GameLiftStreams::GameLiftStreamsEndpointRules::RulesBlobSize) {}
+  GameLiftStreamsEndpointProvider();
 
   ~GameLiftStreamsEndpointProvider() {}
 };

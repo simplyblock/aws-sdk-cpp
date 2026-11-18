@@ -41,7 +41,7 @@ Aws::String PutBucketOwnershipControlsRequest::SerializePayload() const {
 
   m_ownershipControls.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -105,3 +105,5 @@ Aws::String PutBucketOwnershipControlsRequest::GetChecksumAlgorithmName() const 
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
 }
+
+bool PutBucketOwnershipControlsRequest::ChecksumAlgorithmIsSet() const { return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET; }

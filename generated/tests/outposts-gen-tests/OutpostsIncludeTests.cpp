@@ -7,13 +7,16 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/outposts/OutpostsClient.h>
+#include <aws/outposts/OutpostsClientPagination.h>
 #include <aws/outposts/OutpostsEndpointProvider.h>
-#include <aws/outposts/OutpostsEndpointRules.h>
 #include <aws/outposts/OutpostsErrorMarshaller.h>
 #include <aws/outposts/OutpostsErrors.h>
+#include <aws/outposts/OutpostsPaginationBase.h>
 #include <aws/outposts/OutpostsRequest.h>
 #include <aws/outposts/OutpostsServiceClientModel.h>
+#include <aws/outposts/OutpostsWaiter.h>
 #include <aws/outposts/Outposts_EXPORTS.h>
+#include <aws/outposts/internal/OutpostsEndpointRules.h>
 #include <aws/outposts/model/AWSServiceName.h>
 #include <aws/outposts/model/Address.h>
 #include <aws/outposts/model/AddressType.h>
@@ -45,6 +48,8 @@
 #include <aws/outposts/model/CreateOrderResult.h>
 #include <aws/outposts/model/CreateOutpostRequest.h>
 #include <aws/outposts/model/CreateOutpostResult.h>
+#include <aws/outposts/model/CreatePrivateConnectivityConfigRequest.h>
+#include <aws/outposts/model/CreatePrivateConnectivityConfigResult.h>
 #include <aws/outposts/model/CreateQuoteRequest.h>
 #include <aws/outposts/model/CreateQuoteResult.h>
 #include <aws/outposts/model/CreateRenewalRequest.h>
@@ -72,14 +77,19 @@
 #include <aws/outposts/model/GetConnectionResult.h>
 #include <aws/outposts/model/GetOrderRequest.h>
 #include <aws/outposts/model/GetOrderResult.h>
+#include <aws/outposts/model/GetOutpostBillingInformationPaginationTraits.h>
 #include <aws/outposts/model/GetOutpostBillingInformationRequest.h>
 #include <aws/outposts/model/GetOutpostBillingInformationResult.h>
+#include <aws/outposts/model/GetOutpostInstanceTypesPaginationTraits.h>
 #include <aws/outposts/model/GetOutpostInstanceTypesRequest.h>
 #include <aws/outposts/model/GetOutpostInstanceTypesResult.h>
 #include <aws/outposts/model/GetOutpostRequest.h>
 #include <aws/outposts/model/GetOutpostResult.h>
+#include <aws/outposts/model/GetOutpostSupportedInstanceTypesPaginationTraits.h>
 #include <aws/outposts/model/GetOutpostSupportedInstanceTypesRequest.h>
 #include <aws/outposts/model/GetOutpostSupportedInstanceTypesResult.h>
+#include <aws/outposts/model/GetPrivateConnectivityConfigRequest.h>
+#include <aws/outposts/model/GetPrivateConnectivityConfigResult.h>
 #include <aws/outposts/model/GetQuoteRequest.h>
 #include <aws/outposts/model/GetQuoteResult.h>
 #include <aws/outposts/model/GetRenewalPricingRequest.h>
@@ -95,24 +105,34 @@
 #include <aws/outposts/model/LineItemAssetInformation.h>
 #include <aws/outposts/model/LineItemRequest.h>
 #include <aws/outposts/model/LineItemStatus.h>
+#include <aws/outposts/model/ListAssetInstancesPaginationTraits.h>
 #include <aws/outposts/model/ListAssetInstancesRequest.h>
 #include <aws/outposts/model/ListAssetInstancesResult.h>
+#include <aws/outposts/model/ListAssetsPaginationTraits.h>
 #include <aws/outposts/model/ListAssetsRequest.h>
 #include <aws/outposts/model/ListAssetsResult.h>
+#include <aws/outposts/model/ListBlockingInstancesForCapacityTaskPaginationTraits.h>
 #include <aws/outposts/model/ListBlockingInstancesForCapacityTaskRequest.h>
 #include <aws/outposts/model/ListBlockingInstancesForCapacityTaskResult.h>
+#include <aws/outposts/model/ListCapacityTasksPaginationTraits.h>
 #include <aws/outposts/model/ListCapacityTasksRequest.h>
 #include <aws/outposts/model/ListCapacityTasksResult.h>
+#include <aws/outposts/model/ListCatalogItemsPaginationTraits.h>
 #include <aws/outposts/model/ListCatalogItemsRequest.h>
 #include <aws/outposts/model/ListCatalogItemsResult.h>
+#include <aws/outposts/model/ListOrderableInstanceTypesPaginationTraits.h>
 #include <aws/outposts/model/ListOrderableInstanceTypesRequest.h>
 #include <aws/outposts/model/ListOrderableInstanceTypesResult.h>
+#include <aws/outposts/model/ListOrdersPaginationTraits.h>
 #include <aws/outposts/model/ListOrdersRequest.h>
 #include <aws/outposts/model/ListOrdersResult.h>
+#include <aws/outposts/model/ListOutpostsPaginationTraits.h>
 #include <aws/outposts/model/ListOutpostsRequest.h>
 #include <aws/outposts/model/ListOutpostsResult.h>
+#include <aws/outposts/model/ListQuotesPaginationTraits.h>
 #include <aws/outposts/model/ListQuotesRequest.h>
 #include <aws/outposts/model/ListQuotesResult.h>
+#include <aws/outposts/model/ListSitesPaginationTraits.h>
 #include <aws/outposts/model/ListSitesRequest.h>
 #include <aws/outposts/model/ListSitesResult.h>
 #include <aws/outposts/model/ListTagsForResourceRequest.h>
@@ -136,6 +156,8 @@
 #include <aws/outposts/model/PowerPhase.h>
 #include <aws/outposts/model/PricingOption.h>
 #include <aws/outposts/model/PricingResult.h>
+#include <aws/outposts/model/PrivateConnectivityConfig.h>
+#include <aws/outposts/model/PrivateConnectivityStatus.h>
 #include <aws/outposts/model/Quote.h>
 #include <aws/outposts/model/QuoteCapacity.h>
 #include <aws/outposts/model/QuoteCapacityType.h>
@@ -149,6 +171,7 @@
 #include <aws/outposts/model/QuoteStatus.h>
 #include <aws/outposts/model/QuoteSummary.h>
 #include <aws/outposts/model/RackPhysicalProperties.h>
+#include <aws/outposts/model/RackScalingType.h>
 #include <aws/outposts/model/RackSpecificationDetails.h>
 #include <aws/outposts/model/RackUnitHeight.h>
 #include <aws/outposts/model/ResourceType.h>
@@ -185,6 +208,7 @@
 #include <aws/outposts/model/UpdateSiteResult.h>
 #include <aws/outposts/model/UplinkCount.h>
 #include <aws/outposts/model/UplinkGbps.h>
+#include <aws/outposts/model/VpcInformation.h>
 
 using OutpostsIncludeTest = ::testing::Test;
 

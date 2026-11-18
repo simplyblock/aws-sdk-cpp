@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-rtbfabric "C++ SDK for the AWS rtbfabric service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-rtbfabric "C++ SDK for RTBFabric" aws-cpp-sdk-core)
 
 file(GLOB AWS_RTBFABRIC_HEADERS
     "include/aws/rtbfabric/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_RTBFABRIC_HEADERS
 
 file(GLOB AWS_RTBFABRIC_MODEL_HEADERS
     "include/aws/rtbfabric/model/*.h"
+)
+
+file(GLOB AWS_RTBFABRIC_INTERNAL_HEADERS
+    "include/aws/rtbfabric/internal/*.h"
 )
 
 file(GLOB AWS_RTBFABRIC_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_RTBFABRIC_MODEL_SOURCE
 
 file(GLOB RTBFABRIC_UNIFIED_HEADERS
     ${AWS_RTBFABRIC_HEADERS}
+    ${AWS_RTBFABRIC_INTERNAL_HEADERS}
     ${AWS_RTBFABRIC_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\rtbfabric" FILES ${AWS_RTBFABRIC_HEADERS})
+        source_group("Header Files\\aws\\rtbfabric\\internal" FILES ${AWS_RTBFABRIC_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\rtbfabric\\model" FILES ${AWS_RTBFABRIC_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_RTBFABRIC_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_RTBFABRIC_MODEL_SOURCE})

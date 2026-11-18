@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-billingconductor "C++ SDK for the AWS billingconductor service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-billingconductor "C++ SDK for AWSBillingConductor" aws-cpp-sdk-core)
 
 file(GLOB AWS_BILLINGCONDUCTOR_HEADERS
     "include/aws/billingconductor/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_BILLINGCONDUCTOR_HEADERS
 
 file(GLOB AWS_BILLINGCONDUCTOR_MODEL_HEADERS
     "include/aws/billingconductor/model/*.h"
+)
+
+file(GLOB AWS_BILLINGCONDUCTOR_INTERNAL_HEADERS
+    "include/aws/billingconductor/internal/*.h"
 )
 
 file(GLOB AWS_BILLINGCONDUCTOR_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_BILLINGCONDUCTOR_MODEL_SOURCE
 
 file(GLOB BILLINGCONDUCTOR_UNIFIED_HEADERS
     ${AWS_BILLINGCONDUCTOR_HEADERS}
+    ${AWS_BILLINGCONDUCTOR_INTERNAL_HEADERS}
     ${AWS_BILLINGCONDUCTOR_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\billingconductor" FILES ${AWS_BILLINGCONDUCTOR_HEADERS})
+        source_group("Header Files\\aws\\billingconductor\\internal" FILES ${AWS_BILLINGCONDUCTOR_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\billingconductor\\model" FILES ${AWS_BILLINGCONDUCTOR_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_BILLINGCONDUCTOR_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_BILLINGCONDUCTOR_MODEL_SOURCE})

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-partnercentral-selling "C++ SDK for the AWS partnercentral-selling service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-partnercentral-selling "C++ SDK for Partner Central Selling API" aws-cpp-sdk-core)
 
 file(GLOB AWS_PARTNERCENTRAL-SELLING_HEADERS
     "include/aws/partnercentral-selling/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_PARTNERCENTRAL-SELLING_HEADERS
 
 file(GLOB AWS_PARTNERCENTRAL-SELLING_MODEL_HEADERS
     "include/aws/partnercentral-selling/model/*.h"
+)
+
+file(GLOB AWS_PARTNERCENTRAL-SELLING_INTERNAL_HEADERS
+    "include/aws/partnercentral-selling/internal/*.h"
 )
 
 file(GLOB AWS_PARTNERCENTRAL-SELLING_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_PARTNERCENTRAL-SELLING_MODEL_SOURCE
 
 file(GLOB PARTNERCENTRAL-SELLING_UNIFIED_HEADERS
     ${AWS_PARTNERCENTRAL-SELLING_HEADERS}
+    ${AWS_PARTNERCENTRAL-SELLING_INTERNAL_HEADERS}
     ${AWS_PARTNERCENTRAL-SELLING_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\partnercentral-selling" FILES ${AWS_PARTNERCENTRAL-SELLING_HEADERS})
+        source_group("Header Files\\aws\\partnercentral-selling\\internal" FILES ${AWS_PARTNERCENTRAL-SELLING_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\partnercentral-selling\\model" FILES ${AWS_PARTNERCENTRAL-SELLING_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_PARTNERCENTRAL-SELLING_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_PARTNERCENTRAL-SELLING_MODEL_SOURCE})

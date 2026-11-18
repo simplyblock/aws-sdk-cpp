@@ -7,14 +7,18 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/emr-containers/EMRContainersClient.h>
+#include <aws/emr-containers/EMRContainersClientPagination.h>
 #include <aws/emr-containers/EMRContainersEndpointProvider.h>
-#include <aws/emr-containers/EMRContainersEndpointRules.h>
 #include <aws/emr-containers/EMRContainersErrorMarshaller.h>
 #include <aws/emr-containers/EMRContainersErrors.h>
+#include <aws/emr-containers/EMRContainersPaginationBase.h>
 #include <aws/emr-containers/EMRContainersRequest.h>
 #include <aws/emr-containers/EMRContainersServiceClientModel.h>
+#include <aws/emr-containers/EMRContainersWaiter.h>
 #include <aws/emr-containers/EMRContainers_EXPORTS.h>
+#include <aws/emr-containers/internal/EMRContainersEndpointRules.h>
 #include <aws/emr-containers/model/AllowAWSToRetainLogs.h>
+#include <aws/emr-containers/model/AuthenticationConfiguration.h>
 #include <aws/emr-containers/model/AuthorizationConfiguration.h>
 #include <aws/emr-containers/model/CancelJobRunRequest.h>
 #include <aws/emr-containers/model/CancelJobRunResult.h>
@@ -40,6 +44,8 @@
 #include <aws/emr-containers/model/DeleteJobTemplateResult.h>
 #include <aws/emr-containers/model/DeleteManagedEndpointRequest.h>
 #include <aws/emr-containers/model/DeleteManagedEndpointResult.h>
+#include <aws/emr-containers/model/DeleteSecurityConfigurationRequest.h>
+#include <aws/emr-containers/model/DeleteSecurityConfigurationResult.h>
 #include <aws/emr-containers/model/DeleteVirtualClusterRequest.h>
 #include <aws/emr-containers/model/DeleteVirtualClusterResult.h>
 #include <aws/emr-containers/model/DescribeJobRunRequest.h>
@@ -59,6 +65,8 @@
 #include <aws/emr-containers/model/FailureReason.h>
 #include <aws/emr-containers/model/GetManagedEndpointSessionCredentialsRequest.h>
 #include <aws/emr-containers/model/GetManagedEndpointSessionCredentialsResult.h>
+#include <aws/emr-containers/model/IAMConfiguration.h>
+#include <aws/emr-containers/model/IdentityCenterConfiguration.h>
 #include <aws/emr-containers/model/InTransitEncryptionConfiguration.h>
 #include <aws/emr-containers/model/JobDriver.h>
 #include <aws/emr-containers/model/JobRun.h>
@@ -66,16 +74,21 @@
 #include <aws/emr-containers/model/JobTemplate.h>
 #include <aws/emr-containers/model/JobTemplateData.h>
 #include <aws/emr-containers/model/LakeFormationConfiguration.h>
+#include <aws/emr-containers/model/ListJobRunsPaginationTraits.h>
 #include <aws/emr-containers/model/ListJobRunsRequest.h>
 #include <aws/emr-containers/model/ListJobRunsResult.h>
+#include <aws/emr-containers/model/ListJobTemplatesPaginationTraits.h>
 #include <aws/emr-containers/model/ListJobTemplatesRequest.h>
 #include <aws/emr-containers/model/ListJobTemplatesResult.h>
+#include <aws/emr-containers/model/ListManagedEndpointsPaginationTraits.h>
 #include <aws/emr-containers/model/ListManagedEndpointsRequest.h>
 #include <aws/emr-containers/model/ListManagedEndpointsResult.h>
+#include <aws/emr-containers/model/ListSecurityConfigurationsPaginationTraits.h>
 #include <aws/emr-containers/model/ListSecurityConfigurationsRequest.h>
 #include <aws/emr-containers/model/ListSecurityConfigurationsResult.h>
 #include <aws/emr-containers/model/ListTagsForResourceRequest.h>
 #include <aws/emr-containers/model/ListTagsForResourceResult.h>
+#include <aws/emr-containers/model/ListVirtualClustersPaginationTraits.h>
 #include <aws/emr-containers/model/ListVirtualClustersRequest.h>
 #include <aws/emr-containers/model/ListVirtualClustersResult.h>
 #include <aws/emr-containers/model/ManagedLogs.h>
@@ -88,6 +101,8 @@
 #include <aws/emr-containers/model/RetryPolicyConfiguration.h>
 #include <aws/emr-containers/model/RetryPolicyExecution.h>
 #include <aws/emr-containers/model/S3MonitoringConfiguration.h>
+#include <aws/emr-containers/model/SchedulerConfiguration.h>
+#include <aws/emr-containers/model/SchedulerStatus.h>
 #include <aws/emr-containers/model/SecureNamespaceInfo.h>
 #include <aws/emr-containers/model/SecurityConfiguration.h>
 #include <aws/emr-containers/model/SecurityConfigurationData.h>
@@ -102,6 +117,8 @@
 #include <aws/emr-containers/model/TemplateParameterDataType.h>
 #include <aws/emr-containers/model/UntagResourceRequest.h>
 #include <aws/emr-containers/model/UntagResourceResult.h>
+#include <aws/emr-containers/model/UpdateVirtualClusterRequest.h>
+#include <aws/emr-containers/model/UpdateVirtualClusterResult.h>
 #include <aws/emr-containers/model/VirtualCluster.h>
 #include <aws/emr-containers/model/VirtualClusterState.h>
 

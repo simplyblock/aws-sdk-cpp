@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/eks/EKSEndpointRules.h>
 #include <aws/eks/EKS_EXPORTS.h>
 
 namespace Aws {
 namespace EKS {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using EKSClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using EKSBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using EKSEndpointProviderBase = EndpointProviderBase<EKSClientConfiguration, EKSBuiltInParameters, EKSClientContextParameters>;
 
-using EKSDefaultEpProviderBase = DefaultEndpointProvider<EKSClientConfiguration, EKSBuiltInParameters, EKSClientContextParameters>;
+using EKSDefaultEpProviderBase = BDDEndpointProvider<EKSClientConfiguration, EKSBuiltInParameters, EKSClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_EKS_API EKSEndpointProvider : public EKSDefaultEpProviderBase {
  public:
   using EKSResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  EKSEndpointProvider() : EKSDefaultEpProviderBase(Aws::EKS::EKSEndpointRules::GetRulesBlob(), Aws::EKS::EKSEndpointRules::RulesBlobSize) {}
+  EKSEndpointProvider();
 
   ~EKSEndpointProvider() {}
 };

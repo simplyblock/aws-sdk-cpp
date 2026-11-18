@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-personalize "C++ SDK for the AWS personalize service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-personalize "C++ SDK for Amazon Personalize" aws-cpp-sdk-core)
 
 file(GLOB AWS_PERSONALIZE_HEADERS
     "include/aws/personalize/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_PERSONALIZE_HEADERS
 
 file(GLOB AWS_PERSONALIZE_MODEL_HEADERS
     "include/aws/personalize/model/*.h"
+)
+
+file(GLOB AWS_PERSONALIZE_INTERNAL_HEADERS
+    "include/aws/personalize/internal/*.h"
 )
 
 file(GLOB AWS_PERSONALIZE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_PERSONALIZE_MODEL_SOURCE
 
 file(GLOB PERSONALIZE_UNIFIED_HEADERS
     ${AWS_PERSONALIZE_HEADERS}
+    ${AWS_PERSONALIZE_INTERNAL_HEADERS}
     ${AWS_PERSONALIZE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\personalize" FILES ${AWS_PERSONALIZE_HEADERS})
+        source_group("Header Files\\aws\\personalize\\internal" FILES ${AWS_PERSONALIZE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\personalize\\model" FILES ${AWS_PERSONALIZE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_PERSONALIZE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_PERSONALIZE_MODEL_SOURCE})

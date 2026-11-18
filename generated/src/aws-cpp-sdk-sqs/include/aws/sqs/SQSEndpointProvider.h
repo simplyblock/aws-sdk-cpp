@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/sqs/SQSEndpointRules.h>
 #include <aws/sqs/SQS_EXPORTS.h>
 
 namespace Aws {
 namespace SQS {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SQSClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using SQSBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using SQSEndpointProviderBase = EndpointProviderBase<SQSClientConfiguration, SQSBuiltInParameters, SQSClientContextParameters>;
 
-using SQSDefaultEpProviderBase = DefaultEndpointProvider<SQSClientConfiguration, SQSBuiltInParameters, SQSClientContextParameters>;
+using SQSDefaultEpProviderBase = BDDEndpointProvider<SQSClientConfiguration, SQSBuiltInParameters, SQSClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_SQS_API SQSEndpointProvider : public SQSDefaultEpProviderBase {
  public:
   using SQSResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SQSEndpointProvider() : SQSDefaultEpProviderBase(Aws::SQS::SQSEndpointRules::GetRulesBlob(), Aws::SQS::SQSEndpointRules::RulesBlobSize) {}
+  SQSEndpointProvider();
 
   ~SQSEndpointProvider() {}
 };

@@ -162,6 +162,68 @@ class AWS_ODB_API OdbClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Adds virtual machines to the specified VM cluster.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/AssociateVirtualMachinesToCloudVmCluster">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::AssociateVirtualMachinesToCloudVmClusterOutcome AssociateVirtualMachinesToCloudVmCluster(
+      const Model::AssociateVirtualMachinesToCloudVmClusterRequest& request) const;
+
+  /**
+   * A Callable wrapper for AssociateVirtualMachinesToCloudVmCluster that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename AssociateVirtualMachinesToCloudVmClusterRequestT = Model::AssociateVirtualMachinesToCloudVmClusterRequest>
+  Model::AssociateVirtualMachinesToCloudVmClusterOutcomeCallable AssociateVirtualMachinesToCloudVmClusterCallable(
+      const AssociateVirtualMachinesToCloudVmClusterRequestT& request) const {
+    return SubmitCallable(&OdbClient::AssociateVirtualMachinesToCloudVmCluster, request);
+  }
+
+  /**
+   * An Async wrapper for AssociateVirtualMachinesToCloudVmCluster that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename AssociateVirtualMachinesToCloudVmClusterRequestT = Model::AssociateVirtualMachinesToCloudVmClusterRequest>
+  void AssociateVirtualMachinesToCloudVmClusterAsync(
+      const AssociateVirtualMachinesToCloudVmClusterRequestT& request,
+      const AssociateVirtualMachinesToCloudVmClusterResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::AssociateVirtualMachinesToCloudVmCluster, request, handler, context);
+  }
+
+  /**
+   * <p>Adds virtual machines to the specified Exascale VM cluster.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/AssociateVirtualMachinesToExadbVmCluster">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::AssociateVirtualMachinesToExadbVmClusterOutcome AssociateVirtualMachinesToExadbVmCluster(
+      const Model::AssociateVirtualMachinesToExadbVmClusterRequest& request) const;
+
+  /**
+   * A Callable wrapper for AssociateVirtualMachinesToExadbVmCluster that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename AssociateVirtualMachinesToExadbVmClusterRequestT = Model::AssociateVirtualMachinesToExadbVmClusterRequest>
+  Model::AssociateVirtualMachinesToExadbVmClusterOutcomeCallable AssociateVirtualMachinesToExadbVmClusterCallable(
+      const AssociateVirtualMachinesToExadbVmClusterRequestT& request) const {
+    return SubmitCallable(&OdbClient::AssociateVirtualMachinesToExadbVmCluster, request);
+  }
+
+  /**
+   * An Async wrapper for AssociateVirtualMachinesToExadbVmCluster that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename AssociateVirtualMachinesToExadbVmClusterRequestT = Model::AssociateVirtualMachinesToExadbVmClusterRequest>
+  void AssociateVirtualMachinesToExadbVmClusterAsync(
+      const AssociateVirtualMachinesToExadbVmClusterRequestT& request,
+      const AssociateVirtualMachinesToExadbVmClusterResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::AssociateVirtualMachinesToExadbVmCluster, request, handler, context);
+  }
+
+  /**
    * <p>Creates a new Autonomous Database.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/CreateAutonomousDatabase">AWS
    * API Reference</a></p>
@@ -333,6 +395,63 @@ class AWS_ODB_API OdbClient : public Aws::Client::AWSJsonClient,
   void CreateCloudVmClusterAsync(const CreateCloudVmClusterRequestT& request, const CreateCloudVmClusterResponseReceivedHandler& handler,
                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&OdbClient::CreateCloudVmCluster, request, handler, context);
+  }
+
+  /**
+   * <p>Creates an Exascale VM cluster.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/CreateExadbVmCluster">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateExadbVmClusterOutcome CreateExadbVmCluster(const Model::CreateExadbVmClusterRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateExadbVmCluster that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateExadbVmClusterRequestT = Model::CreateExadbVmClusterRequest>
+  Model::CreateExadbVmClusterOutcomeCallable CreateExadbVmClusterCallable(const CreateExadbVmClusterRequestT& request) const {
+    return SubmitCallable(&OdbClient::CreateExadbVmCluster, request);
+  }
+
+  /**
+   * An Async wrapper for CreateExadbVmCluster that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateExadbVmClusterRequestT = Model::CreateExadbVmClusterRequest>
+  void CreateExadbVmClusterAsync(const CreateExadbVmClusterRequestT& request, const CreateExadbVmClusterResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::CreateExadbVmCluster, request, handler, context);
+  }
+
+  /**
+   * <p>Creates an Exascale storage vault.</p> <p>To create the Exascale storage
+   * vault on dedicated Exadata infrastructure, specify
+   * <code>cloudExadataInfrastructureId</code>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/CreateExascaleDbStorageVault">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateExascaleDbStorageVaultOutcome CreateExascaleDbStorageVault(
+      const Model::CreateExascaleDbStorageVaultRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateExascaleDbStorageVault that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename CreateExascaleDbStorageVaultRequestT = Model::CreateExascaleDbStorageVaultRequest>
+  Model::CreateExascaleDbStorageVaultOutcomeCallable CreateExascaleDbStorageVaultCallable(
+      const CreateExascaleDbStorageVaultRequestT& request) const {
+    return SubmitCallable(&OdbClient::CreateExascaleDbStorageVault, request);
+  }
+
+  /**
+   * An Async wrapper for CreateExascaleDbStorageVault that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateExascaleDbStorageVaultRequestT = Model::CreateExascaleDbStorageVaultRequest>
+  void CreateExascaleDbStorageVaultAsync(const CreateExascaleDbStorageVaultRequestT& request,
+                                         const CreateExascaleDbStorageVaultResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::CreateExascaleDbStorageVault, request, handler, context);
   }
 
   /**
@@ -536,6 +655,61 @@ class AWS_ODB_API OdbClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Deletes the specified Exascale VM cluster.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/DeleteExadbVmCluster">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteExadbVmClusterOutcome DeleteExadbVmCluster(const Model::DeleteExadbVmClusterRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteExadbVmCluster that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteExadbVmClusterRequestT = Model::DeleteExadbVmClusterRequest>
+  Model::DeleteExadbVmClusterOutcomeCallable DeleteExadbVmClusterCallable(const DeleteExadbVmClusterRequestT& request) const {
+    return SubmitCallable(&OdbClient::DeleteExadbVmCluster, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteExadbVmCluster that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteExadbVmClusterRequestT = Model::DeleteExadbVmClusterRequest>
+  void DeleteExadbVmClusterAsync(const DeleteExadbVmClusterRequestT& request, const DeleteExadbVmClusterResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::DeleteExadbVmCluster, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes the specified Exascale storage vault.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/DeleteExascaleDbStorageVault">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteExascaleDbStorageVaultOutcome DeleteExascaleDbStorageVault(
+      const Model::DeleteExascaleDbStorageVaultRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteExascaleDbStorageVault that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename DeleteExascaleDbStorageVaultRequestT = Model::DeleteExascaleDbStorageVaultRequest>
+  Model::DeleteExascaleDbStorageVaultOutcomeCallable DeleteExascaleDbStorageVaultCallable(
+      const DeleteExascaleDbStorageVaultRequestT& request) const {
+    return SubmitCallable(&OdbClient::DeleteExascaleDbStorageVault, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteExascaleDbStorageVault that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteExascaleDbStorageVaultRequestT = Model::DeleteExascaleDbStorageVaultRequest>
+  void DeleteExascaleDbStorageVaultAsync(const DeleteExascaleDbStorageVaultRequestT& request,
+                                         const DeleteExascaleDbStorageVaultResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::DeleteExascaleDbStorageVault, request, handler, context);
+  }
+
+  /**
    * <p>Deletes the specified ODB network.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/DeleteOdbNetwork">AWS
    * API Reference</a></p>
@@ -621,6 +795,68 @@ class AWS_ODB_API OdbClient : public Aws::Client::AWSJsonClient,
                                             const DisassociateIamRoleFromResourceResponseReceivedHandler& handler,
                                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&OdbClient::DisassociateIamRoleFromResource, request, handler, context);
+  }
+
+  /**
+   * <p>Removes virtual machines from the specified VM cluster.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/DisassociateVirtualMachinesFromCloudVmCluster">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DisassociateVirtualMachinesFromCloudVmClusterOutcome DisassociateVirtualMachinesFromCloudVmCluster(
+      const Model::DisassociateVirtualMachinesFromCloudVmClusterRequest& request) const;
+
+  /**
+   * A Callable wrapper for DisassociateVirtualMachinesFromCloudVmCluster that returns a future to the operation so that it can be executed
+   * in parallel to other requests.
+   */
+  template <typename DisassociateVirtualMachinesFromCloudVmClusterRequestT = Model::DisassociateVirtualMachinesFromCloudVmClusterRequest>
+  Model::DisassociateVirtualMachinesFromCloudVmClusterOutcomeCallable DisassociateVirtualMachinesFromCloudVmClusterCallable(
+      const DisassociateVirtualMachinesFromCloudVmClusterRequestT& request) const {
+    return SubmitCallable(&OdbClient::DisassociateVirtualMachinesFromCloudVmCluster, request);
+  }
+
+  /**
+   * An Async wrapper for DisassociateVirtualMachinesFromCloudVmCluster that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename DisassociateVirtualMachinesFromCloudVmClusterRequestT = Model::DisassociateVirtualMachinesFromCloudVmClusterRequest>
+  void DisassociateVirtualMachinesFromCloudVmClusterAsync(
+      const DisassociateVirtualMachinesFromCloudVmClusterRequestT& request,
+      const DisassociateVirtualMachinesFromCloudVmClusterResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::DisassociateVirtualMachinesFromCloudVmCluster, request, handler, context);
+  }
+
+  /**
+   * <p>Removes virtual machines from the specified Exascale VM
+   * cluster.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/DisassociateVirtualMachinesFromExadbVmCluster">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DisassociateVirtualMachinesFromExadbVmClusterOutcome DisassociateVirtualMachinesFromExadbVmCluster(
+      const Model::DisassociateVirtualMachinesFromExadbVmClusterRequest& request) const;
+
+  /**
+   * A Callable wrapper for DisassociateVirtualMachinesFromExadbVmCluster that returns a future to the operation so that it can be executed
+   * in parallel to other requests.
+   */
+  template <typename DisassociateVirtualMachinesFromExadbVmClusterRequestT = Model::DisassociateVirtualMachinesFromExadbVmClusterRequest>
+  Model::DisassociateVirtualMachinesFromExadbVmClusterOutcomeCallable DisassociateVirtualMachinesFromExadbVmClusterCallable(
+      const DisassociateVirtualMachinesFromExadbVmClusterRequestT& request) const {
+    return SubmitCallable(&OdbClient::DisassociateVirtualMachinesFromExadbVmCluster, request);
+  }
+
+  /**
+   * An Async wrapper for DisassociateVirtualMachinesFromExadbVmCluster that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename DisassociateVirtualMachinesFromExadbVmClusterRequestT = Model::DisassociateVirtualMachinesFromExadbVmClusterRequest>
+  void DisassociateVirtualMachinesFromExadbVmClusterAsync(
+      const DisassociateVirtualMachinesFromExadbVmClusterRequestT& request,
+      const DisassociateVirtualMachinesFromExadbVmClusterResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::DisassociateVirtualMachinesFromExadbVmCluster, request, handler, context);
   }
 
   /**
@@ -909,6 +1145,62 @@ class AWS_ODB_API OdbClient : public Aws::Client::AWSJsonClient,
   void GetDbServerAsync(const GetDbServerRequestT& request, const GetDbServerResponseReceivedHandler& handler,
                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&OdbClient::GetDbServer, request, handler, context);
+  }
+
+  /**
+   * <p>Returns information about the specified Exascale VM cluster.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/GetExadbVmCluster">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetExadbVmClusterOutcome GetExadbVmCluster(const Model::GetExadbVmClusterRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetExadbVmCluster that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetExadbVmClusterRequestT = Model::GetExadbVmClusterRequest>
+  Model::GetExadbVmClusterOutcomeCallable GetExadbVmClusterCallable(const GetExadbVmClusterRequestT& request) const {
+    return SubmitCallable(&OdbClient::GetExadbVmCluster, request);
+  }
+
+  /**
+   * An Async wrapper for GetExadbVmCluster that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetExadbVmClusterRequestT = Model::GetExadbVmClusterRequest>
+  void GetExadbVmClusterAsync(const GetExadbVmClusterRequestT& request, const GetExadbVmClusterResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::GetExadbVmCluster, request, handler, context);
+  }
+
+  /**
+   * <p>Returns information about the specified Exascale storage vault.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/GetExascaleDbStorageVault">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetExascaleDbStorageVaultOutcome GetExascaleDbStorageVault(const Model::GetExascaleDbStorageVaultRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetExascaleDbStorageVault that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetExascaleDbStorageVaultRequestT = Model::GetExascaleDbStorageVaultRequest>
+  Model::GetExascaleDbStorageVaultOutcomeCallable GetExascaleDbStorageVaultCallable(
+      const GetExascaleDbStorageVaultRequestT& request) const {
+    return SubmitCallable(&OdbClient::GetExascaleDbStorageVault, request);
+  }
+
+  /**
+   * An Async wrapper for GetExascaleDbStorageVault that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetExascaleDbStorageVaultRequestT = Model::GetExascaleDbStorageVaultRequest>
+  void GetExascaleDbStorageVaultAsync(const GetExascaleDbStorageVaultRequestT& request,
+                                      const GetExascaleDbStorageVaultResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::GetExascaleDbStorageVault, request, handler, context);
   }
 
   /**
@@ -1325,13 +1617,13 @@ class AWS_ODB_API OdbClient : public Aws::Client::AWSJsonClient,
    * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/ListDbNodes">AWS API
    * Reference</a></p>
    */
-  virtual Model::ListDbNodesOutcome ListDbNodes(const Model::ListDbNodesRequest& request) const;
+  virtual Model::ListDbNodesOutcome ListDbNodes(const Model::ListDbNodesRequest& request = {}) const;
 
   /**
    * A Callable wrapper for ListDbNodes that returns a future to the operation so that it can be executed in parallel to other requests.
    */
   template <typename ListDbNodesRequestT = Model::ListDbNodesRequest>
-  Model::ListDbNodesOutcomeCallable ListDbNodesCallable(const ListDbNodesRequestT& request) const {
+  Model::ListDbNodesOutcomeCallable ListDbNodesCallable(const ListDbNodesRequestT& request = {}) const {
     return SubmitCallable(&OdbClient::ListDbNodes, request);
   }
 
@@ -1340,8 +1632,9 @@ class AWS_ODB_API OdbClient : public Aws::Client::AWSJsonClient,
    * finished.
    */
   template <typename ListDbNodesRequestT = Model::ListDbNodesRequest>
-  void ListDbNodesAsync(const ListDbNodesRequestT& request, const ListDbNodesResponseReceivedHandler& handler,
-                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+  void ListDbNodesAsync(const ListDbNodesResponseReceivedHandler& handler,
+                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                        const ListDbNodesRequestT& request = {}) const {
     return SubmitAsync(&OdbClient::ListDbNodes, request, handler, context);
   }
 
@@ -1397,6 +1690,119 @@ class AWS_ODB_API OdbClient : public Aws::Client::AWSJsonClient,
                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                const ListDbSystemShapesRequestT& request = {}) const {
     return SubmitAsync(&OdbClient::ListDbSystemShapes, request, handler, context);
+  }
+
+  /**
+   * <p>Returns information about the Exascale VM clusters owned by your Amazon Web
+   * Services account.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/ListExadbVmClusters">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListExadbVmClustersOutcome ListExadbVmClusters(const Model::ListExadbVmClustersRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListExadbVmClusters that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListExadbVmClustersRequestT = Model::ListExadbVmClustersRequest>
+  Model::ListExadbVmClustersOutcomeCallable ListExadbVmClustersCallable(const ListExadbVmClustersRequestT& request = {}) const {
+    return SubmitCallable(&OdbClient::ListExadbVmClusters, request);
+  }
+
+  /**
+   * An Async wrapper for ListExadbVmClusters that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListExadbVmClustersRequestT = Model::ListExadbVmClustersRequest>
+  void ListExadbVmClustersAsync(const ListExadbVmClustersResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                const ListExadbVmClustersRequestT& request = {}) const {
+    return SubmitAsync(&OdbClient::ListExadbVmClusters, request, handler, context);
+  }
+
+  /**
+   * <p>Returns information about the Exascale storage vaults owned by your Amazon
+   * Web Services account.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/ListExascaleDbStorageVaults">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListExascaleDbStorageVaultsOutcome ListExascaleDbStorageVaults(
+      const Model::ListExascaleDbStorageVaultsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListExascaleDbStorageVaults that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename ListExascaleDbStorageVaultsRequestT = Model::ListExascaleDbStorageVaultsRequest>
+  Model::ListExascaleDbStorageVaultsOutcomeCallable ListExascaleDbStorageVaultsCallable(
+      const ListExascaleDbStorageVaultsRequestT& request = {}) const {
+    return SubmitCallable(&OdbClient::ListExascaleDbStorageVaults, request);
+  }
+
+  /**
+   * An Async wrapper for ListExascaleDbStorageVaults that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListExascaleDbStorageVaultsRequestT = Model::ListExascaleDbStorageVaultsRequest>
+  void ListExascaleDbStorageVaultsAsync(const ListExascaleDbStorageVaultsResponseReceivedHandler& handler,
+                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                        const ListExascaleDbStorageVaultsRequestT& request = {}) const {
+    return SubmitAsync(&OdbClient::ListExascaleDbStorageVaults, request, handler, context);
+  }
+
+  /**
+   * <p>Returns information about the flex components that are available for an
+   * Exadata infrastructure.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/ListFlexComponents">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListFlexComponentsOutcome ListFlexComponents(const Model::ListFlexComponentsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListFlexComponents that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListFlexComponentsRequestT = Model::ListFlexComponentsRequest>
+  Model::ListFlexComponentsOutcomeCallable ListFlexComponentsCallable(const ListFlexComponentsRequestT& request = {}) const {
+    return SubmitCallable(&OdbClient::ListFlexComponents, request);
+  }
+
+  /**
+   * An Async wrapper for ListFlexComponents that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListFlexComponentsRequestT = Model::ListFlexComponentsRequest>
+  void ListFlexComponentsAsync(const ListFlexComponentsResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                               const ListFlexComponentsRequestT& request = {}) const {
+    return SubmitAsync(&OdbClient::ListFlexComponents, request, handler, context);
+  }
+
+  /**
+   * <p>Returns a list of the Oracle Grid Infrastructure (GI) minor versions for the
+   * specified major version.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/ListGiMinorVersions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListGiMinorVersionsOutcome ListGiMinorVersions(const Model::ListGiMinorVersionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListGiMinorVersions that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListGiMinorVersionsRequestT = Model::ListGiMinorVersionsRequest>
+  Model::ListGiMinorVersionsOutcomeCallable ListGiMinorVersionsCallable(const ListGiMinorVersionsRequestT& request) const {
+    return SubmitCallable(&OdbClient::ListGiMinorVersions, request);
+  }
+
+  /**
+   * An Async wrapper for ListGiMinorVersions that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListGiMinorVersionsRequestT = Model::ListGiMinorVersionsRequest>
+  void ListGiMinorVersionsAsync(const ListGiMinorVersionsRequestT& request, const ListGiMinorVersionsResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::ListGiMinorVersions, request, handler, context);
   }
 
   /**
@@ -1891,6 +2297,36 @@ class AWS_ODB_API OdbClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates the properties of the specified Autonomous VM cluster.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/UpdateCloudAutonomousVmCluster">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateCloudAutonomousVmClusterOutcome UpdateCloudAutonomousVmCluster(
+      const Model::UpdateCloudAutonomousVmClusterRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateCloudAutonomousVmCluster that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename UpdateCloudAutonomousVmClusterRequestT = Model::UpdateCloudAutonomousVmClusterRequest>
+  Model::UpdateCloudAutonomousVmClusterOutcomeCallable UpdateCloudAutonomousVmClusterCallable(
+      const UpdateCloudAutonomousVmClusterRequestT& request) const {
+    return SubmitCallable(&OdbClient::UpdateCloudAutonomousVmCluster, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateCloudAutonomousVmCluster that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename UpdateCloudAutonomousVmClusterRequestT = Model::UpdateCloudAutonomousVmClusterRequest>
+  void UpdateCloudAutonomousVmClusterAsync(const UpdateCloudAutonomousVmClusterRequestT& request,
+                                           const UpdateCloudAutonomousVmClusterResponseReceivedHandler& handler,
+                                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::UpdateCloudAutonomousVmCluster, request, handler, context);
+  }
+
+  /**
    * <p>Updates the properties of an Exadata infrastructure resource.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/UpdateCloudExadataInfrastructure">AWS
@@ -1918,6 +2354,154 @@ class AWS_ODB_API OdbClient : public Aws::Client::AWSJsonClient,
                                              const UpdateCloudExadataInfrastructureResponseReceivedHandler& handler,
                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&OdbClient::UpdateCloudExadataInfrastructure, request, handler, context);
+  }
+
+  /**
+   * <p>Adds storage capacity to the specified Exadata infrastructure.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/UpdateCloudExadataInfrastructureStorageCapacity">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateCloudExadataInfrastructureStorageCapacityOutcome UpdateCloudExadataInfrastructureStorageCapacity(
+      const Model::UpdateCloudExadataInfrastructureStorageCapacityRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateCloudExadataInfrastructureStorageCapacity that returns a future to the operation so that it can be
+   * executed in parallel to other requests.
+   */
+  template <
+      typename UpdateCloudExadataInfrastructureStorageCapacityRequestT = Model::UpdateCloudExadataInfrastructureStorageCapacityRequest>
+  Model::UpdateCloudExadataInfrastructureStorageCapacityOutcomeCallable UpdateCloudExadataInfrastructureStorageCapacityCallable(
+      const UpdateCloudExadataInfrastructureStorageCapacityRequestT& request) const {
+    return SubmitCallable(&OdbClient::UpdateCloudExadataInfrastructureStorageCapacity, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateCloudExadataInfrastructureStorageCapacity that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <
+      typename UpdateCloudExadataInfrastructureStorageCapacityRequestT = Model::UpdateCloudExadataInfrastructureStorageCapacityRequest>
+  void UpdateCloudExadataInfrastructureStorageCapacityAsync(
+      const UpdateCloudExadataInfrastructureStorageCapacityRequestT& request,
+      const UpdateCloudExadataInfrastructureStorageCapacityResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::UpdateCloudExadataInfrastructureStorageCapacity, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the properties of the specified VM cluster.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/UpdateCloudVmCluster">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateCloudVmClusterOutcome UpdateCloudVmCluster(const Model::UpdateCloudVmClusterRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateCloudVmCluster that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateCloudVmClusterRequestT = Model::UpdateCloudVmClusterRequest>
+  Model::UpdateCloudVmClusterOutcomeCallable UpdateCloudVmClusterCallable(const UpdateCloudVmClusterRequestT& request) const {
+    return SubmitCallable(&OdbClient::UpdateCloudVmCluster, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateCloudVmCluster that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateCloudVmClusterRequestT = Model::UpdateCloudVmClusterRequest>
+  void UpdateCloudVmClusterAsync(const UpdateCloudVmClusterRequestT& request, const UpdateCloudVmClusterResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::UpdateCloudVmCluster, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the specified Exascale VM cluster.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/UpdateExadbVmCluster">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateExadbVmClusterOutcome UpdateExadbVmCluster(const Model::UpdateExadbVmClusterRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateExadbVmCluster that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateExadbVmClusterRequestT = Model::UpdateExadbVmClusterRequest>
+  Model::UpdateExadbVmClusterOutcomeCallable UpdateExadbVmClusterCallable(const UpdateExadbVmClusterRequestT& request) const {
+    return SubmitCallable(&OdbClient::UpdateExadbVmCluster, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateExadbVmCluster that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateExadbVmClusterRequestT = Model::UpdateExadbVmClusterRequest>
+  void UpdateExadbVmClusterAsync(const UpdateExadbVmClusterRequestT& request, const UpdateExadbVmClusterResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::UpdateExadbVmCluster, request, handler, context);
+  }
+
+  /**
+   * <p>Configures or updates the Exascale storage on an Exadata infrastructure.
+   * After you configure Exascale storage, you can create Exascale storage vaults on
+   * the infrastructure and VM clusters that use Exascale storage.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/UpdateExascaleCloudExadataInfrastructure">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateExascaleCloudExadataInfrastructureOutcome UpdateExascaleCloudExadataInfrastructure(
+      const Model::UpdateExascaleCloudExadataInfrastructureRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateExascaleCloudExadataInfrastructure that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename UpdateExascaleCloudExadataInfrastructureRequestT = Model::UpdateExascaleCloudExadataInfrastructureRequest>
+  Model::UpdateExascaleCloudExadataInfrastructureOutcomeCallable UpdateExascaleCloudExadataInfrastructureCallable(
+      const UpdateExascaleCloudExadataInfrastructureRequestT& request) const {
+    return SubmitCallable(&OdbClient::UpdateExascaleCloudExadataInfrastructure, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateExascaleCloudExadataInfrastructure that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename UpdateExascaleCloudExadataInfrastructureRequestT = Model::UpdateExascaleCloudExadataInfrastructureRequest>
+  void UpdateExascaleCloudExadataInfrastructureAsync(
+      const UpdateExascaleCloudExadataInfrastructureRequestT& request,
+      const UpdateExascaleCloudExadataInfrastructureResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::UpdateExascaleCloudExadataInfrastructure, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the specified Exascale storage vault.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/odb-2024-08-20/UpdateExascaleDbStorageVault">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateExascaleDbStorageVaultOutcome UpdateExascaleDbStorageVault(
+      const Model::UpdateExascaleDbStorageVaultRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateExascaleDbStorageVault that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename UpdateExascaleDbStorageVaultRequestT = Model::UpdateExascaleDbStorageVaultRequest>
+  Model::UpdateExascaleDbStorageVaultOutcomeCallable UpdateExascaleDbStorageVaultCallable(
+      const UpdateExascaleDbStorageVaultRequestT& request) const {
+    return SubmitCallable(&OdbClient::UpdateExascaleDbStorageVault, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateExascaleDbStorageVault that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateExascaleDbStorageVaultRequestT = Model::UpdateExascaleDbStorageVaultRequest>
+  void UpdateExascaleDbStorageVaultAsync(const UpdateExascaleDbStorageVaultRequestT& request,
+                                         const UpdateExascaleDbStorageVaultResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&OdbClient::UpdateExascaleDbStorageVault, request, handler, context);
   }
 
   /**

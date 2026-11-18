@@ -16,9 +16,8 @@
 namespace Aws {
 namespace Signin {
 /**
- * <p>AWS Sign-In manages authentication for AWS services. This service provides
- * secure authentication flows for accessing AWS resources from the console and
- * developer tools.</p>
+ * <p>AWS Sign-In manages authentication for AWS services. It implements OAuth 2.0,
+ * providing secure token exchange and refresh capabilities.</p>
  */
 class AWS_SIGNIN_API SigninClient : public Aws::Client::AWSJsonClient,
                                     public Aws::Client::ClientWithAsyncTemplateMethods<SigninClient>,
@@ -78,28 +77,36 @@ class AWS_SIGNIN_API SigninClient : public Aws::Client::AWSJsonClient,
   virtual ~SigninClient();
 
   /**
-   * <p>CreateOAuth2Token API</p> <p>Path: /v1/token Request Method: POST
-   * Content-Type: application/json or application/x-www-form-urlencoded</p> <p>This
-   * API implements OAuth 2.0 flows for AWS Sign-In CLI clients, supporting both:</p>
-   * <ol> <li>Authorization code redemption (grant_type=authorization_code) - NOT
-   * idempotent</li> <li>Token refresh (grant_type=refresh_token) - Idempotent within
-   * token validity window</li> </ol> <p>The operation behavior is determined by the
-   * grant_type parameter in the request body:</p> <p><strong>Authorization Code Flow
-   * (NOT Idempotent):</strong></p> <ul> <li>JSON or form-encoded body with
-   * client_id, grant_type=authorization_code, code, redirect_uri, code_verifier</li>
-   * <li>Returns access_token, token_type, expires_in, refresh_token, and
-   * id_token</li> <li>Each authorization code can only be used ONCE for security
-   * (prevents replay attacks)</li> </ul> <p><strong>Token Refresh Flow
-   * (Idempotent):</strong></p> <ul> <li>JSON or form-encoded body with client_id,
-   * grant_type=refresh_token, refresh_token</li> <li>Returns access_token,
-   * token_type, expires_in, and refresh_token (no id_token)</li> <li>Multiple calls
-   * with same refresh_token return consistent results within validity window</li>
-   * </ul> <p>Authentication and authorization:</p> <ul> <li>Confidential clients:
-   * sigv4 signing required with signin:ExchangeToken permissions</li> <li>CLI
-   * clients (public): authn/authz skipped based on client_id &amp; grant_type</li>
-   * </ul> <p>Note: This operation cannot be marked as @idempotent because it handles
-   * both idempotent (token refresh) and non-idempotent (auth code redemption) flows
-   * in a single endpoint.</p><p><h3>See Also:</h3>   <a
+   * <p>Creates a bearer token that represents your IAM credentials and can be used
+   * to access a supported AWS service. By default, the token is valid for 12
+   * hours.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/signin-2023-01-01/CreateBearerToken">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateBearerTokenOutcome CreateBearerToken(const Model::CreateBearerTokenRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateBearerToken that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateBearerTokenRequestT = Model::CreateBearerTokenRequest>
+  Model::CreateBearerTokenOutcomeCallable CreateBearerTokenCallable(const CreateBearerTokenRequestT& request) const {
+    return SubmitCallable(&SigninClient::CreateBearerToken, request);
+  }
+
+  /**
+   * An Async wrapper for CreateBearerToken that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename CreateBearerTokenRequestT = Model::CreateBearerTokenRequest>
+  void CreateBearerTokenAsync(const CreateBearerTokenRequestT& request, const CreateBearerTokenResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SigninClient::CreateBearerToken, request, handler, context);
+  }
+
+  /**
+   * <p>Exchanges an authorization code or refresh token for an OAuth 2.0 access
+   * token and refresh token.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/signin-2023-01-01/CreateOAuth2Token">AWS
    * API Reference</a></p>
    */
@@ -122,6 +129,66 @@ class AWS_SIGNIN_API SigninClient : public Aws::Client::AWSJsonClient,
   void CreateOAuth2TokenAsync(const CreateOAuth2TokenRequestT& request, const CreateOAuth2TokenResponseReceivedHandler& handler,
                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&SigninClient::CreateOAuth2Token, request, handler, context);
+  }
+
+  /**
+   * <p>Exchanges client credentials for an OAuth 2.0 access token scoped to a
+   * resource, which you can use to access AWS services from
+   * applications.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/signin-2023-01-01/CreateOAuth2TokenWithIAM">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateOAuth2TokenWithIAMOutcome CreateOAuth2TokenWithIAM(const Model::CreateOAuth2TokenWithIAMRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateOAuth2TokenWithIAM that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateOAuth2TokenWithIAMRequestT = Model::CreateOAuth2TokenWithIAMRequest>
+  Model::CreateOAuth2TokenWithIAMOutcomeCallable CreateOAuth2TokenWithIAMCallable(const CreateOAuth2TokenWithIAMRequestT& request) const {
+    return SubmitCallable(&SigninClient::CreateOAuth2TokenWithIAM, request);
+  }
+
+  /**
+   * An Async wrapper for CreateOAuth2TokenWithIAM that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateOAuth2TokenWithIAMRequestT = Model::CreateOAuth2TokenWithIAMRequest>
+  void CreateOAuth2TokenWithIAMAsync(const CreateOAuth2TokenWithIAMRequestT& request,
+                                     const CreateOAuth2TokenWithIAMResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SigninClient::CreateOAuth2TokenWithIAM, request, handler, context);
+  }
+
+  /**
+   * <p>Exchanges a supported token for an OAuth 2.0 access token scoped to a
+   * resource, which you can use to access AWS services from
+   * applications.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/signin-2023-01-01/CreateOAuth2TokenWithTokenExchange">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateOAuth2TokenWithTokenExchangeOutcome CreateOAuth2TokenWithTokenExchange(
+      const Model::CreateOAuth2TokenWithTokenExchangeRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateOAuth2TokenWithTokenExchange that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename CreateOAuth2TokenWithTokenExchangeRequestT = Model::CreateOAuth2TokenWithTokenExchangeRequest>
+  Model::CreateOAuth2TokenWithTokenExchangeOutcomeCallable CreateOAuth2TokenWithTokenExchangeCallable(
+      const CreateOAuth2TokenWithTokenExchangeRequestT& request) const {
+    return SubmitCallable(&SigninClient::CreateOAuth2TokenWithTokenExchange, request);
+  }
+
+  /**
+   * An Async wrapper for CreateOAuth2TokenWithTokenExchange that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename CreateOAuth2TokenWithTokenExchangeRequestT = Model::CreateOAuth2TokenWithTokenExchangeRequest>
+  void CreateOAuth2TokenWithTokenExchangeAsync(const CreateOAuth2TokenWithTokenExchangeRequestT& request,
+                                               const CreateOAuth2TokenWithTokenExchangeResponseReceivedHandler& handler,
+                                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SigninClient::CreateOAuth2TokenWithTokenExchange, request, handler, context);
   }
 
   /**
@@ -243,6 +310,38 @@ class AWS_SIGNIN_API SigninClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Inspects the metadata and active state of an OAuth 2.0 access token or
+   * refresh token.</p> <p>Implements RFC 7662 OAuth 2.0 Token Introspection over a
+   * SigV4-authenticated endpoint. Returns the claims associated with a token issued
+   * by AWS Sign-In.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/signin-2023-01-01/IntrospectOAuth2TokenWithIAM">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::IntrospectOAuth2TokenWithIAMOutcome IntrospectOAuth2TokenWithIAM(
+      const Model::IntrospectOAuth2TokenWithIAMRequest& request) const;
+
+  /**
+   * A Callable wrapper for IntrospectOAuth2TokenWithIAM that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename IntrospectOAuth2TokenWithIAMRequestT = Model::IntrospectOAuth2TokenWithIAMRequest>
+  Model::IntrospectOAuth2TokenWithIAMOutcomeCallable IntrospectOAuth2TokenWithIAMCallable(
+      const IntrospectOAuth2TokenWithIAMRequestT& request) const {
+    return SubmitCallable(&SigninClient::IntrospectOAuth2TokenWithIAM, request);
+  }
+
+  /**
+   * An Async wrapper for IntrospectOAuth2TokenWithIAM that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename IntrospectOAuth2TokenWithIAMRequestT = Model::IntrospectOAuth2TokenWithIAMRequest>
+  void IntrospectOAuth2TokenWithIAMAsync(const IntrospectOAuth2TokenWithIAMRequestT& request,
+                                         const IntrospectOAuth2TokenWithIAMResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SigninClient::IntrospectOAuth2TokenWithIAM, request, handler, context);
+  }
+
+  /**
    * <p>Retrieve all permission statements in the account's SignIn resource-based
    * policy</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/signin-2023-01-01/ListResourcePermissionStatements">AWS
@@ -332,6 +431,34 @@ class AWS_SIGNIN_API SigninClient : public Aws::Client::AWSJsonClient,
     return SubmitAsync(&SigninClient::PutResourcePermissionStatement, request, handler, context);
   }
 
+  /**
+   * <p>Revokes an OAuth 2.0 refresh token and its associated token
+   * chain.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/signin-2023-01-01/RevokeOAuth2TokenWithIAM">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::RevokeOAuth2TokenWithIAMOutcome RevokeOAuth2TokenWithIAM(const Model::RevokeOAuth2TokenWithIAMRequest& request) const;
+
+  /**
+   * A Callable wrapper for RevokeOAuth2TokenWithIAM that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename RevokeOAuth2TokenWithIAMRequestT = Model::RevokeOAuth2TokenWithIAMRequest>
+  Model::RevokeOAuth2TokenWithIAMOutcomeCallable RevokeOAuth2TokenWithIAMCallable(const RevokeOAuth2TokenWithIAMRequestT& request) const {
+    return SubmitCallable(&SigninClient::RevokeOAuth2TokenWithIAM, request);
+  }
+
+  /**
+   * An Async wrapper for RevokeOAuth2TokenWithIAM that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename RevokeOAuth2TokenWithIAMRequestT = Model::RevokeOAuth2TokenWithIAMRequest>
+  void RevokeOAuth2TokenWithIAMAsync(const RevokeOAuth2TokenWithIAMRequestT& request,
+                                     const RevokeOAuth2TokenWithIAMResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SigninClient::RevokeOAuth2TokenWithIAM, request, handler, context);
+  }
+
   virtual void OverrideEndpoint(const Aws::String& endpoint);
   virtual std::shared_ptr<SigninEndpointProviderBase>& accessEndpointProvider();
 
@@ -343,7 +470,7 @@ class AWS_SIGNIN_API SigninClient : public Aws::Client::AWSJsonClient,
 
   InvokeOperationOutcome InvokeServiceOperation(const AmazonWebServiceRequest& request,
                                                 const std::function<void(Aws::Endpoint::ResolveEndpointOutcome&)>& resolveUri,
-                                                Aws::Http::HttpMethod httpMethod) const;
+                                                Aws::Http::HttpMethod httpMethod, const char* signerName = Aws::Auth::SIGV4_SIGNER) const;
 
   SigninClientConfiguration m_clientConfiguration;
   std::shared_ptr<SigninEndpointProviderBase> m_endpointProvider;

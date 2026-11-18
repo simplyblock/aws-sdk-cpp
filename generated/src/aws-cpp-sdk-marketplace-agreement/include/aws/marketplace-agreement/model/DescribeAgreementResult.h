@@ -7,31 +7,33 @@
 #include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 #include <aws/marketplace-agreement/model/Acceptor.h>
 #include <aws/marketplace-agreement/model/AgreementStatus.h>
+#include <aws/marketplace-agreement/model/EndTimeBehavior.h>
 #include <aws/marketplace-agreement/model/EstimatedCharges.h>
+#include <aws/marketplace-agreement/model/FreeTrialSummary.h>
 #include <aws/marketplace-agreement/model/ProposalSummary.h>
 #include <aws/marketplace-agreement/model/Proposer.h>
 
 #include <utility>
-
 namespace Aws {
 template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
 namespace Utils {
-namespace Json {
-class JsonValue;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AgreementService {
 namespace Model {
 class DescribeAgreementResult {
  public:
   AWS_AGREEMENTSERVICE_API DescribeAgreementResult() = default;
-  AWS_AGREEMENTSERVICE_API DescribeAgreementResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-  AWS_AGREEMENTSERVICE_API DescribeAgreementResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AGREEMENTSERVICE_API DescribeAgreementResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_AGREEMENTSERVICE_API DescribeAgreementResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
   ///@{
   /**
@@ -196,15 +198,14 @@ class DescribeAgreementResult {
   /**
    * <p>The current status of the agreement.</p> <p>Statuses include:</p> <ul> <li>
    * <p> <code>ACTIVE</code> – The terms of the agreement are active.</p> </li> <li>
-   * <p> <code>ARCHIVED</code> – The agreement ended without a specified reason.</p>
-   * </li> <li> <p> <code>CANCELLED</code> – The acceptor ended the agreement before
-   * the defined end date.</p> </li> <li> <p> <code>EXPIRED</code> – The agreement
-   * ended on the defined end date.</p> </li> <li> <p> <code>RENEWED</code> – The
-   * agreement was renewed into a new agreement (for example, an auto-renewal).</p>
-   * </li> <li> <p> <code>REPLACED</code> – The agreement was replaced using an
-   * agreement replacement offer.</p> </li> <li> <p> <code>TERMINATED</code> – The
-   * agreement ended before the defined end date because of an AWS termination (for
-   * example, a payment failure).</p> </li> </ul>
+   * <p> <code>CANCELLED</code> – The acceptor ended the agreement before the defined
+   * end date.</p> </li> <li> <p> <code>EXPIRED</code> – The agreement ended on the
+   * defined end date.</p> </li> <li> <p> <code>RENEWED</code> – The agreement was
+   * renewed into a new agreement (for example, an auto-renewal).</p> </li> <li> <p>
+   * <code>REPLACED</code> – The agreement was replaced using an agreement
+   * replacement offer.</p> </li> <li> <p> <code>TERMINATED</code> – The agreement
+   * ended before the defined end date because of an AWS termination (for example, a
+   * payment failure).</p> </li> </ul>
    */
   inline AgreementStatus GetStatus() const { return m_status; }
   inline void SetStatus(AgreementStatus value) {
@@ -213,6 +214,67 @@ class DescribeAgreementResult {
   }
   inline DescribeAgreementResult& WithStatus(AgreementStatus value) {
     SetStatus(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The unique identifier of the very first agreement in a chain of related
+   * agreements, such as renewals or replacements. It stays the same across all
+   * agreements in that chain, which lets you trace an agreement back to the
+   * original. When an agreement isn't derived from another agreement, its
+   * <code>InitialAgreementId</code> is its own <code>AgreementId</code>.</p>
+   */
+  inline const Aws::String& GetInitialAgreementId() const { return m_initialAgreementId; }
+  template <typename InitialAgreementIdT = Aws::String>
+  void SetInitialAgreementId(InitialAgreementIdT&& value) {
+    m_initialAgreementIdHasBeenSet = true;
+    m_initialAgreementId = std::forward<InitialAgreementIdT>(value);
+  }
+  template <typename InitialAgreementIdT = Aws::String>
+  DescribeAgreementResult& WithInitialAgreementId(InitialAgreementIdT&& value) {
+    SetInitialAgreementId(std::forward<InitialAgreementIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The behavior of the agreement when it reaches its end date. For example,
+   * whether the agreement renews, and if it doesn't, the reason why.</p> <p>This
+   * field is present for every active agreement that has an end date. It is not
+   * present for an agreement that has no end date, because such an agreement never
+   * reaches an end time. Pay-as-you-go agreements are the most common example. It is
+   * also not present for an agreement that is no longer active.</p>
+   */
+  inline const EndTimeBehavior& GetEndTimeBehavior() const { return m_endTimeBehavior; }
+  template <typename EndTimeBehaviorT = EndTimeBehavior>
+  void SetEndTimeBehavior(EndTimeBehaviorT&& value) {
+    m_endTimeBehaviorHasBeenSet = true;
+    m_endTimeBehavior = std::forward<EndTimeBehaviorT>(value);
+  }
+  template <typename EndTimeBehaviorT = EndTimeBehavior>
+  DescribeAgreementResult& WithEndTimeBehavior(EndTimeBehaviorT&& value) {
+    SetEndTimeBehavior(std::forward<EndTimeBehaviorT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The free trial details of the agreement. This field is present only when the
+   * agreement includes a free trial.</p>
+   */
+  inline const FreeTrialSummary& GetFreeTrialSummary() const { return m_freeTrialSummary; }
+  template <typename FreeTrialSummaryT = FreeTrialSummary>
+  void SetFreeTrialSummary(FreeTrialSummaryT&& value) {
+    m_freeTrialSummaryHasBeenSet = true;
+    m_freeTrialSummary = std::forward<FreeTrialSummaryT>(value);
+  }
+  template <typename FreeTrialSummaryT = FreeTrialSummary>
+  DescribeAgreementResult& WithFreeTrialSummary(FreeTrialSummaryT&& value) {
+    SetFreeTrialSummary(std::forward<FreeTrialSummaryT>(value));
     return *this;
   }
   ///@}
@@ -254,6 +316,12 @@ class DescribeAgreementResult {
 
   AgreementStatus m_status{AgreementStatus::NOT_SET};
 
+  Aws::String m_initialAgreementId;
+
+  EndTimeBehavior m_endTimeBehavior;
+
+  FreeTrialSummary m_freeTrialSummary;
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_agreementIdHasBeenSet = false;
@@ -266,6 +334,9 @@ class DescribeAgreementResult {
   bool m_estimatedChargesHasBeenSet = false;
   bool m_proposalSummaryHasBeenSet = false;
   bool m_statusHasBeenSet = false;
+  bool m_initialAgreementIdHasBeenSet = false;
+  bool m_endTimeBehaviorHasBeenSet = false;
+  bool m_freeTrialSummaryHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

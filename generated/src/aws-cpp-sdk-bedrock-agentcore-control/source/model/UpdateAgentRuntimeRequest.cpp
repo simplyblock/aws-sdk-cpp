@@ -47,6 +47,10 @@ Aws::String UpdateAgentRuntimeRequest::SerializePayload() const {
     payload.WithObject("lifecycleConfiguration", m_lifecycleConfiguration.Jsonize());
   }
 
+  if (m_hooksConfigurationHasBeenSet) {
+    payload.WithObject("hooksConfiguration", m_hooksConfiguration.Jsonize());
+  }
+
   if (m_metadataConfigurationHasBeenSet) {
     payload.WithObject("metadataConfiguration", m_metadataConfiguration.Jsonize());
   }
@@ -67,6 +71,31 @@ Aws::String UpdateAgentRuntimeRequest::SerializePayload() const {
           m_filesystemConfigurations[filesystemConfigurationsIndex].Jsonize());
     }
     payload.WithArray("filesystemConfigurations", std::move(filesystemConfigurationsJsonList));
+  }
+
+  if (m_capacityProviderConfigurationHasBeenSet) {
+    payload.WithObject("capacityProviderConfiguration", m_capacityProviderConfiguration.Jsonize());
+  }
+
+  if (m_platformVersionHasBeenSet) {
+    payload.WithString("platformVersion", m_platformVersion);
+  }
+
+  if (m_allowedPortsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> allowedPortsJsonList(m_allowedPorts.size());
+    for (unsigned allowedPortsIndex = 0; allowedPortsIndex < allowedPortsJsonList.GetLength(); ++allowedPortsIndex) {
+      allowedPortsJsonList[allowedPortsIndex].AsObject(m_allowedPorts[allowedPortsIndex].Jsonize());
+    }
+    payload.WithArray("allowedPorts", std::move(allowedPortsJsonList));
+  }
+
+  if (m_resourceConfigurationsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> resourceConfigurationsJsonList(m_resourceConfigurations.size());
+    for (unsigned resourceConfigurationsIndex = 0; resourceConfigurationsIndex < resourceConfigurationsJsonList.GetLength();
+         ++resourceConfigurationsIndex) {
+      resourceConfigurationsJsonList[resourceConfigurationsIndex].AsObject(m_resourceConfigurations[resourceConfigurationsIndex].Jsonize());
+    }
+    payload.WithArray("resourceConfigurations", std::move(resourceConfigurationsJsonList));
   }
 
   if (m_clientTokenHasBeenSet) {

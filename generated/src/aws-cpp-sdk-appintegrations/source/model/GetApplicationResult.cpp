@@ -54,6 +54,10 @@ GetApplicationResult& GetApplicationResult::operator=(const Aws::AmazonWebServic
     m_lastModifiedTime = jsonValue.GetDouble("LastModifiedTime");
     m_lastModifiedTimeHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("LastModifiedRegion")) {
+    m_lastModifiedRegion = jsonValue.GetString("LastModifiedRegion");
+    m_lastModifiedRegionHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("Tags")) {
     Aws::Map<Aws::String, JsonView> tagsJsonMap = jsonValue.GetObject("Tags").GetAllObjects();
     for (auto& tagsItem : tagsJsonMap) {
@@ -83,6 +87,10 @@ GetApplicationResult& GetApplicationResult::operator=(const Aws::AmazonWebServic
   if (jsonValue.ValueExists("ApplicationType")) {
     m_applicationType = ApplicationTypeMapper::GetApplicationTypeForName(jsonValue.GetString("ApplicationType"));
     m_applicationTypeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AuthConfig")) {
+    m_authConfig = jsonValue.GetObject("AuthConfig");
+    m_authConfigHasBeenSet = true;
   }
 
   const auto& headers = result.GetHeaderValueCollection();

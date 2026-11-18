@@ -348,6 +348,33 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Creates a cloud connector that establishes a connection between Systems
+   * Manager and a third-party cloud environment.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/CreateCloudConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateCloudConnectorOutcome CreateCloudConnector(const Model::CreateCloudConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateCloudConnector that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateCloudConnectorRequestT = Model::CreateCloudConnectorRequest>
+  Model::CreateCloudConnectorOutcomeCallable CreateCloudConnectorCallable(const CreateCloudConnectorRequestT& request) const {
+    return SubmitCallable(&SSMClient::CreateCloudConnector, request);
+  }
+
+  /**
+   * An Async wrapper for CreateCloudConnector that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateCloudConnectorRequestT = Model::CreateCloudConnectorRequest>
+  void CreateCloudConnectorAsync(const CreateCloudConnectorRequestT& request, const CreateCloudConnectorResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SSMClient::CreateCloudConnector, request, handler, context);
+  }
+
+  /**
    * <p>Creates a Amazon Web Services Systems Manager (SSM document). An SSM document
    * defines the actions that Systems Manager performs on your managed nodes. For
    * more information about SSM documents, including information about supported
@@ -619,6 +646,32 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Deletes a cloud connector.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/DeleteCloudConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteCloudConnectorOutcome DeleteCloudConnector(const Model::DeleteCloudConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteCloudConnector that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteCloudConnectorRequestT = Model::DeleteCloudConnectorRequest>
+  Model::DeleteCloudConnectorOutcomeCallable DeleteCloudConnectorCallable(const DeleteCloudConnectorRequestT& request) const {
+    return SubmitCallable(&SSMClient::DeleteCloudConnector, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteCloudConnector that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteCloudConnectorRequestT = Model::DeleteCloudConnectorRequest>
+  void DeleteCloudConnectorAsync(const DeleteCloudConnectorRequestT& request, const DeleteCloudConnectorResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SSMClient::DeleteCloudConnector, request, handler, context);
+  }
+
+  /**
    * <p>Deletes the Amazon Web Services Systems Manager document (SSM document) and
    * all managed node associations to the document.</p> <p>Before you delete the
    * document, we recommend that you use <a>DeleteAssociation</a> to disassociate all
@@ -771,8 +824,13 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
 
   /**
    * <p>Delete a parameter from the system. After deleting a parameter, wait for at
-   * least 30 seconds to create a parameter with the same name.</p><p><h3>See
-   * Also:</h3>   <a
+   * least 30 seconds to create a parameter with the same name.</p>  <p>This
+   * operation is authorized against the <code>ssm:DeleteParameter</code> action.
+   * Denying that action alone doesn't restrict <a>DeleteParameters</a>, which is
+   * authorized against its own action. For more information, see <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-restrict-parameter-access.html">Restricting
+   * access to specific parameters and paths</a> in the <i>Amazon Web Services
+   * Systems Manager User Guide</i>.</p> <p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/DeleteParameter">AWS
    * API Reference</a></p>
    */
@@ -798,7 +856,14 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
 
   /**
    * <p>Delete a list of parameters. After deleting a parameter, wait for at least 30
-   * seconds to create a parameter with the same name.</p><p><h3>See Also:</h3>   <a
+   * seconds to create a parameter with the same name.</p>  <p>This
+   * operation is authorized against the <code>ssm:DeleteParameters</code> action,
+   * not against <code>ssm:DeleteParameter</code>. Denying
+   * <code>ssm:DeleteParameter</code> for a parameter doesn't prevent a principal
+   * from deleting that parameter with this operation. For more information, see <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-restrict-parameter-access.html">Restricting
+   * access to specific parameters and paths</a> in the <i>Amazon Web Services
+   * Systems Manager User Guide</i>.</p> <p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/DeleteParameters">AWS
    * API Reference</a></p>
    */
@@ -891,6 +956,11 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
    * (RAM). For more information about cross-account sharing of parameters, see <a
    * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-shared-parameters.html">Working
    * with shared parameters</a> in the <i>Amazon Web Services Systems Manager User
+   * Guide</i>.</p> </li> <li> <p> <code>Document</code> – Shares the document using
+   * Resource Access Manager (RAM). For more information about sharing documents, see
+   * <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/documents-ssm-sharing.html">Sharing
+   * Systems Manager documents</a> in the <i>Amazon Web Services Systems Manager User
    * Guide</i>.</p> </li> </ul><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/DeleteResourcePolicy">AWS
    * API Reference</a></p>
@@ -914,6 +984,45 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
   void DeleteResourcePolicyAsync(const DeleteResourcePolicyRequestT& request, const DeleteResourcePolicyResponseReceivedHandler& handler,
                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&SSMClient::DeleteResourcePolicy, request, handler, context);
+  }
+
+  /**
+   * <p>Removes the Default Host Management Configuration (DHMC) for an Amazon Web
+   * Services account and Amazon Web Services Region. After you deregister DHMC,
+   * Amazon EC2 instances are no longer automatically managed as managed nodes by
+   * Amazon Web Services Systems Manager.</p> <p>To use this operation, you must have
+   * the following permissions:</p> <ul> <li> <p>You need the
+   * <code>ssm:GetServiceSetting</code> and <code>ssm:ResetServiceSetting</code>
+   * permissions for the
+   * <code>/ssm/managed-instance/default-ec2-instance-management-role</code> service
+   * setting.</p> </li> </ul> <p>If the registered role is service-managed, you also
+   * need the <code>iam:DeleteRole</code> permission so that Amazon Web Services
+   * Systems Manager can remove the role it created.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/DeregisterDefaultHostManagementConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeregisterDefaultHostManagementConfigurationOutcome DeregisterDefaultHostManagementConfiguration(
+      const Model::DeregisterDefaultHostManagementConfigurationRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DeregisterDefaultHostManagementConfiguration that returns a future to the operation so that it can be executed
+   * in parallel to other requests.
+   */
+  template <typename DeregisterDefaultHostManagementConfigurationRequestT = Model::DeregisterDefaultHostManagementConfigurationRequest>
+  Model::DeregisterDefaultHostManagementConfigurationOutcomeCallable DeregisterDefaultHostManagementConfigurationCallable(
+      const DeregisterDefaultHostManagementConfigurationRequestT& request = {}) const {
+    return SubmitCallable(&SSMClient::DeregisterDefaultHostManagementConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for DeregisterDefaultHostManagementConfiguration that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename DeregisterDefaultHostManagementConfigurationRequestT = Model::DeregisterDefaultHostManagementConfigurationRequest>
+  void DeregisterDefaultHostManagementConfigurationAsync(const DeregisterDefaultHostManagementConfigurationResponseReceivedHandler& handler,
+                                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                                         const DeregisterDefaultHostManagementConfigurationRequestT& request = {}) const {
+    return SubmitAsync(&SSMClient::DeregisterDefaultHostManagementConfiguration, request, handler, context);
   }
 
   /**
@@ -2210,6 +2319,33 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Returns detailed information about a cloud connector.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/GetCloudConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetCloudConnectorOutcome GetCloudConnector(const Model::GetCloudConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetCloudConnector that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetCloudConnectorRequestT = Model::GetCloudConnectorRequest>
+  Model::GetCloudConnectorOutcomeCallable GetCloudConnectorCallable(const GetCloudConnectorRequestT& request) const {
+    return SubmitCallable(&SSMClient::GetCloudConnector, request);
+  }
+
+  /**
+   * An Async wrapper for GetCloudConnector that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetCloudConnectorRequestT = Model::GetCloudConnectorRequest>
+  void GetCloudConnectorAsync(const GetCloudConnectorRequestT& request, const GetCloudConnectorResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SSMClient::GetCloudConnector, request, handler, context);
+  }
+
+  /**
    * <p>Returns detailed information about command execution for an invocation or
    * plugin. The Run Command API follows an eventual consistency model, due to the
    * distributed nature of the system supporting the API. This means that the result
@@ -2704,7 +2840,27 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
    * name for a parameter contains spaces between characters, the request fails with
    * a <code>ValidationException</code> error.</p>  <p>To get information about
    * more than one parameter at a time, use the <a>GetParameters</a> operation.</p>
-   * <p><h3>See Also:</h3>   <a
+   *   <p>This operation is authorized against the
+   * <code>ssm:GetParameter</code> action. Denying that action alone doesn't restrict
+   * <a>GetParameters</a>, <a>GetParameterHistory</a>, or <a>GetParametersByPath</a>,
+   * each of which is authorized against its own action. For more information, see <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-retrieval-authorization.html">How
+   * Parameter Store authorizes parameter retrieval</a> in the <i>Amazon Web Services
+   * Systems Manager User Guide</i>.</p>   <p>Parameter Store throughput
+   * defines the number of API transactions per second (TPS) that Systems Manager can
+   * process. This applies to <code>GetParameter</code>, <code>GetParameters</code>,
+   * and <code>PutParameter</code> API calls for your Amazon Web Services account and
+   * Amazon Web Services Region. By default, Parameter Store is configured with a
+   * standard throughput quota suitable for low- to moderate-volume workloads.
+   * Applications that retrieve configuration data infrequently or operate at smaller
+   * scale can use this default setting without additional cost.</p> <p>For
+   * higher-volume workloads, you can enable higher throughput. This increases the
+   * maximum number of supported transactions per second for your account and Region.
+   * Increased throughput supports applications and workloads that need concurrent
+   * access to multiple parameters. If you experience <code>ThrottlingException: Rate
+   * exceeded</code> errors, enable higher throughput. For more information, see <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-throughput.html">Changing
+   * Parameter Store throughput</a>.</p> <p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/GetParameter">AWS
    * API Reference</a></p>
    */
@@ -2737,7 +2893,18 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
    * key alias for the KMS key used to encrypt a parameter, then you must also update
    * the key alias the parameter uses to reference KMS. Otherwise,
    * <code>GetParameterHistory</code> retrieves whatever the original key alias was
-   * referencing.</p> <p><h3>See Also:</h3>   <a
+   * referencing.</p>   <p>This operation is authorized
+   * against the <code>ssm:GetParameterHistory</code> action, not against
+   * <code>ssm:GetParameter</code>. Because parameter history includes every version
+   * of a parameter, including the current one, a principal who is denied
+   * <code>ssm:GetParameter</code>, <code>ssm:GetParameters</code>, and
+   * <code>ssm:GetParametersByPath</code> but allowed
+   * <code>ssm:GetParameterHistory</code> can still read the current value. To
+   * restrict access to a parameter value, deny every action that can return it. For
+   * more information, see <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-retrieval-authorization.html">How
+   * Parameter Store authorizes parameter retrieval</a> in the <i>Amazon Web Services
+   * Systems Manager User Guide</i>.</p> <p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/GetParameterHistory">AWS
    * API Reference</a></p>
    */
@@ -2765,11 +2932,33 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
   /**
    * <p>Get information about one or more parameters by specifying multiple parameter
    * names.</p>  <p>To get information about a single parameter, you can use
-   * the <a>GetParameter</a> operation instead.</p>  <p>Parameter names can't
+   * the <a>GetParameter</a> operation instead.</p>   <p>This
+   * operation is authorized against the <code>ssm:GetParameters</code> action, not
+   * against <code>ssm:GetParameter</code>. Denying <code>ssm:GetParameter</code> for
+   * a parameter doesn't prevent a principal from retrieving that parameter with this
+   * operation. To restrict access to a parameter value, deny every action that can
+   * return it. For more information, see <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-retrieval-authorization.html">How
+   * Parameter Store authorizes parameter retrieval</a> in the <i>Amazon Web Services
+   * Systems Manager User Guide</i>.</p>  <p>Parameter names can't
    * contain spaces. The service removes any spaces specified for the beginning or
    * end of a parameter name. If the specified name for a parameter contains spaces
    * between characters, the request fails with a <code>ValidationException</code>
-   * error.</p><p><h3>See Also:</h3>   <a
+   * error.</p>  <p>Parameter Store throughput defines the number of API
+   * transactions per second (TPS) that Systems Manager can process. This applies to
+   * <code>GetParameter</code>, <code>GetParameters</code>, and
+   * <code>PutParameter</code> API calls for your Amazon Web Services account and
+   * Amazon Web Services Region. By default, Parameter Store is configured with a
+   * standard throughput quota suitable for low- to moderate-volume workloads.
+   * Applications that retrieve configuration data infrequently or operate at smaller
+   * scale can use this default setting without additional cost.</p> <p>For
+   * higher-volume workloads, you can enable higher throughput. This increases the
+   * maximum number of supported transactions per second for your account and Region.
+   * Increased throughput supports applications and workloads that need concurrent
+   * access to multiple parameters. If you experience <code>ThrottlingException: Rate
+   * exceeded</code> errors, enable higher throughput. For more information, see <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-throughput.html">Changing
+   * Parameter Store throughput</a>.</p> <p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/GetParameters">AWS
    * API Reference</a></p>
    */
@@ -2795,18 +2984,31 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
 
   /**
    * <p>Retrieve information about one or more parameters under a specified level in
-   * a hierarchy. </p> <p>Request results are returned on a best-effort basis. If you
-   * specify <code>MaxResults</code> in the request, the response includes
-   * information up to the limit specified. The number of items returned, however,
-   * can be between zero and the value of <code>MaxResults</code>. If the service
-   * reaches an internal limit while processing the results, it stops the operation
-   * and returns the matching values up to that point and a <code>NextToken</code>.
-   * You can specify the <code>NextToken</code> in a subsequent call to get the next
-   * set of results.</p> <p>Parameter names can't contain spaces. The service removes
-   * any spaces specified for the beginning or end of a parameter name. If the
-   * specified name for a parameter contains spaces between characters, the request
-   * fails with a <code>ValidationException</code> error.</p><p><h3>See Also:</h3>
-   * <a
+   * a hierarchy. </p>  <p>This operation is authorized against the
+   * <code>ssm:GetParametersByPath</code> action for the path that you specify in the
+   * request. It isn't authorized against the individual parameters that it returns,
+   * and it isn't authorized against <code>ssm:GetParameter</code>. A principal who
+   * is allowed to call this operation for the path <code>/a</code> with
+   * <code>Recursive</code> set to <code>true</code> receives every parameter under
+   * that path, including <code>/a/b</code>, even if a policy explicitly denies
+   * access to <code>/a/b</code>.</p> <p>To prevent a parameter from being returned
+   * by this operation, deny the <code>ssm:GetParametersByPath</code> action on every
+   * ancestor path that could include the parameter in its results. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-restrict-parameter-access.html">Restricting
+   * access to specific parameters and paths</a> in the <i>Amazon Web Services
+   * Systems Manager User Guide</i>.</p>  <p>Request results are returned
+   * on a best-effort basis. If you specify <code>MaxResults</code> in the request,
+   * the response includes information up to the limit specified. The number of items
+   * returned, however, can be between zero and the value of <code>MaxResults</code>.
+   * If the service reaches an internal limit while processing the results, it stops
+   * the operation and returns the matching values up to that point and a
+   * <code>NextToken</code>. You can specify the <code>NextToken</code> in a
+   * subsequent call to get the next set of results.</p> <p>Parameter names can't
+   * contain spaces. The service removes any spaces specified for the beginning or
+   * end of a parameter name. If the specified name for a parameter contains spaces
+   * between characters, the request fails with a <code>ValidationException</code>
+   * error.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/GetParametersByPath">AWS
    * API Reference</a></p>
    */
@@ -3063,6 +3265,34 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                              const ListAssociationsRequestT& request = {}) const {
     return SubmitAsync(&SSMClient::ListAssociations, request, handler, context);
+  }
+
+  /**
+   * <p>Returns a list of cloud connectors in the current Amazon Web Services account
+   * and Amazon Web Services Region.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ListCloudConnectors">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListCloudConnectorsOutcome ListCloudConnectors(const Model::ListCloudConnectorsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListCloudConnectors that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListCloudConnectorsRequestT = Model::ListCloudConnectorsRequest>
+  Model::ListCloudConnectorsOutcomeCallable ListCloudConnectorsCallable(const ListCloudConnectorsRequestT& request = {}) const {
+    return SubmitCallable(&SSMClient::ListCloudConnectors, request);
+  }
+
+  /**
+   * An Async wrapper for ListCloudConnectors that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListCloudConnectorsRequestT = Model::ListCloudConnectorsRequest>
+  void ListCloudConnectorsAsync(const ListCloudConnectorsResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                const ListCloudConnectorsRequestT& request = {}) const {
+    return SubmitAsync(&SSMClient::ListCloudConnectors, request, handler, context);
   }
 
   /**
@@ -3653,8 +3883,23 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Create or update a parameter in Parameter Store.</p><p><h3>See Also:</h3>
-   * <a href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/PutParameter">AWS
+   * <p>Create or update a parameter in Parameter Store.</p>  <p>Parameter
+   * Store throughput defines the number of API transactions per second (TPS) that
+   * Systems Manager can process. This applies to <code>GetParameter</code>,
+   * <code>GetParameters</code>, and <code>PutParameter</code> API calls for your
+   * Amazon Web Services account and Amazon Web Services Region. By default,
+   * Parameter Store is configured with a standard throughput quota suitable for low-
+   * to moderate-volume workloads. Applications that retrieve configuration data
+   * infrequently or operate at smaller scale can use this default setting without
+   * additional cost.</p> <p>For higher-volume workloads, you can enable higher
+   * throughput. This increases the maximum number of supported transactions per
+   * second for your account and Region. Increased throughput supports applications
+   * and workloads that need concurrent access to multiple parameters. If you
+   * experience <code>ThrottlingException: Rate exceeded</code> errors, enable higher
+   * throughput. For more information, see <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-throughput.html">Changing
+   * Parameter Store throughput</a>.</p> <p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/PutParameter">AWS
    * API Reference</a></p>
    */
   virtual Model::PutParameterOutcome PutParameter(const Model::PutParameterRequest& request) const;
@@ -3713,7 +3958,24 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
    * information, see <a
    * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-shared-parameters.html#share">Sharing
    * a parameter</a> in the <i>Amazon Web Services Systems Manager User Guide</i>
-   * </p>  </li> </ul><p><h3>See Also:</h3>   <a
+   * </p>  </li> <li> <p> <code>Document</code> – Shares the document
+   * using Resource Access Manager (RAM). For more information about sharing
+   * documents, see <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/userguide/documents-ssm-sharing.html">Sharing
+   * Systems Manager documents</a> in the <i>Amazon Web Services Systems Manager User
+   * Guide</i>.</p> </li> </ul>  <p>While you can share a document using
+   * the Systems Manager <code>PutResourcePolicy</code> operation, we recommend using
+   * Resource Access Manager (RAM) instead. Using <code>PutResourcePolicy</code>
+   * requires an extra step. You must promote the document to a standard RAM Resource
+   * Share using the RAM <a
+   * href="https://docs.aws.amazon.com/ram/latest/APIReference/API_PromoteResourceShareCreatedFromPolicy.html">PromoteResourceShareCreatedFromPolicy</a>
+   * API operation. Otherwise, the Systems Manager <a
+   * href="https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListDocuments.html">ListDocuments</a>
+   * API operation won't return the document when filtering for shared documents. The
+   * Amazon Web Services Config <a
+   * href="https://docs.aws.amazon.com/config/latest/APIReference/API_PutRemediationConfigurations.html">PutRemediationConfigurations</a>
+   * API operation also can't use the document.</p> <p><h3>See Also:</h3>
+   * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/PutResourcePolicy">AWS
    * API Reference</a></p>
    */
@@ -3736,6 +3998,50 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
   void PutResourcePolicyAsync(const PutResourcePolicyRequestT& request, const PutResourcePolicyResponseReceivedHandler& handler,
                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&SSMClient::PutResourcePolicy, request, handler, context);
+  }
+
+  /**
+   * <p>Enables Default Host Management Configuration (DHMC) for the current Amazon
+   * Web Services account and Amazon Web Services Region. With DHMC enabled, you
+   * don't need to configure additional resources, such as an instance profile, to
+   * use your Amazon EC2 instances as managed nodes in Amazon Web Services Systems
+   * Manager.</p> <p>To use this operation, you must have the following
+   * permissions:</p> <ul> <li> <p>You need the <code>ssm:GetServiceSetting</code>
+   * and <code>ssm:UpdateServiceSetting</code> permissions for the
+   * <code>/ssm/managed-instance/default-ec2-instance-management-role</code> service
+   * setting.</p> </li> <li> <p>You need the <code>iam:GetRole</code> and
+   * <code>iam:PassRole</code> permissions for the role used for Default Host
+   * Management Configuration.</p> </li> </ul> <p>If <code>PermissionModel</code> is
+   * <code>SERVICE_MANAGED</code>, you also need the <code>iam:CreateRole</code> and
+   * <code>iam:AttachRolePolicy</code> permissions so that Amazon Web Services
+   * Systems Manager can create and configure the role on your behalf.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/RegisterDefaultHostManagementConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::RegisterDefaultHostManagementConfigurationOutcome RegisterDefaultHostManagementConfiguration(
+      const Model::RegisterDefaultHostManagementConfigurationRequest& request) const;
+
+  /**
+   * A Callable wrapper for RegisterDefaultHostManagementConfiguration that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename RegisterDefaultHostManagementConfigurationRequestT = Model::RegisterDefaultHostManagementConfigurationRequest>
+  Model::RegisterDefaultHostManagementConfigurationOutcomeCallable RegisterDefaultHostManagementConfigurationCallable(
+      const RegisterDefaultHostManagementConfigurationRequestT& request) const {
+    return SubmitCallable(&SSMClient::RegisterDefaultHostManagementConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for RegisterDefaultHostManagementConfiguration that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename RegisterDefaultHostManagementConfigurationRequestT = Model::RegisterDefaultHostManagementConfigurationRequest>
+  void RegisterDefaultHostManagementConfigurationAsync(
+      const RegisterDefaultHostManagementConfigurationRequestT& request,
+      const RegisterDefaultHostManagementConfigurationResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SSMClient::RegisterDefaultHostManagementConfiguration, request, handler, context);
   }
 
   /**
@@ -4352,6 +4658,33 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates an existing cloud connector with new configuration
+   * details.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/UpdateCloudConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateCloudConnectorOutcome UpdateCloudConnector(const Model::UpdateCloudConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateCloudConnector that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateCloudConnectorRequestT = Model::UpdateCloudConnectorRequest>
+  Model::UpdateCloudConnectorOutcomeCallable UpdateCloudConnectorCallable(const UpdateCloudConnectorRequestT& request) const {
+    return SubmitCallable(&SSMClient::UpdateCloudConnector, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateCloudConnector that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateCloudConnectorRequestT = Model::UpdateCloudConnectorRequest>
+  void UpdateCloudConnectorAsync(const UpdateCloudConnectorRequestT& request, const UpdateCloudConnectorResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SSMClient::UpdateCloudConnector, request, handler, context);
+  }
+
+  /**
    * <p>Updates one or more values for an SSM document.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/UpdateDocument">AWS
    * API Reference</a></p>
@@ -4765,6 +5098,34 @@ class AWS_SSM_API SSMClient : public Aws::Client::AWSJsonClient,
   void UpdateServiceSettingAsync(const UpdateServiceSettingRequestT& request, const UpdateServiceSettingResponseReceivedHandler& handler,
                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&SSMClient::UpdateServiceSetting, request, handler, context);
+  }
+
+  /**
+   * <p>Validates the configuration and connectivity of a cloud
+   * connector.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ValidateCloudConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ValidateCloudConnectorOutcome ValidateCloudConnector(const Model::ValidateCloudConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for ValidateCloudConnector that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ValidateCloudConnectorRequestT = Model::ValidateCloudConnectorRequest>
+  Model::ValidateCloudConnectorOutcomeCallable ValidateCloudConnectorCallable(const ValidateCloudConnectorRequestT& request) const {
+    return SubmitCallable(&SSMClient::ValidateCloudConnector, request);
+  }
+
+  /**
+   * An Async wrapper for ValidateCloudConnector that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ValidateCloudConnectorRequestT = Model::ValidateCloudConnectorRequest>
+  void ValidateCloudConnectorAsync(const ValidateCloudConnectorRequestT& request,
+                                   const ValidateCloudConnectorResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&SSMClient::ValidateCloudConnector, request, handler, context);
   }
 
   virtual void OverrideEndpoint(const Aws::String& endpoint);

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-location "C++ SDK for the AWS location service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-location "C++ SDK for Amazon Location Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_LOCATION_HEADERS
     "include/aws/location/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LOCATION_HEADERS
 
 file(GLOB AWS_LOCATION_MODEL_HEADERS
     "include/aws/location/model/*.h"
+)
+
+file(GLOB AWS_LOCATION_INTERNAL_HEADERS
+    "include/aws/location/internal/*.h"
 )
 
 file(GLOB AWS_LOCATION_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LOCATION_MODEL_SOURCE
 
 file(GLOB LOCATION_UNIFIED_HEADERS
     ${AWS_LOCATION_HEADERS}
+    ${AWS_LOCATION_INTERNAL_HEADERS}
     ${AWS_LOCATION_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\location" FILES ${AWS_LOCATION_HEADERS})
+        source_group("Header Files\\aws\\location\\internal" FILES ${AWS_LOCATION_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\location\\model" FILES ${AWS_LOCATION_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LOCATION_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LOCATION_MODEL_SOURCE})

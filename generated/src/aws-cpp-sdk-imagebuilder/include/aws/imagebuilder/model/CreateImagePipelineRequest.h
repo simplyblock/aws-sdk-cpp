@@ -39,7 +39,10 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The name of the image pipeline.</p>
+   * <p>The name of the image pipeline. Pipeline names must be unique to your account
+   * in each Amazon Web Services Region. Image Builder generates the pipeline ARN
+   * from a normalized form of the name, so names that differ only in case, spaces,
+   * or underscores count as the same name.</p>
    */
   inline const Aws::String& GetName() const { return m_name; }
   inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
@@ -75,8 +78,9 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The Amazon Resource Name (ARN) of the image recipe that will be used to
-   * configure images created by this image pipeline.</p>
+   * <p>The Amazon Resource Name (ARN) of the image recipe that configures images
+   * created by this image pipeline. You must specify either this property or
+   * <code>containerRecipeArn</code>, but not both.</p>
    */
   inline const Aws::String& GetImageRecipeArn() const { return m_imageRecipeArn; }
   inline bool ImageRecipeArnHasBeenSet() const { return m_imageRecipeArnHasBeenSet; }
@@ -95,7 +99,8 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
   ///@{
   /**
    * <p>The Amazon Resource Name (ARN) of the container recipe that is used to
-   * configure images created by this container pipeline.</p>
+   * configure images created by this container pipeline. You must specify either
+   * this property or <code>imageRecipeArn</code>, but not both.</p>
    */
   inline const Aws::String& GetContainerRecipeArn() const { return m_containerRecipeArn; }
   inline bool ContainerRecipeArnHasBeenSet() const { return m_containerRecipeArnHasBeenSet; }
@@ -113,8 +118,8 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The Amazon Resource Name (ARN) of the infrastructure configuration that will
-   * be used to build images created by this image pipeline.</p>
+   * <p>The Amazon Resource Name (ARN) of the infrastructure configuration that
+   * builds images created by this image pipeline.</p>
    */
   inline const Aws::String& GetInfrastructureConfigurationArn() const { return m_infrastructureConfigurationArn; }
   inline bool InfrastructureConfigurationArnHasBeenSet() const { return m_infrastructureConfigurationArnHasBeenSet; }
@@ -132,8 +137,8 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The Amazon Resource Name (ARN) of the distribution configuration that will be
-   * used to configure and distribute images created by this image pipeline.</p>
+   * <p>The Amazon Resource Name (ARN) of the distribution configuration that
+   * configures and distributes images created by this image pipeline.</p>
    */
   inline const Aws::String& GetDistributionConfigurationArn() const { return m_distributionConfigurationArn; }
   inline bool DistributionConfigurationArnHasBeenSet() const { return m_distributionConfigurationArnHasBeenSet; }
@@ -151,7 +156,9 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The image test configuration of the image pipeline.</p>
+   * <p>Specifies the test settings that Image Builder applies to images that this
+   * pipeline creates. If you don't provide test settings, Image Builder stores a
+   * default configuration with image tests enabled.</p>
    */
   inline const ImageTestsConfiguration& GetImageTestsConfiguration() const { return m_imageTestsConfiguration; }
   inline bool ImageTestsConfigurationHasBeenSet() const { return m_imageTestsConfigurationHasBeenSet; }
@@ -169,10 +176,9 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Collects additional information about the image being created, including the
-   * operating system (OS) version and package list. This information is used to
-   * enhance the overall experience of using EC2 Image Builder. Enabled by
-   * default.</p>
+   * <p>Specifies whether to collect additional information about the image being
+   * created, including the operating system (OS) version and package list. Defaults
+   * to <code>true</code>.</p>
    */
   inline bool GetEnhancedImageMetadataEnabled() const { return m_enhancedImageMetadataEnabled; }
   inline bool EnhancedImageMetadataEnabledHasBeenSet() const { return m_enhancedImageMetadataEnabledHasBeenSet; }
@@ -188,7 +194,8 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The schedule of the image pipeline.</p>
+   * <p>The schedule of the image pipeline. If you don't provide a schedule, the
+   * pipeline runs only when you call <a>StartImagePipelineExecution</a>.</p>
    */
   inline const Schedule& GetSchedule() const { return m_schedule; }
   inline bool ScheduleHasBeenSet() const { return m_scheduleHasBeenSet; }
@@ -206,7 +213,9 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The status of the image pipeline.</p>
+   * <p>The status of the image pipeline. If you don't specify a status, it defaults
+   * to <code>ENABLED</code>. A disabled pipeline doesn't run on its schedule, but
+   * you can still start builds manually.</p>
    */
   inline PipelineStatus GetStatus() const { return m_status; }
   inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
@@ -246,7 +255,10 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The tags to be applied to the images produced by this pipeline.</p>
+   * <p>The tags that Image Builder applies to the Image Builder image resource that
+   * this pipeline's scheduled executions create. These tags don't apply to the
+   * output AMI. To tag output AMIs, use <code>amiTags</code> in the pipeline's
+   * distribution configuration.</p>
    */
   inline const Aws::Map<Aws::String, Aws::String>& GetImageTags() const { return m_imageTags; }
   inline bool ImageTagsHasBeenSet() const { return m_imageTagsHasBeenSet; }
@@ -270,8 +282,10 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Unique, case-sensitive identifier you provide to ensure idempotency of the
-   * request. For more information, see <a
+   * <p>A unique, case-sensitive identifier you provide to ensure that the operation
+   * runs no more than one time. If you retry a request with the same client token,
+   * Image Builder returns the original response without running the operation again.
+   * For more information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
    * idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>
    */
@@ -291,7 +305,8 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Contains settings for vulnerability scans.</p>
+   * <p>The settings that determine whether and how Amazon Inspector scans the images
+   * that this pipeline creates.</p>
    */
   inline const ImageScanningConfiguration& GetImageScanningConfiguration() const { return m_imageScanningConfiguration; }
   inline bool ImageScanningConfigurationHasBeenSet() const { return m_imageScanningConfigurationHasBeenSet; }
@@ -309,7 +324,11 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Contains an array of workflow configuration objects.</p>
+   * <p>The array of workflow configuration objects for builds that this pipeline
+   * starts. If you specify workflows, they replace the default workflows that Image
+   * Builder otherwise runs for the pipeline's builds. For example, if your list
+   * doesn't include a test workflow, the pipeline's builds don't run one. You must
+   * also specify <code>executionRole</code> when you provide workflows.</p>
    */
   inline const Aws::Vector<WorkflowConfiguration>& GetWorkflows() const { return m_workflows; }
   inline bool WorkflowsHasBeenSet() const { return m_workflowsHasBeenSet; }
@@ -372,6 +391,24 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Validates the required permissions and request parameters without performing
+   * the operation. If validation succeeds, the operation returns a
+   * <code>DryRunOperationException</code> error response.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline CreateImagePipelineRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_name;
 
@@ -406,6 +443,8 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
   Aws::String m_executionRole;
 
   PipelineLoggingConfiguration m_loggingConfiguration;
+
+  bool m_dryRun{false};
   bool m_nameHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_imageRecipeArnHasBeenSet = false;
@@ -423,6 +462,7 @@ class CreateImagePipelineRequest : public ImagebuilderRequest {
   bool m_workflowsHasBeenSet = false;
   bool m_executionRoleHasBeenSet = false;
   bool m_loggingConfigurationHasBeenSet = false;
+  bool m_dryRunHasBeenSet = false;
 };
 
 }  // namespace Model

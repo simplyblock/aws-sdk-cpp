@@ -5,16 +5,16 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/health/Health_EXPORTS.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace Health {
 namespace Model {
@@ -29,9 +29,9 @@ namespace Model {
 class OrganizationEventDetailsErrorItem {
  public:
   AWS_HEALTH_API OrganizationEventDetailsErrorItem() = default;
-  AWS_HEALTH_API OrganizationEventDetailsErrorItem(Aws::Utils::Json::JsonView jsonValue);
-  AWS_HEALTH_API OrganizationEventDetailsErrorItem& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_HEALTH_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_HEALTH_API OrganizationEventDetailsErrorItem(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_HEALTH_API OrganizationEventDetailsErrorItem& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_HEALTH_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -106,8 +106,8 @@ class OrganizationEventDetailsErrorItem {
    * must enter a null value for the Amazon Web Services account ID in the
    * request.</p> </li> <li> <p>Your Amazon Web Services account doesn't include the
    * Amazon Web Services Support plan required to use the Health API. You must have
-   * either a Business, Enterprise On-Ramp, or Enterprise Support plan.</p> </li>
-   * </ul>
+   * either a Amazon Web Services Business Support+, Amazon Web Services Enterprise
+   * Support, or Amazon Web Services Unified Operations plan.</p> </li> </ul>
    */
   inline const Aws::String& GetErrorMessage() const { return m_errorMessage; }
   inline bool ErrorMessageHasBeenSet() const { return m_errorMessageHasBeenSet; }

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ivs "C++ SDK for the AWS ivs service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ivs "C++ SDK for Amazon Interactive Video Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_IVS_HEADERS
     "include/aws/ivs/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_IVS_HEADERS
 
 file(GLOB AWS_IVS_MODEL_HEADERS
     "include/aws/ivs/model/*.h"
+)
+
+file(GLOB AWS_IVS_INTERNAL_HEADERS
+    "include/aws/ivs/internal/*.h"
 )
 
 file(GLOB AWS_IVS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_IVS_MODEL_SOURCE
 
 file(GLOB IVS_UNIFIED_HEADERS
     ${AWS_IVS_HEADERS}
+    ${AWS_IVS_INTERNAL_HEADERS}
     ${AWS_IVS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ivs" FILES ${AWS_IVS_HEADERS})
+        source_group("Header Files\\aws\\ivs\\internal" FILES ${AWS_IVS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ivs\\model" FILES ${AWS_IVS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_IVS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_IVS_MODEL_SOURCE})

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-bedrock-data-automation-runtime "C++ SDK for the AWS bedrock-data-automation-runtime service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-bedrock-data-automation-runtime "C++ SDK for Runtime for Amazon Bedrock Data Automation" aws-cpp-sdk-core)
 
 file(GLOB AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_HEADERS
     "include/aws/bedrock-data-automation-runtime/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_HEADERS
 
 file(GLOB AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_MODEL_HEADERS
     "include/aws/bedrock-data-automation-runtime/model/*.h"
+)
+
+file(GLOB AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_INTERNAL_HEADERS
+    "include/aws/bedrock-data-automation-runtime/internal/*.h"
 )
 
 file(GLOB AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_MODEL_SOURCE
 
 file(GLOB BEDROCK-DATA-AUTOMATION-RUNTIME_UNIFIED_HEADERS
     ${AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_HEADERS}
+    ${AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_INTERNAL_HEADERS}
     ${AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\bedrock-data-automation-runtime" FILES ${AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_HEADERS})
+        source_group("Header Files\\aws\\bedrock-data-automation-runtime\\internal" FILES ${AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\bedrock-data-automation-runtime\\model" FILES ${AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_BEDROCK-DATA-AUTOMATION-RUNTIME_MODEL_SOURCE})

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/kinesisanalytics/KinesisAnalyticsEndpointRules.h>
 #include <aws/kinesisanalytics/KinesisAnalytics_EXPORTS.h>
 
 namespace Aws {
 namespace KinesisAnalytics {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using KinesisAnalyticsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using KinesisAnalyticsEndpointProviderBase =
     EndpointProviderBase<KinesisAnalyticsClientConfiguration, KinesisAnalyticsBuiltInParameters, KinesisAnalyticsClientContextParameters>;
 
 using KinesisAnalyticsDefaultEpProviderBase =
-    DefaultEndpointProvider<KinesisAnalyticsClientConfiguration, KinesisAnalyticsBuiltInParameters,
-                            KinesisAnalyticsClientContextParameters>;
+    BDDEndpointProvider<KinesisAnalyticsClientConfiguration, KinesisAnalyticsBuiltInParameters, KinesisAnalyticsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_KINESISANALYTICS_API KinesisAnalyticsEndpointProvider : public Kinesis
  public:
   using KinesisAnalyticsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  KinesisAnalyticsEndpointProvider()
-      : KinesisAnalyticsDefaultEpProviderBase(Aws::KinesisAnalytics::KinesisAnalyticsEndpointRules::GetRulesBlob(),
-                                              Aws::KinesisAnalytics::KinesisAnalyticsEndpointRules::RulesBlobSize) {}
+  KinesisAnalyticsEndpointProvider();
 
   ~KinesisAnalyticsEndpointProvider() {}
 };

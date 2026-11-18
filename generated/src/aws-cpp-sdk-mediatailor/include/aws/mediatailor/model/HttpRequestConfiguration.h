@@ -7,6 +7,7 @@
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediatailor/MediaTailor_EXPORTS.h>
+#include <aws/mediatailor/model/HttpRequestCacheConfiguration.h>
 #include <aws/mediatailor/model/MethodType.h>
 #include <aws/mediatailor/model/RuntimeType.h>
 
@@ -23,7 +24,11 @@ namespace MediaTailor {
 namespace Model {
 
 /**
- * <p>-- Function Configuration DataStructure</p><p><h3>See Also:</h3>   <a
+ * <p>The configuration for an <code>HTTP_REQUEST</code> function. Specifies the
+ * HTTP method, URL, headers, body, timeout, and output expressions for the
+ * request. For more information, see <a
+ * href="https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-types-http-request.html">HTTP_REQUEST</a>
+ * in the <i>MediaTailor User Guide</i>.</p><p><h3>See Also:</h3>   <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/HttpRequestConfiguration">AWS
  * API Reference</a></p>
  */
@@ -182,6 +187,27 @@ class HttpRequestConfiguration {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The optional response-caching configuration for the function. When present,
+   * MediaTailor caches the responses that the function receives from the HTTP
+   * endpoint, within the time-to-live (TTL) bounds that you specify. Omit this
+   * configuration to disable response caching.</p>
+   */
+  inline const HttpRequestCacheConfiguration& GetCache() const { return m_cache; }
+  inline bool CacheHasBeenSet() const { return m_cacheHasBeenSet; }
+  template <typename CacheT = HttpRequestCacheConfiguration>
+  void SetCache(CacheT&& value) {
+    m_cacheHasBeenSet = true;
+    m_cache = std::forward<CacheT>(value);
+  }
+  template <typename CacheT = HttpRequestCacheConfiguration>
+  HttpRequestConfiguration& WithCache(CacheT&& value) {
+    SetCache(std::forward<CacheT>(value));
+    return *this;
+  }
+  ///@}
  private:
   RuntimeType m_runtime{RuntimeType::NOT_SET};
 
@@ -196,6 +222,8 @@ class HttpRequestConfiguration {
   Aws::String m_body;
 
   Aws::Map<Aws::String, Aws::String> m_headers;
+
+  HttpRequestCacheConfiguration m_cache;
   bool m_runtimeHasBeenSet = false;
   bool m_outputHasBeenSet = false;
   bool m_methodTypeHasBeenSet = false;
@@ -203,6 +231,7 @@ class HttpRequestConfiguration {
   bool m_urlHasBeenSet = false;
   bool m_bodyHasBeenSet = false;
   bool m_headersHasBeenSet = false;
+  bool m_cacheHasBeenSet = false;
 };
 
 }  // namespace Model

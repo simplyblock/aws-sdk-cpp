@@ -4,8 +4,10 @@
  */
 
 #pragma once
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/health/Health_EXPORTS.h>
 #include <aws/health/model/DateTimeRange.h>
 #include <aws/health/model/EventActionability.h>
@@ -17,10 +19,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace Health {
 namespace Model {
@@ -35,9 +36,9 @@ namespace Model {
 class OrganizationEventFilter {
  public:
   AWS_HEALTH_API OrganizationEventFilter() = default;
-  AWS_HEALTH_API OrganizationEventFilter(Aws::Utils::Json::JsonView jsonValue);
-  AWS_HEALTH_API OrganizationEventFilter& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_HEALTH_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_HEALTH_API OrganizationEventFilter(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_HEALTH_API OrganizationEventFilter& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_HEALTH_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -334,6 +335,34 @@ class OrganizationEventFilter {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>A map of tag keys to lists of tag values. A tag matches when its key is in
+   * the map and its value is one of the values listed for that key. Matching is case
+   * sensitive, and the filter matches when at least one key in the map matches.</p>
+   * <p>An event is returned when one of its affected accounts, or one of the
+   * entities of those accounts, has tags that match.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::Vector<Aws::String>>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::Vector<Aws::String>>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::Vector<Aws::String>>>
+  OrganizationEventFilter& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::Vector<Aws::String>>
+  OrganizationEventFilter& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::Vector<EventActionability> m_actionabilities;
 
@@ -360,6 +389,8 @@ class OrganizationEventFilter {
   Aws::Vector<EventStatusCode> m_eventStatusCodes;
 
   Aws::Vector<EventPersona> m_personas;
+
+  Aws::Map<Aws::String, Aws::Vector<Aws::String>> m_tags;
   bool m_actionabilitiesHasBeenSet = false;
   bool m_eventTypeCodesHasBeenSet = false;
   bool m_awsAccountIdsHasBeenSet = false;
@@ -373,6 +404,7 @@ class OrganizationEventFilter {
   bool m_eventTypeCategoriesHasBeenSet = false;
   bool m_eventStatusCodesHasBeenSet = false;
   bool m_personasHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
 };
 
 }  // namespace Model

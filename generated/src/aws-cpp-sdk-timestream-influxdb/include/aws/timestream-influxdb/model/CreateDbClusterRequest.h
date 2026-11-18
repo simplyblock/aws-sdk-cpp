@@ -10,8 +10,10 @@
 #include <aws/timestream-influxdb/TimestreamInfluxDBRequest.h>
 #include <aws/timestream-influxdb/TimestreamInfluxDB_EXPORTS.h>
 #include <aws/timestream-influxdb/model/ClusterDeploymentType.h>
+#include <aws/timestream-influxdb/model/DbBackupConfiguration.h>
 #include <aws/timestream-influxdb/model/DbInstanceType.h>
 #include <aws/timestream-influxdb/model/DbStorageType.h>
+#include <aws/timestream-influxdb/model/DeploymentConfiguration.h>
 #include <aws/timestream-influxdb/model/FailoverMode.h>
 #include <aws/timestream-influxdb/model/LogDeliveryConfiguration.h>
 #include <aws/timestream-influxdb/model/MaintenanceSchedule.h>
@@ -186,6 +188,8 @@ class CreateDbClusterRequest : public TimestreamInfluxDBRequest {
   ///@{
   /**
    * <p>The Timestream for InfluxDB DB instance type to run InfluxDB on.</p>
+   * <p>Optional when you define the cluster topology with deploymentConfiguration,
+   * because the instance type is then specified per node group.</p>
    */
   inline DbInstanceType GetDbInstanceType() const { return m_dbInstanceType; }
   inline bool DbInstanceTypeHasBeenSet() const { return m_dbInstanceTypeHasBeenSet; }
@@ -340,6 +344,28 @@ class CreateDbClusterRequest : public TimestreamInfluxDBRequest {
 
   ///@{
   /**
+   * <p>The compute topology for the cluster, defined as a set of node groups. Use
+   * deploymentConfiguration to allocate compute per function: ingest, query,
+   * compaction, and processing. A deployment configuration becomes the source of
+   * truth for the cluster's topology. Timestream for InfluxDB then ignores any
+   * node-count parameters in the associated DB parameter group.</p>
+   */
+  inline const DeploymentConfiguration& GetDeploymentConfiguration() const { return m_deploymentConfiguration; }
+  inline bool DeploymentConfigurationHasBeenSet() const { return m_deploymentConfigurationHasBeenSet; }
+  template <typename DeploymentConfigurationT = DeploymentConfiguration>
+  void SetDeploymentConfiguration(DeploymentConfigurationT&& value) {
+    m_deploymentConfigurationHasBeenSet = true;
+    m_deploymentConfiguration = std::forward<DeploymentConfigurationT>(value);
+  }
+  template <typename DeploymentConfigurationT = DeploymentConfiguration>
+  CreateDbClusterRequest& WithDeploymentConfiguration(DeploymentConfigurationT&& value) {
+    SetDeploymentConfiguration(std::forward<DeploymentConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>Specifies the behavior of failure recovery when the primary node of the
    * cluster fails.</p>
    */
@@ -388,6 +414,50 @@ class CreateDbClusterRequest : public TimestreamInfluxDBRequest {
   template <typename MaintenanceScheduleT = MaintenanceSchedule>
   CreateDbClusterRequest& WithMaintenanceSchedule(MaintenanceScheduleT&& value) {
     SetMaintenanceSchedule(std::forward<MaintenanceScheduleT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>A list of backup configurations to enable automated backups for the DB
+   * cluster.</p>
+   */
+  inline const Aws::Vector<DbBackupConfiguration>& GetDbBackupConfigurations() const { return m_dbBackupConfigurations; }
+  inline bool DbBackupConfigurationsHasBeenSet() const { return m_dbBackupConfigurationsHasBeenSet; }
+  template <typename DbBackupConfigurationsT = Aws::Vector<DbBackupConfiguration>>
+  void SetDbBackupConfigurations(DbBackupConfigurationsT&& value) {
+    m_dbBackupConfigurationsHasBeenSet = true;
+    m_dbBackupConfigurations = std::forward<DbBackupConfigurationsT>(value);
+  }
+  template <typename DbBackupConfigurationsT = Aws::Vector<DbBackupConfiguration>>
+  CreateDbClusterRequest& WithDbBackupConfigurations(DbBackupConfigurationsT&& value) {
+    SetDbBackupConfigurations(std::forward<DbBackupConfigurationsT>(value));
+    return *this;
+  }
+  template <typename DbBackupConfigurationsT = DbBackupConfiguration>
+  CreateDbClusterRequest& AddDbBackupConfigurations(DbBackupConfigurationsT&& value) {
+    m_dbBackupConfigurationsHasBeenSet = true;
+    m_dbBackupConfigurations.emplace_back(std::forward<DbBackupConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Amazon Web Services KMS key identifier to use for encryption of the DB
+   * cluster. Can be a key ID, key ARN, alias name, or alias ARN.</p>
+   */
+  inline const Aws::String& GetKmsKeyId() const { return m_kmsKeyId; }
+  inline bool KmsKeyIdHasBeenSet() const { return m_kmsKeyIdHasBeenSet; }
+  template <typename KmsKeyIdT = Aws::String>
+  void SetKmsKeyId(KmsKeyIdT&& value) {
+    m_kmsKeyIdHasBeenSet = true;
+    m_kmsKeyId = std::forward<KmsKeyIdT>(value);
+  }
+  template <typename KmsKeyIdT = Aws::String>
+  CreateDbClusterRequest& WithKmsKeyId(KmsKeyIdT&& value) {
+    SetKmsKeyId(std::forward<KmsKeyIdT>(value));
     return *this;
   }
   ///@}
@@ -446,11 +516,17 @@ class CreateDbClusterRequest : public TimestreamInfluxDBRequest {
 
   ClusterDeploymentType m_deploymentType{ClusterDeploymentType::NOT_SET};
 
+  DeploymentConfiguration m_deploymentConfiguration;
+
   FailoverMode m_failoverMode{FailoverMode::NOT_SET};
 
   LogDeliveryConfiguration m_logDeliveryConfiguration;
 
   MaintenanceSchedule m_maintenanceSchedule;
+
+  Aws::Vector<DbBackupConfiguration> m_dbBackupConfigurations;
+
+  Aws::String m_kmsKeyId;
 
   Aws::Map<Aws::String, Aws::String> m_tags;
   bool m_nameHasBeenSet = false;
@@ -468,9 +544,12 @@ class CreateDbClusterRequest : public TimestreamInfluxDBRequest {
   bool m_vpcSubnetIdsHasBeenSet = false;
   bool m_vpcSecurityGroupIdsHasBeenSet = false;
   bool m_deploymentTypeHasBeenSet = false;
+  bool m_deploymentConfigurationHasBeenSet = false;
   bool m_failoverModeHasBeenSet = false;
   bool m_logDeliveryConfigurationHasBeenSet = false;
   bool m_maintenanceScheduleHasBeenSet = false;
+  bool m_dbBackupConfigurationsHasBeenSet = false;
+  bool m_kmsKeyIdHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
 };
 

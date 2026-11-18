@@ -26,6 +26,7 @@
 #include <aws/kms/model/CreateCustomKeyStoreRequest.h>
 #include <aws/kms/model/CreateGrantRequest.h>
 #include <aws/kms/model/CreateKeyRequest.h>
+#include <aws/kms/model/DecapsulateRequest.h>
 #include <aws/kms/model/DecryptRequest.h>
 #include <aws/kms/model/DeleteAliasRequest.h>
 #include <aws/kms/model/DeleteCustomKeyStoreRequest.h>
@@ -38,6 +39,7 @@
 #include <aws/kms/model/DisconnectCustomKeyStoreRequest.h>
 #include <aws/kms/model/EnableKeyRequest.h>
 #include <aws/kms/model/EnableKeyRotationRequest.h>
+#include <aws/kms/model/EncapsulateRequest.h>
 #include <aws/kms/model/EncryptRequest.h>
 #include <aws/kms/model/GenerateDataKeyPairRequest.h>
 #include <aws/kms/model/GenerateDataKeyPairWithoutPlaintextRequest.h>
@@ -207,7 +209,8 @@ KMSClient::InvokeOperationOutcome KMSClient::InvokeServiceOperation(const Amazon
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -219,7 +222,7 @@ KMSClient::InvokeOperationOutcome KMSClient::InvokeServiceOperation(const Amazon
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -254,6 +257,11 @@ CreateGrantOutcome KMSClient::CreateGrant(const CreateGrantRequest& request) con
 CreateKeyOutcome KMSClient::CreateKey(const CreateKeyRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateKeyOutcome(result.GetResultWithOwnership()) : CreateKeyOutcome(std::move(result.GetError()));
+}
+
+DecapsulateOutcome KMSClient::Decapsulate(const DecapsulateRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DecapsulateOutcome(result.GetResultWithOwnership()) : DecapsulateOutcome(std::move(result.GetError()));
 }
 
 DecryptOutcome KMSClient::Decrypt(const DecryptRequest& request) const {
@@ -321,6 +329,11 @@ EnableKeyRotationOutcome KMSClient::EnableKeyRotation(const EnableKeyRotationReq
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? EnableKeyRotationOutcome(result.GetResultWithOwnership())
                             : EnableKeyRotationOutcome(std::move(result.GetError()));
+}
+
+EncapsulateOutcome KMSClient::Encapsulate(const EncapsulateRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? EncapsulateOutcome(result.GetResultWithOwnership()) : EncapsulateOutcome(std::move(result.GetError()));
 }
 
 EncryptOutcome KMSClient::Encrypt(const EncryptRequest& request) const {

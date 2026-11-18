@@ -45,7 +45,9 @@ enum class HealthLakeErrors {
   ///////////////////////////////////////////////////////////////////////////////////////////
 
   CONFLICT = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
-  INTERNAL_SERVER
+  FAILED_DEPENDENCY,
+  INTERNAL_SERVER,
+  SERVICE_QUOTA_EXCEEDED
 };
 
 class AWS_HEALTHLAKE_API HealthLakeError : public Aws::Client::AWSError<HealthLakeErrors> {

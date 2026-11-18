@@ -5,16 +5,16 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/route53domains/Route53Domains_EXPORTS.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace Route53Domains {
 namespace Model {
@@ -31,9 +31,9 @@ namespace Model {
 class DnssecKey {
  public:
   AWS_ROUTE53DOMAINS_API DnssecKey() = default;
-  AWS_ROUTE53DOMAINS_API DnssecKey(Aws::Utils::Json::JsonView jsonValue);
-  AWS_ROUTE53DOMAINS_API DnssecKey& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_ROUTE53DOMAINS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_ROUTE53DOMAINS_API DnssecKey(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_ROUTE53DOMAINS_API DnssecKey& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_ROUTE53DOMAINS_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -44,53 +44,14 @@ class DnssecKey {
    * href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-configuring-dnssec-enable-signing.html">Enabling
    * DNSSEC signing and establishing a chain of trust</a>.</p>
    */
-  inline int GetAlgorithm() const { return m_algorithm; }
+  inline int64_t GetAlgorithm() const { return m_algorithm; }
   inline bool AlgorithmHasBeenSet() const { return m_algorithmHasBeenSet; }
-  inline void SetAlgorithm(int value) {
+  inline void SetAlgorithm(int64_t value) {
     m_algorithmHasBeenSet = true;
     m_algorithm = value;
   }
-  inline DnssecKey& WithAlgorithm(int value) {
+  inline DnssecKey& WithAlgorithm(int64_t value) {
     SetAlgorithm(value);
-    return *this;
-  }
-  ///@}
-
-  ///@{
-  /**
-   * <p>Defines the type of key. It can be either a KSK (key-signing-key, value 257)
-   * or ZSK (zone-signing-key, value 256). Using KSK is always encouraged. Only use
-   * ZSK if your DNS provider isn't Route 53 and you don’t have KSK available.</p>
-   * <p>If you have KSK and ZSK keys, always use KSK to create a delegations signer
-   * (DS) record. If you have ZSK keys only – use ZSK to create a DS record.</p>
-   */
-  inline int GetFlags() const { return m_flags; }
-  inline bool FlagsHasBeenSet() const { return m_flagsHasBeenSet; }
-  inline void SetFlags(int value) {
-    m_flagsHasBeenSet = true;
-    m_flags = value;
-  }
-  inline DnssecKey& WithFlags(int value) {
-    SetFlags(value);
-    return *this;
-  }
-  ///@}
-
-  ///@{
-  /**
-   * <p>The base64-encoded public key part of the key pair that is passed to the
-   * registry .</p>
-   */
-  inline const Aws::String& GetPublicKey() const { return m_publicKey; }
-  inline bool PublicKeyHasBeenSet() const { return m_publicKeyHasBeenSet; }
-  template <typename PublicKeyT = Aws::String>
-  void SetPublicKey(PublicKeyT&& value) {
-    m_publicKeyHasBeenSet = true;
-    m_publicKey = std::forward<PublicKeyT>(value);
-  }
-  template <typename PublicKeyT = Aws::String>
-  DnssecKey& WithPublicKey(PublicKeyT&& value) {
-    SetPublicKey(std::forward<PublicKeyT>(value));
     return *this;
   }
   ///@}
@@ -103,13 +64,13 @@ class DnssecKey {
    * for DNSSEC Delegation Signer (DS) Resource Record (RR) Type Digest Algorithms.
    * </p>
    */
-  inline int GetDigestType() const { return m_digestType; }
+  inline int64_t GetDigestType() const { return m_digestType; }
   inline bool DigestTypeHasBeenSet() const { return m_digestTypeHasBeenSet; }
-  inline void SetDigestType(int value) {
+  inline void SetDigestType(int64_t value) {
     m_digestTypeHasBeenSet = true;
     m_digestType = value;
   }
-  inline DnssecKey& WithDigestType(int value) {
+  inline DnssecKey& WithDigestType(int64_t value) {
     SetDigestType(value);
     return *this;
   }
@@ -140,13 +101,13 @@ class DnssecKey {
    * <p> A numeric identification of the DNSKEY record referred to by this DS record.
    * </p>
    */
-  inline int GetKeyTag() const { return m_keyTag; }
+  inline int64_t GetKeyTag() const { return m_keyTag; }
   inline bool KeyTagHasBeenSet() const { return m_keyTagHasBeenSet; }
-  inline void SetKeyTag(int value) {
+  inline void SetKeyTag(int64_t value) {
     m_keyTagHasBeenSet = true;
     m_keyTag = value;
   }
-  inline DnssecKey& WithKeyTag(int value) {
+  inline DnssecKey& WithKeyTag(int64_t value) {
     SetKeyTag(value);
     return *this;
   }
@@ -172,22 +133,16 @@ class DnssecKey {
   }
   ///@}
  private:
-  int m_algorithm{0};
+  int64_t m_algorithm{0};
 
-  int m_flags{0};
-
-  Aws::String m_publicKey;
-
-  int m_digestType{0};
+  int64_t m_digestType{0};
 
   Aws::String m_digest;
 
-  int m_keyTag{0};
+  int64_t m_keyTag{0};
 
   Aws::String m_id;
   bool m_algorithmHasBeenSet = false;
-  bool m_flagsHasBeenSet = false;
-  bool m_publicKeyHasBeenSet = false;
   bool m_digestTypeHasBeenSet = false;
   bool m_digestHasBeenSet = false;
   bool m_keyTagHasBeenSet = false;

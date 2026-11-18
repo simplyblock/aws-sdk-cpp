@@ -45,6 +45,7 @@
 #include <aws/devops-agent/model/GetAssetResult.h>
 #include <aws/devops-agent/model/GetAssociationResult.h>
 #include <aws/devops-agent/model/GetBacklogTaskResult.h>
+#include <aws/devops-agent/model/GetChatResult.h>
 #include <aws/devops-agent/model/GetOperatorAppResult.h>
 #include <aws/devops-agent/model/GetRecommendationResult.h>
 #include <aws/devops-agent/model/GetServiceResult.h>
@@ -75,10 +76,12 @@
 #include <aws/devops-agent/model/TagResourceResult.h>
 #include <aws/devops-agent/model/UntagResourceResult.h>
 #include <aws/devops-agent/model/UpdateAgentSpaceResult.h>
+#include <aws/devops-agent/model/UpdateApprovalActionResult.h>
 #include <aws/devops-agent/model/UpdateAssetFileResult.h>
 #include <aws/devops-agent/model/UpdateAssetResult.h>
 #include <aws/devops-agent/model/UpdateAssociationResult.h>
 #include <aws/devops-agent/model/UpdateBacklogTaskResult.h>
+#include <aws/devops-agent/model/UpdateChatResult.h>
 #include <aws/devops-agent/model/UpdateGoalResult.h>
 #include <aws/devops-agent/model/UpdateOperatorAppIdpConfigResult.h>
 #include <aws/devops-agent/model/UpdatePrivateConnectionCertificateResult.h>
@@ -143,6 +146,7 @@ class GetAssetContentRequest;
 class GetAssetFileRequest;
 class GetAssociationRequest;
 class GetBacklogTaskRequest;
+class GetChatRequest;
 class GetOperatorAppRequest;
 class GetRecommendationRequest;
 class GetServiceRequest;
@@ -170,10 +174,12 @@ class SendMessageRequest;
 class TagResourceRequest;
 class UntagResourceRequest;
 class UpdateAgentSpaceRequest;
+class UpdateApprovalActionRequest;
 class UpdateAssetRequest;
 class UpdateAssetFileRequest;
 class UpdateAssociationRequest;
 class UpdateBacklogTaskRequest;
+class UpdateChatRequest;
 class UpdateGoalRequest;
 class UpdateOperatorAppIdpConfigRequest;
 class UpdatePrivateConnectionCertificateRequest;
@@ -208,6 +214,7 @@ typedef Aws::Utils::Outcome<GetAssetContentResult, DevOpsAgentError> GetAssetCon
 typedef Aws::Utils::Outcome<GetAssetFileResult, DevOpsAgentError> GetAssetFileOutcome;
 typedef Aws::Utils::Outcome<GetAssociationResult, DevOpsAgentError> GetAssociationOutcome;
 typedef Aws::Utils::Outcome<GetBacklogTaskResult, DevOpsAgentError> GetBacklogTaskOutcome;
+typedef Aws::Utils::Outcome<GetChatResult, DevOpsAgentError> GetChatOutcome;
 typedef Aws::Utils::Outcome<GetOperatorAppResult, DevOpsAgentError> GetOperatorAppOutcome;
 typedef Aws::Utils::Outcome<GetRecommendationResult, DevOpsAgentError> GetRecommendationOutcome;
 typedef Aws::Utils::Outcome<GetServiceResult, DevOpsAgentError> GetServiceOutcome;
@@ -235,10 +242,12 @@ typedef Aws::Utils::Outcome<Aws::NoResult, DevOpsAgentError> SendMessageOutcome;
 typedef Aws::Utils::Outcome<TagResourceResult, DevOpsAgentError> TagResourceOutcome;
 typedef Aws::Utils::Outcome<UntagResourceResult, DevOpsAgentError> UntagResourceOutcome;
 typedef Aws::Utils::Outcome<UpdateAgentSpaceResult, DevOpsAgentError> UpdateAgentSpaceOutcome;
+typedef Aws::Utils::Outcome<UpdateApprovalActionResult, DevOpsAgentError> UpdateApprovalActionOutcome;
 typedef Aws::Utils::Outcome<UpdateAssetResult, DevOpsAgentError> UpdateAssetOutcome;
 typedef Aws::Utils::Outcome<UpdateAssetFileResult, DevOpsAgentError> UpdateAssetFileOutcome;
 typedef Aws::Utils::Outcome<UpdateAssociationResult, DevOpsAgentError> UpdateAssociationOutcome;
 typedef Aws::Utils::Outcome<UpdateBacklogTaskResult, DevOpsAgentError> UpdateBacklogTaskOutcome;
+typedef Aws::Utils::Outcome<UpdateChatResult, DevOpsAgentError> UpdateChatOutcome;
 typedef Aws::Utils::Outcome<UpdateGoalResult, DevOpsAgentError> UpdateGoalOutcome;
 typedef Aws::Utils::Outcome<UpdateOperatorAppIdpConfigResult, DevOpsAgentError> UpdateOperatorAppIdpConfigOutcome;
 typedef Aws::Utils::Outcome<UpdatePrivateConnectionCertificateResult, DevOpsAgentError> UpdatePrivateConnectionCertificateOutcome;
@@ -273,6 +282,7 @@ typedef std::future<GetAssetContentOutcome> GetAssetContentOutcomeCallable;
 typedef std::future<GetAssetFileOutcome> GetAssetFileOutcomeCallable;
 typedef std::future<GetAssociationOutcome> GetAssociationOutcomeCallable;
 typedef std::future<GetBacklogTaskOutcome> GetBacklogTaskOutcomeCallable;
+typedef std::future<GetChatOutcome> GetChatOutcomeCallable;
 typedef std::future<GetOperatorAppOutcome> GetOperatorAppOutcomeCallable;
 typedef std::future<GetRecommendationOutcome> GetRecommendationOutcomeCallable;
 typedef std::future<GetServiceOutcome> GetServiceOutcomeCallable;
@@ -300,10 +310,12 @@ typedef std::future<SendMessageOutcome> SendMessageOutcomeCallable;
 typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
 typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
 typedef std::future<UpdateAgentSpaceOutcome> UpdateAgentSpaceOutcomeCallable;
+typedef std::future<UpdateApprovalActionOutcome> UpdateApprovalActionOutcomeCallable;
 typedef std::future<UpdateAssetOutcome> UpdateAssetOutcomeCallable;
 typedef std::future<UpdateAssetFileOutcome> UpdateAssetFileOutcomeCallable;
 typedef std::future<UpdateAssociationOutcome> UpdateAssociationOutcomeCallable;
 typedef std::future<UpdateBacklogTaskOutcome> UpdateBacklogTaskOutcomeCallable;
+typedef std::future<UpdateChatOutcome> UpdateChatOutcomeCallable;
 typedef std::future<UpdateGoalOutcome> UpdateGoalOutcomeCallable;
 typedef std::future<UpdateOperatorAppIdpConfigOutcome> UpdateOperatorAppIdpConfigOutcomeCallable;
 typedef std::future<UpdatePrivateConnectionCertificateOutcome> UpdatePrivateConnectionCertificateOutcomeCallable;
@@ -391,6 +403,9 @@ typedef std::function<void(const DevOpsAgentClient*, const Model::GetAssociation
 typedef std::function<void(const DevOpsAgentClient*, const Model::GetBacklogTaskRequest&, const Model::GetBacklogTaskOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetBacklogTaskResponseReceivedHandler;
+typedef std::function<void(const DevOpsAgentClient*, const Model::GetChatRequest&, const Model::GetChatOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetChatResponseReceivedHandler;
 typedef std::function<void(const DevOpsAgentClient*, const Model::GetOperatorAppRequest&, const Model::GetOperatorAppOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetOperatorAppResponseReceivedHandler;
@@ -472,6 +487,9 @@ typedef std::function<void(const DevOpsAgentClient*, const Model::UntagResourceR
 typedef std::function<void(const DevOpsAgentClient*, const Model::UpdateAgentSpaceRequest&, const Model::UpdateAgentSpaceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateAgentSpaceResponseReceivedHandler;
+typedef std::function<void(const DevOpsAgentClient*, const Model::UpdateApprovalActionRequest&, const Model::UpdateApprovalActionOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateApprovalActionResponseReceivedHandler;
 typedef std::function<void(const DevOpsAgentClient*, const Model::UpdateAssetRequest&, const Model::UpdateAssetOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateAssetResponseReceivedHandler;
@@ -484,6 +502,9 @@ typedef std::function<void(const DevOpsAgentClient*, const Model::UpdateAssociat
 typedef std::function<void(const DevOpsAgentClient*, const Model::UpdateBacklogTaskRequest&, const Model::UpdateBacklogTaskOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateBacklogTaskResponseReceivedHandler;
+typedef std::function<void(const DevOpsAgentClient*, const Model::UpdateChatRequest&, const Model::UpdateChatOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateChatResponseReceivedHandler;
 typedef std::function<void(const DevOpsAgentClient*, const Model::UpdateGoalRequest&, const Model::UpdateGoalOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateGoalResponseReceivedHandler;

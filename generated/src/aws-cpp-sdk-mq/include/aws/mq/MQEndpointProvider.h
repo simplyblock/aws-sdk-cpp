@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/mq/MQEndpointRules.h>
 #include <aws/mq/MQ_EXPORTS.h>
 
 namespace Aws {
 namespace MQ {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using MQClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using MQBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using MQEndpointProviderBase = EndpointProviderBase<MQClientConfiguration, MQBuiltInParameters, MQClientContextParameters>;
 
-using MQDefaultEpProviderBase = DefaultEndpointProvider<MQClientConfiguration, MQBuiltInParameters, MQClientContextParameters>;
+using MQDefaultEpProviderBase = BDDEndpointProvider<MQClientConfiguration, MQBuiltInParameters, MQClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_MQ_API MQEndpointProvider : public MQDefaultEpProviderBase {
  public:
   using MQResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  MQEndpointProvider() : MQDefaultEpProviderBase(Aws::MQ::MQEndpointRules::GetRulesBlob(), Aws::MQ::MQEndpointRules::RulesBlobSize) {}
+  MQEndpointProvider();
 
   ~MQEndpointProvider() {}
 };

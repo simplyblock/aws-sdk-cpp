@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/interconnect/InterconnectEndpointRules.h>
 #include <aws/interconnect/Interconnect_EXPORTS.h>
 
 namespace Aws {
 namespace Interconnect {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using InterconnectClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using InterconnectEndpointProviderBase =
     EndpointProviderBase<InterconnectClientConfiguration, InterconnectBuiltInParameters, InterconnectClientContextParameters>;
 
 using InterconnectDefaultEpProviderBase =
-    DefaultEndpointProvider<InterconnectClientConfiguration, InterconnectBuiltInParameters, InterconnectClientContextParameters>;
+    BDDEndpointProvider<InterconnectClientConfiguration, InterconnectBuiltInParameters, InterconnectClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_INTERCONNECT_API InterconnectEndpointProvider : public InterconnectDef
  public:
   using InterconnectResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  InterconnectEndpointProvider()
-      : InterconnectDefaultEpProviderBase(Aws::Interconnect::InterconnectEndpointRules::GetRulesBlob(),
-                                          Aws::Interconnect::InterconnectEndpointRules::RulesBlobSize) {}
+  InterconnectEndpointProvider();
 
   ~InterconnectEndpointProvider() {}
 };

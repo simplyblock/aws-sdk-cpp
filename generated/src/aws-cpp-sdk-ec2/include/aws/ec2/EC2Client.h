@@ -360,7 +360,15 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * the owner of the peer VPC. Use <a>DescribeVpcPeeringConnections</a> to view your
    * outstanding VPC peering connection requests.</p> <p>For an inter-Region VPC
    * peering connection request, you must accept the VPC peering connection in the
-   * Region of the accepter VPC.</p><p><h3>See Also:</h3>   <a
+   * Region of the accepter VPC.</p> <p>If the requester allows multipath resilience,
+   * accepting the request also allows multipath resilience for the accepter VPC, and
+   * the <code>multipathResilienceStatus</code> of the VPC peering connection becomes
+   * <code>enabled</code>. Additional charges apply. For more information, see <a
+   * href="http://aws.amazon.com/vpc/pricing/">Amazon VPC pricing</a>. To stop
+   * allowing multipath resilience for the accepter VPC, use
+   * <a>ModifyVpcPeeringConnectionOptions</a> and set
+   * <code>AllowMultipathResilience</code> to <code>false</code>.</p><p><h3>See
+   * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AcceptVpcPeeringConnection">AWS
    * API Reference</a></p>
    */
@@ -731,6 +739,51 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Associates an application status check with instances or <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">tags</a>.
+   * Once you create an association, health monitoring automatically begins for the
+   * specified instances or for instances that match the specified tags. The
+   * following rules apply:</p> <ul> <li> <p>You must specify either
+   * <code>TargetTagAssociations</code> or <code>InstanceIds</code>, but not both.
+   * Specifying both results in an <code>InvalidParameterCombination</code>
+   * error.</p> </li> <li> <p>You must own the application status check. The check
+   * must already exist in your account.</p> </li> <li> <p>You must not leave tag
+   * keys blank.</p> </li> <li> <p>You can create a maximum of 50 tag associations
+   * for each application status check.</p> </li> <li> <p>You can use
+   * <code>DisassociateApplicationStatusCheck</code> to remove associations.</p>
+   * </li> <li> <p>You can associate <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">tags</a>
+   * so that the application status check automatically monitors all current and
+   * future instances that have the specified tags.</p> </li> </ul><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AssociateApplicationStatusCheck">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::AssociateApplicationStatusCheckOutcome AssociateApplicationStatusCheck(
+      const Model::AssociateApplicationStatusCheckRequest& request) const;
+
+  /**
+   * A Callable wrapper for AssociateApplicationStatusCheck that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename AssociateApplicationStatusCheckRequestT = Model::AssociateApplicationStatusCheckRequest>
+  Model::AssociateApplicationStatusCheckOutcomeCallable AssociateApplicationStatusCheckCallable(
+      const AssociateApplicationStatusCheckRequestT& request) const {
+    return SubmitCallable(&EC2Client::AssociateApplicationStatusCheck, request);
+  }
+
+  /**
+   * An Async wrapper for AssociateApplicationStatusCheck that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename AssociateApplicationStatusCheckRequestT = Model::AssociateApplicationStatusCheckRequest>
+  void AssociateApplicationStatusCheckAsync(const AssociateApplicationStatusCheckRequestT& request,
+                                            const AssociateApplicationStatusCheckResponseReceivedHandler& handler,
+                                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::AssociateApplicationStatusCheck, request, handler, context);
+  }
+
+  /**
    * <p>Initiates a request to assign billing of the unused capacity of a shared
    * Capacity Reservation to a consumer account that is consolidated under the same
    * Amazon Web Services organizations payer account. For more information, see <a
@@ -1017,6 +1070,38 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Associates an additional KMS key with an encrypted Amazon EBS snapshot. With
+   * the associated key, you have a second, independent way to access the snapshot's
+   * data, in addition to the key the snapshot is already encrypted under.
+   * Associating a key doesn't re-encrypt the snapshot or grant access to its
+   * original key.</p> <p>For more information, see <a
+   * href="https://docs.aws.amazon.com/ebs/latest/userguide/associated-kms-keys.html">Associated
+   * KMS keys</a> in the <i>Amazon EBS User Guide</i>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AssociateKmsKeyId">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::AssociateKmsKeyIdOutcome AssociateKmsKeyId(const Model::AssociateKmsKeyIdRequest& request) const;
+
+  /**
+   * A Callable wrapper for AssociateKmsKeyId that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename AssociateKmsKeyIdRequestT = Model::AssociateKmsKeyIdRequest>
+  Model::AssociateKmsKeyIdOutcomeCallable AssociateKmsKeyIdCallable(const AssociateKmsKeyIdRequestT& request) const {
+    return SubmitCallable(&EC2Client::AssociateKmsKeyId, request);
+  }
+
+  /**
+   * An Async wrapper for AssociateKmsKeyId that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename AssociateKmsKeyIdRequestT = Model::AssociateKmsKeyIdRequest>
+  void AssociateKmsKeyIdAsync(const AssociateKmsKeyIdRequestT& request, const AssociateKmsKeyIdResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::AssociateKmsKeyId, request, handler, context);
+  }
+
+  /**
    * <p>Associates Elastic IP addresses (EIPs) and private IPv4 addresses with a
    * public NAT gateway. For more information, see <a
    * href="https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html">Work
@@ -1061,6 +1146,45 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                        const AssociateNatGatewayAddressResponseReceivedHandler& handler,
                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::AssociateNatGatewayAddress, request, handler, context);
+  }
+
+  /**
+   * <p>Associates a flex cost allocation policy with one or more network resources.
+   * You can associate the policy directly with specific resources by resource ID, or
+   * you can associate it with a scope of resources in an account, Amazon VPC, or
+   * subnet.</p> <p>The following limits apply:</p> <ul> <li> <p>A request can
+   * associate up to 20 resources.</p> </li> <li> <p>A policy can have up to 100
+   * active associations.</p> </li> <li> <p>A network resource can have only one
+   * active association, across all policies. If a resource is already associated,
+   * the response includes it in the failures with the code
+   * <code>ResourceAlreadyAssociated</code>.</p> </li> </ul><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AssociateNetworkingFlexCostAllocationPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::AssociateNetworkingFlexCostAllocationPolicyOutcome AssociateNetworkingFlexCostAllocationPolicy(
+      const Model::AssociateNetworkingFlexCostAllocationPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for AssociateNetworkingFlexCostAllocationPolicy that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename AssociateNetworkingFlexCostAllocationPolicyRequestT = Model::AssociateNetworkingFlexCostAllocationPolicyRequest>
+  Model::AssociateNetworkingFlexCostAllocationPolicyOutcomeCallable AssociateNetworkingFlexCostAllocationPolicyCallable(
+      const AssociateNetworkingFlexCostAllocationPolicyRequestT& request) const {
+    return SubmitCallable(&EC2Client::AssociateNetworkingFlexCostAllocationPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for AssociateNetworkingFlexCostAllocationPolicy that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename AssociateNetworkingFlexCostAllocationPolicyRequestT = Model::AssociateNetworkingFlexCostAllocationPolicyRequest>
+  void AssociateNetworkingFlexCostAllocationPolicyAsync(
+      const AssociateNetworkingFlexCostAllocationPolicyRequestT& request,
+      const AssociateNetworkingFlexCostAllocationPolicyResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::AssociateNetworkingFlexCostAllocationPolicy, request, handler, context);
   }
 
   /**
@@ -1710,12 +1834,44 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Modifies multiple routing policy registrations in a single operation. You can
+   * create, update, or delete Route Origin Authorizations (ROAs) in
+   * batch.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/BatchModifyIpamRoutingPolicyRegistrations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::BatchModifyIpamRoutingPolicyRegistrationsOutcome BatchModifyIpamRoutingPolicyRegistrations(
+      const Model::BatchModifyIpamRoutingPolicyRegistrationsRequest& request) const;
+
+  /**
+   * A Callable wrapper for BatchModifyIpamRoutingPolicyRegistrations that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename BatchModifyIpamRoutingPolicyRegistrationsRequestT = Model::BatchModifyIpamRoutingPolicyRegistrationsRequest>
+  Model::BatchModifyIpamRoutingPolicyRegistrationsOutcomeCallable BatchModifyIpamRoutingPolicyRegistrationsCallable(
+      const BatchModifyIpamRoutingPolicyRegistrationsRequestT& request) const {
+    return SubmitCallable(&EC2Client::BatchModifyIpamRoutingPolicyRegistrations, request);
+  }
+
+  /**
+   * An Async wrapper for BatchModifyIpamRoutingPolicyRegistrations that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename BatchModifyIpamRoutingPolicyRegistrationsRequestT = Model::BatchModifyIpamRoutingPolicyRegistrationsRequest>
+  void BatchModifyIpamRoutingPolicyRegistrationsAsync(
+      const BatchModifyIpamRoutingPolicyRegistrationsRequestT& request,
+      const BatchModifyIpamRoutingPolicyRegistrationsResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::BatchModifyIpamRoutingPolicyRegistrations, request, handler, context);
+  }
+
+  /**
    * <p>Bundles an Amazon instance store-backed Windows instance.</p> <p>During
    * bundling, only the root device volume (C:\) is bundled. Data on other instance
-   * store volumes is not preserved.</p>  <p>This action is no longer
+   * store volumes is not preserved.</p>  <p>BundleInstance is no longer
    * supported. To create an AMI, use <a
-   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html">CreateImage</a>.
-   * For more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html">CreateImage</a>
+   * instead. For more information about creating an Amazon EBS-backed AMI, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html">
    * Create an Amazon EBS-backed AMI</a> in the <i>Amazon EC2 User Guide</i>.</p>
    * <p><h3>See Also:</h3>   <a
@@ -1744,7 +1900,10 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
 
   /**
    * <p>Cancels a bundling operation for an instance store-backed Windows
-   * instance.</p><p><h3>See Also:</h3>   <a
+   * instance.</p>  <p>CancelBundleTask is no longer supported because <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_BundleInstance.html">BundleInstance</a>,
+   * the operation it cancels, is no longer supported.</p> <p><h3>See
+   * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CancelBundleTask">AWS
    * API Reference</a></p>
    */
@@ -2315,6 +2474,55 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Creates an application status check for monitoring the health of applications
+   * running on your instances. You can configure the protocol, port, path, and
+   * thresholds for the health check. The following rules apply:</p> <ul> <li> <p>You
+   * can create a maximum of 50 application status checks for each account.</p> </li>
+   * <li> <p>You must associate the check with instances or tags using
+   * <code>AssociateApplicationStatusCheck</code> before health checks start.</p>
+   * </li> <li> <p>You must set the <code>Timeout</code> value to less than the
+   * <code>Interval</code> value.</p> </li> <li> <p>You must start the
+   * <code>Path</code> with a forward slash (<code>/</code>). Default:
+   * <code>/</code>.</p> </li> <li> <p>You can specify <code>Aggregation</code> as
+   * <code>included</code> or <code>excluded</code>. If you do not specify a value,
+   * it defaults to <code>included</code>, which means the check contributes to the
+   * instance-level application status.</p> </li> <li> <p>You can use the following
+   * default values: <code>Interval</code> is 60 seconds, <code>Timeout</code> is 6
+   * seconds, <code>FailureThreshold</code> is 2, <code>SuccessThreshold</code> is 2,
+   * <code>StatusCodeMatcher</code> is <code>200</code>,
+   * <code>InitializationGracePeriodSeconds</code> is 300 seconds.</p> </li> <li>
+   * <p>You can tag the application status check during creation. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tag
+   * your Amazon EC2 resources</a>.</p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateApplicationStatusCheck">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateApplicationStatusCheckOutcome CreateApplicationStatusCheck(
+      const Model::CreateApplicationStatusCheckRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateApplicationStatusCheck that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename CreateApplicationStatusCheckRequestT = Model::CreateApplicationStatusCheckRequest>
+  Model::CreateApplicationStatusCheckOutcomeCallable CreateApplicationStatusCheckCallable(
+      const CreateApplicationStatusCheckRequestT& request) const {
+    return SubmitCallable(&EC2Client::CreateApplicationStatusCheck, request);
+  }
+
+  /**
+   * An Async wrapper for CreateApplicationStatusCheck that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateApplicationStatusCheckRequestT = Model::CreateApplicationStatusCheckRequest>
+  void CreateApplicationStatusCheckAsync(const CreateApplicationStatusCheckRequestT& request,
+                                         const CreateApplicationStatusCheckResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::CreateApplicationStatusCheck, request, handler, context);
+  }
+
+  /**
    * <p> Creates a new data export configuration for EC2 Capacity Manager. This
    * allows you to automatically export capacity usage data to an S3 bucket on a
    * scheduled basis. The exported data includes metrics for On-Demand, Spot, and
@@ -2458,6 +2666,42 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
       const CreateCapacityReservationCancellationQuoteResponseReceivedHandler& handler,
       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::CreateCapacityReservationCancellationQuote, request, handler, context);
+  }
+
+  /**
+   * <p>Generates a quote for changing the start date of a future-dated Capacity
+   * Reservation that has not yet been delivered. The quote includes the new start
+   * date, the resulting commitment end date, and a quote ID. Pass the quote ID to
+   * <code>ModifyCapacityReservation</code> to apply the change.</p> <p>The
+   * cumulative pushout across all changes is limited to 30 days from the Capacity
+   * Reservation's original start date. Quotes are valid for 24 hours, and always
+   * expire at least one hour before the start date.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateCapacityReservationDateChangeQuote">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateCapacityReservationDateChangeQuoteOutcome CreateCapacityReservationDateChangeQuote(
+      const Model::CreateCapacityReservationDateChangeQuoteRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateCapacityReservationDateChangeQuote that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename CreateCapacityReservationDateChangeQuoteRequestT = Model::CreateCapacityReservationDateChangeQuoteRequest>
+  Model::CreateCapacityReservationDateChangeQuoteOutcomeCallable CreateCapacityReservationDateChangeQuoteCallable(
+      const CreateCapacityReservationDateChangeQuoteRequestT& request) const {
+    return SubmitCallable(&EC2Client::CreateCapacityReservationDateChangeQuote, request);
+  }
+
+  /**
+   * An Async wrapper for CreateCapacityReservationDateChangeQuote that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename CreateCapacityReservationDateChangeQuoteRequestT = Model::CreateCapacityReservationDateChangeQuoteRequest>
+  void CreateCapacityReservationDateChangeQuoteAsync(
+      const CreateCapacityReservationDateChangeQuoteRequestT& request,
+      const CreateCapacityReservationDateChangeQuoteResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::CreateCapacityReservationDateChangeQuote, request, handler, context);
   }
 
   /**
@@ -2975,7 +3219,11 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * instance is in a Region, you must create the snapshots in the same Region as the
    * instance.</p> </li> <li> <p>If the source instance is in a Local Zone, you can
    * create the snapshots in the same Local Zone or in its parent Region.</p> </li>
-   * </ul> <p>For more information, see <a
+   * <li> <p>If the source instance is on an Outpost that supports local snapshots,
+   * you can create the snapshots on the same Outpost or in the parent Region of that
+   * Outpost. In this case, you must use the <code>SnapshotLocation</code> parameter
+   * to specify where to create the snapshots.</p> </li> </ul> <p>For more
+   * information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html">Create
    * an Amazon EBS-backed AMI</a> in the <i>Amazon Elastic Compute Cloud User
    * Guide</i>.</p><p><h3>See Also:</h3>   <a
@@ -3005,8 +3253,9 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   /**
    * <p>Creates a report that shows how your image is used across other Amazon Web
    * Services accounts. The report provides visibility into which accounts are using
-   * the specified image, and how many resources (EC2 instances or launch templates)
-   * are referencing it.</p> <p>For more information, see <a
+   * the specified image, and how many resources (EC2 instances, EC2 launch
+   * templates, Image Builder image recipes, or Image Builder container recipes) are
+   * referencing it.</p> <p>For more information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/your-ec2-ami-usage.html">View
    * your AMI usage</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See Also:</h3>
    * <a
@@ -3279,6 +3528,39 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Creates an association between an IPAM and a Regional Internet Registry (RIR)
+   * for Resource Public Key Infrastructure (RPKI) management. You can use this
+   * association to create Route Origin Authorizations (ROAs) for IP address prefixes
+   * registered with the internet registry. Your IPAM must be in the Advanced tier to
+   * use this feature.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateIpamInternetRegistryAssociation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateIpamInternetRegistryAssociationOutcome CreateIpamInternetRegistryAssociation(
+      const Model::CreateIpamInternetRegistryAssociationRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateIpamInternetRegistryAssociation that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename CreateIpamInternetRegistryAssociationRequestT = Model::CreateIpamInternetRegistryAssociationRequest>
+  Model::CreateIpamInternetRegistryAssociationOutcomeCallable CreateIpamInternetRegistryAssociationCallable(
+      const CreateIpamInternetRegistryAssociationRequestT& request) const {
+    return SubmitCallable(&EC2Client::CreateIpamInternetRegistryAssociation, request);
+  }
+
+  /**
+   * An Async wrapper for CreateIpamInternetRegistryAssociation that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename CreateIpamInternetRegistryAssociationRequestT = Model::CreateIpamInternetRegistryAssociationRequest>
+  void CreateIpamInternetRegistryAssociationAsync(const CreateIpamInternetRegistryAssociationRequestT& request,
+                                                  const CreateIpamInternetRegistryAssociationResponseReceivedHandler& handler,
+                                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::CreateIpamInternetRegistryAssociation, request, handler, context);
+  }
+
+  /**
    * <p>Creates an IPAM policy.</p> <p>An IPAM policy is a set of rules that define
    * how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services
    * resources. Each rule maps an Amazon Web Services service to IPAM pools that the
@@ -3451,6 +3733,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                         const CreateIpamResourceDiscoveryRequestT& request = {}) const {
     return SubmitAsync(&EC2Client::CreateIpamResourceDiscovery, request, handler, context);
+  }
+
+  /**
+   * <p>Creates a routing policy registration and publishes Route Origin
+   * Authorizations (ROAs) to the RPKI for the specified CIDR prefix and
+   * ASNs.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateIpamRoutingPolicyRegistration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateIpamRoutingPolicyRegistrationOutcome CreateIpamRoutingPolicyRegistration(
+      const Model::CreateIpamRoutingPolicyRegistrationRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateIpamRoutingPolicyRegistration that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename CreateIpamRoutingPolicyRegistrationRequestT = Model::CreateIpamRoutingPolicyRegistrationRequest>
+  Model::CreateIpamRoutingPolicyRegistrationOutcomeCallable CreateIpamRoutingPolicyRegistrationCallable(
+      const CreateIpamRoutingPolicyRegistrationRequestT& request) const {
+    return SubmitCallable(&EC2Client::CreateIpamRoutingPolicyRegistration, request);
+  }
+
+  /**
+   * An Async wrapper for CreateIpamRoutingPolicyRegistration that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename CreateIpamRoutingPolicyRegistrationRequestT = Model::CreateIpamRoutingPolicyRegistrationRequest>
+  void CreateIpamRoutingPolicyRegistrationAsync(const CreateIpamRoutingPolicyRegistrationRequestT& request,
+                                                const CreateIpamRoutingPolicyRegistrationResponseReceivedHandler& handler,
+                                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::CreateIpamRoutingPolicyRegistration, request, handler, context);
   }
 
   /**
@@ -3875,6 +4188,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Creates a metric category. A metric category is a set of additional metrics
+   * that you can associate with an instance that has detailed monitoring
+   * enabled.</p> <p>For more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-detailed-monitoring.html#detailed-monitoring-metric-categories">Use
+   * metric categories for additional metrics</a> in the <i>Amazon EC2 User
+   * Guide</i>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateMetricCategory">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateMetricCategoryOutcome CreateMetricCategory(const Model::CreateMetricCategoryRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateMetricCategory that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreateMetricCategoryRequestT = Model::CreateMetricCategoryRequest>
+  Model::CreateMetricCategoryOutcomeCallable CreateMetricCategoryCallable(const CreateMetricCategoryRequestT& request) const {
+    return SubmitCallable(&EC2Client::CreateMetricCategory, request);
+  }
+
+  /**
+   * An Async wrapper for CreateMetricCategory that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreateMetricCategoryRequestT = Model::CreateMetricCategoryRequest>
+  void CreateMetricCategoryAsync(const CreateMetricCategoryRequestT& request, const CreateMetricCategoryResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::CreateMetricCategory, request, handler, context);
+  }
+
+  /**
    * <p>Creates a NAT gateway in the specified subnet. This action creates a network
    * interface in the specified subnet with a private IP address from the IP address
    * range of the subnet. You can create either a public NAT gateway or a private NAT
@@ -4123,6 +4467,45 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Creates a flex cost allocation policy for Networking Flexible Cost Allocation
+   * (FCA), a feature of Amazon Virtual Private Cloud (Amazon VPC). The policy
+   * allocates the charges of a shared networking resource at the reporting
+   * granularity that you specify. You can create a policy for one of the following
+   * resource types: NAT gateways, Amazon VPC peering connections, or EC2 instances.
+   * Policies can allocate data transfer charges for all three types, and data
+   * processing charges for NAT gateways.</p> <p>You can have up to 100 policies per
+   * account in each Amazon Web Services Region, plus one additional policy per
+   * network resource type created by a declarative policy, for a maximum of 103
+   * policies in an Amazon Web Services Region.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkingFlexCostAllocationPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateNetworkingFlexCostAllocationPolicyOutcome CreateNetworkingFlexCostAllocationPolicy(
+      const Model::CreateNetworkingFlexCostAllocationPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateNetworkingFlexCostAllocationPolicy that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename CreateNetworkingFlexCostAllocationPolicyRequestT = Model::CreateNetworkingFlexCostAllocationPolicyRequest>
+  Model::CreateNetworkingFlexCostAllocationPolicyOutcomeCallable CreateNetworkingFlexCostAllocationPolicyCallable(
+      const CreateNetworkingFlexCostAllocationPolicyRequestT& request) const {
+    return SubmitCallable(&EC2Client::CreateNetworkingFlexCostAllocationPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for CreateNetworkingFlexCostAllocationPolicy that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename CreateNetworkingFlexCostAllocationPolicyRequestT = Model::CreateNetworkingFlexCostAllocationPolicyRequest>
+  void CreateNetworkingFlexCostAllocationPolicyAsync(
+      const CreateNetworkingFlexCostAllocationPolicyRequestT& request,
+      const CreateNetworkingFlexCostAllocationPolicyResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::CreateNetworkingFlexCostAllocationPolicy, request, handler, context);
+  }
+
+  /**
    * <p>Creates a placement group in which to launch instances. The strategy of the
    * placement group determines how the instances are organized within the group.
    * </p> <p>A <code>cluster</code> placement group is a logical grouping of
@@ -4196,9 +4579,10 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   /**
    * <p>Replaces the EBS-backed root volume for a <code>running</code> instance with
    * a new volume that is restored to the original root volume's launch state, that
-   * is restored to a specific snapshot taken from the original root volume, or that
-   * is restored from an AMI that has the same key characteristics as that of the
-   * instance.</p> <p>For more information, see <a
+   * is restored to a specific snapshot taken from the original root volume, that is
+   * restored from an AMI that has the same key characteristics as that of the
+   * instance, or that is replaced by a specified volume.</p> <p>For more
+   * information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/replace-root.html">Replace
    * a root volume</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See Also:</h3>
    * <a
@@ -5220,6 +5604,43 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Creates a network function attachment that connects the specified transit
+   * gateway to a Gateway Load Balancer endpoint service. Traffic that you route to
+   * the attachment is sent to the network function appliances behind the endpoint
+   * service. To use this operation, you must be the owner of the transit
+   * gateway.</p> <p>You can create one network function attachment for each
+   * combination of transit gateway and endpoint service. The attachment remains in
+   * the <code>pendingAcceptance</code> state until the endpoint service owner
+   * accepts the endpoint connection.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateTransitGatewayNetworkFunctionAttachment">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateTransitGatewayNetworkFunctionAttachmentOutcome CreateTransitGatewayNetworkFunctionAttachment(
+      const Model::CreateTransitGatewayNetworkFunctionAttachmentRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateTransitGatewayNetworkFunctionAttachment that returns a future to the operation so that it can be executed
+   * in parallel to other requests.
+   */
+  template <typename CreateTransitGatewayNetworkFunctionAttachmentRequestT = Model::CreateTransitGatewayNetworkFunctionAttachmentRequest>
+  Model::CreateTransitGatewayNetworkFunctionAttachmentOutcomeCallable CreateTransitGatewayNetworkFunctionAttachmentCallable(
+      const CreateTransitGatewayNetworkFunctionAttachmentRequestT& request) const {
+    return SubmitCallable(&EC2Client::CreateTransitGatewayNetworkFunctionAttachment, request);
+  }
+
+  /**
+   * An Async wrapper for CreateTransitGatewayNetworkFunctionAttachment that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename CreateTransitGatewayNetworkFunctionAttachmentRequestT = Model::CreateTransitGatewayNetworkFunctionAttachmentRequest>
+  void CreateTransitGatewayNetworkFunctionAttachmentAsync(
+      const CreateTransitGatewayNetworkFunctionAttachmentRequestT& request,
+      const CreateTransitGatewayNetworkFunctionAttachmentResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::CreateTransitGatewayNetworkFunctionAttachment, request, handler, context);
+  }
+
+  /**
    * <p>Requests a transit gateway peering attachment between the specified transit
    * gateway (requester) and a peer transit gateway (accepter). The peer transit
    * gateway can be in your account or a different Amazon Web Services account.</p>
@@ -5279,6 +5700,36 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                             const CreateTransitGatewayPolicyTableResponseReceivedHandler& handler,
                                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::CreateTransitGatewayPolicyTable, request, handler, context);
+  }
+
+  /**
+   * <p>Creates an entry in a transit gateway policy table to route matching traffic
+   * to a specified route table.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateTransitGatewayPolicyTableEntry">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateTransitGatewayPolicyTableEntryOutcome CreateTransitGatewayPolicyTableEntry(
+      const Model::CreateTransitGatewayPolicyTableEntryRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateTransitGatewayPolicyTableEntry that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename CreateTransitGatewayPolicyTableEntryRequestT = Model::CreateTransitGatewayPolicyTableEntryRequest>
+  Model::CreateTransitGatewayPolicyTableEntryOutcomeCallable CreateTransitGatewayPolicyTableEntryCallable(
+      const CreateTransitGatewayPolicyTableEntryRequestT& request) const {
+    return SubmitCallable(&EC2Client::CreateTransitGatewayPolicyTableEntry, request);
+  }
+
+  /**
+   * An Async wrapper for CreateTransitGatewayPolicyTableEntry that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename CreateTransitGatewayPolicyTableEntryRequestT = Model::CreateTransitGatewayPolicyTableEntryRequest>
+  void CreateTransitGatewayPolicyTableEntryAsync(const CreateTransitGatewayPolicyTableEntryRequestT& request,
+                                                 const CreateTransitGatewayPolicyTableEntryResponseReceivedHandler& handler,
+                                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::CreateTransitGatewayPolicyTableEntry, request, handler, context);
   }
 
   /**
@@ -5838,10 +6289,11 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * peering limitations</a> in the <i>VPC Peering Guide</i>.</p>  <p>The
    * owner of the accepter VPC must accept the peering request to activate the
    * peering connection. The VPC peering connection request expires after 7 days,
-   * after which it cannot be accepted or rejected.</p> <p>If you create a VPC
-   * peering connection request between VPCs with overlapping CIDR blocks, the VPC
-   * peering connection has a status of <code>failed</code>.</p><p><h3>See Also:</h3>
-   * <a
+   * after which it cannot be accepted or rejected.</p> <p>Multipath resilience
+   * replicates the traffic of an inter-Region VPC peering connection across multiple
+   * network paths.</p> <p>If you create a VPC peering connection request between
+   * VPCs with overlapping CIDR blocks, the VPC peering connection has a status of
+   * <code>failed</code>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVpcPeeringConnection">AWS
    * API Reference</a></p>
    */
@@ -6001,6 +6453,38 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Deletes an application status check. The following rules apply:</p> <ul> <li>
+   * <p>Deleting a check automatically removes all of its associations.</p> </li>
+   * <li> <p>Use <code>DescribeApplicationStatusChecks</code> to view existing checks
+   * before deleting.</p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteApplicationStatusCheck">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteApplicationStatusCheckOutcome DeleteApplicationStatusCheck(
+      const Model::DeleteApplicationStatusCheckRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteApplicationStatusCheck that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename DeleteApplicationStatusCheckRequestT = Model::DeleteApplicationStatusCheckRequest>
+  Model::DeleteApplicationStatusCheckOutcomeCallable DeleteApplicationStatusCheckCallable(
+      const DeleteApplicationStatusCheckRequestT& request) const {
+    return SubmitCallable(&EC2Client::DeleteApplicationStatusCheck, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteApplicationStatusCheck that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteApplicationStatusCheckRequestT = Model::DeleteApplicationStatusCheckRequest>
+  void DeleteApplicationStatusCheckAsync(const DeleteApplicationStatusCheckRequestT& request,
+                                         const DeleteApplicationStatusCheckResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DeleteApplicationStatusCheck, request, handler, context);
+  }
+
+  /**
    * <p> Deletes an existing Capacity Manager data export configuration. This stops
    * future scheduled exports but does not delete previously exported files from S3.
    * </p><p><h3>See Also:</h3>   <a
@@ -6088,6 +6572,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                     const DeleteClientVpnEndpointResponseReceivedHandler& handler,
                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::DeleteClientVpnEndpoint, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes the authorization policy for a Client VPN endpoint.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteClientVpnEndpointAuthorizationPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteClientVpnEndpointAuthorizationPolicyOutcome DeleteClientVpnEndpointAuthorizationPolicy(
+      const Model::DeleteClientVpnEndpointAuthorizationPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteClientVpnEndpointAuthorizationPolicy that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename DeleteClientVpnEndpointAuthorizationPolicyRequestT = Model::DeleteClientVpnEndpointAuthorizationPolicyRequest>
+  Model::DeleteClientVpnEndpointAuthorizationPolicyOutcomeCallable DeleteClientVpnEndpointAuthorizationPolicyCallable(
+      const DeleteClientVpnEndpointAuthorizationPolicyRequestT& request) const {
+    return SubmitCallable(&EC2Client::DeleteClientVpnEndpointAuthorizationPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteClientVpnEndpointAuthorizationPolicy that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename DeleteClientVpnEndpointAuthorizationPolicyRequestT = Model::DeleteClientVpnEndpointAuthorizationPolicyRequest>
+  void DeleteClientVpnEndpointAuthorizationPolicyAsync(
+      const DeleteClientVpnEndpointAuthorizationPolicyRequestT& request,
+      const DeleteClientVpnEndpointAuthorizationPolicyResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DeleteClientVpnEndpointAuthorizationPolicy, request, handler, context);
   }
 
   /**
@@ -6545,6 +7060,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Deletes an IPAM internet registry association. Before deleting, you must
+   * remove all routing policy registrations associated with the internet
+   * registry.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteIpamInternetRegistryAssociation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteIpamInternetRegistryAssociationOutcome DeleteIpamInternetRegistryAssociation(
+      const Model::DeleteIpamInternetRegistryAssociationRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteIpamInternetRegistryAssociation that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename DeleteIpamInternetRegistryAssociationRequestT = Model::DeleteIpamInternetRegistryAssociationRequest>
+  Model::DeleteIpamInternetRegistryAssociationOutcomeCallable DeleteIpamInternetRegistryAssociationCallable(
+      const DeleteIpamInternetRegistryAssociationRequestT& request) const {
+    return SubmitCallable(&EC2Client::DeleteIpamInternetRegistryAssociation, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteIpamInternetRegistryAssociation that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename DeleteIpamInternetRegistryAssociationRequestT = Model::DeleteIpamInternetRegistryAssociationRequest>
+  void DeleteIpamInternetRegistryAssociationAsync(const DeleteIpamInternetRegistryAssociationRequestT& request,
+                                                  const DeleteIpamInternetRegistryAssociationResponseReceivedHandler& handler,
+                                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DeleteIpamInternetRegistryAssociation, request, handler, context);
+  }
+
+  /**
    * <p>Deletes an IPAM policy.</p> <p>An IPAM policy is a set of rules that define
    * how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services
    * resources. Each rule maps an Amazon Web Services service to IPAM pools that the
@@ -6705,6 +7251,36 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                         const DeleteIpamResourceDiscoveryResponseReceivedHandler& handler,
                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::DeleteIpamResourceDiscovery, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a routing policy registration for a specified CIDR
+   * prefix.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteIpamRoutingPolicyRegistration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteIpamRoutingPolicyRegistrationOutcome DeleteIpamRoutingPolicyRegistration(
+      const Model::DeleteIpamRoutingPolicyRegistrationRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteIpamRoutingPolicyRegistration that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename DeleteIpamRoutingPolicyRegistrationRequestT = Model::DeleteIpamRoutingPolicyRegistrationRequest>
+  Model::DeleteIpamRoutingPolicyRegistrationOutcomeCallable DeleteIpamRoutingPolicyRegistrationCallable(
+      const DeleteIpamRoutingPolicyRegistrationRequestT& request) const {
+    return SubmitCallable(&EC2Client::DeleteIpamRoutingPolicyRegistration, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteIpamRoutingPolicyRegistration that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename DeleteIpamRoutingPolicyRegistrationRequestT = Model::DeleteIpamRoutingPolicyRegistrationRequest>
+  void DeleteIpamRoutingPolicyRegistrationAsync(const DeleteIpamRoutingPolicyRegistrationRequestT& request,
+                                                const DeleteIpamRoutingPolicyRegistrationResponseReceivedHandler& handler,
+                                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DeleteIpamRoutingPolicyRegistration, request, handler, context);
   }
 
   /**
@@ -7042,6 +7618,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Deletes the specified metric category. Associations between the metric
+   * category and your instances are removed asynchronously.</p> <p>For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-detailed-monitoring.html#detailed-monitoring-metric-categories">Use
+   * metric categories for additional metrics</a> in the <i>Amazon EC2 User
+   * Guide</i>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteMetricCategory">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteMetricCategoryOutcome DeleteMetricCategory(const Model::DeleteMetricCategoryRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteMetricCategory that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteMetricCategoryRequestT = Model::DeleteMetricCategoryRequest>
+  Model::DeleteMetricCategoryOutcomeCallable DeleteMetricCategoryCallable(const DeleteMetricCategoryRequestT& request) const {
+    return SubmitCallable(&EC2Client::DeleteMetricCategory, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteMetricCategory that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteMetricCategoryRequestT = Model::DeleteMetricCategoryRequest>
+  void DeleteMetricCategoryAsync(const DeleteMetricCategoryRequestT& request, const DeleteMetricCategoryResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DeleteMetricCategory, request, handler, context);
+  }
+
+  /**
    * <p>Deletes the specified NAT gateway. Deleting a public NAT gateway
    * disassociates its Elastic IP address, but does not release the address from your
    * account. Deleting a NAT gateway does not delete any NAT gateway routes in your
@@ -7301,6 +7908,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                              const DeleteNetworkInterfacePermissionResponseReceivedHandler& handler,
                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::DeleteNetworkInterfacePermission, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes one or more flex cost allocation policies.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteNetworkingFlexCostAllocationPolicies">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteNetworkingFlexCostAllocationPoliciesOutcome DeleteNetworkingFlexCostAllocationPolicies(
+      const Model::DeleteNetworkingFlexCostAllocationPoliciesRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteNetworkingFlexCostAllocationPolicies that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename DeleteNetworkingFlexCostAllocationPoliciesRequestT = Model::DeleteNetworkingFlexCostAllocationPoliciesRequest>
+  Model::DeleteNetworkingFlexCostAllocationPoliciesOutcomeCallable DeleteNetworkingFlexCostAllocationPoliciesCallable(
+      const DeleteNetworkingFlexCostAllocationPoliciesRequestT& request) const {
+    return SubmitCallable(&EC2Client::DeleteNetworkingFlexCostAllocationPolicies, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteNetworkingFlexCostAllocationPolicies that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename DeleteNetworkingFlexCostAllocationPoliciesRequestT = Model::DeleteNetworkingFlexCostAllocationPoliciesRequest>
+  void DeleteNetworkingFlexCostAllocationPoliciesAsync(
+      const DeleteNetworkingFlexCostAllocationPoliciesRequestT& request,
+      const DeleteNetworkingFlexCostAllocationPoliciesResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DeleteNetworkingFlexCostAllocationPolicies, request, handler, context);
   }
 
   /**
@@ -8113,6 +8751,38 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Deletes the specified network function attachment. The attachment must be in
+   * the <code>available</code> or <code>pendingAcceptance</code>
+   * state.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteTransitGatewayNetworkFunctionAttachment">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteTransitGatewayNetworkFunctionAttachmentOutcome DeleteTransitGatewayNetworkFunctionAttachment(
+      const Model::DeleteTransitGatewayNetworkFunctionAttachmentRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteTransitGatewayNetworkFunctionAttachment that returns a future to the operation so that it can be executed
+   * in parallel to other requests.
+   */
+  template <typename DeleteTransitGatewayNetworkFunctionAttachmentRequestT = Model::DeleteTransitGatewayNetworkFunctionAttachmentRequest>
+  Model::DeleteTransitGatewayNetworkFunctionAttachmentOutcomeCallable DeleteTransitGatewayNetworkFunctionAttachmentCallable(
+      const DeleteTransitGatewayNetworkFunctionAttachmentRequestT& request) const {
+    return SubmitCallable(&EC2Client::DeleteTransitGatewayNetworkFunctionAttachment, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteTransitGatewayNetworkFunctionAttachment that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename DeleteTransitGatewayNetworkFunctionAttachmentRequestT = Model::DeleteTransitGatewayNetworkFunctionAttachmentRequest>
+  void DeleteTransitGatewayNetworkFunctionAttachmentAsync(
+      const DeleteTransitGatewayNetworkFunctionAttachmentRequestT& request,
+      const DeleteTransitGatewayNetworkFunctionAttachmentResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DeleteTransitGatewayNetworkFunctionAttachment, request, handler, context);
+  }
+
+  /**
    * <p>Deletes a transit gateway peering attachment.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteTransitGatewayPeeringAttachment">AWS
    * API Reference</a></p>
@@ -8169,6 +8839,36 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                             const DeleteTransitGatewayPolicyTableResponseReceivedHandler& handler,
                                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::DeleteTransitGatewayPolicyTable, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes the specified transit gateway policy table entry.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteTransitGatewayPolicyTableEntry">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteTransitGatewayPolicyTableEntryOutcome DeleteTransitGatewayPolicyTableEntry(
+      const Model::DeleteTransitGatewayPolicyTableEntryRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteTransitGatewayPolicyTableEntry that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename DeleteTransitGatewayPolicyTableEntryRequestT = Model::DeleteTransitGatewayPolicyTableEntryRequest>
+  Model::DeleteTransitGatewayPolicyTableEntryOutcomeCallable DeleteTransitGatewayPolicyTableEntryCallable(
+      const DeleteTransitGatewayPolicyTableEntryRequestT& request) const {
+    return SubmitCallable(&EC2Client::DeleteTransitGatewayPolicyTableEntry, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteTransitGatewayPolicyTableEntry that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename DeleteTransitGatewayPolicyTableEntryRequestT = Model::DeleteTransitGatewayPolicyTableEntryRequest>
+  void DeleteTransitGatewayPolicyTableEntryAsync(const DeleteTransitGatewayPolicyTableEntryRequestT& request,
+                                                 const DeleteTransitGatewayPolicyTableEntryResponseReceivedHandler& handler,
+                                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DeleteTransitGatewayPolicyTableEntry, request, handler, context);
   }
 
   /**
@@ -8231,11 +8931,13 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
-   * <p>Deletes the specified transit gateway route table. If there are any route
-   * tables associated with the transit gateway route table, you must first run
-   * <a>DisassociateRouteTable</a> before you can delete the transit gateway route
-   * table. This removes any route tables associated with the transit gateway route
-   * table.</p><p><h3>See Also:</h3>   <a
+   * <p>Deletes the specified transit gateway route table. Before you can delete a
+   * transit gateway route table, you must disassociate all attachments from it by
+   * using <a>DisassociateTransitGatewayRouteTable</a> and wait for the
+   * disassociations to complete. You can't delete a transit gateway route table that
+   * is the default association route table or default propagation route table for
+   * the transit gateway. To change the default route tables, use
+   * <a>ModifyTransitGateway</a>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteTransitGatewayRouteTable">AWS
    * API Reference</a></p>
    */
@@ -9319,6 +10021,113 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Describes the aggregated application health status for the specified
+   * instances. The following rules apply:</p> <ul> <li> <p>The instance-level status
+   * is derived from all application status checks with the aggregation setting set
+   * to <code>included</code>.</p> </li> <li> <p>Use
+   * <code>DescribeApplicationStatusChecks</code> to view the configuration of
+   * individual checks.</p> </li> <li> <p>Use
+   * <code>EnableApplicationStatusCheckSuppression</code> to temporarily suppress
+   * health check results from affecting the instance-level status.</p> </li>
+   * </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeApplicationStatus">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeApplicationStatusOutcome DescribeApplicationStatus(
+      const Model::DescribeApplicationStatusRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeApplicationStatus that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DescribeApplicationStatusRequestT = Model::DescribeApplicationStatusRequest>
+  Model::DescribeApplicationStatusOutcomeCallable DescribeApplicationStatusCallable(
+      const DescribeApplicationStatusRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::DescribeApplicationStatus, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeApplicationStatus that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeApplicationStatusRequestT = Model::DescribeApplicationStatusRequest>
+  void DescribeApplicationStatusAsync(const DescribeApplicationStatusResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                      const DescribeApplicationStatusRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::DescribeApplicationStatus, request, handler, context);
+  }
+
+  /**
+   * <p>Describes the associations for one or more application status checks. For
+   * more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-application-status-checks.html">Application
+   * status checks</a>. To avoid timeouts and retrieve complete results, use the
+   * pagination parameters.</p>  <p>The order of the elements in the response,
+   * including those within nested structures, might vary.</p> <p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeApplicationStatusCheckAssociations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeApplicationStatusCheckAssociationsOutcome DescribeApplicationStatusCheckAssociations(
+      const Model::DescribeApplicationStatusCheckAssociationsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeApplicationStatusCheckAssociations that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename DescribeApplicationStatusCheckAssociationsRequestT = Model::DescribeApplicationStatusCheckAssociationsRequest>
+  Model::DescribeApplicationStatusCheckAssociationsOutcomeCallable DescribeApplicationStatusCheckAssociationsCallable(
+      const DescribeApplicationStatusCheckAssociationsRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::DescribeApplicationStatusCheckAssociations, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeApplicationStatusCheckAssociations that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename DescribeApplicationStatusCheckAssociationsRequestT = Model::DescribeApplicationStatusCheckAssociationsRequest>
+  void DescribeApplicationStatusCheckAssociationsAsync(const DescribeApplicationStatusCheckAssociationsResponseReceivedHandler& handler,
+                                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                                       const DescribeApplicationStatusCheckAssociationsRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::DescribeApplicationStatusCheckAssociations, request, handler, context);
+  }
+
+  /**
+   * <p>Describes application status checks, including configuration details such as
+   * protocol, port, path, thresholds, and associations. Results are paginated. Use
+   * the <code>NextToken</code> parameter to retrieve additional results. The
+   * following rules apply:</p> <ul> <li> <p>If you do not specify any application
+   * status check IDs, all checks in your account are returned.</p> </li> <li> <p>Use
+   * <code>DescribeApplicationStatus</code> to see the actual health status of
+   * instances.</p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeApplicationStatusChecks">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeApplicationStatusChecksOutcome DescribeApplicationStatusChecks(
+      const Model::DescribeApplicationStatusChecksRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeApplicationStatusChecks that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename DescribeApplicationStatusChecksRequestT = Model::DescribeApplicationStatusChecksRequest>
+  Model::DescribeApplicationStatusChecksOutcomeCallable DescribeApplicationStatusChecksCallable(
+      const DescribeApplicationStatusChecksRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::DescribeApplicationStatusChecks, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeApplicationStatusChecks that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename DescribeApplicationStatusChecksRequestT = Model::DescribeApplicationStatusChecksRequest>
+  void DescribeApplicationStatusChecksAsync(const DescribeApplicationStatusChecksResponseReceivedHandler& handler,
+                                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                            const DescribeApplicationStatusChecksRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::DescribeApplicationStatusChecks, request, handler, context);
+  }
+
+  /**
    * <p>Describes the Availability Zones, Local Zones, and Wavelength Zones that are
    * available to you.</p> <p>For more information about Availability Zones, Local
    * Zones, and Wavelength Zones, see <a
@@ -9697,6 +10506,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
       const DescribeCapacityReservationCancellationQuotesRequestT& request = {}) const {
     return SubmitAsync(&EC2Client::DescribeCapacityReservationCancellationQuotes, request, handler, context);
+  }
+
+  /**
+   * <p>Describes one or more Capacity Reservation date change quotes that you
+   * generated by using the <code>CreateCapacityReservationDateChangeQuote</code>
+   * operation.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCapacityReservationDateChangeQuotes">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeCapacityReservationDateChangeQuotesOutcome DescribeCapacityReservationDateChangeQuotes(
+      const Model::DescribeCapacityReservationDateChangeQuotesRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeCapacityReservationDateChangeQuotes that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename DescribeCapacityReservationDateChangeQuotesRequestT = Model::DescribeCapacityReservationDateChangeQuotesRequest>
+  Model::DescribeCapacityReservationDateChangeQuotesOutcomeCallable DescribeCapacityReservationDateChangeQuotesCallable(
+      const DescribeCapacityReservationDateChangeQuotesRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::DescribeCapacityReservationDateChangeQuotes, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeCapacityReservationDateChangeQuotes that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename DescribeCapacityReservationDateChangeQuotesRequestT = Model::DescribeCapacityReservationDateChangeQuotesRequest>
+  void DescribeCapacityReservationDateChangeQuotesAsync(const DescribeCapacityReservationDateChangeQuotesResponseReceivedHandler& handler,
+                                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                                        const DescribeCapacityReservationDateChangeQuotesRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::DescribeCapacityReservationDateChangeQuotes, request, handler, context);
   }
 
   /**
@@ -11087,13 +11927,13 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * Amazon EC2 returns the M4 instance.</p> <p>If you specify one or more instance
    * IDs, Amazon EC2 returns the credit option (<code>standard</code> or
    * <code>unlimited</code>) of those instances. If you specify an instance ID that
-   * is not valid, such as an instance that is not a burstable performance instance,
-   * an error is returned.</p> <p>Recently terminated instances might appear in the
-   * returned results. This interval is usually less than one hour.</p> <p>If an
-   * Availability Zone is experiencing a service disruption and you specify instance
-   * IDs in the affected zone, or do not specify any instance IDs at all, the call
-   * fails. If you specify only instance IDs in an unaffected zone, the call works
-   * normally.</p> <p>For more information, see <a
+   * is not a burstable performance instance, Amazon EC2 returns the
+   * <code>standard</code> credit option.</p> <p>Recently terminated instances might
+   * appear in the returned results. This interval is usually less than one hour.</p>
+   * <p>If an Availability Zone is experiencing a service disruption and you specify
+   * instance IDs in the affected zone, or do not specify any instance IDs at all,
+   * the call fails. If you specify only instance IDs in an unaffected zone, the call
+   * works normally.</p> <p>For more information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html">Burstable
    * performance instances</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See
    * Also:</h3>   <a
@@ -11312,9 +12152,12 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * checks for your instances</a> and <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html">Troubleshoot
    * instances with failed status checks</a> in the <i>Amazon EC2 User Guide</i>.</p>
-   * </li> <li> <p> <b>Scheduled events</b> - Amazon EC2 can schedule events (such as
-   * reboot, stop, or terminate) for your instances related to hardware issues,
-   * software updates, or system maintenance. For more information, see <a
+   * </li> <li> <p> <b>Application status checks</b> - Amazon EC2 reports
+   * application-level health status for instances, indicating whether applications
+   * running on the instance are functioning properly.</p> </li> <li> <p>
+   * <b>Scheduled events</b> - Amazon EC2 can schedule events (such as reboot, stop,
+   * or terminate) for your instances related to hardware issues, software updates,
+   * or system maintenance. For more information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-instances-status-check_sched.html">Scheduled
    * events for your instances</a> in the <i>Amazon EC2 User Guide</i>.</p> </li>
    * <li> <p> <b>Instance state</b> - You can manage your instances from the moment
@@ -11612,6 +12455,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
       const DescribeIpamExternalResourceVerificationTokensRequestT& request = {}) const {
     return SubmitAsync(&EC2Client::DescribeIpamExternalResourceVerificationTokens, request, handler, context);
+  }
+
+  /**
+   * <p>Describes one or more IPAM internet registry associations. We recommend using
+   * pagination to ensure that the operation returns quickly and
+   * successfully.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeIpamInternetRegistryAssociations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeIpamInternetRegistryAssociationsOutcome DescribeIpamInternetRegistryAssociations(
+      const Model::DescribeIpamInternetRegistryAssociationsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeIpamInternetRegistryAssociations that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename DescribeIpamInternetRegistryAssociationsRequestT = Model::DescribeIpamInternetRegistryAssociationsRequest>
+  Model::DescribeIpamInternetRegistryAssociationsOutcomeCallable DescribeIpamInternetRegistryAssociationsCallable(
+      const DescribeIpamInternetRegistryAssociationsRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::DescribeIpamInternetRegistryAssociations, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeIpamInternetRegistryAssociations that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename DescribeIpamInternetRegistryAssociationsRequestT = Model::DescribeIpamInternetRegistryAssociationsRequest>
+  void DescribeIpamInternetRegistryAssociationsAsync(const DescribeIpamInternetRegistryAssociationsResponseReceivedHandler& handler,
+                                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                                     const DescribeIpamInternetRegistryAssociationsRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::DescribeIpamInternetRegistryAssociations, request, handler, context);
   }
 
   /**
@@ -12318,6 +13192,38 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Describes the specified metric categories, or all of your metric
+   * categories.</p> <p>For more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-detailed-monitoring.html#detailed-monitoring-metric-categories">Use
+   * metric categories for additional metrics</a> in the <i>Amazon EC2 User
+   * Guide</i>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeMetricCategories">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeMetricCategoriesOutcome DescribeMetricCategories(const Model::DescribeMetricCategoriesRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeMetricCategories that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DescribeMetricCategoriesRequestT = Model::DescribeMetricCategoriesRequest>
+  Model::DescribeMetricCategoriesOutcomeCallable DescribeMetricCategoriesCallable(
+      const DescribeMetricCategoriesRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::DescribeMetricCategories, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeMetricCategories that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeMetricCategoriesRequestT = Model::DescribeMetricCategoriesRequest>
+  void DescribeMetricCategoriesAsync(const DescribeMetricCategoriesResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                     const DescribeMetricCategoriesRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::DescribeMetricCategories, request, handler, context);
+  }
+
+  /**
    *  <p>This action is deprecated.</p>  <p>Describes your Elastic IP
    * addresses that are being moved from or being restored to the EC2-Classic
    * platform. This request does not return information about any other Elastic IP
@@ -12591,7 +13497,8 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * <p>Describes the specified network interfaces or all your network
    * interfaces.</p> <p>If you have a large number of network interfaces, the
    * operation fails unless you use pagination or one of the following filters:
-   * <code>group-id</code>, <code>mac-address</code>, <code>private-dns-name</code>,
+   * <code>attachment.instance-id</code>, <code>group-id</code>,
+   * <code>mac-address</code>, <code>private-dns-name</code>,
    * <code>private-ip-address</code>, <code>subnet-id</code>, or
    * <code>vpc-id</code>.</p>  <p>We strongly recommend using only
    * paginated requests. Unpaginated requests are susceptible to throttling and
@@ -12621,6 +13528,72 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                       const DescribeNetworkInterfacesRequestT& request = {}) const {
     return SubmitAsync(&EC2Client::DescribeNetworkInterfaces, request, handler, context);
+  }
+
+  /**
+   * <p>Describes one or more of your flex cost allocation policies. We recommend
+   * using pagination to ensure that the operation returns quickly and
+   * successfully.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeNetworkingFlexCostAllocationPolicies">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeNetworkingFlexCostAllocationPoliciesOutcome DescribeNetworkingFlexCostAllocationPolicies(
+      const Model::DescribeNetworkingFlexCostAllocationPoliciesRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeNetworkingFlexCostAllocationPolicies that returns a future to the operation so that it can be executed
+   * in parallel to other requests.
+   */
+  template <typename DescribeNetworkingFlexCostAllocationPoliciesRequestT = Model::DescribeNetworkingFlexCostAllocationPoliciesRequest>
+  Model::DescribeNetworkingFlexCostAllocationPoliciesOutcomeCallable DescribeNetworkingFlexCostAllocationPoliciesCallable(
+      const DescribeNetworkingFlexCostAllocationPoliciesRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::DescribeNetworkingFlexCostAllocationPolicies, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeNetworkingFlexCostAllocationPolicies that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename DescribeNetworkingFlexCostAllocationPoliciesRequestT = Model::DescribeNetworkingFlexCostAllocationPoliciesRequest>
+  void DescribeNetworkingFlexCostAllocationPoliciesAsync(const DescribeNetworkingFlexCostAllocationPoliciesResponseReceivedHandler& handler,
+                                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                                         const DescribeNetworkingFlexCostAllocationPoliciesRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::DescribeNetworkingFlexCostAllocationPolicies, request, handler, context);
+  }
+
+  /**
+   * <p>Describes the associations between your flex cost allocation policies and
+   * network resources. We recommend using pagination to ensure that the operation
+   * returns quickly and successfully.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeNetworkingFlexCostAllocationPolicyAssociations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeNetworkingFlexCostAllocationPolicyAssociationsOutcome DescribeNetworkingFlexCostAllocationPolicyAssociations(
+      const Model::DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeNetworkingFlexCostAllocationPolicyAssociations that returns a future to the operation so that it can be
+   * executed in parallel to other requests.
+   */
+  template <typename DescribeNetworkingFlexCostAllocationPolicyAssociationsRequestT =
+                Model::DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest>
+  Model::DescribeNetworkingFlexCostAllocationPolicyAssociationsOutcomeCallable
+  DescribeNetworkingFlexCostAllocationPolicyAssociationsCallable(
+      const DescribeNetworkingFlexCostAllocationPolicyAssociationsRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::DescribeNetworkingFlexCostAllocationPolicyAssociations, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeNetworkingFlexCostAllocationPolicyAssociations that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename DescribeNetworkingFlexCostAllocationPolicyAssociationsRequestT =
+                Model::DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest>
+  void DescribeNetworkingFlexCostAllocationPolicyAssociationsAsync(
+      const DescribeNetworkingFlexCostAllocationPolicyAssociationsResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+      const DescribeNetworkingFlexCostAllocationPolicyAssociationsRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::DescribeNetworkingFlexCostAllocationPolicyAssociations, request, handler, context);
   }
 
   /**
@@ -14221,6 +15194,40 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Describes one or more network function attachments. You can describe
+   * attachments that you own or that are attached to a transit gateway that you
+   * own.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeTransitGatewayNetworkFunctionAttachments">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeTransitGatewayNetworkFunctionAttachmentsOutcome DescribeTransitGatewayNetworkFunctionAttachments(
+      const Model::DescribeTransitGatewayNetworkFunctionAttachmentsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeTransitGatewayNetworkFunctionAttachments that returns a future to the operation so that it can be
+   * executed in parallel to other requests.
+   */
+  template <
+      typename DescribeTransitGatewayNetworkFunctionAttachmentsRequestT = Model::DescribeTransitGatewayNetworkFunctionAttachmentsRequest>
+  Model::DescribeTransitGatewayNetworkFunctionAttachmentsOutcomeCallable DescribeTransitGatewayNetworkFunctionAttachmentsCallable(
+      const DescribeTransitGatewayNetworkFunctionAttachmentsRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::DescribeTransitGatewayNetworkFunctionAttachments, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeTransitGatewayNetworkFunctionAttachments that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <
+      typename DescribeTransitGatewayNetworkFunctionAttachmentsRequestT = Model::DescribeTransitGatewayNetworkFunctionAttachmentsRequest>
+  void DescribeTransitGatewayNetworkFunctionAttachmentsAsync(
+      const DescribeTransitGatewayNetworkFunctionAttachmentsResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+      const DescribeTransitGatewayNetworkFunctionAttachmentsRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::DescribeTransitGatewayNetworkFunctionAttachments, request, handler, context);
+  }
+
+  /**
    * <p>Describes your transit gateway peering attachments.</p><p><h3>See Also:</h3>
    * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeTransitGatewayPeeringAttachments">AWS
@@ -15603,6 +16610,38 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Disables suppression of application status checks for the specified
+   * instances. After suppression is disabled, health check results resume affecting
+   * the instance-level application status. You can specify a maximum of 100 instance
+   * IDs for each request.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableApplicationStatusCheckSuppression">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DisableApplicationStatusCheckSuppressionOutcome DisableApplicationStatusCheckSuppression(
+      const Model::DisableApplicationStatusCheckSuppressionRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DisableApplicationStatusCheckSuppression that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename DisableApplicationStatusCheckSuppressionRequestT = Model::DisableApplicationStatusCheckSuppressionRequest>
+  Model::DisableApplicationStatusCheckSuppressionOutcomeCallable DisableApplicationStatusCheckSuppressionCallable(
+      const DisableApplicationStatusCheckSuppressionRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::DisableApplicationStatusCheckSuppression, request);
+  }
+
+  /**
+   * An Async wrapper for DisableApplicationStatusCheckSuppression that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename DisableApplicationStatusCheckSuppressionRequestT = Model::DisableApplicationStatusCheckSuppressionRequest>
+  void DisableApplicationStatusCheckSuppressionAsync(const DisableApplicationStatusCheckSuppressionResponseReceivedHandler& handler,
+                                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                                     const DisableApplicationStatusCheckSuppressionRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::DisableApplicationStatusCheckSuppression, request, handler, context);
+  }
+
+  /**
    * <p>Disables Infrastructure Performance metric subscriptions.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableAwsNetworkPerformanceMetricSubscription">AWS
@@ -16279,6 +17318,43 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Disassociates an application status check from instances or <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">tags</a>.
+   * After disassociation, health monitoring stops for the affected instances. The
+   * following rules apply:</p> <ul> <li> <p>You must specify either
+   * <code>TargetTagAssociations</code> or <code>InstanceIds</code>, but not both.
+   * Specifying both results in an <code>InvalidParameterCombination</code>
+   * error.</p> </li> <li> <p>The application status check must already exist and
+   * belong to your account.</p> </li> <li> <p>Tag keys must not be blank.</p> </li>
+   * </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisassociateApplicationStatusCheck">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DisassociateApplicationStatusCheckOutcome DisassociateApplicationStatusCheck(
+      const Model::DisassociateApplicationStatusCheckRequest& request) const;
+
+  /**
+   * A Callable wrapper for DisassociateApplicationStatusCheck that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename DisassociateApplicationStatusCheckRequestT = Model::DisassociateApplicationStatusCheckRequest>
+  Model::DisassociateApplicationStatusCheckOutcomeCallable DisassociateApplicationStatusCheckCallable(
+      const DisassociateApplicationStatusCheckRequestT& request) const {
+    return SubmitCallable(&EC2Client::DisassociateApplicationStatusCheck, request);
+  }
+
+  /**
+   * An Async wrapper for DisassociateApplicationStatusCheck that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename DisassociateApplicationStatusCheckRequestT = Model::DisassociateApplicationStatusCheckRequest>
+  void DisassociateApplicationStatusCheckAsync(const DisassociateApplicationStatusCheckRequestT& request,
+                                               const DisassociateApplicationStatusCheckResponseReceivedHandler& handler,
+                                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DisassociateApplicationStatusCheck, request, handler, context);
+  }
+
+  /**
    * <p>Cancels a pending request to assign billing of the unused capacity of a
    * Capacity Reservation to a consumer account, or revokes a request that has
    * already been accepted. For more information, see <a
@@ -16510,6 +17586,35 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Removes an associated KMS key from an Amazon EBS snapshot. After you
+   * disassociate the key, it can no longer be used to access the snapshot's data.
+   * The snapshot's original encryption key is unaffected.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisassociateKmsKeyId">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DisassociateKmsKeyIdOutcome DisassociateKmsKeyId(const Model::DisassociateKmsKeyIdRequest& request) const;
+
+  /**
+   * A Callable wrapper for DisassociateKmsKeyId that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DisassociateKmsKeyIdRequestT = Model::DisassociateKmsKeyIdRequest>
+  Model::DisassociateKmsKeyIdOutcomeCallable DisassociateKmsKeyIdCallable(const DisassociateKmsKeyIdRequestT& request) const {
+    return SubmitCallable(&EC2Client::DisassociateKmsKeyId, request);
+  }
+
+  /**
+   * An Async wrapper for DisassociateKmsKeyId that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DisassociateKmsKeyIdRequestT = Model::DisassociateKmsKeyIdRequest>
+  void DisassociateKmsKeyIdAsync(const DisassociateKmsKeyIdRequestT& request, const DisassociateKmsKeyIdResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DisassociateKmsKeyId, request, handler, context);
+  }
+
+  /**
    * <p>Disassociates secondary Elastic IP addresses (EIPs) from a public NAT
    * gateway. You cannot disassociate your primary EIP. For more information, see <a
    * href="https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html#nat-gateway-edit-secondary">Edit
@@ -16547,6 +17652,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                           const DisassociateNatGatewayAddressResponseReceivedHandler& handler,
                                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::DisassociateNatGatewayAddress, request, handler, context);
+  }
+
+  /**
+   * <p>Disassociates a flex cost allocation policy from one or more network
+   * resources.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisassociateNetworkingFlexCostAllocationPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DisassociateNetworkingFlexCostAllocationPolicyOutcome DisassociateNetworkingFlexCostAllocationPolicy(
+      const Model::DisassociateNetworkingFlexCostAllocationPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for DisassociateNetworkingFlexCostAllocationPolicy that returns a future to the operation so that it can be executed
+   * in parallel to other requests.
+   */
+  template <typename DisassociateNetworkingFlexCostAllocationPolicyRequestT = Model::DisassociateNetworkingFlexCostAllocationPolicyRequest>
+  Model::DisassociateNetworkingFlexCostAllocationPolicyOutcomeCallable DisassociateNetworkingFlexCostAllocationPolicyCallable(
+      const DisassociateNetworkingFlexCostAllocationPolicyRequestT& request) const {
+    return SubmitCallable(&EC2Client::DisassociateNetworkingFlexCostAllocationPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for DisassociateNetworkingFlexCostAllocationPolicy that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename DisassociateNetworkingFlexCostAllocationPolicyRequestT = Model::DisassociateNetworkingFlexCostAllocationPolicyRequest>
+  void DisassociateNetworkingFlexCostAllocationPolicyAsync(
+      const DisassociateNetworkingFlexCostAllocationPolicyRequestT& request,
+      const DisassociateNetworkingFlexCostAllocationPolicyResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::DisassociateNetworkingFlexCostAllocationPolicy, request, handler, context);
   }
 
   /**
@@ -16909,6 +18045,43 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Suppresses application status checks for the specified instances. While
+   * suppressed, health checks continue to run but do not affect the instance-level
+   * application status. The following rules apply:</p> <ul> <li> <p>You can specify
+   * a maximum of 100 instance IDs for each request.</p> </li> <li> <p>Use
+   * <code>DisableApplicationStatusCheckSuppression</code> to resume normal health
+   * check reporting.</p> </li> <li> <p>If you do not specify
+   * <code>DurationSeconds</code>, suppression continues indefinitely until you call
+   * <code>DisableApplicationStatusCheckSuppression</code>.</p> </li> </ul><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableApplicationStatusCheckSuppression">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::EnableApplicationStatusCheckSuppressionOutcome EnableApplicationStatusCheckSuppression(
+      const Model::EnableApplicationStatusCheckSuppressionRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for EnableApplicationStatusCheckSuppression that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename EnableApplicationStatusCheckSuppressionRequestT = Model::EnableApplicationStatusCheckSuppressionRequest>
+  Model::EnableApplicationStatusCheckSuppressionOutcomeCallable EnableApplicationStatusCheckSuppressionCallable(
+      const EnableApplicationStatusCheckSuppressionRequestT& request = {}) const {
+    return SubmitCallable(&EC2Client::EnableApplicationStatusCheckSuppression, request);
+  }
+
+  /**
+   * An Async wrapper for EnableApplicationStatusCheckSuppression that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename EnableApplicationStatusCheckSuppressionRequestT = Model::EnableApplicationStatusCheckSuppressionRequest>
+  void EnableApplicationStatusCheckSuppressionAsync(const EnableApplicationStatusCheckSuppressionResponseReceivedHandler& handler,
+                                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                                    const EnableApplicationStatusCheckSuppressionRequestT& request = {}) const {
+    return SubmitAsync(&EC2Client::EnableApplicationStatusCheckSuppression, request, handler, context);
+  }
+
+  /**
    * <p>Enables Infrastructure Performance subscriptions.</p><p><h3>See Also:</h3>
    * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableAwsNetworkPerformanceMetricSubscription">AWS
@@ -17257,6 +18430,39 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                                  const EnableInstanceSqlHaStandbyDetectionsResponseReceivedHandler& handler,
                                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::EnableInstanceSqlHaStandbyDetections, request, handler, context);
+  }
+
+  /**
+   * <p>Enables Resource Public Key Infrastructure (RPKI) on an existing IPAM
+   * internet registry association by providing BGP Public Key Infrastructure (BPKI)
+   * certificate details. After enabling, you can create Route Origin Authorizations
+   * (ROAs) for prefixes registered with the internet registry.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableIpamInternetRegistryAssociation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::EnableIpamInternetRegistryAssociationOutcome EnableIpamInternetRegistryAssociation(
+      const Model::EnableIpamInternetRegistryAssociationRequest& request) const;
+
+  /**
+   * A Callable wrapper for EnableIpamInternetRegistryAssociation that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename EnableIpamInternetRegistryAssociationRequestT = Model::EnableIpamInternetRegistryAssociationRequest>
+  Model::EnableIpamInternetRegistryAssociationOutcomeCallable EnableIpamInternetRegistryAssociationCallable(
+      const EnableIpamInternetRegistryAssociationRequestT& request) const {
+    return SubmitCallable(&EC2Client::EnableIpamInternetRegistryAssociation, request);
+  }
+
+  /**
+   * An Async wrapper for EnableIpamInternetRegistryAssociation that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename EnableIpamInternetRegistryAssociationRequestT = Model::EnableIpamInternetRegistryAssociationRequest>
+  void EnableIpamInternetRegistryAssociationAsync(const EnableIpamInternetRegistryAssociationRequestT& request,
+                                                  const EnableIpamInternetRegistryAssociationResponseReceivedHandler& handler,
+                                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::EnableIpamInternetRegistryAssociation, request, handler, context);
   }
 
   /**
@@ -18078,6 +19284,46 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p> Scores how well each instance type and Availability Zone combination can
+   * support a capacity request, based on current Amazon EC2 capacity. The response
+   * includes a score for each combination and an aggregate score for all
+   * combinations in the request. This action doesn't launch or reserve instances,
+   * and a score doesn't guarantee that a later launch will succeed. </p> <p> Call
+   * this action in the Region where you turned on Capacity Manager. A single request
+   * can include Availability Zones in any Region. Real-time supportability checks
+   * are available only to Amazon Web Services Support customers on the Unified
+   * Operations plan. </p> <p>For more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-manager-supportability.html">Check
+   * supportability</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetCapacityManagerSupportabilityScores">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetCapacityManagerSupportabilityScoresOutcome GetCapacityManagerSupportabilityScores(
+      const Model::GetCapacityManagerSupportabilityScoresRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetCapacityManagerSupportabilityScores that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename GetCapacityManagerSupportabilityScoresRequestT = Model::GetCapacityManagerSupportabilityScoresRequest>
+  Model::GetCapacityManagerSupportabilityScoresOutcomeCallable GetCapacityManagerSupportabilityScoresCallable(
+      const GetCapacityManagerSupportabilityScoresRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetCapacityManagerSupportabilityScores, request);
+  }
+
+  /**
+   * An Async wrapper for GetCapacityManagerSupportabilityScores that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename GetCapacityManagerSupportabilityScoresRequestT = Model::GetCapacityManagerSupportabilityScoresRequest>
+  void GetCapacityManagerSupportabilityScoresAsync(const GetCapacityManagerSupportabilityScoresRequestT& request,
+                                                   const GetCapacityManagerSupportabilityScoresResponseReceivedHandler& handler,
+                                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetCapacityManagerSupportabilityScores, request, handler, context);
+  }
+
+  /**
    * <p>Gets usage information about a Capacity Reservation. If the Capacity
    * Reservation is shared, it shows usage information for the Capacity Reservation
    * owner and each Amazon Web Services account that is currently using the shared
@@ -18108,6 +19354,36 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                         const GetCapacityReservationUsageResponseReceivedHandler& handler,
                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::GetCapacityReservationUsage, request, handler, context);
+  }
+
+  /**
+   * <p>Describes the authorization policy for a Client VPN endpoint.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetClientVpnEndpointAuthorizationPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetClientVpnEndpointAuthorizationPolicyOutcome GetClientVpnEndpointAuthorizationPolicy(
+      const Model::GetClientVpnEndpointAuthorizationPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetClientVpnEndpointAuthorizationPolicy that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename GetClientVpnEndpointAuthorizationPolicyRequestT = Model::GetClientVpnEndpointAuthorizationPolicyRequest>
+  Model::GetClientVpnEndpointAuthorizationPolicyOutcomeCallable GetClientVpnEndpointAuthorizationPolicyCallable(
+      const GetClientVpnEndpointAuthorizationPolicyRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetClientVpnEndpointAuthorizationPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for GetClientVpnEndpointAuthorizationPolicy that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename GetClientVpnEndpointAuthorizationPolicyRequestT = Model::GetClientVpnEndpointAuthorizationPolicyRequest>
+  void GetClientVpnEndpointAuthorizationPolicyAsync(const GetClientVpnEndpointAuthorizationPolicyRequestT& request,
+                                                    const GetClientVpnEndpointAuthorizationPolicyResponseReceivedHandler& handler,
+                                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetClientVpnEndpointAuthorizationPolicy, request, handler, context);
   }
 
   /**
@@ -18383,8 +19659,9 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * table partitioned between two timestamps in the past</p> </li> <li> <p>Create a
    * set of named queries in Athena that you can use to get started quickly</p> </li>
    * </ul>  <p> <code>GetFlowLogsIntegrationTemplate</code> does not support
-   * integration between Amazon Web Services Transit Gateway Flow Logs and Amazon
-   * Athena.</p> <p><h3>See Also:</h3>   <a
+   * integration between Amazon Web Services Transit Gateway Flow Logs or Amazon Web
+   * Services Cloud WAN Flow Logs and Amazon Athena.</p> <p><h3>See Also:</h3>
+   * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetFlowLogsIntegrationTemplate">AWS
    * API Reference</a></p>
    */
@@ -18536,6 +19813,35 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                            const GetImageBlockPublicAccessStateRequestT& request = {}) const {
     return SubmitAsync(&EC2Client::GetImageBlockPublicAccessState, request, handler, context);
+  }
+
+  /**
+   * <p>Describes the Amazon Inspector vulnerability findings for the specified
+   * AMI.</p> <p>You can get findings for AMIs that you own, AMIs that are shared
+   * with you, and public AMIs. Amazon Inspector returns findings only for AMIs that
+   * it has scanned.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetImageFindings">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetImageFindingsOutcome GetImageFindings(const Model::GetImageFindingsRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetImageFindings that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetImageFindingsRequestT = Model::GetImageFindingsRequest>
+  Model::GetImageFindingsOutcomeCallable GetImageFindingsCallable(const GetImageFindingsRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetImageFindings, request);
+  }
+
+  /**
+   * An Async wrapper for GetImageFindings that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetImageFindingsRequestT = Model::GetImageFindingsRequest>
+  void GetImageFindingsAsync(const GetImageFindingsRequestT& request, const GetImageFindingsResponseReceivedHandler& handler,
+                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetImageFindings, request, handler, context);
   }
 
   /**
@@ -18805,6 +20111,100 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                            const GetIpamDiscoveredResourceCidrsResponseReceivedHandler& handler,
                                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::GetIpamDiscoveredResourceCidrs, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves Border Gateway Protocol (BGP) routes discovered by IPAM resource
+   * discovery for a specified Region. Use this operation to view the Bring Your Own
+   * IP (BYOIP) address ranges that are currently advertised through BGP. We
+   * recommend using pagination to ensure that the operation returns quickly and
+   * successfully.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetIpamDiscoveredRoutes">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetIpamDiscoveredRoutesOutcome GetIpamDiscoveredRoutes(const Model::GetIpamDiscoveredRoutesRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetIpamDiscoveredRoutes that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetIpamDiscoveredRoutesRequestT = Model::GetIpamDiscoveredRoutesRequest>
+  Model::GetIpamDiscoveredRoutesOutcomeCallable GetIpamDiscoveredRoutesCallable(const GetIpamDiscoveredRoutesRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetIpamDiscoveredRoutes, request);
+  }
+
+  /**
+   * An Async wrapper for GetIpamDiscoveredRoutes that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetIpamDiscoveredRoutesRequestT = Model::GetIpamDiscoveredRoutesRequest>
+  void GetIpamDiscoveredRoutesAsync(const GetIpamDiscoveredRoutesRequestT& request,
+                                    const GetIpamDiscoveredRoutesResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetIpamDiscoveredRoutes, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves Autonomous System Numbers (ASNs) registered with an internet
+   * registry for an IPAM internet registry association. We recommend using
+   * pagination to ensure that the operation returns quickly and
+   * successfully.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetIpamInternetRegistryAssociationAsns">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetIpamInternetRegistryAssociationAsnsOutcome GetIpamInternetRegistryAssociationAsns(
+      const Model::GetIpamInternetRegistryAssociationAsnsRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetIpamInternetRegistryAssociationAsns that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename GetIpamInternetRegistryAssociationAsnsRequestT = Model::GetIpamInternetRegistryAssociationAsnsRequest>
+  Model::GetIpamInternetRegistryAssociationAsnsOutcomeCallable GetIpamInternetRegistryAssociationAsnsCallable(
+      const GetIpamInternetRegistryAssociationAsnsRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetIpamInternetRegistryAssociationAsns, request);
+  }
+
+  /**
+   * An Async wrapper for GetIpamInternetRegistryAssociationAsns that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename GetIpamInternetRegistryAssociationAsnsRequestT = Model::GetIpamInternetRegistryAssociationAsnsRequest>
+  void GetIpamInternetRegistryAssociationAsnsAsync(const GetIpamInternetRegistryAssociationAsnsRequestT& request,
+                                                   const GetIpamInternetRegistryAssociationAsnsResponseReceivedHandler& handler,
+                                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetIpamInternetRegistryAssociationAsns, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves IP address CIDRs registered with an internet registry for an IPAM
+   * internet registry association. We recommend using pagination to ensure that the
+   * operation returns quickly and successfully.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetIpamInternetRegistryAssociationCidrs">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetIpamInternetRegistryAssociationCidrsOutcome GetIpamInternetRegistryAssociationCidrs(
+      const Model::GetIpamInternetRegistryAssociationCidrsRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetIpamInternetRegistryAssociationCidrs that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename GetIpamInternetRegistryAssociationCidrsRequestT = Model::GetIpamInternetRegistryAssociationCidrsRequest>
+  Model::GetIpamInternetRegistryAssociationCidrsOutcomeCallable GetIpamInternetRegistryAssociationCidrsCallable(
+      const GetIpamInternetRegistryAssociationCidrsRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetIpamInternetRegistryAssociationCidrs, request);
+  }
+
+  /**
+   * An Async wrapper for GetIpamInternetRegistryAssociationCidrs that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename GetIpamInternetRegistryAssociationCidrsRequestT = Model::GetIpamInternetRegistryAssociationCidrsRequest>
+  void GetIpamInternetRegistryAssociationCidrsAsync(const GetIpamInternetRegistryAssociationCidrsRequestT& request,
+                                                    const GetIpamInternetRegistryAssociationCidrsResponseReceivedHandler& handler,
+                                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetIpamInternetRegistryAssociationCidrs, request, handler, context);
   }
 
   /**
@@ -19082,6 +20482,136 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Retrieves the current Route Origin Authorizations (ROAs) published to the
+   * RPKI for an IPAM internet registry association. We recommend using pagination to
+   * ensure that the operation returns quickly and successfully.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetIpamRouteOriginAuthorizations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetIpamRouteOriginAuthorizationsOutcome GetIpamRouteOriginAuthorizations(
+      const Model::GetIpamRouteOriginAuthorizationsRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetIpamRouteOriginAuthorizations that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename GetIpamRouteOriginAuthorizationsRequestT = Model::GetIpamRouteOriginAuthorizationsRequest>
+  Model::GetIpamRouteOriginAuthorizationsOutcomeCallable GetIpamRouteOriginAuthorizationsCallable(
+      const GetIpamRouteOriginAuthorizationsRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetIpamRouteOriginAuthorizations, request);
+  }
+
+  /**
+   * An Async wrapper for GetIpamRouteOriginAuthorizations that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename GetIpamRouteOriginAuthorizationsRequestT = Model::GetIpamRouteOriginAuthorizationsRequest>
+  void GetIpamRouteOriginAuthorizationsAsync(const GetIpamRouteOriginAuthorizationsRequestT& request,
+                                             const GetIpamRouteOriginAuthorizationsResponseReceivedHandler& handler,
+                                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetIpamRouteOriginAuthorizations, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves route protection findings for an IPAM. Route protection findings
+   * show the Resource Public Key Infrastructure (RPKI) validation status of your
+   * Bring Your Own IP (BYOIP) routes. Findings identify routes that have valid,
+   * invalid, or unknown validation states. We recommend using pagination to ensure
+   * that the operation returns quickly and successfully.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetIpamRouteProtectionFindings">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetIpamRouteProtectionFindingsOutcome GetIpamRouteProtectionFindings(
+      const Model::GetIpamRouteProtectionFindingsRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetIpamRouteProtectionFindings that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename GetIpamRouteProtectionFindingsRequestT = Model::GetIpamRouteProtectionFindingsRequest>
+  Model::GetIpamRouteProtectionFindingsOutcomeCallable GetIpamRouteProtectionFindingsCallable(
+      const GetIpamRouteProtectionFindingsRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetIpamRouteProtectionFindings, request);
+  }
+
+  /**
+   * An Async wrapper for GetIpamRouteProtectionFindings that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename GetIpamRouteProtectionFindingsRequestT = Model::GetIpamRouteProtectionFindingsRequest>
+  void GetIpamRouteProtectionFindingsAsync(const GetIpamRouteProtectionFindingsRequestT& request,
+                                           const GetIpamRouteProtectionFindingsResponseReceivedHandler& handler,
+                                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetIpamRouteProtectionFindings, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the history of routing policy registration changes for an IPAM
+   * internet registry association. We recommend using pagination to ensure that the
+   * operation returns quickly and successfully.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetIpamRoutingPolicyRegistrationDeltas">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetIpamRoutingPolicyRegistrationDeltasOutcome GetIpamRoutingPolicyRegistrationDeltas(
+      const Model::GetIpamRoutingPolicyRegistrationDeltasRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetIpamRoutingPolicyRegistrationDeltas that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename GetIpamRoutingPolicyRegistrationDeltasRequestT = Model::GetIpamRoutingPolicyRegistrationDeltasRequest>
+  Model::GetIpamRoutingPolicyRegistrationDeltasOutcomeCallable GetIpamRoutingPolicyRegistrationDeltasCallable(
+      const GetIpamRoutingPolicyRegistrationDeltasRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetIpamRoutingPolicyRegistrationDeltas, request);
+  }
+
+  /**
+   * An Async wrapper for GetIpamRoutingPolicyRegistrationDeltas that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename GetIpamRoutingPolicyRegistrationDeltasRequestT = Model::GetIpamRoutingPolicyRegistrationDeltasRequest>
+  void GetIpamRoutingPolicyRegistrationDeltasAsync(const GetIpamRoutingPolicyRegistrationDeltasRequestT& request,
+                                                   const GetIpamRoutingPolicyRegistrationDeltasResponseReceivedHandler& handler,
+                                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetIpamRoutingPolicyRegistrationDeltas, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves routing policy registrations for an IPAM internet registry
+   * association. Each registration represents a Route Origin Authorization (ROA)
+   * that has been created or is pending publication to the RPKI. We recommend using
+   * pagination to ensure that the operation returns quickly and
+   * successfully.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetIpamRoutingPolicyRegistrations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetIpamRoutingPolicyRegistrationsOutcome GetIpamRoutingPolicyRegistrations(
+      const Model::GetIpamRoutingPolicyRegistrationsRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetIpamRoutingPolicyRegistrations that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename GetIpamRoutingPolicyRegistrationsRequestT = Model::GetIpamRoutingPolicyRegistrationsRequest>
+  Model::GetIpamRoutingPolicyRegistrationsOutcomeCallable GetIpamRoutingPolicyRegistrationsCallable(
+      const GetIpamRoutingPolicyRegistrationsRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetIpamRoutingPolicyRegistrations, request);
+  }
+
+  /**
+   * An Async wrapper for GetIpamRoutingPolicyRegistrations that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename GetIpamRoutingPolicyRegistrationsRequestT = Model::GetIpamRoutingPolicyRegistrationsRequest>
+  void GetIpamRoutingPolicyRegistrationsAsync(const GetIpamRoutingPolicyRegistrationsRequestT& request,
+                                              const GetIpamRoutingPolicyRegistrationsResponseReceivedHandler& handler,
+                                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetIpamRoutingPolicyRegistrations, request, handler, context);
+  }
+
+  /**
    * <p>Retrieves the configuration data of the specified instance. You can use this
    * data to create a launch template. </p> <p>This action calls on other describe
    * actions to get instance information. Depending on your instance configuration,
@@ -19265,6 +20795,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                                  const GetNetworkInsightsAccessScopeContentResponseReceivedHandler& handler,
                                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::GetNetworkInsightsAccessScopeContent, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the versions of a flex cost allocation policy.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetNetworkingFlexCostAllocationPolicyVersions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetNetworkingFlexCostAllocationPolicyVersionsOutcome GetNetworkingFlexCostAllocationPolicyVersions(
+      const Model::GetNetworkingFlexCostAllocationPolicyVersionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetNetworkingFlexCostAllocationPolicyVersions that returns a future to the operation so that it can be executed
+   * in parallel to other requests.
+   */
+  template <typename GetNetworkingFlexCostAllocationPolicyVersionsRequestT = Model::GetNetworkingFlexCostAllocationPolicyVersionsRequest>
+  Model::GetNetworkingFlexCostAllocationPolicyVersionsOutcomeCallable GetNetworkingFlexCostAllocationPolicyVersionsCallable(
+      const GetNetworkingFlexCostAllocationPolicyVersionsRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetNetworkingFlexCostAllocationPolicyVersions, request);
+  }
+
+  /**
+   * An Async wrapper for GetNetworkingFlexCostAllocationPolicyVersions that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename GetNetworkingFlexCostAllocationPolicyVersionsRequestT = Model::GetNetworkingFlexCostAllocationPolicyVersionsRequest>
+  void GetNetworkingFlexCostAllocationPolicyVersionsAsync(
+      const GetNetworkingFlexCostAllocationPolicyVersionsRequestT& request,
+      const GetNetworkingFlexCostAllocationPolicyVersionsResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetNetworkingFlexCostAllocationPolicyVersions, request, handler, context);
   }
 
   /**
@@ -19628,6 +21189,38 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                       const GetSubnetCidrReservationsResponseReceivedHandler& handler,
                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::GetSubnetCidrReservations, request, handler, context);
+  }
+
+  /**
+   * <p>Describes the NAT configuration for the specified transit gateway attachment.
+   * Only the owner of the transit gateway can describe the NAT
+   * configuration.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetTransitGatewayAttachmentNatConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetTransitGatewayAttachmentNatConfigurationOutcome GetTransitGatewayAttachmentNatConfiguration(
+      const Model::GetTransitGatewayAttachmentNatConfigurationRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetTransitGatewayAttachmentNatConfiguration that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename GetTransitGatewayAttachmentNatConfigurationRequestT = Model::GetTransitGatewayAttachmentNatConfigurationRequest>
+  Model::GetTransitGatewayAttachmentNatConfigurationOutcomeCallable GetTransitGatewayAttachmentNatConfigurationCallable(
+      const GetTransitGatewayAttachmentNatConfigurationRequestT& request) const {
+    return SubmitCallable(&EC2Client::GetTransitGatewayAttachmentNatConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for GetTransitGatewayAttachmentNatConfiguration that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename GetTransitGatewayAttachmentNatConfigurationRequestT = Model::GetTransitGatewayAttachmentNatConfigurationRequest>
+  void GetTransitGatewayAttachmentNatConfigurationAsync(
+      const GetTransitGatewayAttachmentNatConfigurationRequestT& request,
+      const GetTransitGatewayAttachmentNatConfigurationResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::GetTransitGatewayAttachmentNatConfiguration, request, handler, context);
   }
 
   /**
@@ -20486,6 +22079,39 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Modifies an existing application status check. You can update the protocol,
+   * port, path, thresholds, and other configuration settings. The following rules
+   * apply:</p> <ul> <li> <p>The application status check must exist and belong to
+   * your account.</p> </li> <li> <p>Changes take effect on the next health check
+   * interval.</p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyApplicationStatusCheck">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ModifyApplicationStatusCheckOutcome ModifyApplicationStatusCheck(
+      const Model::ModifyApplicationStatusCheckRequest& request) const;
+
+  /**
+   * A Callable wrapper for ModifyApplicationStatusCheck that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename ModifyApplicationStatusCheckRequestT = Model::ModifyApplicationStatusCheckRequest>
+  Model::ModifyApplicationStatusCheckOutcomeCallable ModifyApplicationStatusCheckCallable(
+      const ModifyApplicationStatusCheckRequestT& request) const {
+    return SubmitCallable(&EC2Client::ModifyApplicationStatusCheck, request);
+  }
+
+  /**
+   * An Async wrapper for ModifyApplicationStatusCheck that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ModifyApplicationStatusCheckRequestT = Model::ModifyApplicationStatusCheckRequest>
+  void ModifyApplicationStatusCheckAsync(const ModifyApplicationStatusCheckRequestT& request,
+                                         const ModifyApplicationStatusCheckResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ModifyApplicationStatusCheck, request, handler, context);
+  }
+
+  /**
    * <p>Changes the opt-in status of the specified zone group for your
    * account.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyAvailabilityZoneGroup">AWS
@@ -20534,7 +22160,13 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * commitment duration or elapsed commitment duration - All modifications are
    * allowed.</p> </li> <li> <p> <code>expired</code>, <code>cancelled</code>,
    * <code>unsupported</code>, or <code>failed</code> state - You can't modify the
-   * Capacity Reservation in any way.</p> </li> </ul><p><h3>See Also:</h3>   <a
+   * Capacity Reservation in any way.</p> </li> </ul> <p>For a future-dated Capacity
+   * Reservation that has not yet been delivered, pushing out the start date requires
+   * a quote generated by <code>CreateCapacityReservationDateChangeQuote</code>. For
+   * more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-reservations-modify.html">Modify
+   * an active Capacity Reservation</a> in the <i>Amazon EC2 User
+   * Guide</i>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyCapacityReservation">AWS
    * API Reference</a></p>
    */
@@ -20621,6 +22253,40 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                     const ModifyClientVpnEndpointResponseReceivedHandler& handler,
                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::ModifyClientVpnEndpoint, request, handler, context);
+  }
+
+  /**
+   * <p>Creates or updates the authorization policy for a Client VPN endpoint. A
+   * Client VPN endpoint can have one authorization policy. If a policy already
+   * exists for the endpoint, the values that you specify replace the corresponding
+   * values in the existing policy, and values that you do not specify remain
+   * unchanged.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyClientVpnEndpointAuthorizationPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ModifyClientVpnEndpointAuthorizationPolicyOutcome ModifyClientVpnEndpointAuthorizationPolicy(
+      const Model::ModifyClientVpnEndpointAuthorizationPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for ModifyClientVpnEndpointAuthorizationPolicy that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename ModifyClientVpnEndpointAuthorizationPolicyRequestT = Model::ModifyClientVpnEndpointAuthorizationPolicyRequest>
+  Model::ModifyClientVpnEndpointAuthorizationPolicyOutcomeCallable ModifyClientVpnEndpointAuthorizationPolicyCallable(
+      const ModifyClientVpnEndpointAuthorizationPolicyRequestT& request) const {
+    return SubmitCallable(&EC2Client::ModifyClientVpnEndpointAuthorizationPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for ModifyClientVpnEndpointAuthorizationPolicy that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename ModifyClientVpnEndpointAuthorizationPolicyRequestT = Model::ModifyClientVpnEndpointAuthorizationPolicyRequest>
+  void ModifyClientVpnEndpointAuthorizationPolicyAsync(
+      const ModifyClientVpnEndpointAuthorizationPolicyRequestT& request,
+      const ModifyClientVpnEndpointAuthorizationPolicyResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ModifyClientVpnEndpointAuthorizationPolicy, request, handler, context);
   }
 
   /**
@@ -21633,6 +23299,37 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Modifies an existing routing policy registration. You can update the
+   * authorized ASNs, maximum prefix length, and other properties of a Route Origin
+   * Authorization (ROA).</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyIpamRoutingPolicyRegistration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ModifyIpamRoutingPolicyRegistrationOutcome ModifyIpamRoutingPolicyRegistration(
+      const Model::ModifyIpamRoutingPolicyRegistrationRequest& request) const;
+
+  /**
+   * A Callable wrapper for ModifyIpamRoutingPolicyRegistration that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename ModifyIpamRoutingPolicyRegistrationRequestT = Model::ModifyIpamRoutingPolicyRegistrationRequest>
+  Model::ModifyIpamRoutingPolicyRegistrationOutcomeCallable ModifyIpamRoutingPolicyRegistrationCallable(
+      const ModifyIpamRoutingPolicyRegistrationRequestT& request) const {
+    return SubmitCallable(&EC2Client::ModifyIpamRoutingPolicyRegistration, request);
+  }
+
+  /**
+   * An Async wrapper for ModifyIpamRoutingPolicyRegistration that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename ModifyIpamRoutingPolicyRegistrationRequestT = Model::ModifyIpamRoutingPolicyRegistrationRequest>
+  void ModifyIpamRoutingPolicyRegistrationAsync(const ModifyIpamRoutingPolicyRegistrationRequestT& request,
+                                                const ModifyIpamRoutingPolicyRegistrationResponseReceivedHandler& handler,
+                                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ModifyIpamRoutingPolicyRegistration, request, handler, context);
+  }
+
+  /**
    * <p>Modify an IPAM scope.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyIpamScope">AWS
    * API Reference</a></p>
@@ -21779,6 +23476,38 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Modifies the metrics in the specified metric category. The metrics that you
+   * specify replace the existing metrics.</p> <p>Instances that are associated with
+   * the metric category are updated asynchronously.</p> <p>For more information, see
+   * <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-detailed-monitoring.html#detailed-monitoring-metric-categories">Use
+   * metric categories for additional metrics</a> in the <i>Amazon EC2 User
+   * Guide</i>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyMetricCategory">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ModifyMetricCategoryOutcome ModifyMetricCategory(const Model::ModifyMetricCategoryRequest& request) const;
+
+  /**
+   * A Callable wrapper for ModifyMetricCategory that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ModifyMetricCategoryRequestT = Model::ModifyMetricCategoryRequest>
+  Model::ModifyMetricCategoryOutcomeCallable ModifyMetricCategoryCallable(const ModifyMetricCategoryRequestT& request) const {
+    return SubmitCallable(&EC2Client::ModifyMetricCategory, request);
+  }
+
+  /**
+   * An Async wrapper for ModifyMetricCategory that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ModifyMetricCategoryRequestT = Model::ModifyMetricCategoryRequest>
+  void ModifyMetricCategoryAsync(const ModifyMetricCategoryRequestT& request, const ModifyMetricCategoryResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ModifyMetricCategory, request, handler, context);
+  }
+
+  /**
    * <p>Modifies the specified network interface attribute. You can specify only one
    * attribute at a time. You can use this action to attach and detach security
    * groups from an existing EC2 instance.</p><p><h3>See Also:</h3>   <a
@@ -21807,6 +23536,42 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                             const ModifyNetworkInterfaceAttributeResponseReceivedHandler& handler,
                                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::ModifyNetworkInterfaceAttribute, request, handler, context);
+  }
+
+  /**
+   * <p>Modifies a flex cost allocation policy. Changing a policy document or
+   * <code>ShowBackEnabled</code> creates a new version of the policy. Changing only
+   * the description doesn't create a new version.</p> <p>A policy can have up to 100
+   * versions. Versions are never removed, so after a policy reaches 100 versions,
+   * you can't change its policy document or <code>ShowBackEnabled</code>. Policies
+   * that are managed by a declarative policy aren't subject to this
+   * limit.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyNetworkingFlexCostAllocationPolicy">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ModifyNetworkingFlexCostAllocationPolicyOutcome ModifyNetworkingFlexCostAllocationPolicy(
+      const Model::ModifyNetworkingFlexCostAllocationPolicyRequest& request) const;
+
+  /**
+   * A Callable wrapper for ModifyNetworkingFlexCostAllocationPolicy that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename ModifyNetworkingFlexCostAllocationPolicyRequestT = Model::ModifyNetworkingFlexCostAllocationPolicyRequest>
+  Model::ModifyNetworkingFlexCostAllocationPolicyOutcomeCallable ModifyNetworkingFlexCostAllocationPolicyCallable(
+      const ModifyNetworkingFlexCostAllocationPolicyRequestT& request) const {
+    return SubmitCallable(&EC2Client::ModifyNetworkingFlexCostAllocationPolicy, request);
+  }
+
+  /**
+   * An Async wrapper for ModifyNetworkingFlexCostAllocationPolicy that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename ModifyNetworkingFlexCostAllocationPolicyRequestT = Model::ModifyNetworkingFlexCostAllocationPolicyRequest>
+  void ModifyNetworkingFlexCostAllocationPolicyAsync(
+      const ModifyNetworkingFlexCostAllocationPolicyRequestT& request,
+      const ModifyNetworkingFlexCostAllocationPolicyResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ModifyNetworkingFlexCostAllocationPolicy, request, handler, context);
   }
 
   /**
@@ -22259,6 +24024,47 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Modifies the NAT configuration for the specified transit gateway attachment.
+   * Use this operation to do the following:</p> <ul> <li> <p>Enable or disable NAT
+   * gateway support for the attachment.</p> </li> <li> <p>Specify whether the
+   * transit gateway installs routes for the NAT CIDRs.</p> </li> <li> <p>Replace the
+   * NAT gateway rules for the attachment.</p> </li> </ul> <p>Only the owner of the
+   * transit gateway can modify the NAT configuration.</p> <p>With NAT gateway
+   * support enabled, the transit gateway translates addresses in each rule's
+   * <code>MatchSourceCidr</code> range to the corresponding addresses in its
+   * <code>NatCidr</code> range.</p> <p>The transit gateway applies changes
+   * asynchronously. To check the result, use
+   * <code>GetTransitGatewayAttachmentNatConfiguration</code>.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyTransitGatewayAttachmentNatConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ModifyTransitGatewayAttachmentNatConfigurationOutcome ModifyTransitGatewayAttachmentNatConfiguration(
+      const Model::ModifyTransitGatewayAttachmentNatConfigurationRequest& request) const;
+
+  /**
+   * A Callable wrapper for ModifyTransitGatewayAttachmentNatConfiguration that returns a future to the operation so that it can be executed
+   * in parallel to other requests.
+   */
+  template <typename ModifyTransitGatewayAttachmentNatConfigurationRequestT = Model::ModifyTransitGatewayAttachmentNatConfigurationRequest>
+  Model::ModifyTransitGatewayAttachmentNatConfigurationOutcomeCallable ModifyTransitGatewayAttachmentNatConfigurationCallable(
+      const ModifyTransitGatewayAttachmentNatConfigurationRequestT& request) const {
+    return SubmitCallable(&EC2Client::ModifyTransitGatewayAttachmentNatConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for ModifyTransitGatewayAttachmentNatConfiguration that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename ModifyTransitGatewayAttachmentNatConfigurationRequestT = Model::ModifyTransitGatewayAttachmentNatConfigurationRequest>
+  void ModifyTransitGatewayAttachmentNatConfigurationAsync(
+      const ModifyTransitGatewayAttachmentNatConfigurationRequestT& request,
+      const ModifyTransitGatewayAttachmentNatConfigurationResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ModifyTransitGatewayAttachmentNatConfiguration, request, handler, context);
+  }
+
+  /**
    * <p>Modifies a transit gateway metering policy.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyTransitGatewayMeteringPolicy">AWS
    * API Reference</a></p>
@@ -22285,6 +24091,113 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                                const ModifyTransitGatewayMeteringPolicyResponseReceivedHandler& handler,
                                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&EC2Client::ModifyTransitGatewayMeteringPolicy, request, handler, context);
+  }
+
+  /**
+   * <p>Adds Availability Zones to or removes Availability Zones from the specified
+   * network function attachment. The attachment must be in the
+   * <code>available</code> state. You must specify at least one Availability Zone to
+   * add or remove, and the attachment must keep at least one Availability Zone.</p>
+   * <p>Adding an Availability Zone provisions a new Gateway Load Balancer endpoint
+   * in that Availability Zone. If the endpoint service doesn't automatically accept
+   * connection requests, the endpoint service owner must accept the endpoint
+   * connection for each Availability Zone that you add.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyTransitGatewayNetworkFunctionAttachment">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ModifyTransitGatewayNetworkFunctionAttachmentOutcome ModifyTransitGatewayNetworkFunctionAttachment(
+      const Model::ModifyTransitGatewayNetworkFunctionAttachmentRequest& request) const;
+
+  /**
+   * A Callable wrapper for ModifyTransitGatewayNetworkFunctionAttachment that returns a future to the operation so that it can be executed
+   * in parallel to other requests.
+   */
+  template <typename ModifyTransitGatewayNetworkFunctionAttachmentRequestT = Model::ModifyTransitGatewayNetworkFunctionAttachmentRequest>
+  Model::ModifyTransitGatewayNetworkFunctionAttachmentOutcomeCallable ModifyTransitGatewayNetworkFunctionAttachmentCallable(
+      const ModifyTransitGatewayNetworkFunctionAttachmentRequestT& request) const {
+    return SubmitCallable(&EC2Client::ModifyTransitGatewayNetworkFunctionAttachment, request);
+  }
+
+  /**
+   * An Async wrapper for ModifyTransitGatewayNetworkFunctionAttachment that queues the request into a thread executor and triggers
+   * associated callback when operation has finished.
+   */
+  template <typename ModifyTransitGatewayNetworkFunctionAttachmentRequestT = Model::ModifyTransitGatewayNetworkFunctionAttachmentRequest>
+  void ModifyTransitGatewayNetworkFunctionAttachmentAsync(
+      const ModifyTransitGatewayNetworkFunctionAttachmentRequestT& request,
+      const ModifyTransitGatewayNetworkFunctionAttachmentResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ModifyTransitGatewayNetworkFunctionAttachment, request, handler, context);
+  }
+
+  /**
+   * <p>Modifies the options for a transit gateway peering attachment. The peering
+   * attachment must be in the <code>available</code> state.</p> <p>You can allow
+   * multipath resilience for your side of an inter-Region transit gateway peering
+   * attachment between supported Regions. Multipath resilience isn't supported for
+   * transit gateway peering attachments in the same Region. It takes effect only
+   * when both the requester and the accepter allow it. To modify the requester side,
+   * send the request in the Region of the requester transit gateway. To modify the
+   * accepter side, send the request in the Region of the accepter transit gateway.
+   * To check whether multipath resilience is in effect, use
+   * <a>DescribeTransitGatewayPeeringAttachments</a> and check
+   * <code>multipathResilienceStatus</code>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyTransitGatewayPeeringAttachment">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ModifyTransitGatewayPeeringAttachmentOutcome ModifyTransitGatewayPeeringAttachment(
+      const Model::ModifyTransitGatewayPeeringAttachmentRequest& request) const;
+
+  /**
+   * A Callable wrapper for ModifyTransitGatewayPeeringAttachment that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename ModifyTransitGatewayPeeringAttachmentRequestT = Model::ModifyTransitGatewayPeeringAttachmentRequest>
+  Model::ModifyTransitGatewayPeeringAttachmentOutcomeCallable ModifyTransitGatewayPeeringAttachmentCallable(
+      const ModifyTransitGatewayPeeringAttachmentRequestT& request) const {
+    return SubmitCallable(&EC2Client::ModifyTransitGatewayPeeringAttachment, request);
+  }
+
+  /**
+   * An Async wrapper for ModifyTransitGatewayPeeringAttachment that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename ModifyTransitGatewayPeeringAttachmentRequestT = Model::ModifyTransitGatewayPeeringAttachmentRequest>
+  void ModifyTransitGatewayPeeringAttachmentAsync(const ModifyTransitGatewayPeeringAttachmentRequestT& request,
+                                                  const ModifyTransitGatewayPeeringAttachmentResponseReceivedHandler& handler,
+                                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ModifyTransitGatewayPeeringAttachment, request, handler, context);
+  }
+
+  /**
+   * <p>Modifies the specified transit gateway policy table entry.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyTransitGatewayPolicyTableEntry">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ModifyTransitGatewayPolicyTableEntryOutcome ModifyTransitGatewayPolicyTableEntry(
+      const Model::ModifyTransitGatewayPolicyTableEntryRequest& request) const;
+
+  /**
+   * A Callable wrapper for ModifyTransitGatewayPolicyTableEntry that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename ModifyTransitGatewayPolicyTableEntryRequestT = Model::ModifyTransitGatewayPolicyTableEntryRequest>
+  Model::ModifyTransitGatewayPolicyTableEntryOutcomeCallable ModifyTransitGatewayPolicyTableEntryCallable(
+      const ModifyTransitGatewayPolicyTableEntryRequestT& request) const {
+    return SubmitCallable(&EC2Client::ModifyTransitGatewayPolicyTableEntry, request);
+  }
+
+  /**
+   * An Async wrapper for ModifyTransitGatewayPolicyTableEntry that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename ModifyTransitGatewayPolicyTableEntryRequestT = Model::ModifyTransitGatewayPolicyTableEntryRequest>
+  void ModifyTransitGatewayPolicyTableEntryAsync(const ModifyTransitGatewayPolicyTableEntryRequestT& request,
+                                                 const ModifyTransitGatewayPolicyTableEntryResponseReceivedHandler& handler,
+                                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ModifyTransitGatewayPolicyTableEntry, request, handler, context);
   }
 
   /**
@@ -22928,7 +24841,13 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * aren't supported.</p> <p>If you grant permissions to all principals, the service
    * is public. Any users who know the name of a public service can send a request to
    * attach an endpoint. If the service does not require manual approval, attachments
-   * are automatically approved.</p><p><h3>See Also:</h3>   <a
+   * are automatically approved.</p> <p>By default, principals that you grant
+   * permissions to can create VPC endpoints that connect to your endpoint service.
+   * For Gateway Load Balancer endpoint services, you can instead grant permissions
+   * so that principals can create transit gateway attachments that connect to your
+   * endpoint service. To do so, specify <code>transit-gateway-attachment</code> for
+   * <code>PermissionType</code>. The two permission types are independent. A
+   * principal can have either or both.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcEndpointServicePermissions">AWS
    * API Reference</a></p>
    */
@@ -22969,7 +24888,16 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * to modify the requester VPC peering options and the Region for the accepter VPC
    * to modify the accepter VPC peering options. To verify which VPCs are the
    * accepter and the requester for a VPC peering connection, use the
-   * <a>DescribeVpcPeeringConnections</a> command.</p><p><h3>See Also:</h3>   <a
+   * <a>DescribeVpcPeeringConnections</a> command.</p> <p>Multipath resilience
+   * replicates the traffic of an inter-Region VPC peering connection across multiple
+   * network paths. You can allow multipath resilience for your side of the
+   * connection if both of its Regions are supported. It takes effect only when both
+   * the requester and the accepter allow it. Additional charges apply when multipath
+   * resilience is in effect. For more information, see <a
+   * href="http://aws.amazon.com/vpc/pricing/">Amazon VPC pricing</a>. To check
+   * whether multipath resilience is in effect, use
+   * <a>DescribeVpcPeeringConnections</a> and check
+   * <code>multipathResilienceStatus</code>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcPeeringConnectionOptions">AWS
    * API Reference</a></p>
    */
@@ -23318,7 +25246,10 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
    * to be advertised.</p> <p>Amazon Web Services verifies that you own the address
    * range and are authorized to advertise it. You must ensure that the address range
    * is registered to you and that you created an RPKI ROA to authorize Amazon ASNs
-   * 16509 and 14618 to advertise the address range. For more information, see <a
+   * 16509 and 14618 to advertise the address range. For the Amazon Web Services
+   * GovCloud (US) Regions, authorize only ASN 8987. For the Amazon Web Services
+   * European Sovereign Cloud, authorize ASNs 16509 and 214101. For more information,
+   * see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html">Bring
    * your own IP addresses (BYOIP)</a> in the <i>Amazon EC2 User Guide</i>.</p>
    * <p>Provisioning an address range is an asynchronous operation, so the call
@@ -24234,6 +26165,56 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                                         const ReplaceImageCriteriaInAllowedImagesSettingsRequestT& request = {}) const {
     return SubmitAsync(&EC2Client::ReplaceImageCriteriaInAllowedImagesSettings, request, handler, context);
+  }
+
+  /**
+   * <p>Replaces or removes the instance type specification for an AMI. The instance
+   * type specification defines which instance types are compatible with the AMI.</p>
+   * <p>When you launch an instance using <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html">RunInstances</a>,
+   * Amazon EC2 validates the requested instance type against the AMI's instance type
+   * specification. If the instance type is not compatible, the request fails with an
+   * <code>InvalidParameterCombination</code> error.</p> <p>You can specify supported
+   * instance types, unsupported instance types, or both. The evaluation logic is as
+   * follows:</p> <ul> <li> <p>No specification set – all instance types are
+   * allowed.</p> </li> <li> <p>Only <code>UnsupportedInstanceTypes</code> set – All
+   * instance types are allowed except those that match the unsupported list.</p>
+   * </li> <li> <p> <code>SupportedInstanceTypes</code> set – The instance type must
+   * match the supported list and must not match the unsupported list.</p> </li>
+   * </ul> <p>Instance type entries support wildcard patterns using <code>*</code>
+   * (for example, <code>t3.*</code> matches all t3 sizes).</p> <p>To remove an
+   * existing instance type specification, omit the
+   * <code>InstanceTypeSpecification</code> parameter or set it to
+   * <code>null</code>.</p> <p>To set the instance type specification, you must be
+   * the AMI owner. You cannot set an instance type specification on an AMI that is
+   * listed in Amazon Web Services Marketplace, and you cannot list an AMI in Amazon
+   * Web Services Marketplace if it has an instance type specification
+   * set.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReplaceImageInstanceTypeSpecification">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ReplaceImageInstanceTypeSpecificationOutcome ReplaceImageInstanceTypeSpecification(
+      const Model::ReplaceImageInstanceTypeSpecificationRequest& request) const;
+
+  /**
+   * A Callable wrapper for ReplaceImageInstanceTypeSpecification that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename ReplaceImageInstanceTypeSpecificationRequestT = Model::ReplaceImageInstanceTypeSpecificationRequest>
+  Model::ReplaceImageInstanceTypeSpecificationOutcomeCallable ReplaceImageInstanceTypeSpecificationCallable(
+      const ReplaceImageInstanceTypeSpecificationRequestT& request) const {
+    return SubmitCallable(&EC2Client::ReplaceImageInstanceTypeSpecification, request);
+  }
+
+  /**
+   * An Async wrapper for ReplaceImageInstanceTypeSpecification that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename ReplaceImageInstanceTypeSpecificationRequestT = Model::ReplaceImageInstanceTypeSpecificationRequest>
+  void ReplaceImageInstanceTypeSpecificationAsync(const ReplaceImageInstanceTypeSpecificationRequestT& request,
+                                                  const ReplaceImageInstanceTypeSpecificationResponseReceivedHandler& handler,
+                                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ReplaceImageInstanceTypeSpecification, request, handler, context);
   }
 
   /**
@@ -25977,6 +27958,43 @@ class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient,
                                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                                        const UpdateSecurityGroupRuleDescriptionsIngressRequestT& request = {}) const {
     return SubmitAsync(&EC2Client::UpdateSecurityGroupRuleDescriptionsIngress, request, handler, context);
+  }
+
+  /**
+   * <p>Validates whether the specified security groups can be associated with a
+   * single network interface. The operation checks Amazon Virtual Private Cloud
+   * (Amazon VPC) quotas. It checks inbound or outbound rules per security group and
+   * security groups per network interface. Only authorized Amazon Web Services
+   * services can call this operation.</p> <p>For more information about security
+   * group quotas, see <a
+   * href="https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-security-groups">Amazon
+   * VPC quotas</a> in the <i>Amazon VPC User Guide</i>.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ValidateSecurityGroupQuotasForInterface">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ValidateSecurityGroupQuotasForInterfaceOutcome ValidateSecurityGroupQuotasForInterface(
+      const Model::ValidateSecurityGroupQuotasForInterfaceRequest& request) const;
+
+  /**
+   * A Callable wrapper for ValidateSecurityGroupQuotasForInterface that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename ValidateSecurityGroupQuotasForInterfaceRequestT = Model::ValidateSecurityGroupQuotasForInterfaceRequest>
+  Model::ValidateSecurityGroupQuotasForInterfaceOutcomeCallable ValidateSecurityGroupQuotasForInterfaceCallable(
+      const ValidateSecurityGroupQuotasForInterfaceRequestT& request) const {
+    return SubmitCallable(&EC2Client::ValidateSecurityGroupQuotasForInterface, request);
+  }
+
+  /**
+   * An Async wrapper for ValidateSecurityGroupQuotasForInterface that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename ValidateSecurityGroupQuotasForInterfaceRequestT = Model::ValidateSecurityGroupQuotasForInterfaceRequest>
+  void ValidateSecurityGroupQuotasForInterfaceAsync(const ValidateSecurityGroupQuotasForInterfaceRequestT& request,
+                                                    const ValidateSecurityGroupQuotasForInterfaceResponseReceivedHandler& handler,
+                                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&EC2Client::ValidateSecurityGroupQuotasForInterface, request, handler, context);
   }
 
   /**

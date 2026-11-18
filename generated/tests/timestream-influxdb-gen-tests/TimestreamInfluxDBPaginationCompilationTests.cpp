@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -8,6 +8,7 @@
 
 #include <aws/timestream-influxdb/TimestreamInfluxDBClientPagination.h>
 #include <aws/timestream-influxdb/TimestreamInfluxDBPaginationBase.h>
+#include <aws/timestream-influxdb/model/ListDbBackupsPaginationTraits.h>
 #include <aws/timestream-influxdb/model/ListDbParameterGroupsPaginationTraits.h>
 #include <aws/timestream-influxdb/model/ListDbClustersPaginationTraits.h>
 #include <aws/timestream-influxdb/model/ListDbInstancesPaginationTraits.h>
@@ -21,6 +22,6 @@ class TimestreamInfluxDBPaginationCompilationTest : public Aws::Testing::AwsCppS
 
 TEST_F(TimestreamInfluxDBPaginationCompilationTest, TimestreamInfluxDBPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

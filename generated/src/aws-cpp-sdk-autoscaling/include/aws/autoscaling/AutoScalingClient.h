@@ -813,6 +813,37 @@ class AWS_AUTOSCALING_API AutoScalingClient : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p> Describes the current Amazon EC2 Auto Scaling account settings for your
+   * account. Account settings are a framework that allows you to enable or disable
+   * features for your account. The framework also gives you visibility into features
+   * that will be enforced by a given date, providing a time window to prepare for
+   * backwards-incompatible changes. </p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/DescribeAccountSettings">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeAccountSettingsOutcome DescribeAccountSettings(const Model::DescribeAccountSettingsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeAccountSettings that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DescribeAccountSettingsRequestT = Model::DescribeAccountSettingsRequest>
+  Model::DescribeAccountSettingsOutcomeCallable DescribeAccountSettingsCallable(const DescribeAccountSettingsRequestT& request = {}) const {
+    return SubmitCallable(&AutoScalingClient::DescribeAccountSettings, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeAccountSettings that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeAccountSettingsRequestT = Model::DescribeAccountSettingsRequest>
+  void DescribeAccountSettingsAsync(const DescribeAccountSettingsResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                    const DescribeAccountSettingsRequestT& request = {}) const {
+    return SubmitAsync(&AutoScalingClient::DescribeAccountSettings, request, handler, context);
+  }
+
+  /**
    * <p>Describes the available adjustment types for step scaling and simple scaling
    * policies.</p> <p>The following adjustment types are supported:</p> <ul> <li> <p>
    * <code>ChangeInCapacity</code> </p> </li> <li> <p> <code>ExactCapacity</code>
@@ -1901,6 +1932,39 @@ class AWS_AUTOSCALING_API AutoScalingClient : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p> Modifies an account setting for your account. You can use this operation to
+   * opt in or opt out of features provided through account settings when permitted.
+   * Account settings give you control over features that might have
+   * backwards-incompatible changes. When Amazon EC2 Auto Scaling introduces such
+   * changes, account settings allow you to test and adopt new features. Some account
+   * settings are enforced after a specified date. This means that after the
+   * enforcement date, you can no longer modify the setting. </p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/PutAccountSetting">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::PutAccountSettingOutcome PutAccountSetting(const Model::PutAccountSettingRequest& request) const;
+
+  /**
+   * A Callable wrapper for PutAccountSetting that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename PutAccountSettingRequestT = Model::PutAccountSettingRequest>
+  Model::PutAccountSettingOutcomeCallable PutAccountSettingCallable(const PutAccountSettingRequestT& request) const {
+    return SubmitCallable(&AutoScalingClient::PutAccountSetting, request);
+  }
+
+  /**
+   * An Async wrapper for PutAccountSetting that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename PutAccountSettingRequestT = Model::PutAccountSettingRequest>
+  void PutAccountSettingAsync(const PutAccountSettingRequestT& request, const PutAccountSettingResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&AutoScalingClient::PutAccountSetting, request, handler, context);
+  }
+
+  /**
    * <p>Creates or updates a lifecycle hook for the specified Auto Scaling group.</p>
    * <p>Lifecycle hooks let you create solutions that are aware of events in the Auto
    * Scaling instance lifecycle, and then perform a custom action on instances when
@@ -2425,16 +2489,20 @@ class AWS_AUTOSCALING_API AutoScalingClient : public Aws::Client::AWSXMLClient,
   /**
    * <p>Terminates the specified instance and optionally adjusts the desired group
    * size. This operation cannot be called on instances in a warm pool.</p> <p>This
-   * call simply makes a termination request. The instance is not terminated
+   * call simply makes a termination request. The instances are not terminated
    * immediately. When an instance is terminated, the instance status changes to
    * <code>terminated</code>. You can't connect to or start an instance after you've
    * terminated it.</p> <p>If you do not specify the option to decrement the desired
    * capacity, Amazon EC2 Auto Scaling launches instances to replace the ones that
-   * are terminated. </p> <p>By default, Amazon EC2 Auto Scaling balances instances
-   * across all Availability Zones. If you decrement the desired capacity, your Auto
-   * Scaling group can become unbalanced between Availability Zones. Amazon EC2 Auto
-   * Scaling tries to rebalance the group, and rebalancing might terminate instances
-   * in other zones. For more information, see <a
+   * are terminated. </p> <p>To terminate multiple instances in a single call, use
+   * the <code>InstanceIds</code> and <code>AutoScalingGroupName</code> parameters
+   * instead of <code>InstanceId</code>. When terminating multiple instances, the
+   * response populates <code>Activities</code> instead of <code>Activity</code>.</p>
+   * <p>By default, Amazon EC2 Auto Scaling balances instances across all
+   * Availability Zones. If you decrement the desired capacity, your Auto Scaling
+   * group can become unbalanced between Availability Zones. Amazon EC2 Auto Scaling
+   * tries to rebalance the group, and rebalancing might terminate instances in other
+   * zones. For more information, see <a
    * href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-scaling-manually.html">Manual
    * scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p><p><h3>See
    * Also:</h3>   <a

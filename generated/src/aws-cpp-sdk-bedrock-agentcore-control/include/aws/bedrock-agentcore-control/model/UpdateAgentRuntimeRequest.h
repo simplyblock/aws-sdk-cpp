@@ -7,12 +7,16 @@
 #include <aws/bedrock-agentcore-control/BedrockAgentCoreControlRequest.h>
 #include <aws/bedrock-agentcore-control/BedrockAgentCoreControl_EXPORTS.h>
 #include <aws/bedrock-agentcore-control/model/AgentRuntimeArtifact.h>
+#include <aws/bedrock-agentcore-control/model/AllowedPort.h>
 #include <aws/bedrock-agentcore-control/model/AuthorizerConfiguration.h>
+#include <aws/bedrock-agentcore-control/model/CapacityProviderConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/FilesystemConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/LifecycleConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/NetworkConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/ProtocolConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/RequestHeaderConfiguration.h>
+#include <aws/bedrock-agentcore-control/model/ResourceConfiguration.h>
+#include <aws/bedrock-agentcore-control/model/RuntimeHooksConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/RuntimeMetadataConfiguration.h>
 #include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
@@ -168,7 +172,10 @@ class UpdateAgentRuntimeRequest : public BedrockAgentCoreControlRequest {
   ///@}
 
   ///@{
-
+  /**
+   * <p>The updated protocol configuration for the AgentCore Runtime, including the
+   * protocol, port, and path on which the agent server is available.</p>
+   */
   inline const ProtocolConfiguration& GetProtocolConfiguration() const { return m_protocolConfiguration; }
   inline bool ProtocolConfigurationHasBeenSet() const { return m_protocolConfigurationHasBeenSet; }
   template <typename ProtocolConfigurationT = ProtocolConfiguration>
@@ -197,6 +204,24 @@ class UpdateAgentRuntimeRequest : public BedrockAgentCoreControlRequest {
   template <typename LifecycleConfigurationT = LifecycleConfiguration>
   UpdateAgentRuntimeRequest& WithLifecycleConfiguration(LifecycleConfigurationT&& value) {
     SetLifecycleConfiguration(std::forward<LifecycleConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The updated lifecycle hooks configuration for the AgentCore Runtime.</p>
+   */
+  inline const RuntimeHooksConfiguration& GetHooksConfiguration() const { return m_hooksConfiguration; }
+  inline bool HooksConfigurationHasBeenSet() const { return m_hooksConfigurationHasBeenSet; }
+  template <typename HooksConfigurationT = RuntimeHooksConfiguration>
+  void SetHooksConfiguration(HooksConfigurationT&& value) {
+    m_hooksConfigurationHasBeenSet = true;
+    m_hooksConfiguration = std::forward<HooksConfigurationT>(value);
+  }
+  template <typename HooksConfigurationT = RuntimeHooksConfiguration>
+  UpdateAgentRuntimeRequest& WithHooksConfiguration(HooksConfigurationT&& value) {
+    SetHooksConfiguration(std::forward<HooksConfigurationT>(value));
     return *this;
   }
   ///@}
@@ -272,6 +297,96 @@ class UpdateAgentRuntimeRequest : public BedrockAgentCoreControlRequest {
 
   ///@{
   /**
+   * <p>The updated capacity provider configuration for the AgentCore Runtime.</p>
+   */
+  inline const CapacityProviderConfiguration& GetCapacityProviderConfiguration() const { return m_capacityProviderConfiguration; }
+  inline bool CapacityProviderConfigurationHasBeenSet() const { return m_capacityProviderConfigurationHasBeenSet; }
+  template <typename CapacityProviderConfigurationT = CapacityProviderConfiguration>
+  void SetCapacityProviderConfiguration(CapacityProviderConfigurationT&& value) {
+    m_capacityProviderConfigurationHasBeenSet = true;
+    m_capacityProviderConfiguration = std::forward<CapacityProviderConfigurationT>(value);
+  }
+  template <typename CapacityProviderConfigurationT = CapacityProviderConfiguration>
+  UpdateAgentRuntimeRequest& WithCapacityProviderConfiguration(CapacityProviderConfigurationT&& value) {
+    SetCapacityProviderConfiguration(std::forward<CapacityProviderConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The updated version of the runtime platform to use for the AgentCore
+   * Runtime.</p>
+   */
+  inline const Aws::String& GetPlatformVersion() const { return m_platformVersion; }
+  inline bool PlatformVersionHasBeenSet() const { return m_platformVersionHasBeenSet; }
+  template <typename PlatformVersionT = Aws::String>
+  void SetPlatformVersion(PlatformVersionT&& value) {
+    m_platformVersionHasBeenSet = true;
+    m_platformVersion = std::forward<PlatformVersionT>(value);
+  }
+  template <typename PlatformVersionT = Aws::String>
+  UpdateAgentRuntimeRequest& WithPlatformVersion(PlatformVersionT&& value) {
+    SetPlatformVersion(std::forward<PlatformVersionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The updated additional ports on the AgentCore Runtime that are reachable
+   * through the runtime's session URL. Specify one to five non-overlapping entries,
+   * each containing either a single port or an inclusive port range. Ports must be
+   * between <code>8000</code> and <code>12000</code>, excluding the reserved port
+   * <code>8443</code>.</p>
+   */
+  inline const Aws::Vector<AllowedPort>& GetAllowedPorts() const { return m_allowedPorts; }
+  inline bool AllowedPortsHasBeenSet() const { return m_allowedPortsHasBeenSet; }
+  template <typename AllowedPortsT = Aws::Vector<AllowedPort>>
+  void SetAllowedPorts(AllowedPortsT&& value) {
+    m_allowedPortsHasBeenSet = true;
+    m_allowedPorts = std::forward<AllowedPortsT>(value);
+  }
+  template <typename AllowedPortsT = Aws::Vector<AllowedPort>>
+  UpdateAgentRuntimeRequest& WithAllowedPorts(AllowedPortsT&& value) {
+    SetAllowedPorts(std::forward<AllowedPortsT>(value));
+    return *this;
+  }
+  template <typename AllowedPortsT = AllowedPort>
+  UpdateAgentRuntimeRequest& AddAllowedPorts(AllowedPortsT&& value) {
+    m_allowedPortsHasBeenSet = true;
+    m_allowedPorts.emplace_back(std::forward<AllowedPortsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The updated resource configurations for the AgentCore Runtime. You can
+   * specify at most one resource configuration.</p>
+   */
+  inline const Aws::Vector<ResourceConfiguration>& GetResourceConfigurations() const { return m_resourceConfigurations; }
+  inline bool ResourceConfigurationsHasBeenSet() const { return m_resourceConfigurationsHasBeenSet; }
+  template <typename ResourceConfigurationsT = Aws::Vector<ResourceConfiguration>>
+  void SetResourceConfigurations(ResourceConfigurationsT&& value) {
+    m_resourceConfigurationsHasBeenSet = true;
+    m_resourceConfigurations = std::forward<ResourceConfigurationsT>(value);
+  }
+  template <typename ResourceConfigurationsT = Aws::Vector<ResourceConfiguration>>
+  UpdateAgentRuntimeRequest& WithResourceConfigurations(ResourceConfigurationsT&& value) {
+    SetResourceConfigurations(std::forward<ResourceConfigurationsT>(value));
+    return *this;
+  }
+  template <typename ResourceConfigurationsT = ResourceConfiguration>
+  UpdateAgentRuntimeRequest& AddResourceConfigurations(ResourceConfigurationsT&& value) {
+    m_resourceConfigurationsHasBeenSet = true;
+    m_resourceConfigurations.emplace_back(std::forward<ResourceConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>
    */
   inline const Aws::String& GetClientToken() const { return m_clientToken; }
@@ -306,11 +421,21 @@ class UpdateAgentRuntimeRequest : public BedrockAgentCoreControlRequest {
 
   LifecycleConfiguration m_lifecycleConfiguration;
 
+  RuntimeHooksConfiguration m_hooksConfiguration;
+
   RuntimeMetadataConfiguration m_metadataConfiguration;
 
   Aws::Map<Aws::String, Aws::String> m_environmentVariables;
 
   Aws::Vector<FilesystemConfiguration> m_filesystemConfigurations;
+
+  CapacityProviderConfiguration m_capacityProviderConfiguration;
+
+  Aws::String m_platformVersion;
+
+  Aws::Vector<AllowedPort> m_allowedPorts;
+
+  Aws::Vector<ResourceConfiguration> m_resourceConfigurations;
 
   Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
   bool m_agentRuntimeIdHasBeenSet = false;
@@ -322,9 +447,14 @@ class UpdateAgentRuntimeRequest : public BedrockAgentCoreControlRequest {
   bool m_requestHeaderConfigurationHasBeenSet = false;
   bool m_protocolConfigurationHasBeenSet = false;
   bool m_lifecycleConfigurationHasBeenSet = false;
+  bool m_hooksConfigurationHasBeenSet = false;
   bool m_metadataConfigurationHasBeenSet = false;
   bool m_environmentVariablesHasBeenSet = false;
   bool m_filesystemConfigurationsHasBeenSet = false;
+  bool m_capacityProviderConfigurationHasBeenSet = false;
+  bool m_platformVersionHasBeenSet = false;
+  bool m_allowedPortsHasBeenSet = false;
+  bool m_resourceConfigurationsHasBeenSet = false;
   bool m_clientTokenHasBeenSet = true;
 };
 

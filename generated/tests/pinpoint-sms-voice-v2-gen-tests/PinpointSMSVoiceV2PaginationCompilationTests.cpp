@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -24,6 +24,7 @@
 #include <aws/pinpoint-sms-voice-v2/model/DescribeSenderIdsPaginationTraits.h>
 #include <aws/pinpoint-sms-voice-v2/model/DescribeVerifiedDestinationNumbersPaginationTraits.h>
 #include <aws/pinpoint-sms-voice-v2/model/ListProtectConfigurationRuleSetNumberOverridesPaginationTraits.h>
+#include <aws/pinpoint-sms-voice-v2/model/ListAvailablePhoneNumbersPaginationTraits.h>
 #include <aws/pinpoint-sms-voice-v2/model/DescribeOptOutListsPaginationTraits.h>
 #include <aws/pinpoint-sms-voice-v2/model/DescribeRegistrationTypeDefinitionsPaginationTraits.h>
 #include <aws/pinpoint-sms-voice-v2/model/DescribeRcsAgentsPaginationTraits.h>
@@ -44,6 +45,6 @@ class PinpointSMSVoiceV2PaginationCompilationTest : public Aws::Testing::AwsCppS
 
 TEST_F(PinpointSMSVoiceV2PaginationCompilationTest, PinpointSMSVoiceV2PaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

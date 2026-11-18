@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-elementalinference "C++ SDK for the AWS elementalinference service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-elementalinference "C++ SDK for AWS Elemental Inference" aws-cpp-sdk-core)
 
 file(GLOB AWS_ELEMENTALINFERENCE_HEADERS
     "include/aws/elementalinference/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ELEMENTALINFERENCE_HEADERS
 
 file(GLOB AWS_ELEMENTALINFERENCE_MODEL_HEADERS
     "include/aws/elementalinference/model/*.h"
+)
+
+file(GLOB AWS_ELEMENTALINFERENCE_INTERNAL_HEADERS
+    "include/aws/elementalinference/internal/*.h"
 )
 
 file(GLOB AWS_ELEMENTALINFERENCE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ELEMENTALINFERENCE_MODEL_SOURCE
 
 file(GLOB ELEMENTALINFERENCE_UNIFIED_HEADERS
     ${AWS_ELEMENTALINFERENCE_HEADERS}
+    ${AWS_ELEMENTALINFERENCE_INTERNAL_HEADERS}
     ${AWS_ELEMENTALINFERENCE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\elementalinference" FILES ${AWS_ELEMENTALINFERENCE_HEADERS})
+        source_group("Header Files\\aws\\elementalinference\\internal" FILES ${AWS_ELEMENTALINFERENCE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\elementalinference\\model" FILES ${AWS_ELEMENTALINFERENCE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ELEMENTALINFERENCE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ELEMENTALINFERENCE_MODEL_SOURCE})

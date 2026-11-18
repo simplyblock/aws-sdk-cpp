@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -11,6 +11,7 @@
 #include <aws/ivs/model/ListStreamsPaginationTraits.h>
 #include <aws/ivs/model/ListRecordingConfigurationsPaginationTraits.h>
 #include <aws/ivs/model/ListAdConfigurationsPaginationTraits.h>
+#include <aws/ivs/model/ListFailoverSlateConfigurationsPaginationTraits.h>
 #include <aws/ivs/model/ListStreamKeysPaginationTraits.h>
 #include <aws/ivs/model/ListPlaybackRestrictionPoliciesPaginationTraits.h>
 #include <aws/ivs/model/ListStreamSessionsPaginationTraits.h>
@@ -25,6 +26,6 @@ class IVSPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(IVSPaginationCompilationTest, IVSPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

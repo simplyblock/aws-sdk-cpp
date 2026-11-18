@@ -8,12 +8,14 @@
 
 #include <aws/wafv2/WAFV2Client.h>
 #include <aws/wafv2/WAFV2EndpointProvider.h>
-#include <aws/wafv2/WAFV2EndpointRules.h>
 #include <aws/wafv2/WAFV2ErrorMarshaller.h>
 #include <aws/wafv2/WAFV2Errors.h>
+#include <aws/wafv2/WAFV2PaginationBase.h>
 #include <aws/wafv2/WAFV2Request.h>
 #include <aws/wafv2/WAFV2ServiceClientModel.h>
+#include <aws/wafv2/WAFV2Waiter.h>
 #include <aws/wafv2/WAFV2_EXPORTS.h>
+#include <aws/wafv2/internal/WAFV2EndpointRules.h>
 #include <aws/wafv2/model/APIKeySummary.h>
 #include <aws/wafv2/model/AWSManagedRulesACFPRuleSet.h>
 #include <aws/wafv2/model/AWSManagedRulesATPRuleSet.h>
@@ -44,6 +46,7 @@
 #include <aws/wafv2/model/CaptchaResponse.h>
 #include <aws/wafv2/model/ChallengeAction.h>
 #include <aws/wafv2/model/ChallengeConfig.h>
+#include <aws/wafv2/model/ChallengeJavascriptSdkInjectionConfig.h>
 #include <aws/wafv2/model/ChallengeResponse.h>
 #include <aws/wafv2/model/CheckCapacityRequest.h>
 #include <aws/wafv2/model/CheckCapacityResult.h>
@@ -51,6 +54,10 @@
 #include <aws/wafv2/model/ClientSideActionConfig.h>
 #include <aws/wafv2/model/ComparisonOperator.h>
 #include <aws/wafv2/model/Condition.h>
+#include <aws/wafv2/model/ConnectedAccountChain.h>
+#include <aws/wafv2/model/ConnectedAccountChainConfig.h>
+#include <aws/wafv2/model/ConnectedAccountConfig.h>
+#include <aws/wafv2/model/ConnectedAccountPrice.h>
 #include <aws/wafv2/model/CookieMatchPattern.h>
 #include <aws/wafv2/model/Cookies.h>
 #include <aws/wafv2/model/CountAction.h>
@@ -236,6 +243,8 @@
 #include <aws/wafv2/model/PhoneNumberField.h>
 #include <aws/wafv2/model/Platform.h>
 #include <aws/wafv2/model/PositionalConstraint.h>
+#include <aws/wafv2/model/PreParseTextTransformation.h>
+#include <aws/wafv2/model/PreParseTextTransformationType.h>
 #include <aws/wafv2/model/Price.h>
 #include <aws/wafv2/model/PutLoggingConfigurationRequest.h>
 #include <aws/wafv2/model/PutLoggingConfigurationResult.h>

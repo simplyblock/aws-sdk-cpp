@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ec2-protocol "C++ SDK for the AWS ec2-protocol service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ec2-protocol "C++ SDK for Sample Ec2 Protocol Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_EC2-PROTOCOL_HEADERS
     "include/aws/ec2-protocol/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_EC2-PROTOCOL_HEADERS
 
 file(GLOB AWS_EC2-PROTOCOL_MODEL_HEADERS
     "include/aws/ec2-protocol/model/*.h"
+)
+
+file(GLOB AWS_EC2-PROTOCOL_INTERNAL_HEADERS
+    "include/aws/ec2-protocol/internal/*.h"
 )
 
 file(GLOB AWS_EC2-PROTOCOL_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_EC2-PROTOCOL_MODEL_SOURCE
 
 file(GLOB EC2-PROTOCOL_UNIFIED_HEADERS
     ${AWS_EC2-PROTOCOL_HEADERS}
+    ${AWS_EC2-PROTOCOL_INTERNAL_HEADERS}
     ${AWS_EC2-PROTOCOL_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ec2-protocol" FILES ${AWS_EC2-PROTOCOL_HEADERS})
+        source_group("Header Files\\aws\\ec2-protocol\\internal" FILES ${AWS_EC2-PROTOCOL_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ec2-protocol\\model" FILES ${AWS_EC2-PROTOCOL_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_EC2-PROTOCOL_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_EC2-PROTOCOL_MODEL_SOURCE})

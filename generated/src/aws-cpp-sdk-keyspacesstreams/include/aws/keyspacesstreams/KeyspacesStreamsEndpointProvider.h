@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/keyspacesstreams/KeyspacesStreamsEndpointRules.h>
 #include <aws/keyspacesstreams/KeyspacesStreams_EXPORTS.h>
 
 namespace Aws {
 namespace KeyspacesStreams {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using KeyspacesStreamsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using KeyspacesStreamsEndpointProviderBase =
     EndpointProviderBase<KeyspacesStreamsClientConfiguration, KeyspacesStreamsBuiltInParameters, KeyspacesStreamsClientContextParameters>;
 
 using KeyspacesStreamsDefaultEpProviderBase =
-    DefaultEndpointProvider<KeyspacesStreamsClientConfiguration, KeyspacesStreamsBuiltInParameters,
-                            KeyspacesStreamsClientContextParameters>;
+    BDDEndpointProvider<KeyspacesStreamsClientConfiguration, KeyspacesStreamsBuiltInParameters, KeyspacesStreamsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_KEYSPACESSTREAMS_API KeyspacesStreamsEndpointProvider : public Keyspac
  public:
   using KeyspacesStreamsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  KeyspacesStreamsEndpointProvider()
-      : KeyspacesStreamsDefaultEpProviderBase(Aws::KeyspacesStreams::KeyspacesStreamsEndpointRules::GetRulesBlob(),
-                                              Aws::KeyspacesStreams::KeyspacesStreamsEndpointRules::RulesBlobSize) {}
+  KeyspacesStreamsEndpointProvider();
 
   ~KeyspacesStreamsEndpointProvider() {}
 };

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/lambda-microvms/LambdaMicrovmsEndpointRules.h>
 #include <aws/lambda-microvms/LambdaMicrovms_EXPORTS.h>
 
 namespace Aws {
 namespace LambdaMicrovms {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using LambdaMicrovmsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using LambdaMicrovmsEndpointProviderBase =
     EndpointProviderBase<LambdaMicrovmsClientConfiguration, LambdaMicrovmsBuiltInParameters, LambdaMicrovmsClientContextParameters>;
 
 using LambdaMicrovmsDefaultEpProviderBase =
-    DefaultEndpointProvider<LambdaMicrovmsClientConfiguration, LambdaMicrovmsBuiltInParameters, LambdaMicrovmsClientContextParameters>;
+    BDDEndpointProvider<LambdaMicrovmsClientConfiguration, LambdaMicrovmsBuiltInParameters, LambdaMicrovmsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_LAMBDAMICROVMS_API LambdaMicrovmsEndpointProvider : public LambdaMicro
  public:
   using LambdaMicrovmsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  LambdaMicrovmsEndpointProvider()
-      : LambdaMicrovmsDefaultEpProviderBase(Aws::LambdaMicrovms::LambdaMicrovmsEndpointRules::GetRulesBlob(),
-                                            Aws::LambdaMicrovms::LambdaMicrovmsEndpointRules::RulesBlobSize) {}
+  LambdaMicrovmsEndpointProvider();
 
   ~LambdaMicrovmsEndpointProvider() {}
 };

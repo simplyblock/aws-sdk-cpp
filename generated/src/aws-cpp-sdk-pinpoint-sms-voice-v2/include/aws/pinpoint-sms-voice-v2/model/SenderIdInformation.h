@@ -8,6 +8,7 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
 #include <aws/pinpoint-sms-voice-v2/model/MessageType.h>
+#include <aws/pinpoint-sms-voice-v2/model/MessagingLimits.h>
 
 #include <utility>
 
@@ -183,6 +184,43 @@ class SenderIdInformation {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The messaging limits that apply to the sender ID, including the
+   * per-capability send rates.</p>
+   */
+  inline const MessagingLimits& GetMessagingLimits() const { return m_messagingLimits; }
+  inline bool MessagingLimitsHasBeenSet() const { return m_messagingLimitsHasBeenSet; }
+  template <typename MessagingLimitsT = MessagingLimits>
+  void SetMessagingLimits(MessagingLimitsT&& value) {
+    m_messagingLimitsHasBeenSet = true;
+    m_messagingLimits = std::forward<MessagingLimitsT>(value);
+  }
+  template <typename MessagingLimitsT = MessagingLimits>
+  SenderIdInformation& WithMessagingLimits(MessagingLimitsT&& value) {
+    SetMessagingLimits(std::forward<MessagingLimitsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The pricing model.</p>
+   */
+  inline const Aws::String& GetPricingTier() const { return m_pricingTier; }
+  inline bool PricingTierHasBeenSet() const { return m_pricingTierHasBeenSet; }
+  template <typename PricingTierT = Aws::String>
+  void SetPricingTier(PricingTierT&& value) {
+    m_pricingTierHasBeenSet = true;
+    m_pricingTier = std::forward<PricingTierT>(value);
+  }
+  template <typename PricingTierT = Aws::String>
+  SenderIdInformation& WithPricingTier(PricingTierT&& value) {
+    SetPricingTier(std::forward<PricingTierT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_senderIdArn;
 
@@ -199,6 +237,10 @@ class SenderIdInformation {
   bool m_registered{false};
 
   Aws::String m_registrationId;
+
+  MessagingLimits m_messagingLimits;
+
+  Aws::String m_pricingTier;
   bool m_senderIdArnHasBeenSet = false;
   bool m_senderIdHasBeenSet = false;
   bool m_isoCountryCodeHasBeenSet = false;
@@ -207,6 +249,8 @@ class SenderIdInformation {
   bool m_deletionProtectionEnabledHasBeenSet = false;
   bool m_registeredHasBeenSet = false;
   bool m_registrationIdHasBeenSet = false;
+  bool m_messagingLimitsHasBeenSet = false;
+  bool m_pricingTierHasBeenSet = false;
 };
 
 }  // namespace Model

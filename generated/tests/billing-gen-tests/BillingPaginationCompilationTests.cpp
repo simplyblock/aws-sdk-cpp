@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -10,6 +10,15 @@
 #include <aws/billing/BillingPaginationBase.h>
 #include <aws/billing/model/ListBillingViewsPaginationTraits.h>
 #include <aws/billing/model/ListSourceViewsForBillingViewPaginationTraits.h>
+#include <aws/billing/model/ListContractualInvestmentAttestationsPaginationTraits.h>
+#include <aws/billing/model/ListContractualInvestmentSummariesPaginationTraits.h>
+#include <aws/billing/model/ListBillingViewSegmentsPaginationTraits.h>
+#include <aws/billing/model/ListContractualInvestmentsPaginationTraits.h>
+#include <aws/billing/model/ListEnterpriseSupportLinkedAccountChargesPaginationTraits.h>
+#include <aws/billing/model/GetCreditAllocationHistoryPaginationTraits.h>
+#include <aws/billing/model/ListBusinessSupportSubscriptionHistoryPaginationTraits.h>
+#include <aws/billing/model/ListBusinessSupportAccountChargesPaginationTraits.h>
+#include <aws/billing/model/ListContractsPaginationTraits.h>
 
 #include <aws/testing/AwsCppSdkGTestSuite.h>
 
@@ -19,6 +28,6 @@ class BillingPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuit
 
 TEST_F(BillingPaginationCompilationTest, BillingPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

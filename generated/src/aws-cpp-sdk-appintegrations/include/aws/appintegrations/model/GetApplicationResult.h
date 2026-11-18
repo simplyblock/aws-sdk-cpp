@@ -8,6 +8,7 @@
 #include <aws/appintegrations/model/ApplicationConfig.h>
 #include <aws/appintegrations/model/ApplicationSourceConfig.h>
 #include <aws/appintegrations/model/ApplicationType.h>
+#include <aws/appintegrations/model/AuthConfig.h>
 #include <aws/appintegrations/model/IframeConfig.h>
 #include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
@@ -172,6 +173,23 @@ class GetApplicationResult {
 
   ///@{
   /**
+   * <p>The Amazon Web Services Region where the application was last modified.</p>
+   */
+  inline const Aws::String& GetLastModifiedRegion() const { return m_lastModifiedRegion; }
+  template <typename LastModifiedRegionT = Aws::String>
+  void SetLastModifiedRegion(LastModifiedRegionT&& value) {
+    m_lastModifiedRegionHasBeenSet = true;
+    m_lastModifiedRegion = std::forward<LastModifiedRegionT>(value);
+  }
+  template <typename LastModifiedRegionT = Aws::String>
+  GetApplicationResult& WithLastModifiedRegion(LastModifiedRegionT&& value) {
+    SetLastModifiedRegion(std::forward<LastModifiedRegionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The tags used to organize, track, or control access for this resource. For
    * example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
    */
@@ -284,6 +302,24 @@ class GetApplicationResult {
   ///@}
 
   ///@{
+  /**
+   * <p>The authentication settings that Connect Customer uses when calling the
+   * external application.</p>
+   */
+  inline const AuthConfig& GetAuthConfig() const { return m_authConfig; }
+  template <typename AuthConfigT = AuthConfig>
+  void SetAuthConfig(AuthConfigT&& value) {
+    m_authConfigHasBeenSet = true;
+    m_authConfig = std::forward<AuthConfigT>(value);
+  }
+  template <typename AuthConfigT = AuthConfig>
+  GetApplicationResult& WithAuthConfig(AuthConfigT&& value) {
+    SetAuthConfig(std::forward<AuthConfigT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -316,6 +352,8 @@ class GetApplicationResult {
 
   Aws::Utils::DateTime m_lastModifiedTime{};
 
+  Aws::String m_lastModifiedRegion;
+
   Aws::Map<Aws::String, Aws::String> m_tags;
 
   Aws::Vector<Aws::String> m_permissions;
@@ -328,6 +366,8 @@ class GetApplicationResult {
 
   ApplicationType m_applicationType{ApplicationType::NOT_SET};
 
+  AuthConfig m_authConfig;
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_arnHasBeenSet = false;
@@ -338,12 +378,14 @@ class GetApplicationResult {
   bool m_applicationSourceConfigHasBeenSet = false;
   bool m_createdTimeHasBeenSet = false;
   bool m_lastModifiedTimeHasBeenSet = false;
+  bool m_lastModifiedRegionHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
   bool m_permissionsHasBeenSet = false;
   bool m_initializationTimeoutHasBeenSet = false;
   bool m_applicationConfigHasBeenSet = false;
   bool m_iframeConfigHasBeenSet = false;
   bool m_applicationTypeHasBeenSet = false;
+  bool m_authConfigHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

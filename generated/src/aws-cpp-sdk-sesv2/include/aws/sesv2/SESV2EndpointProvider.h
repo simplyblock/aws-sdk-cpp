@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/sesv2/SESV2EndpointRules.h>
 #include <aws/sesv2/SESV2_EXPORTS.h>
 
 namespace Aws {
 namespace SESV2 {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SESV2ClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using SESV2BuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using SESV2EndpointProviderBase = EndpointProviderBase<SESV2ClientConfiguration, SESV2BuiltInParameters, SESV2ClientContextParameters>;
 
-using SESV2DefaultEpProviderBase = DefaultEndpointProvider<SESV2ClientConfiguration, SESV2BuiltInParameters, SESV2ClientContextParameters>;
+using SESV2DefaultEpProviderBase = BDDEndpointProvider<SESV2ClientConfiguration, SESV2BuiltInParameters, SESV2ClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,8 +39,7 @@ class AWS_SESV2_API SESV2EndpointProvider : public SESV2DefaultEpProviderBase {
  public:
   using SESV2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SESV2EndpointProvider()
-      : SESV2DefaultEpProviderBase(Aws::SESV2::SESV2EndpointRules::GetRulesBlob(), Aws::SESV2::SESV2EndpointRules::RulesBlobSize) {}
+  SESV2EndpointProvider();
 
   ~SESV2EndpointProvider() {}
 };

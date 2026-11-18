@@ -7,6 +7,7 @@
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/inspector2/Inspector2_EXPORTS.h>
+#include <aws/inspector2/model/Provider.h>
 #include <aws/inspector2/model/ResourceDetails.h>
 #include <aws/inspector2/model/ResourceType.h>
 
@@ -146,6 +147,67 @@ class Resource {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The cloud provider of the resource. Valid values:</p> <ul> <li> <p>
+   * <code>AWS</code> – Amazon Web Services resources.</p> </li> <li> <p>
+   * <code>AZURE</code> – Microsoft Azure resources.</p> </li> <li> <p>
+   * <code>GCP</code> – Google Cloud Platform (GCP) resources.</p> </li> </ul>
+   */
+  inline Provider GetProvider() const { return m_provider; }
+  inline bool ProviderHasBeenSet() const { return m_providerHasBeenSet; }
+  inline void SetProvider(Provider value) {
+    m_providerHasBeenSet = true;
+    m_provider = value;
+  }
+  inline Resource& WithProvider(Provider value) {
+    SetProvider(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The cloud provider account ID of the resource. The value format depends on
+   * the cloud provider:</p> <ul> <li> <p>An Amazon Web Services account ID.</p>
+   * </li> <li> <p>An Azure subscription ID.</p> </li> <li> <p>A Google Cloud
+   * Platform (GCP) project ID, such as <code>my-project</code>.</p> </li> </ul>
+   */
+  inline const Aws::String& GetProviderAccountId() const { return m_providerAccountId; }
+  inline bool ProviderAccountIdHasBeenSet() const { return m_providerAccountIdHasBeenSet; }
+  template <typename ProviderAccountIdT = Aws::String>
+  void SetProviderAccountId(ProviderAccountIdT&& value) {
+    m_providerAccountIdHasBeenSet = true;
+    m_providerAccountId = std::forward<ProviderAccountIdT>(value);
+  }
+  template <typename ProviderAccountIdT = Aws::String>
+  Resource& WithProviderAccountId(ProviderAccountIdT&& value) {
+    SetProviderAccountId(std::forward<ProviderAccountIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The cloud provider organization ID of the resource. The value format depends
+   * on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Organizations
+   * organization ID.</p> </li> <li> <p>An Azure tenant ID.</p> </li> <li> <p>A
+   * numeric Google Cloud Platform (GCP) organization ID.</p> </li> </ul>
+   */
+  inline const Aws::String& GetProviderOrgId() const { return m_providerOrgId; }
+  inline bool ProviderOrgIdHasBeenSet() const { return m_providerOrgIdHasBeenSet; }
+  template <typename ProviderOrgIdT = Aws::String>
+  void SetProviderOrgId(ProviderOrgIdT&& value) {
+    m_providerOrgIdHasBeenSet = true;
+    m_providerOrgId = std::forward<ProviderOrgIdT>(value);
+  }
+  template <typename ProviderOrgIdT = Aws::String>
+  Resource& WithProviderOrgId(ProviderOrgIdT&& value) {
+    SetProviderOrgId(std::forward<ProviderOrgIdT>(value));
+    return *this;
+  }
+  ///@}
  private:
   ResourceType m_type{ResourceType::NOT_SET};
 
@@ -158,12 +220,21 @@ class Resource {
   Aws::Map<Aws::String, Aws::String> m_tags;
 
   ResourceDetails m_details;
+
+  Provider m_provider{Provider::NOT_SET};
+
+  Aws::String m_providerAccountId;
+
+  Aws::String m_providerOrgId;
   bool m_typeHasBeenSet = false;
   bool m_idHasBeenSet = false;
   bool m_partitionHasBeenSet = false;
   bool m_regionHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
   bool m_detailsHasBeenSet = false;
+  bool m_providerHasBeenSet = false;
+  bool m_providerAccountIdHasBeenSet = false;
+  bool m_providerOrgIdHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/migrationhub-config/MigrationHubConfigEndpointRules.h>
 #include <aws/migrationhub-config/MigrationHubConfig_EXPORTS.h>
 
 namespace Aws {
 namespace MigrationHubConfig {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using MigrationHubConfigClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using MigrationHubConfigEndpointProviderBase =
                          MigrationHubConfigClientContextParameters>;
 
 using MigrationHubConfigDefaultEpProviderBase =
-    DefaultEndpointProvider<MigrationHubConfigClientConfiguration, MigrationHubConfigBuiltInParameters,
-                            MigrationHubConfigClientContextParameters>;
+    BDDEndpointProvider<MigrationHubConfigClientConfiguration, MigrationHubConfigBuiltInParameters,
+                        MigrationHubConfigClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_MIGRATIONHUBCONFIG_API MigrationHubConfigEndpointProvider : public Mig
  public:
   using MigrationHubConfigResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  MigrationHubConfigEndpointProvider()
-      : MigrationHubConfigDefaultEpProviderBase(Aws::MigrationHubConfig::MigrationHubConfigEndpointRules::GetRulesBlob(),
-                                                Aws::MigrationHubConfig::MigrationHubConfigEndpointRules::RulesBlobSize) {}
+  MigrationHubConfigEndpointProvider();
 
   ~MigrationHubConfigEndpointProvider() {}
 };

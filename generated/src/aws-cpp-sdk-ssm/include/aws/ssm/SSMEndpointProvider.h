@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ssm/SSMEndpointRules.h>
 #include <aws/ssm/SSM_EXPORTS.h>
 
 namespace Aws {
 namespace SSM {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SSMClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using SSMBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using SSMEndpointProviderBase = EndpointProviderBase<SSMClientConfiguration, SSMBuiltInParameters, SSMClientContextParameters>;
 
-using SSMDefaultEpProviderBase = DefaultEndpointProvider<SSMClientConfiguration, SSMBuiltInParameters, SSMClientContextParameters>;
+using SSMDefaultEpProviderBase = BDDEndpointProvider<SSMClientConfiguration, SSMBuiltInParameters, SSMClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_SSM_API SSMEndpointProvider : public SSMDefaultEpProviderBase {
  public:
   using SSMResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SSMEndpointProvider() : SSMDefaultEpProviderBase(Aws::SSM::SSMEndpointRules::GetRulesBlob(), Aws::SSM::SSMEndpointRules::RulesBlobSize) {}
+  SSMEndpointProvider();
 
   ~SSMEndpointProvider() {}
 };

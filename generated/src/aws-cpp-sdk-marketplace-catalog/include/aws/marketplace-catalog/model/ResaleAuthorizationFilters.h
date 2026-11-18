@@ -8,6 +8,7 @@
 #include <aws/marketplace-catalog/model/ResaleAuthorizationAvailabilityEndDateFilter.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationCreatedDateFilter.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationEntityIdFilter.h>
+#include <aws/marketplace-catalog/model/ResaleAuthorizationIssuerAccountIdFilter.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationLastModifiedDateFilter.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationManufacturerAccountIdFilter.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationManufacturerLegalNameFilter.h>
@@ -17,6 +18,8 @@
 #include <aws/marketplace-catalog/model/ResaleAuthorizationProductNameFilter.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationResellerAccountIDFilter.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationResellerLegalNameFilter.h>
+#include <aws/marketplace-catalog/model/ResaleAuthorizationResellerRoleFilter.h>
+#include <aws/marketplace-catalog/model/ResaleAuthorizationSourceAuthorizationFilter.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationStatusFilter.h>
 
 #include <utility>
@@ -287,6 +290,63 @@ class ResaleAuthorizationFilters {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Allows filtering on the <code>ResellerRole</code> of a
+   * ResaleAuthorization.</p>
+   */
+  inline const ResaleAuthorizationResellerRoleFilter& GetResellerRole() const { return m_resellerRole; }
+  inline bool ResellerRoleHasBeenSet() const { return m_resellerRoleHasBeenSet; }
+  template <typename ResellerRoleT = ResaleAuthorizationResellerRoleFilter>
+  void SetResellerRole(ResellerRoleT&& value) {
+    m_resellerRoleHasBeenSet = true;
+    m_resellerRole = std::forward<ResellerRoleT>(value);
+  }
+  template <typename ResellerRoleT = ResaleAuthorizationResellerRoleFilter>
+  ResaleAuthorizationFilters& WithResellerRole(ResellerRoleT&& value) {
+    SetResellerRole(std::forward<ResellerRoleT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Allows filtering on the <code>SourceAuthorization</code> of a
+   * ResaleAuthorization.</p>
+   */
+  inline const ResaleAuthorizationSourceAuthorizationFilter& GetSourceAuthorization() const { return m_sourceAuthorization; }
+  inline bool SourceAuthorizationHasBeenSet() const { return m_sourceAuthorizationHasBeenSet; }
+  template <typename SourceAuthorizationT = ResaleAuthorizationSourceAuthorizationFilter>
+  void SetSourceAuthorization(SourceAuthorizationT&& value) {
+    m_sourceAuthorizationHasBeenSet = true;
+    m_sourceAuthorization = std::forward<SourceAuthorizationT>(value);
+  }
+  template <typename SourceAuthorizationT = ResaleAuthorizationSourceAuthorizationFilter>
+  ResaleAuthorizationFilters& WithSourceAuthorization(SourceAuthorizationT&& value) {
+    SetSourceAuthorization(std::forward<SourceAuthorizationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Allows filtering on the <code>IssuerAccountId</code> of a
+   * ResaleAuthorization.</p>
+   */
+  inline const ResaleAuthorizationIssuerAccountIdFilter& GetIssuerAccountId() const { return m_issuerAccountId; }
+  inline bool IssuerAccountIdHasBeenSet() const { return m_issuerAccountIdHasBeenSet; }
+  template <typename IssuerAccountIdT = ResaleAuthorizationIssuerAccountIdFilter>
+  void SetIssuerAccountId(IssuerAccountIdT&& value) {
+    m_issuerAccountIdHasBeenSet = true;
+    m_issuerAccountId = std::forward<IssuerAccountIdT>(value);
+  }
+  template <typename IssuerAccountIdT = ResaleAuthorizationIssuerAccountIdFilter>
+  ResaleAuthorizationFilters& WithIssuerAccountId(IssuerAccountIdT&& value) {
+    SetIssuerAccountId(std::forward<IssuerAccountIdT>(value));
+    return *this;
+  }
+  ///@}
  private:
   ResaleAuthorizationEntityIdFilter m_entityId;
 
@@ -313,6 +373,12 @@ class ResaleAuthorizationFilters {
   ResaleAuthorizationOfferExtendedStatusFilter m_offerExtendedStatus;
 
   ResaleAuthorizationLastModifiedDateFilter m_lastModifiedDate;
+
+  ResaleAuthorizationResellerRoleFilter m_resellerRole;
+
+  ResaleAuthorizationSourceAuthorizationFilter m_sourceAuthorization;
+
+  ResaleAuthorizationIssuerAccountIdFilter m_issuerAccountId;
   bool m_entityIdHasBeenSet = false;
   bool m_nameHasBeenSet = false;
   bool m_productIdHasBeenSet = false;
@@ -326,6 +392,9 @@ class ResaleAuthorizationFilters {
   bool m_statusHasBeenSet = false;
   bool m_offerExtendedStatusHasBeenSet = false;
   bool m_lastModifiedDateHasBeenSet = false;
+  bool m_resellerRoleHasBeenSet = false;
+  bool m_sourceAuthorizationHasBeenSet = false;
+  bool m_issuerAccountIdHasBeenSet = false;
 };
 
 }  // namespace Model

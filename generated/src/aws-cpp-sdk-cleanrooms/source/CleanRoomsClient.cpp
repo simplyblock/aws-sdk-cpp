@@ -38,6 +38,7 @@
 #include <aws/cleanrooms/model/DeleteMembershipRequest.h>
 #include <aws/cleanrooms/model/DeletePrivacyBudgetTemplateRequest.h>
 #include <aws/cleanrooms/model/DisallowIntermediateTableRequest.h>
+#include <aws/cleanrooms/model/GetAnalysisLogExportRequest.h>
 #include <aws/cleanrooms/model/GetAnalysisTemplateRequest.h>
 #include <aws/cleanrooms/model/GetCollaborationAnalysisTemplateRequest.h>
 #include <aws/cleanrooms/model/GetCollaborationChangeRequestRequest.h>
@@ -60,6 +61,7 @@
 #include <aws/cleanrooms/model/GetProtectedQueryRequest.h>
 #include <aws/cleanrooms/model/GetSchemaAnalysisRuleRequest.h>
 #include <aws/cleanrooms/model/GetSchemaRequest.h>
+#include <aws/cleanrooms/model/ListAnalysisLogExportsRequest.h>
 #include <aws/cleanrooms/model/ListAnalysisTemplatesRequest.h>
 #include <aws/cleanrooms/model/ListCollaborationAnalysisTemplatesRequest.h>
 #include <aws/cleanrooms/model/ListCollaborationChangeRequestsRequest.h>
@@ -86,6 +88,7 @@
 #include <aws/cleanrooms/model/PopulateIdMappingTableRequest.h>
 #include <aws/cleanrooms/model/PopulateIntermediateTableRequest.h>
 #include <aws/cleanrooms/model/PreviewPrivacyImpactRequest.h>
+#include <aws/cleanrooms/model/StartAnalysisLogExportRequest.h>
 #include <aws/cleanrooms/model/StartProtectedJobRequest.h>
 #include <aws/cleanrooms/model/StartProtectedQueryRequest.h>
 #include <aws/cleanrooms/model/TagResourceRequest.h>
@@ -256,7 +259,8 @@ CleanRoomsClient::InvokeOperationOutcome CleanRoomsClient::InvokeServiceOperatio
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -270,7 +274,7 @@ CleanRoomsClient::InvokeOperationOutcome CleanRoomsClient::InvokeServiceOperatio
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -967,6 +971,31 @@ DisallowIntermediateTableOutcome CleanRoomsClient::DisallowIntermediateTable(con
                             : DisallowIntermediateTableOutcome(std::move(result.GetError()));
 }
 
+GetAnalysisLogExportOutcome CleanRoomsClient::GetAnalysisLogExport(const GetAnalysisLogExportRequest& request) const {
+  if (!request.MembershipIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAnalysisLogExport", "Required field: MembershipIdentifier, is not set");
+    return GetAnalysisLogExportOutcome(Aws::Client::AWSError<CleanRoomsErrors>(CleanRoomsErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                               "Missing required field [MembershipIdentifier]", false));
+  }
+  if (!request.AnalysisLogExportIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAnalysisLogExport", "Required field: AnalysisLogExportIdentifier, is not set");
+    return GetAnalysisLogExportOutcome(Aws::Client::AWSError<CleanRoomsErrors>(
+        CleanRoomsErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [AnalysisLogExportIdentifier]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/memberships/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetMembershipIdentifier());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/analysislogexports/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetAnalysisLogExportIdentifier());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAnalysisLogExportOutcome(result.GetResultWithOwnership())
+                            : GetAnalysisLogExportOutcome(std::move(result.GetError()));
+}
+
 GetAnalysisTemplateOutcome CleanRoomsClient::GetAnalysisTemplate(const GetAnalysisTemplateRequest& request) const {
   if (!request.MembershipIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetAnalysisTemplate", "Required field: MembershipIdentifier, is not set");
@@ -1533,6 +1562,25 @@ GetSchemaAnalysisRuleOutcome CleanRoomsClient::GetSchemaAnalysisRule(const GetSc
                             : GetSchemaAnalysisRuleOutcome(std::move(result.GetError()));
 }
 
+ListAnalysisLogExportsOutcome CleanRoomsClient::ListAnalysisLogExports(const ListAnalysisLogExportsRequest& request) const {
+  if (!request.MembershipIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListAnalysisLogExports", "Required field: MembershipIdentifier, is not set");
+    return ListAnalysisLogExportsOutcome(Aws::Client::AWSError<CleanRoomsErrors>(CleanRoomsErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                 "Missing required field [MembershipIdentifier]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/memberships/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetMembershipIdentifier());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/analysislogexports");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListAnalysisLogExportsOutcome(result.GetResultWithOwnership())
+                            : ListAnalysisLogExportsOutcome(std::move(result.GetError()));
+}
+
 ListAnalysisTemplatesOutcome CleanRoomsClient::ListAnalysisTemplates(const ListAnalysisTemplatesRequest& request) const {
   if (!request.MembershipIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("ListAnalysisTemplates", "Required field: MembershipIdentifier, is not set");
@@ -2038,6 +2086,25 @@ PreviewPrivacyImpactOutcome CleanRoomsClient::PreviewPrivacyImpact(const Preview
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? PreviewPrivacyImpactOutcome(result.GetResultWithOwnership())
                             : PreviewPrivacyImpactOutcome(std::move(result.GetError()));
+}
+
+StartAnalysisLogExportOutcome CleanRoomsClient::StartAnalysisLogExport(const StartAnalysisLogExportRequest& request) const {
+  if (!request.MembershipIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("StartAnalysisLogExport", "Required field: MembershipIdentifier, is not set");
+    return StartAnalysisLogExportOutcome(Aws::Client::AWSError<CleanRoomsErrors>(CleanRoomsErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                 "Missing required field [MembershipIdentifier]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/memberships/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetMembershipIdentifier());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/analysislogexports");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StartAnalysisLogExportOutcome(result.GetResultWithOwnership())
+                            : StartAnalysisLogExportOutcome(std::move(result.GetError()));
 }
 
 StartProtectedJobOutcome CleanRoomsClient::StartProtectedJob(const StartProtectedJobRequest& request) const {

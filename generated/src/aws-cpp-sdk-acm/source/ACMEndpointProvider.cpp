@@ -4,6 +4,7 @@
  */
 
 #include <aws/acm/ACMEndpointProvider.h>
+#include <aws/acm/internal/ACMEndpointRules.h>
 
 namespace Aws {
 #ifndef AWS_ACM_EXPORTS  // Except for Windows DLL
@@ -14,13 +15,16 @@ namespace Endpoint {
 template class Aws::Endpoint::EndpointProviderBase<ACM::Endpoint::ACMClientConfiguration, ACM::Endpoint::ACMBuiltInParameters,
                                                    ACM::Endpoint::ACMClientContextParameters>;
 
-template class Aws::Endpoint::DefaultEndpointProvider<ACM::Endpoint::ACMClientConfiguration, ACM::Endpoint::ACMBuiltInParameters,
-                                                      ACM::Endpoint::ACMClientContextParameters>;
+template class Aws::Endpoint::BDDEndpointProvider<ACM::Endpoint::ACMClientConfiguration, ACM::Endpoint::ACMBuiltInParameters,
+                                                  ACM::Endpoint::ACMClientContextParameters>;
 }  // namespace Endpoint
 #endif
 
 namespace ACM {
 namespace Endpoint {
+ACMEndpointProvider::ACMEndpointProvider()
+    : ACMDefaultEpProviderBase(Aws::ACM::ACMEndpointRules::GetRulesBlob(), Aws::ACM::ACMEndpointRules::RulesBlobSize) {}
+
 void ACMClientContextParameters::SetServiceType(Aws::String value) {
   return SetStringParameter(Aws::String("ServiceType"), std::move(value));
 }

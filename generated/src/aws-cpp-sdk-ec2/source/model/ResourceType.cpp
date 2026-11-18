@@ -28,6 +28,7 @@ static const int elastic_ip_HASH = HashingUtils::HashString("elastic-ip");
 static const int elastic_gpu_HASH = HashingUtils::HashString("elastic-gpu");
 static const int export_image_task_HASH = HashingUtils::HashString("export-image-task");
 static const int export_instance_task_HASH = HashingUtils::HashString("export-instance-task");
+static const int fca_policy_HASH = HashingUtils::HashString("fca-policy");
 static const int fleet_HASH = HashingUtils::HashString("fleet");
 static const int fpga_image_HASH = HashingUtils::HashString("fpga-image");
 static const int host_reservation_HASH = HashingUtils::HashString("host-reservation");
@@ -118,6 +119,7 @@ static const int mac_modification_task_HASH = HashingUtils::HashString("mac-modi
 static const int ipam_prefix_list_resolver_HASH = HashingUtils::HashString("ipam-prefix-list-resolver");
 static const int ipam_policy_HASH = HashingUtils::HashString("ipam-policy");
 static const int ipam_prefix_list_resolver_target_HASH = HashingUtils::HashString("ipam-prefix-list-resolver-target");
+static const int ipam_internet_registry_association_HASH = HashingUtils::HashString("ipam-internet-registry-association");
 static const int secondary_interface_HASH = HashingUtils::HashString("secondary-interface");
 static const int secondary_network_HASH = HashingUtils::HashString("secondary-network");
 static const int secondary_subnet_HASH = HashingUtils::HashString("secondary-subnet");
@@ -125,6 +127,9 @@ static const int capacity_manager_data_export_HASH = HashingUtils::HashString("c
 static const int vpn_concentrator_HASH = HashingUtils::HashString("vpn-concentrator");
 static const int ipam_pool_allocation_HASH = HashingUtils::HashString("ipam-pool-allocation");
 static const int capacity_reservation_cancellation_quote_HASH = HashingUtils::HashString("capacity-reservation-cancellation-quote");
+static const int application_status_check_HASH = HashingUtils::HashString("application-status-check");
+static const int capacity_reservation_modification_quote_HASH = HashingUtils::HashString("capacity-reservation-modification-quote");
+static const int metric_category_HASH = HashingUtils::HashString("metric-category");
 
 ResourceType GetResourceTypeForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -154,6 +159,8 @@ ResourceType GetResourceTypeForName(const Aws::String& name) {
     return ResourceType::export_image_task;
   } else if (hashCode == export_instance_task_HASH) {
     return ResourceType::export_instance_task;
+  } else if (hashCode == fca_policy_HASH) {
+    return ResourceType::fca_policy;
   } else if (hashCode == fleet_HASH) {
     return ResourceType::fleet;
   } else if (hashCode == fpga_image_HASH) {
@@ -332,6 +339,8 @@ ResourceType GetResourceTypeForName(const Aws::String& name) {
     return ResourceType::ipam_policy;
   } else if (hashCode == ipam_prefix_list_resolver_target_HASH) {
     return ResourceType::ipam_prefix_list_resolver_target;
+  } else if (hashCode == ipam_internet_registry_association_HASH) {
+    return ResourceType::ipam_internet_registry_association;
   } else if (hashCode == secondary_interface_HASH) {
     return ResourceType::secondary_interface;
   } else if (hashCode == secondary_network_HASH) {
@@ -346,6 +355,12 @@ ResourceType GetResourceTypeForName(const Aws::String& name) {
     return ResourceType::ipam_pool_allocation;
   } else if (hashCode == capacity_reservation_cancellation_quote_HASH) {
     return ResourceType::capacity_reservation_cancellation_quote;
+  } else if (hashCode == application_status_check_HASH) {
+    return ResourceType::application_status_check;
+  } else if (hashCode == capacity_reservation_modification_quote_HASH) {
+    return ResourceType::capacity_reservation_modification_quote;
+  } else if (hashCode == metric_category_HASH) {
+    return ResourceType::metric_category;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -386,6 +401,8 @@ Aws::String GetNameForResourceType(ResourceType enumValue) {
       return "export-image-task";
     case ResourceType::export_instance_task:
       return "export-instance-task";
+    case ResourceType::fca_policy:
+      return "fca-policy";
     case ResourceType::fleet:
       return "fleet";
     case ResourceType::fpga_image:
@@ -564,6 +581,8 @@ Aws::String GetNameForResourceType(ResourceType enumValue) {
       return "ipam-policy";
     case ResourceType::ipam_prefix_list_resolver_target:
       return "ipam-prefix-list-resolver-target";
+    case ResourceType::ipam_internet_registry_association:
+      return "ipam-internet-registry-association";
     case ResourceType::secondary_interface:
       return "secondary-interface";
     case ResourceType::secondary_network:
@@ -578,6 +597,12 @@ Aws::String GetNameForResourceType(ResourceType enumValue) {
       return "ipam-pool-allocation";
     case ResourceType::capacity_reservation_cancellation_quote:
       return "capacity-reservation-cancellation-quote";
+    case ResourceType::application_status_check:
+      return "application-status-check";
+    case ResourceType::capacity_reservation_modification_quote:
+      return "capacity-reservation-modification-quote";
+    case ResourceType::metric_category:
+      return "metric-category";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

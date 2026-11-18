@@ -12,6 +12,7 @@
 #include <aws/ecs/model/ContainerImage.h>
 #include <aws/ecs/model/DeploymentEphemeralStorage.h>
 #include <aws/ecs/model/ECSManagedResources.h>
+#include <aws/ecs/model/GatewayConnector.h>
 #include <aws/ecs/model/LaunchType.h>
 #include <aws/ecs/model/LoadBalancer.h>
 #include <aws/ecs/model/MonitoringConfiguration.h>
@@ -19,6 +20,7 @@
 #include <aws/ecs/model/ResolvedConfiguration.h>
 #include <aws/ecs/model/ServiceConnectConfiguration.h>
 #include <aws/ecs/model/ServiceRegistry.h>
+#include <aws/ecs/model/ServiceRevisionOverrides.h>
 #include <aws/ecs/model/ServiceVolumeConfiguration.h>
 #include <aws/ecs/model/VpcLatticeConfiguration.h>
 
@@ -447,6 +449,50 @@ class ServiceRevision {
 
   ///@{
   /**
+   * <p>The effective runtime overrides that Amazon ECS applies to this service
+   * revision. This value is present only when Amazon ECS detects a difference
+   * between the task definition and the actual runtime configuration.</p>
+   */
+  inline const ServiceRevisionOverrides& GetOverrides() const { return m_overrides; }
+  inline bool OverridesHasBeenSet() const { return m_overridesHasBeenSet; }
+  template <typename OverridesT = ServiceRevisionOverrides>
+  void SetOverrides(OverridesT&& value) {
+    m_overridesHasBeenSet = true;
+    m_overrides = std::forward<OverridesT>(value);
+  }
+  template <typename OverridesT = ServiceRevisionOverrides>
+  ServiceRevision& WithOverrides(OverridesT&& value) {
+    SetOverrides(std::forward<OverridesT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The gateway connectors that are associated with the service revision.</p>
+   */
+  inline const Aws::Vector<GatewayConnector>& GetGatewayConnectors() const { return m_gatewayConnectors; }
+  inline bool GatewayConnectorsHasBeenSet() const { return m_gatewayConnectorsHasBeenSet; }
+  template <typename GatewayConnectorsT = Aws::Vector<GatewayConnector>>
+  void SetGatewayConnectors(GatewayConnectorsT&& value) {
+    m_gatewayConnectorsHasBeenSet = true;
+    m_gatewayConnectors = std::forward<GatewayConnectorsT>(value);
+  }
+  template <typename GatewayConnectorsT = Aws::Vector<GatewayConnector>>
+  ServiceRevision& WithGatewayConnectors(GatewayConnectorsT&& value) {
+    SetGatewayConnectors(std::forward<GatewayConnectorsT>(value));
+    return *this;
+  }
+  template <typename GatewayConnectorsT = GatewayConnector>
+  ServiceRevision& AddGatewayConnectors(GatewayConnectorsT&& value) {
+    m_gatewayConnectorsHasBeenSet = true;
+    m_gatewayConnectors.emplace_back(std::forward<GatewayConnectorsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The optional monitoring configuration for the service, which defines the
    * resolution for the service-level <code>CPUUtilization</code> and
    * <code>MemoryUtilization</code> Amazon CloudWatch metrics. When not specified,
@@ -506,6 +552,10 @@ class ServiceRevision {
 
   ECSManagedResources m_ecsManagedResources;
 
+  ServiceRevisionOverrides m_overrides;
+
+  Aws::Vector<GatewayConnector> m_gatewayConnectors;
+
   MonitoringConfiguration m_monitoring;
   bool m_serviceRevisionArnHasBeenSet = false;
   bool m_serviceArnHasBeenSet = false;
@@ -527,6 +577,8 @@ class ServiceRevision {
   bool m_vpcLatticeConfigurationsHasBeenSet = false;
   bool m_resolvedConfigurationHasBeenSet = false;
   bool m_ecsManagedResourcesHasBeenSet = false;
+  bool m_overridesHasBeenSet = false;
+  bool m_gatewayConnectorsHasBeenSet = false;
   bool m_monitoringHasBeenSet = false;
 };
 

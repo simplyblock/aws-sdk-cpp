@@ -7,6 +7,9 @@
 #include <aws/ec2-protocol/model/SimpleInputParamsRequest.h>
 #include <aws/testing/AwsProtocolTestHelpers.h>
 
+#include <cmath>
+#include <limits>
+
 using SimpleInputParams = AWS_PROTOCOL_TEST_SUITE;
 using EC2ProtocolClient = Aws::EC2Protocol::EC2ProtocolClient;
 using namespace Aws::EC2Protocol::Model;
@@ -27,7 +30,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2SimpleInputParamsStrings) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -47,7 +50,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2SimpleInputParamsStringAndBooleanTrue) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -66,7 +69,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2SimpleInputParamsStringsAndBooleanFalse)
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -85,7 +88,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2SimpleInputParamsInteger) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -104,7 +107,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2SimpleInputParamsFloat) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -123,7 +126,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2SimpleInputParamsBlob) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -142,7 +145,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2Enums) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -161,7 +164,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2Query) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -180,7 +183,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2QueryIsPreferred) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -199,7 +202,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2XmlNameIsUppercased) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -219,7 +222,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2QuerySupportsNaNFloatInputs) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -239,7 +242,7 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2QuerySupportsInfinityFloatInputs) {
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -259,6 +262,6 @@ AWS_PROTOCOL_TEST(SimpleInputParams, Ec2QuerySupportsNegativeInfinityFloatInputs
   expectedRq.uri = "/";
   expectedRq.headers = {{"Content-Type", R"(application/x-www-form-urlencoded)"}};
   expectedRq.requireHeaders = {"Content-Length"};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateFormUrlEncodedBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }

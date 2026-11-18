@@ -7,8 +7,10 @@
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/network-firewall/model/EncryptionConfiguration.h>
+#include <aws/network-firewall/model/FirewallPolicyError.h>
 #include <aws/network-firewall/model/ResourceStatus.h>
 #include <aws/network-firewall/model/Tag.h>
 
@@ -16,10 +18,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace NetworkFirewall {
 namespace Model {
@@ -35,9 +36,9 @@ namespace Model {
 class FirewallPolicyResponse {
  public:
   AWS_NETWORKFIREWALL_API FirewallPolicyResponse() = default;
-  AWS_NETWORKFIREWALL_API FirewallPolicyResponse(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API FirewallPolicyResponse& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_NETWORKFIREWALL_API FirewallPolicyResponse(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API FirewallPolicyResponse& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -135,6 +136,27 @@ class FirewallPolicyResponse {
 
   ///@{
   /**
+   * <p>Additional detail about the firewall policy's current status, when
+   * applicable. For example, while an Amazon Route 53 Resolver DNS Firewall rule
+   * group change is in progress, the status is <code>UPDATING</code> and this
+   * message is "A DNS Firewall rule group change is in progress."</p>
+   */
+  inline const Aws::String& GetStatusMessage() const { return m_statusMessage; }
+  inline bool StatusMessageHasBeenSet() const { return m_statusMessageHasBeenSet; }
+  template <typename StatusMessageT = Aws::String>
+  void SetStatusMessage(StatusMessageT&& value) {
+    m_statusMessageHasBeenSet = true;
+    m_statusMessage = std::forward<StatusMessageT>(value);
+  }
+  template <typename StatusMessageT = Aws::String>
+  FirewallPolicyResponse& WithStatusMessage(StatusMessageT&& value) {
+    SetStatusMessage(std::forward<StatusMessageT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The key:value pairs to associate with the resource.</p>
    */
   inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
@@ -162,13 +184,13 @@ class FirewallPolicyResponse {
    * <p>The number of capacity units currently consumed by the policy's stateless
    * rules.</p>
    */
-  inline int GetConsumedStatelessRuleCapacity() const { return m_consumedStatelessRuleCapacity; }
+  inline int64_t GetConsumedStatelessRuleCapacity() const { return m_consumedStatelessRuleCapacity; }
   inline bool ConsumedStatelessRuleCapacityHasBeenSet() const { return m_consumedStatelessRuleCapacityHasBeenSet; }
-  inline void SetConsumedStatelessRuleCapacity(int value) {
+  inline void SetConsumedStatelessRuleCapacity(int64_t value) {
     m_consumedStatelessRuleCapacityHasBeenSet = true;
     m_consumedStatelessRuleCapacity = value;
   }
-  inline FirewallPolicyResponse& WithConsumedStatelessRuleCapacity(int value) {
+  inline FirewallPolicyResponse& WithConsumedStatelessRuleCapacity(int64_t value) {
     SetConsumedStatelessRuleCapacity(value);
     return *this;
   }
@@ -179,13 +201,13 @@ class FirewallPolicyResponse {
    * <p>The number of capacity units currently consumed by the policy's stateful
    * rules.</p>
    */
-  inline int GetConsumedStatefulRuleCapacity() const { return m_consumedStatefulRuleCapacity; }
+  inline int64_t GetConsumedStatefulRuleCapacity() const { return m_consumedStatefulRuleCapacity; }
   inline bool ConsumedStatefulRuleCapacityHasBeenSet() const { return m_consumedStatefulRuleCapacityHasBeenSet; }
-  inline void SetConsumedStatefulRuleCapacity(int value) {
+  inline void SetConsumedStatefulRuleCapacity(int64_t value) {
     m_consumedStatefulRuleCapacityHasBeenSet = true;
     m_consumedStatefulRuleCapacity = value;
   }
-  inline FirewallPolicyResponse& WithConsumedStatefulRuleCapacity(int value) {
+  inline FirewallPolicyResponse& WithConsumedStatefulRuleCapacity(int64_t value) {
     SetConsumedStatefulRuleCapacity(value);
     return *this;
   }
@@ -197,13 +219,13 @@ class FirewallPolicyResponse {
    * groups in the firewall policy that use the
    * <code>stateful-domain-rulegroup</code> resource type.</p>
    */
-  inline int GetConsumedStatefulDomainCapacity() const { return m_consumedStatefulDomainCapacity; }
+  inline int64_t GetConsumedStatefulDomainCapacity() const { return m_consumedStatefulDomainCapacity; }
   inline bool ConsumedStatefulDomainCapacityHasBeenSet() const { return m_consumedStatefulDomainCapacityHasBeenSet; }
-  inline void SetConsumedStatefulDomainCapacity(int value) {
+  inline void SetConsumedStatefulDomainCapacity(int64_t value) {
     m_consumedStatefulDomainCapacityHasBeenSet = true;
     m_consumedStatefulDomainCapacity = value;
   }
-  inline FirewallPolicyResponse& WithConsumedStatefulDomainCapacity(int value) {
+  inline FirewallPolicyResponse& WithConsumedStatefulDomainCapacity(int64_t value) {
     SetConsumedStatefulDomainCapacity(value);
     return *this;
   }
@@ -213,13 +235,13 @@ class FirewallPolicyResponse {
   /**
    * <p>The number of firewalls that are associated with this firewall policy.</p>
    */
-  inline int GetNumberOfAssociations() const { return m_numberOfAssociations; }
+  inline int64_t GetNumberOfAssociations() const { return m_numberOfAssociations; }
   inline bool NumberOfAssociationsHasBeenSet() const { return m_numberOfAssociationsHasBeenSet; }
-  inline void SetNumberOfAssociations(int value) {
+  inline void SetNumberOfAssociations(int64_t value) {
     m_numberOfAssociationsHasBeenSet = true;
     m_numberOfAssociations = value;
   }
-  inline FirewallPolicyResponse& WithNumberOfAssociations(int value) {
+  inline FirewallPolicyResponse& WithNumberOfAssociations(int64_t value) {
     SetNumberOfAssociations(value);
     return *this;
   }
@@ -240,6 +262,34 @@ class FirewallPolicyResponse {
   template <typename EncryptionConfigurationT = EncryptionConfiguration>
   FirewallPolicyResponse& WithEncryptionConfiguration(EncryptionConfigurationT&& value) {
     SetEncryptionConfiguration(std::forward<EncryptionConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Any configuration errors that apply to the firewall policy. Network Firewall
+   * detects these errors asynchronously, after you create or update the policy, so
+   * an error can appear after the request that caused it has already succeeded. Each
+   * entry describes the problem and how to resolve it, and Network Firewall clears
+   * it automatically after you resolve the problem.</p>
+   */
+  inline const Aws::Vector<FirewallPolicyError>& GetErrors() const { return m_errors; }
+  inline bool ErrorsHasBeenSet() const { return m_errorsHasBeenSet; }
+  template <typename ErrorsT = Aws::Vector<FirewallPolicyError>>
+  void SetErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors = std::forward<ErrorsT>(value);
+  }
+  template <typename ErrorsT = Aws::Vector<FirewallPolicyError>>
+  FirewallPolicyResponse& WithErrors(ErrorsT&& value) {
+    SetErrors(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  template <typename ErrorsT = FirewallPolicyError>
+  FirewallPolicyResponse& AddErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors.emplace_back(std::forward<ErrorsT>(value));
     return *this;
   }
   ///@}
@@ -272,17 +322,21 @@ class FirewallPolicyResponse {
 
   ResourceStatus m_firewallPolicyStatus{ResourceStatus::NOT_SET};
 
+  Aws::String m_statusMessage;
+
   Aws::Vector<Tag> m_tags;
 
-  int m_consumedStatelessRuleCapacity{0};
+  int64_t m_consumedStatelessRuleCapacity{0};
 
-  int m_consumedStatefulRuleCapacity{0};
+  int64_t m_consumedStatefulRuleCapacity{0};
 
-  int m_consumedStatefulDomainCapacity{0};
+  int64_t m_consumedStatefulDomainCapacity{0};
 
-  int m_numberOfAssociations{0};
+  int64_t m_numberOfAssociations{0};
 
   EncryptionConfiguration m_encryptionConfiguration;
+
+  Aws::Vector<FirewallPolicyError> m_errors;
 
   Aws::Utils::DateTime m_lastModifiedTime{};
   bool m_firewallPolicyNameHasBeenSet = false;
@@ -290,12 +344,14 @@ class FirewallPolicyResponse {
   bool m_firewallPolicyIdHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_firewallPolicyStatusHasBeenSet = false;
+  bool m_statusMessageHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
   bool m_consumedStatelessRuleCapacityHasBeenSet = false;
   bool m_consumedStatefulRuleCapacityHasBeenSet = false;
   bool m_consumedStatefulDomainCapacityHasBeenSet = false;
   bool m_numberOfAssociationsHasBeenSet = false;
   bool m_encryptionConfigurationHasBeenSet = false;
+  bool m_errorsHasBeenSet = false;
   bool m_lastModifiedTimeHasBeenSet = false;
 };
 

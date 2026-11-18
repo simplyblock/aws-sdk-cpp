@@ -36,6 +36,7 @@ file(GLOB ENDPOINT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/endpoint/*.cpp")
 file(GLOB AWS_CPP_SDK_CORE_TESTS_SRC
   "${CMAKE_CURRENT_SOURCE_DIR}/RunTests.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/VersionTests.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/smithy/client/AsyncSmithyClientTest.cpp"
   ${AWS_SRC}
   ${AWS_AUTH_SRC}
   ${AWS_CONFIG_SRC}
@@ -125,6 +126,9 @@ if (NO_HTTP_CLIENT)
 endif()
 
 target_link_libraries(${PROJECT_NAME} ${PROJECT_LIBS} ${CLIENT_LIBS})
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    "CLOCK_SKEW_TEST_CASES_PATH=\"${CMAKE_CURRENT_SOURCE_DIR}/resources/clock-skew-test-cases.json\"")
 
 add_custom_command(TARGET aws-cpp-sdk-core-tests PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory

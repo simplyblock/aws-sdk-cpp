@@ -11,11 +11,14 @@
 #include <aws/lightsail/model/CacheBehavior.h>
 #include <aws/lightsail/model/CacheBehaviorPerPath.h>
 #include <aws/lightsail/model/CacheSettings.h>
+#include <aws/lightsail/model/DistributionCustomErrorResponse.h>
 #include <aws/lightsail/model/IpAddressType.h>
+#include <aws/lightsail/model/LightsailDistributionSubdomain.h>
 #include <aws/lightsail/model/Origin.h>
 #include <aws/lightsail/model/ResourceLocation.h>
 #include <aws/lightsail/model/ResourceType.h>
 #include <aws/lightsail/model/Tag.h>
+#include <aws/lightsail/model/WafConfig.h>
 
 #include <utility>
 
@@ -447,6 +450,94 @@ class LightsailDistribution {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The object (for example, <code>index.html</code>) that the distribution
+   * returns when a viewer requests the root URL of the distribution (<code>/</code>)
+   * instead of a specific object.</p> <p>This value is returned only when you
+   * specify <code>distributionName</code> in your <code>GetDistributions</code>
+   * request. It isn't included in the response when you list all of your
+   * distributions.</p>
+   */
+  inline const Aws::String& GetDefaultRootObject() const { return m_defaultRootObject; }
+  inline bool DefaultRootObjectHasBeenSet() const { return m_defaultRootObjectHasBeenSet; }
+  template <typename DefaultRootObjectT = Aws::String>
+  void SetDefaultRootObject(DefaultRootObjectT&& value) {
+    m_defaultRootObjectHasBeenSet = true;
+    m_defaultRootObject = std::forward<DefaultRootObjectT>(value);
+  }
+  template <typename DefaultRootObjectT = Aws::String>
+  LightsailDistribution& WithDefaultRootObject(DefaultRootObjectT&& value) {
+    SetDefaultRootObject(std::forward<DefaultRootObjectT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>An array of objects that describe the custom error responses configured for
+   * the distribution.</p> <p>This value is returned only when you specify
+   * <code>distributionName</code> in your <code>GetDistributions</code> request. It
+   * isn't included in the response when you list all of your distributions.</p>
+   */
+  inline const Aws::Vector<DistributionCustomErrorResponse>& GetCustomErrorResponses() const { return m_customErrorResponses; }
+  inline bool CustomErrorResponsesHasBeenSet() const { return m_customErrorResponsesHasBeenSet; }
+  template <typename CustomErrorResponsesT = Aws::Vector<DistributionCustomErrorResponse>>
+  void SetCustomErrorResponses(CustomErrorResponsesT&& value) {
+    m_customErrorResponsesHasBeenSet = true;
+    m_customErrorResponses = std::forward<CustomErrorResponsesT>(value);
+  }
+  template <typename CustomErrorResponsesT = Aws::Vector<DistributionCustomErrorResponse>>
+  LightsailDistribution& WithCustomErrorResponses(CustomErrorResponsesT&& value) {
+    SetCustomErrorResponses(std::forward<CustomErrorResponsesT>(value));
+    return *this;
+  }
+  template <typename CustomErrorResponsesT = DistributionCustomErrorResponse>
+  LightsailDistribution& AddCustomErrorResponses(CustomErrorResponsesT&& value) {
+    m_customErrorResponsesHasBeenSet = true;
+    m_customErrorResponses.emplace_back(std::forward<CustomErrorResponsesT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>An object that describes the Web Application Firewall (WAF) configuration of
+   * the distribution.</p>
+   */
+  inline const WafConfig& GetWaf() const { return m_waf; }
+  inline bool WafHasBeenSet() const { return m_wafHasBeenSet; }
+  template <typename WafT = WafConfig>
+  void SetWaf(WafT&& value) {
+    m_wafHasBeenSet = true;
+    m_waf = std::forward<WafT>(value);
+  }
+  template <typename WafT = WafConfig>
+  LightsailDistribution& WithWaf(WafT&& value) {
+    SetWaf(std::forward<WafT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>An object that describes the Lightsail subdomain that's associated with the
+   * distribution, or is being associated with it.</p>
+   */
+  inline const LightsailDistributionSubdomain& GetSubdomain() const { return m_subdomain; }
+  inline bool SubdomainHasBeenSet() const { return m_subdomainHasBeenSet; }
+  template <typename SubdomainT = LightsailDistributionSubdomain>
+  void SetSubdomain(SubdomainT&& value) {
+    m_subdomainHasBeenSet = true;
+    m_subdomain = std::forward<SubdomainT>(value);
+  }
+  template <typename SubdomainT = LightsailDistributionSubdomain>
+  LightsailDistribution& WithSubdomain(SubdomainT&& value) {
+    SetSubdomain(std::forward<SubdomainT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_name;
 
@@ -489,6 +580,14 @@ class LightsailDistribution {
   Aws::Vector<Tag> m_tags;
 
   Aws::String m_viewerMinimumTlsProtocolVersion;
+
+  Aws::String m_defaultRootObject;
+
+  Aws::Vector<DistributionCustomErrorResponse> m_customErrorResponses;
+
+  WafConfig m_waf;
+
+  LightsailDistributionSubdomain m_subdomain;
   bool m_nameHasBeenSet = false;
   bool m_arnHasBeenSet = false;
   bool m_supportCodeHasBeenSet = false;
@@ -510,6 +609,10 @@ class LightsailDistribution {
   bool m_ipAddressTypeHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
   bool m_viewerMinimumTlsProtocolVersionHasBeenSet = false;
+  bool m_defaultRootObjectHasBeenSet = false;
+  bool m_customErrorResponsesHasBeenSet = false;
+  bool m_wafHasBeenSet = false;
+  bool m_subdomainHasBeenSet = false;
 };
 
 }  // namespace Model

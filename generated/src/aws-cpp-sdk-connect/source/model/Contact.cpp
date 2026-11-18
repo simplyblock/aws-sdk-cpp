@@ -203,6 +203,13 @@ Contact& Contact::operator=(JsonView jsonValue) {
     m_taskTemplateInfo = jsonValue.GetObject("TaskTemplateInfo");
     m_taskTemplateInfoHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("Cases")) {
+    Aws::Utils::Array<JsonView> casesJsonList = jsonValue.GetArray("Cases");
+    for (unsigned casesIndex = 0; casesIndex < casesJsonList.GetLength(); ++casesIndex) {
+      m_cases.push_back(casesJsonList[casesIndex].AsObject());
+    }
+    m_casesHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("ContactDetails")) {
     m_contactDetails = jsonValue.GetObject("ContactDetails");
     m_contactDetailsHasBeenSet = true;
@@ -228,6 +235,10 @@ Contact& Contact::operator=(JsonView jsonValue) {
   if (jsonValue.ValueExists("GlobalResiliencyMetadata")) {
     m_globalResiliencyMetadata = jsonValue.GetObject("GlobalResiliencyMetadata");
     m_globalResiliencyMetadataHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ContactLens")) {
+    m_contactLens = jsonValue.GetObject("ContactLens");
+    m_contactLensHasBeenSet = true;
   }
   return *this;
 }
@@ -424,6 +435,14 @@ JsonValue Contact::Jsonize() const {
     payload.WithObject("TaskTemplateInfo", m_taskTemplateInfo.Jsonize());
   }
 
+  if (m_casesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> casesJsonList(m_cases.size());
+    for (unsigned casesIndex = 0; casesIndex < casesJsonList.GetLength(); ++casesIndex) {
+      casesJsonList[casesIndex].AsObject(m_cases[casesIndex].Jsonize());
+    }
+    payload.WithArray("Cases", std::move(casesJsonList));
+  }
+
   if (m_contactDetailsHasBeenSet) {
     payload.WithObject("ContactDetails", m_contactDetails.Jsonize());
   }
@@ -450,6 +469,10 @@ JsonValue Contact::Jsonize() const {
 
   if (m_globalResiliencyMetadataHasBeenSet) {
     payload.WithObject("GlobalResiliencyMetadata", m_globalResiliencyMetadata.Jsonize());
+  }
+
+  if (m_contactLensHasBeenSet) {
+    payload.WithObject("ContactLens", m_contactLens.Jsonize());
   }
 
   return payload;

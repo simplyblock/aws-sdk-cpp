@@ -30,9 +30,9 @@ GitLabConfiguration& GitLabConfiguration::operator=(JsonView jsonValue) {
     m_instanceIdentifier = jsonValue.GetString("instanceIdentifier");
     m_instanceIdentifierHasBeenSet = true;
   }
-  if (jsonValue.ValueExists("runtimeRoleArn")) {
-    m_runtimeRoleArn = jsonValue.GetString("runtimeRoleArn");
-    m_runtimeRoleArnHasBeenSet = true;
+  if (jsonValue.ValueExists("releaseManagementAssociationId")) {
+    m_releaseManagementAssociationId = jsonValue.GetString("releaseManagementAssociationId");
+    m_releaseManagementAssociationIdHasBeenSet = true;
   }
   return *this;
 }
@@ -52,8 +52,8 @@ JsonValue GitLabConfiguration::Jsonize() const {
     payload.WithString("instanceIdentifier", m_instanceIdentifier);
   }
 
-  if (m_runtimeRoleArnHasBeenSet) {
-    payload.WithString("runtimeRoleArn", m_runtimeRoleArn);
+  if (m_releaseManagementAssociationIdHasBeenSet) {
+    payload.WithString("releaseManagementAssociationId", m_releaseManagementAssociationId);
   }
 
   return payload;

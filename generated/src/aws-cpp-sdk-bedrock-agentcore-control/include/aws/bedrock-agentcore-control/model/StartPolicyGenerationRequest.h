@@ -74,8 +74,8 @@ class StartPolicyGenerationRequest : public BedrockAgentCoreControlRequest {
   ///@{
   /**
    * <p>The natural language description of the desired policy behavior. This content
-   * is processed by AI to generate corresponding Cedar policy statements that match
-   * the described intent.</p>
+   * is processed by AI to generate corresponding Dogwood policy statements that
+   * match the described intent.</p>
    */
   inline const Content& GetContent() const { return m_content; }
   inline bool ContentHasBeenSet() const { return m_contentHasBeenSet; }
@@ -114,9 +114,10 @@ class StartPolicyGenerationRequest : public BedrockAgentCoreControlRequest {
   ///@{
   /**
    * <p>A unique, case-sensitive identifier to ensure the idempotency of the request.
-   * The AWS SDK automatically generates this token, so you don't need to provide it
-   * in most cases. If you retry a request with the same client token, the service
-   * returns the same response without starting a duplicate generation.</p>
+   * The Amazon Web Services SDK automatically generates this token, so you don't
+   * need to provide it in most cases. If you retry a request with the same client
+   * token, the service returns the same response without starting a duplicate
+   * generation.</p>
    */
   inline const Aws::String& GetClientToken() const { return m_clientToken; }
   inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }

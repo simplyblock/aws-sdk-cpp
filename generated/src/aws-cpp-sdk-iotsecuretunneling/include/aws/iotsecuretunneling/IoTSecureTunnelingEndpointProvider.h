@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/iotsecuretunneling/IoTSecureTunnelingEndpointRules.h>
 #include <aws/iotsecuretunneling/IoTSecureTunneling_EXPORTS.h>
 
 namespace Aws {
 namespace IoTSecureTunneling {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using IoTSecureTunnelingClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using IoTSecureTunnelingEndpointProviderBase =
                          IoTSecureTunnelingClientContextParameters>;
 
 using IoTSecureTunnelingDefaultEpProviderBase =
-    DefaultEndpointProvider<IoTSecureTunnelingClientConfiguration, IoTSecureTunnelingBuiltInParameters,
-                            IoTSecureTunnelingClientContextParameters>;
+    BDDEndpointProvider<IoTSecureTunnelingClientConfiguration, IoTSecureTunnelingBuiltInParameters,
+                        IoTSecureTunnelingClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_IOTSECURETUNNELING_API IoTSecureTunnelingEndpointProvider : public IoT
  public:
   using IoTSecureTunnelingResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  IoTSecureTunnelingEndpointProvider()
-      : IoTSecureTunnelingDefaultEpProviderBase(Aws::IoTSecureTunneling::IoTSecureTunnelingEndpointRules::GetRulesBlob(),
-                                                Aws::IoTSecureTunneling::IoTSecureTunnelingEndpointRules::RulesBlobSize) {}
+  IoTSecureTunnelingEndpointProvider();
 
   ~IoTSecureTunnelingEndpointProvider() {}
 };

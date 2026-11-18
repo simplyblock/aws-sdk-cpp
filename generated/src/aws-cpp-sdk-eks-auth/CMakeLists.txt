@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-eks-auth "C++ SDK for the AWS eks-auth service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-eks-auth "C++ SDK for Amazon EKS Auth" aws-cpp-sdk-core)
 
 file(GLOB AWS_EKS-AUTH_HEADERS
     "include/aws/eks-auth/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_EKS-AUTH_HEADERS
 
 file(GLOB AWS_EKS-AUTH_MODEL_HEADERS
     "include/aws/eks-auth/model/*.h"
+)
+
+file(GLOB AWS_EKS-AUTH_INTERNAL_HEADERS
+    "include/aws/eks-auth/internal/*.h"
 )
 
 file(GLOB AWS_EKS-AUTH_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_EKS-AUTH_MODEL_SOURCE
 
 file(GLOB EKS-AUTH_UNIFIED_HEADERS
     ${AWS_EKS-AUTH_HEADERS}
+    ${AWS_EKS-AUTH_INTERNAL_HEADERS}
     ${AWS_EKS-AUTH_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\eks-auth" FILES ${AWS_EKS-AUTH_HEADERS})
+        source_group("Header Files\\aws\\eks-auth\\internal" FILES ${AWS_EKS-AUTH_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\eks-auth\\model" FILES ${AWS_EKS-AUTH_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_EKS-AUTH_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_EKS-AUTH_MODEL_SOURCE})

@@ -18,7 +18,9 @@
 #include <aws/devops-agent/model/MCPServerNewRelicConfiguration.h>
 #include <aws/devops-agent/model/MCPServerSigV4Configuration.h>
 #include <aws/devops-agent/model/MCPServerSplunkConfiguration.h>
+#include <aws/devops-agent/model/MSTeamsConfiguration.h>
 #include <aws/devops-agent/model/PagerDutyConfiguration.h>
+#include <aws/devops-agent/model/ReleaseManagementConfiguration.h>
 #include <aws/devops-agent/model/RemoteAgentConfiguration.h>
 #include <aws/devops-agent/model/RemoteAgentSigV4Configuration.h>
 #include <aws/devops-agent/model/ServiceNowConfiguration.h>
@@ -391,6 +393,43 @@ class ServiceConfiguration {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The configuration for connecting a Microsoft Teams team to the DevOps Agent
+   * service.</p>
+   */
+  inline const MSTeamsConfiguration& GetMsteams() const { return m_msteams; }
+  inline bool MsteamsHasBeenSet() const { return m_msteamsHasBeenSet; }
+  template <typename MsteamsT = MSTeamsConfiguration>
+  void SetMsteams(MsteamsT&& value) {
+    m_msteamsHasBeenSet = true;
+    m_msteams = std::forward<MsteamsT>(value);
+  }
+  template <typename MsteamsT = MSTeamsConfiguration>
+  ServiceConfiguration& WithMsteams(MsteamsT&& value) {
+    SetMsteams(std::forward<MsteamsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Release management network environment configuration</p>
+   */
+  inline const ReleaseManagementConfiguration& GetReleaseManagement() const { return m_releaseManagement; }
+  inline bool ReleaseManagementHasBeenSet() const { return m_releaseManagementHasBeenSet; }
+  template <typename ReleaseManagementT = ReleaseManagementConfiguration>
+  void SetReleaseManagement(ReleaseManagementT&& value) {
+    m_releaseManagementHasBeenSet = true;
+    m_releaseManagement = std::forward<ReleaseManagementT>(value);
+  }
+  template <typename ReleaseManagementT = ReleaseManagementConfiguration>
+  ServiceConfiguration& WithReleaseManagement(ReleaseManagementT&& value) {
+    SetReleaseManagement(std::forward<ReleaseManagementT>(value));
+    return *this;
+  }
+  ///@}
  private:
   SourceAwsConfiguration m_sourceAws;
 
@@ -429,6 +468,10 @@ class ServiceConfiguration {
   RemoteAgentConfiguration m_remoteagent;
 
   RemoteAgentSigV4Configuration m_remoteagentsigv4;
+
+  MSTeamsConfiguration m_msteams;
+
+  ReleaseManagementConfiguration m_releaseManagement;
   bool m_sourceAwsHasBeenSet = false;
   bool m_awsHasBeenSet = false;
   bool m_githubHasBeenSet = false;
@@ -448,6 +491,8 @@ class ServiceConfiguration {
   bool m_mcpserversigv4HasBeenSet = false;
   bool m_remoteagentHasBeenSet = false;
   bool m_remoteagentsigv4HasBeenSet = false;
+  bool m_msteamsHasBeenSet = false;
+  bool m_releaseManagementHasBeenSet = false;
 };
 
 }  // namespace Model

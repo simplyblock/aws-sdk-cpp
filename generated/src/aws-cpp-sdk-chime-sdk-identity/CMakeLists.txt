@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-chime-sdk-identity "C++ SDK for the AWS chime-sdk-identity service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-chime-sdk-identity "C++ SDK for Amazon Chime SDK Identity" aws-cpp-sdk-core)
 
 file(GLOB AWS_CHIME-SDK-IDENTITY_HEADERS
     "include/aws/chime-sdk-identity/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CHIME-SDK-IDENTITY_HEADERS
 
 file(GLOB AWS_CHIME-SDK-IDENTITY_MODEL_HEADERS
     "include/aws/chime-sdk-identity/model/*.h"
+)
+
+file(GLOB AWS_CHIME-SDK-IDENTITY_INTERNAL_HEADERS
+    "include/aws/chime-sdk-identity/internal/*.h"
 )
 
 file(GLOB AWS_CHIME-SDK-IDENTITY_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CHIME-SDK-IDENTITY_MODEL_SOURCE
 
 file(GLOB CHIME-SDK-IDENTITY_UNIFIED_HEADERS
     ${AWS_CHIME-SDK-IDENTITY_HEADERS}
+    ${AWS_CHIME-SDK-IDENTITY_INTERNAL_HEADERS}
     ${AWS_CHIME-SDK-IDENTITY_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\chime-sdk-identity" FILES ${AWS_CHIME-SDK-IDENTITY_HEADERS})
+        source_group("Header Files\\aws\\chime-sdk-identity\\internal" FILES ${AWS_CHIME-SDK-IDENTITY_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\chime-sdk-identity\\model" FILES ${AWS_CHIME-SDK-IDENTITY_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CHIME-SDK-IDENTITY_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CHIME-SDK-IDENTITY_MODEL_SOURCE})

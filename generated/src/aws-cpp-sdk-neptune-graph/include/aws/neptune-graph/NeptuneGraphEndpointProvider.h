@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/neptune-graph/NeptuneGraphEndpointRules.h>
 #include <aws/neptune-graph/NeptuneGraph_EXPORTS.h>
 
 namespace Aws {
 namespace NeptuneGraph {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using NeptuneGraphClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using NeptuneGraphEndpointProviderBase =
     EndpointProviderBase<NeptuneGraphClientConfiguration, NeptuneGraphBuiltInParameters, NeptuneGraphClientContextParameters>;
 
 using NeptuneGraphDefaultEpProviderBase =
-    DefaultEndpointProvider<NeptuneGraphClientConfiguration, NeptuneGraphBuiltInParameters, NeptuneGraphClientContextParameters>;
+    BDDEndpointProvider<NeptuneGraphClientConfiguration, NeptuneGraphBuiltInParameters, NeptuneGraphClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_NEPTUNEGRAPH_API NeptuneGraphEndpointProvider : public NeptuneGraphDef
  public:
   using NeptuneGraphResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  NeptuneGraphEndpointProvider()
-      : NeptuneGraphDefaultEpProviderBase(Aws::NeptuneGraph::NeptuneGraphEndpointRules::GetRulesBlob(),
-                                          Aws::NeptuneGraph::NeptuneGraphEndpointRules::RulesBlobSize) {}
+  NeptuneGraphEndpointProvider();
 
   ~NeptuneGraphEndpointProvider() {}
 };

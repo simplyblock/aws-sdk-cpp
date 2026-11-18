@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-meteringmarketplace "C++ SDK for the AWS meteringmarketplace service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-meteringmarketplace "C++ SDK for AWSMarketplace Metering" aws-cpp-sdk-core)
 
 file(GLOB AWS_METERINGMARKETPLACE_HEADERS
     "include/aws/meteringmarketplace/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_METERINGMARKETPLACE_HEADERS
 
 file(GLOB AWS_METERINGMARKETPLACE_MODEL_HEADERS
     "include/aws/meteringmarketplace/model/*.h"
+)
+
+file(GLOB AWS_METERINGMARKETPLACE_INTERNAL_HEADERS
+    "include/aws/meteringmarketplace/internal/*.h"
 )
 
 file(GLOB AWS_METERINGMARKETPLACE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_METERINGMARKETPLACE_MODEL_SOURCE
 
 file(GLOB METERINGMARKETPLACE_UNIFIED_HEADERS
     ${AWS_METERINGMARKETPLACE_HEADERS}
+    ${AWS_METERINGMARKETPLACE_INTERNAL_HEADERS}
     ${AWS_METERINGMARKETPLACE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\meteringmarketplace" FILES ${AWS_METERINGMARKETPLACE_HEADERS})
+        source_group("Header Files\\aws\\meteringmarketplace\\internal" FILES ${AWS_METERINGMARKETPLACE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\meteringmarketplace\\model" FILES ${AWS_METERINGMARKETPLACE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_METERINGMARKETPLACE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_METERINGMARKETPLACE_MODEL_SOURCE})

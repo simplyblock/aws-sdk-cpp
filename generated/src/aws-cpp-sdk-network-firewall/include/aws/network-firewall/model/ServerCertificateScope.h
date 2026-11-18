@@ -5,18 +5,21 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/network-firewall/model/Address.h>
+#include <aws/network-firewall/model/DecryptionAction.h>
+#include <aws/network-firewall/model/DomainMatch.h>
 #include <aws/network-firewall/model/PortRange.h>
+#include <aws/network-firewall/model/TLSInspectionScopeDeploymentMode.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace NetworkFirewall {
 namespace Model {
@@ -31,9 +34,9 @@ namespace Model {
 class ServerCertificateScope {
  public:
   AWS_NETWORKFIREWALL_API ServerCertificateScope() = default;
-  AWS_NETWORKFIREWALL_API ServerCertificateScope(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API ServerCertificateScope& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_NETWORKFIREWALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_NETWORKFIREWALL_API ServerCertificateScope(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API ServerCertificateScope& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_NETWORKFIREWALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -145,21 +148,86 @@ class ServerCertificateScope {
    * number (IANA) for each protocol. If not specified, this matches with any
    * protocol.</p> <p>Network Firewall currently supports only TCP.</p>
    */
-  inline const Aws::Vector<int>& GetProtocols() const { return m_protocols; }
+  inline const Aws::Vector<int64_t>& GetProtocols() const { return m_protocols; }
   inline bool ProtocolsHasBeenSet() const { return m_protocolsHasBeenSet; }
-  template <typename ProtocolsT = Aws::Vector<int>>
+  template <typename ProtocolsT = Aws::Vector<int64_t>>
   void SetProtocols(ProtocolsT&& value) {
     m_protocolsHasBeenSet = true;
     m_protocols = std::forward<ProtocolsT>(value);
   }
-  template <typename ProtocolsT = Aws::Vector<int>>
+  template <typename ProtocolsT = Aws::Vector<int64_t>>
   ServerCertificateScope& WithProtocols(ProtocolsT&& value) {
     SetProtocols(std::forward<ProtocolsT>(value));
     return *this;
   }
-  inline ServerCertificateScope& AddProtocols(int value) {
+  inline ServerCertificateScope& AddProtocols(int64_t value) {
     m_protocolsHasBeenSet = true;
     m_protocols.push_back(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The domains that this scope matches, based on the host name in the client's
+   * HTTP CONNECT request. Domain matching applies only to proxy mode firewalls. If
+   * you specify <code>DomainMatch</code>, you must set <code>DeploymentMode</code>
+   * to <code>EXPLICIT_PROXY_ONLY</code>. If you don't specify
+   * <code>DomainMatch</code>, the scope matches traffic by its source, destination,
+   * ports, and protocols only.</p>
+   */
+  inline const DomainMatch& GetDomainMatch() const { return m_domainMatch; }
+  inline bool DomainMatchHasBeenSet() const { return m_domainMatchHasBeenSet; }
+  template <typename DomainMatchT = DomainMatch>
+  void SetDomainMatch(DomainMatchT&& value) {
+    m_domainMatchHasBeenSet = true;
+    m_domainMatch = std::forward<DomainMatchT>(value);
+  }
+  template <typename DomainMatchT = DomainMatch>
+  ServerCertificateScope& WithDomainMatch(DomainMatchT&& value) {
+    SetDomainMatch(std::forward<DomainMatchT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Whether the firewall decrypts traffic that matches this scope. You can choose
+   * from the following values:</p> <ul> <li> <p> <code>DECRYPT</code> - The firewall
+   * decrypts the traffic for inspection.</p> </li> <li> <p> <code>BYPASS</code> -
+   * The firewall doesn't decrypt the traffic.</p> </li> </ul>
+   */
+  inline DecryptionAction GetDecryptionAction() const { return m_decryptionAction; }
+  inline bool DecryptionActionHasBeenSet() const { return m_decryptionActionHasBeenSet; }
+  inline void SetDecryptionAction(DecryptionAction value) {
+    m_decryptionActionHasBeenSet = true;
+    m_decryptionAction = value;
+  }
+  inline ServerCertificateScope& WithDecryptionAction(DecryptionAction value) {
+    SetDecryptionAction(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The type of firewall that this scope applies to. If you don't specify a
+   * value, the scope applies to both types, the same as <code>ALL</code>. You can
+   * choose from the following values:</p> <ul> <li> <p> <code>ALL</code> - The scope
+   * applies to both transparent firewalls and proxy mode firewalls.</p> </li> <li>
+   * <p> <code>TRANSPARENT_FIREWALL_ONLY</code> - The scope applies only to
+   * transparent firewalls.</p> </li> <li> <p> <code>EXPLICIT_PROXY_ONLY</code> - The
+   * scope applies only to proxy mode firewalls. A scope that specifies
+   * <code>DomainMatch</code> must use this value.</p> </li> </ul>
+   */
+  inline TLSInspectionScopeDeploymentMode GetDeploymentMode() const { return m_deploymentMode; }
+  inline bool DeploymentModeHasBeenSet() const { return m_deploymentModeHasBeenSet; }
+  inline void SetDeploymentMode(TLSInspectionScopeDeploymentMode value) {
+    m_deploymentModeHasBeenSet = true;
+    m_deploymentMode = value;
+  }
+  inline ServerCertificateScope& WithDeploymentMode(TLSInspectionScopeDeploymentMode value) {
+    SetDeploymentMode(value);
     return *this;
   }
   ///@}
@@ -172,12 +240,21 @@ class ServerCertificateScope {
 
   Aws::Vector<PortRange> m_destinationPorts;
 
-  Aws::Vector<int> m_protocols;
+  Aws::Vector<int64_t> m_protocols;
+
+  DomainMatch m_domainMatch;
+
+  DecryptionAction m_decryptionAction{DecryptionAction::NOT_SET};
+
+  TLSInspectionScopeDeploymentMode m_deploymentMode{TLSInspectionScopeDeploymentMode::NOT_SET};
   bool m_sourcesHasBeenSet = false;
   bool m_destinationsHasBeenSet = false;
   bool m_sourcePortsHasBeenSet = false;
   bool m_destinationPortsHasBeenSet = false;
   bool m_protocolsHasBeenSet = false;
+  bool m_domainMatchHasBeenSet = false;
+  bool m_decryptionActionHasBeenSet = false;
+  bool m_deploymentModeHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-workdocs "C++ SDK for the AWS workdocs service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-workdocs "C++ SDK for Amazon WorkDocs" aws-cpp-sdk-core)
 
 file(GLOB AWS_WORKDOCS_HEADERS
     "include/aws/workdocs/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_WORKDOCS_HEADERS
 
 file(GLOB AWS_WORKDOCS_MODEL_HEADERS
     "include/aws/workdocs/model/*.h"
+)
+
+file(GLOB AWS_WORKDOCS_INTERNAL_HEADERS
+    "include/aws/workdocs/internal/*.h"
 )
 
 file(GLOB AWS_WORKDOCS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_WORKDOCS_MODEL_SOURCE
 
 file(GLOB WORKDOCS_UNIFIED_HEADERS
     ${AWS_WORKDOCS_HEADERS}
+    ${AWS_WORKDOCS_INTERNAL_HEADERS}
     ${AWS_WORKDOCS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\workdocs" FILES ${AWS_WORKDOCS_HEADERS})
+        source_group("Header Files\\aws\\workdocs\\internal" FILES ${AWS_WORKDOCS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\workdocs\\model" FILES ${AWS_WORKDOCS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_WORKDOCS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_WORKDOCS_MODEL_SOURCE})

@@ -4,6 +4,7 @@
  */
 
 #include <aws/s3-crt/S3CrtEndpointProvider.h>
+#include <aws/s3-crt/internal/S3CrtEndpointRules.h>
 
 namespace Aws {
 #ifndef AWS_S3CRT_EXPORTS  // Except for Windows DLL
@@ -14,13 +15,16 @@ namespace Endpoint {
 template class Aws::Endpoint::EndpointProviderBase<S3Crt::Endpoint::S3CrtClientConfiguration, S3Crt::Endpoint::S3CrtBuiltInParameters,
                                                    S3Crt::Endpoint::S3CrtClientContextParameters>;
 
-template class Aws::Endpoint::DefaultEndpointProvider<S3Crt::Endpoint::S3CrtClientConfiguration, S3Crt::Endpoint::S3CrtBuiltInParameters,
-                                                      S3Crt::Endpoint::S3CrtClientContextParameters>;
+template class Aws::Endpoint::BDDEndpointProvider<S3Crt::Endpoint::S3CrtClientConfiguration, S3Crt::Endpoint::S3CrtBuiltInParameters,
+                                                  S3Crt::Endpoint::S3CrtClientContextParameters>;
 }  // namespace Endpoint
 #endif
 
 namespace S3Crt {
 namespace Endpoint {
+S3CrtEndpointProvider::S3CrtEndpointProvider()
+    : S3CrtDefaultEpProviderBase(Aws::S3Crt::S3CrtEndpointRules::GetRulesBlob(), Aws::S3Crt::S3CrtEndpointRules::RulesBlobSize) {}
+
 void S3CrtClientContextParameters::SetForcePathStyle(bool value) { return SetBooleanParameter(Aws::String("ForcePathStyle"), value); }
 const S3CrtClientContextParameters::ClientContextParameters::EndpointParameter& S3CrtClientContextParameters::GetForcePathStyle() const {
   return GetParameter("ForcePathStyle");
@@ -49,16 +53,15 @@ S3CrtClientContextParameters::GetDisableS3ExpressSessionAuth() const {
 }
 void S3CrtBuiltInParameters::SetFromClientConfiguration(const S3CrtClientConfiguration& config) {
   SetFromClientConfiguration(static_cast<const S3CrtClientConfiguration::BaseClientConfigClass&>(config));
-
-  SetS3SpecificParameters(config);
+  SetServiceSpecificParameters(config);
 }
 
 void S3CrtBuiltInParameters::SetFromClientConfiguration(const S3CrtClientConfiguration& config, const Aws::String& serviceName) {
   SetFromClientConfiguration(static_cast<const S3CrtClientConfiguration::BaseClientConfigClass&>(config), serviceName);
-  SetS3SpecificParameters(config);
+  SetServiceSpecificParameters(config);
 }
 
-void S3CrtBuiltInParameters::SetS3SpecificParameters(const S3CrtClientConfiguration& config) {
+void S3CrtBuiltInParameters::SetServiceSpecificParameters(const S3CrtClientConfiguration& config) {
   static const char* AWS_S3_USE_GLOBAL_ENDPOINT = "UseGlobalEndpoint";
   if (config.useUSEast1RegionalEndPointOption == US_EAST_1_REGIONAL_ENDPOINT_OPTION::LEGACY) {
     SetBooleanParameter(AWS_S3_USE_GLOBAL_ENDPOINT, true);

@@ -33,10 +33,8 @@ class ListImagesRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The owner defines which images you want to list. By default, this request
-   * will only show images owned by your account. You can use this field to specify
-   * if you want to view images owned by yourself, by Amazon, or those images that
-   * have been shared with you by other customers.</p>
+   * <p>Filters the list to images owned by you, by Amazon, or shared with you by
+   * other accounts. By default, only your account's images are returned.</p>
    */
   inline Ownership GetOwner() const { return m_owner; }
   inline bool OwnerHasBeenSet() const { return m_ownerHasBeenSet; }
@@ -79,7 +77,10 @@ class ListImagesRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Requests a list of images with a specific recipe name.</p>
+   * <p>Specifies whether to return one entry per image name, with all versions of
+   * each image aggregated. Defaults to <code>false</code>, which returns one entry
+   * per image version. You can't combine this option with the <code>version</code>
+   * filter.</p>
    */
   inline bool GetByName() const { return m_byName; }
   inline bool ByNameHasBeenSet() const { return m_byNameHasBeenSet; }
@@ -95,7 +96,10 @@ class ListImagesRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Specify the maximum number of items to return in a request.</p>
+   * <p>The maximum number of items to return in a single request. If you don't
+   * specify a value, Image Builder returns up to 25 items. The largest page size
+   * that you can request is 100 items. A page can contain fewer items than the
+   * maximum, with a <code>nextToken</code> to continue paging.</p>
    */
   inline int GetMaxResults() const { return m_maxResults; }
   inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
@@ -111,8 +115,8 @@ class ListImagesRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>A token to specify where to start paginating. This is the nextToken from a
-   * previously truncated response.</p>
+   * <p>A token to specify where to start paginating. Use the <code>nextToken</code>
+   * value from a previously truncated response.</p>
    */
   inline const Aws::String& GetNextToken() const { return m_nextToken; }
   inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
@@ -130,7 +134,9 @@ class ListImagesRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Includes deprecated images in the response list.</p>
+   * <p>Specifies whether to include deprecated Amazon-managed images in the results.
+   * Deprecated images that you own are always returned. Defaults to
+   * <code>false</code>.</p>
    */
   inline bool GetIncludeDeprecated() const { return m_includeDeprecated; }
   inline bool IncludeDeprecatedHasBeenSet() const { return m_includeDeprecatedHasBeenSet; }

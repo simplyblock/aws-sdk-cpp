@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -19,6 +19,9 @@
 #include <aws/bedrock-agent/model/ListKnowledgeBaseDocumentsPaginationTraits.h>
 #include <aws/bedrock-agent/model/ListKnowledgeBasesPaginationTraits.h>
 #include <aws/bedrock-agent/model/ListPromptsPaginationTraits.h>
+#include <aws/bedrock-agent/model/ListRetrievalInstructionVersionsPaginationTraits.h>
+#include <aws/bedrock-agent/model/ListRetrievalInstructionsPaginationTraits.h>
+#include <aws/bedrock-agent/model/ListVpcConfigurationsPaginationTraits.h>
 #include <aws/core/utils/pagination/Paginator.h>
 
 namespace Aws {
@@ -56,6 +59,15 @@ using ListKnowledgeBasesPaginator = Aws::Utils::Pagination::Paginator<BedrockAge
                                                                       Pagination::ListKnowledgeBasesPaginationTraits<BedrockAgentClient>>;
 using ListPromptsPaginator = Aws::Utils::Pagination::Paginator<BedrockAgentClient, Model::ListPromptsRequest,
                                                                Pagination::ListPromptsPaginationTraits<BedrockAgentClient>>;
+using ListRetrievalInstructionsPaginator =
+    Aws::Utils::Pagination::Paginator<BedrockAgentClient, Model::ListRetrievalInstructionsRequest,
+                                      Pagination::ListRetrievalInstructionsPaginationTraits<BedrockAgentClient>>;
+using ListRetrievalInstructionVersionsPaginator =
+    Aws::Utils::Pagination::Paginator<BedrockAgentClient, Model::ListRetrievalInstructionVersionsRequest,
+                                      Pagination::ListRetrievalInstructionVersionsPaginationTraits<BedrockAgentClient>>;
+using ListVpcConfigurationsPaginator =
+    Aws::Utils::Pagination::Paginator<BedrockAgentClient, Model::ListVpcConfigurationsRequest,
+                                      Pagination::ListVpcConfigurationsPaginationTraits<BedrockAgentClient>>;
 
 }  // namespace BedrockAgent
 }  // namespace Aws

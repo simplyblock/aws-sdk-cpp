@@ -17,8 +17,10 @@
 #include <aws/ec2/model/ImageTypeValues.h>
 #include <aws/ec2/model/ImageWatermark.h>
 #include <aws/ec2/model/ImdsSupportValues.h>
+#include <aws/ec2/model/InstanceTypeSpecification.h>
 #include <aws/ec2/model/PlatformValues.h>
 #include <aws/ec2/model/ProductCode.h>
+#include <aws/ec2/model/ScanResults.h>
 #include <aws/ec2/model/StateReason.h>
 #include <aws/ec2/model/Tag.h>
 #include <aws/ec2/model/TpmSupportValues.h>
@@ -547,6 +549,25 @@ class Image {
 
   ///@{
   /**
+   * <p>The name of the public Systems Manager parameter that resolves to this AMI,
+   * under the <code>aws/service/</code> namespace.</p>
+   */
+  inline const Aws::String& GetPublicSsmParameterName() const { return m_publicSsmParameterName; }
+  inline bool PublicSsmParameterNameHasBeenSet() const { return m_publicSsmParameterNameHasBeenSet; }
+  template <typename PublicSsmParameterNameT = Aws::String>
+  void SetPublicSsmParameterName(PublicSsmParameterNameT&& value) {
+    m_publicSsmParameterNameHasBeenSet = true;
+    m_publicSsmParameterName = std::forward<PublicSsmParameterNameT>(value);
+  }
+  template <typename PublicSsmParameterNameT = Aws::String>
+  Image& WithPublicSsmParameterName(PublicSsmParameterNameT&& value) {
+    SetPublicSsmParameterName(std::forward<PublicSsmParameterNameT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The watermarks attached to the AMI.</p>
    */
   inline const Aws::Vector<ImageWatermark>& GetImageWatermarks() const { return m_imageWatermarks; }
@@ -565,6 +586,46 @@ class Image {
   Image& AddImageWatermarks(ImageWatermarksT&& value) {
     m_imageWatermarksHasBeenSet = true;
     m_imageWatermarks.emplace_back(std::forward<ImageWatermarksT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Amazon Inspector scan results for the AMI. This information is present
+   * only for AMIs that Amazon Inspector has scanned.</p> <p>When you share an AMI
+   * with other accounts, organizations, or organizational units (OUs), or make it
+   * public, its scan results are available to the accounts that can use the AMI.</p>
+   */
+  inline const ScanResults& GetScanResults() const { return m_scanResults; }
+  inline bool ScanResultsHasBeenSet() const { return m_scanResultsHasBeenSet; }
+  template <typename ScanResultsT = ScanResults>
+  void SetScanResults(ScanResultsT&& value) {
+    m_scanResultsHasBeenSet = true;
+    m_scanResults = std::forward<ScanResultsT>(value);
+  }
+  template <typename ScanResultsT = ScanResults>
+  Image& WithScanResults(ScanResultsT&& value) {
+    SetScanResults(std::forward<ScanResultsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The instance type specification for the AMI, which defines which instance
+   * types are compatible with this image.</p>
+   */
+  inline const InstanceTypeSpecification& GetInstanceTypeSpecification() const { return m_instanceTypeSpecification; }
+  inline bool InstanceTypeSpecificationHasBeenSet() const { return m_instanceTypeSpecificationHasBeenSet; }
+  template <typename InstanceTypeSpecificationT = InstanceTypeSpecification>
+  void SetInstanceTypeSpecification(InstanceTypeSpecificationT&& value) {
+    m_instanceTypeSpecificationHasBeenSet = true;
+    m_instanceTypeSpecification = std::forward<InstanceTypeSpecificationT>(value);
+  }
+  template <typename InstanceTypeSpecificationT = InstanceTypeSpecification>
+  Image& WithInstanceTypeSpecification(InstanceTypeSpecificationT&& value) {
+    SetInstanceTypeSpecification(std::forward<InstanceTypeSpecificationT>(value));
     return *this;
   }
   ///@}
@@ -837,7 +898,13 @@ class Image {
 
   bool m_freeTierEligible{false};
 
+  Aws::String m_publicSsmParameterName;
+
   Aws::Vector<ImageWatermark> m_imageWatermarks;
+
+  ScanResults m_scanResults;
+
+  InstanceTypeSpecification m_instanceTypeSpecification;
 
   Aws::String m_imageId;
 
@@ -887,7 +954,10 @@ class Image {
   bool m_sourceImageIdHasBeenSet = false;
   bool m_sourceImageRegionHasBeenSet = false;
   bool m_freeTierEligibleHasBeenSet = false;
+  bool m_publicSsmParameterNameHasBeenSet = false;
   bool m_imageWatermarksHasBeenSet = false;
+  bool m_scanResultsHasBeenSet = false;
+  bool m_instanceTypeSpecificationHasBeenSet = false;
   bool m_imageIdHasBeenSet = false;
   bool m_imageLocationHasBeenSet = false;
   bool m_stateHasBeenSet = false;

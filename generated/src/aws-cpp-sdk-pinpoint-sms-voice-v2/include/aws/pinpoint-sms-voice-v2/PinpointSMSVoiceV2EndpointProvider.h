@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2EndpointRules.h>
 #include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
 
 namespace Aws {
 namespace PinpointSMSVoiceV2 {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using PinpointSMSVoiceV2ClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using PinpointSMSVoiceV2EndpointProviderBase =
                          PinpointSMSVoiceV2ClientContextParameters>;
 
 using PinpointSMSVoiceV2DefaultEpProviderBase =
-    DefaultEndpointProvider<PinpointSMSVoiceV2ClientConfiguration, PinpointSMSVoiceV2BuiltInParameters,
-                            PinpointSMSVoiceV2ClientContextParameters>;
+    BDDEndpointProvider<PinpointSMSVoiceV2ClientConfiguration, PinpointSMSVoiceV2BuiltInParameters,
+                        PinpointSMSVoiceV2ClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_PINPOINTSMSVOICEV2_API PinpointSMSVoiceV2EndpointProvider : public Pin
  public:
   using PinpointSMSVoiceV2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  PinpointSMSVoiceV2EndpointProvider()
-      : PinpointSMSVoiceV2DefaultEpProviderBase(Aws::PinpointSMSVoiceV2::PinpointSMSVoiceV2EndpointRules::GetRulesBlob(),
-                                                Aws::PinpointSMSVoiceV2::PinpointSMSVoiceV2EndpointRules::RulesBlobSize) {}
+  PinpointSMSVoiceV2EndpointProvider();
 
   ~PinpointSMSVoiceV2EndpointProvider() {}
 };

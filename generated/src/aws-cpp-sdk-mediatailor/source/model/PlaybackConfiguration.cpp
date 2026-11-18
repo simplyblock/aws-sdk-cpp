@@ -125,12 +125,28 @@ PlaybackConfiguration& PlaybackConfiguration::operator=(JsonView jsonValue) {
     m_adDecisionServerConfiguration = jsonValue.GetObject("AdDecisionServerConfiguration");
     m_adDecisionServerConfigurationHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("YieldOptimizationConfiguration")) {
+    m_yieldOptimizationConfiguration = jsonValue.GetObject("YieldOptimizationConfiguration");
+    m_yieldOptimizationConfigurationHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("FunctionMapping")) {
     Aws::Map<Aws::String, JsonView> functionMappingJsonMap = jsonValue.GetObject("FunctionMapping").GetAllObjects();
     for (auto& functionMappingItem : functionMappingJsonMap) {
       m_functionMapping[EventNameMapper::GetEventNameForName(functionMappingItem.first)] = functionMappingItem.second.AsString();
     }
     m_functionMappingHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AdsPersonalizationTimeouts")) {
+    m_adsPersonalizationTimeouts = jsonValue.GetObject("AdsPersonalizationTimeouts");
+    m_adsPersonalizationTimeoutsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AdsPersonalizationConcurrency")) {
+    m_adsPersonalizationConcurrency = jsonValue.GetObject("AdsPersonalizationConcurrency");
+    m_adsPersonalizationConcurrencyHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("BeaconingConfiguration")) {
+    m_beaconingConfiguration = jsonValue.GetObject("BeaconingConfiguration");
+    m_beaconingConfigurationHasBeenSet = true;
   }
   return *this;
 }
@@ -246,12 +262,28 @@ JsonValue PlaybackConfiguration::Jsonize() const {
     payload.WithObject("AdDecisionServerConfiguration", m_adDecisionServerConfiguration.Jsonize());
   }
 
+  if (m_yieldOptimizationConfigurationHasBeenSet) {
+    payload.WithObject("YieldOptimizationConfiguration", m_yieldOptimizationConfiguration.Jsonize());
+  }
+
   if (m_functionMappingHasBeenSet) {
     JsonValue functionMappingJsonMap;
     for (auto& functionMappingItem : m_functionMapping) {
       functionMappingJsonMap.WithString(EventNameMapper::GetNameForEventName(functionMappingItem.first), functionMappingItem.second);
     }
     payload.WithObject("FunctionMapping", std::move(functionMappingJsonMap));
+  }
+
+  if (m_adsPersonalizationTimeoutsHasBeenSet) {
+    payload.WithObject("AdsPersonalizationTimeouts", m_adsPersonalizationTimeouts.Jsonize());
+  }
+
+  if (m_adsPersonalizationConcurrencyHasBeenSet) {
+    payload.WithObject("AdsPersonalizationConcurrency", m_adsPersonalizationConcurrency.Jsonize());
+  }
+
+  if (m_beaconingConfigurationHasBeenSet) {
+    payload.WithObject("BeaconingConfiguration", m_beaconingConfiguration.Jsonize());
   }
 
   return payload;

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/devops-agent/DevOpsAgentEndpointRules.h>
 #include <aws/devops-agent/DevOpsAgent_EXPORTS.h>
 
 namespace Aws {
 namespace DevOpsAgent {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using DevOpsAgentClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using DevOpsAgentEndpointProviderBase =
     EndpointProviderBase<DevOpsAgentClientConfiguration, DevOpsAgentBuiltInParameters, DevOpsAgentClientContextParameters>;
 
 using DevOpsAgentDefaultEpProviderBase =
-    DefaultEndpointProvider<DevOpsAgentClientConfiguration, DevOpsAgentBuiltInParameters, DevOpsAgentClientContextParameters>;
+    BDDEndpointProvider<DevOpsAgentClientConfiguration, DevOpsAgentBuiltInParameters, DevOpsAgentClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_DEVOPSAGENT_API DevOpsAgentEndpointProvider : public DevOpsAgentDefaul
  public:
   using DevOpsAgentResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  DevOpsAgentEndpointProvider()
-      : DevOpsAgentDefaultEpProviderBase(Aws::DevOpsAgent::DevOpsAgentEndpointRules::GetRulesBlob(),
-                                         Aws::DevOpsAgent::DevOpsAgentEndpointRules::RulesBlobSize) {}
+  DevOpsAgentEndpointProvider();
 
   ~DevOpsAgentEndpointProvider() {}
 };

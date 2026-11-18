@@ -46,6 +46,7 @@
 #include <aws/devops-agent/model/GetAssetRequest.h>
 #include <aws/devops-agent/model/GetAssociationRequest.h>
 #include <aws/devops-agent/model/GetBacklogTaskRequest.h>
+#include <aws/devops-agent/model/GetChatRequest.h>
 #include <aws/devops-agent/model/GetOperatorAppRequest.h>
 #include <aws/devops-agent/model/GetRecommendationRequest.h>
 #include <aws/devops-agent/model/GetServiceRequest.h>
@@ -73,10 +74,12 @@
 #include <aws/devops-agent/model/TagResourceRequest.h>
 #include <aws/devops-agent/model/UntagResourceRequest.h>
 #include <aws/devops-agent/model/UpdateAgentSpaceRequest.h>
+#include <aws/devops-agent/model/UpdateApprovalActionRequest.h>
 #include <aws/devops-agent/model/UpdateAssetFileRequest.h>
 #include <aws/devops-agent/model/UpdateAssetRequest.h>
 #include <aws/devops-agent/model/UpdateAssociationRequest.h>
 #include <aws/devops-agent/model/UpdateBacklogTaskRequest.h>
+#include <aws/devops-agent/model/UpdateChatRequest.h>
 #include <aws/devops-agent/model/UpdateGoalRequest.h>
 #include <aws/devops-agent/model/UpdateOperatorAppIdpConfigRequest.h>
 #include <aws/devops-agent/model/UpdatePrivateConnectionCertificateRequest.h>
@@ -219,7 +222,8 @@ DevOpsAgentClient::InvokeOperationOutcome DevOpsAgentClient::InvokeServiceOperat
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -233,7 +237,7 @@ DevOpsAgentClient::InvokeOperationOutcome DevOpsAgentClient::InvokeServiceOperat
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -755,6 +759,30 @@ GetBacklogTaskOutcome DevOpsAgentClient::GetBacklogTask(const GetBacklogTaskRequ
   return result.IsSuccess() ? GetBacklogTaskOutcome(result.GetResultWithOwnership()) : GetBacklogTaskOutcome(std::move(result.GetError()));
 }
 
+GetChatOutcome DevOpsAgentClient::GetChat(const GetChatRequest& request) const {
+  if (!request.AgentSpaceIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetChat", "Required field: AgentSpaceId, is not set");
+    return GetChatOutcome(Aws::Client::AWSError<DevOpsAgentErrors>(DevOpsAgentErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                   "Missing required field [AgentSpaceId]", false));
+  }
+  if (!request.ExecutionIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetChat", "Required field: ExecutionId, is not set");
+    return GetChatOutcome(Aws::Client::AWSError<DevOpsAgentErrors>(DevOpsAgentErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                   "Missing required field [ExecutionId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/agents/agent-space/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetAgentSpaceId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/chat/get/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetExecutionId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetChatOutcome(result.GetResultWithOwnership()) : GetChatOutcome(std::move(result.GetError()));
+}
+
 GetOperatorAppOutcome DevOpsAgentClient::GetOperatorApp(const GetOperatorAppRequest& request) const {
   if (!request.AgentSpaceIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetOperatorApp", "Required field: AgentSpaceId, is not set");
@@ -1196,7 +1224,8 @@ SendMessageOutcome DevOpsAgentClient::SendMessage(SendMessageRequest& request) c
                                   {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<SendMessageOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<SendMessageOutcome>(
+      request, std::move(span),
       [&]() -> SendMessageOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -1225,7 +1254,7 @@ SendMessageOutcome DevOpsAgentClient::SendMessage(SendMessageRequest& request) c
         auto result = MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST);
         return result.IsSuccess() ? SendMessageOutcome(result.GetResultWithOwnership()) : SendMessageOutcome(std::move(result.GetError()));
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
        {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
@@ -1285,6 +1314,32 @@ UpdateAgentSpaceOutcome DevOpsAgentClient::UpdateAgentSpace(const UpdateAgentSpa
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
   return result.IsSuccess() ? UpdateAgentSpaceOutcome(result.GetResultWithOwnership())
                             : UpdateAgentSpaceOutcome(std::move(result.GetError()));
+}
+
+UpdateApprovalActionOutcome DevOpsAgentClient::UpdateApprovalAction(const UpdateApprovalActionRequest& request) const {
+  if (!request.AgentSpaceIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateApprovalAction", "Required field: AgentSpaceId, is not set");
+    return UpdateApprovalActionOutcome(Aws::Client::AWSError<DevOpsAgentErrors>(DevOpsAgentErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                "Missing required field [AgentSpaceId]", false));
+  }
+  if (!request.ApprovalIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateApprovalAction", "Required field: ApprovalId, is not set");
+    return UpdateApprovalActionOutcome(Aws::Client::AWSError<DevOpsAgentErrors>(DevOpsAgentErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                "Missing required field [ApprovalId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/agents/agent-space/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetAgentSpaceId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/approvals/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetApprovalId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/update-action");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateApprovalActionOutcome(result.GetResultWithOwnership())
+                            : UpdateApprovalActionOutcome(std::move(result.GetError()));
 }
 
 UpdateAssetOutcome DevOpsAgentClient::UpdateAsset(const UpdateAssetRequest& request) const {
@@ -1391,6 +1446,30 @@ UpdateBacklogTaskOutcome DevOpsAgentClient::UpdateBacklogTask(const UpdateBacklo
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
   return result.IsSuccess() ? UpdateBacklogTaskOutcome(result.GetResultWithOwnership())
                             : UpdateBacklogTaskOutcome(std::move(result.GetError()));
+}
+
+UpdateChatOutcome DevOpsAgentClient::UpdateChat(const UpdateChatRequest& request) const {
+  if (!request.AgentSpaceIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateChat", "Required field: AgentSpaceId, is not set");
+    return UpdateChatOutcome(Aws::Client::AWSError<DevOpsAgentErrors>(DevOpsAgentErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                      "Missing required field [AgentSpaceId]", false));
+  }
+  if (!request.ExecutionIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateChat", "Required field: ExecutionId, is not set");
+    return UpdateChatOutcome(Aws::Client::AWSError<DevOpsAgentErrors>(DevOpsAgentErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                      "Missing required field [ExecutionId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/agents/agent-space/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetAgentSpaceId());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/chat/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetExecutionId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateChatOutcome(result.GetResultWithOwnership()) : UpdateChatOutcome(std::move(result.GetError()));
 }
 
 UpdateGoalOutcome DevOpsAgentClient::UpdateGoal(const UpdateGoalRequest& request) const {

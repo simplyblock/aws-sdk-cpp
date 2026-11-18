@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-iot-managed-integrations "C++ SDK for the AWS iot-managed-integrations service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-iot-managed-integrations "C++ SDK for Managed integrations for AWS IoT Device Management" aws-cpp-sdk-core)
 
 file(GLOB AWS_IOT-MANAGED-INTEGRATIONS_HEADERS
     "include/aws/iot-managed-integrations/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_IOT-MANAGED-INTEGRATIONS_HEADERS
 
 file(GLOB AWS_IOT-MANAGED-INTEGRATIONS_MODEL_HEADERS
     "include/aws/iot-managed-integrations/model/*.h"
+)
+
+file(GLOB AWS_IOT-MANAGED-INTEGRATIONS_INTERNAL_HEADERS
+    "include/aws/iot-managed-integrations/internal/*.h"
 )
 
 file(GLOB AWS_IOT-MANAGED-INTEGRATIONS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_IOT-MANAGED-INTEGRATIONS_MODEL_SOURCE
 
 file(GLOB IOT-MANAGED-INTEGRATIONS_UNIFIED_HEADERS
     ${AWS_IOT-MANAGED-INTEGRATIONS_HEADERS}
+    ${AWS_IOT-MANAGED-INTEGRATIONS_INTERNAL_HEADERS}
     ${AWS_IOT-MANAGED-INTEGRATIONS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\iot-managed-integrations" FILES ${AWS_IOT-MANAGED-INTEGRATIONS_HEADERS})
+        source_group("Header Files\\aws\\iot-managed-integrations\\internal" FILES ${AWS_IOT-MANAGED-INTEGRATIONS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\iot-managed-integrations\\model" FILES ${AWS_IOT-MANAGED-INTEGRATIONS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_IOT-MANAGED-INTEGRATIONS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_IOT-MANAGED-INTEGRATIONS_MODEL_SOURCE})

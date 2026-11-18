@@ -8,6 +8,7 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/ecs/ECS_EXPORTS.h>
+#include <aws/ecs/model/ExpressCpuArchitecture.h>
 #include <aws/ecs/model/ExpressGatewayContainer.h>
 #include <aws/ecs/model/ExpressGatewayScalingTarget.h>
 #include <aws/ecs/model/ExpressGatewayServiceNetworkConfiguration.h>
@@ -151,6 +152,27 @@ class ExpressGatewayServiceConfiguration {
 
   ///@{
   /**
+   * <p>The CPU architecture that the task runs on.</p> <p>Valid values:</p> <ul>
+   * <li> <p> <code>X86_64</code> - The x86 64-bit architecture.</p> </li> <li> <p>
+   * <code>ARM64</code> - The 64-bit ARM architecture.</p> </li> </ul> <p>Different
+   * service revisions can report different architectures. This value isn't returned
+   * when the service uses a customer-provided task definition that doesn't specify a
+   * CPU architecture.</p>
+   */
+  inline ExpressCpuArchitecture GetCpuArchitecture() const { return m_cpuArchitecture; }
+  inline bool CpuArchitectureHasBeenSet() const { return m_cpuArchitectureHasBeenSet; }
+  inline void SetCpuArchitecture(ExpressCpuArchitecture value) {
+    m_cpuArchitectureHasBeenSet = true;
+    m_cpuArchitecture = value;
+  }
+  inline ExpressGatewayServiceConfiguration& WithCpuArchitecture(ExpressCpuArchitecture value) {
+    SetCpuArchitecture(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The network configuration for tasks in this service revision.</p>
    */
   inline const ExpressGatewayServiceNetworkConfiguration& GetNetworkConfiguration() const { return m_networkConfiguration; }
@@ -275,6 +297,8 @@ class ExpressGatewayServiceConfiguration {
 
   Aws::String m_memory;
 
+  ExpressCpuArchitecture m_cpuArchitecture{ExpressCpuArchitecture::NOT_SET};
+
   ExpressGatewayServiceNetworkConfiguration m_networkConfiguration;
 
   Aws::String m_healthCheckPath;
@@ -292,6 +316,7 @@ class ExpressGatewayServiceConfiguration {
   bool m_taskDefinitionArnHasBeenSet = false;
   bool m_cpuHasBeenSet = false;
   bool m_memoryHasBeenSet = false;
+  bool m_cpuArchitectureHasBeenSet = false;
   bool m_networkConfigurationHasBeenSet = false;
   bool m_healthCheckPathHasBeenSet = false;
   bool m_primaryContainerHasBeenSet = false;

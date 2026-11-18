@@ -20,6 +20,7 @@
 #include <aws/arc-region-switch/model/ListPlansRequest.h>
 #include <aws/arc-region-switch/model/ListRoute53HealthChecksInRegionRequest.h>
 #include <aws/arc-region-switch/model/ListRoute53HealthChecksRequest.h>
+#include <aws/arc-region-switch/model/ListServiceQuotaWarningsRequest.h>
 #include <aws/arc-region-switch/model/ListTagsForResourceRequest.h>
 #include <aws/arc-region-switch/model/StartPlanExecutionRequest.h>
 #include <aws/arc-region-switch/model/TagResourceRequest.h>
@@ -180,7 +181,8 @@ ARCRegionswitchClient::InvokeOperationOutcome ARCRegionswitchClient::InvokeServi
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -192,7 +194,7 @@ ARCRegionswitchClient::InvokeOperationOutcome ARCRegionswitchClient::InvokeServi
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -275,6 +277,12 @@ ListRoute53HealthChecksInRegionOutcome ARCRegionswitchClient::ListRoute53HealthC
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListRoute53HealthChecksInRegionOutcome(result.GetResultWithOwnership())
                             : ListRoute53HealthChecksInRegionOutcome(std::move(result.GetError()));
+}
+
+ListServiceQuotaWarningsOutcome ARCRegionswitchClient::ListServiceQuotaWarnings(const ListServiceQuotaWarningsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListServiceQuotaWarningsOutcome(result.GetResultWithOwnership())
+                            : ListServiceQuotaWarningsOutcome(std::move(result.GetError()));
 }
 
 ListTagsForResourceOutcome ARCRegionswitchClient::ListTagsForResource(const ListTagsForResourceRequest& request) const {

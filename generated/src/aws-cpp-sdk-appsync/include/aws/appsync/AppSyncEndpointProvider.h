@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/appsync/AppSyncEndpointRules.h>
 #include <aws/appsync/AppSync_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace AppSync {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using AppSyncClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using AppSyncEndpointProviderBase =
     EndpointProviderBase<AppSyncClientConfiguration, AppSyncBuiltInParameters, AppSyncClientContextParameters>;
 
 using AppSyncDefaultEpProviderBase =
-    DefaultEndpointProvider<AppSyncClientConfiguration, AppSyncBuiltInParameters, AppSyncClientContextParameters>;
+    BDDEndpointProvider<AppSyncClientConfiguration, AppSyncBuiltInParameters, AppSyncClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_APPSYNC_API AppSyncEndpointProvider : public AppSyncDefaultEpProviderB
  public:
   using AppSyncResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  AppSyncEndpointProvider()
-      : AppSyncDefaultEpProviderBase(Aws::AppSync::AppSyncEndpointRules::GetRulesBlob(),
-                                     Aws::AppSync::AppSyncEndpointRules::RulesBlobSize) {}
+  AppSyncEndpointProvider();
 
   ~AppSyncEndpointProvider() {}
 };

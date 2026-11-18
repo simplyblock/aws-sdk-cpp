@@ -21,6 +21,8 @@
 /* Service model headers required in OdbClient header */
 #include <aws/odb/model/AcceptMarketplaceRegistrationResult.h>
 #include <aws/odb/model/AssociateIamRoleToResourceResult.h>
+#include <aws/odb/model/AssociateVirtualMachinesToCloudVmClusterResult.h>
+#include <aws/odb/model/AssociateVirtualMachinesToExadbVmClusterResult.h>
 #include <aws/odb/model/CreateAutonomousDatabaseBackupResult.h>
 #include <aws/odb/model/CreateAutonomousDatabaseRequest.h>
 #include <aws/odb/model/CreateAutonomousDatabaseResult.h>
@@ -28,6 +30,8 @@
 #include <aws/odb/model/CreateCloudAutonomousVmClusterResult.h>
 #include <aws/odb/model/CreateCloudExadataInfrastructureResult.h>
 #include <aws/odb/model/CreateCloudVmClusterResult.h>
+#include <aws/odb/model/CreateExadbVmClusterResult.h>
+#include <aws/odb/model/CreateExascaleDbStorageVaultResult.h>
 #include <aws/odb/model/CreateOdbNetworkResult.h>
 #include <aws/odb/model/CreateOdbPeeringConnectionResult.h>
 #include <aws/odb/model/DeleteAutonomousDatabaseBackupResult.h>
@@ -35,9 +39,13 @@
 #include <aws/odb/model/DeleteCloudAutonomousVmClusterResult.h>
 #include <aws/odb/model/DeleteCloudExadataInfrastructureResult.h>
 #include <aws/odb/model/DeleteCloudVmClusterResult.h>
+#include <aws/odb/model/DeleteExadbVmClusterResult.h>
+#include <aws/odb/model/DeleteExascaleDbStorageVaultResult.h>
 #include <aws/odb/model/DeleteOdbNetworkResult.h>
 #include <aws/odb/model/DeleteOdbPeeringConnectionResult.h>
 #include <aws/odb/model/DisassociateIamRoleFromResourceResult.h>
+#include <aws/odb/model/DisassociateVirtualMachinesFromCloudVmClusterResult.h>
+#include <aws/odb/model/DisassociateVirtualMachinesFromExadbVmClusterResult.h>
 #include <aws/odb/model/FailoverAutonomousDatabaseResult.h>
 #include <aws/odb/model/GetAutonomousDatabaseBackupResult.h>
 #include <aws/odb/model/GetAutonomousDatabaseResult.h>
@@ -48,6 +56,8 @@
 #include <aws/odb/model/GetCloudVmClusterResult.h>
 #include <aws/odb/model/GetDbNodeResult.h>
 #include <aws/odb/model/GetDbServerResult.h>
+#include <aws/odb/model/GetExadbVmClusterResult.h>
+#include <aws/odb/model/GetExascaleDbStorageVaultResult.h>
 #include <aws/odb/model/GetOciOnboardingStatusRequest.h>
 #include <aws/odb/model/GetOciOnboardingStatusResult.h>
 #include <aws/odb/model/GetOdbNetworkResult.h>
@@ -70,10 +80,18 @@
 #include <aws/odb/model/ListCloudExadataInfrastructuresResult.h>
 #include <aws/odb/model/ListCloudVmClustersRequest.h>
 #include <aws/odb/model/ListCloudVmClustersResult.h>
+#include <aws/odb/model/ListDbNodesRequest.h>
 #include <aws/odb/model/ListDbNodesResult.h>
 #include <aws/odb/model/ListDbServersResult.h>
 #include <aws/odb/model/ListDbSystemShapesRequest.h>
 #include <aws/odb/model/ListDbSystemShapesResult.h>
+#include <aws/odb/model/ListExadbVmClustersRequest.h>
+#include <aws/odb/model/ListExadbVmClustersResult.h>
+#include <aws/odb/model/ListExascaleDbStorageVaultsRequest.h>
+#include <aws/odb/model/ListExascaleDbStorageVaultsResult.h>
+#include <aws/odb/model/ListFlexComponentsRequest.h>
+#include <aws/odb/model/ListFlexComponentsResult.h>
+#include <aws/odb/model/ListGiMinorVersionsResult.h>
 #include <aws/odb/model/ListGiVersionsRequest.h>
 #include <aws/odb/model/ListGiVersionsResult.h>
 #include <aws/odb/model/ListOdbNetworksRequest.h>
@@ -95,7 +113,13 @@
 #include <aws/odb/model/UntagResourceResult.h>
 #include <aws/odb/model/UpdateAutonomousDatabaseBackupResult.h>
 #include <aws/odb/model/UpdateAutonomousDatabaseResult.h>
+#include <aws/odb/model/UpdateCloudAutonomousVmClusterResult.h>
 #include <aws/odb/model/UpdateCloudExadataInfrastructureResult.h>
+#include <aws/odb/model/UpdateCloudExadataInfrastructureStorageCapacityResult.h>
+#include <aws/odb/model/UpdateCloudVmClusterResult.h>
+#include <aws/odb/model/UpdateExadbVmClusterResult.h>
+#include <aws/odb/model/UpdateExascaleCloudExadataInfrastructureResult.h>
+#include <aws/odb/model/UpdateExascaleDbStorageVaultResult.h>
 #include <aws/odb/model/UpdateOdbNetworkResult.h>
 #include <aws/odb/model/UpdateOdbPeeringConnectionResult.h>
 /* End of service model headers required in OdbClient header */
@@ -133,12 +157,16 @@ namespace Model {
 /* Service model forward declarations required in OdbClient header */
 class AcceptMarketplaceRegistrationRequest;
 class AssociateIamRoleToResourceRequest;
+class AssociateVirtualMachinesToCloudVmClusterRequest;
+class AssociateVirtualMachinesToExadbVmClusterRequest;
 class CreateAutonomousDatabaseRequest;
 class CreateAutonomousDatabaseBackupRequest;
 class CreateAutonomousDatabaseWalletRequest;
 class CreateCloudAutonomousVmClusterRequest;
 class CreateCloudExadataInfrastructureRequest;
 class CreateCloudVmClusterRequest;
+class CreateExadbVmClusterRequest;
+class CreateExascaleDbStorageVaultRequest;
 class CreateOdbNetworkRequest;
 class CreateOdbPeeringConnectionRequest;
 class DeleteAutonomousDatabaseRequest;
@@ -146,9 +174,13 @@ class DeleteAutonomousDatabaseBackupRequest;
 class DeleteCloudAutonomousVmClusterRequest;
 class DeleteCloudExadataInfrastructureRequest;
 class DeleteCloudVmClusterRequest;
+class DeleteExadbVmClusterRequest;
+class DeleteExascaleDbStorageVaultRequest;
 class DeleteOdbNetworkRequest;
 class DeleteOdbPeeringConnectionRequest;
 class DisassociateIamRoleFromResourceRequest;
+class DisassociateVirtualMachinesFromCloudVmClusterRequest;
+class DisassociateVirtualMachinesFromExadbVmClusterRequest;
 class FailoverAutonomousDatabaseRequest;
 class GetAutonomousDatabaseRequest;
 class GetAutonomousDatabaseBackupRequest;
@@ -159,6 +191,8 @@ class GetCloudExadataInfrastructureUnallocatedResourcesRequest;
 class GetCloudVmClusterRequest;
 class GetDbNodeRequest;
 class GetDbServerRequest;
+class GetExadbVmClusterRequest;
+class GetExascaleDbStorageVaultRequest;
 class GetOciOnboardingStatusRequest;
 class GetOdbNetworkRequest;
 class GetOdbPeeringConnectionRequest;
@@ -176,6 +210,10 @@ class ListCloudVmClustersRequest;
 class ListDbNodesRequest;
 class ListDbServersRequest;
 class ListDbSystemShapesRequest;
+class ListExadbVmClustersRequest;
+class ListExascaleDbStorageVaultsRequest;
+class ListFlexComponentsRequest;
+class ListGiMinorVersionsRequest;
 class ListGiVersionsRequest;
 class ListOdbNetworksRequest;
 class ListOdbPeeringConnectionsRequest;
@@ -194,7 +232,13 @@ class TagResourceRequest;
 class UntagResourceRequest;
 class UpdateAutonomousDatabaseRequest;
 class UpdateAutonomousDatabaseBackupRequest;
+class UpdateCloudAutonomousVmClusterRequest;
 class UpdateCloudExadataInfrastructureRequest;
+class UpdateCloudExadataInfrastructureStorageCapacityRequest;
+class UpdateCloudVmClusterRequest;
+class UpdateExadbVmClusterRequest;
+class UpdateExascaleCloudExadataInfrastructureRequest;
+class UpdateExascaleDbStorageVaultRequest;
 class UpdateOdbNetworkRequest;
 class UpdateOdbPeeringConnectionRequest;
 /* End of service model forward declarations required in OdbClient header */
@@ -202,12 +246,16 @@ class UpdateOdbPeeringConnectionRequest;
 /* Service model Outcome class definitions */
 typedef Aws::Utils::Outcome<AcceptMarketplaceRegistrationResult, OdbError> AcceptMarketplaceRegistrationOutcome;
 typedef Aws::Utils::Outcome<AssociateIamRoleToResourceResult, OdbError> AssociateIamRoleToResourceOutcome;
+typedef Aws::Utils::Outcome<AssociateVirtualMachinesToCloudVmClusterResult, OdbError> AssociateVirtualMachinesToCloudVmClusterOutcome;
+typedef Aws::Utils::Outcome<AssociateVirtualMachinesToExadbVmClusterResult, OdbError> AssociateVirtualMachinesToExadbVmClusterOutcome;
 typedef Aws::Utils::Outcome<CreateAutonomousDatabaseResult, OdbError> CreateAutonomousDatabaseOutcome;
 typedef Aws::Utils::Outcome<CreateAutonomousDatabaseBackupResult, OdbError> CreateAutonomousDatabaseBackupOutcome;
 typedef Aws::Utils::Outcome<CreateAutonomousDatabaseWalletResult, OdbError> CreateAutonomousDatabaseWalletOutcome;
 typedef Aws::Utils::Outcome<CreateCloudAutonomousVmClusterResult, OdbError> CreateCloudAutonomousVmClusterOutcome;
 typedef Aws::Utils::Outcome<CreateCloudExadataInfrastructureResult, OdbError> CreateCloudExadataInfrastructureOutcome;
 typedef Aws::Utils::Outcome<CreateCloudVmClusterResult, OdbError> CreateCloudVmClusterOutcome;
+typedef Aws::Utils::Outcome<CreateExadbVmClusterResult, OdbError> CreateExadbVmClusterOutcome;
+typedef Aws::Utils::Outcome<CreateExascaleDbStorageVaultResult, OdbError> CreateExascaleDbStorageVaultOutcome;
 typedef Aws::Utils::Outcome<CreateOdbNetworkResult, OdbError> CreateOdbNetworkOutcome;
 typedef Aws::Utils::Outcome<CreateOdbPeeringConnectionResult, OdbError> CreateOdbPeeringConnectionOutcome;
 typedef Aws::Utils::Outcome<DeleteAutonomousDatabaseResult, OdbError> DeleteAutonomousDatabaseOutcome;
@@ -215,9 +263,15 @@ typedef Aws::Utils::Outcome<DeleteAutonomousDatabaseBackupResult, OdbError> Dele
 typedef Aws::Utils::Outcome<DeleteCloudAutonomousVmClusterResult, OdbError> DeleteCloudAutonomousVmClusterOutcome;
 typedef Aws::Utils::Outcome<DeleteCloudExadataInfrastructureResult, OdbError> DeleteCloudExadataInfrastructureOutcome;
 typedef Aws::Utils::Outcome<DeleteCloudVmClusterResult, OdbError> DeleteCloudVmClusterOutcome;
+typedef Aws::Utils::Outcome<DeleteExadbVmClusterResult, OdbError> DeleteExadbVmClusterOutcome;
+typedef Aws::Utils::Outcome<DeleteExascaleDbStorageVaultResult, OdbError> DeleteExascaleDbStorageVaultOutcome;
 typedef Aws::Utils::Outcome<DeleteOdbNetworkResult, OdbError> DeleteOdbNetworkOutcome;
 typedef Aws::Utils::Outcome<DeleteOdbPeeringConnectionResult, OdbError> DeleteOdbPeeringConnectionOutcome;
 typedef Aws::Utils::Outcome<DisassociateIamRoleFromResourceResult, OdbError> DisassociateIamRoleFromResourceOutcome;
+typedef Aws::Utils::Outcome<DisassociateVirtualMachinesFromCloudVmClusterResult, OdbError>
+    DisassociateVirtualMachinesFromCloudVmClusterOutcome;
+typedef Aws::Utils::Outcome<DisassociateVirtualMachinesFromExadbVmClusterResult, OdbError>
+    DisassociateVirtualMachinesFromExadbVmClusterOutcome;
 typedef Aws::Utils::Outcome<FailoverAutonomousDatabaseResult, OdbError> FailoverAutonomousDatabaseOutcome;
 typedef Aws::Utils::Outcome<GetAutonomousDatabaseResult, OdbError> GetAutonomousDatabaseOutcome;
 typedef Aws::Utils::Outcome<GetAutonomousDatabaseBackupResult, OdbError> GetAutonomousDatabaseBackupOutcome;
@@ -229,6 +283,8 @@ typedef Aws::Utils::Outcome<GetCloudExadataInfrastructureUnallocatedResourcesRes
 typedef Aws::Utils::Outcome<GetCloudVmClusterResult, OdbError> GetCloudVmClusterOutcome;
 typedef Aws::Utils::Outcome<GetDbNodeResult, OdbError> GetDbNodeOutcome;
 typedef Aws::Utils::Outcome<GetDbServerResult, OdbError> GetDbServerOutcome;
+typedef Aws::Utils::Outcome<GetExadbVmClusterResult, OdbError> GetExadbVmClusterOutcome;
+typedef Aws::Utils::Outcome<GetExascaleDbStorageVaultResult, OdbError> GetExascaleDbStorageVaultOutcome;
 typedef Aws::Utils::Outcome<GetOciOnboardingStatusResult, OdbError> GetOciOnboardingStatusOutcome;
 typedef Aws::Utils::Outcome<GetOdbNetworkResult, OdbError> GetOdbNetworkOutcome;
 typedef Aws::Utils::Outcome<GetOdbPeeringConnectionResult, OdbError> GetOdbPeeringConnectionOutcome;
@@ -246,6 +302,10 @@ typedef Aws::Utils::Outcome<ListCloudVmClustersResult, OdbError> ListCloudVmClus
 typedef Aws::Utils::Outcome<ListDbNodesResult, OdbError> ListDbNodesOutcome;
 typedef Aws::Utils::Outcome<ListDbServersResult, OdbError> ListDbServersOutcome;
 typedef Aws::Utils::Outcome<ListDbSystemShapesResult, OdbError> ListDbSystemShapesOutcome;
+typedef Aws::Utils::Outcome<ListExadbVmClustersResult, OdbError> ListExadbVmClustersOutcome;
+typedef Aws::Utils::Outcome<ListExascaleDbStorageVaultsResult, OdbError> ListExascaleDbStorageVaultsOutcome;
+typedef Aws::Utils::Outcome<ListFlexComponentsResult, OdbError> ListFlexComponentsOutcome;
+typedef Aws::Utils::Outcome<ListGiMinorVersionsResult, OdbError> ListGiMinorVersionsOutcome;
 typedef Aws::Utils::Outcome<ListGiVersionsResult, OdbError> ListGiVersionsOutcome;
 typedef Aws::Utils::Outcome<ListOdbNetworksResult, OdbError> ListOdbNetworksOutcome;
 typedef Aws::Utils::Outcome<ListOdbPeeringConnectionsResult, OdbError> ListOdbPeeringConnectionsOutcome;
@@ -264,7 +324,14 @@ typedef Aws::Utils::Outcome<TagResourceResult, OdbError> TagResourceOutcome;
 typedef Aws::Utils::Outcome<UntagResourceResult, OdbError> UntagResourceOutcome;
 typedef Aws::Utils::Outcome<UpdateAutonomousDatabaseResult, OdbError> UpdateAutonomousDatabaseOutcome;
 typedef Aws::Utils::Outcome<UpdateAutonomousDatabaseBackupResult, OdbError> UpdateAutonomousDatabaseBackupOutcome;
+typedef Aws::Utils::Outcome<UpdateCloudAutonomousVmClusterResult, OdbError> UpdateCloudAutonomousVmClusterOutcome;
 typedef Aws::Utils::Outcome<UpdateCloudExadataInfrastructureResult, OdbError> UpdateCloudExadataInfrastructureOutcome;
+typedef Aws::Utils::Outcome<UpdateCloudExadataInfrastructureStorageCapacityResult, OdbError>
+    UpdateCloudExadataInfrastructureStorageCapacityOutcome;
+typedef Aws::Utils::Outcome<UpdateCloudVmClusterResult, OdbError> UpdateCloudVmClusterOutcome;
+typedef Aws::Utils::Outcome<UpdateExadbVmClusterResult, OdbError> UpdateExadbVmClusterOutcome;
+typedef Aws::Utils::Outcome<UpdateExascaleCloudExadataInfrastructureResult, OdbError> UpdateExascaleCloudExadataInfrastructureOutcome;
+typedef Aws::Utils::Outcome<UpdateExascaleDbStorageVaultResult, OdbError> UpdateExascaleDbStorageVaultOutcome;
 typedef Aws::Utils::Outcome<UpdateOdbNetworkResult, OdbError> UpdateOdbNetworkOutcome;
 typedef Aws::Utils::Outcome<UpdateOdbPeeringConnectionResult, OdbError> UpdateOdbPeeringConnectionOutcome;
 /* End of service model Outcome class definitions */
@@ -272,12 +339,16 @@ typedef Aws::Utils::Outcome<UpdateOdbPeeringConnectionResult, OdbError> UpdateOd
 /* Service model Outcome callable definitions */
 typedef std::future<AcceptMarketplaceRegistrationOutcome> AcceptMarketplaceRegistrationOutcomeCallable;
 typedef std::future<AssociateIamRoleToResourceOutcome> AssociateIamRoleToResourceOutcomeCallable;
+typedef std::future<AssociateVirtualMachinesToCloudVmClusterOutcome> AssociateVirtualMachinesToCloudVmClusterOutcomeCallable;
+typedef std::future<AssociateVirtualMachinesToExadbVmClusterOutcome> AssociateVirtualMachinesToExadbVmClusterOutcomeCallable;
 typedef std::future<CreateAutonomousDatabaseOutcome> CreateAutonomousDatabaseOutcomeCallable;
 typedef std::future<CreateAutonomousDatabaseBackupOutcome> CreateAutonomousDatabaseBackupOutcomeCallable;
 typedef std::future<CreateAutonomousDatabaseWalletOutcome> CreateAutonomousDatabaseWalletOutcomeCallable;
 typedef std::future<CreateCloudAutonomousVmClusterOutcome> CreateCloudAutonomousVmClusterOutcomeCallable;
 typedef std::future<CreateCloudExadataInfrastructureOutcome> CreateCloudExadataInfrastructureOutcomeCallable;
 typedef std::future<CreateCloudVmClusterOutcome> CreateCloudVmClusterOutcomeCallable;
+typedef std::future<CreateExadbVmClusterOutcome> CreateExadbVmClusterOutcomeCallable;
+typedef std::future<CreateExascaleDbStorageVaultOutcome> CreateExascaleDbStorageVaultOutcomeCallable;
 typedef std::future<CreateOdbNetworkOutcome> CreateOdbNetworkOutcomeCallable;
 typedef std::future<CreateOdbPeeringConnectionOutcome> CreateOdbPeeringConnectionOutcomeCallable;
 typedef std::future<DeleteAutonomousDatabaseOutcome> DeleteAutonomousDatabaseOutcomeCallable;
@@ -285,9 +356,13 @@ typedef std::future<DeleteAutonomousDatabaseBackupOutcome> DeleteAutonomousDatab
 typedef std::future<DeleteCloudAutonomousVmClusterOutcome> DeleteCloudAutonomousVmClusterOutcomeCallable;
 typedef std::future<DeleteCloudExadataInfrastructureOutcome> DeleteCloudExadataInfrastructureOutcomeCallable;
 typedef std::future<DeleteCloudVmClusterOutcome> DeleteCloudVmClusterOutcomeCallable;
+typedef std::future<DeleteExadbVmClusterOutcome> DeleteExadbVmClusterOutcomeCallable;
+typedef std::future<DeleteExascaleDbStorageVaultOutcome> DeleteExascaleDbStorageVaultOutcomeCallable;
 typedef std::future<DeleteOdbNetworkOutcome> DeleteOdbNetworkOutcomeCallable;
 typedef std::future<DeleteOdbPeeringConnectionOutcome> DeleteOdbPeeringConnectionOutcomeCallable;
 typedef std::future<DisassociateIamRoleFromResourceOutcome> DisassociateIamRoleFromResourceOutcomeCallable;
+typedef std::future<DisassociateVirtualMachinesFromCloudVmClusterOutcome> DisassociateVirtualMachinesFromCloudVmClusterOutcomeCallable;
+typedef std::future<DisassociateVirtualMachinesFromExadbVmClusterOutcome> DisassociateVirtualMachinesFromExadbVmClusterOutcomeCallable;
 typedef std::future<FailoverAutonomousDatabaseOutcome> FailoverAutonomousDatabaseOutcomeCallable;
 typedef std::future<GetAutonomousDatabaseOutcome> GetAutonomousDatabaseOutcomeCallable;
 typedef std::future<GetAutonomousDatabaseBackupOutcome> GetAutonomousDatabaseBackupOutcomeCallable;
@@ -299,6 +374,8 @@ typedef std::future<GetCloudExadataInfrastructureUnallocatedResourcesOutcome>
 typedef std::future<GetCloudVmClusterOutcome> GetCloudVmClusterOutcomeCallable;
 typedef std::future<GetDbNodeOutcome> GetDbNodeOutcomeCallable;
 typedef std::future<GetDbServerOutcome> GetDbServerOutcomeCallable;
+typedef std::future<GetExadbVmClusterOutcome> GetExadbVmClusterOutcomeCallable;
+typedef std::future<GetExascaleDbStorageVaultOutcome> GetExascaleDbStorageVaultOutcomeCallable;
 typedef std::future<GetOciOnboardingStatusOutcome> GetOciOnboardingStatusOutcomeCallable;
 typedef std::future<GetOdbNetworkOutcome> GetOdbNetworkOutcomeCallable;
 typedef std::future<GetOdbPeeringConnectionOutcome> GetOdbPeeringConnectionOutcomeCallable;
@@ -316,6 +393,10 @@ typedef std::future<ListCloudVmClustersOutcome> ListCloudVmClustersOutcomeCallab
 typedef std::future<ListDbNodesOutcome> ListDbNodesOutcomeCallable;
 typedef std::future<ListDbServersOutcome> ListDbServersOutcomeCallable;
 typedef std::future<ListDbSystemShapesOutcome> ListDbSystemShapesOutcomeCallable;
+typedef std::future<ListExadbVmClustersOutcome> ListExadbVmClustersOutcomeCallable;
+typedef std::future<ListExascaleDbStorageVaultsOutcome> ListExascaleDbStorageVaultsOutcomeCallable;
+typedef std::future<ListFlexComponentsOutcome> ListFlexComponentsOutcomeCallable;
+typedef std::future<ListGiMinorVersionsOutcome> ListGiMinorVersionsOutcomeCallable;
 typedef std::future<ListGiVersionsOutcome> ListGiVersionsOutcomeCallable;
 typedef std::future<ListOdbNetworksOutcome> ListOdbNetworksOutcomeCallable;
 typedef std::future<ListOdbPeeringConnectionsOutcome> ListOdbPeeringConnectionsOutcomeCallable;
@@ -334,7 +415,13 @@ typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
 typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
 typedef std::future<UpdateAutonomousDatabaseOutcome> UpdateAutonomousDatabaseOutcomeCallable;
 typedef std::future<UpdateAutonomousDatabaseBackupOutcome> UpdateAutonomousDatabaseBackupOutcomeCallable;
+typedef std::future<UpdateCloudAutonomousVmClusterOutcome> UpdateCloudAutonomousVmClusterOutcomeCallable;
 typedef std::future<UpdateCloudExadataInfrastructureOutcome> UpdateCloudExadataInfrastructureOutcomeCallable;
+typedef std::future<UpdateCloudExadataInfrastructureStorageCapacityOutcome> UpdateCloudExadataInfrastructureStorageCapacityOutcomeCallable;
+typedef std::future<UpdateCloudVmClusterOutcome> UpdateCloudVmClusterOutcomeCallable;
+typedef std::future<UpdateExadbVmClusterOutcome> UpdateExadbVmClusterOutcomeCallable;
+typedef std::future<UpdateExascaleCloudExadataInfrastructureOutcome> UpdateExascaleCloudExadataInfrastructureOutcomeCallable;
+typedef std::future<UpdateExascaleDbStorageVaultOutcome> UpdateExascaleDbStorageVaultOutcomeCallable;
 typedef std::future<UpdateOdbNetworkOutcome> UpdateOdbNetworkOutcomeCallable;
 typedef std::future<UpdateOdbPeeringConnectionOutcome> UpdateOdbPeeringConnectionOutcomeCallable;
 /* End of service model Outcome callable definitions */
@@ -350,6 +437,14 @@ typedef std::function<void(const OdbClient*, const Model::AcceptMarketplaceRegis
 typedef std::function<void(const OdbClient*, const Model::AssociateIamRoleToResourceRequest&,
                            const Model::AssociateIamRoleToResourceOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     AssociateIamRoleToResourceResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::AssociateVirtualMachinesToCloudVmClusterRequest&,
+                           const Model::AssociateVirtualMachinesToCloudVmClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    AssociateVirtualMachinesToCloudVmClusterResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::AssociateVirtualMachinesToExadbVmClusterRequest&,
+                           const Model::AssociateVirtualMachinesToExadbVmClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    AssociateVirtualMachinesToExadbVmClusterResponseReceivedHandler;
 typedef std::function<void(const OdbClient*, const Model::CreateAutonomousDatabaseRequest&, const Model::CreateAutonomousDatabaseOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateAutonomousDatabaseResponseReceivedHandler;
@@ -372,6 +467,13 @@ typedef std::function<void(const OdbClient*, const Model::CreateCloudExadataInfr
 typedef std::function<void(const OdbClient*, const Model::CreateCloudVmClusterRequest&, const Model::CreateCloudVmClusterOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateCloudVmClusterResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::CreateExadbVmClusterRequest&, const Model::CreateExadbVmClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateExadbVmClusterResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::CreateExascaleDbStorageVaultRequest&,
+                           const Model::CreateExascaleDbStorageVaultOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateExascaleDbStorageVaultResponseReceivedHandler;
 typedef std::function<void(const OdbClient*, const Model::CreateOdbNetworkRequest&, const Model::CreateOdbNetworkOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateOdbNetworkResponseReceivedHandler;
@@ -396,6 +498,13 @@ typedef std::function<void(const OdbClient*, const Model::DeleteCloudExadataInfr
 typedef std::function<void(const OdbClient*, const Model::DeleteCloudVmClusterRequest&, const Model::DeleteCloudVmClusterOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteCloudVmClusterResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::DeleteExadbVmClusterRequest&, const Model::DeleteExadbVmClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteExadbVmClusterResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::DeleteExascaleDbStorageVaultRequest&,
+                           const Model::DeleteExascaleDbStorageVaultOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteExascaleDbStorageVaultResponseReceivedHandler;
 typedef std::function<void(const OdbClient*, const Model::DeleteOdbNetworkRequest&, const Model::DeleteOdbNetworkOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteOdbNetworkResponseReceivedHandler;
@@ -406,6 +515,14 @@ typedef std::function<void(const OdbClient*, const Model::DisassociateIamRoleFro
                            const Model::DisassociateIamRoleFromResourceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DisassociateIamRoleFromResourceResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::DisassociateVirtualMachinesFromCloudVmClusterRequest&,
+                           const Model::DisassociateVirtualMachinesFromCloudVmClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DisassociateVirtualMachinesFromCloudVmClusterResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::DisassociateVirtualMachinesFromExadbVmClusterRequest&,
+                           const Model::DisassociateVirtualMachinesFromExadbVmClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DisassociateVirtualMachinesFromExadbVmClusterResponseReceivedHandler;
 typedef std::function<void(const OdbClient*, const Model::FailoverAutonomousDatabaseRequest&,
                            const Model::FailoverAutonomousDatabaseOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     FailoverAutonomousDatabaseResponseReceivedHandler;
@@ -439,6 +556,12 @@ typedef std::function<void(const OdbClient*, const Model::GetDbNodeRequest&, con
 typedef std::function<void(const OdbClient*, const Model::GetDbServerRequest&, const Model::GetDbServerOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetDbServerResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::GetExadbVmClusterRequest&, const Model::GetExadbVmClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetExadbVmClusterResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::GetExascaleDbStorageVaultRequest&, const Model::GetExascaleDbStorageVaultOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetExascaleDbStorageVaultResponseReceivedHandler;
 typedef std::function<void(const OdbClient*, const Model::GetOciOnboardingStatusRequest&, const Model::GetOciOnboardingStatusOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetOciOnboardingStatusResponseReceivedHandler;
@@ -497,6 +620,18 @@ typedef std::function<void(const OdbClient*, const Model::ListDbServersRequest&,
 typedef std::function<void(const OdbClient*, const Model::ListDbSystemShapesRequest&, const Model::ListDbSystemShapesOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListDbSystemShapesResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::ListExadbVmClustersRequest&, const Model::ListExadbVmClustersOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListExadbVmClustersResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::ListExascaleDbStorageVaultsRequest&,
+                           const Model::ListExascaleDbStorageVaultsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListExascaleDbStorageVaultsResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::ListFlexComponentsRequest&, const Model::ListFlexComponentsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListFlexComponentsResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::ListGiMinorVersionsRequest&, const Model::ListGiMinorVersionsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListGiMinorVersionsResponseReceivedHandler;
 typedef std::function<void(const OdbClient*, const Model::ListGiVersionsRequest&, const Model::ListGiVersionsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListGiVersionsResponseReceivedHandler;
@@ -553,10 +688,32 @@ typedef std::function<void(const OdbClient*, const Model::UpdateAutonomousDataba
                            const Model::UpdateAutonomousDatabaseBackupOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateAutonomousDatabaseBackupResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::UpdateCloudAutonomousVmClusterRequest&,
+                           const Model::UpdateCloudAutonomousVmClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateCloudAutonomousVmClusterResponseReceivedHandler;
 typedef std::function<void(const OdbClient*, const Model::UpdateCloudExadataInfrastructureRequest&,
                            const Model::UpdateCloudExadataInfrastructureOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateCloudExadataInfrastructureResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::UpdateCloudExadataInfrastructureStorageCapacityRequest&,
+                           const Model::UpdateCloudExadataInfrastructureStorageCapacityOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateCloudExadataInfrastructureStorageCapacityResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::UpdateCloudVmClusterRequest&, const Model::UpdateCloudVmClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateCloudVmClusterResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::UpdateExadbVmClusterRequest&, const Model::UpdateExadbVmClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateExadbVmClusterResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::UpdateExascaleCloudExadataInfrastructureRequest&,
+                           const Model::UpdateExascaleCloudExadataInfrastructureOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateExascaleCloudExadataInfrastructureResponseReceivedHandler;
+typedef std::function<void(const OdbClient*, const Model::UpdateExascaleDbStorageVaultRequest&,
+                           const Model::UpdateExascaleDbStorageVaultOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateExascaleDbStorageVaultResponseReceivedHandler;
 typedef std::function<void(const OdbClient*, const Model::UpdateOdbNetworkRequest&, const Model::UpdateOdbNetworkOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateOdbNetworkResponseReceivedHandler;

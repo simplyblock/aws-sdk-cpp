@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -17,6 +17,7 @@
 #include <aws/ec2/model/DescribeCapacityBlocksPaginationTraits.h>
 #include <aws/ec2/model/DescribeCapacityManagerDataExportsPaginationTraits.h>
 #include <aws/ec2/model/DescribeCapacityReservationBillingRequestsPaginationTraits.h>
+#include <aws/ec2/model/DescribeCapacityReservationDateChangeQuotesPaginationTraits.h>
 #include <aws/ec2/model/DescribeCapacityReservationFleetsPaginationTraits.h>
 #include <aws/ec2/model/DescribeCapacityReservationsPaginationTraits.h>
 #include <aws/ec2/model/DescribeCarrierGatewaysPaginationTraits.h>
@@ -75,6 +76,7 @@
 #include <aws/ec2/model/DescribeMacHostsPaginationTraits.h>
 #include <aws/ec2/model/DescribeMacModificationTasksPaginationTraits.h>
 #include <aws/ec2/model/DescribeManagedPrefixListsPaginationTraits.h>
+#include <aws/ec2/model/DescribeMetricCategoriesPaginationTraits.h>
 #include <aws/ec2/model/DescribeMovingAddressesPaginationTraits.h>
 #include <aws/ec2/model/DescribeNatGatewaysPaginationTraits.h>
 #include <aws/ec2/model/DescribeNetworkAclsPaginationTraits.h>
@@ -84,6 +86,8 @@
 #include <aws/ec2/model/DescribeNetworkInsightsPathsPaginationTraits.h>
 #include <aws/ec2/model/DescribeNetworkInterfacePermissionsPaginationTraits.h>
 #include <aws/ec2/model/DescribeNetworkInterfacesPaginationTraits.h>
+#include <aws/ec2/model/DescribeNetworkingFlexCostAllocationPoliciesPaginationTraits.h>
+#include <aws/ec2/model/DescribeNetworkingFlexCostAllocationPolicyAssociationsPaginationTraits.h>
 #include <aws/ec2/model/DescribePrefixListsPaginationTraits.h>
 #include <aws/ec2/model/DescribePrincipalIdFormatPaginationTraits.h>
 #include <aws/ec2/model/DescribePublicIpv4PoolsPaginationTraits.h>
@@ -148,6 +152,7 @@
 #include <aws/ec2/model/GetCapacityManagerMetricDimensionsPaginationTraits.h>
 #include <aws/ec2/model/GetCapacityManagerMonitoredTagKeysPaginationTraits.h>
 #include <aws/ec2/model/GetGroupsForCapacityReservationPaginationTraits.h>
+#include <aws/ec2/model/GetImageFindingsPaginationTraits.h>
 #include <aws/ec2/model/GetInstanceTypesFromInstanceRequirementsPaginationTraits.h>
 #include <aws/ec2/model/GetIpamAddressHistoryPaginationTraits.h>
 #include <aws/ec2/model/GetIpamDiscoveredAccountsPaginationTraits.h>
@@ -166,6 +171,7 @@
 #include <aws/ec2/model/GetTransitGatewayAttachmentPropagationsPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayMulticastDomainAssociationsPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayPolicyTableAssociationsPaginationTraits.h>
+#include <aws/ec2/model/GetTransitGatewayPolicyTableEntriesPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayPrefixListReferencesPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayRouteTableAssociationsPaginationTraits.h>
 #include <aws/ec2/model/GetTransitGatewayRouteTablePropagationsPaginationTraits.h>
@@ -210,6 +216,9 @@ using DescribeCapacityManagerDataExportsPaginator =
 using DescribeCapacityReservationBillingRequestsPaginator =
     Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeCapacityReservationBillingRequestsRequest,
                                       Pagination::DescribeCapacityReservationBillingRequestsPaginationTraits<EC2Client>>;
+using DescribeCapacityReservationDateChangeQuotesPaginator =
+    Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeCapacityReservationDateChangeQuotesRequest,
+                                      Pagination::DescribeCapacityReservationDateChangeQuotesPaginationTraits<EC2Client>>;
 using DescribeCapacityReservationFleetsPaginator =
     Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeCapacityReservationFleetsRequest,
                                       Pagination::DescribeCapacityReservationFleetsPaginationTraits<EC2Client>>;
@@ -364,12 +373,21 @@ using DescribeMacModificationTasksPaginator =
 using DescribeManagedPrefixListsPaginator =
     Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeManagedPrefixListsRequest,
                                       Pagination::DescribeManagedPrefixListsPaginationTraits<EC2Client>>;
+using DescribeMetricCategoriesPaginator =
+    Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeMetricCategoriesRequest,
+                                      Pagination::DescribeMetricCategoriesPaginationTraits<EC2Client>>;
 using DescribeMovingAddressesPaginator = Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeMovingAddressesRequest,
                                                                            Pagination::DescribeMovingAddressesPaginationTraits<EC2Client>>;
 using DescribeNatGatewaysPaginator = Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeNatGatewaysRequest,
                                                                        Pagination::DescribeNatGatewaysPaginationTraits<EC2Client>>;
 using DescribeNetworkAclsPaginator = Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeNetworkAclsRequest,
                                                                        Pagination::DescribeNetworkAclsPaginationTraits<EC2Client>>;
+using DescribeNetworkingFlexCostAllocationPoliciesPaginator =
+    Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeNetworkingFlexCostAllocationPoliciesRequest,
+                                      Pagination::DescribeNetworkingFlexCostAllocationPoliciesPaginationTraits<EC2Client>>;
+using DescribeNetworkingFlexCostAllocationPolicyAssociationsPaginator =
+    Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest,
+                                      Pagination::DescribeNetworkingFlexCostAllocationPolicyAssociationsPaginationTraits<EC2Client>>;
 using DescribeNetworkInsightsAccessScopeAnalysesPaginator =
     Aws::Utils::Pagination::Paginator<EC2Client, Model::DescribeNetworkInsightsAccessScopeAnalysesRequest,
                                       Pagination::DescribeNetworkInsightsAccessScopeAnalysesPaginationTraits<EC2Client>>;
@@ -566,6 +584,8 @@ using GetCapacityManagerMonitoredTagKeysPaginator =
 using GetGroupsForCapacityReservationPaginator =
     Aws::Utils::Pagination::Paginator<EC2Client, Model::GetGroupsForCapacityReservationRequest,
                                       Pagination::GetGroupsForCapacityReservationPaginationTraits<EC2Client>>;
+using GetImageFindingsPaginator =
+    Aws::Utils::Pagination::Paginator<EC2Client, Model::GetImageFindingsRequest, Pagination::GetImageFindingsPaginationTraits<EC2Client>>;
 using GetInstanceTypesFromInstanceRequirementsPaginator =
     Aws::Utils::Pagination::Paginator<EC2Client, Model::GetInstanceTypesFromInstanceRequirementsRequest,
                                       Pagination::GetInstanceTypesFromInstanceRequirementsPaginationTraits<EC2Client>>;
@@ -614,6 +634,9 @@ using GetTransitGatewayMulticastDomainAssociationsPaginator =
 using GetTransitGatewayPolicyTableAssociationsPaginator =
     Aws::Utils::Pagination::Paginator<EC2Client, Model::GetTransitGatewayPolicyTableAssociationsRequest,
                                       Pagination::GetTransitGatewayPolicyTableAssociationsPaginationTraits<EC2Client>>;
+using GetTransitGatewayPolicyTableEntriesPaginator =
+    Aws::Utils::Pagination::Paginator<EC2Client, Model::GetTransitGatewayPolicyTableEntriesRequest,
+                                      Pagination::GetTransitGatewayPolicyTableEntriesPaginationTraits<EC2Client>>;
 using GetTransitGatewayPrefixListReferencesPaginator =
     Aws::Utils::Pagination::Paginator<EC2Client, Model::GetTransitGatewayPrefixListReferencesRequest,
                                       Pagination::GetTransitGatewayPrefixListReferencesPaginationTraits<EC2Client>>;

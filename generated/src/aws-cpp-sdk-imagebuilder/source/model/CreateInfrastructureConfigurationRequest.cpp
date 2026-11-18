@@ -59,6 +59,10 @@ Aws::String CreateInfrastructureConfigurationRequest::SerializePayload() const {
     payload.WithBool("terminateInstanceOnFailure", m_terminateInstanceOnFailure);
   }
 
+  if (m_terminateInstanceOnCompletionHasBeenSet) {
+    payload.WithBool("terminateInstanceOnCompletion", m_terminateInstanceOnCompletion);
+  }
+
   if (m_snsTopicArnHasBeenSet) {
     payload.WithString("snsTopicArn", m_snsTopicArn);
   }
@@ -87,8 +91,16 @@ Aws::String CreateInfrastructureConfigurationRequest::SerializePayload() const {
     payload.WithObject("placement", m_placement.Jsonize());
   }
 
+  if (m_parentInstanceHasBeenSet) {
+    payload.WithObject("parentInstance", m_parentInstance.Jsonize());
+  }
+
   if (m_clientTokenHasBeenSet) {
     payload.WithString("clientToken", m_clientToken);
+  }
+
+  if (m_dryRunHasBeenSet) {
+    payload.WithBool("dryRun", m_dryRun);
   }
 
   return payload.View().WriteReadable();

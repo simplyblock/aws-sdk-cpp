@@ -852,6 +852,11 @@ MetricAlarm& MetricAlarm::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDe
                 m_evaluationWindowHasBeenSet = true;
               }
 
+              else if (initialKeyStr == "WarmUpConfiguration") {
+                m_warmUpConfiguration = WarmUpConfiguration(decoder);
+                m_warmUpConfigurationHasBeenSet = true;
+              }
+
               else if (initialKeyStr == "EvaluationCriteria") {
                 m_evaluationCriteria = EvaluationCriteria(decoder);
                 m_evaluationCriteriaHasBeenSet = true;
@@ -873,6 +878,11 @@ MetricAlarm& MetricAlarm::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDe
                   }
                 }
                 m_evaluationIntervalHasBeenSet = true;
+              }
+
+              else if (initialKeyStr == "ActionConfiguration") {
+                m_actionConfiguration = ActionConfiguration(decoder);
+                m_actionConfigurationHasBeenSet = true;
               } else {
                 // Unknown key, skip the value
                 decoder->ConsumeNextWholeDataItem();
@@ -1721,6 +1731,11 @@ MetricAlarm& MetricAlarm::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDe
               m_evaluationWindowHasBeenSet = true;
             }
 
+            else if (initialKeyStr == "WarmUpConfiguration") {
+              m_warmUpConfiguration = WarmUpConfiguration(decoder);
+              m_warmUpConfigurationHasBeenSet = true;
+            }
+
             else if (initialKeyStr == "EvaluationCriteria") {
               m_evaluationCriteria = EvaluationCriteria(decoder);
               m_evaluationCriteriaHasBeenSet = true;
@@ -1742,6 +1757,11 @@ MetricAlarm& MetricAlarm::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDe
                 }
               }
               m_evaluationIntervalHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "ActionConfiguration") {
+              m_actionConfiguration = ActionConfiguration(decoder);
+              m_actionConfigurationHasBeenSet = true;
             } else {
               // Unknown key, skip the value
               decoder->ConsumeNextWholeDataItem();
@@ -1848,10 +1868,16 @@ void MetricAlarm::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
   if (m_evaluationWindowHasBeenSet) {
     mapSize++;
   }
+  if (m_warmUpConfigurationHasBeenSet) {
+    mapSize++;
+  }
   if (m_evaluationCriteriaHasBeenSet) {
     mapSize++;
   }
   if (m_evaluationIntervalHasBeenSet) {
+    mapSize++;
+  }
+  if (m_actionConfigurationHasBeenSet) {
     mapSize++;
   }
 
@@ -2026,6 +2052,11 @@ void MetricAlarm::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
     m_evaluationWindow.CborEncode(encoder);
   }
 
+  if (m_warmUpConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WarmUpConfiguration"));
+    m_warmUpConfiguration.CborEncode(encoder);
+  }
+
   if (m_evaluationCriteriaHasBeenSet) {
     encoder.WriteText(Aws::Crt::ByteCursorFromCString("EvaluationCriteria"));
     m_evaluationCriteria.CborEncode(encoder);
@@ -2034,6 +2065,11 @@ void MetricAlarm::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
   if (m_evaluationIntervalHasBeenSet) {
     encoder.WriteText(Aws::Crt::ByteCursorFromCString("EvaluationInterval"));
     (m_evaluationInterval >= 0) ? encoder.WriteUInt(m_evaluationInterval) : encoder.WriteNegInt(m_evaluationInterval);
+  }
+
+  if (m_actionConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ActionConfiguration"));
+    m_actionConfiguration.CborEncode(encoder);
   }
 }
 

@@ -7,12 +7,16 @@
 #include <aws/bedrock-agentcore-control/BedrockAgentCoreControl_EXPORTS.h>
 #include <aws/bedrock-agentcore-control/model/AgentRuntimeArtifact.h>
 #include <aws/bedrock-agentcore-control/model/AgentRuntimeStatus.h>
+#include <aws/bedrock-agentcore-control/model/AllowedPort.h>
 #include <aws/bedrock-agentcore-control/model/AuthorizerConfiguration.h>
+#include <aws/bedrock-agentcore-control/model/CapacityProviderConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/FilesystemConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/LifecycleConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/NetworkConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/ProtocolConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/RequestHeaderConfiguration.h>
+#include <aws/bedrock-agentcore-control/model/ResourceConfiguration.h>
+#include <aws/bedrock-agentcore-control/model/RuntimeHooksConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/RuntimeMetadataConfiguration.h>
 #include <aws/bedrock-agentcore-control/model/WorkloadIdentityDetails.h>
 #include <aws/core/http/HttpResponse.h>
@@ -210,6 +214,23 @@ class GetAgentRuntimeResult {
 
   ///@{
   /**
+   * <p>The lifecycle hooks configuration for the AgentCore Runtime.</p>
+   */
+  inline const RuntimeHooksConfiguration& GetHooksConfiguration() const { return m_hooksConfiguration; }
+  template <typename HooksConfigurationT = RuntimeHooksConfiguration>
+  void SetHooksConfiguration(HooksConfigurationT&& value) {
+    m_hooksConfigurationHasBeenSet = true;
+    m_hooksConfiguration = std::forward<HooksConfigurationT>(value);
+  }
+  template <typename HooksConfigurationT = RuntimeHooksConfiguration>
+  GetAgentRuntimeResult& WithHooksConfiguration(HooksConfigurationT&& value) {
+    SetHooksConfiguration(std::forward<HooksConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The reason for failure if the AgentCore Runtime is in a failed state.</p>
    */
   inline const Aws::String& GetFailureReason() const { return m_failureReason; }
@@ -277,7 +298,10 @@ class GetAgentRuntimeResult {
   ///@}
 
   ///@{
-
+  /**
+   * <p>The protocol configuration for the AgentCore Runtime, including the protocol,
+   * port, and path on which the agent server is available.</p>
+   */
   inline const ProtocolConfiguration& GetProtocolConfiguration() const { return m_protocolConfiguration; }
   template <typename ProtocolConfigurationT = ProtocolConfiguration>
   void SetProtocolConfiguration(ProtocolConfigurationT&& value) {
@@ -391,6 +415,87 @@ class GetAgentRuntimeResult {
   ///@}
 
   ///@{
+  /**
+   * <p>The capacity provider configuration for the AgentCore Runtime.</p>
+   */
+  inline const CapacityProviderConfiguration& GetCapacityProviderConfiguration() const { return m_capacityProviderConfiguration; }
+  template <typename CapacityProviderConfigurationT = CapacityProviderConfiguration>
+  void SetCapacityProviderConfiguration(CapacityProviderConfigurationT&& value) {
+    m_capacityProviderConfigurationHasBeenSet = true;
+    m_capacityProviderConfiguration = std::forward<CapacityProviderConfigurationT>(value);
+  }
+  template <typename CapacityProviderConfigurationT = CapacityProviderConfiguration>
+  GetAgentRuntimeResult& WithCapacityProviderConfiguration(CapacityProviderConfigurationT&& value) {
+    SetCapacityProviderConfiguration(std::forward<CapacityProviderConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The version of the runtime platform used by the AgentCore Runtime.</p>
+   */
+  inline const Aws::String& GetPlatformVersion() const { return m_platformVersion; }
+  template <typename PlatformVersionT = Aws::String>
+  void SetPlatformVersion(PlatformVersionT&& value) {
+    m_platformVersionHasBeenSet = true;
+    m_platformVersion = std::forward<PlatformVersionT>(value);
+  }
+  template <typename PlatformVersionT = Aws::String>
+  GetAgentRuntimeResult& WithPlatformVersion(PlatformVersionT&& value) {
+    SetPlatformVersion(std::forward<PlatformVersionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The additional ports on the AgentCore Runtime that are reachable through the
+   * runtime's session URL.</p>
+   */
+  inline const Aws::Vector<AllowedPort>& GetAllowedPorts() const { return m_allowedPorts; }
+  template <typename AllowedPortsT = Aws::Vector<AllowedPort>>
+  void SetAllowedPorts(AllowedPortsT&& value) {
+    m_allowedPortsHasBeenSet = true;
+    m_allowedPorts = std::forward<AllowedPortsT>(value);
+  }
+  template <typename AllowedPortsT = Aws::Vector<AllowedPort>>
+  GetAgentRuntimeResult& WithAllowedPorts(AllowedPortsT&& value) {
+    SetAllowedPorts(std::forward<AllowedPortsT>(value));
+    return *this;
+  }
+  template <typename AllowedPortsT = AllowedPort>
+  GetAgentRuntimeResult& AddAllowedPorts(AllowedPortsT&& value) {
+    m_allowedPortsHasBeenSet = true;
+    m_allowedPorts.emplace_back(std::forward<AllowedPortsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The resource configurations for the AgentCore Runtime.</p>
+   */
+  inline const Aws::Vector<ResourceConfiguration>& GetResourceConfigurations() const { return m_resourceConfigurations; }
+  template <typename ResourceConfigurationsT = Aws::Vector<ResourceConfiguration>>
+  void SetResourceConfigurations(ResourceConfigurationsT&& value) {
+    m_resourceConfigurationsHasBeenSet = true;
+    m_resourceConfigurations = std::forward<ResourceConfigurationsT>(value);
+  }
+  template <typename ResourceConfigurationsT = Aws::Vector<ResourceConfiguration>>
+  GetAgentRuntimeResult& WithResourceConfigurations(ResourceConfigurationsT&& value) {
+    SetResourceConfigurations(std::forward<ResourceConfigurationsT>(value));
+    return *this;
+  }
+  template <typename ResourceConfigurationsT = ResourceConfiguration>
+  GetAgentRuntimeResult& AddResourceConfigurations(ResourceConfigurationsT&& value) {
+    m_resourceConfigurationsHasBeenSet = true;
+    m_resourceConfigurations.emplace_back(std::forward<ResourceConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -427,6 +532,8 @@ class GetAgentRuntimeResult {
 
   LifecycleConfiguration m_lifecycleConfiguration;
 
+  RuntimeHooksConfiguration m_hooksConfiguration;
+
   Aws::String m_failureReason;
 
   Aws::String m_description;
@@ -447,6 +554,14 @@ class GetAgentRuntimeResult {
 
   Aws::Vector<FilesystemConfiguration> m_filesystemConfigurations;
 
+  CapacityProviderConfiguration m_capacityProviderConfiguration;
+
+  Aws::String m_platformVersion;
+
+  Aws::Vector<AllowedPort> m_allowedPorts;
+
+  Aws::Vector<ResourceConfiguration> m_resourceConfigurations;
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_agentRuntimeArnHasBeenSet = false;
@@ -459,6 +574,7 @@ class GetAgentRuntimeResult {
   bool m_networkConfigurationHasBeenSet = false;
   bool m_statusHasBeenSet = false;
   bool m_lifecycleConfigurationHasBeenSet = false;
+  bool m_hooksConfigurationHasBeenSet = false;
   bool m_failureReasonHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_workloadIdentityDetailsHasBeenSet = false;
@@ -469,6 +585,10 @@ class GetAgentRuntimeResult {
   bool m_requestHeaderConfigurationHasBeenSet = false;
   bool m_metadataConfigurationHasBeenSet = false;
   bool m_filesystemConfigurationsHasBeenSet = false;
+  bool m_capacityProviderConfigurationHasBeenSet = false;
+  bool m_platformVersionHasBeenSet = false;
+  bool m_allowedPortsHasBeenSet = false;
+  bool m_resourceConfigurationsHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-neptune "C++ SDK for the AWS neptune service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-neptune "C++ SDK for Amazon Neptune" aws-cpp-sdk-core)
 
 file(GLOB AWS_NEPTUNE_HEADERS
     "include/aws/neptune/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_NEPTUNE_HEADERS
 
 file(GLOB AWS_NEPTUNE_MODEL_HEADERS
     "include/aws/neptune/model/*.h"
+)
+
+file(GLOB AWS_NEPTUNE_INTERNAL_HEADERS
+    "include/aws/neptune/internal/*.h"
 )
 
 file(GLOB AWS_NEPTUNE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_NEPTUNE_MODEL_SOURCE
 
 file(GLOB NEPTUNE_UNIFIED_HEADERS
     ${AWS_NEPTUNE_HEADERS}
+    ${AWS_NEPTUNE_INTERNAL_HEADERS}
     ${AWS_NEPTUNE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\neptune" FILES ${AWS_NEPTUNE_HEADERS})
+        source_group("Header Files\\aws\\neptune\\internal" FILES ${AWS_NEPTUNE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\neptune\\model" FILES ${AWS_NEPTUNE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_NEPTUNE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_NEPTUNE_MODEL_SOURCE})

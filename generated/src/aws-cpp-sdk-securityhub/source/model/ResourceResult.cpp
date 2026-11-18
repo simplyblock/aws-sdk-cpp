@@ -30,9 +30,33 @@ ResourceResult& ResourceResult::operator=(JsonView jsonValue) {
     m_accountId = jsonValue.GetString("AccountId");
     m_accountIdHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("AccountName")) {
+    m_accountName = jsonValue.GetString("AccountName");
+    m_accountNameHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("Region")) {
     m_region = jsonValue.GetString("Region");
     m_regionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ResourceProvider")) {
+    m_resourceProvider = jsonValue.GetString("ResourceProvider");
+    m_resourceProviderHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ResourceOwnerAccountId")) {
+    m_resourceOwnerAccountId = jsonValue.GetString("ResourceOwnerAccountId");
+    m_resourceOwnerAccountIdHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ResourceOwnerOrgId")) {
+    m_resourceOwnerOrgId = jsonValue.GetString("ResourceOwnerOrgId");
+    m_resourceOwnerOrgIdHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ResourceCloudPartition")) {
+    m_resourceCloudPartition = jsonValue.GetString("ResourceCloudPartition");
+    m_resourceCloudPartitionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ResourceRegion")) {
+    m_resourceRegion = jsonValue.GetString("ResourceRegion");
+    m_resourceRegionHasBeenSet = true;
   }
   if (jsonValue.ValueExists("ResourceCategory")) {
     m_resourceCategory = ResourceCategoryMapper::GetResourceCategoryForName(jsonValue.GetString("ResourceCategory"));
@@ -72,6 +96,30 @@ ResourceResult& ResourceResult::operator=(JsonView jsonValue) {
     m_resourceConfig = jsonValue.GetObject("ResourceConfig");
     m_resourceConfigHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("ResourceSubCategory")) {
+    m_resourceSubCategory = ResourceSubCategoryMapper::GetResourceSubCategoryForName(jsonValue.GetString("ResourceSubCategory"));
+    m_resourceSubCategoryHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("DiscoveryType")) {
+    m_discoveryType = DiscoveryTypeMapper::GetDiscoveryTypeForName(jsonValue.GetString("DiscoveryType"));
+    m_discoveryTypeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ResourceInfo")) {
+    m_resourceInfo = jsonValue.GetObject("ResourceInfo");
+    m_resourceInfoHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("ResourceCriticality")) {
+    m_resourceCriticality = ResourceCriticalityMapper::GetResourceCriticalityForName(jsonValue.GetString("ResourceCriticality"));
+    m_resourceCriticalityHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("CriticalitySources")) {
+    Aws::Utils::Array<JsonView> criticalitySourcesJsonList = jsonValue.GetArray("CriticalitySources");
+    for (unsigned criticalitySourcesIndex = 0; criticalitySourcesIndex < criticalitySourcesJsonList.GetLength();
+         ++criticalitySourcesIndex) {
+      m_criticalitySources.push_back(criticalitySourcesJsonList[criticalitySourcesIndex].AsObject());
+    }
+    m_criticalitySourcesHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -90,8 +138,32 @@ JsonValue ResourceResult::Jsonize() const {
     payload.WithString("AccountId", m_accountId);
   }
 
+  if (m_accountNameHasBeenSet) {
+    payload.WithString("AccountName", m_accountName);
+  }
+
   if (m_regionHasBeenSet) {
     payload.WithString("Region", m_region);
+  }
+
+  if (m_resourceProviderHasBeenSet) {
+    payload.WithString("ResourceProvider", m_resourceProvider);
+  }
+
+  if (m_resourceOwnerAccountIdHasBeenSet) {
+    payload.WithString("ResourceOwnerAccountId", m_resourceOwnerAccountId);
+  }
+
+  if (m_resourceOwnerOrgIdHasBeenSet) {
+    payload.WithString("ResourceOwnerOrgId", m_resourceOwnerOrgId);
+  }
+
+  if (m_resourceCloudPartitionHasBeenSet) {
+    payload.WithString("ResourceCloudPartition", m_resourceCloudPartition);
+  }
+
+  if (m_resourceRegionHasBeenSet) {
+    payload.WithString("ResourceRegion", m_resourceRegion);
   }
 
   if (m_resourceCategoryHasBeenSet) {
@@ -134,6 +206,31 @@ JsonValue ResourceResult::Jsonize() const {
     if (!m_resourceConfig.View().IsNull()) {
       payload.WithObject("ResourceConfig", JsonValue(m_resourceConfig.View()));
     }
+  }
+
+  if (m_resourceSubCategoryHasBeenSet) {
+    payload.WithString("ResourceSubCategory", ResourceSubCategoryMapper::GetNameForResourceSubCategory(m_resourceSubCategory));
+  }
+
+  if (m_discoveryTypeHasBeenSet) {
+    payload.WithString("DiscoveryType", DiscoveryTypeMapper::GetNameForDiscoveryType(m_discoveryType));
+  }
+
+  if (m_resourceInfoHasBeenSet) {
+    payload.WithObject("ResourceInfo", m_resourceInfo.Jsonize());
+  }
+
+  if (m_resourceCriticalityHasBeenSet) {
+    payload.WithString("ResourceCriticality", ResourceCriticalityMapper::GetNameForResourceCriticality(m_resourceCriticality));
+  }
+
+  if (m_criticalitySourcesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> criticalitySourcesJsonList(m_criticalitySources.size());
+    for (unsigned criticalitySourcesIndex = 0; criticalitySourcesIndex < criticalitySourcesJsonList.GetLength();
+         ++criticalitySourcesIndex) {
+      criticalitySourcesJsonList[criticalitySourcesIndex].AsObject(m_criticalitySources[criticalitySourcesIndex].Jsonize());
+    }
+    payload.WithArray("CriticalitySources", std::move(criticalitySourcesJsonList));
   }
 
   return payload;

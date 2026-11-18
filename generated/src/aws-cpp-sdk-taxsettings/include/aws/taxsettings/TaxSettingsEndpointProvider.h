@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/taxsettings/TaxSettingsEndpointRules.h>
 #include <aws/taxsettings/TaxSettings_EXPORTS.h>
 
 namespace Aws {
 namespace TaxSettings {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using TaxSettingsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using TaxSettingsEndpointProviderBase =
     EndpointProviderBase<TaxSettingsClientConfiguration, TaxSettingsBuiltInParameters, TaxSettingsClientContextParameters>;
 
 using TaxSettingsDefaultEpProviderBase =
-    DefaultEndpointProvider<TaxSettingsClientConfiguration, TaxSettingsBuiltInParameters, TaxSettingsClientContextParameters>;
+    BDDEndpointProvider<TaxSettingsClientConfiguration, TaxSettingsBuiltInParameters, TaxSettingsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_TAXSETTINGS_API TaxSettingsEndpointProvider : public TaxSettingsDefaul
  public:
   using TaxSettingsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  TaxSettingsEndpointProvider()
-      : TaxSettingsDefaultEpProviderBase(Aws::TaxSettings::TaxSettingsEndpointRules::GetRulesBlob(),
-                                         Aws::TaxSettings::TaxSettingsEndpointRules::RulesBlobSize) {}
+  TaxSettingsEndpointProvider();
 
   ~TaxSettingsEndpointProvider() {}
 };

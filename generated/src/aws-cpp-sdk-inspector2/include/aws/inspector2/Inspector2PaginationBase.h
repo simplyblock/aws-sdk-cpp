@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -14,6 +14,8 @@
 #include <aws/inspector2/model/ListCisScanResultsAggregatedByChecksPaginationTraits.h>
 #include <aws/inspector2/model/ListCisScanResultsAggregatedByTargetResourcePaginationTraits.h>
 #include <aws/inspector2/model/ListCisScansPaginationTraits.h>
+#include <aws/inspector2/model/ListConnectorScanConfigurationsPaginationTraits.h>
+#include <aws/inspector2/model/ListConnectorsPaginationTraits.h>
 #include <aws/inspector2/model/ListCoveragePaginationTraits.h>
 #include <aws/inspector2/model/ListCoverageStatisticsPaginationTraits.h>
 #include <aws/inspector2/model/ListDelegatedAdminAccountsPaginationTraits.h>
@@ -21,6 +23,7 @@
 #include <aws/inspector2/model/ListFindingAggregationsPaginationTraits.h>
 #include <aws/inspector2/model/ListFindingsPaginationTraits.h>
 #include <aws/inspector2/model/ListMembersPaginationTraits.h>
+#include <aws/inspector2/model/ListOnDemandScansPaginationTraits.h>
 #include <aws/inspector2/model/ListUsageTotalsPaginationTraits.h>
 #include <aws/inspector2/model/SearchVulnerabilitiesPaginationTraits.h>
 
@@ -116,6 +119,29 @@ class Inspector2PaginationBase {
   }
 
   /**
+   * Create a paginator for ListConnectors operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListConnectorsRequest, Pagination::ListConnectorsPaginationTraits<DerivedClient>>
+  ListConnectorsPaginator(const Model::ListConnectorsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListConnectorsRequest,
+                                             Pagination::ListConnectorsPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                        request};
+  }
+
+  /**
+   * Create a paginator for ListConnectorScanConfigurations operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListConnectorScanConfigurationsRequest,
+                                    Pagination::ListConnectorScanConfigurationsPaginationTraits<DerivedClient>>
+  ListConnectorScanConfigurationsPaginator(const Model::ListConnectorScanConfigurationsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListConnectorScanConfigurationsRequest,
+                                             Pagination::ListConnectorScanConfigurationsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for ListCoverage operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListCoverageRequest, Pagination::ListCoveragePaginationTraits<DerivedClient>>
@@ -193,6 +219,18 @@ class Inspector2PaginationBase {
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListMembersRequest,
                                              Pagination::ListMembersPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
                                                                                                      request};
+  }
+
+  /**
+   * Create a paginator for ListOnDemandScans operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListOnDemandScansRequest,
+                                    Pagination::ListOnDemandScansPaginationTraits<DerivedClient>>
+  ListOnDemandScansPaginator(const Model::ListOnDemandScansRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListOnDemandScansRequest,
+                                             Pagination::ListOnDemandScansPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
   }
 
   /**

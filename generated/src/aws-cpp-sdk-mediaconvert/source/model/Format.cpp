@@ -25,6 +25,14 @@ static const int avi_HASH = HashingUtils::HashString("avi");
 static const int mpegts_HASH = HashingUtils::HashString("mpegts");
 static const int mpegps_HASH = HashingUtils::HashString("mpegps");
 static const int mp3_HASH = HashingUtils::HashString("mp3");
+static const int flac_HASH = HashingUtils::HashString("flac");
+static const int asf_HASH = HashingUtils::HashString("asf");
+static const int ogg_HASH = HashingUtils::HashString("ogg");
+static const int three_gp_HASH = HashingUtils::HashString("three_gp");
+static const int three_g2_HASH = HashingUtils::HashString("three_g2");
+static const int aac_HASH = HashingUtils::HashString("aac");
+static const int ac3_HASH = HashingUtils::HashString("ac3");
+static const int eac3_HASH = HashingUtils::HashString("eac3");
 
 Format GetFormatForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -48,6 +56,22 @@ Format GetFormatForName(const Aws::String& name) {
     return Format::mpegps;
   } else if (hashCode == mp3_HASH) {
     return Format::mp3;
+  } else if (hashCode == flac_HASH) {
+    return Format::flac;
+  } else if (hashCode == asf_HASH) {
+    return Format::asf;
+  } else if (hashCode == ogg_HASH) {
+    return Format::ogg;
+  } else if (hashCode == three_gp_HASH) {
+    return Format::three_gp;
+  } else if (hashCode == three_g2_HASH) {
+    return Format::three_g2;
+  } else if (hashCode == aac_HASH) {
+    return Format::aac;
+  } else if (hashCode == ac3_HASH) {
+    return Format::ac3;
+  } else if (hashCode == eac3_HASH) {
+    return Format::eac3;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -82,6 +106,22 @@ Aws::String GetNameForFormat(Format enumValue) {
       return "mpegps";
     case Format::mp3:
       return "mp3";
+    case Format::flac:
+      return "flac";
+    case Format::asf:
+      return "asf";
+    case Format::ogg:
+      return "ogg";
+    case Format::three_gp:
+      return "three_gp";
+    case Format::three_g2:
+      return "three_g2";
+    case Format::aac:
+      return "aac";
+    case Format::ac3:
+      return "ac3";
+    case Format::eac3:
+      return "eac3";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

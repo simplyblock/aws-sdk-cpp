@@ -86,6 +86,7 @@
 #include <aws/pinpoint-sms-voice-v2/model/DiscardRegistrationVersionRequest.h>
 #include <aws/pinpoint-sms-voice-v2/model/GetProtectConfigurationCountryRuleSetRequest.h>
 #include <aws/pinpoint-sms-voice-v2/model/GetResourcePolicyRequest.h>
+#include <aws/pinpoint-sms-voice-v2/model/ListAvailablePhoneNumbersRequest.h>
 #include <aws/pinpoint-sms-voice-v2/model/ListNotifyCountriesRequest.h>
 #include <aws/pinpoint-sms-voice-v2/model/ListPoolOriginationIdentitiesRequest.h>
 #include <aws/pinpoint-sms-voice-v2/model/ListProtectConfigurationRuleSetNumberOverridesRequest.h>
@@ -269,7 +270,8 @@ PinpointSMSVoiceV2Client::InvokeOperationOutcome PinpointSMSVoiceV2Client::Invok
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -281,7 +283,7 @@ PinpointSMSVoiceV2Client::InvokeOperationOutcome PinpointSMSVoiceV2Client::Invok
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -708,6 +710,13 @@ GetResourcePolicyOutcome PinpointSMSVoiceV2Client::GetResourcePolicy(const GetRe
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetResourcePolicyOutcome(result.GetResultWithOwnership())
                             : GetResourcePolicyOutcome(std::move(result.GetError()));
+}
+
+ListAvailablePhoneNumbersOutcome PinpointSMSVoiceV2Client::ListAvailablePhoneNumbers(
+    const ListAvailablePhoneNumbersRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListAvailablePhoneNumbersOutcome(result.GetResultWithOwnership())
+                            : ListAvailablePhoneNumbersOutcome(std::move(result.GetError()));
 }
 
 ListNotifyCountriesOutcome PinpointSMSVoiceV2Client::ListNotifyCountries(const ListNotifyCountriesRequest& request) const {

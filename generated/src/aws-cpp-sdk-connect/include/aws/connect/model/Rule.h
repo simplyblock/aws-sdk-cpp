@@ -5,7 +5,9 @@
 
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
+#include <aws/connect/model/PreEvaluationFilters.h>
 #include <aws/connect/model/RuleAction.h>
+#include <aws/connect/model/RuleCapabilityTier.h>
 #include <aws/connect/model/RulePublishStatus.h>
 #include <aws/connect/model/RuleTriggerEventSource.h>
 #include <aws/core/utils/DateTime.h>
@@ -111,6 +113,30 @@ class Rule {
 
   ///@{
   /**
+   * <p>The list of capability tiers associated with the rule. Used for categorizing
+   * rules by capability (for example, <code>GenerativeAI</code>).</p>
+   */
+  inline const Aws::Vector<RuleCapabilityTier>& GetRuleCapabilityTiers() const { return m_ruleCapabilityTiers; }
+  inline bool RuleCapabilityTiersHasBeenSet() const { return m_ruleCapabilityTiersHasBeenSet; }
+  template <typename RuleCapabilityTiersT = Aws::Vector<RuleCapabilityTier>>
+  void SetRuleCapabilityTiers(RuleCapabilityTiersT&& value) {
+    m_ruleCapabilityTiersHasBeenSet = true;
+    m_ruleCapabilityTiers = std::forward<RuleCapabilityTiersT>(value);
+  }
+  template <typename RuleCapabilityTiersT = Aws::Vector<RuleCapabilityTier>>
+  Rule& WithRuleCapabilityTiers(RuleCapabilityTiersT&& value) {
+    SetRuleCapabilityTiers(std::forward<RuleCapabilityTiersT>(value));
+    return *this;
+  }
+  inline Rule& AddRuleCapabilityTiers(RuleCapabilityTier value) {
+    m_ruleCapabilityTiersHasBeenSet = true;
+    m_ruleCapabilityTiers.push_back(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The conditions of the rule.</p>
    */
   inline const Aws::String& GetFunction() const { return m_function; }
@@ -163,6 +189,28 @@ class Rule {
   }
   inline Rule& WithPublishStatus(RulePublishStatus value) {
     SetPublishStatus(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The pre-evaluation filters for the rule, that restrict the rule to be applied
+   * to only certain resources based on the resource's attributes, such as tags
+   * assigned to a contact. The pre-evaluation filters are applied even before rule
+   * conditions are evaluated and are used to enforce tag-based-access-control while
+   * applying rules.</p>
+   */
+  inline const PreEvaluationFilters& GetPreEvaluationFilters() const { return m_preEvaluationFilters; }
+  inline bool PreEvaluationFiltersHasBeenSet() const { return m_preEvaluationFiltersHasBeenSet; }
+  template <typename PreEvaluationFiltersT = PreEvaluationFilters>
+  void SetPreEvaluationFilters(PreEvaluationFiltersT&& value) {
+    m_preEvaluationFiltersHasBeenSet = true;
+    m_preEvaluationFilters = std::forward<PreEvaluationFiltersT>(value);
+  }
+  template <typename PreEvaluationFiltersT = PreEvaluationFilters>
+  Rule& WithPreEvaluationFilters(PreEvaluationFiltersT&& value) {
+    SetPreEvaluationFilters(std::forward<PreEvaluationFiltersT>(value));
     return *this;
   }
   ///@}
@@ -254,11 +302,15 @@ class Rule {
 
   RuleTriggerEventSource m_triggerEventSource;
 
+  Aws::Vector<RuleCapabilityTier> m_ruleCapabilityTiers;
+
   Aws::String m_function;
 
   Aws::Vector<RuleAction> m_actions;
 
   RulePublishStatus m_publishStatus{RulePublishStatus::NOT_SET};
+
+  PreEvaluationFilters m_preEvaluationFilters;
 
   Aws::Utils::DateTime m_createdTime{};
 
@@ -271,9 +323,11 @@ class Rule {
   bool m_ruleIdHasBeenSet = false;
   bool m_ruleArnHasBeenSet = false;
   bool m_triggerEventSourceHasBeenSet = false;
+  bool m_ruleCapabilityTiersHasBeenSet = false;
   bool m_functionHasBeenSet = false;
   bool m_actionsHasBeenSet = false;
   bool m_publishStatusHasBeenSet = false;
+  bool m_preEvaluationFiltersHasBeenSet = false;
   bool m_createdTimeHasBeenSet = false;
   bool m_lastUpdatedTimeHasBeenSet = false;
   bool m_lastUpdatedByHasBeenSet = false;

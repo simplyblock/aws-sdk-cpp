@@ -95,12 +95,28 @@ Aws::String PutPlaybackConfigurationRequest::SerializePayload() const {
     payload.WithObject("AdDecisionServerConfiguration", m_adDecisionServerConfiguration.Jsonize());
   }
 
+  if (m_yieldOptimizationConfigurationHasBeenSet) {
+    payload.WithObject("YieldOptimizationConfiguration", m_yieldOptimizationConfiguration.Jsonize());
+  }
+
   if (m_functionMappingHasBeenSet) {
     JsonValue functionMappingJsonMap;
     for (auto& functionMappingItem : m_functionMapping) {
       functionMappingJsonMap.WithString(EventNameMapper::GetNameForEventName(functionMappingItem.first), functionMappingItem.second);
     }
     payload.WithObject("FunctionMapping", std::move(functionMappingJsonMap));
+  }
+
+  if (m_adsPersonalizationTimeoutsHasBeenSet) {
+    payload.WithObject("AdsPersonalizationTimeouts", m_adsPersonalizationTimeouts.Jsonize());
+  }
+
+  if (m_adsPersonalizationConcurrencyHasBeenSet) {
+    payload.WithObject("AdsPersonalizationConcurrency", m_adsPersonalizationConcurrency.Jsonize());
+  }
+
+  if (m_beaconingConfigurationHasBeenSet) {
+    payload.WithObject("BeaconingConfiguration", m_beaconingConfiguration.Jsonize());
   }
 
   return payload.View().WriteReadable();

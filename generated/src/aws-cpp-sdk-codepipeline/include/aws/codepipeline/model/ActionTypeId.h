@@ -8,15 +8,15 @@
 #include <aws/codepipeline/model/ActionCategory.h>
 #include <aws/codepipeline/model/ActionOwner.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace CodePipeline {
 namespace Model {
@@ -29,9 +29,9 @@ namespace Model {
 class ActionTypeId {
  public:
   AWS_CODEPIPELINE_API ActionTypeId() = default;
-  AWS_CODEPIPELINE_API ActionTypeId(Aws::Utils::Json::JsonView jsonValue);
-  AWS_CODEPIPELINE_API ActionTypeId& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_CODEPIPELINE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_CODEPIPELINE_API ActionTypeId(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CODEPIPELINE_API ActionTypeId& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CODEPIPELINE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -60,7 +60,7 @@ class ActionTypeId {
    * structure: <code>AWS</code>, <code>ThirdParty</code>, and <code>Custom</code>.
    * For more information, see <a
    * href="https://docs.aws.amazon.com/codepipeline/latest/userguide/reference-pipeline-structure.html#actions-valid-providers">Valid
-   * Action Types and Providers in CodePipeline</a>.</p>
+   * Action Types and Providers in CodePipeline </a>.</p>
    */
   inline ActionOwner GetOwner() const { return m_owner; }
   inline bool OwnerHasBeenSet() const { return m_ownerHasBeenSet; }
@@ -81,7 +81,7 @@ class ActionTypeId {
    * type might have a provider of CodeDeploy, which would be specified as
    * <code>CodeDeploy</code>. For more information, see <a
    * href="https://docs.aws.amazon.com/codepipeline/latest/userguide/reference-pipeline-structure.html#actions-valid-providers">Valid
-   * Action Types and Providers in CodePipeline</a>.</p>
+   * Action Types and Providers in CodePipeline </a>.</p>
    */
   inline const Aws::String& GetProvider() const { return m_provider; }
   inline bool ProviderHasBeenSet() const { return m_providerHasBeenSet; }

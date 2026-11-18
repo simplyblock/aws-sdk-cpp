@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/cognito-idp/model/AnalyticsConfigurationType.h>
+#include <aws/cognito-idp/model/ClientTypeType.h>
 #include <aws/cognito-idp/model/ExplicitAuthFlowsType.h>
 #include <aws/cognito-idp/model/OAuthFlowType.h>
 #include <aws/cognito-idp/model/PreventUserExistenceErrorTypes.h>
@@ -361,7 +362,14 @@ class UserPoolClientType {
    * request instead of using the SRP protocol to verify passwords.</p> </li> <li>
    * <p> <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP-based authentication.</p> </li>
    * <li> <p> <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to refresh
-   * tokens.</p> </li> </ul> <p>In some environments, you will see the values
+   * tokens.</p> </li> <li> <p> <code>ALLOW_TOKEN_EXCHANGE_IMPERSONATION</code> – Use
+   * this flow to request <code>GetDerivedToken</code> token exchanges without an
+   * <code>ActorToken</code>. The issued token represents the subject user
+   * directly.</p> </li> <li> <p> <code>ALLOW_TOKEN_EXCHANGE_DELEGATION</code> – Use
+   * this flow to request <code>GetDerivedToken</code> token exchanges that include
+   * an <code>ActorToken</code>. The issued token carries an <code>act</code> claim
+   * that identifies the intermediary acting on the behalf of the subject.</p> </li>
+   * </ul> <p>In some environments, you will see the values
    * <code>ADMIN_NO_SRP_AUTH</code>, <code>CUSTOM_AUTH_FLOW_ONLY</code>, or
    * <code>USER_PASSWORD_AUTH</code>. You can't assign these legacy
    * <code>ExplicitAuthFlows</code> values to user pool clients at the same time as
@@ -737,6 +745,28 @@ class UserPoolClientType {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>How the app client was created.</p> <dl> <dt>REGULAR</dt> <dd> <p>The app
+   * client wasn't created through dynamic client registration. For example, you
+   * created it with <code>CreateUserPoolClient</code>.</p> </dd> <dt>DCR</dt> <dd>
+   * <p>An application registered the app client through dynamic client registration.
+   * These app clients don't support client secret operations such as
+   * <code>AddUserPoolClientSecret</code>, and they can't hold the
+   * <code>aws.cognito/dcr/register</code> scope.</p> </dd> </dl>
+   */
+  inline ClientTypeType GetClientType() const { return m_clientType; }
+  inline bool ClientTypeHasBeenSet() const { return m_clientTypeHasBeenSet; }
+  inline void SetClientType(ClientTypeType value) {
+    m_clientTypeHasBeenSet = true;
+    m_clientType = value;
+  }
+  inline UserPoolClientType& WithClientType(ClientTypeType value) {
+    SetClientType(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_userPoolId;
 
@@ -789,6 +819,8 @@ class UserPoolClientType {
   int m_authSessionValidity{0};
 
   RefreshTokenRotationType m_refreshTokenRotation;
+
+  ClientTypeType m_clientType{ClientTypeType::NOT_SET};
   bool m_userPoolIdHasBeenSet = false;
   bool m_clientNameHasBeenSet = false;
   bool m_clientIdHasBeenSet = false;
@@ -815,6 +847,7 @@ class UserPoolClientType {
   bool m_enablePropagateAdditionalUserContextDataHasBeenSet = false;
   bool m_authSessionValidityHasBeenSet = false;
   bool m_refreshTokenRotationHasBeenSet = false;
+  bool m_clientTypeHasBeenSet = false;
 };
 
 }  // namespace Model

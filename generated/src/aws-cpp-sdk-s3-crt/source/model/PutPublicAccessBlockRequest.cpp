@@ -41,7 +41,7 @@ Aws::String PutPublicAccessBlockRequest::SerializePayload() const {
 
   m_publicAccessBlockConfiguration.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -105,3 +105,5 @@ Aws::String PutPublicAccessBlockRequest::GetChecksumAlgorithmName() const {
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
 }
+
+bool PutPublicAccessBlockRequest::ChecksumAlgorithmIsSet() const { return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET; }

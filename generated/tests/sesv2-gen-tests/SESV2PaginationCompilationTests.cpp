@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -22,6 +22,7 @@
 #include <aws/sesv2/model/ListImportJobsPaginationTraits.h>
 #include <aws/sesv2/model/ListTenantsPaginationTraits.h>
 #include <aws/sesv2/model/ListContactsPaginationTraits.h>
+#include <aws/sesv2/model/ListEmailIdentityCertificatesPaginationTraits.h>
 #include <aws/sesv2/model/ListReputationEntitiesPaginationTraits.h>
 #include <aws/sesv2/model/GetDedicatedIpsPaginationTraits.h>
 #include <aws/sesv2/model/ListEmailIdentitiesPaginationTraits.h>
@@ -36,6 +37,6 @@ class SESV2PaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(SESV2PaginationCompilationTest, SESV2PaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

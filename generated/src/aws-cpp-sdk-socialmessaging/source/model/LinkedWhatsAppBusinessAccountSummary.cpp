@@ -53,6 +53,18 @@ LinkedWhatsAppBusinessAccountSummary& LinkedWhatsAppBusinessAccountSummary::oper
     m_marketingMessagesOnboardingStatus = jsonValue.GetString("marketingMessagesOnboardingStatus");
     m_marketingMessagesOnboardingStatusHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("directSendEnforcementStatus")) {
+    m_directSendEnforcementStatus = jsonValue.GetString("directSendEnforcementStatus");
+    m_directSendEnforcementStatusHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("directSendEnforcementStatusExpiresAt")) {
+    m_directSendEnforcementStatusExpiresAt = jsonValue.GetDouble("directSendEnforcementStatusExpiresAt");
+    m_directSendEnforcementStatusExpiresAtHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("datasetId")) {
+    m_datasetId = jsonValue.GetString("datasetId");
+    m_datasetIdHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -93,6 +105,18 @@ JsonValue LinkedWhatsAppBusinessAccountSummary::Jsonize() const {
 
   if (m_marketingMessagesOnboardingStatusHasBeenSet) {
     payload.WithString("marketingMessagesOnboardingStatus", m_marketingMessagesOnboardingStatus);
+  }
+
+  if (m_directSendEnforcementStatusHasBeenSet) {
+    payload.WithString("directSendEnforcementStatus", m_directSendEnforcementStatus);
+  }
+
+  if (m_directSendEnforcementStatusExpiresAtHasBeenSet) {
+    payload.WithDouble("directSendEnforcementStatusExpiresAt", m_directSendEnforcementStatusExpiresAt.SecondsWithMSPrecision());
+  }
+
+  if (m_datasetIdHasBeenSet) {
+    payload.WithString("datasetId", m_datasetId);
   }
 
   return payload;

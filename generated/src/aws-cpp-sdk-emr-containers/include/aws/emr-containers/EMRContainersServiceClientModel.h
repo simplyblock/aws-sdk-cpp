@@ -26,6 +26,7 @@
 #include <aws/emr-containers/model/CreateVirtualClusterResult.h>
 #include <aws/emr-containers/model/DeleteJobTemplateResult.h>
 #include <aws/emr-containers/model/DeleteManagedEndpointResult.h>
+#include <aws/emr-containers/model/DeleteSecurityConfigurationResult.h>
 #include <aws/emr-containers/model/DeleteVirtualClusterResult.h>
 #include <aws/emr-containers/model/DescribeJobRunResult.h>
 #include <aws/emr-containers/model/DescribeJobTemplateResult.h>
@@ -45,6 +46,7 @@
 #include <aws/emr-containers/model/StartJobRunResult.h>
 #include <aws/emr-containers/model/TagResourceResult.h>
 #include <aws/emr-containers/model/UntagResourceResult.h>
+#include <aws/emr-containers/model/UpdateVirtualClusterResult.h>
 /* End of service model headers required in EMRContainersClient header */
 
 namespace Aws {
@@ -85,6 +87,7 @@ class CreateSecurityConfigurationRequest;
 class CreateVirtualClusterRequest;
 class DeleteJobTemplateRequest;
 class DeleteManagedEndpointRequest;
+class DeleteSecurityConfigurationRequest;
 class DeleteVirtualClusterRequest;
 class DescribeJobRunRequest;
 class DescribeJobTemplateRequest;
@@ -101,6 +104,7 @@ class ListVirtualClustersRequest;
 class StartJobRunRequest;
 class TagResourceRequest;
 class UntagResourceRequest;
+class UpdateVirtualClusterRequest;
 /* End of service model forward declarations required in EMRContainersClient header */
 
 /* Service model Outcome class definitions */
@@ -111,6 +115,7 @@ typedef Aws::Utils::Outcome<CreateSecurityConfigurationResult, EMRContainersErro
 typedef Aws::Utils::Outcome<CreateVirtualClusterResult, EMRContainersError> CreateVirtualClusterOutcome;
 typedef Aws::Utils::Outcome<DeleteJobTemplateResult, EMRContainersError> DeleteJobTemplateOutcome;
 typedef Aws::Utils::Outcome<DeleteManagedEndpointResult, EMRContainersError> DeleteManagedEndpointOutcome;
+typedef Aws::Utils::Outcome<DeleteSecurityConfigurationResult, EMRContainersError> DeleteSecurityConfigurationOutcome;
 typedef Aws::Utils::Outcome<DeleteVirtualClusterResult, EMRContainersError> DeleteVirtualClusterOutcome;
 typedef Aws::Utils::Outcome<DescribeJobRunResult, EMRContainersError> DescribeJobRunOutcome;
 typedef Aws::Utils::Outcome<DescribeJobTemplateResult, EMRContainersError> DescribeJobTemplateOutcome;
@@ -127,6 +132,7 @@ typedef Aws::Utils::Outcome<ListVirtualClustersResult, EMRContainersError> ListV
 typedef Aws::Utils::Outcome<StartJobRunResult, EMRContainersError> StartJobRunOutcome;
 typedef Aws::Utils::Outcome<TagResourceResult, EMRContainersError> TagResourceOutcome;
 typedef Aws::Utils::Outcome<UntagResourceResult, EMRContainersError> UntagResourceOutcome;
+typedef Aws::Utils::Outcome<UpdateVirtualClusterResult, EMRContainersError> UpdateVirtualClusterOutcome;
 /* End of service model Outcome class definitions */
 
 /* Service model Outcome callable definitions */
@@ -137,6 +143,7 @@ typedef std::future<CreateSecurityConfigurationOutcome> CreateSecurityConfigurat
 typedef std::future<CreateVirtualClusterOutcome> CreateVirtualClusterOutcomeCallable;
 typedef std::future<DeleteJobTemplateOutcome> DeleteJobTemplateOutcomeCallable;
 typedef std::future<DeleteManagedEndpointOutcome> DeleteManagedEndpointOutcomeCallable;
+typedef std::future<DeleteSecurityConfigurationOutcome> DeleteSecurityConfigurationOutcomeCallable;
 typedef std::future<DeleteVirtualClusterOutcome> DeleteVirtualClusterOutcomeCallable;
 typedef std::future<DescribeJobRunOutcome> DescribeJobRunOutcomeCallable;
 typedef std::future<DescribeJobTemplateOutcome> DescribeJobTemplateOutcomeCallable;
@@ -153,6 +160,7 @@ typedef std::future<ListVirtualClustersOutcome> ListVirtualClustersOutcomeCallab
 typedef std::future<StartJobRunOutcome> StartJobRunOutcomeCallable;
 typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
 typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
+typedef std::future<UpdateVirtualClusterOutcome> UpdateVirtualClusterOutcomeCallable;
 /* End of service model Outcome callable definitions */
 }  // namespace Model
 
@@ -180,6 +188,9 @@ typedef std::function<void(const EMRContainersClient*, const Model::DeleteJobTem
 typedef std::function<void(const EMRContainersClient*, const Model::DeleteManagedEndpointRequest&,
                            const Model::DeleteManagedEndpointOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteManagedEndpointResponseReceivedHandler;
+typedef std::function<void(const EMRContainersClient*, const Model::DeleteSecurityConfigurationRequest&,
+                           const Model::DeleteSecurityConfigurationOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteSecurityConfigurationResponseReceivedHandler;
 typedef std::function<void(const EMRContainersClient*, const Model::DeleteVirtualClusterRequest&, const Model::DeleteVirtualClusterOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteVirtualClusterResponseReceivedHandler;
@@ -230,6 +241,9 @@ typedef std::function<void(const EMRContainersClient*, const Model::TagResourceR
 typedef std::function<void(const EMRContainersClient*, const Model::UntagResourceRequest&, const Model::UntagResourceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UntagResourceResponseReceivedHandler;
+typedef std::function<void(const EMRContainersClient*, const Model::UpdateVirtualClusterRequest&, const Model::UpdateVirtualClusterOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateVirtualClusterResponseReceivedHandler;
 /* End of service model async handlers definitions */
 }  // namespace EMRContainers
 }  // namespace Aws

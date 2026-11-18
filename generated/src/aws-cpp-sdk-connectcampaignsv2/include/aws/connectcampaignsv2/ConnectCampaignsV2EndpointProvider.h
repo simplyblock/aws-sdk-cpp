@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/connectcampaignsv2/ConnectCampaignsV2EndpointRules.h>
 #include <aws/connectcampaignsv2/ConnectCampaignsV2_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ConnectCampaignsV2 {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ConnectCampaignsV2ClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ConnectCampaignsV2EndpointProviderBase =
                          ConnectCampaignsV2ClientContextParameters>;
 
 using ConnectCampaignsV2DefaultEpProviderBase =
-    DefaultEndpointProvider<ConnectCampaignsV2ClientConfiguration, ConnectCampaignsV2BuiltInParameters,
-                            ConnectCampaignsV2ClientContextParameters>;
+    BDDEndpointProvider<ConnectCampaignsV2ClientConfiguration, ConnectCampaignsV2BuiltInParameters,
+                        ConnectCampaignsV2ClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_CONNECTCAMPAIGNSV2_API ConnectCampaignsV2EndpointProvider : public Con
  public:
   using ConnectCampaignsV2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ConnectCampaignsV2EndpointProvider()
-      : ConnectCampaignsV2DefaultEpProviderBase(Aws::ConnectCampaignsV2::ConnectCampaignsV2EndpointRules::GetRulesBlob(),
-                                                Aws::ConnectCampaignsV2::ConnectCampaignsV2EndpointRules::RulesBlobSize) {}
+  ConnectCampaignsV2EndpointProvider();
 
   ~ConnectCampaignsV2EndpointProvider() {}
 };

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-servicecatalog-appregistry "C++ SDK for the AWS servicecatalog-appregistry service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-servicecatalog-appregistry "C++ SDK for AWS Service Catalog App Registry" aws-cpp-sdk-core)
 
 file(GLOB AWS_SERVICECATALOG-APPREGISTRY_HEADERS
     "include/aws/servicecatalog-appregistry/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SERVICECATALOG-APPREGISTRY_HEADERS
 
 file(GLOB AWS_SERVICECATALOG-APPREGISTRY_MODEL_HEADERS
     "include/aws/servicecatalog-appregistry/model/*.h"
+)
+
+file(GLOB AWS_SERVICECATALOG-APPREGISTRY_INTERNAL_HEADERS
+    "include/aws/servicecatalog-appregistry/internal/*.h"
 )
 
 file(GLOB AWS_SERVICECATALOG-APPREGISTRY_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SERVICECATALOG-APPREGISTRY_MODEL_SOURCE
 
 file(GLOB SERVICECATALOG-APPREGISTRY_UNIFIED_HEADERS
     ${AWS_SERVICECATALOG-APPREGISTRY_HEADERS}
+    ${AWS_SERVICECATALOG-APPREGISTRY_INTERNAL_HEADERS}
     ${AWS_SERVICECATALOG-APPREGISTRY_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\servicecatalog-appregistry" FILES ${AWS_SERVICECATALOG-APPREGISTRY_HEADERS})
+        source_group("Header Files\\aws\\servicecatalog-appregistry\\internal" FILES ${AWS_SERVICECATALOG-APPREGISTRY_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\servicecatalog-appregistry\\model" FILES ${AWS_SERVICECATALOG-APPREGISTRY_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SERVICECATALOG-APPREGISTRY_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SERVICECATALOG-APPREGISTRY_MODEL_SOURCE})

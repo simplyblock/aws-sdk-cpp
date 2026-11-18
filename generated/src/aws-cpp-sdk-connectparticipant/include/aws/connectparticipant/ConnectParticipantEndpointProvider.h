@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/connectparticipant/ConnectParticipantEndpointRules.h>
 #include <aws/connectparticipant/ConnectParticipant_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ConnectParticipant {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ConnectParticipantClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ConnectParticipantEndpointProviderBase =
                          ConnectParticipantClientContextParameters>;
 
 using ConnectParticipantDefaultEpProviderBase =
-    DefaultEndpointProvider<ConnectParticipantClientConfiguration, ConnectParticipantBuiltInParameters,
-                            ConnectParticipantClientContextParameters>;
+    BDDEndpointProvider<ConnectParticipantClientConfiguration, ConnectParticipantBuiltInParameters,
+                        ConnectParticipantClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_CONNECTPARTICIPANT_API ConnectParticipantEndpointProvider : public Con
  public:
   using ConnectParticipantResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ConnectParticipantEndpointProvider()
-      : ConnectParticipantDefaultEpProviderBase(Aws::ConnectParticipant::ConnectParticipantEndpointRules::GetRulesBlob(),
-                                                Aws::ConnectParticipant::ConnectParticipantEndpointRules::RulesBlobSize) {}
+  ConnectParticipantEndpointProvider();
 
   ~ConnectParticipantEndpointProvider() {}
 };

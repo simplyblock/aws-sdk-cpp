@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-kinesisvideo "C++ SDK for the AWS kinesisvideo service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-kinesisvideo "C++ SDK for Amazon Kinesis Video Streams" aws-cpp-sdk-core)
 
 file(GLOB AWS_KINESISVIDEO_HEADERS
     "include/aws/kinesisvideo/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_KINESISVIDEO_HEADERS
 
 file(GLOB AWS_KINESISVIDEO_MODEL_HEADERS
     "include/aws/kinesisvideo/model/*.h"
+)
+
+file(GLOB AWS_KINESISVIDEO_INTERNAL_HEADERS
+    "include/aws/kinesisvideo/internal/*.h"
 )
 
 file(GLOB AWS_KINESISVIDEO_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_KINESISVIDEO_MODEL_SOURCE
 
 file(GLOB KINESISVIDEO_UNIFIED_HEADERS
     ${AWS_KINESISVIDEO_HEADERS}
+    ${AWS_KINESISVIDEO_INTERNAL_HEADERS}
     ${AWS_KINESISVIDEO_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\kinesisvideo" FILES ${AWS_KINESISVIDEO_HEADERS})
+        source_group("Header Files\\aws\\kinesisvideo\\internal" FILES ${AWS_KINESISVIDEO_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\kinesisvideo\\model" FILES ${AWS_KINESISVIDEO_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_KINESISVIDEO_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_KINESISVIDEO_MODEL_SOURCE})

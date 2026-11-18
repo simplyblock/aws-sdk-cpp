@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/sso/SSOEndpointRules.h>
 #include <aws/sso/SSO_EXPORTS.h>
 
 namespace Aws {
 namespace SSO {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SSOClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using SSOBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using SSOEndpointProviderBase = EndpointProviderBase<SSOClientConfiguration, SSOBuiltInParameters, SSOClientContextParameters>;
 
-using SSODefaultEpProviderBase = DefaultEndpointProvider<SSOClientConfiguration, SSOBuiltInParameters, SSOClientContextParameters>;
+using SSODefaultEpProviderBase = BDDEndpointProvider<SSOClientConfiguration, SSOBuiltInParameters, SSOClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_SSO_API SSOEndpointProvider : public SSODefaultEpProviderBase {
  public:
   using SSOResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SSOEndpointProvider() : SSODefaultEpProviderBase(Aws::SSO::SSOEndpointRules::GetRulesBlob(), Aws::SSO::SSOEndpointRules::RulesBlobSize) {}
+  SSOEndpointProvider();
 
   ~SSOEndpointProvider() {}
 };

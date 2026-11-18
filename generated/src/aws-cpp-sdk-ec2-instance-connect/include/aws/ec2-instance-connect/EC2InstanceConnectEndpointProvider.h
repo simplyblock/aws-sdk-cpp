@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2-instance-connect/EC2InstanceConnectEndpointRules.h>
 #include <aws/ec2-instance-connect/EC2InstanceConnect_EXPORTS.h>
 
 namespace Aws {
 namespace EC2InstanceConnect {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using EC2InstanceConnectClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using EC2InstanceConnectEndpointProviderBase =
                          EC2InstanceConnectClientContextParameters>;
 
 using EC2InstanceConnectDefaultEpProviderBase =
-    DefaultEndpointProvider<EC2InstanceConnectClientConfiguration, EC2InstanceConnectBuiltInParameters,
-                            EC2InstanceConnectClientContextParameters>;
+    BDDEndpointProvider<EC2InstanceConnectClientConfiguration, EC2InstanceConnectBuiltInParameters,
+                        EC2InstanceConnectClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_EC2INSTANCECONNECT_API EC2InstanceConnectEndpointProvider : public EC2
  public:
   using EC2InstanceConnectResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  EC2InstanceConnectEndpointProvider()
-      : EC2InstanceConnectDefaultEpProviderBase(Aws::EC2InstanceConnect::EC2InstanceConnectEndpointRules::GetRulesBlob(),
-                                                Aws::EC2InstanceConnect::EC2InstanceConnectEndpointRules::RulesBlobSize) {}
+  EC2InstanceConnectEndpointProvider();
 
   ~EC2InstanceConnectEndpointProvider() {}
 };

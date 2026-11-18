@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-supportauthz "C++ SDK for the AWS supportauthz service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-supportauthz "C++ SDK for SupportAuthZ" aws-cpp-sdk-core)
 
 file(GLOB AWS_SUPPORTAUTHZ_HEADERS
     "include/aws/supportauthz/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SUPPORTAUTHZ_HEADERS
 
 file(GLOB AWS_SUPPORTAUTHZ_MODEL_HEADERS
     "include/aws/supportauthz/model/*.h"
+)
+
+file(GLOB AWS_SUPPORTAUTHZ_INTERNAL_HEADERS
+    "include/aws/supportauthz/internal/*.h"
 )
 
 file(GLOB AWS_SUPPORTAUTHZ_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SUPPORTAUTHZ_MODEL_SOURCE
 
 file(GLOB SUPPORTAUTHZ_UNIFIED_HEADERS
     ${AWS_SUPPORTAUTHZ_HEADERS}
+    ${AWS_SUPPORTAUTHZ_INTERNAL_HEADERS}
     ${AWS_SUPPORTAUTHZ_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\supportauthz" FILES ${AWS_SUPPORTAUTHZ_HEADERS})
+        source_group("Header Files\\aws\\supportauthz\\internal" FILES ${AWS_SUPPORTAUTHZ_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\supportauthz\\model" FILES ${AWS_SUPPORTAUTHZ_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SUPPORTAUTHZ_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SUPPORTAUTHZ_MODEL_SOURCE})

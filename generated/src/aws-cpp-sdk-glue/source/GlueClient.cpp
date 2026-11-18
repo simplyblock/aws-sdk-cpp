@@ -30,6 +30,8 @@
 #include <aws/glue/model/BatchGetCrawlersRequest.h>
 #include <aws/glue/model/BatchGetCustomEntityTypesRequest.h>
 #include <aws/glue/model/BatchGetDataQualityResultRequest.h>
+#include <aws/glue/model/BatchGetDataQualityResultV2Request.h>
+#include <aws/glue/model/BatchGetDataQualityRulesetEvaluationRunRequest.h>
 #include <aws/glue/model/BatchGetDevEndpointsRequest.h>
 #include <aws/glue/model/BatchGetIterableFormsRequest.h>
 #include <aws/glue/model/BatchGetJobsRequest.h>
@@ -52,6 +54,7 @@
 #include <aws/glue/model/CreateConnectionRequest.h>
 #include <aws/glue/model/CreateCrawlerRequest.h>
 #include <aws/glue/model/CreateCustomEntityTypeRequest.h>
+#include <aws/glue/model/CreateDataQualityEvaluationConfigRequest.h>
 #include <aws/glue/model/CreateDataQualityRulesetRequest.h>
 #include <aws/glue/model/CreateDatabaseRequest.h>
 #include <aws/glue/model/CreateDevEndpointRequest.h>
@@ -89,6 +92,7 @@
 #include <aws/glue/model/DeleteConnectionTypeRequest.h>
 #include <aws/glue/model/DeleteCrawlerRequest.h>
 #include <aws/glue/model/DeleteCustomEntityTypeRequest.h>
+#include <aws/glue/model/DeleteDataQualityEvaluationConfigRequest.h>
 #include <aws/glue/model/DeleteDataQualityRulesetRequest.h>
 #include <aws/glue/model/DeleteDatabaseRequest.h>
 #include <aws/glue/model/DeleteDevEndpointRequest.h>
@@ -116,10 +120,6 @@
 #include <aws/glue/model/DeleteUsageProfileRequest.h>
 #include <aws/glue/model/DeleteUserDefinedFunctionRequest.h>
 #include <aws/glue/model/DeleteWorkflowRequest.h>
-#include <aws/glue/model/DescribeConnectionTypeRequest.h>
-#include <aws/glue/model/DescribeEntityRequest.h>
-#include <aws/glue/model/DescribeInboundIntegrationsRequest.h>
-#include <aws/glue/model/DescribeIntegrationsRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
 using namespace Aws;
@@ -253,7 +253,8 @@ GlueClient::InvokeOperationOutcome GlueClient::InvokeServiceOperation(const Amaz
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -265,7 +266,7 @@ GlueClient::InvokeOperationOutcome GlueClient::InvokeServiceOperation(const Amaz
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -327,6 +328,19 @@ BatchGetDataQualityResultOutcome GlueClient::BatchGetDataQualityResult(const Bat
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? BatchGetDataQualityResultOutcome(result.GetResultWithOwnership())
                             : BatchGetDataQualityResultOutcome(std::move(result.GetError()));
+}
+
+BatchGetDataQualityResultV2Outcome GlueClient::BatchGetDataQualityResultV2(const BatchGetDataQualityResultV2Request& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? BatchGetDataQualityResultV2Outcome(result.GetResultWithOwnership())
+                            : BatchGetDataQualityResultV2Outcome(std::move(result.GetError()));
+}
+
+BatchGetDataQualityRulesetEvaluationRunOutcome GlueClient::BatchGetDataQualityRulesetEvaluationRun(
+    const BatchGetDataQualityRulesetEvaluationRunRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? BatchGetDataQualityRulesetEvaluationRunOutcome(result.GetResultWithOwnership())
+                            : BatchGetDataQualityRulesetEvaluationRunOutcome(std::move(result.GetError()));
 }
 
 BatchGetDevEndpointsOutcome GlueClient::BatchGetDevEndpoints(const BatchGetDevEndpointsRequest& request) const {
@@ -460,6 +474,13 @@ CreateCustomEntityTypeOutcome GlueClient::CreateCustomEntityType(const CreateCus
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateCustomEntityTypeOutcome(result.GetResultWithOwnership())
                             : CreateCustomEntityTypeOutcome(std::move(result.GetError()));
+}
+
+CreateDataQualityEvaluationConfigOutcome GlueClient::CreateDataQualityEvaluationConfig(
+    const CreateDataQualityEvaluationConfigRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateDataQualityEvaluationConfigOutcome(result.GetResultWithOwnership())
+                            : CreateDataQualityEvaluationConfigOutcome(std::move(result.GetError()));
 }
 
 CreateDataQualityRulesetOutcome GlueClient::CreateDataQualityRuleset(const CreateDataQualityRulesetRequest& request) const {
@@ -677,6 +698,13 @@ DeleteCustomEntityTypeOutcome GlueClient::DeleteCustomEntityType(const DeleteCus
                             : DeleteCustomEntityTypeOutcome(std::move(result.GetError()));
 }
 
+DeleteDataQualityEvaluationConfigOutcome GlueClient::DeleteDataQualityEvaluationConfig(
+    const DeleteDataQualityEvaluationConfigRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteDataQualityEvaluationConfigOutcome(result.GetResultWithOwnership())
+                            : DeleteDataQualityEvaluationConfigOutcome(std::move(result.GetError()));
+}
+
 DeleteDataQualityRulesetOutcome GlueClient::DeleteDataQualityRuleset(const DeleteDataQualityRulesetRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DeleteDataQualityRulesetOutcome(result.GetResultWithOwnership())
@@ -830,27 +858,4 @@ DeleteUserDefinedFunctionOutcome GlueClient::DeleteUserDefinedFunction(const Del
 DeleteWorkflowOutcome GlueClient::DeleteWorkflow(const DeleteWorkflowRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DeleteWorkflowOutcome(result.GetResultWithOwnership()) : DeleteWorkflowOutcome(std::move(result.GetError()));
-}
-
-DescribeConnectionTypeOutcome GlueClient::DescribeConnectionType(const DescribeConnectionTypeRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeConnectionTypeOutcome(result.GetResultWithOwnership())
-                            : DescribeConnectionTypeOutcome(std::move(result.GetError()));
-}
-
-DescribeEntityOutcome GlueClient::DescribeEntity(const DescribeEntityRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeEntityOutcome(result.GetResultWithOwnership()) : DescribeEntityOutcome(std::move(result.GetError()));
-}
-
-DescribeInboundIntegrationsOutcome GlueClient::DescribeInboundIntegrations(const DescribeInboundIntegrationsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeInboundIntegrationsOutcome(result.GetResultWithOwnership())
-                            : DescribeInboundIntegrationsOutcome(std::move(result.GetError()));
-}
-
-DescribeIntegrationsOutcome GlueClient::DescribeIntegrations(const DescribeIntegrationsRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? DescribeIntegrationsOutcome(result.GetResultWithOwnership())
-                            : DescribeIntegrationsOutcome(std::move(result.GetError()));
 }

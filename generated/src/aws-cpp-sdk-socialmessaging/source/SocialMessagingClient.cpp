@@ -21,6 +21,7 @@
 #include <aws/socialmessaging/SocialMessagingEndpointProvider.h>
 #include <aws/socialmessaging/SocialMessagingErrorMarshaller.h>
 #include <aws/socialmessaging/model/AssociateWhatsAppBusinessAccountRequest.h>
+#include <aws/socialmessaging/model/CreateWhatsAppDatasetRequest.h>
 #include <aws/socialmessaging/model/CreateWhatsAppFlowRequest.h>
 #include <aws/socialmessaging/model/CreateWhatsAppMessageTemplateFromLibraryRequest.h>
 #include <aws/socialmessaging/model/CreateWhatsAppMessageTemplateMediaRequest.h>
@@ -32,6 +33,8 @@
 #include <aws/socialmessaging/model/DisassociateWhatsAppBusinessAccountRequest.h>
 #include <aws/socialmessaging/model/GetLinkedWhatsAppBusinessAccountPhoneNumberRequest.h>
 #include <aws/socialmessaging/model/GetLinkedWhatsAppBusinessAccountRequest.h>
+#include <aws/socialmessaging/model/GetWhatsAppBusinessPublicKeyRequest.h>
+#include <aws/socialmessaging/model/GetWhatsAppCallPermissionRequest.h>
 #include <aws/socialmessaging/model/GetWhatsAppFlowPreviewRequest.h>
 #include <aws/socialmessaging/model/GetWhatsAppFlowRequest.h>
 #include <aws/socialmessaging/model/GetWhatsAppMessageMediaRequest.h>
@@ -45,9 +48,13 @@
 #include <aws/socialmessaging/model/PostWhatsAppMessageMediaRequest.h>
 #include <aws/socialmessaging/model/PublishWhatsAppFlowRequest.h>
 #include <aws/socialmessaging/model/PutWhatsAppBusinessAccountEventDestinationsRequest.h>
+#include <aws/socialmessaging/model/PutWhatsAppBusinessPublicKeyRequest.h>
+#include <aws/socialmessaging/model/SendWhatsAppCallEventRequest.h>
+#include <aws/socialmessaging/model/SendWhatsAppConversionEventRequest.h>
 #include <aws/socialmessaging/model/SendWhatsAppMessageRequest.h>
 #include <aws/socialmessaging/model/TagResourceRequest.h>
 #include <aws/socialmessaging/model/UntagResourceRequest.h>
+#include <aws/socialmessaging/model/UpdateLinkedWhatsAppBusinessAccountPhoneNumberRequest.h>
 #include <aws/socialmessaging/model/UpdateWhatsAppFlowAssetsRequest.h>
 #include <aws/socialmessaging/model/UpdateWhatsAppFlowRequest.h>
 #include <aws/socialmessaging/model/UpdateWhatsAppMessageTemplateRequest.h>
@@ -191,7 +198,8 @@ SocialMessagingClient::InvokeOperationOutcome SocialMessagingClient::InvokeServi
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -205,7 +213,7 @@ SocialMessagingClient::InvokeOperationOutcome SocialMessagingClient::InvokeServi
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -219,6 +227,17 @@ AssociateWhatsAppBusinessAccountOutcome SocialMessagingClient::AssociateWhatsApp
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? AssociateWhatsAppBusinessAccountOutcome(result.GetResultWithOwnership())
                             : AssociateWhatsAppBusinessAccountOutcome(std::move(result.GetError()));
+}
+
+CreateWhatsAppDatasetOutcome SocialMessagingClient::CreateWhatsAppDataset(const CreateWhatsAppDatasetRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/whatsapp/waba/dataset");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateWhatsAppDatasetOutcome(result.GetResultWithOwnership())
+                            : CreateWhatsAppDatasetOutcome(std::move(result.GetError()));
 }
 
 CreateWhatsAppFlowOutcome SocialMessagingClient::CreateWhatsAppFlow(const CreateWhatsAppFlowRequest& request) const {
@@ -399,6 +418,35 @@ GetLinkedWhatsAppBusinessAccountPhoneNumberOutcome SocialMessagingClient::GetLin
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
   return result.IsSuccess() ? GetLinkedWhatsAppBusinessAccountPhoneNumberOutcome(result.GetResultWithOwnership())
                             : GetLinkedWhatsAppBusinessAccountPhoneNumberOutcome(std::move(result.GetError()));
+}
+
+GetWhatsAppBusinessPublicKeyOutcome SocialMessagingClient::GetWhatsAppBusinessPublicKey(
+    const GetWhatsAppBusinessPublicKeyRequest& request) const {
+  if (!request.OriginationPhoneNumberIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetWhatsAppBusinessPublicKey", "Required field: OriginationPhoneNumberId, is not set");
+    return GetWhatsAppBusinessPublicKeyOutcome(Aws::Client::AWSError<SocialMessagingErrors>(
+        SocialMessagingErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [OriginationPhoneNumberId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/whatsapp/business-public-key");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetWhatsAppBusinessPublicKeyOutcome(result.GetResultWithOwnership())
+                            : GetWhatsAppBusinessPublicKeyOutcome(std::move(result.GetError()));
+}
+
+GetWhatsAppCallPermissionOutcome SocialMessagingClient::GetWhatsAppCallPermission(const GetWhatsAppCallPermissionRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/whatsapp/call/permission/get");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetWhatsAppCallPermissionOutcome(result.GetResultWithOwnership())
+                            : GetWhatsAppCallPermissionOutcome(std::move(result.GetError()));
 }
 
 GetWhatsAppFlowOutcome SocialMessagingClient::GetWhatsAppFlow(const GetWhatsAppFlowRequest& request) const {
@@ -612,6 +660,41 @@ PutWhatsAppBusinessAccountEventDestinationsOutcome SocialMessagingClient::PutWha
                             : PutWhatsAppBusinessAccountEventDestinationsOutcome(std::move(result.GetError()));
 }
 
+PutWhatsAppBusinessPublicKeyOutcome SocialMessagingClient::PutWhatsAppBusinessPublicKey(
+    const PutWhatsAppBusinessPublicKeyRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/whatsapp/business-public-key");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? PutWhatsAppBusinessPublicKeyOutcome(result.GetResultWithOwnership())
+                            : PutWhatsAppBusinessPublicKeyOutcome(std::move(result.GetError()));
+}
+
+SendWhatsAppCallEventOutcome SocialMessagingClient::SendWhatsAppCallEvent(const SendWhatsAppCallEventRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/whatsapp/call/event");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? SendWhatsAppCallEventOutcome(result.GetResultWithOwnership())
+                            : SendWhatsAppCallEventOutcome(std::move(result.GetError()));
+}
+
+SendWhatsAppConversionEventOutcome SocialMessagingClient::SendWhatsAppConversionEvent(
+    const SendWhatsAppConversionEventRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/whatsapp/waba/dataset/events");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? SendWhatsAppConversionEventOutcome(result.GetResultWithOwnership())
+                            : SendWhatsAppConversionEventOutcome(std::move(result.GetError()));
+}
+
 SendWhatsAppMessageOutcome SocialMessagingClient::SendWhatsAppMessage(const SendWhatsAppMessageRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -641,6 +724,24 @@ UntagResourceOutcome SocialMessagingClient::UntagResource(const UntagResourceReq
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? UntagResourceOutcome(result.GetResultWithOwnership()) : UntagResourceOutcome(std::move(result.GetError()));
+}
+
+UpdateLinkedWhatsAppBusinessAccountPhoneNumberOutcome SocialMessagingClient::UpdateLinkedWhatsAppBusinessAccountPhoneNumber(
+    const UpdateLinkedWhatsAppBusinessAccountPhoneNumberRequest& request) const {
+  if (!request.IdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateLinkedWhatsAppBusinessAccountPhoneNumber", "Required field: Id, is not set");
+    return UpdateLinkedWhatsAppBusinessAccountPhoneNumberOutcome(Aws::Client::AWSError<SocialMessagingErrors>(
+        SocialMessagingErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [Id]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v1/whatsapp/waba/phone");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? UpdateLinkedWhatsAppBusinessAccountPhoneNumberOutcome(result.GetResultWithOwnership())
+                            : UpdateLinkedWhatsAppBusinessAccountPhoneNumberOutcome(std::move(result.GetError()));
 }
 
 UpdateWhatsAppFlowOutcome SocialMessagingClient::UpdateWhatsAppFlow(const UpdateWhatsAppFlowRequest& request) const {

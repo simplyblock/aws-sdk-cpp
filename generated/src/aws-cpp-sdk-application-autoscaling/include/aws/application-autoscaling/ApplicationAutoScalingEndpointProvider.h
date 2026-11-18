@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/application-autoscaling/ApplicationAutoScalingEndpointRules.h>
 #include <aws/application-autoscaling/ApplicationAutoScaling_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ApplicationAutoScaling {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ApplicationAutoScalingClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ApplicationAutoScalingEndpointProviderBase =
                          ApplicationAutoScalingClientContextParameters>;
 
 using ApplicationAutoScalingDefaultEpProviderBase =
-    DefaultEndpointProvider<ApplicationAutoScalingClientConfiguration, ApplicationAutoScalingBuiltInParameters,
-                            ApplicationAutoScalingClientContextParameters>;
+    BDDEndpointProvider<ApplicationAutoScalingClientConfiguration, ApplicationAutoScalingBuiltInParameters,
+                        ApplicationAutoScalingClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_APPLICATIONAUTOSCALING_API ApplicationAutoScalingEndpointProvider : pu
  public:
   using ApplicationAutoScalingResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ApplicationAutoScalingEndpointProvider()
-      : ApplicationAutoScalingDefaultEpProviderBase(Aws::ApplicationAutoScaling::ApplicationAutoScalingEndpointRules::GetRulesBlob(),
-                                                    Aws::ApplicationAutoScaling::ApplicationAutoScalingEndpointRules::RulesBlobSize) {}
+  ApplicationAutoScalingEndpointProvider();
 
   ~ApplicationAutoScalingEndpointProvider() {}
 };

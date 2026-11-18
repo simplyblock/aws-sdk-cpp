@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ds "C++ SDK for the AWS ds service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ds "C++ SDK for AWS Directory Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_DS_HEADERS
     "include/aws/ds/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_DS_HEADERS
 
 file(GLOB AWS_DS_MODEL_HEADERS
     "include/aws/ds/model/*.h"
+)
+
+file(GLOB AWS_DS_INTERNAL_HEADERS
+    "include/aws/ds/internal/*.h"
 )
 
 file(GLOB AWS_DS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_DS_MODEL_SOURCE
 
 file(GLOB DS_UNIFIED_HEADERS
     ${AWS_DS_HEADERS}
+    ${AWS_DS_INTERNAL_HEADERS}
     ${AWS_DS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ds" FILES ${AWS_DS_HEADERS})
+        source_group("Header Files\\aws\\ds\\internal" FILES ${AWS_DS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ds\\model" FILES ${AWS_DS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_DS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_DS_MODEL_SOURCE})

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -22,7 +22,10 @@
 #include <aws/sagemaker/model/ListAutoMLJobsPaginationTraits.h>
 #include <aws/sagemaker/model/ListCandidatesForAutoMLJobPaginationTraits.h>
 #include <aws/sagemaker/model/ListClusterEventsPaginationTraits.h>
+#include <aws/sagemaker/model/ListClusterExtensionVersionsPaginationTraits.h>
+#include <aws/sagemaker/model/ListClusterExtensionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListClusterNodesPaginationTraits.h>
+#include <aws/sagemaker/model/ListClusterOperationsPaginationTraits.h>
 #include <aws/sagemaker/model/ListClusterSchedulerConfigsPaginationTraits.h>
 #include <aws/sagemaker/model/ListClustersPaginationTraits.h>
 #include <aws/sagemaker/model/ListCodeRepositoriesPaginationTraits.h>
@@ -48,6 +51,7 @@
 #include <aws/sagemaker/model/ListInferenceExperimentsPaginationTraits.h>
 #include <aws/sagemaker/model/ListInferenceRecommendationsJobStepsPaginationTraits.h>
 #include <aws/sagemaker/model/ListInferenceRecommendationsJobsPaginationTraits.h>
+#include <aws/sagemaker/model/ListInferenceRoutersPaginationTraits.h>
 #include <aws/sagemaker/model/ListJobSchemaVersionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListJobsPaginationTraits.h>
 #include <aws/sagemaker/model/ListLabelingJobsForWorkteamPaginationTraits.h>
@@ -89,6 +93,7 @@
 #include <aws/sagemaker/model/ListTrainingJobsForHyperParameterTuningJobPaginationTraits.h>
 #include <aws/sagemaker/model/ListTrainingJobsPaginationTraits.h>
 #include <aws/sagemaker/model/ListTrainingPlansPaginationTraits.h>
+#include <aws/sagemaker/model/ListTrainingSessionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListTransformJobsPaginationTraits.h>
 #include <aws/sagemaker/model/ListTrialComponentsPaginationTraits.h>
 #include <aws/sagemaker/model/ListTrialsPaginationTraits.h>
@@ -281,6 +286,30 @@ class SageMakerPaginationBase {
   }
 
   /**
+   * Create a paginator for ListClusterExtensions operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListClusterExtensionsRequest,
+                                    Pagination::ListClusterExtensionsPaginationTraits<DerivedClient>>
+  ListClusterExtensionsPaginator(const Model::ListClusterExtensionsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListClusterExtensionsRequest,
+                                             Pagination::ListClusterExtensionsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListClusterExtensionVersions operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListClusterExtensionVersionsRequest,
+                                    Pagination::ListClusterExtensionVersionsPaginationTraits<DerivedClient>>
+  ListClusterExtensionVersionsPaginator(const Model::ListClusterExtensionVersionsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListClusterExtensionVersionsRequest,
+                                             Pagination::ListClusterExtensionVersionsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for ListClusterNodes operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListClusterNodesRequest,
@@ -290,6 +319,18 @@ class SageMakerPaginationBase {
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListClusterNodesRequest,
                                              Pagination::ListClusterNodesPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
                                                                                                           request};
+  }
+
+  /**
+   * Create a paginator for ListClusterOperations operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListClusterOperationsRequest,
+                                    Pagination::ListClusterOperationsPaginationTraits<DerivedClient>>
+  ListClusterOperationsPaginator(const Model::ListClusterOperationsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListClusterOperationsRequest,
+                                             Pagination::ListClusterOperationsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
   }
 
   /**
@@ -583,6 +624,18 @@ class SageMakerPaginationBase {
     request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListInferenceRecommendationsJobStepsRequest,
                                              Pagination::ListInferenceRecommendationsJobStepsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListInferenceRouters operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListInferenceRoutersRequest,
+                                    Pagination::ListInferenceRoutersPaginationTraits<DerivedClient>>
+  ListInferenceRoutersPaginator(const Model::ListInferenceRoutersRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListInferenceRoutersRequest,
+                                             Pagination::ListInferenceRoutersPaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
   }
 
@@ -1065,6 +1118,18 @@ class SageMakerPaginationBase {
     request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListTrainingPlansRequest,
                                              Pagination::ListTrainingPlansPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListTrainingSessions operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListTrainingSessionsRequest,
+                                    Pagination::ListTrainingSessionsPaginationTraits<DerivedClient>>
+  ListTrainingSessionsPaginator(const Model::ListTrainingSessionsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListTrainingSessionsRequest,
+                                             Pagination::ListTrainingSessionsPaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
   }
 

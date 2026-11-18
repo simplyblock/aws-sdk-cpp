@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticloadbalancingv2/ElasticLoadBalancingv2EndpointRules.h>
 #include <aws/elasticloadbalancingv2/ElasticLoadBalancingv2_EXPORTS.h>
 
 namespace Aws {
 namespace ElasticLoadBalancingv2 {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ElasticLoadBalancingv2ClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ElasticLoadBalancingv2EndpointProviderBase =
                          ElasticLoadBalancingv2ClientContextParameters>;
 
 using ElasticLoadBalancingv2DefaultEpProviderBase =
-    DefaultEndpointProvider<ElasticLoadBalancingv2ClientConfiguration, ElasticLoadBalancingv2BuiltInParameters,
-                            ElasticLoadBalancingv2ClientContextParameters>;
+    BDDEndpointProvider<ElasticLoadBalancingv2ClientConfiguration, ElasticLoadBalancingv2BuiltInParameters,
+                        ElasticLoadBalancingv2ClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_ELASTICLOADBALANCINGV2_API ElasticLoadBalancingv2EndpointProvider : pu
  public:
   using ElasticLoadBalancingv2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ElasticLoadBalancingv2EndpointProvider()
-      : ElasticLoadBalancingv2DefaultEpProviderBase(Aws::ElasticLoadBalancingv2::ElasticLoadBalancingv2EndpointRules::GetRulesBlob(),
-                                                    Aws::ElasticLoadBalancingv2::ElasticLoadBalancingv2EndpointRules::RulesBlobSize) {}
+  ElasticLoadBalancingv2EndpointProvider();
 
   ~ElasticLoadBalancingv2EndpointProvider() {}
 };

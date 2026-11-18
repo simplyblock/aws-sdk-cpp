@@ -7,13 +7,16 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/rtbfabric/RTBFabricClient.h>
+#include <aws/rtbfabric/RTBFabricClientPagination.h>
 #include <aws/rtbfabric/RTBFabricEndpointProvider.h>
-#include <aws/rtbfabric/RTBFabricEndpointRules.h>
 #include <aws/rtbfabric/RTBFabricErrorMarshaller.h>
 #include <aws/rtbfabric/RTBFabricErrors.h>
+#include <aws/rtbfabric/RTBFabricPaginationBase.h>
 #include <aws/rtbfabric/RTBFabricRequest.h>
 #include <aws/rtbfabric/RTBFabricServiceClientModel.h>
+#include <aws/rtbfabric/RTBFabricWaiter.h>
 #include <aws/rtbfabric/RTBFabric_EXPORTS.h>
+#include <aws/rtbfabric/internal/RTBFabricEndpointRules.h>
 #include <aws/rtbfabric/model/AcceptLinkRequest.h>
 #include <aws/rtbfabric/model/AcceptLinkResult.h>
 #include <aws/rtbfabric/model/Action.h>
@@ -22,6 +25,7 @@
 #include <aws/rtbfabric/model/AutoScalingGroupsConfiguration.h>
 #include <aws/rtbfabric/model/CertificateAssociationStatus.h>
 #include <aws/rtbfabric/model/CertificateAssociationSummary.h>
+#include <aws/rtbfabric/model/ClientRoutingPolicy.h>
 #include <aws/rtbfabric/model/ConnectivityType.h>
 #include <aws/rtbfabric/model/CreateInboundExternalLinkRequest.h>
 #include <aws/rtbfabric/model/CreateInboundExternalLinkResult.h>
@@ -77,15 +81,20 @@
 #include <aws/rtbfabric/model/LinkLogSettings.h>
 #include <aws/rtbfabric/model/LinkRoutingRuleSummary.h>
 #include <aws/rtbfabric/model/LinkStatus.h>
+#include <aws/rtbfabric/model/ListCertificateAssociationsPaginationTraits.h>
 #include <aws/rtbfabric/model/ListCertificateAssociationsRequest.h>
 #include <aws/rtbfabric/model/ListCertificateAssociationsResult.h>
+#include <aws/rtbfabric/model/ListLinkRoutingRulesPaginationTraits.h>
 #include <aws/rtbfabric/model/ListLinkRoutingRulesRequest.h>
 #include <aws/rtbfabric/model/ListLinkRoutingRulesResult.h>
+#include <aws/rtbfabric/model/ListLinksPaginationTraits.h>
 #include <aws/rtbfabric/model/ListLinksRequest.h>
 #include <aws/rtbfabric/model/ListLinksResponseStructure.h>
 #include <aws/rtbfabric/model/ListLinksResult.h>
+#include <aws/rtbfabric/model/ListRequesterGatewaysPaginationTraits.h>
 #include <aws/rtbfabric/model/ListRequesterGatewaysRequest.h>
 #include <aws/rtbfabric/model/ListRequesterGatewaysResult.h>
+#include <aws/rtbfabric/model/ListResponderGatewaysPaginationTraits.h>
 #include <aws/rtbfabric/model/ListResponderGatewaysRequest.h>
 #include <aws/rtbfabric/model/ListResponderGatewaysResult.h>
 #include <aws/rtbfabric/model/ListTagsForResourceRequest.h>

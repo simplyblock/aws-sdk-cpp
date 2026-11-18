@@ -25,12 +25,15 @@ static const int EncryptionStatus_HASH = HashingUtils::HashString("EncryptionSta
 static const int ObjectLockRetainUntilDate_HASH = HashingUtils::HashString("ObjectLockRetainUntilDate");
 static const int ObjectLockMode_HASH = HashingUtils::HashString("ObjectLockMode");
 static const int ObjectLockLegalHoldStatus_HASH = HashingUtils::HashString("ObjectLockLegalHoldStatus");
+static const int ObjectLockEventHoldStatus_HASH = HashingUtils::HashString("ObjectLockEventHoldStatus");
+static const int ObjectLockEventHoldDuration_HASH = HashingUtils::HashString("ObjectLockEventHoldDuration");
 static const int IntelligentTieringAccessTier_HASH = HashingUtils::HashString("IntelligentTieringAccessTier");
 static const int BucketKeyStatus_HASH = HashingUtils::HashString("BucketKeyStatus");
 static const int ChecksumAlgorithm_HASH = HashingUtils::HashString("ChecksumAlgorithm");
 static const int ObjectAccessControlList_HASH = HashingUtils::HashString("ObjectAccessControlList");
 static const int ObjectOwner_HASH = HashingUtils::HashString("ObjectOwner");
 static const int LifecycleExpirationDate_HASH = HashingUtils::HashString("LifecycleExpirationDate");
+static const int IntelligentTieringReferenceDate_HASH = HashingUtils::HashString("IntelligentTieringReferenceDate");
 
 InventoryOptionalField GetInventoryOptionalFieldForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -54,6 +57,10 @@ InventoryOptionalField GetInventoryOptionalFieldForName(const Aws::String& name)
     return InventoryOptionalField::ObjectLockMode;
   } else if (hashCode == ObjectLockLegalHoldStatus_HASH) {
     return InventoryOptionalField::ObjectLockLegalHoldStatus;
+  } else if (hashCode == ObjectLockEventHoldStatus_HASH) {
+    return InventoryOptionalField::ObjectLockEventHoldStatus;
+  } else if (hashCode == ObjectLockEventHoldDuration_HASH) {
+    return InventoryOptionalField::ObjectLockEventHoldDuration;
   } else if (hashCode == IntelligentTieringAccessTier_HASH) {
     return InventoryOptionalField::IntelligentTieringAccessTier;
   } else if (hashCode == BucketKeyStatus_HASH) {
@@ -66,6 +73,8 @@ InventoryOptionalField GetInventoryOptionalFieldForName(const Aws::String& name)
     return InventoryOptionalField::ObjectOwner;
   } else if (hashCode == LifecycleExpirationDate_HASH) {
     return InventoryOptionalField::LifecycleExpirationDate;
+  } else if (hashCode == IntelligentTieringReferenceDate_HASH) {
+    return InventoryOptionalField::IntelligentTieringReferenceDate;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -100,6 +109,10 @@ Aws::String GetNameForInventoryOptionalField(InventoryOptionalField enumValue) {
       return "ObjectLockMode";
     case InventoryOptionalField::ObjectLockLegalHoldStatus:
       return "ObjectLockLegalHoldStatus";
+    case InventoryOptionalField::ObjectLockEventHoldStatus:
+      return "ObjectLockEventHoldStatus";
+    case InventoryOptionalField::ObjectLockEventHoldDuration:
+      return "ObjectLockEventHoldDuration";
     case InventoryOptionalField::IntelligentTieringAccessTier:
       return "IntelligentTieringAccessTier";
     case InventoryOptionalField::BucketKeyStatus:
@@ -112,6 +125,8 @@ Aws::String GetNameForInventoryOptionalField(InventoryOptionalField enumValue) {
       return "ObjectOwner";
     case InventoryOptionalField::LifecycleExpirationDate:
       return "LifecycleExpirationDate";
+    case InventoryOptionalField::IntelligentTieringReferenceDate:
+      return "IntelligentTieringReferenceDate";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

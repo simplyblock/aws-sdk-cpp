@@ -24,8 +24,8 @@ AWS_PROTOCOL_TEST(HttpPrefixHeaders, HttpPrefixHeadersArePresent) {
   ExpectedRequest expectedRq;
   expectedRq.method = "GET";
   expectedRq.uri = "/HttpPrefixHeaders";
-  expectedRq.headers = {{"x-foo", R"(Foo)"}, {"x-foo-abc", R"(Abc value)"}, {"x-foo-def", R"(Def value)"}};
-  ValidateRequestSent(expectedRq);
+  expectedRq.headers = {{"x-foo", R"(Foo)"}, {"x-foo-def", R"(Def value)"}, {"x-foo-abc", R"(Abc value)"}};
+  ValidateRequestSent(expectedRq, ValidateXmlBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -43,7 +43,7 @@ AWS_PROTOCOL_TEST(HttpPrefixHeaders, HttpPrefixHeadersAreNotPresent) {
   expectedRq.method = "GET";
   expectedRq.uri = "/HttpPrefixHeaders";
   expectedRq.headers = {{"x-foo", R"(Foo)"}};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateXmlBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }
 
@@ -60,6 +60,6 @@ AWS_PROTOCOL_TEST(HttpPrefixHeaders, HttpPrefixEmptyHeaders) {
   expectedRq.method = "GET";
   expectedRq.uri = "/HttpPrefixHeaders";
   expectedRq.headers = {{"x-foo-abc", R"()"}};
-  ValidateRequestSent(expectedRq);
+  ValidateRequestSent(expectedRq, ValidateXmlBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }

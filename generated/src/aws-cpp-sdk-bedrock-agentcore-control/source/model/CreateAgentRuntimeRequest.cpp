@@ -55,6 +55,10 @@ Aws::String CreateAgentRuntimeRequest::SerializePayload() const {
     payload.WithObject("lifecycleConfiguration", m_lifecycleConfiguration.Jsonize());
   }
 
+  if (m_hooksConfigurationHasBeenSet) {
+    payload.WithObject("hooksConfiguration", m_hooksConfiguration.Jsonize());
+  }
+
   if (m_environmentVariablesHasBeenSet) {
     JsonValue environmentVariablesJsonMap;
     for (auto& environmentVariablesItem : m_environmentVariables) {
@@ -73,12 +77,37 @@ Aws::String CreateAgentRuntimeRequest::SerializePayload() const {
     payload.WithArray("filesystemConfigurations", std::move(filesystemConfigurationsJsonList));
   }
 
+  if (m_capacityProviderConfigurationHasBeenSet) {
+    payload.WithObject("capacityProviderConfiguration", m_capacityProviderConfiguration.Jsonize());
+  }
+
   if (m_tagsHasBeenSet) {
     JsonValue tagsJsonMap;
     for (auto& tagsItem : m_tags) {
       tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
     }
     payload.WithObject("tags", std::move(tagsJsonMap));
+  }
+
+  if (m_platformVersionHasBeenSet) {
+    payload.WithString("platformVersion", m_platformVersion);
+  }
+
+  if (m_allowedPortsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> allowedPortsJsonList(m_allowedPorts.size());
+    for (unsigned allowedPortsIndex = 0; allowedPortsIndex < allowedPortsJsonList.GetLength(); ++allowedPortsIndex) {
+      allowedPortsJsonList[allowedPortsIndex].AsObject(m_allowedPorts[allowedPortsIndex].Jsonize());
+    }
+    payload.WithArray("allowedPorts", std::move(allowedPortsJsonList));
+  }
+
+  if (m_resourceConfigurationsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> resourceConfigurationsJsonList(m_resourceConfigurations.size());
+    for (unsigned resourceConfigurationsIndex = 0; resourceConfigurationsIndex < resourceConfigurationsJsonList.GetLength();
+         ++resourceConfigurationsIndex) {
+      resourceConfigurationsJsonList[resourceConfigurationsIndex].AsObject(m_resourceConfigurations[resourceConfigurationsIndex].Jsonize());
+    }
+    payload.WithArray("resourceConfigurations", std::move(resourceConfigurationsJsonList));
   }
 
   return payload.View().WriteReadable();

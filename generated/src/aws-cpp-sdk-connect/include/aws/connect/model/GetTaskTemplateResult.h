@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/model/TaskTemplateConstraints.h>
+#include <aws/connect/model/TaskTemplateContactHooks.h>
 #include <aws/connect/model/TaskTemplateDefaults.h>
 #include <aws/connect/model/TaskTemplateField.h>
 #include <aws/connect/model/TaskTemplateStatus.h>
@@ -159,7 +160,29 @@ class GetTaskTemplateResult {
 
   ///@{
   /**
-   * <p>Constraints that are applicable to the fields listed.</p>
+   * <p>The event hooks that are set on tasks created by using this template.</p>
+   */
+  inline const TaskTemplateContactHooks& GetContactHooks() const { return m_contactHooks; }
+  template <typename ContactHooksT = TaskTemplateContactHooks>
+  void SetContactHooks(ContactHooksT&& value) {
+    m_contactHooksHasBeenSet = true;
+    m_contactHooks = std::forward<ContactHooksT>(value);
+  }
+  template <typename ContactHooksT = TaskTemplateContactHooks>
+  GetTaskTemplateResult& WithContactHooks(ContactHooksT&& value) {
+    SetContactHooks(std::forward<ContactHooksT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Constraints that are applicable to the fields listed. Although this parameter
+   * is marked as optional in the API model, the service requires it when calling
+   * <code>CreateTaskTemplate</code> or <code>UpdateTaskTemplate</code>. The
+   * <code>RequiredFields</code> array must contain at least one element, and the
+   * field of type <code>NAME</code> must be included in
+   * <code>RequiredFields</code>.</p>
    */
   inline const TaskTemplateConstraints& GetConstraints() const { return m_constraints; }
   template <typename ConstraintsT = TaskTemplateConstraints>
@@ -322,6 +345,8 @@ class GetTaskTemplateResult {
 
   Aws::String m_selfAssignFlowId;
 
+  TaskTemplateContactHooks m_contactHooks;
+
   TaskTemplateConstraints m_constraints;
 
   TaskTemplateDefaults m_defaults;
@@ -345,6 +370,7 @@ class GetTaskTemplateResult {
   bool m_descriptionHasBeenSet = false;
   bool m_contactFlowIdHasBeenSet = false;
   bool m_selfAssignFlowIdHasBeenSet = false;
+  bool m_contactHooksHasBeenSet = false;
   bool m_constraintsHasBeenSet = false;
   bool m_defaultsHasBeenSet = false;
   bool m_fieldsHasBeenSet = false;

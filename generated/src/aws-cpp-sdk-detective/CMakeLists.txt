@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-detective "C++ SDK for the AWS detective service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-detective "C++ SDK for Amazon Detective" aws-cpp-sdk-core)
 
 file(GLOB AWS_DETECTIVE_HEADERS
     "include/aws/detective/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_DETECTIVE_HEADERS
 
 file(GLOB AWS_DETECTIVE_MODEL_HEADERS
     "include/aws/detective/model/*.h"
+)
+
+file(GLOB AWS_DETECTIVE_INTERNAL_HEADERS
+    "include/aws/detective/internal/*.h"
 )
 
 file(GLOB AWS_DETECTIVE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_DETECTIVE_MODEL_SOURCE
 
 file(GLOB DETECTIVE_UNIFIED_HEADERS
     ${AWS_DETECTIVE_HEADERS}
+    ${AWS_DETECTIVE_INTERNAL_HEADERS}
     ${AWS_DETECTIVE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\detective" FILES ${AWS_DETECTIVE_HEADERS})
+        source_group("Header Files\\aws\\detective\\internal" FILES ${AWS_DETECTIVE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\detective\\model" FILES ${AWS_DETECTIVE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_DETECTIVE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_DETECTIVE_MODEL_SOURCE})

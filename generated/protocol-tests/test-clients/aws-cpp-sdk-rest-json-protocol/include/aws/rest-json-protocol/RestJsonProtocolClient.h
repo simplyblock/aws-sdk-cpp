@@ -296,6 +296,29 @@ class AWS_RESTJSONPROTOCOL_API RestJsonProtocolClient : public Aws::Client::AWSJ
   }
 
   /**
+   *
+   *
+   * Queues the request into a thread executor.
+   * The streamReadyHandler is triggered when the stream is ready to be written to.
+   * The handler is triggered when the request is finished.
+   */
+  virtual void DuplexStreamAsync(Model::DuplexStreamRequest& request, const DuplexStreamStreamReadyHandler& streamReadyHandler,
+                                 const DuplexStreamResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& handlerContext = nullptr) const;
+
+  /**
+   *
+   *
+   * Queues the request into a thread executor.
+   * The streamReadyHandler is triggered when the stream is ready to be written to.
+   * The handler is triggered when the request is finished.
+   */
+  virtual void DuplexStreamWithInitialMessagesAsync(
+      Model::DuplexStreamWithInitialMessagesRequest& request, const DuplexStreamWithInitialMessagesStreamReadyHandler& streamReadyHandler,
+      const DuplexStreamWithInitialMessagesResponseReceivedHandler& handler,
+      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& handlerContext = nullptr) const;
+
+  /**
    * <p>The example tests how requests and responses are serialized when there's no
    * request or response payload because the operation has an empty input and empty
    * output structure that reuses the same shape. While this should be rare, code
@@ -1361,6 +1384,56 @@ class AWS_RESTJSONPROTOCOL_API RestJsonProtocolClient : public Aws::Client::AWSJ
   }
 
   /**
+   *
+   */
+  virtual Model::OutputStreamOutcome OutputStream(Model::OutputStreamRequest& request) const;
+
+  /**
+   * A Callable wrapper for OutputStream that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename OutputStreamRequestT = Model::OutputStreamRequest>
+  Model::OutputStreamOutcomeCallable OutputStreamCallable(OutputStreamRequestT& request) const {
+    return SubmitCallable(&RestJsonProtocolClient::OutputStream, request);
+  }
+
+  /**
+   * An Async wrapper for OutputStream that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename OutputStreamRequestT = Model::OutputStreamRequest>
+  void OutputStreamAsync(OutputStreamRequestT& request, const OutputStreamResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&RestJsonProtocolClient::OutputStream, request, handler, context);
+  }
+
+  /**
+   *
+   */
+  virtual Model::OutputStreamWithInitialResponseOutcome OutputStreamWithInitialResponse(
+      Model::OutputStreamWithInitialResponseRequest& request) const;
+
+  /**
+   * A Callable wrapper for OutputStreamWithInitialResponse that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename OutputStreamWithInitialResponseRequestT = Model::OutputStreamWithInitialResponseRequest>
+  Model::OutputStreamWithInitialResponseOutcomeCallable OutputStreamWithInitialResponseCallable(
+      OutputStreamWithInitialResponseRequestT& request) const {
+    return SubmitCallable(&RestJsonProtocolClient::OutputStreamWithInitialResponse, request);
+  }
+
+  /**
+   * An Async wrapper for OutputStreamWithInitialResponse that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename OutputStreamWithInitialResponseRequestT = Model::OutputStreamWithInitialResponseRequest>
+  void OutputStreamWithInitialResponseAsync(OutputStreamWithInitialResponseRequestT& request,
+                                            const OutputStreamWithInitialResponseResponseReceivedHandler& handler,
+                                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&RestJsonProtocolClient::OutputStreamWithInitialResponse, request, handler, context);
+  }
+
+  /**
    * <p>This operation defines a union that uses jsonName on some
    * members.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/rest-json-protocol-2019-12-16/PostUnionWithJsonName">AWS
@@ -1917,6 +1990,12 @@ class AWS_RESTJSONPROTOCOL_API RestJsonProtocolClient : public Aws::Client::AWSJ
  private:
   friend class Aws::Client::ClientWithAsyncTemplateMethods<RestJsonProtocolClient>;
   void init(const RestJsonProtocolClientConfiguration& clientConfiguration);
+
+  typedef Aws::Utils::Outcome<Aws::AmazonWebServiceResult<RESPONSE>, RestJsonProtocolError> InvokeOperationOutcome;
+
+  InvokeOperationOutcome InvokeServiceOperation(const AmazonWebServiceRequest& request,
+                                                const std::function<void(Aws::Endpoint::ResolveEndpointOutcome&)>& resolveUri,
+                                                Aws::Http::HttpMethod httpMethod) const;
 
   RestJsonProtocolClientConfiguration m_clientConfiguration;
   std::shared_ptr<RestJsonProtocolEndpointProviderBase> m_endpointProvider;

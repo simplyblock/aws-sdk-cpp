@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/forecast/ForecastServiceEndpointRules.h>
 #include <aws/forecast/ForecastService_EXPORTS.h>
 
 namespace Aws {
 namespace ForecastService {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ForecastServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using ForecastServiceEndpointProviderBase =
     EndpointProviderBase<ForecastServiceClientConfiguration, ForecastServiceBuiltInParameters, ForecastServiceClientContextParameters>;
 
 using ForecastServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<ForecastServiceClientConfiguration, ForecastServiceBuiltInParameters, ForecastServiceClientContextParameters>;
+    BDDEndpointProvider<ForecastServiceClientConfiguration, ForecastServiceBuiltInParameters, ForecastServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_FORECASTSERVICE_API ForecastServiceEndpointProvider : public ForecastS
  public:
   using ForecastServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ForecastServiceEndpointProvider()
-      : ForecastServiceDefaultEpProviderBase(Aws::ForecastService::ForecastServiceEndpointRules::GetRulesBlob(),
-                                             Aws::ForecastService::ForecastServiceEndpointRules::RulesBlobSize) {}
+  ForecastServiceEndpointProvider();
 
   ~ForecastServiceEndpointProvider() {}
 };

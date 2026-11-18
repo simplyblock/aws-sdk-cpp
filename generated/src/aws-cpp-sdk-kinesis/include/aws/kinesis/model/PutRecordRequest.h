@@ -88,7 +88,14 @@ class PutRecordRequest : public KinesisRequest {
    * shard. Specifically, an MD5 hash function is used to map partition keys to
    * 128-bit integer values and to map associated data records to shards. As a result
    * of this hashing mechanism, all data records with the same partition key map to
-   * the same shard within the stream.</p>
+   * the same shard within the stream.</p> <p>If the stream uses the
+   * <code>USER_PARTITION_KEY</code> record distribution strategy (the default), a
+   * partition key is required. If the stream uses the <code>AUTO</code> record
+   * distribution strategy, the partition key is optional and any value you provide
+   * is ignored, along with any <code>ExplicitHashKey</code> you provide. In that
+   * case, Amazon Kinesis Data Streams distributes the record across shards using
+   * service-managed algorithms. For more information, see
+   * <code>UpdateStreamRecordDistributionStrategy</code>.</p>
    */
   inline const Aws::String& GetPartitionKey() const { return m_partitionKey; }
   inline bool PartitionKeyHasBeenSet() const { return m_partitionKeyHasBeenSet; }
@@ -181,6 +188,23 @@ class PutRecordRequest : public KinesisRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Checks if your request will succeed. <code>DryRun</code> is an optional
+   * parameter.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline PutRecordRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_streamName;
 
@@ -195,6 +219,8 @@ class PutRecordRequest : public KinesisRequest {
   Aws::String m_streamARN;
 
   Aws::String m_streamId;
+
+  bool m_dryRun{false};
   bool m_streamNameHasBeenSet = false;
   bool m_dataHasBeenSet = false;
   bool m_partitionKeyHasBeenSet = false;
@@ -202,6 +228,7 @@ class PutRecordRequest : public KinesisRequest {
   bool m_sequenceNumberForOrderingHasBeenSet = false;
   bool m_streamARNHasBeenSet = false;
   bool m_streamIdHasBeenSet = false;
+  bool m_dryRunHasBeenSet = false;
 };
 
 }  // namespace Model

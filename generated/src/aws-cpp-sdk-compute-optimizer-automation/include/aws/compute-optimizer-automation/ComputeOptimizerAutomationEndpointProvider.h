@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/compute-optimizer-automation/ComputeOptimizerAutomationEndpointRules.h>
 #include <aws/compute-optimizer-automation/ComputeOptimizerAutomation_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ComputeOptimizerAutomation {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ComputeOptimizerAutomationClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ComputeOptimizerAutomationEndpointProviderBase =
                          ComputeOptimizerAutomationClientContextParameters>;
 
 using ComputeOptimizerAutomationDefaultEpProviderBase =
-    DefaultEndpointProvider<ComputeOptimizerAutomationClientConfiguration, ComputeOptimizerAutomationBuiltInParameters,
-                            ComputeOptimizerAutomationClientContextParameters>;
+    BDDEndpointProvider<ComputeOptimizerAutomationClientConfiguration, ComputeOptimizerAutomationBuiltInParameters,
+                        ComputeOptimizerAutomationClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -45,10 +44,7 @@ class AWS_COMPUTEOPTIMIZERAUTOMATION_API ComputeOptimizerAutomationEndpointProvi
  public:
   using ComputeOptimizerAutomationResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ComputeOptimizerAutomationEndpointProvider()
-      : ComputeOptimizerAutomationDefaultEpProviderBase(
-            Aws::ComputeOptimizerAutomation::ComputeOptimizerAutomationEndpointRules::GetRulesBlob(),
-            Aws::ComputeOptimizerAutomation::ComputeOptimizerAutomationEndpointRules::RulesBlobSize) {}
+  ComputeOptimizerAutomationEndpointProvider();
 
   ~ComputeOptimizerAutomationEndpointProvider() {}
 };

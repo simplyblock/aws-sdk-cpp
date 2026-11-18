@@ -7,13 +7,16 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/codedeploy/CodeDeployClient.h>
+#include <aws/codedeploy/CodeDeployClientPagination.h>
 #include <aws/codedeploy/CodeDeployEndpointProvider.h>
-#include <aws/codedeploy/CodeDeployEndpointRules.h>
 #include <aws/codedeploy/CodeDeployErrorMarshaller.h>
 #include <aws/codedeploy/CodeDeployErrors.h>
+#include <aws/codedeploy/CodeDeployPaginationBase.h>
 #include <aws/codedeploy/CodeDeployRequest.h>
 #include <aws/codedeploy/CodeDeployServiceClientModel.h>
+#include <aws/codedeploy/CodeDeployWaiter.h>
 #include <aws/codedeploy/CodeDeploy_EXPORTS.h>
+#include <aws/codedeploy/internal/CodeDeployEndpointRules.h>
 #include <aws/codedeploy/model/AddTagsToOnPremisesInstancesRequest.h>
 #include <aws/codedeploy/model/Alarm.h>
 #include <aws/codedeploy/model/AlarmConfiguration.h>
@@ -23,6 +26,7 @@
 #include <aws/codedeploy/model/AutoRollbackConfiguration.h>
 #include <aws/codedeploy/model/AutoRollbackEvent.h>
 #include <aws/codedeploy/model/AutoScalingGroup.h>
+#include <aws/codedeploy/model/AutoScalingGroupProcess.h>
 #include <aws/codedeploy/model/BatchGetApplicationRevisionsRequest.h>
 #include <aws/codedeploy/model/BatchGetApplicationRevisionsResult.h>
 #include <aws/codedeploy/model/BatchGetApplicationsRequest.h>
@@ -61,6 +65,7 @@
 #include <aws/codedeploy/model/DeploymentCreator.h>
 #include <aws/codedeploy/model/DeploymentGroupInfo.h>
 #include <aws/codedeploy/model/DeploymentInfo.h>
+#include <aws/codedeploy/model/DeploymentMode.h>
 #include <aws/codedeploy/model/DeploymentOption.h>
 #include <aws/codedeploy/model/DeploymentOverview.h>
 #include <aws/codedeploy/model/DeploymentReadyAction.h>
@@ -73,6 +78,7 @@
 #include <aws/codedeploy/model/DeploymentWaitType.h>
 #include <aws/codedeploy/model/DeregisterOnPremisesInstanceRequest.h>
 #include <aws/codedeploy/model/Diagnostics.h>
+#include <aws/codedeploy/model/EC2DeploymentOptions.h>
 #include <aws/codedeploy/model/EC2TagFilter.h>
 #include <aws/codedeploy/model/EC2TagFilterType.h>
 #include <aws/codedeploy/model/EC2TagSet.h>
@@ -113,16 +119,21 @@
 #include <aws/codedeploy/model/LifecycleErrorCode.h>
 #include <aws/codedeploy/model/LifecycleEvent.h>
 #include <aws/codedeploy/model/LifecycleEventStatus.h>
+#include <aws/codedeploy/model/ListApplicationRevisionsPaginationTraits.h>
 #include <aws/codedeploy/model/ListApplicationRevisionsRequest.h>
 #include <aws/codedeploy/model/ListApplicationRevisionsResult.h>
+#include <aws/codedeploy/model/ListApplicationsPaginationTraits.h>
 #include <aws/codedeploy/model/ListApplicationsRequest.h>
 #include <aws/codedeploy/model/ListApplicationsResult.h>
+#include <aws/codedeploy/model/ListDeploymentConfigsPaginationTraits.h>
 #include <aws/codedeploy/model/ListDeploymentConfigsRequest.h>
 #include <aws/codedeploy/model/ListDeploymentConfigsResult.h>
+#include <aws/codedeploy/model/ListDeploymentGroupsPaginationTraits.h>
 #include <aws/codedeploy/model/ListDeploymentGroupsRequest.h>
 #include <aws/codedeploy/model/ListDeploymentGroupsResult.h>
 #include <aws/codedeploy/model/ListDeploymentTargetsRequest.h>
 #include <aws/codedeploy/model/ListDeploymentTargetsResult.h>
+#include <aws/codedeploy/model/ListDeploymentsPaginationTraits.h>
 #include <aws/codedeploy/model/ListDeploymentsRequest.h>
 #include <aws/codedeploy/model/ListDeploymentsResult.h>
 #include <aws/codedeploy/model/ListGitHubAccountTokenNamesRequest.h>

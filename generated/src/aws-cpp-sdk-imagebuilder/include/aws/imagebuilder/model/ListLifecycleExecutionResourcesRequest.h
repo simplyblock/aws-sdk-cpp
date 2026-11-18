@@ -30,8 +30,7 @@ class ListLifecycleExecutionResourcesRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Use the unique identifier for a runtime instance of the lifecycle policy to
-   * get runtime details.</p>
+   * <p>The unique identifier for a runtime instance of the lifecycle policy.</p>
    */
   inline const Aws::String& GetLifecycleExecutionId() const { return m_lifecycleExecutionId; }
   inline bool LifecycleExecutionIdHasBeenSet() const { return m_lifecycleExecutionIdHasBeenSet; }
@@ -49,12 +48,13 @@ class ListLifecycleExecutionResourcesRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>You can leave this empty to get a list of Image Builder resources that were
-   * identified for lifecycle actions.</p> <p>To get a list of associated resources
-   * that are impacted for an individual resource (the parent), specify its Amazon
-   * Resource Name (ARN). Associated resources are produced from your image and
-   * distributed when you run a build, such as AMIs or container images stored in ECR
-   * repositories.</p>
+   * <p>The Amazon Resource Name (ARN) of an image build version to get the output
+   * resources for, such as AMIs or container images in Amazon ECR. You can get this
+   * value from the <code>resourceId</code> in the top-level response. If you leave
+   * this property empty, the response lists the Image Builder resources that the
+   * lifecycle execution identified for lifecycle actions. If the image build version
+   * that you specify in <code>parentResourceId</code> wasn't part of this lifecycle
+   * execution, the response contains an empty list.</p>
    */
   inline const Aws::String& GetParentResourceId() const { return m_parentResourceId; }
   inline bool ParentResourceIdHasBeenSet() const { return m_parentResourceIdHasBeenSet; }
@@ -72,7 +72,10 @@ class ListLifecycleExecutionResourcesRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Specify the maximum number of items to return in a request.</p>
+   * <p>The maximum number of items to return in a single request. If you don't
+   * specify a value, Image Builder returns up to 25 items. The largest page size
+   * that you can request is 100 items. A page can contain fewer items than the
+   * maximum, with a <code>nextToken</code> to continue paging.</p>
    */
   inline int GetMaxResults() const { return m_maxResults; }
   inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
@@ -88,8 +91,8 @@ class ListLifecycleExecutionResourcesRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>A token to specify where to start paginating. This is the nextToken from a
-   * previously truncated response.</p>
+   * <p>A token to specify where to start paginating. Use the <code>nextToken</code>
+   * value from a previously truncated response.</p>
    */
   inline const Aws::String& GetNextToken() const { return m_nextToken; }
   inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }

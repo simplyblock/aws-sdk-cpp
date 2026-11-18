@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-arc-zonal-shift "C++ SDK for the AWS arc-zonal-shift service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-arc-zonal-shift "C++ SDK for AWS ARC - Zonal Shift" aws-cpp-sdk-core)
 
 file(GLOB AWS_ARC-ZONAL-SHIFT_HEADERS
     "include/aws/arc-zonal-shift/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ARC-ZONAL-SHIFT_HEADERS
 
 file(GLOB AWS_ARC-ZONAL-SHIFT_MODEL_HEADERS
     "include/aws/arc-zonal-shift/model/*.h"
+)
+
+file(GLOB AWS_ARC-ZONAL-SHIFT_INTERNAL_HEADERS
+    "include/aws/arc-zonal-shift/internal/*.h"
 )
 
 file(GLOB AWS_ARC-ZONAL-SHIFT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ARC-ZONAL-SHIFT_MODEL_SOURCE
 
 file(GLOB ARC-ZONAL-SHIFT_UNIFIED_HEADERS
     ${AWS_ARC-ZONAL-SHIFT_HEADERS}
+    ${AWS_ARC-ZONAL-SHIFT_INTERNAL_HEADERS}
     ${AWS_ARC-ZONAL-SHIFT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\arc-zonal-shift" FILES ${AWS_ARC-ZONAL-SHIFT_HEADERS})
+        source_group("Header Files\\aws\\arc-zonal-shift\\internal" FILES ${AWS_ARC-ZONAL-SHIFT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\arc-zonal-shift\\model" FILES ${AWS_ARC-ZONAL-SHIFT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ARC-ZONAL-SHIFT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ARC-ZONAL-SHIFT_MODEL_SOURCE})

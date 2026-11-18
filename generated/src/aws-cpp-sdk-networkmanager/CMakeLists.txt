@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-networkmanager "C++ SDK for the AWS networkmanager service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-networkmanager "C++ SDK for AWS Network Manager" aws-cpp-sdk-core)
 
 file(GLOB AWS_NETWORKMANAGER_HEADERS
     "include/aws/networkmanager/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_NETWORKMANAGER_HEADERS
 
 file(GLOB AWS_NETWORKMANAGER_MODEL_HEADERS
     "include/aws/networkmanager/model/*.h"
+)
+
+file(GLOB AWS_NETWORKMANAGER_INTERNAL_HEADERS
+    "include/aws/networkmanager/internal/*.h"
 )
 
 file(GLOB AWS_NETWORKMANAGER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_NETWORKMANAGER_MODEL_SOURCE
 
 file(GLOB NETWORKMANAGER_UNIFIED_HEADERS
     ${AWS_NETWORKMANAGER_HEADERS}
+    ${AWS_NETWORKMANAGER_INTERNAL_HEADERS}
     ${AWS_NETWORKMANAGER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\networkmanager" FILES ${AWS_NETWORKMANAGER_HEADERS})
+        source_group("Header Files\\aws\\networkmanager\\internal" FILES ${AWS_NETWORKMANAGER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\networkmanager\\model" FILES ${AWS_NETWORKMANAGER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_NETWORKMANAGER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_NETWORKMANAGER_MODEL_SOURCE})

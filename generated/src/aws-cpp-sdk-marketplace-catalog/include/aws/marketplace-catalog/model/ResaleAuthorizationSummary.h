@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/marketplace-catalog/MarketplaceCatalog_EXPORTS.h>
+#include <aws/marketplace-catalog/model/ResaleAuthorizationResellerRoleString.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationStatusString.h>
 
 #include <utility>
@@ -228,6 +229,58 @@ class ResaleAuthorizationSummary {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The reseller role of the ResaleAuthorization.</p>
+   */
+  inline ResaleAuthorizationResellerRoleString GetResellerRole() const { return m_resellerRole; }
+  inline bool ResellerRoleHasBeenSet() const { return m_resellerRoleHasBeenSet; }
+  inline void SetResellerRole(ResaleAuthorizationResellerRoleString value) {
+    m_resellerRoleHasBeenSet = true;
+    m_resellerRole = value;
+  }
+  inline ResaleAuthorizationSummary& WithResellerRole(ResaleAuthorizationResellerRoleString value) {
+    SetResellerRole(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The source authorization of the ResaleAuthorization.</p>
+   */
+  inline const Aws::String& GetSourceAuthorization() const { return m_sourceAuthorization; }
+  inline bool SourceAuthorizationHasBeenSet() const { return m_sourceAuthorizationHasBeenSet; }
+  template <typename SourceAuthorizationT = Aws::String>
+  void SetSourceAuthorization(SourceAuthorizationT&& value) {
+    m_sourceAuthorizationHasBeenSet = true;
+    m_sourceAuthorization = std::forward<SourceAuthorizationT>(value);
+  }
+  template <typename SourceAuthorizationT = Aws::String>
+  ResaleAuthorizationSummary& WithSourceAuthorization(SourceAuthorizationT&& value) {
+    SetSourceAuthorization(std::forward<SourceAuthorizationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The issuer account ID of the ResaleAuthorization.</p>
+   */
+  inline const Aws::String& GetIssuerAccountId() const { return m_issuerAccountId; }
+  inline bool IssuerAccountIdHasBeenSet() const { return m_issuerAccountIdHasBeenSet; }
+  template <typename IssuerAccountIdT = Aws::String>
+  void SetIssuerAccountId(IssuerAccountIdT&& value) {
+    m_issuerAccountIdHasBeenSet = true;
+    m_issuerAccountId = std::forward<IssuerAccountIdT>(value);
+  }
+  template <typename IssuerAccountIdT = Aws::String>
+  ResaleAuthorizationSummary& WithIssuerAccountId(IssuerAccountIdT&& value) {
+    SetIssuerAccountId(std::forward<IssuerAccountIdT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_name;
 
@@ -250,6 +303,12 @@ class ResaleAuthorizationSummary {
   Aws::String m_createdDate;
 
   Aws::String m_availabilityEndDate;
+
+  ResaleAuthorizationResellerRoleString m_resellerRole{ResaleAuthorizationResellerRoleString::NOT_SET};
+
+  Aws::String m_sourceAuthorization;
+
+  Aws::String m_issuerAccountId;
   bool m_nameHasBeenSet = false;
   bool m_productIdHasBeenSet = false;
   bool m_productNameHasBeenSet = false;
@@ -261,6 +320,9 @@ class ResaleAuthorizationSummary {
   bool m_offerExtendedStatusHasBeenSet = false;
   bool m_createdDateHasBeenSet = false;
   bool m_availabilityEndDateHasBeenSet = false;
+  bool m_resellerRoleHasBeenSet = false;
+  bool m_sourceAuthorizationHasBeenSet = false;
+  bool m_issuerAccountIdHasBeenSet = false;
 };
 
 }  // namespace Model

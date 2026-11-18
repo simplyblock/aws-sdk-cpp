@@ -34,10 +34,13 @@ class ListImageScanFindingsRequest : public ImagebuilderRequest {
   /**
    * <p>An array of name value pairs that you can use to filter your results. You can
    * use the following filters to streamline results:</p> <ul> <li> <p>
-   * <code>imageBuildVersionArn</code> </p> </li> <li> <p>
-   * <code>imagePipelineArn</code> </p> </li> <li> <p> <code>vulnerabilityId</code>
-   * </p> </li> <li> <p> <code>severity</code> </p> </li> </ul> <p>If you don't
-   * request a filter, then all findings in your account are listed.</p>
+   * <code>imageBuildVersionArn</code> – Filters findings by the image build version
+   * that was scanned.</p> </li> <li> <p> <code>imagePipelineArn</code> – Filters
+   * findings by the pipeline that created the scanned image.</p> </li> <li> <p>
+   * <code>vulnerabilityId</code> – Filters findings by vulnerability ID, for example
+   * a CVE ID.</p> </li> <li> <p> <code>severity</code> – Filters findings by
+   * severity level.</p> </li> </ul> <p>If you don't request a filter, then all
+   * findings in your account are listed.</p>
    */
   inline const Aws::Vector<ImageScanFindingsFilter>& GetFilters() const { return m_filters; }
   inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
@@ -61,7 +64,10 @@ class ListImageScanFindingsRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Specify the maximum number of items to return in a request.</p>
+   * <p>The maximum number of items to return in a single request. If you don't
+   * specify a value, Image Builder returns up to 25 items. The largest page size
+   * that you can request is 100 items. A page can contain fewer items than the
+   * maximum, with a <code>nextToken</code> to continue paging.</p>
    */
   inline int GetMaxResults() const { return m_maxResults; }
   inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
@@ -77,8 +83,8 @@ class ListImageScanFindingsRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>A token to specify where to start paginating. This is the nextToken from a
-   * previously truncated response.</p>
+   * <p>A token to specify where to start paginating. Use the <code>nextToken</code>
+   * value from a previously truncated response.</p>
    */
   inline const Aws::String& GetNextToken() const { return m_nextToken; }
   inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }

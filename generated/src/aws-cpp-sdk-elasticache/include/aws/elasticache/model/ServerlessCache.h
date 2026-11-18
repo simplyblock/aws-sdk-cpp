@@ -10,7 +10,10 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/elasticache/model/CacheUsageLimits.h>
+#include <aws/elasticache/model/ConnectionType.h>
 #include <aws/elasticache/model/Endpoint.h>
+#include <aws/elasticache/model/Integration.h>
+#include <aws/elasticache/model/MigrationSummary.h>
 #include <aws/elasticache/model/NetworkType.h>
 #include <aws/elasticache/model/StorageEncryptionType.h>
 
@@ -400,6 +403,65 @@ class ServerlessCache {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The connection type for the serverless cache. Must be either <code>vpc</code>
+   * | <code>public</code>. If not specified, defaults to <code>vpc</code>.</p>
+   */
+  inline ConnectionType GetConnectionType() const { return m_connectionType; }
+  inline bool ConnectionTypeHasBeenSet() const { return m_connectionTypeHasBeenSet; }
+  inline void SetConnectionType(ConnectionType value) {
+    m_connectionTypeHasBeenSet = true;
+    m_connectionType = value;
+  }
+  inline ServerlessCache& WithConnectionType(ConnectionType value) {
+    SetConnectionType(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Provides a summary of the migration status for the serverless cache.</p>
+   */
+  inline const MigrationSummary& GetMigration() const { return m_migration; }
+  inline bool MigrationHasBeenSet() const { return m_migrationHasBeenSet; }
+  template <typename MigrationT = MigrationSummary>
+  void SetMigration(MigrationT&& value) {
+    m_migrationHasBeenSet = true;
+    m_migration = std::forward<MigrationT>(value);
+  }
+  template <typename MigrationT = MigrationSummary>
+  ServerlessCache& WithMigration(MigrationT&& value) {
+    SetMigration(std::forward<MigrationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Configured integrations and their status.</p>
+   */
+  inline const Aws::Vector<Integration>& GetIntegrations() const { return m_integrations; }
+  inline bool IntegrationsHasBeenSet() const { return m_integrationsHasBeenSet; }
+  template <typename IntegrationsT = Aws::Vector<Integration>>
+  void SetIntegrations(IntegrationsT&& value) {
+    m_integrationsHasBeenSet = true;
+    m_integrations = std::forward<IntegrationsT>(value);
+  }
+  template <typename IntegrationsT = Aws::Vector<Integration>>
+  ServerlessCache& WithIntegrations(IntegrationsT&& value) {
+    SetIntegrations(std::forward<IntegrationsT>(value));
+    return *this;
+  }
+  template <typename IntegrationsT = Integration>
+  ServerlessCache& AddIntegrations(IntegrationsT&& value) {
+    m_integrationsHasBeenSet = true;
+    m_integrations.emplace_back(std::forward<IntegrationsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_serverlessCacheName;
 
@@ -438,6 +500,12 @@ class ServerlessCache {
   Aws::String m_dailySnapshotTime;
 
   NetworkType m_networkType{NetworkType::NOT_SET};
+
+  ConnectionType m_connectionType{ConnectionType::NOT_SET};
+
+  MigrationSummary m_migration;
+
+  Aws::Vector<Integration> m_integrations;
   bool m_serverlessCacheNameHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_createTimeHasBeenSet = false;
@@ -457,6 +525,9 @@ class ServerlessCache {
   bool m_snapshotRetentionLimitHasBeenSet = false;
   bool m_dailySnapshotTimeHasBeenSet = false;
   bool m_networkTypeHasBeenSet = false;
+  bool m_connectionTypeHasBeenSet = false;
+  bool m_migrationHasBeenSet = false;
+  bool m_integrationsHasBeenSet = false;
 };
 
 }  // namespace Model

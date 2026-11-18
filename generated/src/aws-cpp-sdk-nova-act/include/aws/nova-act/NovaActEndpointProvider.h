@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/nova-act/NovaActEndpointRules.h>
 #include <aws/nova-act/NovaAct_EXPORTS.h>
 
 namespace Aws {
 namespace NovaAct {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using NovaActClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using NovaActEndpointProviderBase =
     EndpointProviderBase<NovaActClientConfiguration, NovaActBuiltInParameters, NovaActClientContextParameters>;
 
 using NovaActDefaultEpProviderBase =
-    DefaultEndpointProvider<NovaActClientConfiguration, NovaActBuiltInParameters, NovaActClientContextParameters>;
+    BDDEndpointProvider<NovaActClientConfiguration, NovaActBuiltInParameters, NovaActClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_NOVAACT_API NovaActEndpointProvider : public NovaActDefaultEpProviderB
  public:
   using NovaActResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  NovaActEndpointProvider()
-      : NovaActDefaultEpProviderBase(Aws::NovaAct::NovaActEndpointRules::GetRulesBlob(),
-                                     Aws::NovaAct::NovaActEndpointRules::RulesBlobSize) {}
+  NovaActEndpointProvider();
 
   ~NovaActEndpointProvider() {}
 };

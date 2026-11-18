@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/sagemaker-a2i-runtime/AugmentedAIRuntimeEndpointRules.h>
 #include <aws/sagemaker-a2i-runtime/AugmentedAIRuntime_EXPORTS.h>
 
 namespace Aws {
 namespace AugmentedAIRuntime {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using AugmentedAIRuntimeClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using AugmentedAIRuntimeEndpointProviderBase =
                          AugmentedAIRuntimeClientContextParameters>;
 
 using AugmentedAIRuntimeDefaultEpProviderBase =
-    DefaultEndpointProvider<AugmentedAIRuntimeClientConfiguration, AugmentedAIRuntimeBuiltInParameters,
-                            AugmentedAIRuntimeClientContextParameters>;
+    BDDEndpointProvider<AugmentedAIRuntimeClientConfiguration, AugmentedAIRuntimeBuiltInParameters,
+                        AugmentedAIRuntimeClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_AUGMENTEDAIRUNTIME_API AugmentedAIRuntimeEndpointProvider : public Aug
  public:
   using AugmentedAIRuntimeResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  AugmentedAIRuntimeEndpointProvider()
-      : AugmentedAIRuntimeDefaultEpProviderBase(Aws::AugmentedAIRuntime::AugmentedAIRuntimeEndpointRules::GetRulesBlob(),
-                                                Aws::AugmentedAIRuntime::AugmentedAIRuntimeEndpointRules::RulesBlobSize) {}
+  AugmentedAIRuntimeEndpointProvider();
 
   ~AugmentedAIRuntimeEndpointProvider() {}
 };

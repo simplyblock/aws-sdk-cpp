@@ -5,6 +5,7 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 #include <aws/marketplace-agreement/model/SortOrder.h>
 
@@ -12,10 +13,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AgreementService {
 namespace Model {
@@ -29,14 +29,16 @@ namespace Model {
 class Sort {
  public:
   AWS_AGREEMENTSERVICE_API Sort() = default;
-  AWS_AGREEMENTSERVICE_API Sort(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API Sort& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_AGREEMENTSERVICE_API Sort(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API Sort& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
-   * <p>The attribute on which the data is grouped, which can be by
-   * <code>StartTime</code> and <code>EndTime</code>. The default value is
+   * <p>The attribute on which the data is grouped, which can be
+   * <code>EndTime</code>, <code>StartTime</code>, or <code>LastUpdateTime</code>.
+   * <code>StartTime</code> and <code>LastUpdateTime</code> are supported only when
+   * <code>PartyType</code> is <code>Proposer</code>. The default value is
    * <code>EndTime</code>.</p>
    */
   inline const Aws::String& GetSortBy() const { return m_sortBy; }
@@ -56,7 +58,7 @@ class Sort {
   ///@{
   /**
    * <p>The sorting order, which can be <code>ASCENDING</code> or
-   * <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>
+   * <code>DESCENDING</code>. The default value is <code>ASCENDING</code>.</p>
    */
   inline SortOrder GetSortOrder() const { return m_sortOrder; }
   inline bool SortOrderHasBeenSet() const { return m_sortOrderHasBeenSet; }

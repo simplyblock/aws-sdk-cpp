@@ -158,7 +158,8 @@ class WorkflowStepMetadata {
 
   ///@{
   /**
-   * <p>Input parameters that Image Builder provides for the workflow step.</p>
+   * <p>Input parameters that Image Builder provides for the workflow step, as a
+   * JSON-encoded string.</p>
    */
   inline const Aws::String& GetInputs() const { return m_inputs; }
   inline bool InputsHasBeenSet() const { return m_inputsHasBeenSet; }
@@ -176,8 +177,10 @@ class WorkflowStepMetadata {
 
   ///@{
   /**
-   * <p>The file names that the workflow step created as output for this runtime
-   * instance of the workflow.</p>
+   * <p>The output values that the workflow step produced for this runtime instance
+   * of the workflow, as a JSON-encoded string. For example, a step that launches an
+   * instance outputs the instance ID. If the step failed, this field contains the
+   * error message.</p>
    */
   inline const Aws::String& GetOutputs() const { return m_outputs; }
   inline bool OutputsHasBeenSet() const { return m_outputsHasBeenSet; }
@@ -228,6 +231,41 @@ class WorkflowStepMetadata {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The current attempt number for the workflow step. The first run is attempt
+   * one. The number increases by one for each retry.</p>
+   */
+  inline int GetAttemptNumber() const { return m_attemptNumber; }
+  inline bool AttemptNumberHasBeenSet() const { return m_attemptNumberHasBeenSet; }
+  inline void SetAttemptNumber(int value) {
+    m_attemptNumberHasBeenSet = true;
+    m_attemptNumber = value;
+  }
+  inline WorkflowStepMetadata& WithAttemptNumber(int value) {
+    SetAttemptNumber(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The maximum number of attempts allowed for the workflow step, based on the
+   * retry configuration in the workflow document. If the step doesn't configure
+   * retries, the maximum is one attempt.</p>
+   */
+  inline int GetMaxAttempts() const { return m_maxAttempts; }
+  inline bool MaxAttemptsHasBeenSet() const { return m_maxAttemptsHasBeenSet; }
+  inline void SetMaxAttempts(int value) {
+    m_maxAttemptsHasBeenSet = true;
+    m_maxAttempts = value;
+  }
+  inline WorkflowStepMetadata& WithMaxAttempts(int value) {
+    SetMaxAttempts(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_stepExecutionId;
 
@@ -250,6 +288,10 @@ class WorkflowStepMetadata {
   Aws::String m_startTime;
 
   Aws::String m_endTime;
+
+  int m_attemptNumber{0};
+
+  int m_maxAttempts{0};
   bool m_stepExecutionIdHasBeenSet = false;
   bool m_nameHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
@@ -261,6 +303,8 @@ class WorkflowStepMetadata {
   bool m_outputsHasBeenSet = false;
   bool m_startTimeHasBeenSet = false;
   bool m_endTimeHasBeenSet = false;
+  bool m_attemptNumberHasBeenSet = false;
+  bool m_maxAttemptsHasBeenSet = false;
 };
 
 }  // namespace Model

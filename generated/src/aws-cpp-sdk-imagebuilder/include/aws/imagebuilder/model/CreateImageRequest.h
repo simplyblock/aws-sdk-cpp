@@ -38,7 +38,8 @@ class CreateImageRequest : public ImagebuilderRequest {
   ///@{
   /**
    * <p>The Amazon Resource Name (ARN) of the image recipe that defines how images
-   * are configured, tested, and assessed.</p>
+   * are configured, tested, and assessed. You must specify either this property or
+   * <code>containerRecipeArn</code>, but not both.</p>
    */
   inline const Aws::String& GetImageRecipeArn() const { return m_imageRecipeArn; }
   inline bool ImageRecipeArnHasBeenSet() const { return m_imageRecipeArnHasBeenSet; }
@@ -57,7 +58,8 @@ class CreateImageRequest : public ImagebuilderRequest {
   ///@{
   /**
    * <p>The Amazon Resource Name (ARN) of the container recipe that defines how
-   * images are configured and tested.</p>
+   * images are configured and tested. You must specify either this property or
+   * <code>imageRecipeArn</code>, but not both.</p>
    */
   inline const Aws::String& GetContainerRecipeArn() const { return m_containerRecipeArn; }
   inline bool ContainerRecipeArnHasBeenSet() const { return m_containerRecipeArnHasBeenSet; }
@@ -76,7 +78,9 @@ class CreateImageRequest : public ImagebuilderRequest {
   ///@{
   /**
    * <p>The Amazon Resource Name (ARN) of the distribution configuration that defines
-   * and configures the outputs of your pipeline.</p>
+   * and configures the outputs of the image build. If you don't specify a
+   * distribution configuration, Image Builder creates the output image only in the
+   * account and Amazon Web Services Region where the build runs.</p>
    */
   inline const Aws::String& GetDistributionConfigurationArn() const { return m_distributionConfigurationArn; }
   inline bool DistributionConfigurationArnHasBeenSet() const { return m_distributionConfigurationArnHasBeenSet; }
@@ -113,7 +117,8 @@ class CreateImageRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The image tests configuration of the image.</p>
+   * <p>Settings that determine whether Image Builder runs tests on the image after
+   * building it. Image tests are enabled by default.</p>
    */
   inline const ImageTestsConfiguration& GetImageTestsConfiguration() const { return m_imageTestsConfiguration; }
   inline bool ImageTestsConfigurationHasBeenSet() const { return m_imageTestsConfigurationHasBeenSet; }
@@ -131,10 +136,9 @@ class CreateImageRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Collects additional information about the image being created, including the
-   * operating system (OS) version and package list. This information is used to
-   * enhance the overall experience of using EC2 Image Builder. Enabled by
-   * default.</p>
+   * <p>Specifies whether to collect additional information about the image being
+   * created, including the operating system (OS) version and package list. Defaults
+   * to <code>true</code>.</p>
    */
   inline bool GetEnhancedImageMetadataEnabled() const { return m_enhancedImageMetadataEnabled; }
   inline bool EnhancedImageMetadataEnabledHasBeenSet() const { return m_enhancedImageMetadataEnabledHasBeenSet; }
@@ -174,8 +178,10 @@ class CreateImageRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Unique, case-sensitive identifier you provide to ensure idempotency of the
-   * request. For more information, see <a
+   * <p>A unique, case-sensitive identifier you provide to ensure that the operation
+   * runs no more than one time. If you retry a request with the same client token,
+   * Image Builder returns the original response without running the operation again.
+   * For more information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
    * idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>
    */
@@ -195,7 +201,8 @@ class CreateImageRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Contains settings for vulnerability scans.</p>
+   * <p>The settings that determine whether and how Amazon Inspector scans the image
+   * for vulnerabilities.</p>
    */
   inline const ImageScanningConfiguration& GetImageScanningConfiguration() const { return m_imageScanningConfiguration; }
   inline bool ImageScanningConfigurationHasBeenSet() const { return m_imageScanningConfigurationHasBeenSet; }
@@ -213,7 +220,9 @@ class CreateImageRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Contains an array of workflow configuration objects.</p>
+   * <p>The array of workflow configuration objects for the build. If you specify
+   * workflows, they replace the default workflows that Image Builder otherwise runs
+   * for the build, and you must also provide an <code>executionRole</code>.</p>
    */
   inline const Aws::Vector<WorkflowConfiguration>& GetWorkflows() const { return m_workflows; }
   inline bool WorkflowsHasBeenSet() const { return m_workflowsHasBeenSet; }
@@ -238,7 +247,10 @@ class CreateImageRequest : public ImagebuilderRequest {
   ///@{
   /**
    * <p>The name or Amazon Resource Name (ARN) for the IAM role you create that
-   * grants Image Builder access to perform workflow actions.</p>
+   * grants Image Builder access to perform workflow actions. This property is
+   * required if you specify <code>workflows</code>. If you don't provide a role,
+   * Image Builder uses the Image Builder service-linked role in your account, and
+   * creates it if it doesn't exist.</p>
    */
   inline const Aws::String& GetExecutionRole() const { return m_executionRole; }
   inline bool ExecutionRoleHasBeenSet() const { return m_executionRoleHasBeenSet; }
@@ -256,7 +268,10 @@ class CreateImageRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Define logging configuration for the image build process.</p>
+   * <p>The CloudWatch Logs log group where Image Builder sends the image build logs.
+   * If you specify a log group name outside of the <code>/aws/imagebuilder/</code>
+   * namespace, you must also provide an <code>executionRole</code> that has
+   * permission to write to that log group.</p>
    */
   inline const ImageLoggingConfiguration& GetLoggingConfiguration() const { return m_loggingConfiguration; }
   inline bool LoggingConfigurationHasBeenSet() const { return m_loggingConfigurationHasBeenSet; }

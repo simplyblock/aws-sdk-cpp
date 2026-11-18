@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -10,13 +10,13 @@
 #include <aws/network-firewall/model/GetAnalysisReportResultsPaginationTraits.h>
 #include <aws/network-firewall/model/ListAnalysisReportsPaginationTraits.h>
 #include <aws/network-firewall/model/ListContainerAssociationsPaginationTraits.h>
+#include <aws/network-firewall/model/ListContextStoresPaginationTraits.h>
 #include <aws/network-firewall/model/ListFirewallPoliciesPaginationTraits.h>
+#include <aws/network-firewall/model/ListFirewallPoliciesV2PaginationTraits.h>
 #include <aws/network-firewall/model/ListFirewallsPaginationTraits.h>
 #include <aws/network-firewall/model/ListFlowOperationResultsPaginationTraits.h>
 #include <aws/network-firewall/model/ListFlowOperationsPaginationTraits.h>
-#include <aws/network-firewall/model/ListProxiesPaginationTraits.h>
-#include <aws/network-firewall/model/ListProxyConfigurationsPaginationTraits.h>
-#include <aws/network-firewall/model/ListProxyRuleGroupsPaginationTraits.h>
+#include <aws/network-firewall/model/ListResourcesInContextStorePaginationTraits.h>
 #include <aws/network-firewall/model/ListRuleGroupsPaginationTraits.h>
 #include <aws/network-firewall/model/ListTLSInspectionConfigurationsPaginationTraits.h>
 #include <aws/network-firewall/model/ListTagsForResourcePaginationTraits.h>
@@ -67,6 +67,18 @@ class NetworkFirewallPaginationBase {
   }
 
   /**
+   * Create a paginator for ListContextStores operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContextStoresRequest,
+                                    Pagination::ListContextStoresPaginationTraits<DerivedClient>>
+  ListContextStoresPaginator(const Model::ListContextStoresRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContextStoresRequest,
+                                             Pagination::ListContextStoresPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for ListFirewallPolicies operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListFirewallPoliciesRequest,
@@ -75,6 +87,18 @@ class NetworkFirewallPaginationBase {
     request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListFirewallPoliciesRequest,
                                              Pagination::ListFirewallPoliciesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListFirewallPoliciesV2 operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListFirewallPoliciesV2Request,
+                                    Pagination::ListFirewallPoliciesV2PaginationTraits<DerivedClient>>
+  ListFirewallPoliciesV2Paginator(const Model::ListFirewallPoliciesV2Request& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListFirewallPoliciesV2Request,
+                                             Pagination::ListFirewallPoliciesV2PaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
   }
 
@@ -114,37 +138,14 @@ class NetworkFirewallPaginationBase {
   }
 
   /**
-   * Create a paginator for ListProxies operation
+   * Create a paginator for ListResourcesInContextStore operation
    */
-  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProxiesRequest, Pagination::ListProxiesPaginationTraits<DerivedClient>>
-  ListProxiesPaginator(const Model::ListProxiesRequest& request) {
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListResourcesInContextStoreRequest,
+                                    Pagination::ListResourcesInContextStorePaginationTraits<DerivedClient>>
+  ListResourcesInContextStorePaginator(const Model::ListResourcesInContextStoreRequest& request) {
     request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
-    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProxiesRequest,
-                                             Pagination::ListProxiesPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
-                                                                                                     request};
-  }
-
-  /**
-   * Create a paginator for ListProxyConfigurations operation
-   */
-  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProxyConfigurationsRequest,
-                                    Pagination::ListProxyConfigurationsPaginationTraits<DerivedClient>>
-  ListProxyConfigurationsPaginator(const Model::ListProxyConfigurationsRequest& request) {
-    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
-    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProxyConfigurationsRequest,
-                                             Pagination::ListProxyConfigurationsPaginationTraits<DerivedClient>>{
-        static_cast<DerivedClient*>(this), request};
-  }
-
-  /**
-   * Create a paginator for ListProxyRuleGroups operation
-   */
-  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProxyRuleGroupsRequest,
-                                    Pagination::ListProxyRuleGroupsPaginationTraits<DerivedClient>>
-  ListProxyRuleGroupsPaginator(const Model::ListProxyRuleGroupsRequest& request) {
-    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
-    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListProxyRuleGroupsRequest,
-                                             Pagination::ListProxyRuleGroupsPaginationTraits<DerivedClient>>{
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListResourcesInContextStoreRequest,
+                                             Pagination::ListResourcesInContextStorePaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
   }
 

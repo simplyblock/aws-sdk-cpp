@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-iam "C++ SDK for the AWS iam service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-iam "C++ SDK for AWS Identity and Access Management" aws-cpp-sdk-core)
 
 file(GLOB AWS_IAM_HEADERS
     "include/aws/iam/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_IAM_HEADERS
 
 file(GLOB AWS_IAM_MODEL_HEADERS
     "include/aws/iam/model/*.h"
+)
+
+file(GLOB AWS_IAM_INTERNAL_HEADERS
+    "include/aws/iam/internal/*.h"
 )
 
 file(GLOB AWS_IAM_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_IAM_MODEL_SOURCE
 
 file(GLOB IAM_UNIFIED_HEADERS
     ${AWS_IAM_HEADERS}
+    ${AWS_IAM_INTERNAL_HEADERS}
     ${AWS_IAM_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\iam" FILES ${AWS_IAM_HEADERS})
+        source_group("Header Files\\aws\\iam\\internal" FILES ${AWS_IAM_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\iam\\model" FILES ${AWS_IAM_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_IAM_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_IAM_MODEL_SOURCE})

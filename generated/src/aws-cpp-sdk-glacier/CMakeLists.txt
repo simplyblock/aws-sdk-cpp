@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-glacier "C++ SDK for the AWS glacier service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-glacier "C++ SDK for Amazon Glacier" aws-cpp-sdk-core)
 
 file(GLOB AWS_GLACIER_HEADERS
     "include/aws/glacier/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_GLACIER_HEADERS
 
 file(GLOB AWS_GLACIER_MODEL_HEADERS
     "include/aws/glacier/model/*.h"
+)
+
+file(GLOB AWS_GLACIER_INTERNAL_HEADERS
+    "include/aws/glacier/internal/*.h"
 )
 
 file(GLOB AWS_GLACIER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_GLACIER_MODEL_SOURCE
 
 file(GLOB GLACIER_UNIFIED_HEADERS
     ${AWS_GLACIER_HEADERS}
+    ${AWS_GLACIER_INTERNAL_HEADERS}
     ${AWS_GLACIER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\glacier" FILES ${AWS_GLACIER_HEADERS})
+        source_group("Header Files\\aws\\glacier\\internal" FILES ${AWS_GLACIER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\glacier\\model" FILES ${AWS_GLACIER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_GLACIER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_GLACIER_MODEL_SOURCE})

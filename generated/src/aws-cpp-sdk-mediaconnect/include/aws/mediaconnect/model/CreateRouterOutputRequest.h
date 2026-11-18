@@ -9,8 +9,10 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediaconnect/MediaConnectRequest.h>
 #include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+#include <aws/mediaconnect/model/FabricConfiguration.h>
 #include <aws/mediaconnect/model/MaintenanceConfiguration.h>
 #include <aws/mediaconnect/model/RouterOutputConfiguration.h>
+#include <aws/mediaconnect/model/RouterOutputProcessors.h>
 #include <aws/mediaconnect/model/RouterOutputTier.h>
 #include <aws/mediaconnect/model/RoutingScope.h>
 
@@ -106,7 +108,13 @@ class CreateRouterOutputRequest : public MediaConnectRequest {
 
   ///@{
   /**
-   * <p>The tier level for the router output.</p>
+   * <p>The tier level for the router output. The tier sets the maximum bitrate, in
+   * Mbps, for the router output. Valid values include the following:</p> <ul> <li>
+   * <p> <code>OUTPUT_20</code> – 20 Mbps</p> </li> <li> <p> <code>OUTPUT_50</code> –
+   * 50 Mbps</p> </li> <li> <p> <code>OUTPUT_100</code> – 100 Mbps</p> </li> <li> <p>
+   * <code>OUTPUT_250</code> – 250 Mbps</p> </li> <li> <p> <code>OUTPUT_500</code> –
+   * 500 Mbps</p> </li> </ul> <p>The 250 Mbps and 500 Mbps tiers are high-bitrate
+   * tiers that support TR-07 (JPEG XS) workflows.</p>
    */
   inline RouterOutputTier GetTier() const { return m_tier; }
   inline bool TierHasBeenSet() const { return m_tierHasBeenSet; }
@@ -205,6 +213,24 @@ class CreateRouterOutputRequest : public MediaConnectRequest {
 
   ///@{
   /**
+   * <p>The fabric configuration settings for the router output.</p>
+   */
+  inline const FabricConfiguration& GetFabricConfiguration() const { return m_fabricConfiguration; }
+  inline bool FabricConfigurationHasBeenSet() const { return m_fabricConfigurationHasBeenSet; }
+  template <typename FabricConfigurationT = FabricConfiguration>
+  void SetFabricConfiguration(FabricConfigurationT&& value) {
+    m_fabricConfigurationHasBeenSet = true;
+    m_fabricConfiguration = std::forward<FabricConfigurationT>(value);
+  }
+  template <typename FabricConfigurationT = FabricConfiguration>
+  CreateRouterOutputRequest& WithFabricConfiguration(FabricConfigurationT&& value) {
+    SetFabricConfiguration(std::forward<FabricConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>A unique identifier for the request to ensure idempotency.</p>
    */
   inline const Aws::String& GetClientToken() const { return m_clientToken; }
@@ -217,6 +243,24 @@ class CreateRouterOutputRequest : public MediaConnectRequest {
   template <typename ClientTokenT = Aws::String>
   CreateRouterOutputRequest& WithClientToken(ClientTokenT&& value) {
     SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The processor settings for the router output.</p>
+   */
+  inline const RouterOutputProcessors& GetProcessors() const { return m_processors; }
+  inline bool ProcessorsHasBeenSet() const { return m_processorsHasBeenSet; }
+  template <typename ProcessorsT = RouterOutputProcessors>
+  void SetProcessors(ProcessorsT&& value) {
+    m_processorsHasBeenSet = true;
+    m_processors = std::forward<ProcessorsT>(value);
+  }
+  template <typename ProcessorsT = RouterOutputProcessors>
+  CreateRouterOutputRequest& WithProcessors(ProcessorsT&& value) {
+    SetProcessors(std::forward<ProcessorsT>(value));
     return *this;
   }
   ///@}
@@ -239,7 +283,11 @@ class CreateRouterOutputRequest : public MediaConnectRequest {
 
   Aws::Map<Aws::String, Aws::String> m_tags;
 
+  FabricConfiguration m_fabricConfiguration;
+
   Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+
+  RouterOutputProcessors m_processors;
   bool m_nameHasBeenSet = false;
   bool m_configurationHasBeenSet = false;
   bool m_maximumBitrateHasBeenSet = false;
@@ -249,7 +297,9 @@ class CreateRouterOutputRequest : public MediaConnectRequest {
   bool m_availabilityZoneHasBeenSet = false;
   bool m_maintenanceConfigurationHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
+  bool m_fabricConfigurationHasBeenSet = false;
   bool m_clientTokenHasBeenSet = true;
+  bool m_processorsHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -12,6 +12,7 @@
 #include <aws/trustedadvisor/model/ListOrganizationRecommendationAccountsPaginationTraits.h>
 #include <aws/trustedadvisor/model/ListRecommendationResourcesPaginationTraits.h>
 #include <aws/trustedadvisor/model/ListChecksPaginationTraits.h>
+#include <aws/trustedadvisor/model/ListRecommendationsForResourcePaginationTraits.h>
 #include <aws/trustedadvisor/model/ListOrganizationRecommendationResourcesPaginationTraits.h>
 #include <aws/trustedadvisor/model/ListOrganizationRecommendationsPaginationTraits.h>
 
@@ -23,6 +24,6 @@ class TrustedAdvisorPaginationCompilationTest : public Aws::Testing::AwsCppSdkGT
 
 TEST_F(TrustedAdvisorPaginationCompilationTest, TrustedAdvisorPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

@@ -7,8 +7,10 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediaconnect/MediaConnectRequest.h>
 #include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+#include <aws/mediaconnect/model/FabricConfiguration.h>
 #include <aws/mediaconnect/model/MaintenanceConfiguration.h>
 #include <aws/mediaconnect/model/RouterOutputConfiguration.h>
+#include <aws/mediaconnect/model/RouterOutputProcessors.h>
 #include <aws/mediaconnect/model/RouterOutputTier.h>
 #include <aws/mediaconnect/model/RoutingScope.h>
 
@@ -124,7 +126,13 @@ class UpdateRouterOutputRequest : public MediaConnectRequest {
 
   ///@{
   /**
-   * <p>The updated tier level for the router output.</p>
+   * <p>The updated tier level for the router output. The tier sets the maximum
+   * bitrate, in Mbps, for the router output. Valid values include the following:</p>
+   * <ul> <li> <p> <code>OUTPUT_20</code> – 20 Mbps</p> </li> <li> <p>
+   * <code>OUTPUT_50</code> – 50 Mbps</p> </li> <li> <p> <code>OUTPUT_100</code> –
+   * 100 Mbps</p> </li> <li> <p> <code>OUTPUT_250</code> – 250 Mbps</p> </li> <li>
+   * <p> <code>OUTPUT_500</code> – 500 Mbps</p> </li> </ul> <p>The 250 Mbps and 500
+   * Mbps tiers are high-bitrate tiers that support TR-07 (JPEG XS) workflows.</p>
    */
   inline RouterOutputTier GetTier() const { return m_tier; }
   inline bool TierHasBeenSet() const { return m_tierHasBeenSet; }
@@ -156,6 +164,46 @@ class UpdateRouterOutputRequest : public MediaConnectRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The updated fabric configuration settings for the router output. You cannot
+   * update the fabric configuration while the output has an active route. You must
+   * unroute the output before updating the fabric configuration.</p>
+   */
+  inline const FabricConfiguration& GetFabricConfiguration() const { return m_fabricConfiguration; }
+  inline bool FabricConfigurationHasBeenSet() const { return m_fabricConfigurationHasBeenSet; }
+  template <typename FabricConfigurationT = FabricConfiguration>
+  void SetFabricConfiguration(FabricConfigurationT&& value) {
+    m_fabricConfigurationHasBeenSet = true;
+    m_fabricConfiguration = std::forward<FabricConfigurationT>(value);
+  }
+  template <typename FabricConfigurationT = FabricConfiguration>
+  UpdateRouterOutputRequest& WithFabricConfiguration(FabricConfigurationT&& value) {
+    SetFabricConfiguration(std::forward<FabricConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The updated processor settings for the router output. When you update the
+   * processors, include every setting that you want to keep. MediaConnect resets the
+   * settings that you don't specify to their defaults.</p>
+   */
+  inline const RouterOutputProcessors& GetProcessors() const { return m_processors; }
+  inline bool ProcessorsHasBeenSet() const { return m_processorsHasBeenSet; }
+  template <typename ProcessorsT = RouterOutputProcessors>
+  void SetProcessors(ProcessorsT&& value) {
+    m_processorsHasBeenSet = true;
+    m_processors = std::forward<ProcessorsT>(value);
+  }
+  template <typename ProcessorsT = RouterOutputProcessors>
+  UpdateRouterOutputRequest& WithProcessors(ProcessorsT&& value) {
+    SetProcessors(std::forward<ProcessorsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_arn;
 
@@ -170,6 +218,10 @@ class UpdateRouterOutputRequest : public MediaConnectRequest {
   RouterOutputTier m_tier{RouterOutputTier::NOT_SET};
 
   MaintenanceConfiguration m_maintenanceConfiguration;
+
+  FabricConfiguration m_fabricConfiguration;
+
+  RouterOutputProcessors m_processors;
   bool m_arnHasBeenSet = false;
   bool m_nameHasBeenSet = false;
   bool m_configurationHasBeenSet = false;
@@ -177,6 +229,8 @@ class UpdateRouterOutputRequest : public MediaConnectRequest {
   bool m_routingScopeHasBeenSet = false;
   bool m_tierHasBeenSet = false;
   bool m_maintenanceConfigurationHasBeenSet = false;
+  bool m_fabricConfigurationHasBeenSet = false;
+  bool m_processorsHasBeenSet = false;
 };
 
 }  // namespace Model

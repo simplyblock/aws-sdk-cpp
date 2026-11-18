@@ -11,20 +11,21 @@
 #include <aws/appstream/model/ContentRedirection.h>
 #include <aws/appstream/model/StackError.h>
 #include <aws/appstream/model/StorageConnector.h>
+#include <aws/appstream/model/StorageConnectorAuthentication.h>
 #include <aws/appstream/model/StreamingExperienceSettings.h>
 #include <aws/appstream/model/UserSetting.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AppStream {
 namespace Model {
@@ -37,9 +38,9 @@ namespace Model {
 class Stack {
  public:
   AWS_APPSTREAM_API Stack() = default;
-  AWS_APPSTREAM_API Stack(Aws::Utils::Json::JsonView jsonValue);
-  AWS_APPSTREAM_API Stack& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_APPSTREAM_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_APPSTREAM_API Stack(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_APPSTREAM_API Stack& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_APPSTREAM_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -367,6 +368,26 @@ class Stack {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Indicates whether users' cloud storage authentication persists across
+   * streaming sessions. When this attribute is FORCE_REAUTHENTICATION, WorkSpaces
+   * Applications removes the stored authentication for the stack's OneDrive and
+   * Google Drive connectors when a user's session ends. The user links their cloud
+   * storage again on their next session. The default is REUSE_CREDENTIALS.</p>
+   */
+  inline StorageConnectorAuthentication GetStorageConnectorAuthentication() const { return m_storageConnectorAuthentication; }
+  inline bool StorageConnectorAuthenticationHasBeenSet() const { return m_storageConnectorAuthenticationHasBeenSet; }
+  inline void SetStorageConnectorAuthentication(StorageConnectorAuthentication value) {
+    m_storageConnectorAuthenticationHasBeenSet = true;
+    m_storageConnectorAuthentication = value;
+  }
+  inline Stack& WithStorageConnectorAuthentication(StorageConnectorAuthentication value) {
+    SetStorageConnectorAuthentication(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_arn;
 
@@ -399,6 +420,8 @@ class Stack {
   ContentRedirection m_contentRedirection;
 
   AgentAccessConfig m_agentAccessConfig;
+
+  StorageConnectorAuthentication m_storageConnectorAuthentication{StorageConnectorAuthentication::NOT_SET};
   bool m_arnHasBeenSet = false;
   bool m_nameHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
@@ -415,6 +438,7 @@ class Stack {
   bool m_streamingExperienceSettingsHasBeenSet = false;
   bool m_contentRedirectionHasBeenSet = false;
   bool m_agentAccessConfigHasBeenSet = false;
+  bool m_storageConnectorAuthenticationHasBeenSet = false;
 };
 
 }  // namespace Model

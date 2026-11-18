@@ -27,6 +27,10 @@ Aws::String CreateTrustAnchorRequest::SerializePayload() const {
     payload.WithBool("enabled", m_enabled);
   }
 
+  if (m_crlDpRevocationEnabledHasBeenSet) {
+    payload.WithBool("crlDpRevocationEnabled", m_crlDpRevocationEnabled);
+  }
+
   if (m_tagsHasBeenSet) {
     Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
     for (unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex) {
@@ -42,6 +46,10 @@ Aws::String CreateTrustAnchorRequest::SerializePayload() const {
       notificationSettingsJsonList[notificationSettingsIndex].AsObject(m_notificationSettings[notificationSettingsIndex].Jsonize());
     }
     payload.WithArray("notificationSettings", std::move(notificationSettingsJsonList));
+  }
+
+  if (m_aliasNameHasBeenSet) {
+    payload.WithString("aliasName", m_aliasName);
   }
 
   return payload.View().WriteReadable();

@@ -48,5 +48,17 @@ Aws::String UpdateCodeReviewRequest::SerializePayload() const {
     payload.WithString("validationMode", ValidationModeMapper::GetNameForValidationMode(m_validationMode));
   }
 
+  if (m_maxTaskHoursHasBeenSet) {
+    payload.WithDouble("maxTaskHours", m_maxTaskHours);
+  }
+
+  if (m_reportDestinationHasBeenSet) {
+    payload.WithObject("reportDestination", m_reportDestination.Jsonize());
+  }
+
+  if (m_reportFiltersHasBeenSet) {
+    payload.WithObject("reportFilters", m_reportFilters.Jsonize());
+  }
+
   return payload.View().WriteReadable();
 }

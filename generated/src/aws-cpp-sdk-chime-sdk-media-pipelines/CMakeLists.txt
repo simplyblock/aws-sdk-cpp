@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-chime-sdk-media-pipelines "C++ SDK for the AWS chime-sdk-media-pipelines service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-chime-sdk-media-pipelines "C++ SDK for Amazon Chime SDK Media Pipelines" aws-cpp-sdk-core)
 
 file(GLOB AWS_CHIME-SDK-MEDIA-PIPELINES_HEADERS
     "include/aws/chime-sdk-media-pipelines/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CHIME-SDK-MEDIA-PIPELINES_HEADERS
 
 file(GLOB AWS_CHIME-SDK-MEDIA-PIPELINES_MODEL_HEADERS
     "include/aws/chime-sdk-media-pipelines/model/*.h"
+)
+
+file(GLOB AWS_CHIME-SDK-MEDIA-PIPELINES_INTERNAL_HEADERS
+    "include/aws/chime-sdk-media-pipelines/internal/*.h"
 )
 
 file(GLOB AWS_CHIME-SDK-MEDIA-PIPELINES_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CHIME-SDK-MEDIA-PIPELINES_MODEL_SOURCE
 
 file(GLOB CHIME-SDK-MEDIA-PIPELINES_UNIFIED_HEADERS
     ${AWS_CHIME-SDK-MEDIA-PIPELINES_HEADERS}
+    ${AWS_CHIME-SDK-MEDIA-PIPELINES_INTERNAL_HEADERS}
     ${AWS_CHIME-SDK-MEDIA-PIPELINES_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\chime-sdk-media-pipelines" FILES ${AWS_CHIME-SDK-MEDIA-PIPELINES_HEADERS})
+        source_group("Header Files\\aws\\chime-sdk-media-pipelines\\internal" FILES ${AWS_CHIME-SDK-MEDIA-PIPELINES_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\chime-sdk-media-pipelines\\model" FILES ${AWS_CHIME-SDK-MEDIA-PIPELINES_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CHIME-SDK-MEDIA-PIPELINES_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CHIME-SDK-MEDIA-PIPELINES_MODEL_SOURCE})

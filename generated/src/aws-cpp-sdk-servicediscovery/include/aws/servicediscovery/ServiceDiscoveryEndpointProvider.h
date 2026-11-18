@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/servicediscovery/ServiceDiscoveryEndpointRules.h>
 #include <aws/servicediscovery/ServiceDiscovery_EXPORTS.h>
 
 namespace Aws {
 namespace ServiceDiscovery {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ServiceDiscoveryClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using ServiceDiscoveryEndpointProviderBase =
     EndpointProviderBase<ServiceDiscoveryClientConfiguration, ServiceDiscoveryBuiltInParameters, ServiceDiscoveryClientContextParameters>;
 
 using ServiceDiscoveryDefaultEpProviderBase =
-    DefaultEndpointProvider<ServiceDiscoveryClientConfiguration, ServiceDiscoveryBuiltInParameters,
-                            ServiceDiscoveryClientContextParameters>;
+    BDDEndpointProvider<ServiceDiscoveryClientConfiguration, ServiceDiscoveryBuiltInParameters, ServiceDiscoveryClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_SERVICEDISCOVERY_API ServiceDiscoveryEndpointProvider : public Service
  public:
   using ServiceDiscoveryResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ServiceDiscoveryEndpointProvider()
-      : ServiceDiscoveryDefaultEpProviderBase(Aws::ServiceDiscovery::ServiceDiscoveryEndpointRules::GetRulesBlob(),
-                                              Aws::ServiceDiscovery::ServiceDiscoveryEndpointRules::RulesBlobSize) {}
+  ServiceDiscoveryEndpointProvider();
 
   ~ServiceDiscoveryEndpointProvider() {}
 };

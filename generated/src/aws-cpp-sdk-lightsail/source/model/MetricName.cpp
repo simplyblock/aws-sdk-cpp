@@ -38,8 +38,17 @@ static const int DiskQueueDepth_HASH = HashingUtils::HashString("DiskQueueDepth"
 static const int FreeStorageSpace_HASH = HashingUtils::HashString("FreeStorageSpace");
 static const int NetworkReceiveThroughput_HASH = HashingUtils::HashString("NetworkReceiveThroughput");
 static const int NetworkTransmitThroughput_HASH = HashingUtils::HashString("NetworkTransmitThroughput");
+static const int FreeableMemory_HASH = HashingUtils::HashString("FreeableMemory");
+static const int SwapUsage_HASH = HashingUtils::HashString("SwapUsage");
 static const int BurstCapacityTime_HASH = HashingUtils::HashString("BurstCapacityTime");
 static const int BurstCapacityPercentage_HASH = HashingUtils::HashString("BurstCapacityPercentage");
+static const int DiskReadOps_HASH = HashingUtils::HashString("DiskReadOps");
+static const int DiskWriteOps_HASH = HashingUtils::HashString("DiskWriteOps");
+static const int DiskReadBytes_HASH = HashingUtils::HashString("DiskReadBytes");
+static const int DiskWriteBytes_HASH = HashingUtils::HashString("DiskWriteBytes");
+static const int DiskTotalReadTime_HASH = HashingUtils::HashString("DiskTotalReadTime");
+static const int DiskTotalWriteTime_HASH = HashingUtils::HashString("DiskTotalWriteTime");
+static const int DiskQueueLength_HASH = HashingUtils::HashString("DiskQueueLength");
 
 MetricName GetMetricNameForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -89,10 +98,28 @@ MetricName GetMetricNameForName(const Aws::String& name) {
     return MetricName::NetworkReceiveThroughput;
   } else if (hashCode == NetworkTransmitThroughput_HASH) {
     return MetricName::NetworkTransmitThroughput;
+  } else if (hashCode == FreeableMemory_HASH) {
+    return MetricName::FreeableMemory;
+  } else if (hashCode == SwapUsage_HASH) {
+    return MetricName::SwapUsage;
   } else if (hashCode == BurstCapacityTime_HASH) {
     return MetricName::BurstCapacityTime;
   } else if (hashCode == BurstCapacityPercentage_HASH) {
     return MetricName::BurstCapacityPercentage;
+  } else if (hashCode == DiskReadOps_HASH) {
+    return MetricName::DiskReadOps;
+  } else if (hashCode == DiskWriteOps_HASH) {
+    return MetricName::DiskWriteOps;
+  } else if (hashCode == DiskReadBytes_HASH) {
+    return MetricName::DiskReadBytes;
+  } else if (hashCode == DiskWriteBytes_HASH) {
+    return MetricName::DiskWriteBytes;
+  } else if (hashCode == DiskTotalReadTime_HASH) {
+    return MetricName::DiskTotalReadTime;
+  } else if (hashCode == DiskTotalWriteTime_HASH) {
+    return MetricName::DiskTotalWriteTime;
+  } else if (hashCode == DiskQueueLength_HASH) {
+    return MetricName::DiskQueueLength;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -153,10 +180,28 @@ Aws::String GetNameForMetricName(MetricName enumValue) {
       return "NetworkReceiveThroughput";
     case MetricName::NetworkTransmitThroughput:
       return "NetworkTransmitThroughput";
+    case MetricName::FreeableMemory:
+      return "FreeableMemory";
+    case MetricName::SwapUsage:
+      return "SwapUsage";
     case MetricName::BurstCapacityTime:
       return "BurstCapacityTime";
     case MetricName::BurstCapacityPercentage:
       return "BurstCapacityPercentage";
+    case MetricName::DiskReadOps:
+      return "DiskReadOps";
+    case MetricName::DiskWriteOps:
+      return "DiskWriteOps";
+    case MetricName::DiskReadBytes:
+      return "DiskReadBytes";
+    case MetricName::DiskWriteBytes:
+      return "DiskWriteBytes";
+    case MetricName::DiskTotalReadTime:
+      return "DiskTotalReadTime";
+    case MetricName::DiskTotalWriteTime:
+      return "DiskTotalWriteTime";
+    case MetricName::DiskQueueLength:
+      return "DiskQueueLength";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

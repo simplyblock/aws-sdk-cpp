@@ -7,13 +7,16 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/route53profiles/Route53ProfilesClient.h>
+#include <aws/route53profiles/Route53ProfilesClientPagination.h>
 #include <aws/route53profiles/Route53ProfilesEndpointProvider.h>
-#include <aws/route53profiles/Route53ProfilesEndpointRules.h>
 #include <aws/route53profiles/Route53ProfilesErrorMarshaller.h>
 #include <aws/route53profiles/Route53ProfilesErrors.h>
+#include <aws/route53profiles/Route53ProfilesPaginationBase.h>
 #include <aws/route53profiles/Route53ProfilesRequest.h>
 #include <aws/route53profiles/Route53ProfilesServiceClientModel.h>
+#include <aws/route53profiles/Route53ProfilesWaiter.h>
 #include <aws/route53profiles/Route53Profiles_EXPORTS.h>
+#include <aws/route53profiles/internal/Route53ProfilesEndpointRules.h>
 #include <aws/route53profiles/model/AssociateProfileRequest.h>
 #include <aws/route53profiles/model/AssociateProfileResult.h>
 #include <aws/route53profiles/model/AssociateResourceToProfileRequest.h>
@@ -34,10 +37,13 @@
 #include <aws/route53profiles/model/GetProfileResult.h>
 #include <aws/route53profiles/model/InvalidParameterException.h>
 #include <aws/route53profiles/model/LimitExceededException.h>
+#include <aws/route53profiles/model/ListProfileAssociationsPaginationTraits.h>
 #include <aws/route53profiles/model/ListProfileAssociationsRequest.h>
 #include <aws/route53profiles/model/ListProfileAssociationsResult.h>
+#include <aws/route53profiles/model/ListProfileResourceAssociationsPaginationTraits.h>
 #include <aws/route53profiles/model/ListProfileResourceAssociationsRequest.h>
 #include <aws/route53profiles/model/ListProfileResourceAssociationsResult.h>
+#include <aws/route53profiles/model/ListProfilesPaginationTraits.h>
 #include <aws/route53profiles/model/ListProfilesRequest.h>
 #include <aws/route53profiles/model/ListProfilesResult.h>
 #include <aws/route53profiles/model/ListTagsForResourceRequest.h>
@@ -55,6 +61,8 @@
 #include <aws/route53profiles/model/TagResourceResult.h>
 #include <aws/route53profiles/model/UntagResourceRequest.h>
 #include <aws/route53profiles/model/UntagResourceResult.h>
+#include <aws/route53profiles/model/UpdateProfileAssociationRequest.h>
+#include <aws/route53profiles/model/UpdateProfileAssociationResult.h>
 #include <aws/route53profiles/model/UpdateProfileResourceAssociationRequest.h>
 #include <aws/route53profiles/model/UpdateProfileResourceAssociationResult.h>
 

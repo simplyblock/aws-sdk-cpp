@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/codecatalyst/CodeCatalystEndpointRules.h>
 #include <aws/codecatalyst/CodeCatalyst_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace CodeCatalyst {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using CodeCatalystClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using CodeCatalystEndpointProviderBase =
     EndpointProviderBase<CodeCatalystClientConfiguration, CodeCatalystBuiltInParameters, CodeCatalystClientContextParameters>;
 
 using CodeCatalystDefaultEpProviderBase =
-    DefaultEndpointProvider<CodeCatalystClientConfiguration, CodeCatalystBuiltInParameters, CodeCatalystClientContextParameters>;
+    BDDEndpointProvider<CodeCatalystClientConfiguration, CodeCatalystBuiltInParameters, CodeCatalystClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_CODECATALYST_API CodeCatalystEndpointProvider : public CodeCatalystDef
  public:
   using CodeCatalystResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  CodeCatalystEndpointProvider()
-      : CodeCatalystDefaultEpProviderBase(Aws::CodeCatalyst::CodeCatalystEndpointRules::GetRulesBlob(),
-                                          Aws::CodeCatalyst::CodeCatalystEndpointRules::RulesBlobSize) {}
+  CodeCatalystEndpointProvider();
 
   ~CodeCatalystEndpointProvider() {}
 };

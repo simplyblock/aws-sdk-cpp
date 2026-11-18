@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/iot-managed-integrations/IoTManagedIntegrationsEndpointRules.h>
 #include <aws/iot-managed-integrations/IoTManagedIntegrations_EXPORTS.h>
 
 namespace Aws {
 namespace IoTManagedIntegrations {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using IoTManagedIntegrationsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using IoTManagedIntegrationsEndpointProviderBase =
                          IoTManagedIntegrationsClientContextParameters>;
 
 using IoTManagedIntegrationsDefaultEpProviderBase =
-    DefaultEndpointProvider<IoTManagedIntegrationsClientConfiguration, IoTManagedIntegrationsBuiltInParameters,
-                            IoTManagedIntegrationsClientContextParameters>;
+    BDDEndpointProvider<IoTManagedIntegrationsClientConfiguration, IoTManagedIntegrationsBuiltInParameters,
+                        IoTManagedIntegrationsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_IOTMANAGEDINTEGRATIONS_API IoTManagedIntegrationsEndpointProvider : pu
  public:
   using IoTManagedIntegrationsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  IoTManagedIntegrationsEndpointProvider()
-      : IoTManagedIntegrationsDefaultEpProviderBase(Aws::IoTManagedIntegrations::IoTManagedIntegrationsEndpointRules::GetRulesBlob(),
-                                                    Aws::IoTManagedIntegrations::IoTManagedIntegrationsEndpointRules::RulesBlobSize) {}
+  IoTManagedIntegrationsEndpointProvider();
 
   ~IoTManagedIntegrationsEndpointProvider() {}
 };

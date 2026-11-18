@@ -121,19 +121,19 @@ class GitHubConfiguration {
 
   ///@{
   /**
-   * <p>Optional role ARN that AIDevOps assumes at runtime for automatic verification
-   * testing and VPC connectivity on this association.</p>
+   * <p>The identifier of the release management association that this repository
+   * maps to for automatic verification testing.</p>
    */
-  inline const Aws::String& GetRuntimeRoleArn() const { return m_runtimeRoleArn; }
-  inline bool RuntimeRoleArnHasBeenSet() const { return m_runtimeRoleArnHasBeenSet; }
-  template <typename RuntimeRoleArnT = Aws::String>
-  void SetRuntimeRoleArn(RuntimeRoleArnT&& value) {
-    m_runtimeRoleArnHasBeenSet = true;
-    m_runtimeRoleArn = std::forward<RuntimeRoleArnT>(value);
+  inline const Aws::String& GetReleaseManagementAssociationId() const { return m_releaseManagementAssociationId; }
+  inline bool ReleaseManagementAssociationIdHasBeenSet() const { return m_releaseManagementAssociationIdHasBeenSet; }
+  template <typename ReleaseManagementAssociationIdT = Aws::String>
+  void SetReleaseManagementAssociationId(ReleaseManagementAssociationIdT&& value) {
+    m_releaseManagementAssociationIdHasBeenSet = true;
+    m_releaseManagementAssociationId = std::forward<ReleaseManagementAssociationIdT>(value);
   }
-  template <typename RuntimeRoleArnT = Aws::String>
-  GitHubConfiguration& WithRuntimeRoleArn(RuntimeRoleArnT&& value) {
-    SetRuntimeRoleArn(std::forward<RuntimeRoleArnT>(value));
+  template <typename ReleaseManagementAssociationIdT = Aws::String>
+  GitHubConfiguration& WithReleaseManagementAssociationId(ReleaseManagementAssociationIdT&& value) {
+    SetReleaseManagementAssociationId(std::forward<ReleaseManagementAssociationIdT>(value));
     return *this;
   }
   ///@}
@@ -148,13 +148,13 @@ class GitHubConfiguration {
 
   Aws::String m_instanceIdentifier;
 
-  Aws::String m_runtimeRoleArn;
+  Aws::String m_releaseManagementAssociationId;
   bool m_repoNameHasBeenSet = false;
   bool m_repoIdHasBeenSet = false;
   bool m_ownerHasBeenSet = false;
   bool m_ownerTypeHasBeenSet = false;
   bool m_instanceIdentifierHasBeenSet = false;
-  bool m_runtimeRoleArnHasBeenSet = false;
+  bool m_releaseManagementAssociationIdHasBeenSet = false;
 };
 
 }  // namespace Model

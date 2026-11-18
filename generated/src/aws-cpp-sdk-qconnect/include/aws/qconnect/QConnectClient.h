@@ -27,7 +27,7 @@ namespace QConnect {
  * users can take full advantage of the controls implemented in Amazon Bedrock to
  * enforce safety, security, and the responsible use of artificial intelligence
  * (AI).</p>  <p>Amazon Q in Connect is a generative AI customer service
- * assistant. It is an LLM-enhanced evolution of Amazon Connect Wisdom that
+ * assistant. It is an LLM-enhanced evolution of Connect Customer Wisdom that
  * delivers real-time recommendations to help contact center agents resolve
  * customer issues quickly and accurately.</p> <p>Amazon Q in Connect automatically
  * detects customer intent during calls and chats using conversational analytics
@@ -40,7 +40,7 @@ namespace QConnect {
  * information, see <a
  * href="https://docs.aws.amazon.com/connect/latest/adminguide/amazon-q-connect.html">Use
  * Amazon Q in Connect for generative AI powered agent assistance in real-time</a>
- * in the <i>Amazon Connect Administrator Guide</i>.</p>
+ * in the <i>Connect Customer Administrator Guide</i>.</p>
  */
 class AWS_QCONNECT_API QConnectClient : public Aws::Client::AWSJsonClient,
                                         public Aws::Client::ClientWithAsyncTemplateMethods<QConnectClient>,
@@ -384,7 +384,7 @@ class AWS_QCONNECT_API QConnectClient : public Aws::Client::AWSJsonClient,
    * can associate a step-by-step guide with multiple content resources.</p> </li>
    * </ul> <p>For more information, see <a
    * href="https://docs.aws.amazon.com/connect/latest/adminguide/integrate-q-with-guides.html">Integrate
-   * Amazon Q in Connect with step-by-step guides</a> in the <i>Amazon Connect
+   * Amazon Q in Connect with step-by-step guides</a> in the <i>Connect Customer
    * Administrator Guide</i>. </p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateContentAssociation">AWS
    * API Reference</a></p>
@@ -585,7 +585,7 @@ class AWS_QCONNECT_API QConnectClient : public Aws::Client::AWSJsonClient,
 
   /**
    * <p>Creates a session. A session is a contextual container used for generating
-   * recommendations. Amazon Connect creates a new Amazon Q in Connect session for
+   * recommendations. Connect Customer creates a new Amazon Q in Connect session for
    * each contact on which Amazon Q in Connect is enabled.</p><p><h3>See Also:</h3>
    * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateSession">AWS
@@ -883,7 +883,7 @@ class AWS_QCONNECT_API QConnectClient : public Aws::Client::AWSJsonClient,
    * <p>Deletes the content association. </p> <p>For more information about content
    * associations--what they are and when they are used--see <a
    * href="https://docs.aws.amazon.com/connect/latest/adminguide/integrate-q-with-guides.html">Integrate
-   * Amazon Q in Connect with step-by-step guides</a> in the <i>Amazon Connect
+   * Amazon Q in Connect with step-by-step guides</a> in the <i>Connect Customer
    * Administrator Guide</i>. </p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/DeleteContentAssociation">AWS
    * API Reference</a></p>
@@ -1219,7 +1219,7 @@ class AWS_QCONNECT_API QConnectClient : public Aws::Client::AWSJsonClient,
    * <p>Returns the content association.</p> <p>For more information about content
    * associations--what they are and when they are used--see <a
    * href="https://docs.aws.amazon.com/connect/latest/adminguide/integrate-q-with-guides.html">Integrate
-   * Amazon Q in Connect with step-by-step guides</a> in the <i>Amazon Connect
+   * Amazon Q in Connect with step-by-step guides</a> in the <i>Connect Customer
    * Administrator Guide</i>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetContentAssociation">AWS
    * API Reference</a></p>
@@ -1646,7 +1646,7 @@ class AWS_QCONNECT_API QConnectClient : public Aws::Client::AWSJsonClient,
    * <p>Lists the content associations.</p> <p>For more information about content
    * associations--what they are and when they are used--see <a
    * href="https://docs.aws.amazon.com/connect/latest/adminguide/integrate-q-with-guides.html">Integrate
-   * Amazon Q in Connect with step-by-step guides</a> in the <i>Amazon Connect
+   * Amazon Q in Connect with step-by-step guides</a> in the <i>Connect Customer
    * Administrator Guide</i>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListContentAssociations">AWS
    * API Reference</a></p>
@@ -1996,6 +1996,69 @@ class AWS_QCONNECT_API QConnectClient : public Aws::Client::AWSJsonClient,
   void PutFeedbackAsync(const PutFeedbackRequestT& request, const PutFeedbackResponseReceivedHandler& handler,
                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&QConnectClient::PutFeedback, request, handler, context);
+  }
+
+  /**
+   * <p>Registers a replica Region KMS key for an Amazon Q in Connect assistant. To
+   * use this operation, you must have <code>kms:GenerateDataKey</code> permission on
+   * the replica key.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/RegisterAssistantReplicaKey">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::RegisterAssistantReplicaKeyOutcome RegisterAssistantReplicaKey(
+      const Model::RegisterAssistantReplicaKeyRequest& request) const;
+
+  /**
+   * A Callable wrapper for RegisterAssistantReplicaKey that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename RegisterAssistantReplicaKeyRequestT = Model::RegisterAssistantReplicaKeyRequest>
+  Model::RegisterAssistantReplicaKeyOutcomeCallable RegisterAssistantReplicaKeyCallable(
+      const RegisterAssistantReplicaKeyRequestT& request) const {
+    return SubmitCallable(&QConnectClient::RegisterAssistantReplicaKey, request);
+  }
+
+  /**
+   * An Async wrapper for RegisterAssistantReplicaKey that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename RegisterAssistantReplicaKeyRequestT = Model::RegisterAssistantReplicaKeyRequest>
+  void RegisterAssistantReplicaKeyAsync(const RegisterAssistantReplicaKeyRequestT& request,
+                                        const RegisterAssistantReplicaKeyResponseReceivedHandler& handler,
+                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QConnectClient::RegisterAssistantReplicaKey, request, handler, context);
+  }
+
+  /**
+   * <p>Registers a replica Region KMS key for an Amazon Q in Connect knowledge base.
+   * To use this operation, you must have <code>kms:GenerateDataKey</code> permission
+   * on the replica key. You must also have <code>kms:CreateGrant</code> permission
+   * on the primary key.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/RegisterKnowledgeBaseReplicaKey">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::RegisterKnowledgeBaseReplicaKeyOutcome RegisterKnowledgeBaseReplicaKey(
+      const Model::RegisterKnowledgeBaseReplicaKeyRequest& request) const;
+
+  /**
+   * A Callable wrapper for RegisterKnowledgeBaseReplicaKey that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename RegisterKnowledgeBaseReplicaKeyRequestT = Model::RegisterKnowledgeBaseReplicaKeyRequest>
+  Model::RegisterKnowledgeBaseReplicaKeyOutcomeCallable RegisterKnowledgeBaseReplicaKeyCallable(
+      const RegisterKnowledgeBaseReplicaKeyRequestT& request) const {
+    return SubmitCallable(&QConnectClient::RegisterKnowledgeBaseReplicaKey, request);
+  }
+
+  /**
+   * An Async wrapper for RegisterKnowledgeBaseReplicaKey that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename RegisterKnowledgeBaseReplicaKeyRequestT = Model::RegisterKnowledgeBaseReplicaKeyRequest>
+  void RegisterKnowledgeBaseReplicaKeyAsync(const RegisterKnowledgeBaseReplicaKeyRequestT& request,
+                                            const RegisterKnowledgeBaseReplicaKeyResponseReceivedHandler& handler,
+                                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&QConnectClient::RegisterKnowledgeBaseReplicaKey, request, handler, context);
   }
 
   /**
@@ -2620,8 +2683,8 @@ class AWS_QCONNECT_API QConnectClient : public Aws::Client::AWSJsonClient,
 
   /**
    * <p>Updates a session. A session is a contextual container used for generating
-   * recommendations. Amazon Connect updates the existing Amazon Q in Connect session
-   * for each contact on which Amazon Q in Connect is enabled.</p><p><h3>See
+   * recommendations. Connect Customer updates the existing Amazon Q in Connect
+   * session for each contact on which Amazon Q in Connect is enabled.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/UpdateSession">AWS
    * API Reference</a></p>

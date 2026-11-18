@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-keyspacesstreams "C++ SDK for the AWS keyspacesstreams service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-keyspacesstreams "C++ SDK for Amazon Keyspaces Streams" aws-cpp-sdk-core)
 
 file(GLOB AWS_KEYSPACESSTREAMS_HEADERS
     "include/aws/keyspacesstreams/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_KEYSPACESSTREAMS_HEADERS
 
 file(GLOB AWS_KEYSPACESSTREAMS_MODEL_HEADERS
     "include/aws/keyspacesstreams/model/*.h"
+)
+
+file(GLOB AWS_KEYSPACESSTREAMS_INTERNAL_HEADERS
+    "include/aws/keyspacesstreams/internal/*.h"
 )
 
 file(GLOB AWS_KEYSPACESSTREAMS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_KEYSPACESSTREAMS_MODEL_SOURCE
 
 file(GLOB KEYSPACESSTREAMS_UNIFIED_HEADERS
     ${AWS_KEYSPACESSTREAMS_HEADERS}
+    ${AWS_KEYSPACESSTREAMS_INTERNAL_HEADERS}
     ${AWS_KEYSPACESSTREAMS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\keyspacesstreams" FILES ${AWS_KEYSPACESSTREAMS_HEADERS})
+        source_group("Header Files\\aws\\keyspacesstreams\\internal" FILES ${AWS_KEYSPACESSTREAMS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\keyspacesstreams\\model" FILES ${AWS_KEYSPACESSTREAMS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_KEYSPACESSTREAMS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_KEYSPACESSTREAMS_MODEL_SOURCE})

@@ -39,7 +39,24 @@
         {"shape":"KmsKeyDisabledException"},
         {"shape":"ResourceNotFoundException"}
       ],
-      "documentation":"<p>Associates an Amazon Web Services Key Management Service (Amazon Web Services KMS) customer managed key with the specified dataset. After this operation completes, all data published to the dataset is encrypted at rest using the specified KMS key. Callers must have <code>kms:Decrypt</code> permission on the key to read the encrypted data.</p> <p>Only the <code>default</code> dataset is supported. The <code>default</code> dataset is implicit for every account in every Region — you do not need to create it before calling this operation.</p> <p>You can call <code>AssociateDatasetKmsKey</code> on a dataset that is already associated with a KMS key to replace the existing key with a different one. To replace a key, the caller must have <code>kms:Decrypt</code> permission on both the current key and the new key.</p> <p>The KMS key that you specify must meet all of the following requirements:</p> <ul> <li> <p>It must be a symmetric encryption KMS key (key spec <code>SYMMETRIC_DEFAULT</code>, key usage <code>ENCRYPT_DECRYPT</code>). Asymmetric keys, HMAC keys, and key material types other than <code>SYMMETRIC_DEFAULT</code> are not supported.</p> </li> <li> <p>It must be enabled and not pending deletion.</p> </li> <li> <p>Its key policy must grant the CloudWatch service principal (<code>cloudwatch.amazonaws.com</code>) these permissions: <code>kms:DescribeKey</code>, <code>kms:GenerateDataKey</code>, <code>kms:Encrypt</code>, <code>kms:Decrypt</code>, and <code>kms:ReEncrypt*</code>. Amazon CloudWatch requires these permissions to manage the data on your behalf.</p> </li> <li> <p>The calling principal must have <code>kms:Decrypt</code> permission on the key.</p> </li> <li> <p>It must be specified as a fully qualified key ARN. Key IDs, aliases, and alias ARNs are not accepted.</p> </li> <li> <p>It must be in the same Amazon Web Services Region as the dataset.</p> </li> </ul> <p>Before completing the association, Amazon CloudWatch validates the key by performing a series of dry-run KMS operations. Service-principal checks run first to verify that the key policy grants the required access to Amazon CloudWatch. These checks include <code>kms:DescribeKey</code>, <code>kms:GenerateDataKey</code>, <code>kms:Encrypt</code>, <code>kms:Decrypt</code>, and <code>kms:ReEncrypt*</code>. After those succeed, a <code>kms:Decrypt</code> dry-run is run with the caller's credentials to verify that the calling principal can use the key. When you are replacing an existing key, the caller's <code>kms:Decrypt</code> dry-run is run on the current key first, and only then on the new key.</p> <p>If any of these checks fails, the operation fails and the existing key association (if any) remains unchanged. Common failure causes include the key being disabled, the key policy not granting the required permissions to Amazon CloudWatch, or the caller lacking <code>kms:Decrypt</code> permission on the key.</p> <p>For more information about using customer managed keys with Amazon CloudWatch, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cmk-encryption.html\">Encryption at rest with customer managed keys</a> in the <i>Amazon CloudWatch User Guide</i>.</p>"
+      "documentation":"<p>Associates an Amazon Web Services Key Management Service (Amazon Web Services KMS) customer managed key with the specified dataset. After this operation completes, all data published to the dataset is encrypted at rest using the specified KMS key. Callers must have <code>kms:Decrypt</code> permission on the key to read the encrypted data.</p> <p>Only the <code>default</code> dataset is supported. The <code>default</code> dataset is implicit for every account in every Region — you do not need to create it before calling this operation.</p> <p>You can call <code>AssociateDatasetKmsKey</code> on a dataset that is already associated with a KMS key to replace the existing key with a different one. The caller must have <code>kms:Decrypt</code> permission on both the current key and the new key.</p> <note> <p>If the currently associated key has been deleted, is scheduled for deletion, is pending import, is unavailable, or has been disabled, Amazon CloudWatch does not require <code>kms:Decrypt</code> permission on the current key and the rotation proceeds. If the key was only disabled, consider re-enabling it instead of rotating, because re-enabling allows Amazon CloudWatch to resume decrypting your existing metric data encrypted with that key.</p> </note> <p>The KMS key that you specify must meet all of the following requirements:</p> <ul> <li> <p>It must be a symmetric encryption KMS key (key spec <code>SYMMETRIC_DEFAULT</code>, key usage <code>ENCRYPT_DECRYPT</code>). Asymmetric keys, HMAC keys, and key material types other than <code>SYMMETRIC_DEFAULT</code> are not supported.</p> </li> <li> <p>It must be enabled and not pending deletion.</p> </li> <li> <p>Its key policy must grant the CloudWatch service principal (<code>cloudwatch.amazonaws.com</code>) these permissions: <code>kms:DescribeKey</code>, <code>kms:GenerateDataKey</code>, <code>kms:Encrypt</code>, <code>kms:Decrypt</code>, and <code>kms:ReEncrypt*</code>. Amazon CloudWatch requires these permissions to manage the data on your behalf.</p> </li> <li> <p>The calling principal must have <code>kms:Decrypt</code> permission on the key.</p> </li> <li> <p>It must be specified as a fully qualified key ARN. Key IDs, aliases, and alias ARNs are not accepted.</p> </li> <li> <p>It must be in the same Amazon Web Services Region as the dataset.</p> </li> </ul> <p>Before completing the association, Amazon CloudWatch validates the key by performing a series of dry-run KMS operations. Service-principal checks run first to verify that the key policy grants the required access to Amazon CloudWatch. These checks include <code>kms:DescribeKey</code>, <code>kms:GenerateDataKey</code>, <code>kms:Encrypt</code>, <code>kms:Decrypt</code>, and <code>kms:ReEncrypt*</code>. After those succeed, a <code>kms:Decrypt</code> dry-run is run with the caller's credentials to verify that the calling principal can use the new key. When you are replacing an existing key, the caller's <code>kms:Decrypt</code> dry-run is also run on the current key.</p> <p>If any of these checks on the new key fails, the operation fails and the existing key association (if any) remains unchanged. Common failure causes include the new key being disabled, the key policy not granting the required permissions to Amazon CloudWatch, or the caller lacking <code>kms:Decrypt</code> permission on the new key.</p> <p>For more information about using customer managed keys with Amazon CloudWatch, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cmk-encryption.html\">Encryption at rest with customer managed keys</a> in the <i>Amazon CloudWatch User Guide</i>.</p>"
+    },
+    "CreateResourceMetricsConfiguration":{
+      "name":"CreateResourceMetricsConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateResourceMetricsConfigurationInput"},
+      "output":{
+        "shape":"CreateResourceMetricsConfigurationOutput",
+        "resultWrapper":"CreateResourceMetricsConfigurationResult"
+      },
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "documentation":"<p>Creates a resource metrics configuration for an Amazon Web Services resource. After you create a configuration, Amazon CloudWatch collects detailed metrics for that resource.</p> <p>Each Amazon Web Services resource can have only one resource metrics configuration. If a configuration already exists for the specified resource ARN, this operation returns a <code>ConflictException</code>. To modify an existing configuration, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_UpdateResourceMetricsConfiguration.html\">UpdateResourceMetricsConfiguration</a>.</p> <p>If the Amazon Web Services resource that you specify in <code>ResourceArn</code> does not exist, this operation returns a <code>ResourceNotFoundException</code>. Verify that the resource ARN is correct and that the resource exists before you retry the request.</p> <p>To create a resource metrics configuration, you must have the <code>cloudwatch:CreateResourceMetricsConfiguration</code> permission. For information about scoping this permission to specific resources, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-cw-condition-keys-resource-arn.html\">Condition keys for resource metrics configuration access</a> in the <i>Amazon CloudWatch User Guide</i>.</p>"
     },
     "DeleteAlarmMuteRule":{
       "name":"DeleteAlarmMuteRule",
@@ -118,6 +135,20 @@
       ],
       "documentation":"<p>Permanently deletes the specified Contributor Insights rules.</p> <p>If you create a rule, delete it, and then re-create it with the same name, historical data from the first time the rule was created might not be available.</p>"
     },
+    "DeleteMetricDataQueryDefinition":{
+      "name":"DeleteMetricDataQueryDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteMetricDataQueryDefinitionInput"},
+      "output":{
+        "shape":"DeleteMetricDataQueryDefinitionOutput",
+        "resultWrapper":"DeleteMetricDataQueryDefinitionResult"
+      },
+      "documentation":"<p>Deletes a metric data query definition.</p> <p>This operation is idempotent. If the definition doesn't exist, the operation succeeds without returning an error.</p> <p> <b>Permissions</b> </p> <p>To delete a definition, you need the <code>cloudwatch:DeleteMetricDataQueryDefinition</code> permission on the metric data query definition resource. You can use the <code>aws:ResourceTag/${TagKey}</code> condition key to control access based on the tags of the definition.</p>",
+      "idempotent":true
+    },
     "DeleteMetricStream":{
       "name":"DeleteMetricStream",
       "http":{
@@ -135,6 +166,22 @@
         {"shape":"MissingRequiredParameterException"}
       ],
       "documentation":"<p>Permanently deletes the metric stream that you specify.</p>"
+    },
+    "DeleteResourceMetricsConfiguration":{
+      "name":"DeleteResourceMetricsConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourceMetricsConfigurationInput"},
+      "output":{
+        "shape":"DeleteResourceMetricsConfigurationOutput",
+        "resultWrapper":"DeleteResourceMetricsConfigurationResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "documentation":"<p>Deletes the resource metrics configuration for an Amazon Web Services resource. After you delete the configuration, Amazon CloudWatch stops collecting detailed metrics for the resource. Metric data that Amazon CloudWatch already collected for the resource is not deleted.</p> <p>This operation returns a <code>ResourceNotFoundException</code> if no resource metrics configuration exists for the specified resource ARN. Verify that the resource ARN is correct.</p> <p>To delete a resource metrics configuration, you must have the <code>cloudwatch:DeleteResourceMetricsConfiguration</code> permission. For information about scoping this permission to specific resources, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-cw-condition-keys-resource-arn.html\">Condition keys for resource metrics configuration access</a> in the <i>Amazon CloudWatch User Guide</i>.</p>"
     },
     "DescribeAlarmContributors":{
       "name":"DescribeAlarmContributors",
@@ -274,7 +321,7 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"}
       ],
-      "documentation":"<p>Removes the customer managed Amazon Web Services Key Management Service (Amazon Web Services KMS) key association from the specified dataset. After this operation completes, data that you publish to the dataset is encrypted at rest using an Amazon Web Services owned key managed by Amazon CloudWatch.</p> <p>Only the <code>default</code> dataset is supported. To call this operation, the dataset must currently have a customer managed KMS key associated with it. If the dataset has no associated KMS key, the operation fails with <code>ResourceNotFoundException</code>.</p> <p>Amazon CloudWatch performs a dry-run <code>kms:Decrypt</code> call on the key as part of this operation. This verifies that the caller is authorized to use the currently associated key. The caller must have <code>kms:Decrypt</code> permission on the currently associated key, and the key must be enabled and accessible. If the key has been disabled or scheduled for deletion, you must first re-enable or restore it before you can disassociate it from the dataset.</p> <important> <p>Disassociating a KMS key from a dataset does not immediately remove the <code>kms:Decrypt</code> requirement on data plane operations. For up to three hours after disassociation, callers must continue to have <code>kms:Decrypt</code> permission on the previously associated key. Some data may still be encrypted with that key during this window. After this enforcement window elapses, the <code>kms:Decrypt</code> requirement is lifted.</p> </important> <p>For more information about using customer managed keys with Amazon CloudWatch, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cmk-encryption.html\">Encryption at rest with customer managed keys</a> in the <i>Amazon CloudWatch User Guide</i>.</p>",
+      "documentation":"<p>Removes the customer managed Amazon Web Services Key Management Service (Amazon Web Services KMS) key association from the specified dataset. After this operation completes, data that you publish to the dataset is encrypted at rest using an Amazon Web Services owned key managed by Amazon CloudWatch.</p> <p>Only the <code>default</code> dataset is supported. To call this operation, the dataset must currently have a customer managed KMS key associated with it. If the dataset has no associated KMS key, the operation fails with <code>ResourceNotFoundException</code>.</p> <p>Amazon CloudWatch performs a dry-run <code>kms:Decrypt</code> call on the currently associated key as part of this operation. The caller must have <code>kms:Decrypt</code> permission on the currently associated key. If the key is accessible but the caller lacks <code>kms:Decrypt</code> permission, the operation fails with <code>AccessDeniedException</code>.</p> <note> <p>If the currently associated key has been deleted, is scheduled for deletion, is pending import, is unavailable, or has been disabled, Amazon CloudWatch does not require <code>kms:Decrypt</code> permission on that key and the disassociation proceeds. If the key was only disabled, consider re-enabling it instead of disassociating, because re-enabling allows Amazon CloudWatch to resume decrypting your existing metric data.</p> </note> <important> <p>Disassociating a KMS key from a dataset does not immediately remove the <code>kms:Decrypt</code> requirement on data plane operations. For up to three hours after disassociation, callers must continue to have <code>kms:Decrypt</code> permission on the previously associated key. Some data might still be encrypted with that key during this window. After this enforcement window elapses, the <code>kms:Decrypt</code> requirement is lifted.</p> </important> <p>For more information about using customer managed keys with Amazon CloudWatch, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cmk-encryption.html\">Encryption at rest with customer managed keys</a> in the <i>Amazon CloudWatch User Guide</i>.</p>",
       "idempotent":true
     },
     "EnableAlarmActions":{
@@ -336,7 +383,7 @@
         {"shape":"DashboardNotFoundError"},
         {"shape":"InternalServiceFault"}
       ],
-      "documentation":"<p>Displays the details of the dashboard that you specify.</p> <p>To copy an existing dashboard, use <code>GetDashboard</code>, and then use the data returned within <code>DashboardBody</code> as the template for the new dashboard when you call <code>PutDashboard</code> to create the copy.</p>"
+      "documentation":"<p>Displays the details of the dashboard that you specify.</p> <p>To copy an existing dashboard, use <code>GetDashboard</code>, and then use the data returned within <code>DashboardBody</code> as the template for the new dashboard when you call <code>PutDashboard</code> to create the copy.</p> <p>You might have recently enabled an <a href=\"https://docs.aws.amazon.com/glossary/latest/reference/glos-chap.html#optinregion\">opt-in Region (Region that is disabled by default)</a> for your account. In that Region, <code>GetDashboard</code> can return an access denied error for up to 24 hours after you enable the Region. This delay occurs while dashboard data propagates. The error does not indicate a problem with your permissions. Because dashboards are global, you can call <code>GetDashboard</code> in any other enabled Region, or retry after propagation completes.</p>"
     },
     "GetDataset":{
       "name":"GetDataset",
@@ -387,7 +434,24 @@
       "errors":[
         {"shape":"InvalidNextToken"}
       ],
-      "documentation":"<p>You can use the <code>GetMetricData</code> API to retrieve CloudWatch metric values. The operation can also include a CloudWatch Metrics Insights query, and one or more metric math functions.</p> <p>A <code>GetMetricData</code> operation that does not include a query can retrieve as many as 500 different metrics in a single request, with a total of as many as 100,800 data points. You can also optionally perform metric math expressions on the values of the returned statistics, to create new time series that represent new insights into your data. For example, using Lambda metrics, you could divide the Errors metric by the Invocations metric to get an error rate time series. For more information about metric math expressions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-metric-math.html#metric-math-syntax\">Metric Math Syntax and Functions</a> in the <i>Amazon CloudWatch User Guide</i>.</p> <p>If you include a Metrics Insights query, each <code>GetMetricData</code> operation can include only one query. But the same <code>GetMetricData</code> operation can also retrieve other metrics. Metrics Insights queries can query only the most recent three hours of metric data. For more information about Metrics Insights, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/query_with_cloudwatch-metrics-insights.html\">Query your metrics with CloudWatch Metrics Insights</a>.</p> <p>Calls to the <code>GetMetricData</code> API have a different pricing structure than calls to <code>GetMetricStatistics</code>. For more information about pricing, see <a href=\"https://aws.amazon.com/cloudwatch/pricing/\">Amazon CloudWatch Pricing</a>.</p> <p>Amazon CloudWatch retains metric data as follows:</p> <ul> <li> <p>Data points with a period of less than 60 seconds are available for 3 hours. These data points are high-resolution metrics and are available only for custom metrics that have been defined with a <code>StorageResolution</code> of 1.</p> </li> <li> <p>Data points with a period of 60 seconds (1-minute) are available for 15 days.</p> </li> <li> <p>Data points with a period of 300 seconds (5-minute) are available for 63 days.</p> </li> <li> <p>Data points with a period of 3600 seconds (1 hour) are available for 455 days (15 months).</p> </li> </ul> <p>Data points that are initially published with a shorter period are aggregated together for long-term storage. For example, if you collect data using a period of 1 minute, the data remains available for 15 days with 1-minute resolution. After 15 days, this data is still available, but is aggregated and retrievable only with a resolution of 5 minutes. After 63 days, the data is further aggregated and is available with a resolution of 1 hour.</p> <p>If you omit <code>Unit</code> in your request, all data that was collected with any unit is returned, along with the corresponding units that were specified when the data was reported to CloudWatch. If you specify a unit, the operation returns only data that was collected with that unit specified. If you specify a unit that does not match the data collected, the results of the operation are null. CloudWatch does not perform unit conversions.</p> <p> <b>Using Metrics Insights queries with metric math</b> </p> <p>You can't mix a Metric Insights query and metric math syntax in the same expression, but you can reference results from a Metrics Insights query within other Metric math expressions. A Metrics Insights query without a <b>GROUP BY</b> clause returns a single time-series (TS), and can be used as input for a metric math expression that expects a single time series. A Metrics Insights query with a <b>GROUP BY</b> clause returns an array of time-series (TS[]), and can be used as input for a metric math expression that expects an array of time series. </p>"
+      "documentation":"<p>You can use the <code>GetMetricData</code> API to retrieve CloudWatch metric values. The operation can also include a CloudWatch Metrics Insights query, and one or more metric math functions.</p> <p>A <code>GetMetricData</code> operation that does not include a query can retrieve as many as 500 different metrics in a single request, with a total of as many as 100,800 data points. You can also optionally perform metric math expressions on the values of the returned statistics, to create new time series that represent new insights into your data. For example, using Lambda metrics, you could divide the Errors metric by the Invocations metric to get an error rate time series. For more information about metric math expressions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-metric-math.html#metric-math-syntax\">Metric Math Syntax and Functions</a> in the <i>Amazon CloudWatch User Guide</i>.</p> <p>If you include a Metrics Insights query, each <code>GetMetricData</code> operation can include only one query. But the same <code>GetMetricData</code> operation can also retrieve other metrics. Metrics Insights queries can query the most recent two weeks of metric data. For alarm condition evaluations, Metrics Insights queries can query only the most recent three hours of metric data. For more information about Metrics Insights, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/query_with_cloudwatch-metrics-insights.html\">Query your metrics with CloudWatch Metrics Insights</a>.</p> <p>Calls to the <code>GetMetricData</code> API have a different pricing structure than calls to <code>GetMetricStatistics</code>. For more information about pricing, see <a href=\"https://aws.amazon.com/cloudwatch/pricing/\">Amazon CloudWatch Pricing</a>.</p> <p>Amazon CloudWatch retains metric data as follows:</p> <ul> <li> <p>Data points with a period of less than 60 seconds are available for 3 hours. These data points are high-resolution metrics and are available only for custom metrics that have been defined with a <code>StorageResolution</code> of 1.</p> </li> <li> <p>Data points with a period of 60 seconds (1-minute) are available for 15 days.</p> </li> <li> <p>Data points with a period of 300 seconds (5-minute) are available for 63 days.</p> </li> <li> <p>Data points with a period of 3600 seconds (1 hour) are available for 455 days (15 months).</p> </li> </ul> <p>Data points that are initially published with a shorter period are aggregated together for long-term storage. For example, if you collect data using a period of 1 minute, the data remains available for 15 days with 1-minute resolution. After 15 days, this data is still available, but is aggregated and retrievable only with a resolution of 5 minutes. After 63 days, the data is further aggregated and is available with a resolution of 1 hour.</p> <p>If you omit <code>Unit</code> in your request, all data that was collected with any unit is returned, along with the corresponding units that were specified when the data was reported to CloudWatch. If you specify a unit, the operation returns only data that was collected with that unit specified. If you specify a unit that does not match the data collected, the results of the operation are null. CloudWatch does not perform unit conversions.</p> <p> <b>Using Metrics Insights queries with metric math</b> </p> <p>You can't mix a Metric Insights query and metric math syntax in the same expression, but you can reference results from a Metrics Insights query within other Metric math expressions. A Metrics Insights query without a <b>GROUP BY</b> clause returns a single time-series (TS), and can be used as input for a metric math expression that expects a single time series. A Metrics Insights query with a <b>GROUP BY</b> clause returns an array of time-series (TS[]), and can be used as input for a metric math expression that expects an array of time series. </p>"
+    },
+    "GetMetricDataQueryDefinition":{
+      "name":"GetMetricDataQueryDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetMetricDataQueryDefinitionInput"},
+      "output":{
+        "shape":"GetMetricDataQueryDefinitionOutput",
+        "resultWrapper":"GetMetricDataQueryDefinitionResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "documentation":"<p>Returns a metric data query definition, including its expression.</p> <p> <b>Permissions</b> </p> <p>To get a definition, you need the <code>cloudwatch:GetMetricDataQueryDefinition</code> permission on the metric data query definition resource. You can use the <code>aws:ResourceTag/${TagKey}</code> condition key to control access based on the tags of the definition.</p>",
+      "readonly":true
     },
     "GetMetricStatistics":{
       "name":"GetMetricStatistics",
@@ -439,7 +503,7 @@
         "shape":"GetMetricWidgetImageOutput",
         "resultWrapper":"GetMetricWidgetImageResult"
       },
-      "documentation":"<p>You can use the <code>GetMetricWidgetImage</code> API to retrieve a snapshot graph of one or more Amazon CloudWatch metrics as a bitmap image. You can then embed this image into your services and products, such as wiki pages, reports, and documents. You could also retrieve images regularly, such as every minute, and create your own custom live dashboard.</p> <p>The graph you retrieve can include all CloudWatch metric graph features, including metric math and horizontal and vertical annotations.</p> <p>There is a limit of 20 transactions per second for this API. Each <code>GetMetricWidgetImage</code> action has the following limits:</p> <ul> <li> <p>As many as 100 metrics in the graph.</p> </li> <li> <p>Up to 100 KB uncompressed payload.</p> </li> </ul>"
+      "documentation":"<p>You can use the <code>GetMetricWidgetImage</code> API to retrieve a snapshot graph of one or more Amazon CloudWatch metrics as a bitmap image. You can then embed this image into your services and products, such as wiki pages, reports, and documents. You could also retrieve images regularly, such as every minute, and create your own custom live dashboard.</p> <note> <p> <code>GetMetricWidgetImage</code> is not available in the Amazon Web Services GovCloud (US) Regions. In those Regions, calls to this operation fail. For the list of Amazon CloudWatch features that are not available in Amazon Web Services GovCloud (US), see <a href=\"https://docs.aws.amazon.com/govcloud-us/latest/UserGuide/govcloud-cw.html\">Amazon CloudWatch in Amazon Web Services GovCloud (US)</a>.</p> </note> <p>The graph you retrieve can include all CloudWatch metric graph features, including metric math and horizontal and vertical annotations.</p> <p>There is a limit of 20 transactions per second for this API. Each <code>GetMetricWidgetImage</code> action has the following limits:</p> <ul> <li> <p>As many as 100 metrics in the graph.</p> </li> <li> <p>Up to 100 KB uncompressed payload.</p> </li> </ul>"
     },
     "GetOTelEnrichment":{
       "name":"GetOTelEnrichment",
@@ -453,6 +517,22 @@
         "resultWrapper":"GetOTelEnrichmentResult"
       },
       "documentation":"<p>Returns the current status of vended metric enrichment for the account, including whether CloudWatch vended metrics are enriched with resource ARN and resource tag labels and queryable using PromQL. For the list of supported resources, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/UsingResourceTagsForTelemetry.html\">Supported Amazon Web Services infrastructure metrics</a>.</p>"
+    },
+    "GetResourceMetricsConfiguration":{
+      "name":"GetResourceMetricsConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourceMetricsConfigurationInput"},
+      "output":{
+        "shape":"GetResourceMetricsConfigurationOutput",
+        "resultWrapper":"GetResourceMetricsConfigurationResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "documentation":"<p>Retrieves the current resource metrics configuration for an Amazon Web Services resource. The response includes the resource ARN, any metric selections, and the times at which the configuration was created and last updated.</p> <p>This operation returns a <code>ResourceNotFoundException</code> if no resource metrics configuration exists for the specified resource ARN. To create a configuration, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_CreateResourceMetricsConfiguration.html\">CreateResourceMetricsConfiguration</a>.</p> <p>To retrieve a resource metrics configuration, you must have the <code>cloudwatch:GetResourceMetricsConfiguration</code> permission. For information about scoping this permission to specific resources, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-cw-condition-keys-resource-arn.html\">Condition keys for resource metrics configuration access</a> in the <i>Amazon CloudWatch User Guide</i>.</p>"
     },
     "ListAlarmMuteRules":{
       "name":"ListAlarmMuteRules",
@@ -486,7 +566,7 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"InternalServiceFault"}
       ],
-      "documentation":"<p>Returns a list of the dashboards for your account. If you include <code>DashboardNamePrefix</code>, only those dashboards with names starting with the prefix are listed. Otherwise, all dashboards in your account are listed. </p> <p> <code>ListDashboards</code> returns up to 1000 results on one page. If there are more than 1000 dashboards, you can call <code>ListDashboards</code> again and include the value you received for <code>NextToken</code> in the first call, to receive the next 1000 results.</p>"
+      "documentation":"<p>Returns a list of the dashboards for your account. If you include <code>DashboardNamePrefix</code>, only those dashboards with names starting with the prefix are listed. Otherwise, all dashboards in your account are listed. </p> <p> <code>ListDashboards</code> returns up to 1000 results on one page. If there are more than 1000 dashboards, you can call <code>ListDashboards</code> again and include the value you received for <code>NextToken</code> in the first call, to receive the next 1000 results.</p> <p>You might have recently enabled an <a href=\"https://docs.aws.amazon.com/glossary/latest/reference/glos-chap.html#optinregion\">opt-in Region (Region that is disabled by default)</a> for your account. In that Region, <code>ListDashboards</code> can return an access denied error for up to 24 hours after you enable the Region. This delay occurs while dashboard data propagates. The error does not indicate a problem with your permissions. Because dashboards are global, you can call <code>ListDashboards</code> in any other enabled Region, or retry after propagation completes.</p>"
     },
     "ListManagedInsightRules":{
       "name":"ListManagedInsightRules",
@@ -505,6 +585,20 @@
         {"shape":"InvalidNextToken"}
       ],
       "documentation":"<p> Returns a list that contains the number of managed Contributor Insights rules in your account. </p>"
+    },
+    "ListMetricDataQueryDefinitions":{
+      "name":"ListMetricDataQueryDefinitions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListMetricDataQueryDefinitionsInput"},
+      "output":{
+        "shape":"ListMetricDataQueryDefinitionsOutput",
+        "resultWrapper":"ListMetricDataQueryDefinitionsResult"
+      },
+      "documentation":"<p>Lists the metric data query definitions in your account and Region.</p> <p>The results are summaries that don't include the expression. To get the full definition, call <code>GetMetricDataQueryDefinition</code> with its ID.</p> <p>This operation supports pagination. Use the <code>MaxResults</code> and <code>NextToken</code> parameters to retrieve results in multiple calls.</p> <p> <b>Permissions</b> </p> <p>To list definitions, you need the <code>cloudwatch:ListMetricDataQueryDefinitions</code> permission. This permission applies to all definitions in the account and Region. The results aren't filtered by tags.</p>",
+      "readonly":true
     },
     "ListMetricStreams":{
       "name":"ListMetricStreams",
@@ -698,6 +792,25 @@
       "documentation":"<p>Publishes metric data to Amazon CloudWatch. CloudWatch associates the data with the specified metric. If the specified metric does not exist, CloudWatch creates the metric. When CloudWatch creates a metric, it can take up to fifteen minutes for the metric to appear in calls to <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_ListMetrics.html\">ListMetrics</a>.</p> <p>You can publish metrics with associated entity data (so that related telemetry can be found and viewed together), or publish metric data by itself. To send entity data with your metrics, use the <code>EntityMetricData</code> parameter. To send metrics without entity data, use the <code>MetricData</code> parameter. The <code>EntityMetricData</code> structure includes <code>MetricData</code> structures for the metric data.</p> <p>You can publish either individual values in the <code>Value</code> field, or arrays of values and the number of times each value occurred during the period by using the <code>Values</code> and <code>Counts</code> fields in the <code>MetricData</code> structure. Using the <code>Values</code> and <code>Counts</code> method enables you to publish up to 150 values per metric with one <code>PutMetricData</code> request, and supports retrieving percentile statistics on this data.</p> <p>Each <code>PutMetricData</code> request is limited to 1 MB in size for HTTP POST requests. You can send a payload compressed by gzip. Each request is also limited to no more than 1000 different metrics (across both the <code>MetricData</code> and <code>EntityMetricData</code> properties).</p> <p>Although the <code>Value</code> parameter accepts numbers of type <code>Double</code>, CloudWatch rejects values that are either too small or too large. Values must be in the range of -2^360 to 2^360. In addition, special values (for example, NaN, +Infinity, -Infinity) are not supported.</p> <p>You can use up to 30 dimensions per metric to further clarify what data the metric collects. Each dimension consists of a Name and Value pair. For more information about specifying dimensions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html\">Publishing Metrics</a> in the <i>Amazon CloudWatch User Guide</i>.</p> <p>You specify the time stamp to be associated with each data point. You can specify time stamps that are as much as two weeks before the current date, and as much as 2 hours after the current day and time.</p> <p>Data points with time stamps from 24 hours ago or longer can take at least 48 hours to become available for <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html\">GetMetricData</a> or <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html\">GetMetricStatistics</a> from the time they are submitted. Data points with time stamps between 3 and 24 hours ago can take as much as 2 hours to become available for <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html\">GetMetricData</a> or <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html\">GetMetricStatistics</a>.</p> <p>CloudWatch needs raw data points to calculate percentile statistics. If you publish data using a statistic set instead, you can only retrieve percentile statistics for this data if one of the following conditions is true:</p> <ul> <li> <p>The <code>SampleCount</code> value of the statistic set is 1 and <code>Min</code>, <code>Max</code>, and <code>Sum</code> are all equal.</p> </li> <li> <p>The <code>Min</code> and <code>Max</code> are equal, and <code>Sum</code> is equal to <code>Min</code> multiplied by <code>SampleCount</code>.</p> </li> </ul>",
       "requestcompression":{"encodings":["gzip"]}
     },
+    "PutMetricDataQueryDefinition":{
+      "name":"PutMetricDataQueryDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutMetricDataQueryDefinitionInput"},
+      "output":{
+        "shape":"PutMetricDataQueryDefinitionOutput",
+        "resultWrapper":"PutMetricDataQueryDefinitionResult"
+      },
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "documentation":"<p>Creates or updates a metric data query definition.</p> <p>A metric data query definition saves a metric query so that you can reuse it later. It includes the query expression, the query language, and a path that names the definition and can organize it into folders. When you save a definition, CloudWatch doesn't validate or run its expression.</p> <p>To create a definition, omit <code>Id</code>. CloudWatch generates the ID and returns it. To update a definition, specify its <code>Id</code>. An update replaces the path, expression, and type, and keeps the creation time.</p> <p>The path must be unique in your account and Region. If another definition already uses the path, the request fails with a <code>ConflictException</code>.</p> <p>You can have up to 1,000 metric data query definitions in each Region of your account. A request that would create more fails with a <code>LimitExceededException</code>.</p> <p> <b>Permissions</b> </p> <p>To create or update a definition, you need the <code>cloudwatch:PutMetricDataQueryDefinition</code> permission on the metric data query definition resource. The resource ARN has the format <code>arn:aws:cloudwatch:Region:account-id:metric-query-definition/Id</code>.</p> <p>To add tags when you create a definition, you also need the <code>cloudwatch:TagResource</code> permission. You can use the <code>aws:RequestTag/${TagKey}</code> and <code>aws:TagKeys</code> condition keys to control which tags can be added.</p>",
+      "idempotent":true
+    },
     "PutMetricStream":{
       "name":"PutMetricStream",
       "http":{
@@ -760,7 +873,10 @@
         "shape":"StartOTelEnrichmentOutput",
         "resultWrapper":"StartOTelEnrichmentResult"
       },
-      "documentation":"<p>Enables enrichment and PromQL access for CloudWatch vended metrics for <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/UsingResourceTagsForTelemetry.html\">supported Amazon Web Services resources</a> in the account. Once enabled, metrics that contain a resource identifier dimension (for example, EC2 <code>CPUUtilization</code> with an <code>InstanceId</code> dimension) are enriched with resource ARN and resource tag labels and become queryable using PromQL.</p> <p>Before calling this operation, you must enable resource tags on telemetry for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/EnableResourceTagsOnTelemetry.html\">Enable resource tags on telemetry</a>.</p>"
+      "errors":[
+        {"shape":"ValidationException"}
+      ],
+      "documentation":"<p>Enables enrichment and PromQL access for CloudWatch vended metrics for <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/UsingResourceTagsForTelemetry.html\">supported Amazon Web Services resources</a> in the account. Once enabled, metrics that contain a resource identifier dimension (for example, EC2 <code>CPUUtilization</code> with an <code>InstanceId</code> dimension) are enriched with resource ARN and resource tag labels and become queryable using PromQL.</p> <p>Before calling this operation, you must enable resource tags on telemetry for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/EnableResourceTagsOnTelemetry.html\">Enable resource tags on telemetry</a>.</p> <p>Optionally, <code>IncludeFilters</code> and <code>ExcludeFilters</code> limit enrichment to a subset of the account's metrics. These filters are stored only when this operation starts enrichment. Calling <code>StartOTelEnrichment</code> for an account where enrichment is already running has no effect and does not modify the filters that are applied. To change them, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_UpdateOTelEnrichment.html\">UpdateOTelEnrichment</a>.</p>"
     },
     "StopMetricStreams":{
       "name":"StopMetricStreams",
@@ -832,6 +948,39 @@
         {"shape":"ConflictException"}
       ],
       "documentation":"<p>Removes one or more tags from the specified resource. Currently, alarms, dashboards, metric streams and Contributor Insights rules support tagging.</p>"
+    },
+    "UpdateOTelEnrichment":{
+      "name":"UpdateOTelEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateOTelEnrichmentInput"},
+      "output":{
+        "shape":"UpdateOTelEnrichmentOutput",
+        "resultWrapper":"UpdateOTelEnrichmentResult"
+      },
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "documentation":"<p>Replaces the filters that determine which CloudWatch vended metrics are enriched with resource ARN and resource tag labels for the account. Enrichment must already be running for the account. If it is not, this operation returns a <code>ResourceNotFoundException</code>. To start enrichment, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_StartOTelEnrichment.html\">StartOTelEnrichment</a>.</p> <p>The filters in the request completely replace the stored filters; they are not merged with them. <code>IncludeFilters</code> and <code>ExcludeFilters</code> are replaced as a pair, so a request that specifies only <code>IncludeFilters</code> also clears the stored <code>ExcludeFilters</code>, and a request that specifies neither clears both.</p>"
+    },
+    "UpdateResourceMetricsConfiguration":{
+      "name":"UpdateResourceMetricsConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateResourceMetricsConfigurationInput"},
+      "output":{
+        "shape":"UpdateResourceMetricsConfigurationOutput",
+        "resultWrapper":"UpdateResourceMetricsConfigurationResult"
+      },
+      "errors":[
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "documentation":"<p>Updates the resource metrics configuration for an Amazon Web Services resource. The <code>MetricSelections</code> value that you provide replaces any existing metric selections for the resource; it is not merged with them.</p> <p>If you omit <code>MetricSelections</code>, Amazon CloudWatch removes any existing metric selection filter and collects all available detailed metrics for the resource.</p> <p>This operation returns a <code>ResourceNotFoundException</code> if no resource metrics configuration exists for the specified resource ARN. To create a configuration, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_CreateResourceMetricsConfiguration.html\">CreateResourceMetricsConfiguration</a>.</p> <p>To update a resource metrics configuration, you must have the <code>cloudwatch:UpdateResourceMetricsConfiguration</code> permission. For information about scoping this permission to specific resources, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-cw-condition-keys-resource-arn.html\">Condition keys for resource metrics configuration access</a> in the <i>Amazon CloudWatch User Guide</i>.</p>"
     }
   },
   "shapes":{
@@ -839,6 +988,16 @@
       "type":"string",
       "max":255,
       "min":1
+    },
+    "ActionConfiguration":{
+      "type":"structure",
+      "members":{
+        "AlarmTagsPropagation":{
+          "shape":"AlarmTagsPropagation",
+          "documentation":"<p>Settings for including the alarm's tags in its action notifications and state-change events.</p>"
+        }
+      },
+      "documentation":"<p>Settings that change the content of the notifications and events that an alarm sends when its state changes. These settings apply to the alarm's actions, whichever state triggers them.</p>"
     },
     "ActionLogLineCount":{"type":"integer"},
     "ActionLogLineRoleArn":{"type":"string"},
@@ -863,7 +1022,7 @@
     },
     "AggregationExpression":{
       "type":"string",
-      "max":256,
+      "max":2048,
       "min":1
     },
     "AlarmArn":{
@@ -1036,6 +1195,37 @@
       "max":10240,
       "min":1
     },
+    "AlarmTagsPropagation":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{
+          "shape":"AlarmTagsPropagationEnabled",
+          "documentation":"<p>Set to <code>true</code> to include the alarm's tags. Set to <code>false</code> to stop including them.</p> <p>When this is <code>true</code>, you must have the <code>cloudwatch:ListTagsForResource</code> permission on the alarm to create or update it.</p>"
+        },
+        "IncludedTagKeys":{
+          "shape":"AlarmTagsPropagationTagKeys",
+          "documentation":"<p>The tag keys to include. Only the alarm's tags with these keys are included.</p> <p>You can specify 1 to 50 tag keys. Each tag key must be 1 to 128 characters long.</p> <p>You can't specify both <code>IncludedTagKeys</code> and <code>ExcludedTagKeys</code>.</p>"
+        },
+        "ExcludedTagKeys":{
+          "shape":"AlarmTagsPropagationTagKeys",
+          "documentation":"<p>The tag keys to exclude. All of the alarm's tags except those with these keys are included.</p> <p>You can specify 1 to 50 tag keys. Each tag key must be 1 to 128 characters long.</p> <p>You can't specify both <code>IncludedTagKeys</code> and <code>ExcludedTagKeys</code>.</p>"
+        }
+      },
+      "documentation":"<p>Includes the alarm's tags in the notifications that the alarm sends to Amazon SNS topics and Lambda functions. The tags are also included in the alarm's state-change events in Amazon EventBridge. Other types of alarm actions don't receive the tags.</p> <p>By default, the alarm's tags aren't included.</p> <p>Use this to route or filter notifications and events by tag, such as by team or environment. You can also use it to read the alarm's tags without looking them up separately.</p> <p>To limit which tags are included, specify either <code>IncludedTagKeys</code> or <code>ExcludedTagKeys</code>. You can't specify both. If you specify neither, all of the alarm's tags are included. This includes tags that you add to the alarm later.</p>"
+    },
+    "AlarmTagsPropagationEnabled":{"type":"boolean"},
+    "AlarmTagsPropagationTagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "AlarmTagsPropagationTagKeys":{
+      "type":"list",
+      "member":{"shape":"AlarmTagsPropagationTagKey"},
+      "max":50,
+      "min":1
+    },
     "AlarmType":{
       "type":"string",
       "enum":[
@@ -1056,6 +1246,10 @@
     "AnomalyDetector":{
       "type":"structure",
       "members":{
+        "AnomalyDetectorId":{
+          "shape":"AnomalyDetectorId",
+          "documentation":"<p>The unique identifier of the anomaly detector.</p> <note> <p>The identifier does not restrict access to a specific anomaly detector in an IAM policy. Permissions for anomaly detector operations apply to all anomaly detectors in the account.</p> </note>"
+        },
         "Namespace":{
           "shape":"Namespace",
           "documentation":"<p>The namespace of the metric associated with the anomaly detection model.</p>",
@@ -1103,6 +1297,14 @@
       },
       "documentation":"<p>An anomaly detection model associated with a particular CloudWatch metric, statistic, or metric math expression. You can use the model to display a band of expected, normal values when the metric is graphed.</p> <p>If you have enabled unified cross-account observability, and this account is a monitoring account, the metric can be in the same account or a source account.</p>"
     },
+    "AnomalyDetectorAdaptationSpeed":{
+      "type":"string",
+      "enum":[
+        "FAST",
+        "NORMAL",
+        "SLOW"
+      ]
+    },
     "AnomalyDetectorConfiguration":{
       "type":"structure",
       "members":{
@@ -1113,6 +1315,14 @@
         "MetricTimezone":{
           "shape":"AnomalyDetectorMetricTimezone",
           "documentation":"<p>The time zone to use for the metric. This is useful to enable the model to automatically account for daylight savings time changes if the metric is sensitive to such time changes.</p> <p>To specify a time zone, use the name of the time zone as specified in the standard tz database. For more information, see <a href=\"https://en.wikipedia.org/wiki/Tz_database\">tz database</a>.</p>"
+        },
+        "AdaptationSpeed":{
+          "shape":"AnomalyDetectorAdaptationSpeed",
+          "documentation":"<p>The speed at which the anomaly detection model adapts to sustained changes in the metric's baseline. Faster adaptation lets the model track shifting workloads sooner, but increases the chance that the model treats a real, lasting change as normal.</p> <p>Valid values:</p> <ul> <li> <p> <code>FAST</code> - The model adapts quickly to sustained changes in the baseline.</p> </li> <li> <p> <code>NORMAL</code> - The model adapts at a moderate pace. This is the default value.</p> </li> <li> <p> <code>SLOW</code> - The model adapts slowly, reducing the risk of treating a real change as normal.</p> </li> </ul>"
+        },
+        "OutlierFilteringStrength":{
+          "shape":"AnomalyDetectorOutlierFilteringStrength",
+          "documentation":"<p>The aggressiveness with which CloudWatch filters outliers from the metric data that the anomaly detection model uses. Stronger filtering excludes more extreme values, which can produce a tighter band of expected values but may also suppress legitimate spikes.</p> <p>Valid values:</p> <ul> <li> <p> <code>MINIMAL</code> - Excludes only the most extreme outliers.</p> </li> <li> <p> <code>MODERATE</code> - Excludes a moderate range of outliers. This is the default value.</p> </li> <li> <p> <code>STRICT</code> - Excludes a wider range of outliers, which can suppress legitimate spikes.</p> </li> </ul>"
         }
       },
       "documentation":"<p>The configuration specifies details about how the anomaly detection model is to be trained, including time ranges to exclude from use for training the model and the time zone to use for the metric.</p>"
@@ -1120,6 +1330,17 @@
     "AnomalyDetectorExcludedTimeRanges":{
       "type":"list",
       "member":{"shape":"Range"}
+    },
+    "AnomalyDetectorId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9_./:%()+-]+"
+    },
+    "AnomalyDetectorIds":{
+      "type":"list",
+      "member":{"shape":"AnomalyDetectorId"},
+      "max":50
     },
     "AnomalyDetectorMetricStat":{
       "type":"string",
@@ -1130,6 +1351,14 @@
       "type":"string",
       "max":50,
       "pattern":".*"
+    },
+    "AnomalyDetectorOutlierFilteringStrength":{
+      "type":"string",
+      "enum":[
+        "MINIMAL",
+        "MODERATE",
+        "STRICT"
+      ]
     },
     "AnomalyDetectorStateValue":{
       "type":"string",
@@ -1286,6 +1515,10 @@
         "ActionsSuppressorExtensionPeriod":{
           "shape":"SuppressorPeriod",
           "documentation":"<p> The maximum time in seconds that the composite alarm waits after suppressor alarm goes out of the <code>ALARM</code> state. After this time, the composite alarm performs its actions. </p> <important> <p> <code>ExtensionPeriod</code> is required only when <code>ActionsSuppressor</code> is specified. </p> </important>"
+        },
+        "ActionConfiguration":{
+          "shape":"ActionConfiguration",
+          "documentation":"<p>Settings that change the content of the notifications and events that the alarm sends when its state changes. These settings apply to the alarm's actions, whichever state triggers them.</p>"
         }
       },
       "documentation":"<p>The details about a composite alarm.</p>",
@@ -1308,7 +1541,8 @@
         "ActionsSuppressedReason",
         "ActionsSuppressor",
         "ActionsSuppressorWaitPeriod",
-        "ActionsSuppressorExtensionPeriod"
+        "ActionsSuppressorExtensionPeriod",
+        "ActionConfiguration"
       ]
     },
     "CompositeAlarms":{
@@ -1350,6 +1584,32 @@
     "Counts":{
       "type":"list",
       "member":{"shape":"DatapointValue"}
+    },
+    "CreateResourceMetricsConfigurationInput":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"ResourceArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the Amazon Web Services resource to enable detailed monitoring for.</p>"
+        },
+        "MetricSelections":{
+          "shape":"ResourceMetricSelectionList",
+          "documentation":"<p>Specifies which metrics Amazon CloudWatch collects for the resource. If you omit this parameter, Amazon CloudWatch collects all available detailed metrics for the resource.</p>"
+        }
+      },
+      "documentation":"<p>Specifies the resource ARN and optional metric selections for a <code>CreateResourceMetricsConfiguration</code> request.</p>"
+    },
+    "CreateResourceMetricsConfigurationOutput":{
+      "type":"structure",
+      "required":["ResourceMetricsConfiguration"],
+      "members":{
+        "ResourceMetricsConfiguration":{
+          "shape":"ResourceMetricsConfiguration",
+          "documentation":"<p>The resource metrics configuration that was created by this operation.</p>"
+        }
+      },
+      "documentation":"<p>Returns the newly created resource metrics configuration.</p>"
     },
     "DashboardArn":{"type":"string"},
     "DashboardBody":{"type":"string"},
@@ -1516,6 +1776,18 @@
       "min":1,
       "pattern":"(default|arn:[a-zA-Z0-9-]+:cloudwatch:[a-zA-Z0-9-]*:\\d{12}:dataset/default)"
     },
+    "DefinitionId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]{1,64}"
+    },
+    "DefinitionPath":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\p{L}\\p{M}\\p{N}\\p{P}\\p{S}\\p{Zs}]+"
+    },
     "DeleteAlarmMuteRuleInput":{
       "type":"structure",
       "required":["AlarmMuteRuleName"],
@@ -1539,6 +1811,10 @@
     "DeleteAnomalyDetectorInput":{
       "type":"structure",
       "members":{
+        "AnomalyDetectorId":{
+          "shape":"AnomalyDetectorId",
+          "documentation":"<p>Specifies the unique identifier of the anomaly detector to delete. If you specify this parameter, you do not need to specify a metric to identify the detector.</p>"
+        },
         "Namespace":{
           "shape":"Namespace",
           "documentation":"<p>The namespace associated with the anomaly detection model to delete.</p>",
@@ -1610,6 +1886,20 @@
         }
       }
     },
+    "DeleteMetricDataQueryDefinitionInput":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"DefinitionId",
+          "documentation":"<p>The ID of the metric data query definition to delete.</p>"
+        }
+      }
+    },
+    "DeleteMetricDataQueryDefinitionOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteMetricStreamInput":{
       "type":"structure",
       "required":["Name"],
@@ -1623,6 +1913,22 @@
     "DeleteMetricStreamOutput":{
       "type":"structure",
       "members":{}
+    },
+    "DeleteResourceMetricsConfigurationInput":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"ResourceArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the Amazon Web Services resource to delete the resource metrics configuration for.</p>"
+        }
+      },
+      "documentation":"<p>Specifies the resource ARN for a <code>DeleteResourceMetricsConfiguration</code> request.</p>"
+    },
+    "DeleteResourceMetricsConfigurationOutput":{
+      "type":"structure",
+      "members":{},
+      "documentation":"<p>No data is returned.</p>"
     },
     "DescribeAlarmContributorsInput":{
       "type":"structure",
@@ -1817,6 +2123,10 @@
     "DescribeAnomalyDetectorsInput":{
       "type":"structure",
       "members":{
+        "AnomalyDetectorIds":{
+          "shape":"AnomalyDetectorIds",
+          "documentation":"<p>Specifies the unique identifiers of the anomaly detectors to describe. You can specify up to 50 identifiers. If you specify this parameter, you cannot also specify the <code>Namespace</code>, <code>MetricName</code>, <code>Dimensions</code>, or <code>AnomalyDetectorTypes</code> metric filters.</p>"
+        },
         "NextToken":{
           "shape":"NextToken",
           "documentation":"<p>Use the token returned by the previous operation to request the next page of results.</p>"
@@ -2016,7 +2326,11 @@
         }
       }
     },
-    "EndTimeOffset":{"type":"long"},
+    "EndTimeOffset":{
+      "type":"long",
+      "max":2592000,
+      "min":0
+    },
     "Entity":{
       "type":"structure",
       "members":{
@@ -2391,6 +2705,58 @@
         }
       }
     },
+    "GetMetricDataQueryDefinitionInput":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"DefinitionId",
+          "documentation":"<p>The ID of the metric data query definition to retrieve.</p>"
+        }
+      }
+    },
+    "GetMetricDataQueryDefinitionOutput":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Arn",
+        "Path",
+        "Expression",
+        "Type",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "members":{
+        "Id":{
+          "shape":"DefinitionId",
+          "documentation":"<p>The ID of the metric data query definition.</p>"
+        },
+        "Arn":{
+          "shape":"AmazonResourceName",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the metric data query definition.</p>"
+        },
+        "Path":{
+          "shape":"DefinitionPath",
+          "documentation":"<p>The path of the metric data query definition.</p>"
+        },
+        "Expression":{
+          "shape":"MetricExpressionString",
+          "documentation":"<p>The query expression.</p>"
+        },
+        "Type":{
+          "shape":"QueryType",
+          "documentation":"<p>The language of the expression. Valid values are the following:</p> <ul> <li> <p> <code>PROMQL</code> – A PromQL query.</p> </li> <li> <p> <code>SQL</code> – A CloudWatch Metrics Insights query.</p> </li> <li> <p> <code>METRIC_MATH</code> – A metric math expression.</p> </li> </ul>"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time when you created the metric data query definition.</p>"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time when you last updated the metric data query definition.</p>"
+        }
+      }
+    },
     "GetMetricStatisticsInput":{
       "type":"structure",
       "required":[
@@ -2507,7 +2873,7 @@
         },
         "StatisticsConfigurations":{
           "shape":"MetricStreamStatisticsConfigurations",
-          "documentation":"<p>Each entry in this array displays information about one or more metrics that include additional statistics in the metric stream. For more information about the additional statistics, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html.html\"> CloudWatch statistics definitions</a>. </p>"
+          "documentation":"<p>Each entry in this array displays information about one or more metrics that include additional statistics in the metric stream. For more information about the additional statistics, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html\"> CloudWatch statistics definitions</a>. </p>"
         },
         "IncludeLinkedAccountsMetrics":{
           "shape":"IncludeLinkedAccountsMetrics",
@@ -2549,8 +2915,46 @@
         "Status":{
           "shape":"OTelEnrichmentStatus",
           "documentation":"<p>The status of OTel enrichment for the account. Valid values are <code>Running</code> (enrichment is enabled) and <code>Stopped</code> (enrichment is disabled).</p>"
+        },
+        "IncludeFilters":{
+          "shape":"OTelEnrichmentMetricSelectorList",
+          "documentation":"<p>The metric namespaces, and the metric names, that are enriched. This parameter is omitted when enrichment is stopped, and when enrichment is running with no include filters, which means that every supported namespace is in scope.</p>"
+        },
+        "ExcludeFilters":{
+          "shape":"OTelEnrichmentMetricSelectorList",
+          "documentation":"<p>The metric namespaces, and the metric names, that are left unenriched. This parameter is omitted when enrichment is stopped, and when enrichment is running with no exclude filters, which means that nothing is excluded.</p>"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time that enrichment started for the account. This parameter is omitted when enrichment is stopped.</p>"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time that the enrichment configuration for the account was last stored.</p>"
         }
       }
+    },
+    "GetResourceMetricsConfigurationInput":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"ResourceArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the Amazon Web Services resource to retrieve the resource metrics configuration for.</p>"
+        }
+      },
+      "documentation":"<p>Specifies the resource ARN for a <code>GetResourceMetricsConfiguration</code> request.</p>"
+    },
+    "GetResourceMetricsConfigurationOutput":{
+      "type":"structure",
+      "required":["ResourceMetricsConfiguration"],
+      "members":{
+        "ResourceMetricsConfiguration":{
+          "shape":"ResourceMetricsConfiguration",
+          "documentation":"<p>The resource metrics configuration for the specified resource.</p>"
+        }
+      },
+      "documentation":"<p>Returns the current resource metrics configuration for the specified resource.</p>"
     },
     "HistoryData":{
       "type":"string",
@@ -2780,6 +3184,7 @@
         "httpStatusCode":500
       },
       "exception":true,
+      "fault":true,
       "xmlOrder":["Message"]
     },
     "InvalidFormatFault":{
@@ -3010,6 +3415,33 @@
         }
       }
     },
+    "ListMetricDataQueryDefinitionsInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"MaxResults",
+          "documentation":"<p>The maximum number of metric data query definitions to return in one call. The default is 100.</p>"
+        },
+        "NextToken":{
+          "shape":"MetricDataQueryDefinitionNextToken",
+          "documentation":"<p>The token returned by a previous call to indicate where to continue retrieving results.</p>"
+        }
+      }
+    },
+    "ListMetricDataQueryDefinitionsOutput":{
+      "type":"structure",
+      "required":["Items"],
+      "members":{
+        "Items":{
+          "shape":"MetricDataQueryDefinitionSummaries",
+          "documentation":"<p>A list of metric data query definition summaries.</p>"
+        },
+        "NextToken":{
+          "shape":"MetricDataQueryDefinitionNextToken",
+          "documentation":"<p>The token to use when requesting the next set of results. If this field is absent, there are no more results to retrieve.</p>"
+        }
+      }
+    },
     "ListMetricStreamsInput":{
       "type":"structure",
       "members":{
@@ -3205,6 +3637,14 @@
         "ActionLogLineRoleArn":{
           "shape":"ActionLogLineRoleArn",
           "documentation":"<p>The Amazon Resource Name (ARN) of the IAM role that CloudWatch assumes to retrieve log events for inclusion in alarm action notifications. Set when <code>ActionLogLineCount</code> is greater than 0.</p>"
+        },
+        "WarmUpConfiguration":{
+          "shape":"WarmUpConfiguration",
+          "documentation":"<p>The warm-up configuration for the alarm. A warm-up period delays alarm evaluation after you create or update the alarm. During the warm-up period, the alarm stays in <code>INSUFFICIENT_DATA</code> and does not perform alarm actions.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-warm-up.html\">Alarm warm-up periods</a> in the <i>Amazon CloudWatch User Guide</i>.</p>"
+        },
+        "ActionConfiguration":{
+          "shape":"ActionConfiguration",
+          "documentation":"<p>Settings that change the content of the notifications and events that the alarm sends when its state changes. These settings apply to the alarm's actions, whichever state triggers them.</p>"
         }
       },
       "documentation":"<p>The details about a log alarm.</p>",
@@ -3230,7 +3670,9 @@
         "TreatMissingData",
         "EvaluationState",
         "ActionLogLineCount",
-        "ActionLogLineRoleArn"
+        "ActionLogLineRoleArn",
+        "WarmUpConfiguration",
+        "ActionConfiguration"
       ]
     },
     "LogAlarms":{
@@ -3311,6 +3753,12 @@
     },
     "MaxRecords":{
       "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "MaxResults":{
+      "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
@@ -3481,6 +3929,10 @@
           "shape":"EvaluationWindow",
           "documentation":"<p>The evaluation window that the alarm uses to select the range of metric data that it evaluates. This is either a sliding window or a wall clock window. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-evaluation-window.html\">Alarm evaluation windows</a> in the <i>CloudWatch User Guide</i>.</p>"
         },
+        "WarmUpConfiguration":{
+          "shape":"WarmUpConfiguration",
+          "documentation":"<p>The warm-up configuration for the alarm. A warm-up period delays alarm evaluation after you create or update the alarm. During the warm-up period, the alarm stays in <code>INSUFFICIENT_DATA</code> and does not perform alarm actions.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-warm-up.html\">Alarm warm-up periods</a> in the <i>Amazon CloudWatch User Guide</i>.</p>"
+        },
         "EvaluationCriteria":{
           "shape":"EvaluationCriteria",
           "documentation":"<p>The evaluation criteria for the alarm.</p>"
@@ -3488,6 +3940,10 @@
         "EvaluationInterval":{
           "shape":"EvaluationInterval",
           "documentation":"<p>The frequency, in seconds, at which the alarm is evaluated.</p>"
+        },
+        "ActionConfiguration":{
+          "shape":"ActionConfiguration",
+          "documentation":"<p>Settings that change the content of the notifications and events that the alarm sends when its state changes. These settings apply to the alarm's actions, whichever state triggers them.</p>"
         }
       },
       "documentation":"<p>The details about a metric alarm.</p>",
@@ -3522,8 +3978,10 @@
         "EvaluationState",
         "StateTransitionedTimestamp",
         "EvaluationWindow",
+        "WarmUpConfiguration",
         "EvaluationCriteria",
-        "EvaluationInterval"
+        "EvaluationInterval",
+        "ActionConfiguration"
       ]
     },
     "MetricAlarms":{
@@ -3582,6 +4040,43 @@
         }
       },
       "documentation":"<p>This structure is used in both <code>GetMetricData</code> and <code>PutMetricAlarm</code>. The supported use of this structure is different for those two operations.</p> <p>When used in <code>GetMetricData</code>, it indicates the metric data to return, and whether this call is just retrieving a batch set of data for one metric, or is performing a Metrics Insights query or a math expression. A single <code>GetMetricData</code> call can include up to 500 <code>MetricDataQuery</code> structures.</p> <p>When used in <code>PutMetricAlarm</code>, it enables you to create an alarm based on a metric math expression. Each <code>MetricDataQuery</code> in the array specifies either a metric to retrieve, or a math expression to be performed on retrieved metrics. A single <code>PutMetricAlarm</code> call can include up to 20 <code>MetricDataQuery</code> structures in the array. The 20 structures can include as many as 10 structures that contain a <code>MetricStat</code> parameter to retrieve a metric, and as many as 10 structures that contain the <code>Expression</code> parameter to perform a math expression. Of those <code>Expression</code> structures, one must have <code>true</code> as the value for <code>ReturnData</code>. The result of this expression is the value the alarm watches.</p> <p>Any expression used in a <code>PutMetricAlarm</code> operation must return a single time series. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-metric-math.html#metric-math-syntax\">Metric Math Syntax and Functions</a> in the <i>Amazon CloudWatch User Guide</i>.</p> <p>Some of the parameters of this structure also have different uses whether you are using this structure in a <code>GetMetricData</code> operation or a <code>PutMetricAlarm</code> operation. These differences are explained in the following parameter list.</p>"
+    },
+    "MetricDataQueryDefinitionNextToken":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[A-Za-z0-9_-]+"
+    },
+    "MetricDataQueryDefinitionSummaries":{
+      "type":"list",
+      "member":{"shape":"MetricDataQueryDefinitionSummary"}
+    },
+    "MetricDataQueryDefinitionSummary":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Path",
+        "Type"
+      ],
+      "members":{
+        "Id":{
+          "shape":"DefinitionId",
+          "documentation":"<p>The ID of the metric data query definition.</p>"
+        },
+        "Path":{
+          "shape":"DefinitionPath",
+          "documentation":"<p>The path of the metric data query definition.</p>"
+        },
+        "Type":{
+          "shape":"QueryType",
+          "documentation":"<p>The language of the expression. Valid values are the following:</p> <ul> <li> <p> <code>PROMQL</code> – A PromQL query.</p> </li> <li> <p> <code>SQL</code> – A CloudWatch Metrics Insights query.</p> </li> <li> <p> <code>METRIC_MATH</code> – A metric math expression.</p> </li> </ul>"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time when you last updated the metric data query definition.</p>"
+        }
+      },
+      "documentation":"<p>Summary information about a metric data query definition. To get the expression, call <code>GetMetricDataQueryDefinition</code>.</p>"
     },
     "MetricDataResult":{
       "type":"structure",
@@ -3669,6 +4164,12 @@
       "max":2048,
       "min":1
     },
+    "MetricExpressionString":{
+      "type":"string",
+      "max":65536,
+      "min":1,
+      "sensitive":true
+    },
     "MetricId":{
       "type":"string",
       "max":255,
@@ -3688,6 +4189,12 @@
     "MetricName":{
       "type":"string",
       "max":255,
+      "min":1
+    },
+    "MetricNameList":{
+      "type":"list",
+      "member":{"shape":"MetricName"},
+      "max":500,
       "min":1
     },
     "MetricStat":{
@@ -3815,10 +4322,10 @@
         },
         "AdditionalStatistics":{
           "shape":"MetricStreamStatisticsAdditionalStatistics",
-          "documentation":"<p>The list of additional statistics that are to be streamed for the metrics listed in the <code>IncludeMetrics</code> array in this structure. This list can include as many as 20 statistics.</p> <p>If the <code>OutputFormat</code> for the stream is <code>opentelemetry1.0</code> or <code>opentelemetry0.7</code>, the only valid values are <code>p<i>??</i> </code> percentile statistics such as <code>p90</code>, <code>p99</code> and so on.</p> <p>If the <code>OutputFormat</code> for the stream is <code>json</code>, the valid values include the abbreviations for all of the statistics listed in <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html.html\"> CloudWatch statistics definitions</a>. For example, this includes <code>tm98, </code> <code>wm90</code>, <code>PR(:300)</code>, and so on.</p>"
+          "documentation":"<p>The list of additional statistics that are to be streamed for the metrics listed in the <code>IncludeMetrics</code> array in this structure. This list can include as many as 20 statistics.</p> <p>If the <code>OutputFormat</code> for the stream is <code>opentelemetry1.0</code> or <code>opentelemetry0.7</code>, the only valid values are <code>p<i>??</i> </code> percentile statistics such as <code>p90</code>, <code>p99</code> and so on.</p> <p>If the <code>OutputFormat</code> for the stream is <code>json</code>, the valid values include the abbreviations for all of the statistics listed in <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html\"> CloudWatch statistics definitions</a>. For example, this includes <code>tm98, </code> <code>wm90</code>, <code>PR(:300)</code>, and so on.</p>"
         }
       },
-      "documentation":"<p>By default, a metric stream always sends the <code>MAX</code>, <code>MIN</code>, <code>SUM</code>, and <code>SAMPLECOUNT</code> statistics for each metric that is streamed. This structure contains information for one metric that includes additional statistics in the stream. For more information about statistics, see CloudWatch, listed in <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html.html\"> CloudWatch statistics definitions</a>.</p>"
+      "documentation":"<p>By default, a metric stream always sends the <code>MAX</code>, <code>MIN</code>, <code>SUM</code>, and <code>SAMPLECOUNT</code> statistics for each metric that is streamed. This structure contains information for one metric that includes additional statistics in the stream. For more information about statistics, see CloudWatch, listed in <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html\"> CloudWatch statistics definitions</a>.</p>"
     },
     "MetricStreamStatisticsConfigurations":{
       "type":"list",
@@ -3898,6 +4405,33 @@
       "pattern":"[^:].*"
     },
     "NextToken":{"type":"string"},
+    "OTelEnrichmentMetricNameList":{
+      "type":"list",
+      "member":{"shape":"MetricName"},
+      "max":100,
+      "min":0
+    },
+    "OTelEnrichmentMetricSelector":{
+      "type":"structure",
+      "required":["Namespace"],
+      "members":{
+        "Namespace":{
+          "shape":"Namespace",
+          "documentation":"<p>The namespace of the metrics to select. Namespaces are matched exactly and are case-sensitive.</p>"
+        },
+        "MetricNames":{
+          "shape":"OTelEnrichmentMetricNameList",
+          "documentation":"<p>The names of the metrics to select within the namespace. Metric names are matched exactly and are case-sensitive. If this parameter is omitted, every metric in the namespace is selected.</p> <p>A maximum of 100 metric names is allowed for each selector.</p>"
+        }
+      },
+      "documentation":"<p>Selects the metrics in one namespace, for use in the <code>IncludeFilters</code> or <code>ExcludeFilters</code> parameter of <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_StartOTelEnrichment.html\">StartOTelEnrichment</a> or <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_UpdateOTelEnrichment.html\">UpdateOTelEnrichment</a>.</p> <p>A maximum of 100 selectors is allowed across <code>IncludeFilters</code> and <code>ExcludeFilters</code> combined.</p>"
+    },
+    "OTelEnrichmentMetricSelectorList":{
+      "type":"list",
+      "member":{"shape":"OTelEnrichmentMetricSelector"},
+      "max":100,
+      "min":0
+    },
     "OTelEnrichmentStatus":{
       "type":"string",
       "documentation":"<p>The status of OTel enrichment for the account.</p>",
@@ -3906,6 +4440,7 @@
         "Stopped"
       ]
     },
+    "OnlyStartEvaluatingAfterWarmUpPeriodEnds":{"type":"boolean"},
     "OutputFormat":{"type":"string"},
     "OwningAccounts":{
       "type":"list",
@@ -4027,7 +4562,12 @@
     },
     "PutAnomalyDetectorOutput":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "AnomalyDetectorId":{
+          "shape":"AnomalyDetectorId",
+          "documentation":"<p>The unique identifier of the anomaly detector that you created or updated.</p>"
+        }
+      }
     },
     "PutCompositeAlarmInput":{
       "type":"structure",
@@ -4079,6 +4619,10 @@
         "ActionsSuppressorExtensionPeriod":{
           "shape":"SuppressorPeriod",
           "documentation":"<p> The maximum time in seconds that the composite alarm waits after suppressor alarm goes out of the <code>ALARM</code> state. After this time, the composite alarm performs its actions. </p> <important> <p> <code>ExtensionPeriod</code> is required only when <code>ActionsSuppressor</code> is specified. </p> </important>"
+        },
+        "ActionConfiguration":{
+          "shape":"ActionConfiguration",
+          "documentation":"<p>Settings that change the content of the notifications and events that the alarm sends when its state changes. These settings apply to the alarm's actions, whichever state triggers them.</p>"
         }
       }
     },
@@ -4215,6 +4759,14 @@
         "Tags":{
           "shape":"TagList",
           "documentation":"<p>A list of key-value pairs to associate with the alarm. You can use tags to categorize and manage your alarms.</p>"
+        },
+        "WarmUpConfiguration":{
+          "shape":"WarmUpConfiguration",
+          "documentation":"<p>The warm-up configuration for the alarm. A warm-up period delays alarm evaluation after you create or update the alarm. The warm-up period reduces alarm noise from missing data while a new resource or service starts publishing data.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-warm-up.html\">Alarm warm-up periods</a> in the <i>Amazon CloudWatch User Guide</i>.</p>"
+        },
+        "ActionConfiguration":{
+          "shape":"ActionConfiguration",
+          "documentation":"<p>Settings that change the content of the notifications and events that the alarm sends when its state changes. These settings apply to the alarm's actions, whichever state triggers them.</p>"
         }
       }
     },
@@ -4333,6 +4885,10 @@
           "shape":"EvaluationWindow",
           "documentation":"<p>The evaluation window that the alarm uses to select the range of metric data that it evaluates. Specify either a sliding window or a wall clock window. If you omit this parameter, the alarm uses a sliding window.</p> <p>A sliding window advances each time the alarm is evaluated, forming a rolling time window. A wall clock window aligns the evaluated range to fixed clock boundaries, such as the top of the hour or the start of the day.</p> <p>You can use <code>EvaluationWindow</code> with any type of metric alarm except alarms that are based on a PromQL query.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-evaluation-window.html\">Alarm evaluation windows</a> in the <i>CloudWatch User Guide</i>.</p>"
         },
+        "WarmUpConfiguration":{
+          "shape":"WarmUpConfiguration",
+          "documentation":"<p>The warm-up configuration for the alarm. A warm-up period delays alarm evaluation after you create or update the alarm. The warm-up period reduces alarm noise from missing data while a new resource or service starts publishing metrics.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-warm-up.html\">Alarm warm-up periods</a> in the <i>Amazon CloudWatch User Guide</i>.</p>"
+        },
         "EvaluationCriteria":{
           "shape":"EvaluationCriteria",
           "documentation":"<p>The evaluation criteria for the alarm. For each <code>PutMetricAlarm</code> operation, you must specify either <code>MetricName</code>, a <code>Metrics</code> array, or an <code>EvaluationCriteria</code>.</p> <p>If you use the <code>EvaluationCriteria</code> parameter, you cannot include the <code>Namespace</code>, <code>MetricName</code>, <code>Dimensions</code>, <code>Period</code>, <code>Unit</code>, <code>Statistic</code>, <code>ExtendedStatistic</code>, <code>Metrics</code>, <code>Threshold</code>, <code>ComparisonOperator</code>, <code>ThresholdMetricId</code>, <code>EvaluationPeriods</code>, or <code>DatapointsToAlarm</code> parameters of <code>PutMetricAlarm</code> in the same operation. Instead, all evaluation parameters are defined within this structure.</p> <p>For an example of how to use this parameter, see the <b>PromQL alarm</b> example on this page.</p>"
@@ -4340,6 +4896,10 @@
         "EvaluationInterval":{
           "shape":"EvaluationInterval",
           "documentation":"<p>The frequency, in seconds, at which the alarm is evaluated. Valid values are 10, 20, 30, and any multiple of 60.</p> <p>This parameter is required for alarms that use <code>EvaluationCriteria</code>, and cannot be specified for alarms configured with <code>MetricName</code> or <code>Metrics</code>.</p>"
+        },
+        "ActionConfiguration":{
+          "shape":"ActionConfiguration",
+          "documentation":"<p>Settings that change the content of the notifications and events that the alarm sends when its state changes. These settings apply to the alarm's actions, whichever state triggers them.</p>"
         }
       }
     },
@@ -4363,6 +4923,78 @@
           "shape":"StrictEntityValidation",
           "documentation":"<p>Whether to accept valid metric data when an invalid entity is sent.</p> <ul> <li> <p>When set to <code>true</code>: Any validation error (for entity or metric data) will fail the entire request, and no data will be ingested. The failed operation will return a 400 result with the error.</p> </li> <li> <p>When set to <code>false</code>: Validation errors in the entity will not associate the metric with the entity, but the metric data will still be accepted and ingested. Validation errors in the metric data will fail the entire request, and no data will be ingested.</p> <p>In the case of an invalid entity, the operation will return a <code>200</code> status, but an additional response header will contain information about the validation errors. The new header, <code>X-Amzn-Failure-Message</code> is an enumeration of the following values:</p> <ul> <li> <p> <code>InvalidEntity</code> - The provided entity is invalid.</p> </li> <li> <p> <code>InvalidKeyAttributes</code> - The provided <code>KeyAttributes</code> of an entity is invalid.</p> </li> <li> <p> <code>InvalidAttributes</code> - The provided <code>Attributes</code> of an entity is invalid.</p> </li> <li> <p> <code>InvalidTypeValue</code> - The provided <code>Type</code> in the <code>KeyAttributes</code> of an entity is invalid.</p> </li> <li> <p> <code>EntitySizeTooLarge</code> - The number of <code>EntityMetricData</code> objects allowed is 2.</p> </li> <li> <p> <code>MissingRequiredFields</code> - There are missing required fields in the <code>KeyAttributes</code> for the provided <code>Type</code>.</p> </li> </ul> <p>For details of the requirements for specifying an entity, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/adding-your-own-related-telemetry.html\">How to add related information to telemetry</a> in the <i>CloudWatch User Guide</i>.</p> </li> </ul> <p>This parameter is <i>required</i> when <code>EntityMetricData</code> is included.</p>",
           "box":true
+        }
+      }
+    },
+    "PutMetricDataQueryDefinitionInput":{
+      "type":"structure",
+      "required":[
+        "Path",
+        "Expression",
+        "Type"
+      ],
+      "members":{
+        "Id":{
+          "shape":"DefinitionId",
+          "documentation":"<p>The ID of the metric data query definition to update. Omit this parameter to create a definition. CloudWatch then generates the ID and returns it in the response.</p>"
+        },
+        "Path":{
+          "shape":"DefinitionPath",
+          "documentation":"<p>The name of the metric data query definition. Use slashes (<code>/</code>) to organize definitions into folders, for example <code>team/web/latency</code>. The path must meet the following requirements:</p> <ul> <li> <p>It must be unique in your account and Region.</p> </li> <li> <p>It can't start or end with a slash.</p> </li> <li> <p>It can't contain an empty folder name (<code>//</code>).</p> </li> <li> <p>It can be at most 1,015 bytes when encoded as UTF-8.</p> </li> </ul>"
+        },
+        "Expression":{
+          "shape":"MetricExpressionString",
+          "documentation":"<p>The query expression, in the language that <code>Type</code> specifies. CloudWatch doesn't validate or run the expression when you save it.</p>"
+        },
+        "Type":{
+          "shape":"QueryType",
+          "documentation":"<p>The language of the expression. Valid values are the following:</p> <ul> <li> <p> <code>PROMQL</code> – A PromQL query.</p> </li> <li> <p> <code>SQL</code> – A CloudWatch Metrics Insights query.</p> </li> <li> <p> <code>METRIC_MATH</code> – A metric math expression.</p> </li> </ul>"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>A list of key-value pairs to associate with the metric data query definition. You can use tags to categorize definitions and to control access to them. Tags are applied only when the request creates a definition, that is, when you omit <code>Id</code>. To change the tags of an existing definition, use <code>TagResource</code> and <code>UntagResource</code>.</p>"
+        }
+      }
+    },
+    "PutMetricDataQueryDefinitionOutput":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Arn",
+        "Path",
+        "Expression",
+        "Type",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "members":{
+        "Id":{
+          "shape":"DefinitionId",
+          "documentation":"<p>The ID of the metric data query definition.</p>"
+        },
+        "Arn":{
+          "shape":"AmazonResourceName",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the metric data query definition.</p>"
+        },
+        "Path":{
+          "shape":"DefinitionPath",
+          "documentation":"<p>The path of the metric data query definition.</p>"
+        },
+        "Expression":{
+          "shape":"MetricExpressionString",
+          "documentation":"<p>The query expression.</p>"
+        },
+        "Type":{
+          "shape":"QueryType",
+          "documentation":"<p>The language of the expression.</p>"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time when you created the metric data query definition.</p>"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time when you last updated the metric data query definition.</p>"
         }
       }
     },
@@ -4405,7 +5037,7 @@
         },
         "StatisticsConfigurations":{
           "shape":"MetricStreamStatisticsConfigurations",
-          "documentation":"<p>By default, a metric stream always sends the <code>MAX</code>, <code>MIN</code>, <code>SUM</code>, and <code>SAMPLECOUNT</code> statistics for each metric that is streamed. You can use this parameter to have the metric stream also send additional statistics in the stream. This array can have up to 100 members.</p> <p>For each entry in this array, you specify one or more metrics and the list of additional statistics to stream for those metrics. The additional statistics that you can stream depend on the stream's <code>OutputFormat</code>. If the <code>OutputFormat</code> is <code>json</code>, you can stream any additional statistic that is supported by CloudWatch, listed in <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html.html\"> CloudWatch statistics definitions</a>. If the <code>OutputFormat</code> is <code>opentelemetry1.0</code> or <code>opentelemetry0.7</code>, you can stream percentile statistics such as p95, p99.9, and so on.</p>"
+          "documentation":"<p>By default, a metric stream always sends the <code>MAX</code>, <code>MIN</code>, <code>SUM</code>, and <code>SAMPLECOUNT</code> statistics for each metric that is streamed. You can use this parameter to have the metric stream also send additional statistics in the stream. This array can have up to 100 members.</p> <p>For each entry in this array, you specify one or more metrics and the list of additional statistics to stream for those metrics. The additional statistics that you can stream depend on the stream's <code>OutputFormat</code>. If the <code>OutputFormat</code> is <code>json</code>, you can stream any additional statistic that is supported by CloudWatch, listed in <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html\"> CloudWatch statistics definitions</a>. If the <code>OutputFormat</code> is <code>opentelemetry1.0</code> or <code>opentelemetry0.7</code>, you can stream percentile statistics such as p95, p99.9, and so on.</p>"
         },
         "IncludeLinkedAccountsMetrics":{
           "shape":"IncludeLinkedAccountsMetrics",
@@ -4440,6 +5072,14 @@
       "max":10000,
       "min":0
     },
+    "QueryType":{
+      "type":"string",
+      "enum":[
+        "PROMQL",
+        "SQL",
+        "METRIC_MATH"
+      ]
+    },
     "Range":{
       "type":"structure",
       "required":[
@@ -4471,6 +5111,12 @@
       "max":86400,
       "min":0
     },
+    "ResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:[a-zA-Z0-9-]+:[a-zA-Z0-9-]+:[a-zA-Z0-9-]*:\\d{12}:.+"
+    },
     "ResourceConflict":{
       "type":"structure",
       "members":{
@@ -4489,6 +5135,50 @@
       "type":"list",
       "member":{"shape":"ResourceName"},
       "max":5
+    },
+    "ResourceMetricSelection":{
+      "type":"structure",
+      "required":["IncludeMetrics"],
+      "members":{
+        "IncludeMetrics":{
+          "shape":"MetricNameList",
+          "documentation":"<p>The names of the metrics to collect for the resource. Amazon CloudWatch collects only the metrics that you list here.</p>"
+        }
+      },
+      "documentation":"<p>Specifies which metrics Amazon CloudWatch collects for a resource metrics configuration. Include this in a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_CreateResourceMetricsConfiguration.html\">CreateResourceMetricsConfiguration</a> or <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_UpdateResourceMetricsConfiguration.html\">UpdateResourceMetricsConfiguration</a> request to limit collection to a specific set of metrics. If you omit metric selections, Amazon CloudWatch collects all available detailed metrics for the resource.</p>"
+    },
+    "ResourceMetricSelectionList":{
+      "type":"list",
+      "member":{"shape":"ResourceMetricSelection"},
+      "max":1,
+      "min":1
+    },
+    "ResourceMetricsConfiguration":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "members":{
+        "ResourceArn":{
+          "shape":"ResourceArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the Amazon Web Services resource that this configuration applies to.</p>"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time that the resource metrics configuration was created.</p>"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time that the resource metrics configuration was last updated. When the configuration is first created, this value is the same as <code>CreatedAt</code>.</p>"
+        },
+        "MetricSelections":{
+          "shape":"ResourceMetricSelectionList",
+          "documentation":"<p>The metrics that Amazon CloudWatch collects for the resource. If this field is not present, Amazon CloudWatch collects all available detailed metrics for the resource.</p>"
+        }
+      },
+      "documentation":"<p>Represents a resource metrics configuration for an Amazon Web Services resource. A resource metrics configuration enables detailed metric collection for the resource that is identified by its Amazon Resource Name (ARN). Each Amazon Web Services resource can have only one resource metrics configuration.</p> <p>This structure is returned by the <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_CreateResourceMetricsConfiguration.html\">CreateResourceMetricsConfiguration</a>, <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_UpdateResourceMetricsConfiguration.html\">UpdateResourceMetricsConfiguration</a>, and <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetResourceMetricsConfiguration.html\">GetResourceMetricsConfiguration</a> operations.</p>"
     },
     "ResourceName":{
       "type":"string",
@@ -4569,7 +5259,10 @@
     },
     "ScheduleConfiguration":{
       "type":"structure",
-      "required":["ScheduleExpression"],
+      "required":[
+        "ScheduleExpression",
+        "StartTimeOffset"
+      ],
       "members":{
         "ScheduleExpression":{
           "shape":"ScheduleExpression",
@@ -4737,13 +5430,43 @@
     },
     "StartOTelEnrichmentInput":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "IncludeFilters":{
+          "shape":"OTelEnrichmentMetricSelectorList",
+          "documentation":"<p>The metric namespaces, and the metric names, to enrich. If this parameter is omitted, every namespace that Amazon CloudWatch supports for enrichment is in scope.</p> <p>A maximum of 100 filters is allowed across <code>IncludeFilters</code> and <code>ExcludeFilters</code> combined.</p>"
+        },
+        "ExcludeFilters":{
+          "shape":"OTelEnrichmentMetricSelectorList",
+          "documentation":"<p>The metric namespaces, and the metric names, to leave unenriched. If this parameter is omitted, nothing is excluded.</p> <p>Amazon CloudWatch applies <code>ExcludeFilters</code> after <code>IncludeFilters</code>, so a metric that both parameters match is not enriched.</p> <p>A maximum of 100 filters is allowed across <code>IncludeFilters</code> and <code>ExcludeFilters</code> combined.</p>"
+        }
+      }
     },
     "StartOTelEnrichmentOutput":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "IncludeFilters":{
+          "shape":"OTelEnrichmentMetricSelectorList",
+          "documentation":"<p>The include filters that are stored for the account.</p>"
+        },
+        "ExcludeFilters":{
+          "shape":"OTelEnrichmentMetricSelectorList",
+          "documentation":"<p>The exclude filters that are stored for the account.</p>"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time that enrichment started for the account.</p>"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time that the enrichment configuration for the account was last stored.</p>"
+        }
+      }
     },
-    "StartTimeOffset":{"type":"long"},
+    "StartTimeOffset":{
+      "type":"long",
+      "max":2592000,
+      "min":1
+    },
     "Stat":{"type":"string"},
     "StateReason":{
       "type":"string",
@@ -4945,6 +5668,81 @@
       "type":"structure",
       "members":{}
     },
+    "UpdateOTelEnrichmentInput":{
+      "type":"structure",
+      "members":{
+        "IncludeFilters":{
+          "shape":"OTelEnrichmentMetricSelectorList",
+          "documentation":"<p>The metric namespaces, and the metric names, to enrich. If this parameter is omitted, every namespace that Amazon CloudWatch supports for enrichment is in scope.</p> <p>A maximum of 100 filters is allowed across <code>IncludeFilters</code> and <code>ExcludeFilters</code> combined.</p>"
+        },
+        "ExcludeFilters":{
+          "shape":"OTelEnrichmentMetricSelectorList",
+          "documentation":"<p>The metric namespaces, and the metric names, to leave unenriched. If this parameter is omitted, nothing is excluded.</p> <p>Amazon CloudWatch applies <code>ExcludeFilters</code> after <code>IncludeFilters</code>, so a metric that both parameters match is not enriched.</p> <p>A maximum of 100 filters is allowed across <code>IncludeFilters</code> and <code>ExcludeFilters</code> combined.</p>"
+        }
+      }
+    },
+    "UpdateOTelEnrichmentOutput":{
+      "type":"structure",
+      "members":{
+        "IncludeFilters":{
+          "shape":"OTelEnrichmentMetricSelectorList",
+          "documentation":"<p>The include filters that are stored for the account after the replacement. This parameter is omitted when the request cleared the include filters, which means that every supported namespace is in scope.</p>"
+        },
+        "ExcludeFilters":{
+          "shape":"OTelEnrichmentMetricSelectorList",
+          "documentation":"<p>The exclude filters that are stored for the account after the replacement. This parameter is omitted when the request cleared the exclude filters, which means that nothing is excluded.</p>"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time that enrichment started for the account.</p>"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time that the enrichment configuration for the account was last stored.</p>"
+        }
+      }
+    },
+    "UpdateResourceMetricsConfigurationInput":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"ResourceArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the Amazon Web Services resource to update the resource metrics configuration for.</p>"
+        },
+        "MetricSelections":{
+          "shape":"ResourceMetricSelectionList",
+          "documentation":"<p>Specifies which metrics Amazon CloudWatch collects for the resource. The selections that you provide completely replace any existing metric selections.</p> <p>If you omit this parameter, Amazon CloudWatch removes any existing metric selection filter and collects all available detailed metrics for the resource.</p>"
+        }
+      },
+      "documentation":"<p>Specifies the resource ARN and optional replacement metric selections for an <code>UpdateResourceMetricsConfiguration</code> request.</p>"
+    },
+    "UpdateResourceMetricsConfigurationOutput":{
+      "type":"structure",
+      "required":["ResourceMetricsConfiguration"],
+      "members":{
+        "ResourceMetricsConfiguration":{
+          "shape":"ResourceMetricsConfiguration",
+          "documentation":"<p>The resource metrics configuration after the update was applied.</p>"
+        }
+      },
+      "documentation":"<p>Returns the updated resource metrics configuration.</p>"
+    },
+    "ValidationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ValidationExceptionMessage"}
+      },
+      "documentation":"<p>The request failed validation. One or more input parameters do not satisfy the constraints that the operation requires.</p>",
+      "error":{
+        "code":"ValidationError",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true,
+      "synthetic":true
+    },
+    "ValidationExceptionMessage":{"type":"string"},
     "Values":{
       "type":"list",
       "member":{"shape":"DatapointValue"}
@@ -4958,6 +5756,26 @@
         }
       },
       "documentation":"<p>An evaluation window that aligns the evaluated range to fixed clock boundaries that match the alarm's period, such as the top of the hour, midnight, or the start of the calendar week, optionally in a specific time zone.</p> <p>When you use a wall clock window, the alarm's period must be 1 minute (60 seconds), 5 minutes (300 seconds), 1 hour (3,600 seconds), 1 day (86,400 seconds), or 1 week (604,800 seconds). Other period values aren't supported with a wall clock window.</p> <p>Choose a wall clock window when your monitoring is tied to a business or calendar period, such as daily reports, batch jobs, or backups, or when you want alarm evaluations to match the periods shown on a metric dashboard.</p>"
+    },
+    "WarmUpConfiguration":{
+      "type":"structure",
+      "required":["WarmUpPeriodDurationInMinutes"],
+      "members":{
+        "WarmUpPeriodDurationInMinutes":{
+          "shape":"WarmUpPeriodDurationInMinutes",
+          "documentation":"<p>The length of the warm-up period, in minutes. After you create or update the alarm, the alarm stays in <code>INSUFFICIENT_DATA</code> for this duration. During this time, the alarm does not perform alarm actions.</p> <p>You can change this value at any time, including after the warm-up period ends. If you change it after the warm-up period ends, the new value does not restart the warm-up period.</p>"
+        },
+        "OnlyStartEvaluatingAfterWarmUpPeriodEnds":{
+          "shape":"OnlyStartEvaluatingAfterWarmUpPeriodEnds",
+          "documentation":"<p>Specifies whether the alarm waits for the full warm-up period before it starts to evaluate. The default is <code>false</code>. If <code>true</code>, the alarm waits the entire <code>WarmUpPeriodDurationInMinutes</code> before it starts to evaluate, even if metric data arrives earlier. If <code>false</code>, the alarm ends the warm-up period early. Evaluation begins as soon as the alarm has enough metric data to fill its evaluation window.</p>"
+        }
+      },
+      "documentation":"<p>The configuration settings that define the warm-up behavior for an alarm. Use these settings to delay alarm evaluation after you create or update the alarm, which reduces alarm noise while a new resource or service starts publishing data.</p> <p>During the warm-up period, the alarm stays in <code>INSUFFICIENT_DATA</code> and does not perform alarm actions.</p>"
+    },
+    "WarmUpPeriodDurationInMinutes":{
+      "type":"integer",
+      "max":2880,
+      "min":1
     }
   },
   "documentation":"<p>Amazon CloudWatch enables you to publish, monitor, and manage various metrics, as well as configure alarm actions based on data from metrics. This guide provides detailed information about CloudWatch actions, data types, parameters, and errors. For more information about CloudWatch features, see <a href=\"https://aws.amazon.com/cloudwatch\">Amazon CloudWatch</a> and the <i>Amazon CloudWatch User Guide</i>.</p> <p>For information about the metrics that other Amazon Web Services products send to CloudWatch, see the <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/aws-services-cloudwatch-metrics.html\">Amazon CloudWatch Metrics and Dimensions Reference</a> in the <i>Amazon CloudWatch User Guide</i>.</p> <p>Use the following links to get started using the CloudWatch Query API:</p> <p>: An alphabetical list of all CloudWatch actions.</p> <p>: An alphabetical list of all CloudWatch data types.</p> <p> <a>CommonParameters</a>: Parameters that all Query actions can use.</p> <p> <a>CommonErrors</a>: Client and server errors that all actions can return.</p> <p> <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#cw_region\">Regions and Endpoints</a>: Supported regions and endpoints for all Amazon Web Services products.</p> <p>Alternatively, you can use one of the <a href=\"https://aws.amazon.com/tools/#sdk\">Amazon Web Services SDKs</a> to access CloudWatch using an API tailored to your programming language or platform.</p> <p>Developers in the Amazon Web Services developer community also provide their own libraries, which you can find at the following Amazon Web Services developer centers:</p> <p> <a href=\"http://aws.amazon.com/java/\">Java Developer Center</a> </p> <p> <a href=\"http://aws.amazon.com/javascript/\">JavaScript Developer Center</a> </p> <p> <a href=\"http://aws.amazon.com/mobile/\">Amazon Web Services Mobile Services</a> </p> <p> <a href=\"http://aws.amazon.com/php/\">PHP Developer Center</a> </p> <p> <a href=\"http://aws.amazon.com/python/\">Python Developer Center</a> </p> <p> <a href=\"http://aws.amazon.com/ruby/\">Ruby Developer Center</a> </p> <p> <a href=\"http://aws.amazon.com/net/\">Windows and .NET Developer Center</a> </p>"

@@ -22,6 +22,10 @@ GetProductResult::GetProductResult(const Aws::AmazonWebServiceResult<JsonValue>&
 GetProductResult& GetProductResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
   m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
+  if (jsonValue.ValueExists("locale")) {
+    m_locale = jsonValue.GetString("locale");
+    m_localeHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("productId")) {
     m_productId = jsonValue.GetString("productId");
     m_productIdHasBeenSet = true;
@@ -34,6 +38,10 @@ GetProductResult& GetProductResult::operator=(const Aws::AmazonWebServiceResult<
     m_productName = jsonValue.GetString("productName");
     m_productNameHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("manufacturer")) {
+    m_manufacturer = jsonValue.GetObject("manufacturer");
+    m_manufacturerHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("deployedOnAws")) {
     m_deployedOnAws = DeployedOnAwsStatusMapper::GetDeployedOnAwsStatusForName(jsonValue.GetString("deployedOnAws"));
     m_deployedOnAwsHasBeenSet = true;
@@ -45,10 +53,6 @@ GetProductResult& GetProductResult::operator=(const Aws::AmazonWebServiceResult<
   if (jsonValue.ValueExists("longDescription")) {
     m_longDescription = jsonValue.GetString("longDescription");
     m_longDescriptionHasBeenSet = true;
-  }
-  if (jsonValue.ValueExists("manufacturer")) {
-    m_manufacturer = jsonValue.GetObject("manufacturer");
-    m_manufacturerHasBeenSet = true;
   }
   if (jsonValue.ValueExists("logoThumbnailUrl")) {
     m_logoThumbnailUrl = jsonValue.GetString("logoThumbnailUrl");
@@ -96,6 +100,10 @@ GetProductResult& GetProductResult::operator=(const Aws::AmazonWebServiceResult<
       m_sellerEngagements.push_back(sellerEngagementsJsonList[sellerEngagementsIndex].AsObject());
     }
     m_sellerEngagementsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("listingId")) {
+    m_listingId = jsonValue.GetString("listingId");
+    m_listingIdHasBeenSet = true;
   }
 
   const auto& headers = result.GetHeaderValueCollection();

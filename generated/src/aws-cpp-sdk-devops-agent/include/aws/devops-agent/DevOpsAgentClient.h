@@ -748,6 +748,32 @@ class AWS_DEVOPSAGENT_API DevOpsAgentClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Retrieves the details of a chat execution, including its execution ID,
+   * summary, timestamps, and archive status.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/devops-agent-2026-01-01/GetChat">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetChatOutcome GetChat(const Model::GetChatRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetChat that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetChatRequestT = Model::GetChatRequest>
+  Model::GetChatOutcomeCallable GetChatCallable(const GetChatRequestT& request) const {
+    return SubmitCallable(&DevOpsAgentClient::GetChat, request);
+  }
+
+  /**
+   * An Async wrapper for GetChat that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetChatRequestT = Model::GetChatRequest>
+  void GetChatAsync(const GetChatRequestT& request, const GetChatResponseReceivedHandler& handler,
+                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&DevOpsAgentClient::GetChat, request, handler, context);
+  }
+
+  /**
    * <p>Get the full auth configuration of operator including any enabled auth
    * flow</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/devops-agent-2026-01-01/GetOperatorApp">AWS
@@ -1451,6 +1477,34 @@ class AWS_DEVOPSAGENT_API DevOpsAgentClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Updates an approval request with the terminal decision (APPROVED or
+   * REJECTED). A single operation handles both verbs via the action
+   * enum.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/devops-agent-2026-01-01/UpdateApprovalAction">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateApprovalActionOutcome UpdateApprovalAction(const Model::UpdateApprovalActionRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateApprovalAction that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateApprovalActionRequestT = Model::UpdateApprovalActionRequest>
+  Model::UpdateApprovalActionOutcomeCallable UpdateApprovalActionCallable(const UpdateApprovalActionRequestT& request) const {
+    return SubmitCallable(&DevOpsAgentClient::UpdateApprovalAction, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateApprovalAction that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename UpdateApprovalActionRequestT = Model::UpdateApprovalActionRequest>
+  void UpdateApprovalActionAsync(const UpdateApprovalActionRequestT& request, const UpdateApprovalActionResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&DevOpsAgentClient::UpdateApprovalAction, request, handler, context);
+  }
+
+  /**
    * <p>Updates an asset in the specified agent space</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/devops-agent-2026-01-01/UpdateAsset">AWS
    * API Reference</a></p>
@@ -1552,6 +1606,34 @@ class AWS_DEVOPSAGENT_API DevOpsAgentClient : public Aws::Client::AWSJsonClient,
   void UpdateBacklogTaskAsync(const UpdateBacklogTaskRequestT& request, const UpdateBacklogTaskResponseReceivedHandler& handler,
                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&DevOpsAgentClient::UpdateBacklogTask, request, handler, context);
+  }
+
+  /**
+   * <p>Updates a chat execution. You can use this operation to change the chat
+   * execution's summary or to archive or unarchive it.</p><p>Archiving a chat
+   * execution hides it from the default chat list. Unarchiving a chat execution
+   * restores it to the default chat list.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/devops-agent-2026-01-01/UpdateChat">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateChatOutcome UpdateChat(const Model::UpdateChatRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateChat that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename UpdateChatRequestT = Model::UpdateChatRequest>
+  Model::UpdateChatOutcomeCallable UpdateChatCallable(const UpdateChatRequestT& request) const {
+    return SubmitCallable(&DevOpsAgentClient::UpdateChat, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateChat that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename UpdateChatRequestT = Model::UpdateChatRequest>
+  void UpdateChatAsync(const UpdateChatRequestT& request, const UpdateChatResponseReceivedHandler& handler,
+                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&DevOpsAgentClient::UpdateChat, request, handler, context);
   }
 
   /**

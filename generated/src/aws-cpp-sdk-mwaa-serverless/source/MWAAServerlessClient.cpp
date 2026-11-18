@@ -20,6 +20,7 @@
 #include <aws/mwaa-serverless/MWAAServerlessClient.h>
 #include <aws/mwaa-serverless/MWAAServerlessEndpointProvider.h>
 #include <aws/mwaa-serverless/MWAAServerlessErrorMarshaller.h>
+#include <aws/mwaa-serverless/model/CreateAirflowUiUrlRequest.h>
 #include <aws/mwaa-serverless/model/CreateWorkflowRequest.h>
 #include <aws/mwaa-serverless/model/DeleteWorkflowRequest.h>
 #include <aws/mwaa-serverless/model/GetTaskInstanceRequest.h>
@@ -171,7 +172,8 @@ MWAAServerlessClient::InvokeOperationOutcome MWAAServerlessClient::InvokeService
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -183,8 +185,14 @@ MWAAServerlessClient::InvokeOperationOutcome MWAAServerlessClient::InvokeService
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
+}
+
+CreateAirflowUiUrlOutcome MWAAServerlessClient::CreateAirflowUiUrl(const CreateAirflowUiUrlRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateAirflowUiUrlOutcome(result.GetResultWithOwnership())
+                            : CreateAirflowUiUrlOutcome(std::move(result.GetError()));
 }
 
 CreateWorkflowOutcome MWAAServerlessClient::CreateWorkflow(const CreateWorkflowRequest& request) const {

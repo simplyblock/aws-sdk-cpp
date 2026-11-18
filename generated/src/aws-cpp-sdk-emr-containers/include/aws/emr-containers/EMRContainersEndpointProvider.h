@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/emr-containers/EMRContainersEndpointRules.h>
 #include <aws/emr-containers/EMRContainers_EXPORTS.h>
 
 namespace Aws {
 namespace EMRContainers {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using EMRContainersClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using EMRContainersEndpointProviderBase =
     EndpointProviderBase<EMRContainersClientConfiguration, EMRContainersBuiltInParameters, EMRContainersClientContextParameters>;
 
 using EMRContainersDefaultEpProviderBase =
-    DefaultEndpointProvider<EMRContainersClientConfiguration, EMRContainersBuiltInParameters, EMRContainersClientContextParameters>;
+    BDDEndpointProvider<EMRContainersClientConfiguration, EMRContainersBuiltInParameters, EMRContainersClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_EMRCONTAINERS_API EMRContainersEndpointProvider : public EMRContainers
  public:
   using EMRContainersResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  EMRContainersEndpointProvider()
-      : EMRContainersDefaultEpProviderBase(Aws::EMRContainers::EMRContainersEndpointRules::GetRulesBlob(),
-                                           Aws::EMRContainers::EMRContainersEndpointRules::RulesBlobSize) {}
+  EMRContainersEndpointProvider();
 
   ~EMRContainersEndpointProvider() {}
 };

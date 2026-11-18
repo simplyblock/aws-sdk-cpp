@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -20,6 +20,10 @@
 #include <aws/odb/model/ListDbNodesPaginationTraits.h>
 #include <aws/odb/model/ListDbServersPaginationTraits.h>
 #include <aws/odb/model/ListDbSystemShapesPaginationTraits.h>
+#include <aws/odb/model/ListExadbVmClustersPaginationTraits.h>
+#include <aws/odb/model/ListExascaleDbStorageVaultsPaginationTraits.h>
+#include <aws/odb/model/ListFlexComponentsPaginationTraits.h>
+#include <aws/odb/model/ListGiMinorVersionsPaginationTraits.h>
 #include <aws/odb/model/ListGiVersionsPaginationTraits.h>
 #include <aws/odb/model/ListOdbNetworksPaginationTraits.h>
 #include <aws/odb/model/ListOdbPeeringConnectionsPaginationTraits.h>
@@ -184,6 +188,54 @@ class OdbPaginationBase {
     request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListDbSystemShapesRequest,
                                              Pagination::ListDbSystemShapesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListExadbVmClusters operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListExadbVmClustersRequest,
+                                    Pagination::ListExadbVmClustersPaginationTraits<DerivedClient>>
+  ListExadbVmClustersPaginator(const Model::ListExadbVmClustersRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListExadbVmClustersRequest,
+                                             Pagination::ListExadbVmClustersPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListExascaleDbStorageVaults operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListExascaleDbStorageVaultsRequest,
+                                    Pagination::ListExascaleDbStorageVaultsPaginationTraits<DerivedClient>>
+  ListExascaleDbStorageVaultsPaginator(const Model::ListExascaleDbStorageVaultsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListExascaleDbStorageVaultsRequest,
+                                             Pagination::ListExascaleDbStorageVaultsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListFlexComponents operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListFlexComponentsRequest,
+                                    Pagination::ListFlexComponentsPaginationTraits<DerivedClient>>
+  ListFlexComponentsPaginator(const Model::ListFlexComponentsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListFlexComponentsRequest,
+                                             Pagination::ListFlexComponentsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListGiMinorVersions operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListGiMinorVersionsRequest,
+                                    Pagination::ListGiMinorVersionsPaginationTraits<DerivedClient>>
+  ListGiMinorVersionsPaginator(const Model::ListGiMinorVersionsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListGiMinorVersionsRequest,
+                                             Pagination::ListGiMinorVersionsPaginationTraits<DerivedClient>>{
         static_cast<DerivedClient*>(this), request};
   }
 

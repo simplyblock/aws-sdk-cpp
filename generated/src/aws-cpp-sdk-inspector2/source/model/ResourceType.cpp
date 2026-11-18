@@ -20,6 +20,14 @@ static const int AWS_ECR_CONTAINER_IMAGE_HASH = HashingUtils::HashString("AWS_EC
 static const int AWS_ECR_REPOSITORY_HASH = HashingUtils::HashString("AWS_ECR_REPOSITORY");
 static const int AWS_LAMBDA_FUNCTION_HASH = HashingUtils::HashString("AWS_LAMBDA_FUNCTION");
 static const int CODE_REPOSITORY_HASH = HashingUtils::HashString("CODE_REPOSITORY");
+static const int Microsoft_Compute_virtualMachines_HASH = HashingUtils::HashString("Microsoft.Compute/virtualMachines");
+static const int Microsoft_ContainerRegistry_registry_containerImage_HASH =
+    HashingUtils::HashString("Microsoft.ContainerRegistry/registry/containerImage");
+static const int Microsoft_Web_sites_HASH = HashingUtils::HashString("Microsoft.Web/sites");
+static const int MACHINE_IMAGE_HASH = HashingUtils::HashString("MACHINE_IMAGE");
+static const int cloudfunctions_googleapis_com_Function_HASH = HashingUtils::HashString("cloudfunctions.googleapis.com/Function");
+static const int compute_googleapis_com_Instance_HASH = HashingUtils::HashString("compute.googleapis.com/Instance");
+static const int artifactregistry_googleapis_com_DockerImage_HASH = HashingUtils::HashString("artifactregistry.googleapis.com/DockerImage");
 
 ResourceType GetResourceTypeForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -33,6 +41,20 @@ ResourceType GetResourceTypeForName(const Aws::String& name) {
     return ResourceType::AWS_LAMBDA_FUNCTION;
   } else if (hashCode == CODE_REPOSITORY_HASH) {
     return ResourceType::CODE_REPOSITORY;
+  } else if (hashCode == Microsoft_Compute_virtualMachines_HASH) {
+    return ResourceType::Microsoft_Compute_virtualMachines;
+  } else if (hashCode == Microsoft_ContainerRegistry_registry_containerImage_HASH) {
+    return ResourceType::Microsoft_ContainerRegistry_registry_containerImage;
+  } else if (hashCode == Microsoft_Web_sites_HASH) {
+    return ResourceType::Microsoft_Web_sites;
+  } else if (hashCode == MACHINE_IMAGE_HASH) {
+    return ResourceType::MACHINE_IMAGE;
+  } else if (hashCode == cloudfunctions_googleapis_com_Function_HASH) {
+    return ResourceType::cloudfunctions_googleapis_com_Function;
+  } else if (hashCode == compute_googleapis_com_Instance_HASH) {
+    return ResourceType::compute_googleapis_com_Instance;
+  } else if (hashCode == artifactregistry_googleapis_com_DockerImage_HASH) {
+    return ResourceType::artifactregistry_googleapis_com_DockerImage;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -57,6 +79,20 @@ Aws::String GetNameForResourceType(ResourceType enumValue) {
       return "AWS_LAMBDA_FUNCTION";
     case ResourceType::CODE_REPOSITORY:
       return "CODE_REPOSITORY";
+    case ResourceType::Microsoft_Compute_virtualMachines:
+      return "Microsoft.Compute/virtualMachines";
+    case ResourceType::Microsoft_ContainerRegistry_registry_containerImage:
+      return "Microsoft.ContainerRegistry/registry/containerImage";
+    case ResourceType::Microsoft_Web_sites:
+      return "Microsoft.Web/sites";
+    case ResourceType::MACHINE_IMAGE:
+      return "MACHINE_IMAGE";
+    case ResourceType::cloudfunctions_googleapis_com_Function:
+      return "cloudfunctions.googleapis.com/Function";
+    case ResourceType::compute_googleapis_com_Instance:
+      return "compute.googleapis.com/Instance";
+    case ResourceType::artifactregistry_googleapis_com_DockerImage:
+      return "artifactregistry.googleapis.com/DockerImage";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

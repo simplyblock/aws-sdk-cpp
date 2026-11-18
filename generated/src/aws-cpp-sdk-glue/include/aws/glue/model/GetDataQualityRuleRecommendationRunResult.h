@@ -8,7 +8,9 @@
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/glue/Glue_EXPORTS.h>
+#include <aws/glue/model/DataQualityRuleRecommendationRunAdditionalRunOptions.h>
 #include <aws/glue/model/DataSource.h>
+#include <aws/glue/model/RecommendationMode.h>
 #include <aws/glue/model/TaskStatusType.h>
 
 #include <utility>
@@ -72,7 +74,7 @@ class GetDataQualityRuleRecommendationRunResult {
 
   ///@{
   /**
-   * <p>An IAM role supplied to encrypt the results of the run.</p>
+   * <p>The IAM role that Glue assumes to access resources for the run.</p>
    */
   inline const Aws::String& GetRole() const { return m_role; }
   template <typename RoleT = Aws::String>
@@ -274,6 +276,39 @@ class GetDataQualityRuleRecommendationRunResult {
   ///@}
 
   ///@{
+  /**
+   * <p>Additional run options you can specify for a recommendation run.</p>
+   */
+  inline const DataQualityRuleRecommendationRunAdditionalRunOptions& GetAdditionalRunOptions() const { return m_additionalRunOptions; }
+  template <typename AdditionalRunOptionsT = DataQualityRuleRecommendationRunAdditionalRunOptions>
+  void SetAdditionalRunOptions(AdditionalRunOptionsT&& value) {
+    m_additionalRunOptionsHasBeenSet = true;
+    m_additionalRunOptions = std::forward<AdditionalRunOptionsT>(value);
+  }
+  template <typename AdditionalRunOptionsT = DataQualityRuleRecommendationRunAdditionalRunOptions>
+  GetDataQualityRuleRecommendationRunResult& WithAdditionalRunOptions(AdditionalRunOptionsT&& value) {
+    SetAdditionalRunOptions(std::forward<AdditionalRunOptionsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The mode that Glue Data Quality uses to recommend rules.</p> <p>The default
+   * is <code>BASIC</code>.</p>
+   */
+  inline RecommendationMode GetRecommendationMode() const { return m_recommendationMode; }
+  inline void SetRecommendationMode(RecommendationMode value) {
+    m_recommendationModeHasBeenSet = true;
+    m_recommendationMode = value;
+  }
+  inline GetDataQualityRuleRecommendationRunResult& WithRecommendationMode(RecommendationMode value) {
+    SetRecommendationMode(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -318,6 +353,10 @@ class GetDataQualityRuleRecommendationRunResult {
 
   Aws::String m_dataQualitySecurityConfiguration;
 
+  DataQualityRuleRecommendationRunAdditionalRunOptions m_additionalRunOptions;
+
+  RecommendationMode m_recommendationMode{RecommendationMode::NOT_SET};
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_runIdHasBeenSet = false;
@@ -334,6 +373,8 @@ class GetDataQualityRuleRecommendationRunResult {
   bool m_recommendedRulesetHasBeenSet = false;
   bool m_createdRulesetNameHasBeenSet = false;
   bool m_dataQualitySecurityConfigurationHasBeenSet = false;
+  bool m_additionalRunOptionsHasBeenSet = false;
+  bool m_recommendationModeHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

@@ -35,6 +35,25 @@ class GetOfferResult {
 
   ///@{
   /**
+   * <p>The locale of the returned content. Indicates whether the response contains
+   * content in the requested locale, or fell back to the default locale. See
+   * <code>Locale</code> for details.</p>
+   */
+  inline const Aws::String& GetLocale() const { return m_locale; }
+  template <typename LocaleT = Aws::String>
+  void SetLocale(LocaleT&& value) {
+    m_localeHasBeenSet = true;
+    m_locale = std::forward<LocaleT>(value);
+  }
+  template <typename LocaleT = Aws::String>
+  GetOfferResult& WithLocale(LocaleT&& value) {
+    SetLocale(std::forward<LocaleT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The unique identifier of the offer.</p>
    */
   inline const Aws::String& GetOfferId() const { return m_offerId; }
@@ -87,24 +106,6 @@ class GetOfferResult {
 
   ///@{
   /**
-   * <p>An encoded string to be passed by the acceptor of the terms when creating an
-   * agreement.</p>
-   */
-  inline const Aws::String& GetAgreementProposalId() const { return m_agreementProposalId; }
-  template <typename AgreementProposalIdT = Aws::String>
-  void SetAgreementProposalId(AgreementProposalIdT&& value) {
-    m_agreementProposalIdHasBeenSet = true;
-    m_agreementProposalId = std::forward<AgreementProposalIdT>(value);
-  }
-  template <typename AgreementProposalIdT = Aws::String>
-  GetOfferResult& WithAgreementProposalId(AgreementProposalIdT&& value) {
-    SetAgreementProposalId(std::forward<AgreementProposalIdT>(value));
-    return *this;
-  }
-  ///@}
-
-  ///@{
-  /**
    * <p>The date and time until when the offer can be procured. This value is null
    * for offers that never expire.</p>
    */
@@ -151,6 +152,47 @@ class GetOfferResult {
   template <typename SellerOfRecordT = SellerInformation>
   GetOfferResult& WithSellerOfRecord(SellerOfRecordT&& value) {
     SetSellerOfRecord(std::forward<SellerOfRecordT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The products and offer sets associated with this offer.</p>
+   */
+  inline const Aws::Vector<OfferAssociatedEntity>& GetAssociatedEntities() const { return m_associatedEntities; }
+  template <typename AssociatedEntitiesT = Aws::Vector<OfferAssociatedEntity>>
+  void SetAssociatedEntities(AssociatedEntitiesT&& value) {
+    m_associatedEntitiesHasBeenSet = true;
+    m_associatedEntities = std::forward<AssociatedEntitiesT>(value);
+  }
+  template <typename AssociatedEntitiesT = Aws::Vector<OfferAssociatedEntity>>
+  GetOfferResult& WithAssociatedEntities(AssociatedEntitiesT&& value) {
+    SetAssociatedEntities(std::forward<AssociatedEntitiesT>(value));
+    return *this;
+  }
+  template <typename AssociatedEntitiesT = OfferAssociatedEntity>
+  GetOfferResult& AddAssociatedEntities(AssociatedEntitiesT&& value) {
+    m_associatedEntitiesHasBeenSet = true;
+    m_associatedEntities.emplace_back(std::forward<AssociatedEntitiesT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>An encoded string to be passed by the acceptor of the terms when creating an
+   * agreement.</p>
+   */
+  inline const Aws::String& GetAgreementProposalId() const { return m_agreementProposalId; }
+  template <typename AgreementProposalIdT = Aws::String>
+  void SetAgreementProposalId(AgreementProposalIdT&& value) {
+    m_agreementProposalIdHasBeenSet = true;
+    m_agreementProposalId = std::forward<AgreementProposalIdT>(value);
+  }
+  template <typename AgreementProposalIdT = Aws::String>
+  GetOfferResult& WithAgreementProposalId(AgreementProposalIdT&& value) {
+    SetAgreementProposalId(std::forward<AgreementProposalIdT>(value));
     return *this;
   }
   ///@}
@@ -216,29 +258,6 @@ class GetOfferResult {
   ///@}
 
   ///@{
-  /**
-   * <p>The products and offer sets associated with this offer.</p>
-   */
-  inline const Aws::Vector<OfferAssociatedEntity>& GetAssociatedEntities() const { return m_associatedEntities; }
-  template <typename AssociatedEntitiesT = Aws::Vector<OfferAssociatedEntity>>
-  void SetAssociatedEntities(AssociatedEntitiesT&& value) {
-    m_associatedEntitiesHasBeenSet = true;
-    m_associatedEntities = std::forward<AssociatedEntitiesT>(value);
-  }
-  template <typename AssociatedEntitiesT = Aws::Vector<OfferAssociatedEntity>>
-  GetOfferResult& WithAssociatedEntities(AssociatedEntitiesT&& value) {
-    SetAssociatedEntities(std::forward<AssociatedEntitiesT>(value));
-    return *this;
-  }
-  template <typename AssociatedEntitiesT = OfferAssociatedEntity>
-  GetOfferResult& AddAssociatedEntities(AssociatedEntitiesT&& value) {
-    m_associatedEntitiesHasBeenSet = true;
-    m_associatedEntities.emplace_back(std::forward<AssociatedEntitiesT>(value));
-    return *this;
-  }
-  ///@}
-
-  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -255,13 +274,13 @@ class GetOfferResult {
   inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
  private:
+  Aws::String m_locale;
+
   Aws::String m_offerId;
 
   Aws::String m_catalog;
 
   Aws::String m_offerName;
-
-  Aws::String m_agreementProposalId;
 
   Aws::Utils::DateTime m_expirationTime{};
 
@@ -269,27 +288,30 @@ class GetOfferResult {
 
   SellerInformation m_sellerOfRecord;
 
+  Aws::Vector<OfferAssociatedEntity> m_associatedEntities;
+
+  Aws::String m_agreementProposalId;
+
   Aws::String m_replacementAgreementId;
 
   PricingModel m_pricingModel;
 
   Aws::Vector<PurchaseOptionBadge> m_badges;
 
-  Aws::Vector<OfferAssociatedEntity> m_associatedEntities;
-
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_localeHasBeenSet = false;
   bool m_offerIdHasBeenSet = false;
   bool m_catalogHasBeenSet = false;
   bool m_offerNameHasBeenSet = false;
-  bool m_agreementProposalIdHasBeenSet = false;
   bool m_expirationTimeHasBeenSet = false;
   bool m_availableFromTimeHasBeenSet = false;
   bool m_sellerOfRecordHasBeenSet = false;
+  bool m_associatedEntitiesHasBeenSet = false;
+  bool m_agreementProposalIdHasBeenSet = false;
   bool m_replacementAgreementIdHasBeenSet = false;
   bool m_pricingModelHasBeenSet = false;
   bool m_badgesHasBeenSet = false;
-  bool m_associatedEntitiesHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

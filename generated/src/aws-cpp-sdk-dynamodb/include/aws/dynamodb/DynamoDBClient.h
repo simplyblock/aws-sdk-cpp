@@ -230,20 +230,20 @@ class AWS_DYNAMODB_API DynamoDBClient
    * You can investigate and optionally resend the requests. Typically, you would
    * call <code>BatchWriteItem</code> in a loop. Each iteration would check for
    * unprocessed items and submit a new <code>BatchWriteItem</code> request with
-   * those unprocessed items until all items have been processed.</p> <p>For tables
-   * and indexes with provisioned capacity, if none of the items can be processed due
-   * to insufficient provisioned throughput on all of the tables in the request, then
-   * <code>BatchWriteItem</code> returns a
-   * <code>ProvisionedThroughputExceededException</code>. For all tables and indexes,
-   * if none of the items can be processed due to other throttling scenarios (such as
-   * exceeding partition level limits), then <code>BatchWriteItem</code> returns a
-   * <code>ThrottlingException</code>.</p>  <p>If DynamoDB returns any
-   * unprocessed items, you should retry the batch operation on those items. However,
-   * <i>we strongly recommend that you use an exponential backoff algorithm</i>. If
-   * you retry the batch operation immediately, the underlying read or write requests
-   * can still fail due to throttling on the individual tables. If you delay the
-   * batch operation using exponential backoff, the individual requests in the batch
-   * are much more likely to succeed.</p> <p>For more information, see <a
+   * those unprocessed items until all items have been processed.</p> <p>If
+   * <code>BatchWriteItem</code> cannot process any items due to throttling (for
+   * example, insufficient provisioned throughput on the tables in the request, or
+   * partition-level or account-level limits), it returns a
+   * <code>ProvisionedThroughputExceededException</code> or a
+   * <code>ThrottlingException</code>. Both indicate that the request was throttled;
+   * check the <code>ThrottlingReason</code> field in the returned exception for
+   * details.</p>  <p>If DynamoDB returns any unprocessed items, you
+   * should retry the batch operation on those items. However, <i>we strongly
+   * recommend that you use an exponential backoff algorithm</i>. If you retry the
+   * batch operation immediately, the underlying read or write requests can still
+   * fail due to throttling on the individual tables. If you delay the batch
+   * operation using exponential backoff, the individual requests in the batch are
+   * much more likely to succeed.</p> <p>For more information, see <a
    * href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#Programming.Errors.BatchOperations">Batch
    * Operations and Error Handling</a> in the <i>Amazon DynamoDB Developer
    * Guide</i>.</p>  <p>With <code>BatchWriteItem</code>, you can
@@ -299,6 +299,35 @@ class AWS_DYNAMODB_API DynamoDBClient
   void BatchWriteItemAsync(const BatchWriteItemRequestT& request, const BatchWriteItemResponseReceivedHandler& handler,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&DynamoDBClient::BatchWriteItem, request, handler, context);
+  }
+
+  /**
+   * <p>Cancels an in-progress bulk operation asynchronously. Cancellation doesn't
+   * remove items that the operation has already written. Use
+   * <code>DescribeBulkOperation</code> to monitor the operation until it reaches a
+   * terminal status.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/CancelBulkOperation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CancelBulkOperationOutcome CancelBulkOperation(const Model::CancelBulkOperationRequest& request) const;
+
+  /**
+   * A Callable wrapper for CancelBulkOperation that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CancelBulkOperationRequestT = Model::CancelBulkOperationRequest>
+  Model::CancelBulkOperationOutcomeCallable CancelBulkOperationCallable(const CancelBulkOperationRequestT& request) const {
+    return SubmitCallable(&DynamoDBClient::CancelBulkOperation, request);
+  }
+
+  /**
+   * An Async wrapper for CancelBulkOperation that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename CancelBulkOperationRequestT = Model::CancelBulkOperationRequest>
+  void CancelBulkOperationAsync(const CancelBulkOperationRequestT& request, const CancelBulkOperationResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&DynamoDBClient::CancelBulkOperation, request, handler, context);
   }
 
   /**
@@ -612,6 +641,32 @@ class AWS_DYNAMODB_API DynamoDBClient
   void DescribeBackupAsync(const DescribeBackupRequestT& request, const DescribeBackupResponseReceivedHandler& handler,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&DynamoDBClient::DescribeBackup, request, handler, context);
+  }
+
+  /**
+   * <p>Describes the specified bulk operation.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/DescribeBulkOperation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeBulkOperationOutcome DescribeBulkOperation(const Model::DescribeBulkOperationRequest& request) const;
+
+  /**
+   * A Callable wrapper for DescribeBulkOperation that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DescribeBulkOperationRequestT = Model::DescribeBulkOperationRequest>
+  Model::DescribeBulkOperationOutcomeCallable DescribeBulkOperationCallable(const DescribeBulkOperationRequestT& request) const {
+    return SubmitCallable(&DynamoDBClient::DescribeBulkOperation, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeBulkOperation that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DescribeBulkOperationRequestT = Model::DescribeBulkOperationRequest>
+  void DescribeBulkOperationAsync(const DescribeBulkOperationRequestT& request, const DescribeBulkOperationResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&DynamoDBClient::DescribeBulkOperation, request, handler, context);
   }
 
   /**
@@ -1336,6 +1391,36 @@ class AWS_DYNAMODB_API DynamoDBClient
   }
 
   /**
+   * <p>Lists bulk operations that started within the past 90 days for the current
+   * Amazon Web Services account and Amazon Web Services Region, with the most recent
+   * operations first. Results are paginated. Use the <code>NextToken</code>
+   * parameter to retrieve additional results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/ListBulkOperations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListBulkOperationsOutcome ListBulkOperations(const Model::ListBulkOperationsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListBulkOperations that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListBulkOperationsRequestT = Model::ListBulkOperationsRequest>
+  Model::ListBulkOperationsOutcomeCallable ListBulkOperationsCallable(const ListBulkOperationsRequestT& request = {}) const {
+    return SubmitCallable(&DynamoDBClient::ListBulkOperations, request);
+  }
+
+  /**
+   * An Async wrapper for ListBulkOperations that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListBulkOperationsRequestT = Model::ListBulkOperationsRequest>
+  void ListBulkOperationsAsync(const ListBulkOperationsResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                               const ListBulkOperationsRequestT& request = {}) const {
+    return SubmitAsync(&DynamoDBClient::ListBulkOperations, request, handler, context);
+  }
+
+  /**
    * <p>Returns a list of ContributorInsightsSummary for a table and all its global
    * secondary indexes.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/ListContributorInsights">AWS
@@ -1819,6 +1904,70 @@ class AWS_DYNAMODB_API DynamoDBClient
   }
 
   /**
+   * <p>Performs a vector similarity search on a vector index associated with an
+   * Amazon DynamoDB table, and returns the most similar items sorted by similarity
+   * score based on the distance function configured for the index.</p> <p>Score
+   * interpretation depends on the distance function:</p> <ul> <li> <p>
+   * <code>COSINE</code> - Returns the items with the <i>k smallest</i> scores.
+   * Scores range from 0 (identical) to 2 (opposite). Lower scores indicate higher
+   * similarity.</p> </li> <li> <p> <code>EUCLIDEAN</code> - Returns the items with
+   * the <i>k smallest</i> scores. Scores represent the Euclidean distance between
+   * vectors. Lower scores indicate higher similarity.</p> </li> <li> <p>
+   * <code>DOT_PRODUCT</code> - Returns the items with the <i>k highest</i> scores.
+   * Higher scores indicate higher similarity.</p> </li> </ul><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/SearchVectors">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::SearchVectorsOutcome SearchVectors(const Model::SearchVectorsRequest& request) const;
+
+  /**
+   * A Callable wrapper for SearchVectors that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename SearchVectorsRequestT = Model::SearchVectorsRequest>
+  Model::SearchVectorsOutcomeCallable SearchVectorsCallable(const SearchVectorsRequestT& request) const {
+    return SubmitCallable(&DynamoDBClient::SearchVectors, request);
+  }
+
+  /**
+   * An Async wrapper for SearchVectors that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename SearchVectorsRequestT = Model::SearchVectorsRequest>
+  void SearchVectorsAsync(const SearchVectorsRequestT& request, const SearchVectorsResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&DynamoDBClient::SearchVectors, request, handler, context);
+  }
+
+  /**
+   * <p>Starts an asynchronous bulk operation that reads items from Amazon S3 and
+   * writes them to an existing DynamoDB table, so you can efficiently load or
+   * migrate large datasets.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/StartBulkPutItems">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartBulkPutItemsOutcome StartBulkPutItems(const Model::StartBulkPutItemsRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartBulkPutItems that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StartBulkPutItemsRequestT = Model::StartBulkPutItemsRequest>
+  Model::StartBulkPutItemsOutcomeCallable StartBulkPutItemsCallable(const StartBulkPutItemsRequestT& request) const {
+    return SubmitCallable(&DynamoDBClient::StartBulkPutItems, request);
+  }
+
+  /**
+   * An Async wrapper for StartBulkPutItems that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename StartBulkPutItemsRequestT = Model::StartBulkPutItemsRequest>
+  void StartBulkPutItemsAsync(const StartBulkPutItemsRequestT& request, const StartBulkPutItemsResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&DynamoDBClient::StartBulkPutItems, request, handler, context);
+  }
+
+  /**
    * <p>Associate a set of tags with an Amazon DynamoDB resource. You can then
    * activate these user-defined tags so that they appear on the Billing and Cost
    * Management console for cost allocation tracking. You can call TagResource up to
@@ -2234,18 +2383,38 @@ class AWS_DYNAMODB_API DynamoDBClient
   }
 
   /**
-   * <p>Modifies the provisioned throughput settings, global secondary indexes, or
-   * DynamoDB Streams settings for a given table.</p> <p>You can only perform one of
-   * the following operations at once:</p> <ul> <li> <p>Modify the provisioned
-   * throughput settings of the table.</p> </li> <li> <p>Remove a global secondary
-   * index from the table.</p> </li> <li> <p>Create a new global secondary index on
-   * the table. After the index begins backfilling, you can use
-   * <code>UpdateTable</code> to perform other operations.</p> </li> </ul> <p>
+   * <p>Modifies the provisioned throughput settings, global secondary indexes,
+   * DynamoDB Streams settings, or global table replica settings for a given
+   * table.</p> <p>You can only perform one of the following operations at once:</p>
+   * <ul> <li> <p>Modify the provisioned throughput settings of the table.</p> </li>
+   * <li> <p>Remove a global secondary index from the table.</p> </li> <li> <p>Create
+   * a new global secondary index on the table. After the index begins backfilling,
+   * you can use <code>UpdateTable</code> to perform other operations.</p> </li> <li>
+   * <p>Enable or disable disassociation protection for the local global table
+   * replica.</p> </li> <li> <p>Disassociate the local global table replica and keep
+   * it as a standalone regional table. The <code>Disassociate</code> action must be
+   * the only replica update in the request. If the request includes any other
+   * update, <code>UpdateTable</code> fails with a <code>ValidationException</code>
+   * and the disassociation does not start.</p> </li> </ul> <p>
    * <code>UpdateTable</code> is an asynchronous operation; while it's executing, the
    * table status changes from <code>ACTIVE</code> to <code>UPDATING</code>. While
    * it's <code>UPDATING</code>, you can't issue another <code>UpdateTable</code>
-   * request. When the table returns to the <code>ACTIVE</code> state, the
-   * <code>UpdateTable</code> operation is complete.</p><p><h3>See Also:</h3>   <a
+   * request. Use <code>DescribeTable</code> to monitor the table's status.</p> <p>To
+   * use this operation to disassociate a local replica, you must have the
+   * <code>dynamodb:UpdateTable</code> and
+   * <code>dynamodb:DisassociateTableReplica</code> IAM permissions on the local
+   * replica. Send disassociation and disassociation protection requests to the
+   * replica's Region using credentials for the account that owns the replica. For
+   * prerequisites and the procedure, see <a
+   * href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables-disassociate.html">Disassociating
+   * a global table replica</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>
+   * <p>To confirm successful disassociation, call <code>DescribeTable</code> in the
+   * replica's Region and verify that <code>TableStatus</code> is <code>ACTIVE</code>
+   * and <code>Replicas</code> is absent or empty. If <code>TableStatus</code>
+   * returns to <code>ACTIVE</code> but the response still includes a
+   * <code>Replicas</code> list, the disassociation did not complete. Check
+   * <code>ReplicaStatus</code> for a replication-permission or encryption-access
+   * problem, resolve it, and retry.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/UpdateTable">AWS
    * API Reference</a></p>
    */

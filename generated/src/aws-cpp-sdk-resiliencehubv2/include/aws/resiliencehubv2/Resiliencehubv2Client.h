@@ -293,6 +293,32 @@ class AWS_RESILIENCEHUBV2_API Resiliencehubv2Client : public Aws::Client::AWSJso
   }
 
   /**
+   * <p>Creates a test for a service by configuring a test template. Each service has
+   * one test per template.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/CreateTest">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateTestOutcome CreateTest(const Model::CreateTestRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateTest that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename CreateTestRequestT = Model::CreateTestRequest>
+  Model::CreateTestOutcomeCallable CreateTestCallable(const CreateTestRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::CreateTest, request);
+  }
+
+  /**
+   * An Async wrapper for CreateTest that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename CreateTestRequestT = Model::CreateTestRequest>
+  void CreateTestAsync(const CreateTestRequestT& request, const CreateTestResponseReceivedHandler& handler,
+                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::CreateTest, request, handler, context);
+  }
+
+  /**
    * <p>Creates a user journey within a system.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/CreateUserJourney">AWS
    * API Reference</a></p>
@@ -500,6 +526,59 @@ class AWS_RESILIENCEHUBV2_API Resiliencehubv2Client : public Aws::Client::AWSJso
   }
 
   /**
+   * <p>Deletes a test.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/DeleteTest">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteTestOutcome DeleteTest(const Model::DeleteTestRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteTest that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DeleteTestRequestT = Model::DeleteTestRequest>
+  Model::DeleteTestOutcomeCallable DeleteTestCallable(const DeleteTestRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::DeleteTest, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteTest that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DeleteTestRequestT = Model::DeleteTestRequest>
+  void DeleteTestAsync(const DeleteTestRequestT& request, const DeleteTestResponseReceivedHandler& handler,
+                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::DeleteTest, request, handler, context);
+  }
+
+  /**
+   * <p>Removes monitoring sources from a test. The operation is transactional and
+   * idempotent — removing a source that is not attached is a no-op.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/DeleteTestSources">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteTestSourcesOutcome DeleteTestSources(const Model::DeleteTestSourcesRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteTestSources that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteTestSourcesRequestT = Model::DeleteTestSourcesRequest>
+  Model::DeleteTestSourcesOutcomeCallable DeleteTestSourcesCallable(const DeleteTestSourcesRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::DeleteTestSources, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteTestSources that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename DeleteTestSourcesRequestT = Model::DeleteTestSourcesRequest>
+  void DeleteTestSourcesAsync(const DeleteTestSourcesRequestT& request, const DeleteTestSourcesResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::DeleteTestSources, request, handler, context);
+  }
+
+  /**
    * <p>Deletes a user journey.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/DeleteUserJourney">AWS
    * API Reference</a></p>
@@ -523,6 +602,38 @@ class AWS_RESILIENCEHUBV2_API Resiliencehubv2Client : public Aws::Client::AWSJso
   void DeleteUserJourneyAsync(const DeleteUserJourneyRequestT& request, const DeleteUserJourneyResponseReceivedHandler& handler,
                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&Resiliencehubv2Client::DeleteUserJourney, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the dependency insights generated for a service. The response
+   * reports the current generation status; insights are populated once generation
+   * has completed. If generation failed, the response includes an error code, whose
+   * possible values are listed under the response's errorCode field, and a message
+   * describing the cause. To use this operation, you must have the
+   * <code>resiliencehub:GetDependencyInsights</code> permission on the
+   * service.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/GetDependencyInsights">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetDependencyInsightsOutcome GetDependencyInsights(const Model::GetDependencyInsightsRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetDependencyInsights that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetDependencyInsightsRequestT = Model::GetDependencyInsightsRequest>
+  Model::GetDependencyInsightsOutcomeCallable GetDependencyInsightsCallable(const GetDependencyInsightsRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::GetDependencyInsights, request);
+  }
+
+  /**
+   * An Async wrapper for GetDependencyInsights that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetDependencyInsightsRequestT = Model::GetDependencyInsightsRequest>
+  void GetDependencyInsightsAsync(const GetDependencyInsightsRequestT& request, const GetDependencyInsightsResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::GetDependencyInsights, request, handler, context);
   }
 
   /**
@@ -624,6 +735,83 @@ class AWS_RESILIENCEHUBV2_API Resiliencehubv2Client : public Aws::Client::AWSJso
   void GetSystemAsync(const GetSystemRequestT& request, const GetSystemResponseReceivedHandler& handler,
                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&Resiliencehubv2Client::GetSystem, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves a test by ID.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/GetTest">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetTestOutcome GetTest(const Model::GetTestRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetTest that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetTestRequestT = Model::GetTestRequest>
+  Model::GetTestOutcomeCallable GetTestCallable(const GetTestRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::GetTest, request);
+  }
+
+  /**
+   * An Async wrapper for GetTest that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetTestRequestT = Model::GetTestRequest>
+  void GetTestAsync(const GetTestRequestT& request, const GetTestResponseReceivedHandler& handler,
+                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::GetTest, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves a test run by ID, including its status, results, and the
+   * configuration snapshotted when the run started.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/GetTestRun">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetTestRunOutcome GetTestRun(const Model::GetTestRunRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetTestRun that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetTestRunRequestT = Model::GetTestRunRequest>
+  Model::GetTestRunOutcomeCallable GetTestRunCallable(const GetTestRunRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::GetTestRun, request);
+  }
+
+  /**
+   * An Async wrapper for GetTestRun that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetTestRunRequestT = Model::GetTestRunRequest>
+  void GetTestRunAsync(const GetTestRunRequestT& request, const GetTestRunResponseReceivedHandler& handler,
+                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::GetTestRun, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves a resilience test template by ARN, including the parameters it
+   * accepts and the fault actions it runs.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/GetTestTemplate">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetTestTemplateOutcome GetTestTemplate(const Model::GetTestTemplateRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetTestTemplate that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetTestTemplateRequestT = Model::GetTestTemplateRequest>
+  Model::GetTestTemplateOutcomeCallable GetTestTemplateCallable(const GetTestTemplateRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::GetTestTemplate, request);
+  }
+
+  /**
+   * An Async wrapper for GetTestTemplate that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetTestTemplateRequestT = Model::GetTestTemplateRequest>
+  void GetTestTemplateAsync(const GetTestTemplateRequestT& request, const GetTestTemplateResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::GetTestTemplate, request, handler, context);
   }
 
   /**
@@ -864,6 +1052,34 @@ class AWS_RESILIENCEHUBV2_API Resiliencehubv2Client : public Aws::Client::AWSJso
   }
 
   /**
+   * <p>Lists events for a resilience policy, including services that started or
+   * stopped using it, changes to cross-account sharing, and deletion of the
+   * policy.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListPolicyEvents">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListPolicyEventsOutcome ListPolicyEvents(const Model::ListPolicyEventsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListPolicyEvents that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListPolicyEventsRequestT = Model::ListPolicyEventsRequest>
+  Model::ListPolicyEventsOutcomeCallable ListPolicyEventsCallable(const ListPolicyEventsRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::ListPolicyEvents, request);
+  }
+
+  /**
+   * An Async wrapper for ListPolicyEvents that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListPolicyEventsRequestT = Model::ListPolicyEventsRequest>
+  void ListPolicyEventsAsync(const ListPolicyEventsRequestT& request, const ListPolicyEventsResponseReceivedHandler& handler,
+                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::ListPolicyEvents, request, handler, context);
+  }
+
+  /**
    * <p>List reports for a service, or all reports owned by the account if serviceArn
    * is not provided.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListReports">AWS
@@ -888,6 +1104,36 @@ class AWS_RESILIENCEHUBV2_API Resiliencehubv2Client : public Aws::Client::AWSJso
                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                         const ListReportsRequestT& request = {}) const {
     return SubmitAsync(&Resiliencehubv2Client::ListReports, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the AWS resources that AWS Fault Injection Service (AWS FIS) resolved
+   * as targets for a test run.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListResolvedTestRunTargetResources">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListResolvedTestRunTargetResourcesOutcome ListResolvedTestRunTargetResources(
+      const Model::ListResolvedTestRunTargetResourcesRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListResolvedTestRunTargetResources that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename ListResolvedTestRunTargetResourcesRequestT = Model::ListResolvedTestRunTargetResourcesRequest>
+  Model::ListResolvedTestRunTargetResourcesOutcomeCallable ListResolvedTestRunTargetResourcesCallable(
+      const ListResolvedTestRunTargetResourcesRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::ListResolvedTestRunTargetResources, request);
+  }
+
+  /**
+   * An Async wrapper for ListResolvedTestRunTargetResources that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename ListResolvedTestRunTargetResourcesRequestT = Model::ListResolvedTestRunTargetResourcesRequest>
+  void ListResolvedTestRunTargetResourcesAsync(const ListResolvedTestRunTargetResourcesRequestT& request,
+                                               const ListResolvedTestRunTargetResourcesResponseReceivedHandler& handler,
+                                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::ListResolvedTestRunTargetResources, request, handler, context);
   }
 
   /**
@@ -1099,6 +1345,224 @@ class AWS_RESILIENCEHUBV2_API Resiliencehubv2Client : public Aws::Client::AWSJso
   }
 
   /**
+   * <p>Lists the dependencies that a test run blocked. Each dependency reflects the
+   * discovered classification captured when the run started, so results do not
+   * change if a dependency is reclassified after the run.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListTestRunDependencies">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListTestRunDependenciesOutcome ListTestRunDependencies(const Model::ListTestRunDependenciesRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListTestRunDependencies that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListTestRunDependenciesRequestT = Model::ListTestRunDependenciesRequest>
+  Model::ListTestRunDependenciesOutcomeCallable ListTestRunDependenciesCallable(const ListTestRunDependenciesRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::ListTestRunDependencies, request);
+  }
+
+  /**
+   * An Async wrapper for ListTestRunDependencies that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListTestRunDependenciesRequestT = Model::ListTestRunDependenciesRequest>
+  void ListTestRunDependenciesAsync(const ListTestRunDependenciesRequestT& request,
+                                    const ListTestRunDependenciesResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::ListTestRunDependencies, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the events in a test run's timeline.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListTestRunEvents">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListTestRunEventsOutcome ListTestRunEvents(const Model::ListTestRunEventsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListTestRunEvents that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListTestRunEventsRequestT = Model::ListTestRunEventsRequest>
+  Model::ListTestRunEventsOutcomeCallable ListTestRunEventsCallable(const ListTestRunEventsRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::ListTestRunEvents, request);
+  }
+
+  /**
+   * An Async wrapper for ListTestRunEvents that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListTestRunEventsRequestT = Model::ListTestRunEventsRequest>
+  void ListTestRunEventsAsync(const ListTestRunEventsRequestT& request, const ListTestRunEventsResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::ListTestRunEvents, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the state-change events observed for a test run monitoring source.
+   * Events are returned for one source per call, in chronological
+   * order.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListTestRunSourceEvents">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListTestRunSourceEventsOutcome ListTestRunSourceEvents(const Model::ListTestRunSourceEventsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListTestRunSourceEvents that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListTestRunSourceEventsRequestT = Model::ListTestRunSourceEventsRequest>
+  Model::ListTestRunSourceEventsOutcomeCallable ListTestRunSourceEventsCallable(const ListTestRunSourceEventsRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::ListTestRunSourceEvents, request);
+  }
+
+  /**
+   * An Async wrapper for ListTestRunSourceEvents that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListTestRunSourceEventsRequestT = Model::ListTestRunSourceEventsRequest>
+  void ListTestRunSourceEventsAsync(const ListTestRunSourceEventsRequestT& request,
+                                    const ListTestRunSourceEventsResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::ListTestRunSourceEvents, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the monitoring source snapshots captured for a test run, optionally
+   * filtered by type.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListTestRunSources">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListTestRunSourcesOutcome ListTestRunSources(const Model::ListTestRunSourcesRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListTestRunSources that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListTestRunSourcesRequestT = Model::ListTestRunSourcesRequest>
+  Model::ListTestRunSourcesOutcomeCallable ListTestRunSourcesCallable(const ListTestRunSourcesRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::ListTestRunSources, request);
+  }
+
+  /**
+   * An Async wrapper for ListTestRunSources that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListTestRunSourcesRequestT = Model::ListTestRunSourcesRequest>
+  void ListTestRunSourcesAsync(const ListTestRunSourcesRequestT& request, const ListTestRunSourcesResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::ListTestRunSources, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the runs of a test, or all test runs for a service.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListTestRuns">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListTestRunsOutcome ListTestRuns(const Model::ListTestRunsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListTestRuns that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListTestRunsRequestT = Model::ListTestRunsRequest>
+  Model::ListTestRunsOutcomeCallable ListTestRunsCallable(const ListTestRunsRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::ListTestRuns, request);
+  }
+
+  /**
+   * An Async wrapper for ListTestRuns that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListTestRunsRequestT = Model::ListTestRunsRequest>
+  void ListTestRunsAsync(const ListTestRunsRequestT& request, const ListTestRunsResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::ListTestRuns, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the monitoring sources attached to a test, optionally filtered by
+   * type.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListTestSources">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListTestSourcesOutcome ListTestSources(const Model::ListTestSourcesRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListTestSources that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListTestSourcesRequestT = Model::ListTestSourcesRequest>
+  Model::ListTestSourcesOutcomeCallable ListTestSourcesCallable(const ListTestSourcesRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::ListTestSources, request);
+  }
+
+  /**
+   * An Async wrapper for ListTestSources that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListTestSourcesRequestT = Model::ListTestSourcesRequest>
+  void ListTestSourcesAsync(const ListTestSourcesRequestT& request, const ListTestSourcesResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::ListTestSources, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the available resilience test templates. A test template is a
+   * pre-configured, AWS recommended test that defines which resilience capability to
+   * validate.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListTestTemplates">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListTestTemplatesOutcome ListTestTemplates(const Model::ListTestTemplatesRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListTestTemplates that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListTestTemplatesRequestT = Model::ListTestTemplatesRequest>
+  Model::ListTestTemplatesOutcomeCallable ListTestTemplatesCallable(const ListTestTemplatesRequestT& request = {}) const {
+    return SubmitCallable(&Resiliencehubv2Client::ListTestTemplates, request);
+  }
+
+  /**
+   * An Async wrapper for ListTestTemplates that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListTestTemplatesRequestT = Model::ListTestTemplatesRequest>
+  void ListTestTemplatesAsync(const ListTestTemplatesResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                              const ListTestTemplatesRequestT& request = {}) const {
+    return SubmitAsync(&Resiliencehubv2Client::ListTestTemplates, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the tests configured for a service.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListTests">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListTestsOutcome ListTests(const Model::ListTestsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListTests that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListTestsRequestT = Model::ListTestsRequest>
+  Model::ListTestsOutcomeCallable ListTestsCallable(const ListTestsRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::ListTests, request);
+  }
+
+  /**
+   * An Async wrapper for ListTests that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListTestsRequestT = Model::ListTestsRequest>
+  void ListTestsAsync(const ListTestsRequestT& request, const ListTestsResponseReceivedHandler& handler,
+                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::ListTests, request, handler, context);
+  }
+
+  /**
    * <p>Lists user journeys for a system.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/ListUserJourneys">AWS
    * API Reference</a></p>
@@ -1125,7 +1589,65 @@ class AWS_RESILIENCEHUBV2_API Resiliencehubv2Client : public Aws::Client::AWSJso
   }
 
   /**
-   * <p>Start a failure mode assessment.</p><p><h3>See Also:</h3>   <a
+   * <p>Adds or updates the monitoring sources on a test. The operation is
+   * transactional — either every source is written or the call fails and nothing is
+   * written.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/PutTestSources">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::PutTestSourcesOutcome PutTestSources(const Model::PutTestSourcesRequest& request) const;
+
+  /**
+   * A Callable wrapper for PutTestSources that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename PutTestSourcesRequestT = Model::PutTestSourcesRequest>
+  Model::PutTestSourcesOutcomeCallable PutTestSourcesCallable(const PutTestSourcesRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::PutTestSources, request);
+  }
+
+  /**
+   * An Async wrapper for PutTestSources that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename PutTestSourcesRequestT = Model::PutTestSourcesRequest>
+  void PutTestSourcesAsync(const PutTestSourcesRequestT& request, const PutTestSourcesResponseReceivedHandler& handler,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::PutTestSources, request, handler, context);
+  }
+
+  /**
+   * <p>Starts generating dependency insights for a service. Generation runs
+   * asynchronously; the response returns the initial status, and you retrieve the
+   * results with GetDependencyInsights. To use this operation, you must have the
+   * <code>resiliencehub:StartDependencyInsights</code> permission on the
+   * service.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/StartDependencyInsights">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartDependencyInsightsOutcome StartDependencyInsights(const Model::StartDependencyInsightsRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartDependencyInsights that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StartDependencyInsightsRequestT = Model::StartDependencyInsightsRequest>
+  Model::StartDependencyInsightsOutcomeCallable StartDependencyInsightsCallable(const StartDependencyInsightsRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::StartDependencyInsights, request);
+  }
+
+  /**
+   * An Async wrapper for StartDependencyInsights that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename StartDependencyInsightsRequestT = Model::StartDependencyInsightsRequest>
+  void StartDependencyInsightsAsync(const StartDependencyInsightsRequestT& request,
+                                    const StartDependencyInsightsResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::StartDependencyInsights, request, handler, context);
+  }
+
+  /**
+   * <p>Starts a failure mode assessment.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/StartFailureModeAssessment">AWS
    * API Reference</a></p>
    */
@@ -1151,6 +1673,57 @@ class AWS_RESILIENCEHUBV2_API Resiliencehubv2Client : public Aws::Client::AWSJso
                                        const StartFailureModeAssessmentResponseReceivedHandler& handler,
                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&Resiliencehubv2Client::StartFailureModeAssessment, request, handler, context);
+  }
+
+  /**
+   * <p>Starts a run of a test. Each run scopes to the current resources in the
+   * service and produces a pass or fail outcome.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/StartTestRun">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartTestRunOutcome StartTestRun(const Model::StartTestRunRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartTestRun that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename StartTestRunRequestT = Model::StartTestRunRequest>
+  Model::StartTestRunOutcomeCallable StartTestRunCallable(const StartTestRunRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::StartTestRun, request);
+  }
+
+  /**
+   * An Async wrapper for StartTestRun that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename StartTestRunRequestT = Model::StartTestRunRequest>
+  void StartTestRunAsync(const StartTestRunRequestT& request, const StartTestRunResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::StartTestRun, request, handler, context);
+  }
+
+  /**
+   * <p>Stops an in-progress test run.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/StopTestRun">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StopTestRunOutcome StopTestRun(const Model::StopTestRunRequest& request) const;
+
+  /**
+   * A Callable wrapper for StopTestRun that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename StopTestRunRequestT = Model::StopTestRunRequest>
+  Model::StopTestRunOutcomeCallable StopTestRunCallable(const StopTestRunRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::StopTestRun, request);
+  }
+
+  /**
+   * An Async wrapper for StopTestRun that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename StopTestRunRequestT = Model::StopTestRunRequest>
+  void StopTestRunAsync(const StopTestRunRequestT& request, const StopTestRunResponseReceivedHandler& handler,
+                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::StopTestRun, request, handler, context);
   }
 
   /**
@@ -1380,6 +1953,31 @@ class AWS_RESILIENCEHUBV2_API Resiliencehubv2Client : public Aws::Client::AWSJso
   void UpdateSystemAsync(const UpdateSystemRequestT& request, const UpdateSystemResponseReceivedHandler& handler,
                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&Resiliencehubv2Client::UpdateSystem, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the configuration of an existing test.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehubv2-2026-02-17/UpdateTest">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateTestOutcome UpdateTest(const Model::UpdateTestRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateTest that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename UpdateTestRequestT = Model::UpdateTestRequest>
+  Model::UpdateTestOutcomeCallable UpdateTestCallable(const UpdateTestRequestT& request) const {
+    return SubmitCallable(&Resiliencehubv2Client::UpdateTest, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateTest that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename UpdateTestRequestT = Model::UpdateTestRequest>
+  void UpdateTestAsync(const UpdateTestRequestT& request, const UpdateTestResponseReceivedHandler& handler,
+                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Resiliencehubv2Client::UpdateTest, request, handler, context);
   }
 
   /**

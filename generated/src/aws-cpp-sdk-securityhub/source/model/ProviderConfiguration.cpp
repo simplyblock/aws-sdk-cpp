@@ -26,6 +26,14 @@ ProviderConfiguration& ProviderConfiguration::operator=(JsonView jsonValue) {
     m_serviceNow = jsonValue.GetObject("ServiceNow");
     m_serviceNowHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("Azure")) {
+    m_azure = jsonValue.GetObject("Azure");
+    m_azureHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("GCP")) {
+    m_gCP = jsonValue.GetObject("GCP");
+    m_gCPHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -38,6 +46,14 @@ JsonValue ProviderConfiguration::Jsonize() const {
 
   if (m_serviceNowHasBeenSet) {
     payload.WithObject("ServiceNow", m_serviceNow.Jsonize());
+  }
+
+  if (m_azureHasBeenSet) {
+    payload.WithObject("Azure", m_azure.Jsonize());
+  }
+
+  if (m_gCPHasBeenSet) {
+    payload.WithObject("GCP", m_gCP.Jsonize());
   }
 
   return payload;

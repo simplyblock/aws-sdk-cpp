@@ -22,12 +22,16 @@
 #include <aws/odb/OdbErrorMarshaller.h>
 #include <aws/odb/model/AcceptMarketplaceRegistrationRequest.h>
 #include <aws/odb/model/AssociateIamRoleToResourceRequest.h>
+#include <aws/odb/model/AssociateVirtualMachinesToCloudVmClusterRequest.h>
+#include <aws/odb/model/AssociateVirtualMachinesToExadbVmClusterRequest.h>
 #include <aws/odb/model/CreateAutonomousDatabaseBackupRequest.h>
 #include <aws/odb/model/CreateAutonomousDatabaseRequest.h>
 #include <aws/odb/model/CreateAutonomousDatabaseWalletRequest.h>
 #include <aws/odb/model/CreateCloudAutonomousVmClusterRequest.h>
 #include <aws/odb/model/CreateCloudExadataInfrastructureRequest.h>
 #include <aws/odb/model/CreateCloudVmClusterRequest.h>
+#include <aws/odb/model/CreateExadbVmClusterRequest.h>
+#include <aws/odb/model/CreateExascaleDbStorageVaultRequest.h>
 #include <aws/odb/model/CreateOdbNetworkRequest.h>
 #include <aws/odb/model/CreateOdbPeeringConnectionRequest.h>
 #include <aws/odb/model/DeleteAutonomousDatabaseBackupRequest.h>
@@ -35,9 +39,13 @@
 #include <aws/odb/model/DeleteCloudAutonomousVmClusterRequest.h>
 #include <aws/odb/model/DeleteCloudExadataInfrastructureRequest.h>
 #include <aws/odb/model/DeleteCloudVmClusterRequest.h>
+#include <aws/odb/model/DeleteExadbVmClusterRequest.h>
+#include <aws/odb/model/DeleteExascaleDbStorageVaultRequest.h>
 #include <aws/odb/model/DeleteOdbNetworkRequest.h>
 #include <aws/odb/model/DeleteOdbPeeringConnectionRequest.h>
 #include <aws/odb/model/DisassociateIamRoleFromResourceRequest.h>
+#include <aws/odb/model/DisassociateVirtualMachinesFromCloudVmClusterRequest.h>
+#include <aws/odb/model/DisassociateVirtualMachinesFromExadbVmClusterRequest.h>
 #include <aws/odb/model/FailoverAutonomousDatabaseRequest.h>
 #include <aws/odb/model/GetAutonomousDatabaseBackupRequest.h>
 #include <aws/odb/model/GetAutonomousDatabaseRequest.h>
@@ -48,6 +56,8 @@
 #include <aws/odb/model/GetCloudVmClusterRequest.h>
 #include <aws/odb/model/GetDbNodeRequest.h>
 #include <aws/odb/model/GetDbServerRequest.h>
+#include <aws/odb/model/GetExadbVmClusterRequest.h>
+#include <aws/odb/model/GetExascaleDbStorageVaultRequest.h>
 #include <aws/odb/model/GetOciOnboardingStatusRequest.h>
 #include <aws/odb/model/GetOdbNetworkRequest.h>
 #include <aws/odb/model/GetOdbPeeringConnectionRequest.h>
@@ -65,6 +75,10 @@
 #include <aws/odb/model/ListDbNodesRequest.h>
 #include <aws/odb/model/ListDbServersRequest.h>
 #include <aws/odb/model/ListDbSystemShapesRequest.h>
+#include <aws/odb/model/ListExadbVmClustersRequest.h>
+#include <aws/odb/model/ListExascaleDbStorageVaultsRequest.h>
+#include <aws/odb/model/ListFlexComponentsRequest.h>
+#include <aws/odb/model/ListGiMinorVersionsRequest.h>
 #include <aws/odb/model/ListGiVersionsRequest.h>
 #include <aws/odb/model/ListOdbNetworksRequest.h>
 #include <aws/odb/model/ListOdbPeeringConnectionsRequest.h>
@@ -83,7 +97,13 @@
 #include <aws/odb/model/UntagResourceRequest.h>
 #include <aws/odb/model/UpdateAutonomousDatabaseBackupRequest.h>
 #include <aws/odb/model/UpdateAutonomousDatabaseRequest.h>
+#include <aws/odb/model/UpdateCloudAutonomousVmClusterRequest.h>
 #include <aws/odb/model/UpdateCloudExadataInfrastructureRequest.h>
+#include <aws/odb/model/UpdateCloudExadataInfrastructureStorageCapacityRequest.h>
+#include <aws/odb/model/UpdateCloudVmClusterRequest.h>
+#include <aws/odb/model/UpdateExadbVmClusterRequest.h>
+#include <aws/odb/model/UpdateExascaleCloudExadataInfrastructureRequest.h>
+#include <aws/odb/model/UpdateExascaleDbStorageVaultRequest.h>
 #include <aws/odb/model/UpdateOdbNetworkRequest.h>
 #include <aws/odb/model/UpdateOdbPeeringConnectionRequest.h>
 #include <smithy/tracing/TracingUtils.h>
@@ -219,7 +239,8 @@ OdbClient::InvokeOperationOutcome OdbClient::InvokeServiceOperation(const Amazon
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -231,7 +252,7 @@ OdbClient::InvokeOperationOutcome OdbClient::InvokeServiceOperation(const Amazon
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -245,6 +266,20 @@ AssociateIamRoleToResourceOutcome OdbClient::AssociateIamRoleToResource(const As
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? AssociateIamRoleToResourceOutcome(result.GetResultWithOwnership())
                             : AssociateIamRoleToResourceOutcome(std::move(result.GetError()));
+}
+
+AssociateVirtualMachinesToCloudVmClusterOutcome OdbClient::AssociateVirtualMachinesToCloudVmCluster(
+    const AssociateVirtualMachinesToCloudVmClusterRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? AssociateVirtualMachinesToCloudVmClusterOutcome(result.GetResultWithOwnership())
+                            : AssociateVirtualMachinesToCloudVmClusterOutcome(std::move(result.GetError()));
+}
+
+AssociateVirtualMachinesToExadbVmClusterOutcome OdbClient::AssociateVirtualMachinesToExadbVmCluster(
+    const AssociateVirtualMachinesToExadbVmClusterRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? AssociateVirtualMachinesToExadbVmClusterOutcome(result.GetResultWithOwnership())
+                            : AssociateVirtualMachinesToExadbVmClusterOutcome(std::move(result.GetError()));
 }
 
 CreateAutonomousDatabaseOutcome OdbClient::CreateAutonomousDatabase(const CreateAutonomousDatabaseRequest& request) const {
@@ -285,6 +320,18 @@ CreateCloudVmClusterOutcome OdbClient::CreateCloudVmCluster(const CreateCloudVmC
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateCloudVmClusterOutcome(result.GetResultWithOwnership())
                             : CreateCloudVmClusterOutcome(std::move(result.GetError()));
+}
+
+CreateExadbVmClusterOutcome OdbClient::CreateExadbVmCluster(const CreateExadbVmClusterRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateExadbVmClusterOutcome(result.GetResultWithOwnership())
+                            : CreateExadbVmClusterOutcome(std::move(result.GetError()));
+}
+
+CreateExascaleDbStorageVaultOutcome OdbClient::CreateExascaleDbStorageVault(const CreateExascaleDbStorageVaultRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateExascaleDbStorageVaultOutcome(result.GetResultWithOwnership())
+                            : CreateExascaleDbStorageVaultOutcome(std::move(result.GetError()));
 }
 
 CreateOdbNetworkOutcome OdbClient::CreateOdbNetwork(const CreateOdbNetworkRequest& request) const {
@@ -332,6 +379,18 @@ DeleteCloudVmClusterOutcome OdbClient::DeleteCloudVmCluster(const DeleteCloudVmC
                             : DeleteCloudVmClusterOutcome(std::move(result.GetError()));
 }
 
+DeleteExadbVmClusterOutcome OdbClient::DeleteExadbVmCluster(const DeleteExadbVmClusterRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteExadbVmClusterOutcome(result.GetResultWithOwnership())
+                            : DeleteExadbVmClusterOutcome(std::move(result.GetError()));
+}
+
+DeleteExascaleDbStorageVaultOutcome OdbClient::DeleteExascaleDbStorageVault(const DeleteExascaleDbStorageVaultRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteExascaleDbStorageVaultOutcome(result.GetResultWithOwnership())
+                            : DeleteExascaleDbStorageVaultOutcome(std::move(result.GetError()));
+}
+
 DeleteOdbNetworkOutcome OdbClient::DeleteOdbNetwork(const DeleteOdbNetworkRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DeleteOdbNetworkOutcome(result.GetResultWithOwnership())
@@ -349,6 +408,20 @@ DisassociateIamRoleFromResourceOutcome OdbClient::DisassociateIamRoleFromResourc
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DisassociateIamRoleFromResourceOutcome(result.GetResultWithOwnership())
                             : DisassociateIamRoleFromResourceOutcome(std::move(result.GetError()));
+}
+
+DisassociateVirtualMachinesFromCloudVmClusterOutcome OdbClient::DisassociateVirtualMachinesFromCloudVmCluster(
+    const DisassociateVirtualMachinesFromCloudVmClusterRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DisassociateVirtualMachinesFromCloudVmClusterOutcome(result.GetResultWithOwnership())
+                            : DisassociateVirtualMachinesFromCloudVmClusterOutcome(std::move(result.GetError()));
+}
+
+DisassociateVirtualMachinesFromExadbVmClusterOutcome OdbClient::DisassociateVirtualMachinesFromExadbVmCluster(
+    const DisassociateVirtualMachinesFromExadbVmClusterRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DisassociateVirtualMachinesFromExadbVmClusterOutcome(result.GetResultWithOwnership())
+                            : DisassociateVirtualMachinesFromExadbVmClusterOutcome(std::move(result.GetError()));
 }
 
 FailoverAutonomousDatabaseOutcome OdbClient::FailoverAutonomousDatabase(const FailoverAutonomousDatabaseRequest& request) const {
@@ -409,6 +482,18 @@ GetDbNodeOutcome OdbClient::GetDbNode(const GetDbNodeRequest& request) const {
 GetDbServerOutcome OdbClient::GetDbServer(const GetDbServerRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetDbServerOutcome(result.GetResultWithOwnership()) : GetDbServerOutcome(std::move(result.GetError()));
+}
+
+GetExadbVmClusterOutcome OdbClient::GetExadbVmCluster(const GetExadbVmClusterRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetExadbVmClusterOutcome(result.GetResultWithOwnership())
+                            : GetExadbVmClusterOutcome(std::move(result.GetError()));
+}
+
+GetExascaleDbStorageVaultOutcome OdbClient::GetExascaleDbStorageVault(const GetExascaleDbStorageVaultRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetExascaleDbStorageVaultOutcome(result.GetResultWithOwnership())
+                            : GetExascaleDbStorageVaultOutcome(std::move(result.GetError()));
 }
 
 GetOciOnboardingStatusOutcome OdbClient::GetOciOnboardingStatus(const GetOciOnboardingStatusRequest& request) const {
@@ -511,6 +596,30 @@ ListDbSystemShapesOutcome OdbClient::ListDbSystemShapes(const ListDbSystemShapes
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListDbSystemShapesOutcome(result.GetResultWithOwnership())
                             : ListDbSystemShapesOutcome(std::move(result.GetError()));
+}
+
+ListExadbVmClustersOutcome OdbClient::ListExadbVmClusters(const ListExadbVmClustersRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListExadbVmClustersOutcome(result.GetResultWithOwnership())
+                            : ListExadbVmClustersOutcome(std::move(result.GetError()));
+}
+
+ListExascaleDbStorageVaultsOutcome OdbClient::ListExascaleDbStorageVaults(const ListExascaleDbStorageVaultsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListExascaleDbStorageVaultsOutcome(result.GetResultWithOwnership())
+                            : ListExascaleDbStorageVaultsOutcome(std::move(result.GetError()));
+}
+
+ListFlexComponentsOutcome OdbClient::ListFlexComponents(const ListFlexComponentsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListFlexComponentsOutcome(result.GetResultWithOwnership())
+                            : ListFlexComponentsOutcome(std::move(result.GetError()));
+}
+
+ListGiMinorVersionsOutcome OdbClient::ListGiMinorVersions(const ListGiMinorVersionsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListGiMinorVersionsOutcome(result.GetResultWithOwnership())
+                            : ListGiMinorVersionsOutcome(std::move(result.GetError()));
 }
 
 ListGiVersionsOutcome OdbClient::ListGiVersions(const ListGiVersionsRequest& request) const {
@@ -616,11 +725,50 @@ UpdateAutonomousDatabaseBackupOutcome OdbClient::UpdateAutonomousDatabaseBackup(
                             : UpdateAutonomousDatabaseBackupOutcome(std::move(result.GetError()));
 }
 
+UpdateCloudAutonomousVmClusterOutcome OdbClient::UpdateCloudAutonomousVmCluster(
+    const UpdateCloudAutonomousVmClusterRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateCloudAutonomousVmClusterOutcome(result.GetResultWithOwnership())
+                            : UpdateCloudAutonomousVmClusterOutcome(std::move(result.GetError()));
+}
+
 UpdateCloudExadataInfrastructureOutcome OdbClient::UpdateCloudExadataInfrastructure(
     const UpdateCloudExadataInfrastructureRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? UpdateCloudExadataInfrastructureOutcome(result.GetResultWithOwnership())
                             : UpdateCloudExadataInfrastructureOutcome(std::move(result.GetError()));
+}
+
+UpdateCloudExadataInfrastructureStorageCapacityOutcome OdbClient::UpdateCloudExadataInfrastructureStorageCapacity(
+    const UpdateCloudExadataInfrastructureStorageCapacityRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateCloudExadataInfrastructureStorageCapacityOutcome(result.GetResultWithOwnership())
+                            : UpdateCloudExadataInfrastructureStorageCapacityOutcome(std::move(result.GetError()));
+}
+
+UpdateCloudVmClusterOutcome OdbClient::UpdateCloudVmCluster(const UpdateCloudVmClusterRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateCloudVmClusterOutcome(result.GetResultWithOwnership())
+                            : UpdateCloudVmClusterOutcome(std::move(result.GetError()));
+}
+
+UpdateExadbVmClusterOutcome OdbClient::UpdateExadbVmCluster(const UpdateExadbVmClusterRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateExadbVmClusterOutcome(result.GetResultWithOwnership())
+                            : UpdateExadbVmClusterOutcome(std::move(result.GetError()));
+}
+
+UpdateExascaleCloudExadataInfrastructureOutcome OdbClient::UpdateExascaleCloudExadataInfrastructure(
+    const UpdateExascaleCloudExadataInfrastructureRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateExascaleCloudExadataInfrastructureOutcome(result.GetResultWithOwnership())
+                            : UpdateExascaleCloudExadataInfrastructureOutcome(std::move(result.GetError()));
+}
+
+UpdateExascaleDbStorageVaultOutcome OdbClient::UpdateExascaleDbStorageVault(const UpdateExascaleDbStorageVaultRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateExascaleDbStorageVaultOutcome(result.GetResultWithOwnership())
+                            : UpdateExascaleDbStorageVaultOutcome(std::move(result.GetError()));
 }
 
 UpdateOdbNetworkOutcome OdbClient::UpdateOdbNetwork(const UpdateOdbNetworkRequest& request) const {

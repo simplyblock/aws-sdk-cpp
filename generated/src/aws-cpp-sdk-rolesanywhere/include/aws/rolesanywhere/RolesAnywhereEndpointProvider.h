@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/rolesanywhere/RolesAnywhereEndpointRules.h>
 #include <aws/rolesanywhere/RolesAnywhere_EXPORTS.h>
 
 namespace Aws {
 namespace RolesAnywhere {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using RolesAnywhereClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using RolesAnywhereEndpointProviderBase =
     EndpointProviderBase<RolesAnywhereClientConfiguration, RolesAnywhereBuiltInParameters, RolesAnywhereClientContextParameters>;
 
 using RolesAnywhereDefaultEpProviderBase =
-    DefaultEndpointProvider<RolesAnywhereClientConfiguration, RolesAnywhereBuiltInParameters, RolesAnywhereClientContextParameters>;
+    BDDEndpointProvider<RolesAnywhereClientConfiguration, RolesAnywhereBuiltInParameters, RolesAnywhereClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_ROLESANYWHERE_API RolesAnywhereEndpointProvider : public RolesAnywhere
  public:
   using RolesAnywhereResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  RolesAnywhereEndpointProvider()
-      : RolesAnywhereDefaultEpProviderBase(Aws::RolesAnywhere::RolesAnywhereEndpointRules::GetRulesBlob(),
-                                           Aws::RolesAnywhere::RolesAnywhereEndpointRules::RulesBlobSize) {}
+  RolesAnywhereEndpointProvider();
 
   ~RolesAnywhereEndpointProvider() {}
 };

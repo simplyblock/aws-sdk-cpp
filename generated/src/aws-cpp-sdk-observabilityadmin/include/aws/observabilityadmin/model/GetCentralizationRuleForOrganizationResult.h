@@ -9,7 +9,10 @@
 #include <aws/observabilityadmin/ObservabilityAdmin_EXPORTS.h>
 #include <aws/observabilityadmin/model/CentralizationFailureReason.h>
 #include <aws/observabilityadmin/model/CentralizationRule.h>
+#include <aws/observabilityadmin/model/ContextGraphStatus.h>
 #include <aws/observabilityadmin/model/RuleHealth.h>
+#include <aws/observabilityadmin/model/TagPropagationFailureReason.h>
+#include <aws/observabilityadmin/model/TagPropagationStatus.h>
 
 #include <utility>
 
@@ -164,6 +167,59 @@ class GetCentralizationRuleForOrganizationResult {
 
   ///@{
   /**
+   * <p>The health status of tag propagation for this rule. This status is
+   * independent of the overall <code>RuleHealth</code> for log delivery. Returns
+   * <code>Healthy</code> when the most recent tag-propagation attempt succeeded, or
+   * <code>Unhealthy</code> when the most recent attempt failed.</p>
+   */
+  inline TagPropagationStatus GetTagPropagationStatus() const { return m_tagPropagationStatus; }
+  inline void SetTagPropagationStatus(TagPropagationStatus value) {
+    m_tagPropagationStatusHasBeenSet = true;
+    m_tagPropagationStatus = value;
+  }
+  inline GetCentralizationRuleForOrganizationResult& WithTagPropagationStatus(TagPropagationStatus value) {
+    SetTagPropagationStatus(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The reason tag propagation is unhealthy for this rule. Only present when
+   * <code>TagPropagationStatus</code> is <code>Unhealthy</code>.</p>
+   */
+  inline TagPropagationFailureReason GetTagPropagationFailureReason() const { return m_tagPropagationFailureReason; }
+  inline void SetTagPropagationFailureReason(TagPropagationFailureReason value) {
+    m_tagPropagationFailureReasonHasBeenSet = true;
+    m_tagPropagationFailureReason = value;
+  }
+  inline GetCentralizationRuleForOrganizationResult& WithTagPropagationFailureReason(TagPropagationFailureReason value) {
+    SetTagPropagationFailureReason(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The status of context graph centralization for this rule. Returns
+   * <code>Provisioning</code> while the context graph is being set up,
+   * <code>Healthy</code> once it is active, or <code>Unhealthy</code> if
+   * provisioning failed. This status is independent of the overall
+   * <code>RuleHealth</code> for log delivery.</p>
+   */
+  inline ContextGraphStatus GetContextGraphStatus() const { return m_contextGraphStatus; }
+  inline void SetContextGraphStatus(ContextGraphStatus value) {
+    m_contextGraphStatusHasBeenSet = true;
+    m_contextGraphStatus = value;
+  }
+  inline GetCentralizationRuleForOrganizationResult& WithContextGraphStatus(ContextGraphStatus value) {
+    SetContextGraphStatus(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The configuration details for the organization centralization rule.</p>
    */
   inline const CentralizationRule& GetCentralizationRule() const { return m_centralizationRule; }
@@ -212,6 +268,12 @@ class GetCentralizationRuleForOrganizationResult {
 
   CentralizationFailureReason m_failureReason{CentralizationFailureReason::NOT_SET};
 
+  TagPropagationStatus m_tagPropagationStatus{TagPropagationStatus::NOT_SET};
+
+  TagPropagationFailureReason m_tagPropagationFailureReason{TagPropagationFailureReason::NOT_SET};
+
+  ContextGraphStatus m_contextGraphStatus{ContextGraphStatus::NOT_SET};
+
   CentralizationRule m_centralizationRule;
 
   Aws::String m_requestId;
@@ -224,6 +286,9 @@ class GetCentralizationRuleForOrganizationResult {
   bool m_lastUpdateTimeStampHasBeenSet = false;
   bool m_ruleHealthHasBeenSet = false;
   bool m_failureReasonHasBeenSet = false;
+  bool m_tagPropagationStatusHasBeenSet = false;
+  bool m_tagPropagationFailureReasonHasBeenSet = false;
+  bool m_contextGraphStatusHasBeenSet = false;
   bool m_centralizationRuleHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };

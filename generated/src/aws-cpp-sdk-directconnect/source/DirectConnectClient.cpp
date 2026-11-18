@@ -26,6 +26,7 @@
 #include <aws/directconnect/model/AllocatePublicVirtualInterfaceRequest.h>
 #include <aws/directconnect/model/AllocateTransitVirtualInterfaceRequest.h>
 #include <aws/directconnect/model/AssociateConnectionWithLagRequest.h>
+#include <aws/directconnect/model/AssociateConnectionsToResiliencyGroupRequest.h>
 #include <aws/directconnect/model/AssociateHostedConnectionRequest.h>
 #include <aws/directconnect/model/AssociateMacSecKeyRequest.h>
 #include <aws/directconnect/model/AssociateVirtualInterfaceRequest.h>
@@ -43,6 +44,7 @@
 #include <aws/directconnect/model/CreateLagRequest.h>
 #include <aws/directconnect/model/CreatePrivateVirtualInterfaceRequest.h>
 #include <aws/directconnect/model/CreatePublicVirtualInterfaceRequest.h>
+#include <aws/directconnect/model/CreateResiliencyGroupRequest.h>
 #include <aws/directconnect/model/CreateTransitVirtualInterfaceRequest.h>
 #include <aws/directconnect/model/DeleteBGPPeerRequest.h>
 #include <aws/directconnect/model/DeleteConnectionRequest.h>
@@ -51,6 +53,7 @@
 #include <aws/directconnect/model/DeleteDirectConnectGatewayRequest.h>
 #include <aws/directconnect/model/DeleteInterconnectRequest.h>
 #include <aws/directconnect/model/DeleteLagRequest.h>
+#include <aws/directconnect/model/DeleteResiliencyGroupRequest.h>
 #include <aws/directconnect/model/DeleteVirtualInterfaceRequest.h>
 #include <aws/directconnect/model/DescribeConnectionsRequest.h>
 #include <aws/directconnect/model/DescribeCustomerMetadataRequest.h>
@@ -68,16 +71,23 @@
 #include <aws/directconnect/model/DescribeVirtualGatewaysRequest.h>
 #include <aws/directconnect/model/DescribeVirtualInterfacesRequest.h>
 #include <aws/directconnect/model/DisassociateConnectionFromLagRequest.h>
+#include <aws/directconnect/model/DisassociateConnectionsFromResiliencyGroupRequest.h>
 #include <aws/directconnect/model/DisassociateMacSecKeyRequest.h>
+#include <aws/directconnect/model/GetResiliencyGroupRequest.h>
+#include <aws/directconnect/model/ListResiliencyGroupAssociationsRequest.h>
+#include <aws/directconnect/model/ListResiliencyGroupsRequest.h>
+#include <aws/directconnect/model/ListVirtualInterfaceRoutesRequest.h>
 #include <aws/directconnect/model/ListVirtualInterfaceTestHistoryRequest.h>
 #include <aws/directconnect/model/StartBgpFailoverTestRequest.h>
 #include <aws/directconnect/model/StopBgpFailoverTestRequest.h>
 #include <aws/directconnect/model/TagResourceRequest.h>
 #include <aws/directconnect/model/UntagResourceRequest.h>
 #include <aws/directconnect/model/UpdateConnectionRequest.h>
+#include <aws/directconnect/model/UpdateConnectionsBillingModeRequest.h>
 #include <aws/directconnect/model/UpdateDirectConnectGatewayAssociationRequest.h>
 #include <aws/directconnect/model/UpdateDirectConnectGatewayRequest.h>
 #include <aws/directconnect/model/UpdateLagRequest.h>
+#include <aws/directconnect/model/UpdateResiliencyGroupRequest.h>
 #include <aws/directconnect/model/UpdateVirtualInterfaceAttributesRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
@@ -215,7 +225,8 @@ DirectConnectClient::InvokeOperationOutcome DirectConnectClient::InvokeServiceOp
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -225,9 +236,12 @@ DirectConnectClient::InvokeOperationOutcome DirectConnectClient::InvokeServiceOp
         AWS_OPERATION_CHECK_SUCCESS_DYNAMIC(endpointResolutionOutcome, operationName, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE,
                                             endpointResolutionOutcome.GetError().GetMessage());
 
+        endpointResolutionOutcome.GetResult().AddPathSegments("/service/OvertureService/operation/");
+        endpointResolutionOutcome.GetResult().AddPathSegment(operationName);
+
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -269,6 +283,13 @@ AssociateConnectionWithLagOutcome DirectConnectClient::AssociateConnectionWithLa
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? AssociateConnectionWithLagOutcome(result.GetResultWithOwnership())
                             : AssociateConnectionWithLagOutcome(std::move(result.GetError()));
+}
+
+AssociateConnectionsToResiliencyGroupOutcome DirectConnectClient::AssociateConnectionsToResiliencyGroup(
+    const AssociateConnectionsToResiliencyGroupRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? AssociateConnectionsToResiliencyGroupOutcome(result.GetResultWithOwnership())
+                            : AssociateConnectionsToResiliencyGroupOutcome(std::move(result.GetError()));
 }
 
 AssociateHostedConnectionOutcome DirectConnectClient::AssociateHostedConnection(const AssociateHostedConnectionRequest& request) const {
@@ -378,6 +399,12 @@ CreatePublicVirtualInterfaceOutcome DirectConnectClient::CreatePublicVirtualInte
                             : CreatePublicVirtualInterfaceOutcome(std::move(result.GetError()));
 }
 
+CreateResiliencyGroupOutcome DirectConnectClient::CreateResiliencyGroup(const CreateResiliencyGroupRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateResiliencyGroupOutcome(result.GetResultWithOwnership())
+                            : CreateResiliencyGroupOutcome(std::move(result.GetError()));
+}
+
 CreateTransitVirtualInterfaceOutcome DirectConnectClient::CreateTransitVirtualInterface(
     const CreateTransitVirtualInterfaceRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
@@ -425,6 +452,12 @@ DeleteInterconnectOutcome DirectConnectClient::DeleteInterconnect(const DeleteIn
 DeleteLagOutcome DirectConnectClient::DeleteLag(const DeleteLagRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DeleteLagOutcome(result.GetResultWithOwnership()) : DeleteLagOutcome(std::move(result.GetError()));
+}
+
+DeleteResiliencyGroupOutcome DirectConnectClient::DeleteResiliencyGroup(const DeleteResiliencyGroupRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteResiliencyGroupOutcome(result.GetResultWithOwnership())
+                            : DeleteResiliencyGroupOutcome(std::move(result.GetError()));
 }
 
 DeleteVirtualInterfaceOutcome DirectConnectClient::DeleteVirtualInterface(const DeleteVirtualInterfaceRequest& request) const {
@@ -532,10 +565,42 @@ DisassociateConnectionFromLagOutcome DirectConnectClient::DisassociateConnection
                             : DisassociateConnectionFromLagOutcome(std::move(result.GetError()));
 }
 
+DisassociateConnectionsFromResiliencyGroupOutcome DirectConnectClient::DisassociateConnectionsFromResiliencyGroup(
+    const DisassociateConnectionsFromResiliencyGroupRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DisassociateConnectionsFromResiliencyGroupOutcome(result.GetResultWithOwnership())
+                            : DisassociateConnectionsFromResiliencyGroupOutcome(std::move(result.GetError()));
+}
+
 DisassociateMacSecKeyOutcome DirectConnectClient::DisassociateMacSecKey(const DisassociateMacSecKeyRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DisassociateMacSecKeyOutcome(result.GetResultWithOwnership())
                             : DisassociateMacSecKeyOutcome(std::move(result.GetError()));
+}
+
+GetResiliencyGroupOutcome DirectConnectClient::GetResiliencyGroup(const GetResiliencyGroupRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetResiliencyGroupOutcome(result.GetResultWithOwnership())
+                            : GetResiliencyGroupOutcome(std::move(result.GetError()));
+}
+
+ListResiliencyGroupAssociationsOutcome DirectConnectClient::ListResiliencyGroupAssociations(
+    const ListResiliencyGroupAssociationsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListResiliencyGroupAssociationsOutcome(result.GetResultWithOwnership())
+                            : ListResiliencyGroupAssociationsOutcome(std::move(result.GetError()));
+}
+
+ListResiliencyGroupsOutcome DirectConnectClient::ListResiliencyGroups(const ListResiliencyGroupsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListResiliencyGroupsOutcome(result.GetResultWithOwnership())
+                            : ListResiliencyGroupsOutcome(std::move(result.GetError()));
+}
+
+ListVirtualInterfaceRoutesOutcome DirectConnectClient::ListVirtualInterfaceRoutes(const ListVirtualInterfaceRoutesRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListVirtualInterfaceRoutesOutcome(result.GetResultWithOwnership())
+                            : ListVirtualInterfaceRoutesOutcome(std::move(result.GetError()));
 }
 
 ListVirtualInterfaceTestHistoryOutcome DirectConnectClient::ListVirtualInterfaceTestHistory(
@@ -573,6 +638,13 @@ UpdateConnectionOutcome DirectConnectClient::UpdateConnection(const UpdateConnec
                             : UpdateConnectionOutcome(std::move(result.GetError()));
 }
 
+UpdateConnectionsBillingModeOutcome DirectConnectClient::UpdateConnectionsBillingMode(
+    const UpdateConnectionsBillingModeRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateConnectionsBillingModeOutcome(result.GetResultWithOwnership())
+                            : UpdateConnectionsBillingModeOutcome(std::move(result.GetError()));
+}
+
 UpdateDirectConnectGatewayOutcome DirectConnectClient::UpdateDirectConnectGateway(const UpdateDirectConnectGatewayRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? UpdateDirectConnectGatewayOutcome(result.GetResultWithOwnership())
@@ -589,6 +661,12 @@ UpdateDirectConnectGatewayAssociationOutcome DirectConnectClient::UpdateDirectCo
 UpdateLagOutcome DirectConnectClient::UpdateLag(const UpdateLagRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? UpdateLagOutcome(result.GetResultWithOwnership()) : UpdateLagOutcome(std::move(result.GetError()));
+}
+
+UpdateResiliencyGroupOutcome DirectConnectClient::UpdateResiliencyGroup(const UpdateResiliencyGroupRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateResiliencyGroupOutcome(result.GetResultWithOwnership())
+                            : UpdateResiliencyGroupOutcome(std::move(result.GetError()));
 }
 
 UpdateVirtualInterfaceAttributesOutcome DirectConnectClient::UpdateVirtualInterfaceAttributes(

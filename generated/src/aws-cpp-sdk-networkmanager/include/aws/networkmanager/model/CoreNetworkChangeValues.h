@@ -7,6 +7,7 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/networkmanager/NetworkManager_EXPORTS.h>
+#include <aws/networkmanager/model/MultipathResilienceChangeValues.h>
 #include <aws/networkmanager/model/RoutingPolicyAssociationDetail.h>
 #include <aws/networkmanager/model/RoutingPolicyDirection.h>
 #include <aws/networkmanager/model/ServiceInsertionAction.h>
@@ -273,8 +274,8 @@ class CoreNetworkChangeValues {
 
   ///@{
   /**
-   * <p>The routing policy direction (inbound/outbound) in a core network change
-   * event.</p>
+   * <p>The routing policy direction (inbound/outbound) in the core network change
+   * values.</p>
    */
   inline RoutingPolicyDirection GetRoutingPolicyDirection() const { return m_routingPolicyDirection; }
   inline bool RoutingPolicyDirectionHasBeenSet() const { return m_routingPolicyDirectionHasBeenSet; }
@@ -374,6 +375,25 @@ class CoreNetworkChangeValues {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The change in multipath resilience configuration in the core network change
+   * values.</p>
+   */
+  inline const MultipathResilienceChangeValues& GetMultipathResilience() const { return m_multipathResilience; }
+  inline bool MultipathResilienceHasBeenSet() const { return m_multipathResilienceHasBeenSet; }
+  template <typename MultipathResilienceT = MultipathResilienceChangeValues>
+  void SetMultipathResilience(MultipathResilienceT&& value) {
+    m_multipathResilienceHasBeenSet = true;
+    m_multipathResilience = std::forward<MultipathResilienceT>(value);
+  }
+  template <typename MultipathResilienceT = MultipathResilienceChangeValues>
+  CoreNetworkChangeValues& WithMultipathResilience(MultipathResilienceT&& value) {
+    SetMultipathResilience(std::forward<MultipathResilienceT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_segmentName;
 
@@ -408,6 +428,8 @@ class CoreNetworkChangeValues {
   Aws::String m_attachmentId;
 
   Aws::Vector<RoutingPolicyAssociationDetail> m_routingPolicyAssociationDetails;
+
+  MultipathResilienceChangeValues m_multipathResilience;
   bool m_segmentNameHasBeenSet = false;
   bool m_networkFunctionGroupNameHasBeenSet = false;
   bool m_edgeLocationsHasBeenSet = false;
@@ -425,6 +447,7 @@ class CoreNetworkChangeValues {
   bool m_peerEdgeLocationsHasBeenSet = false;
   bool m_attachmentIdHasBeenSet = false;
   bool m_routingPolicyAssociationDetailsHasBeenSet = false;
+  bool m_multipathResilienceHasBeenSet = false;
 };
 
 }  // namespace Model

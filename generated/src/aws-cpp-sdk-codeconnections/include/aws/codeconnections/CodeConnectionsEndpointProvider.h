@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/codeconnections/CodeConnectionsEndpointRules.h>
 #include <aws/codeconnections/CodeConnections_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace CodeConnections {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using CodeConnectionsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using CodeConnectionsEndpointProviderBase =
     EndpointProviderBase<CodeConnectionsClientConfiguration, CodeConnectionsBuiltInParameters, CodeConnectionsClientContextParameters>;
 
 using CodeConnectionsDefaultEpProviderBase =
-    DefaultEndpointProvider<CodeConnectionsClientConfiguration, CodeConnectionsBuiltInParameters, CodeConnectionsClientContextParameters>;
+    BDDEndpointProvider<CodeConnectionsClientConfiguration, CodeConnectionsBuiltInParameters, CodeConnectionsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_CODECONNECTIONS_API CodeConnectionsEndpointProvider : public CodeConne
  public:
   using CodeConnectionsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  CodeConnectionsEndpointProvider()
-      : CodeConnectionsDefaultEpProviderBase(Aws::CodeConnections::CodeConnectionsEndpointRules::GetRulesBlob(),
-                                             Aws::CodeConnections::CodeConnectionsEndpointRules::RulesBlobSize) {}
+  CodeConnectionsEndpointProvider();
 
   ~CodeConnectionsEndpointProvider() {}
 };

@@ -26,6 +26,15 @@ CustomOauth2ProviderConfigOutput& CustomOauth2ProviderConfigOutput::operator=(Js
     m_clientId = jsonValue.GetString("clientId");
     m_clientIdHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("onBehalfOfTokenExchangeConfig")) {
+    m_onBehalfOfTokenExchangeConfig = jsonValue.GetObject("onBehalfOfTokenExchangeConfig");
+    m_onBehalfOfTokenExchangeConfigHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("clientAuthenticationMethod")) {
+    m_clientAuthenticationMethod =
+        ClientAuthenticationMethodTypeMapper::GetClientAuthenticationMethodTypeForName(jsonValue.GetString("clientAuthenticationMethod"));
+    m_clientAuthenticationMethodHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("privateEndpoint")) {
     m_privateEndpoint = jsonValue.GetObject("privateEndpoint");
     m_privateEndpointHasBeenSet = true;
@@ -38,14 +47,17 @@ CustomOauth2ProviderConfigOutput& CustomOauth2ProviderConfigOutput::operator=(Js
     }
     m_privateEndpointOverridesHasBeenSet = true;
   }
-  if (jsonValue.ValueExists("onBehalfOfTokenExchangeConfig")) {
-    m_onBehalfOfTokenExchangeConfig = jsonValue.GetObject("onBehalfOfTokenExchangeConfig");
-    m_onBehalfOfTokenExchangeConfigHasBeenSet = true;
+  if (jsonValue.ValueExists("certificateConfigurations")) {
+    Aws::Utils::Array<JsonView> certificateConfigurationsJsonList = jsonValue.GetArray("certificateConfigurations");
+    for (unsigned certificateConfigurationsIndex = 0; certificateConfigurationsIndex < certificateConfigurationsJsonList.GetLength();
+         ++certificateConfigurationsIndex) {
+      m_certificateConfigurations.push_back(certificateConfigurationsJsonList[certificateConfigurationsIndex].AsObject());
+    }
+    m_certificateConfigurationsHasBeenSet = true;
   }
-  if (jsonValue.ValueExists("clientAuthenticationMethod")) {
-    m_clientAuthenticationMethod =
-        ClientAuthenticationMethodTypeMapper::GetClientAuthenticationMethodTypeForName(jsonValue.GetString("clientAuthenticationMethod"));
-    m_clientAuthenticationMethodHasBeenSet = true;
+  if (jsonValue.ValueExists("privateKeyJwtConfig")) {
+    m_privateKeyJwtConfig = jsonValue.GetObject("privateKeyJwtConfig");
+    m_privateKeyJwtConfigHasBeenSet = true;
   }
   return *this;
 }
@@ -59,6 +71,15 @@ JsonValue CustomOauth2ProviderConfigOutput::Jsonize() const {
 
   if (m_clientIdHasBeenSet) {
     payload.WithString("clientId", m_clientId);
+  }
+
+  if (m_onBehalfOfTokenExchangeConfigHasBeenSet) {
+    payload.WithObject("onBehalfOfTokenExchangeConfig", m_onBehalfOfTokenExchangeConfig.Jsonize());
+  }
+
+  if (m_clientAuthenticationMethodHasBeenSet) {
+    payload.WithString("clientAuthenticationMethod",
+                       ClientAuthenticationMethodTypeMapper::GetNameForClientAuthenticationMethodType(m_clientAuthenticationMethod));
   }
 
   if (m_privateEndpointHasBeenSet) {
@@ -75,13 +96,18 @@ JsonValue CustomOauth2ProviderConfigOutput::Jsonize() const {
     payload.WithArray("privateEndpointOverrides", std::move(privateEndpointOverridesJsonList));
   }
 
-  if (m_onBehalfOfTokenExchangeConfigHasBeenSet) {
-    payload.WithObject("onBehalfOfTokenExchangeConfig", m_onBehalfOfTokenExchangeConfig.Jsonize());
+  if (m_certificateConfigurationsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> certificateConfigurationsJsonList(m_certificateConfigurations.size());
+    for (unsigned certificateConfigurationsIndex = 0; certificateConfigurationsIndex < certificateConfigurationsJsonList.GetLength();
+         ++certificateConfigurationsIndex) {
+      certificateConfigurationsJsonList[certificateConfigurationsIndex].AsObject(
+          m_certificateConfigurations[certificateConfigurationsIndex].Jsonize());
+    }
+    payload.WithArray("certificateConfigurations", std::move(certificateConfigurationsJsonList));
   }
 
-  if (m_clientAuthenticationMethodHasBeenSet) {
-    payload.WithString("clientAuthenticationMethod",
-                       ClientAuthenticationMethodTypeMapper::GetNameForClientAuthenticationMethodType(m_clientAuthenticationMethod));
+  if (m_privateKeyJwtConfigHasBeenSet) {
+    payload.WithObject("privateKeyJwtConfig", m_privateKeyJwtConfig.Jsonize());
   }
 
   return payload;

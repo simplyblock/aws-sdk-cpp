@@ -7,13 +7,16 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/dsql/DSQLClient.h>
+#include <aws/dsql/DSQLClientPagination.h>
 #include <aws/dsql/DSQLEndpointProvider.h>
-#include <aws/dsql/DSQLEndpointRules.h>
 #include <aws/dsql/DSQLErrorMarshaller.h>
 #include <aws/dsql/DSQLErrors.h>
+#include <aws/dsql/DSQLPaginationBase.h>
 #include <aws/dsql/DSQLRequest.h>
 #include <aws/dsql/DSQLServiceClientModel.h>
+#include <aws/dsql/DSQLWaiter.h>
 #include <aws/dsql/DSQL_EXPORTS.h>
+#include <aws/dsql/internal/DSQLEndpointRules.h>
 #include <aws/dsql/model/ClusterStatus.h>
 #include <aws/dsql/model/ClusterSummary.h>
 #include <aws/dsql/model/ConflictException.h>
@@ -40,12 +43,17 @@
 #include <aws/dsql/model/GetVpcEndpointServiceNameResult.h>
 #include <aws/dsql/model/InternalServerException.h>
 #include <aws/dsql/model/KinesisTargetDefinition.h>
+#include <aws/dsql/model/ListClustersPaginationTraits.h>
 #include <aws/dsql/model/ListClustersRequest.h>
 #include <aws/dsql/model/ListClustersResult.h>
+#include <aws/dsql/model/ListStreamsPaginationTraits.h>
 #include <aws/dsql/model/ListStreamsRequest.h>
 #include <aws/dsql/model/ListStreamsResult.h>
 #include <aws/dsql/model/ListTagsForResourceRequest.h>
 #include <aws/dsql/model/ListTagsForResourceResult.h>
+#include <aws/dsql/model/MetricGroup.h>
+#include <aws/dsql/model/MetricGroupRequest.h>
+#include <aws/dsql/model/MetricGroupResponse.h>
 #include <aws/dsql/model/MultiRegionProperties.h>
 #include <aws/dsql/model/PutClusterPolicyRequest.h>
 #include <aws/dsql/model/PutClusterPolicyResult.h>

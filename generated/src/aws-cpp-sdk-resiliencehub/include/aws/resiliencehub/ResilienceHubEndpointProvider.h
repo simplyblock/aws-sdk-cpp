@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/resiliencehub/ResilienceHubEndpointRules.h>
 #include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
 
 namespace Aws {
 namespace ResilienceHub {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ResilienceHubClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using ResilienceHubEndpointProviderBase =
     EndpointProviderBase<ResilienceHubClientConfiguration, ResilienceHubBuiltInParameters, ResilienceHubClientContextParameters>;
 
 using ResilienceHubDefaultEpProviderBase =
-    DefaultEndpointProvider<ResilienceHubClientConfiguration, ResilienceHubBuiltInParameters, ResilienceHubClientContextParameters>;
+    BDDEndpointProvider<ResilienceHubClientConfiguration, ResilienceHubBuiltInParameters, ResilienceHubClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_RESILIENCEHUB_API ResilienceHubEndpointProvider : public ResilienceHub
  public:
   using ResilienceHubResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ResilienceHubEndpointProvider()
-      : ResilienceHubDefaultEpProviderBase(Aws::ResilienceHub::ResilienceHubEndpointRules::GetRulesBlob(),
-                                           Aws::ResilienceHub::ResilienceHubEndpointRules::RulesBlobSize) {}
+  ResilienceHubEndpointProvider();
 
   ~ResilienceHubEndpointProvider() {}
 };

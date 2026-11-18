@@ -1702,18 +1702,18 @@ class CreateDBInstanceRequest : public RDSRequest {
 
   ///@{
   /**
-   * <p>The life cycle type for this DB instance.</p>  <p>By default, this
-   * value is set to <code>open-source-rds-extended-support</code>, which enrolls
-   * your DB instance into Amazon RDS Extended Support. At the end of standard
-   * support, you can avoid charges for Extended Support by setting the value to
+   * <p>The lifecycle type for this DB instance.</p>  <p>By default, this value
+   * is set to <code>open-source-rds-extended-support</code>, which enrolls your DB
+   * instance into Amazon RDS Extended Support. At the end of standard support, you
+   * can avoid charges for Extended Support by setting the value to
    * <code>open-source-rds-extended-support-disabled</code>. In this case, creating
    * the DB instance will fail if the DB major version is past its end of standard
    * support date.</p>  <p>This setting applies only to RDS for MySQL and RDS
-   * for PostgreSQL. For Amazon Aurora DB instances, the life cycle type is managed
-   * by the DB cluster.</p> <p>You can use this setting to enroll your DB instance
-   * into Amazon RDS Extended Support. With RDS Extended Support, you can run the
-   * selected major engine version on your DB instance past the end of standard
-   * support for that engine version. For more information, see <a
+   * for PostgreSQL. For Amazon Aurora DB instances, the engine lifecycle support is
+   * managed by the DB cluster.</p> <p>You can use this setting to enroll your DB
+   * instance into Amazon RDS Extended Support. With RDS Extended Support, you can
+   * run the selected major engine version on your DB instance past the end of
+   * standard support for that engine version. For more information, see <a
    * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html">Amazon
    * RDS Extended Support with Amazon RDS</a> in the <i>Amazon RDS User
    * Guide</i>.</p> <p>Valid Values: <code>open-source-rds-extended-support |
@@ -1784,6 +1784,44 @@ class CreateDBInstanceRequest : public RDSRequest {
   CreateDBInstanceRequest& AddTagSpecifications(TagSpecificationsT&& value) {
     m_tagSpecificationsHasBeenSet = true;
     m_tagSpecifications.emplace_back(std::forward<TagSpecificationsT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The identifier or the name of the DB capacity reservation to associate with
+   * this DB instance. You can specify the identifier, which has the prefix
+   * <code>dbcr-</code>, or the reservation name. When you specify this parameter,
+   * the DB instance uses reserved capacity from the specified reservation.</p> <p>If
+   * you specify <code>AvailabilityZone</code>, Amazon RDS places the DB instance in
+   * that Availability Zone, and the reservation must cover it.</p>
+   * <p>Constraints:</p> <ul> <li> <p>The reservation must reserve capacity for the
+   * DB instance class and the database engine of the DB instance.</p> </li> <li>
+   * <p>If the reservation reserves capacity for a specific license model, the
+   * license model of the DB instance must match it.</p> </li> <li> <p>The
+   * reservation must be in the <code>active</code> state, and it must not be past
+   * its end date.</p> </li> <li> <p>If you specify <code>AvailabilityZone</code>, it
+   * must be one of the Availability Zones of the reservation.</p> </li> <li> <p>For
+   * a Multi-AZ DB instance, the reservation must cover two or more Availability
+   * Zones. A Multi-AZ DB instance uses one unit of reserved capacity in each of two
+   * Availability Zones. If the reservation covers more than two Availability Zones,
+   * Amazon RDS chooses the two that the DB instance uses.</p> </li> <li> <p>The
+   * reservation must have available capacity in each Availability Zone that the DB
+   * instance uses.</p> </li> <li> <p>The DB subnet group must be in a VPC with
+   * default tenancy.</p> </li> <li> <p>The DB subnet group must cover each
+   * Availability Zone that the DB instance uses.</p> </li> </ul>
+   */
+  inline const Aws::String& GetDBCapacityReservationIdentifier() const { return m_dBCapacityReservationIdentifier; }
+  inline bool DBCapacityReservationIdentifierHasBeenSet() const { return m_dBCapacityReservationIdentifierHasBeenSet; }
+  template <typename DBCapacityReservationIdentifierT = Aws::String>
+  void SetDBCapacityReservationIdentifier(DBCapacityReservationIdentifierT&& value) {
+    m_dBCapacityReservationIdentifierHasBeenSet = true;
+    m_dBCapacityReservationIdentifier = std::forward<DBCapacityReservationIdentifierT>(value);
+  }
+  template <typename DBCapacityReservationIdentifierT = Aws::String>
+  CreateDBInstanceRequest& WithDBCapacityReservationIdentifier(DBCapacityReservationIdentifierT&& value) {
+    SetDBCapacityReservationIdentifier(std::forward<DBCapacityReservationIdentifierT>(value));
     return *this;
   }
   ///@}
@@ -1943,6 +1981,8 @@ class CreateDBInstanceRequest : public RDSRequest {
 
   Aws::Vector<TagSpecification> m_tagSpecifications;
 
+  Aws::String m_dBCapacityReservationIdentifier;
+
   MasterUserAuthenticationType m_masterUserAuthenticationType{MasterUserAuthenticationType::NOT_SET};
   bool m_dBNameHasBeenSet = false;
   bool m_dBInstanceIdentifierHasBeenSet = false;
@@ -2010,6 +2050,7 @@ class CreateDBInstanceRequest : public RDSRequest {
   bool m_engineLifecycleSupportHasBeenSet = false;
   bool m_additionalStorageVolumesHasBeenSet = false;
   bool m_tagSpecificationsHasBeenSet = false;
+  bool m_dBCapacityReservationIdentifierHasBeenSet = false;
   bool m_masterUserAuthenticationTypeHasBeenSet = false;
 };
 

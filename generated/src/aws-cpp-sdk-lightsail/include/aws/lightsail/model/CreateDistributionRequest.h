@@ -11,10 +11,12 @@
 #include <aws/lightsail/model/CacheBehavior.h>
 #include <aws/lightsail/model/CacheBehaviorPerPath.h>
 #include <aws/lightsail/model/CacheSettings.h>
+#include <aws/lightsail/model/DistributionCustomErrorResponse.h>
 #include <aws/lightsail/model/InputOrigin.h>
 #include <aws/lightsail/model/IpAddressType.h>
 #include <aws/lightsail/model/Tag.h>
 #include <aws/lightsail/model/ViewerMinimumTlsProtocolVersionEnum.h>
+#include <aws/lightsail/model/WafRule.h>
 
 #include <utility>
 
@@ -240,6 +242,165 @@ class CreateDistributionRequest : public LightsailRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Specifies whether to enable private origin access for the distribution. With
+   * private origin access, the distribution can serve objects that aren't publicly
+   * accessible from a Lightsail bucket.</p> <p>Lightsail grants the distribution
+   * permission to read the bucket's objects. Enabling private origin access doesn't
+   * change the bucket's access settings, and you can still retrieve publicly
+   * accessible objects directly from the bucket's endpoint.</p>  <p>You can
+   * enable private origin access only when the distribution's origin is a Lightsail
+   * bucket. If the origin is another resource type, the request fails.</p>
+   */
+  inline bool GetEnablePrivateOriginAccess() const { return m_enablePrivateOriginAccess; }
+  inline bool EnablePrivateOriginAccessHasBeenSet() const { return m_enablePrivateOriginAccessHasBeenSet; }
+  inline void SetEnablePrivateOriginAccess(bool value) {
+    m_enablePrivateOriginAccessHasBeenSet = true;
+    m_enablePrivateOriginAccess = value;
+  }
+  inline CreateDistributionRequest& WithEnablePrivateOriginAccess(bool value) {
+    SetEnablePrivateOriginAccess(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The object (for example, <code>index.html</code>) that the distribution
+   * returns when a viewer requests the root URL of the distribution (<code>/</code>)
+   * instead of a specific object. The object that you specify must be available from
+   * the origin.</p>
+   */
+  inline const Aws::String& GetDefaultRootObject() const { return m_defaultRootObject; }
+  inline bool DefaultRootObjectHasBeenSet() const { return m_defaultRootObjectHasBeenSet; }
+  template <typename DefaultRootObjectT = Aws::String>
+  void SetDefaultRootObject(DefaultRootObjectT&& value) {
+    m_defaultRootObjectHasBeenSet = true;
+    m_defaultRootObject = std::forward<DefaultRootObjectT>(value);
+  }
+  template <typename DefaultRootObjectT = Aws::String>
+  CreateDistributionRequest& WithDefaultRootObject(DefaultRootObjectT&& value) {
+    SetDefaultRootObject(std::forward<DefaultRootObjectT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>An array of objects that describe the custom error responses for the
+   * distribution. With a custom error response, you can specify the page to return
+   * when the origin responds with a given HTTP error code. You can also specify the
+   * HTTP status code to send to the viewer.</p>
+   */
+  inline const Aws::Vector<DistributionCustomErrorResponse>& GetCustomErrorResponses() const { return m_customErrorResponses; }
+  inline bool CustomErrorResponsesHasBeenSet() const { return m_customErrorResponsesHasBeenSet; }
+  template <typename CustomErrorResponsesT = Aws::Vector<DistributionCustomErrorResponse>>
+  void SetCustomErrorResponses(CustomErrorResponsesT&& value) {
+    m_customErrorResponsesHasBeenSet = true;
+    m_customErrorResponses = std::forward<CustomErrorResponsesT>(value);
+  }
+  template <typename CustomErrorResponsesT = Aws::Vector<DistributionCustomErrorResponse>>
+  CreateDistributionRequest& WithCustomErrorResponses(CustomErrorResponsesT&& value) {
+    SetCustomErrorResponses(std::forward<CustomErrorResponsesT>(value));
+    return *this;
+  }
+  template <typename CustomErrorResponsesT = DistributionCustomErrorResponse>
+  CreateDistributionRequest& AddCustomErrorResponses(CustomErrorResponsesT&& value) {
+    m_customErrorResponsesHasBeenSet = true;
+    m_customErrorResponses.emplace_back(std::forward<CustomErrorResponsesT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Specifies whether to enable Web Application Firewall (WAF) for the
+   * distribution. WAF inspects viewer requests and blocks requests that match the
+   * WAF rule groups that you enable.</p> <p>When you enable WAF without specifying
+   * the <code>wafRules</code> parameter, the distribution has no WAF rule groups
+   * enabled and doesn't block any requests.</p>  <p>WAF is available only for
+   * distributions that use the <code>medium_1_0</code> or <code>large_1_0</code>
+   * bundle.</p>
+   */
+  inline bool GetEnableWaf() const { return m_enableWaf; }
+  inline bool EnableWafHasBeenSet() const { return m_enableWafHasBeenSet; }
+  inline void SetEnableWaf(bool value) {
+    m_enableWafHasBeenSet = true;
+    m_enableWaf = value;
+  }
+  inline CreateDistributionRequest& WithEnableWaf(bool value) {
+    SetEnableWaf(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>An array of objects that describe the WAF rule groups to enable for the
+   * distribution.</p> <p>The WAF rule groups that you can specify depend on the
+   * bundle of the distribution:</p> <ul> <li> <p> <code>medium_1_0</code> – Supports
+   * the <code>AWSManagedRulesCommonRuleSet</code>,
+   * <code>AWSManagedRulesKnownBadInputsRuleSet</code>, and
+   * <code>AWSManagedRulesAnonymousIpList</code> rule groups.</p> </li> <li> <p>
+   * <code>large_1_0</code> – Supports the rule groups for <code>medium_1_0</code>,
+   * plus <code>AWSManagedRulesAdminProtectionRuleSet</code>,
+   * <code>AWSManagedRulesSQLiRuleSet</code>,
+   * <code>AWSManagedRulesLinuxRuleSet</code>,
+   * <code>AWSManagedRulesUnixRuleSet</code>,
+   * <code>AWSManagedRulesWindowsRuleSet</code>,
+   * <code>AWSManagedRulesPHPRuleSet</code>,
+   * <code>AWSManagedRulesWordPressRuleSet</code>,
+   * <code>AWSManagedRulesAmazonIpReputationList</code>,
+   * <code>AWSManagedRulesATPRuleSet</code>, <code>AWSManagedRulesACFPRuleSet</code>,
+   * and <code>AWSManagedRulesBotControlRuleSet</code> rule groups.</p> </li> </ul>
+   */
+  inline const Aws::Vector<WafRule>& GetWafRules() const { return m_wafRules; }
+  inline bool WafRulesHasBeenSet() const { return m_wafRulesHasBeenSet; }
+  template <typename WafRulesT = Aws::Vector<WafRule>>
+  void SetWafRules(WafRulesT&& value) {
+    m_wafRulesHasBeenSet = true;
+    m_wafRules = std::forward<WafRulesT>(value);
+  }
+  template <typename WafRulesT = Aws::Vector<WafRule>>
+  CreateDistributionRequest& WithWafRules(WafRulesT&& value) {
+    SetWafRules(std::forward<WafRulesT>(value));
+    return *this;
+  }
+  template <typename WafRulesT = WafRule>
+  CreateDistributionRequest& AddWafRules(WafRulesT&& value) {
+    m_wafRulesHasBeenSet = true;
+    m_wafRules.emplace_back(std::forward<WafRulesT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The Lightsail subdomain to create and associate with the distribution (for
+   * example, <code>mysite</code>, for the web address
+   * <code>mysite.amazonlightsail.com</code>).</p> <p>After the distribution is
+   * deployed, Lightsail creates the subdomain and associates it with the
+   * distribution. If Lightsail can't create or associate the subdomain, it still
+   * creates the distribution, but the <code>CreateDistribution</code> operation
+   * fails and the <code>state</code> of the distribution's <code>subdomain</code> is
+   * <code>Error</code>. To check the status, use the <code>subdomain</code>
+   * parameter of the distribution.</p>
+   */
+  inline const Aws::String& GetSubdomainName() const { return m_subdomainName; }
+  inline bool SubdomainNameHasBeenSet() const { return m_subdomainNameHasBeenSet; }
+  template <typename SubdomainNameT = Aws::String>
+  void SetSubdomainName(SubdomainNameT&& value) {
+    m_subdomainNameHasBeenSet = true;
+    m_subdomainName = std::forward<SubdomainNameT>(value);
+  }
+  template <typename SubdomainNameT = Aws::String>
+  CreateDistributionRequest& WithSubdomainName(SubdomainNameT&& value) {
+    SetSubdomainName(std::forward<SubdomainNameT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_distributionName;
 
@@ -260,6 +421,18 @@ class CreateDistributionRequest : public LightsailRequest {
   Aws::String m_certificateName;
 
   ViewerMinimumTlsProtocolVersionEnum m_viewerMinimumTlsProtocolVersion{ViewerMinimumTlsProtocolVersionEnum::NOT_SET};
+
+  bool m_enablePrivateOriginAccess{false};
+
+  Aws::String m_defaultRootObject;
+
+  Aws::Vector<DistributionCustomErrorResponse> m_customErrorResponses;
+
+  bool m_enableWaf{false};
+
+  Aws::Vector<WafRule> m_wafRules;
+
+  Aws::String m_subdomainName;
   bool m_distributionNameHasBeenSet = false;
   bool m_originHasBeenSet = false;
   bool m_defaultCacheBehaviorHasBeenSet = false;
@@ -270,6 +443,12 @@ class CreateDistributionRequest : public LightsailRequest {
   bool m_tagsHasBeenSet = false;
   bool m_certificateNameHasBeenSet = false;
   bool m_viewerMinimumTlsProtocolVersionHasBeenSet = false;
+  bool m_enablePrivateOriginAccessHasBeenSet = false;
+  bool m_defaultRootObjectHasBeenSet = false;
+  bool m_customErrorResponsesHasBeenSet = false;
+  bool m_enableWafHasBeenSet = false;
+  bool m_wafRulesHasBeenSet = false;
+  bool m_subdomainNameHasBeenSet = false;
 };
 
 }  // namespace Model

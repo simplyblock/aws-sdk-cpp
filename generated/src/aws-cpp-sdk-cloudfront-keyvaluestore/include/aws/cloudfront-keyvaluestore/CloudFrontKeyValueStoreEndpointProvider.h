@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/cloudfront-keyvaluestore/CloudFrontKeyValueStoreEndpointRules.h>
 #include <aws/cloudfront-keyvaluestore/CloudFrontKeyValueStore_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace CloudFrontKeyValueStore {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using CloudFrontKeyValueStoreClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using CloudFrontKeyValueStoreEndpointProviderBase =
                          CloudFrontKeyValueStoreClientContextParameters>;
 
 using CloudFrontKeyValueStoreDefaultEpProviderBase =
-    DefaultEndpointProvider<CloudFrontKeyValueStoreClientConfiguration, CloudFrontKeyValueStoreBuiltInParameters,
-                            CloudFrontKeyValueStoreClientContextParameters>;
+    BDDEndpointProvider<CloudFrontKeyValueStoreClientConfiguration, CloudFrontKeyValueStoreBuiltInParameters,
+                        CloudFrontKeyValueStoreClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_CLOUDFRONTKEYVALUESTORE_API CloudFrontKeyValueStoreEndpointProvider : 
  public:
   using CloudFrontKeyValueStoreResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  CloudFrontKeyValueStoreEndpointProvider()
-      : CloudFrontKeyValueStoreDefaultEpProviderBase(Aws::CloudFrontKeyValueStore::CloudFrontKeyValueStoreEndpointRules::GetRulesBlob(),
-                                                     Aws::CloudFrontKeyValueStore::CloudFrontKeyValueStoreEndpointRules::RulesBlobSize) {}
+  CloudFrontKeyValueStoreEndpointProvider();
 
   ~CloudFrontKeyValueStoreEndpointProvider() {}
 };

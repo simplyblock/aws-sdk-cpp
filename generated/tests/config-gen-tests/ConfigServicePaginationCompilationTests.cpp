@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -19,6 +19,7 @@
 #include <aws/config/model/DescribeConfigurationAggregatorSourcesStatusPaginationTraits.h>
 #include <aws/config/model/DescribeConfigurationAggregatorsPaginationTraits.h>
 #include <aws/config/model/DescribeComplianceByResourcePaginationTraits.h>
+#include <aws/config/model/ListConnectorsPaginationTraits.h>
 #include <aws/config/model/DescribeConformancePackCompliancePaginationTraits.h>
 #include <aws/config/model/GetOrganizationConfigRuleDetailedStatusPaginationTraits.h>
 #include <aws/config/model/ListResourceEvaluationsPaginationTraits.h>
@@ -58,6 +59,6 @@ class ConfigServicePaginationCompilationTest : public Aws::Testing::AwsCppSdkGTe
 
 TEST_F(ConfigServicePaginationCompilationTest, ConfigServicePaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

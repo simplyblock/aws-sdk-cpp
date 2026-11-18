@@ -74,6 +74,14 @@ EntitySummary& EntitySummary::operator=(JsonView jsonValue) {
     m_offerSetSummary = jsonValue.GetObject("OfferSetSummary");
     m_offerSetSummaryHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("ExpressPrivateOfferConfigurationSummary")) {
+    m_expressPrivateOfferConfigurationSummary = jsonValue.GetObject("ExpressPrivateOfferConfigurationSummary");
+    m_expressPrivateOfferConfigurationSummaryHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("SubsidiaryAuthorizationSummary")) {
+    m_subsidiaryAuthorizationSummary = jsonValue.GetObject("SubsidiaryAuthorizationSummary");
+    m_subsidiaryAuthorizationSummaryHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -134,6 +142,14 @@ JsonValue EntitySummary::Jsonize() const {
 
   if (m_offerSetSummaryHasBeenSet) {
     payload.WithObject("OfferSetSummary", m_offerSetSummary.Jsonize());
+  }
+
+  if (m_expressPrivateOfferConfigurationSummaryHasBeenSet) {
+    payload.WithObject("ExpressPrivateOfferConfigurationSummary", m_expressPrivateOfferConfigurationSummary.Jsonize());
+  }
+
+  if (m_subsidiaryAuthorizationSummaryHasBeenSet) {
+    payload.WithObject("SubsidiaryAuthorizationSummary", m_subsidiaryAuthorizationSummary.Jsonize());
   }
 
   return payload;

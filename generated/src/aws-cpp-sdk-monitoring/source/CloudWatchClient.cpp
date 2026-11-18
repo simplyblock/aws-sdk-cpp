@@ -21,12 +21,15 @@
 #include <aws/monitoring/CloudWatchEndpointProvider.h>
 #include <aws/monitoring/CloudWatchErrorMarshaller.h>
 #include <aws/monitoring/model/AssociateDatasetKmsKeyRequest.h>
+#include <aws/monitoring/model/CreateResourceMetricsConfigurationRequest.h>
 #include <aws/monitoring/model/DeleteAlarmMuteRuleRequest.h>
 #include <aws/monitoring/model/DeleteAlarmsRequest.h>
 #include <aws/monitoring/model/DeleteAnomalyDetectorRequest.h>
 #include <aws/monitoring/model/DeleteDashboardsRequest.h>
 #include <aws/monitoring/model/DeleteInsightRulesRequest.h>
+#include <aws/monitoring/model/DeleteMetricDataQueryDefinitionRequest.h>
 #include <aws/monitoring/model/DeleteMetricStreamRequest.h>
+#include <aws/monitoring/model/DeleteResourceMetricsConfigurationRequest.h>
 #include <aws/monitoring/model/DescribeAlarmContributorsRequest.h>
 #include <aws/monitoring/model/DescribeAlarmHistoryRequest.h>
 #include <aws/monitoring/model/DescribeAlarmsForMetricRequest.h>
@@ -42,14 +45,17 @@
 #include <aws/monitoring/model/GetDashboardRequest.h>
 #include <aws/monitoring/model/GetDatasetRequest.h>
 #include <aws/monitoring/model/GetInsightRuleReportRequest.h>
+#include <aws/monitoring/model/GetMetricDataQueryDefinitionRequest.h>
 #include <aws/monitoring/model/GetMetricDataRequest.h>
 #include <aws/monitoring/model/GetMetricStatisticsRequest.h>
 #include <aws/monitoring/model/GetMetricStreamRequest.h>
 #include <aws/monitoring/model/GetMetricWidgetImageRequest.h>
 #include <aws/monitoring/model/GetOTelEnrichmentRequest.h>
+#include <aws/monitoring/model/GetResourceMetricsConfigurationRequest.h>
 #include <aws/monitoring/model/ListAlarmMuteRulesRequest.h>
 #include <aws/monitoring/model/ListDashboardsRequest.h>
 #include <aws/monitoring/model/ListManagedInsightRulesRequest.h>
+#include <aws/monitoring/model/ListMetricDataQueryDefinitionsRequest.h>
 #include <aws/monitoring/model/ListMetricStreamsRequest.h>
 #include <aws/monitoring/model/ListMetricsRequest.h>
 #include <aws/monitoring/model/ListTagsForResourceRequest.h>
@@ -61,6 +67,7 @@
 #include <aws/monitoring/model/PutLogAlarmRequest.h>
 #include <aws/monitoring/model/PutManagedInsightRulesRequest.h>
 #include <aws/monitoring/model/PutMetricAlarmRequest.h>
+#include <aws/monitoring/model/PutMetricDataQueryDefinitionRequest.h>
 #include <aws/monitoring/model/PutMetricDataRequest.h>
 #include <aws/monitoring/model/PutMetricStreamRequest.h>
 #include <aws/monitoring/model/SetAlarmStateRequest.h>
@@ -70,6 +77,8 @@
 #include <aws/monitoring/model/StopOTelEnrichmentRequest.h>
 #include <aws/monitoring/model/TagResourceRequest.h>
 #include <aws/monitoring/model/UntagResourceRequest.h>
+#include <aws/monitoring/model/UpdateOTelEnrichmentRequest.h>
+#include <aws/monitoring/model/UpdateResourceMetricsConfigurationRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
 using namespace Aws;
@@ -205,7 +214,8 @@ CloudWatchClient::InvokeOperationOutcome CloudWatchClient::InvokeServiceOperatio
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -220,7 +230,7 @@ CloudWatchClient::InvokeOperationOutcome CloudWatchClient::InvokeServiceOperatio
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -228,6 +238,13 @@ AssociateDatasetKmsKeyOutcome CloudWatchClient::AssociateDatasetKmsKey(const Ass
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? AssociateDatasetKmsKeyOutcome(result.GetResultWithOwnership())
                             : AssociateDatasetKmsKeyOutcome(std::move(result.GetError()));
+}
+
+CreateResourceMetricsConfigurationOutcome CloudWatchClient::CreateResourceMetricsConfiguration(
+    const CreateResourceMetricsConfigurationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateResourceMetricsConfigurationOutcome(result.GetResultWithOwnership())
+                            : CreateResourceMetricsConfigurationOutcome(std::move(result.GetError()));
 }
 
 DeleteAlarmMuteRuleOutcome CloudWatchClient::DeleteAlarmMuteRule(const DeleteAlarmMuteRuleRequest& request) const {
@@ -259,10 +276,24 @@ DeleteInsightRulesOutcome CloudWatchClient::DeleteInsightRules(const DeleteInsig
                             : DeleteInsightRulesOutcome(std::move(result.GetError()));
 }
 
+DeleteMetricDataQueryDefinitionOutcome CloudWatchClient::DeleteMetricDataQueryDefinition(
+    const DeleteMetricDataQueryDefinitionRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteMetricDataQueryDefinitionOutcome(result.GetResultWithOwnership())
+                            : DeleteMetricDataQueryDefinitionOutcome(std::move(result.GetError()));
+}
+
 DeleteMetricStreamOutcome CloudWatchClient::DeleteMetricStream(const DeleteMetricStreamRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? DeleteMetricStreamOutcome(result.GetResultWithOwnership())
                             : DeleteMetricStreamOutcome(std::move(result.GetError()));
+}
+
+DeleteResourceMetricsConfigurationOutcome CloudWatchClient::DeleteResourceMetricsConfiguration(
+    const DeleteResourceMetricsConfigurationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteResourceMetricsConfigurationOutcome(result.GetResultWithOwnership())
+                            : DeleteResourceMetricsConfigurationOutcome(std::move(result.GetError()));
 }
 
 DescribeAlarmContributorsOutcome CloudWatchClient::DescribeAlarmContributors(const DescribeAlarmContributorsRequest& request) const {
@@ -357,6 +388,13 @@ GetMetricDataOutcome CloudWatchClient::GetMetricData(const GetMetricDataRequest&
   return result.IsSuccess() ? GetMetricDataOutcome(result.GetResultWithOwnership()) : GetMetricDataOutcome(std::move(result.GetError()));
 }
 
+GetMetricDataQueryDefinitionOutcome CloudWatchClient::GetMetricDataQueryDefinition(
+    const GetMetricDataQueryDefinitionRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetMetricDataQueryDefinitionOutcome(result.GetResultWithOwnership())
+                            : GetMetricDataQueryDefinitionOutcome(std::move(result.GetError()));
+}
+
 GetMetricStatisticsOutcome CloudWatchClient::GetMetricStatistics(const GetMetricStatisticsRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetMetricStatisticsOutcome(result.GetResultWithOwnership())
@@ -381,6 +419,13 @@ GetOTelEnrichmentOutcome CloudWatchClient::GetOTelEnrichment(const GetOTelEnrich
                             : GetOTelEnrichmentOutcome(std::move(result.GetError()));
 }
 
+GetResourceMetricsConfigurationOutcome CloudWatchClient::GetResourceMetricsConfiguration(
+    const GetResourceMetricsConfigurationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetResourceMetricsConfigurationOutcome(result.GetResultWithOwnership())
+                            : GetResourceMetricsConfigurationOutcome(std::move(result.GetError()));
+}
+
 ListAlarmMuteRulesOutcome CloudWatchClient::ListAlarmMuteRules(const ListAlarmMuteRulesRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListAlarmMuteRulesOutcome(result.GetResultWithOwnership())
@@ -396,6 +441,13 @@ ListManagedInsightRulesOutcome CloudWatchClient::ListManagedInsightRules(const L
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListManagedInsightRulesOutcome(result.GetResultWithOwnership())
                             : ListManagedInsightRulesOutcome(std::move(result.GetError()));
+}
+
+ListMetricDataQueryDefinitionsOutcome CloudWatchClient::ListMetricDataQueryDefinitions(
+    const ListMetricDataQueryDefinitionsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListMetricDataQueryDefinitionsOutcome(result.GetResultWithOwnership())
+                            : ListMetricDataQueryDefinitionsOutcome(std::move(result.GetError()));
 }
 
 ListMetricStreamsOutcome CloudWatchClient::ListMetricStreams(const ListMetricStreamsRequest& request) const {
@@ -464,6 +516,13 @@ PutMetricDataOutcome CloudWatchClient::PutMetricData(const PutMetricDataRequest&
   return result.IsSuccess() ? PutMetricDataOutcome(result.GetResultWithOwnership()) : PutMetricDataOutcome(std::move(result.GetError()));
 }
 
+PutMetricDataQueryDefinitionOutcome CloudWatchClient::PutMetricDataQueryDefinition(
+    const PutMetricDataQueryDefinitionRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? PutMetricDataQueryDefinitionOutcome(result.GetResultWithOwnership())
+                            : PutMetricDataQueryDefinitionOutcome(std::move(result.GetError()));
+}
+
 PutMetricStreamOutcome CloudWatchClient::PutMetricStream(const PutMetricStreamRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? PutMetricStreamOutcome(result.GetResultWithOwnership())
@@ -507,4 +566,17 @@ TagResourceOutcome CloudWatchClient::TagResource(const TagResourceRequest& reque
 UntagResourceOutcome CloudWatchClient::UntagResource(const UntagResourceRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? UntagResourceOutcome(result.GetResultWithOwnership()) : UntagResourceOutcome(std::move(result.GetError()));
+}
+
+UpdateOTelEnrichmentOutcome CloudWatchClient::UpdateOTelEnrichment(const UpdateOTelEnrichmentRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateOTelEnrichmentOutcome(result.GetResultWithOwnership())
+                            : UpdateOTelEnrichmentOutcome(std::move(result.GetError()));
+}
+
+UpdateResourceMetricsConfigurationOutcome CloudWatchClient::UpdateResourceMetricsConfiguration(
+    const UpdateResourceMetricsConfigurationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateResourceMetricsConfigurationOutcome(result.GetResultWithOwnership())
+                            : UpdateResourceMetricsConfigurationOutcome(std::move(result.GetError()));
 }

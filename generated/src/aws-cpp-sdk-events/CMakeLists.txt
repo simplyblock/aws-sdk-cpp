@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-events "C++ SDK for the AWS events service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-events "C++ SDK for Amazon CloudWatch Events" aws-cpp-sdk-core)
 
 file(GLOB AWS_EVENTS_HEADERS
     "include/aws/events/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_EVENTS_HEADERS
 
 file(GLOB AWS_EVENTS_MODEL_HEADERS
     "include/aws/events/model/*.h"
+)
+
+file(GLOB AWS_EVENTS_INTERNAL_HEADERS
+    "include/aws/events/internal/*.h"
 )
 
 file(GLOB AWS_EVENTS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_EVENTS_MODEL_SOURCE
 
 file(GLOB EVENTS_UNIFIED_HEADERS
     ${AWS_EVENTS_HEADERS}
+    ${AWS_EVENTS_INTERNAL_HEADERS}
     ${AWS_EVENTS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\events" FILES ${AWS_EVENTS_HEADERS})
+        source_group("Header Files\\aws\\events\\internal" FILES ${AWS_EVENTS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\events\\model" FILES ${AWS_EVENTS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_EVENTS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_EVENTS_MODEL_SOURCE})

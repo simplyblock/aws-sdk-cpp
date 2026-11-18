@@ -232,29 +232,58 @@ class DescribeImagesRequest : public EC2Request {
    * <code>gp3</code> | <code>sc1 </code>| <code>st1</code> |
    * <code>standard</code>).</p> </li> <li> <p>
    * <code>block-device-mapping.encrypted</code> - A Boolean that indicates whether
-   * the Amazon EBS volume is encrypted.</p> </li> <li> <p>
-   * <code>creation-date</code> - The time when the image was created, in the ISO
-   * 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), for example,
-   * <code>2021-09-29T11:04:43.305Z</code>. You can use a wildcard (<code>*</code>),
-   * for example, <code>2021-09-29T*</code>, which matches an entire day.</p> </li>
-   * <li> <p> <code>description</code> - The description of the image (provided
-   * during image creation).</p> </li> <li> <p> <code>ena-support</code> - A Boolean
-   * that indicates whether enhanced networking with ENA is enabled.</p> </li> <li>
-   * <p> <code>free-tier-eligible</code> - A Boolean that indicates whether this
-   * image can be used under the Amazon Web Services Free Tier (<code>true</code> |
-   * <code>false</code>).</p> </li> <li> <p> <code>hypervisor</code> - The hypervisor
-   * type (<code>ovm</code> | <code>xen</code>).</p> </li> <li> <p>
-   * <code>image-allowed</code> - A Boolean that indicates whether the image meets
-   * the criteria specified for Allowed AMIs.</p> </li> <li> <p>
-   * <code>image-id</code> - The ID of the image.</p> </li> <li> <p>
+   * the Amazon EBS volume is encrypted.</p> </li> <li> <p> <code>boot-mode</code> –
+   * The boot mode of the image (<code>legacy-bios</code> | <code>uefi</code> |
+   * <code>uefi-preferred</code>).</p> </li> <li> <p> <code>creation-date</code> -
+   * The time when the image was created, in the ISO 8601 format in the UTC time zone
+   * (YYYY-MM-DDThh:mm:ss.sssZ), for example, <code>2021-09-29T11:04:43.305Z</code>.
+   * You can use a wildcard (<code>*</code>), for example, <code>2021-09-29T*</code>,
+   * which matches an entire day.</p> </li> <li> <p> <code>description</code> - The
+   * description of the image (provided during image creation).</p> </li> <li> <p>
+   * <code>ena-support</code> - A Boolean that indicates whether enhanced networking
+   * with ENA is enabled.</p> </li> <li> <p> <code>free-tier-eligible</code> - A
+   * Boolean that indicates whether this image can be used under the Amazon Web
+   * Services Free Tier (<code>true</code> | <code>false</code>).</p> </li> <li> <p>
+   * <code>hypervisor</code> - The hypervisor type (<code>ovm</code> |
+   * <code>xen</code>).</p> </li> <li> <p> <code>image-allowed</code> - A Boolean
+   * that indicates whether the image meets the criteria specified for Allowed
+   * AMIs.</p> </li> <li> <p> <code>image-id</code> - The ID of the image.</p> </li>
+   * <li> <p> <code>image-watermark.source-image-creation-time</code> - The creation
+   * date of the source AMI, in the ISO 8601 format in the UTC time zone (<code>
+   * <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>.<i>ssssss</i>+<i>HH</i>:<i>MM</i>
+   * </code>). You can use a wildcard (<code>*</code>), for example,
+   * <code>2021-09-29T*</code>, which matches an entire day.</p> </li> <li> <p>
+   * <code>image-watermark.source-image-id</code> - The ID of the AMI to which the
+   * watermark was originally attached.</p> </li> <li> <p>
+   * <code>image-watermark.source-image-region</code> - The Region where the
+   * watermark was originally attached.</p> </li> <li> <p>
+   * <code>image-watermark.watermark-creation-time</code> - The date and time the
+   * watermark was attached to the AMI, in the ISO 8601 format in the UTC time zone
+   * (<code>
+   * <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>.<i>ssssss</i>+<i>HH</i>:<i>MM</i>
+   * </code>). You can use a wildcard (<code>*</code>), for example,
+   * <code>2021-09-29T*</code>, which matches an entire day.</p> </li> <li> <p>
+   * <code>image-watermark.watermark-key</code> - The watermark identifier, in
+   * <code>accountId:watermarkName</code> format (for example,
+   * <code>123456789012:approvedAmi</code>).</p> </li> <li> <p>
    * <code>image-type</code> - The image type (<code>machine</code> |
    * <code>kernel</code> | <code>ramdisk</code>).</p> </li> <li> <p>
-   * <code>is-public</code> - A Boolean that indicates whether the image is
-   * public.</p> </li> <li> <p> <code>kernel-id</code> - The kernel ID.</p> </li>
-   * <li> <p> <code>manifest-location</code> - The location of the image
-   * manifest.</p> </li> <li> <p> <code>name</code> - The name of the AMI (provided
-   * during image creation).</p> </li> <li> <p> <code>owner-alias</code> - The owner
-   * alias (<code>amazon</code> | <code>aws-backup-vault</code> |
+   * <code>instance-type-specification.supported-instance-type</code> – The instance
+   * types that are compatible with the AMI, as specified by the AMI owner. Values
+   * can be individual instance types (for example, <code>t3.micro</code>) or
+   * wildcard patterns that match multiple instance types (for example,
+   * <code>t3.*</code>).</p> </li> <li> <p>
+   * <code>instance-type-specification.unsupported-instance-type</code> – The
+   * instance types that are not compatible with the AMI, as specified by the AMI
+   * owner. Values can be individual instance types (for example,
+   * <code>t3.micro</code>) or wildcard patterns that match multiple instance types
+   * (for example, <code>t3.*</code>).</p> </li> <li> <p> <code>is-public</code> - A
+   * Boolean that indicates whether the image is public.</p> </li> <li> <p>
+   * <code>kernel-id</code> - The kernel ID.</p> </li> <li> <p>
+   * <code>manifest-location</code> - The location of the image manifest.</p> </li>
+   * <li> <p> <code>name</code> - The name of the AMI (provided during image
+   * creation).</p> </li> <li> <p> <code>owner-alias</code> - The owner alias
+   * (<code>amazon</code> | <code>aws-backup-vault</code> |
    * <code>aws-marketplace</code>). The valid aliases are defined in an
    * Amazon-maintained list. This is not the Amazon Web Services account alias that
    * can be set using the IAM console. We recommend that you use the <b>Owner</b>
@@ -265,16 +294,52 @@ class DescribeImagesRequest : public EC2Request {
    * supported value is <code>windows</code>.</p> </li> <li> <p>
    * <code>product-code</code> - The product code.</p> </li> <li> <p>
    * <code>product-code.type</code> - The type of the product code
-   * (<code>marketplace</code>).</p> </li> <li> <p> <code>ramdisk-id</code> - The RAM
-   * disk ID.</p> </li> <li> <p> <code>root-device-name</code> - The device name of
-   * the root device volume (for example, <code>/dev/sda1</code>).</p> </li> <li> <p>
+   * (<code>marketplace</code>).</p> </li> <li> <p>
+   * <code>public-ssm-parameter-name</code> - The name of a public Systems Manager
+   * parameter associated with the AMI. The parameter must be in a trusted Amazon Web
+   * Services namespace under <code>aws/service/</code>. Returns all AMIs that have
+   * ever been associated with the parameter, including previous versions.</p> </li>
+   * <li> <p> <code>ramdisk-id</code> - The RAM disk ID.</p> </li> <li> <p>
+   * <code>root-device-name</code> - The device name of the root device volume (for
+   * example, <code>/dev/sda1</code>).</p> </li> <li> <p>
    * <code>root-device-type</code> - The type of the root device volume
    * (<code>ebs</code> | <code>instance-store</code>).</p> </li> <li> <p>
-   * <code>source-image-id</code> - The ID of the source AMI from which the AMI was
-   * created.</p> </li> <li> <p> <code>source-image-region</code> - The Region of the
-   * source AMI.</p> </li> <li> <p> <code>source-instance-id</code> - The ID of the
-   * instance that the AMI was created from if the AMI was created using CreateImage.
-   * This filter is applicable only if the AMI was created using <a
+   * <code>scan-result.critical-fix-available-since</code> - The earliest date and
+   * time, in the ISO 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), at
+   * which Amazon Inspector reported a fix as available for a <code>critical</code>
+   * severity finding on the AMI.</p> </li> <li> <p>
+   * <code>scan-result.finding-scan-date</code> - The date and time, in the ISO 8601
+   * format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), of the most recent
+   * Amazon Inspector scan of the AMI.</p> </li> <li> <p>
+   * <code>scan-result.high-fix-available-since</code> - The earliest date and time,
+   * in the ISO 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), at which
+   * Amazon Inspector reported a fix as available for a <code>high</code> severity
+   * finding on the AMI.</p> </li> <li> <p>
+   * <code>scan-result.highest-finding-severity-label</code> - The highest severity
+   * among the AMI's Amazon Inspector findings, whether or not a fix is available.
+   * The valid values are the following Amazon Inspector severity levels:</p> <ul>
+   * <li> <p> <code>informational</code> - CVSS score of 0.</p> </li> <li> <p>
+   * <code>low</code> - CVSS score of 0.1 to 3.9.</p> </li> <li> <p>
+   * <code>medium</code> - CVSS score of 4.0 to 6.9.</p> </li> <li> <p>
+   * <code>high</code> - CVSS score of 7.0 to 8.9.</p> </li> <li> <p>
+   * <code>critical</code> - CVSS score of 9.0 to 10.0.</p> </li> </ul> </li> <li>
+   * <p> <code>scan-result.informational-fix-available-since</code> - The earliest
+   * date and time, in the ISO 8601 format in the UTC time zone
+   * (YYYY-MM-DDThh:mm:ss.sssZ), at which Amazon Inspector reported a fix as
+   * available for an <code>informational</code> severity finding on the AMI.</p>
+   * </li> <li> <p> <code>scan-result.low-fix-available-since</code> - The earliest
+   * date and time, in the ISO 8601 format in the UTC time zone
+   * (YYYY-MM-DDThh:mm:ss.sssZ), at which Amazon Inspector reported a fix as
+   * available for a <code>low</code> severity finding on the AMI.</p> </li> <li> <p>
+   * <code>scan-result.medium-fix-available-since</code> - The earliest date and
+   * time, in the ISO 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), at
+   * which Amazon Inspector reported a fix as available for a <code>medium</code>
+   * severity finding on the AMI.</p> </li> <li> <p> <code>source-image-id</code> -
+   * The ID of the source AMI from which the AMI was created.</p> </li> <li> <p>
+   * <code>source-image-region</code> - The Region of the source AMI.</p> </li> <li>
+   * <p> <code>source-instance-id</code> - The ID of the instance that the AMI was
+   * created from if the AMI was created using CreateImage. This filter is applicable
+   * only if the AMI was created using <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html">CreateImage</a>.</p>
    * </li> <li> <p> <code>state</code> - The state of the image
    * (<code>available</code> | <code>pending</code> | <code>failed</code>).</p> </li>

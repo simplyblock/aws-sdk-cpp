@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/kms/KMSEndpointRules.h>
 #include <aws/kms/KMS_EXPORTS.h>
 
 namespace Aws {
 namespace KMS {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using KMSClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using KMSBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using KMSEndpointProviderBase = EndpointProviderBase<KMSClientConfiguration, KMSBuiltInParameters, KMSClientContextParameters>;
 
-using KMSDefaultEpProviderBase = DefaultEndpointProvider<KMSClientConfiguration, KMSBuiltInParameters, KMSClientContextParameters>;
+using KMSDefaultEpProviderBase = BDDEndpointProvider<KMSClientConfiguration, KMSBuiltInParameters, KMSClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_KMS_API KMSEndpointProvider : public KMSDefaultEpProviderBase {
  public:
   using KMSResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  KMSEndpointProvider() : KMSDefaultEpProviderBase(Aws::KMS::KMSEndpointRules::GetRulesBlob(), Aws::KMS::KMSEndpointRules::RulesBlobSize) {}
+  KMSEndpointProvider();
 
   ~KMSEndpointProvider() {}
 };

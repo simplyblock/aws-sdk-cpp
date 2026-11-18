@@ -17,25 +17,25 @@ AWS_PROTOCOL_TEST(TimestampFormatHeaders, TimestampFormatHeaders) {
   SetMockResponse();
 
   TimestampFormatHeadersRequest request;
-  request.SetMemberEpochSeconds(Aws::Utils::DateTime(static_cast<int64_t>(1576540098)));
-  request.SetMemberHttpDate(Aws::Utils::DateTime(static_cast<int64_t>(1576540098)));
-  request.SetMemberDateTime(Aws::Utils::DateTime(static_cast<int64_t>(1576540098)));
-  request.SetDefaultFormat(Aws::Utils::DateTime(static_cast<int64_t>(1576540098)));
-  request.SetTargetEpochSeconds(Aws::Utils::DateTime(static_cast<int64_t>(1576540098)));
-  request.SetTargetHttpDate(Aws::Utils::DateTime(static_cast<int64_t>(1576540098)));
-  request.SetTargetDateTime(Aws::Utils::DateTime(static_cast<int64_t>(1576540098)));
+  request.SetMemberEpochSeconds(Aws::Utils::DateTime(static_cast<double>(1576540098)));
+  request.SetMemberHttpDate(Aws::Utils::DateTime(static_cast<double>(1576540098)));
+  request.SetMemberDateTime(Aws::Utils::DateTime(static_cast<double>(1576540098)));
+  request.SetDefaultFormat(Aws::Utils::DateTime(static_cast<double>(1576540098)));
+  request.SetTargetEpochSeconds(Aws::Utils::DateTime(static_cast<double>(1576540098)));
+  request.SetTargetHttpDate(Aws::Utils::DateTime(static_cast<double>(1576540098)));
+  request.SetTargetDateTime(Aws::Utils::DateTime(static_cast<double>(1576540098)));
 
   auto outcome = client.TimestampFormatHeaders(request);
   ExpectedRequest expectedRq;
   expectedRq.method = "POST";
   expectedRq.uri = "/TimestampFormatHeaders";
-  expectedRq.headers = {{"X-defaultFormat", R"(Mon, 16 Dec 2019 23:48:18 GMT)"},
-                        {"X-memberDateTime", R"(2019-12-16T23:48:18Z)"},
-                        {"X-memberEpochSeconds", R"(1576540098)"},
+  expectedRq.headers = {{"X-memberDateTime", R"(2019-12-16T23:48:18Z)"},
+                        {"X-targetHttpDate", R"(Mon, 16 Dec 2019 23:48:18 GMT)"},
                         {"X-memberHttpDate", R"(Mon, 16 Dec 2019 23:48:18 GMT)"},
                         {"X-targetDateTime", R"(2019-12-16T23:48:18Z)"},
                         {"X-targetEpochSeconds", R"(1576540098)"},
-                        {"X-targetHttpDate", R"(Mon, 16 Dec 2019 23:48:18 GMT)"}};
-  ValidateRequestSent(expectedRq);
+                        {"X-memberEpochSeconds", R"(1576540098)"},
+                        {"X-defaultFormat", R"(Mon, 16 Dec 2019 23:48:18 GMT)"}};
+  ValidateRequestSent(expectedRq, ValidateXmlBody);
   AWS_ASSERT_SUCCESS(outcome) << outcome.GetError();
 }

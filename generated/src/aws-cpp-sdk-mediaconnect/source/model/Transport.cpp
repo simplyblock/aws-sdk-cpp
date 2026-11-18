@@ -90,6 +90,18 @@ Transport& Transport::operator=(JsonView jsonValue) {
         NdiOutputTimecodeSourceMapper::GetNdiOutputTimecodeSourceForName(jsonValue.GetString("ndiOutputTimecodeSource"));
     m_ndiOutputTimecodeSourceHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("ndiAudioReferenceLevel")) {
+    m_ndiAudioReferenceLevel = jsonValue.GetInteger("ndiAudioReferenceLevel");
+    m_ndiAudioReferenceLevelHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("rtmpPushSourceSettings")) {
+    m_rtmpPushSourceSettings = jsonValue.GetObject("rtmpPushSourceSettings");
+    m_rtmpPushSourceSettingsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("rtmpPushOutputSettings")) {
+    m_rtmpPushOutputSettings = jsonValue.GetObject("rtmpPushOutputSettings");
+    m_rtmpPushOutputSettingsHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -167,6 +179,18 @@ JsonValue Transport::Jsonize() const {
   if (m_ndiOutputTimecodeSourceHasBeenSet) {
     payload.WithString("ndiOutputTimecodeSource",
                        NdiOutputTimecodeSourceMapper::GetNameForNdiOutputTimecodeSource(m_ndiOutputTimecodeSource));
+  }
+
+  if (m_ndiAudioReferenceLevelHasBeenSet) {
+    payload.WithInteger("ndiAudioReferenceLevel", m_ndiAudioReferenceLevel);
+  }
+
+  if (m_rtmpPushSourceSettingsHasBeenSet) {
+    payload.WithObject("rtmpPushSourceSettings", m_rtmpPushSourceSettings.Jsonize());
+  }
+
+  if (m_rtmpPushOutputSettingsHasBeenSet) {
+    payload.WithObject("rtmpPushOutputSettings", m_rtmpPushOutputSettings.Jsonize());
   }
 
   return payload;

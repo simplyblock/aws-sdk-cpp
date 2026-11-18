@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-secretsmanager "C++ SDK for the AWS secretsmanager service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-secretsmanager "C++ SDK for AWS Secrets Manager" aws-cpp-sdk-core)
 
 file(GLOB AWS_SECRETSMANAGER_HEADERS
     "include/aws/secretsmanager/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SECRETSMANAGER_HEADERS
 
 file(GLOB AWS_SECRETSMANAGER_MODEL_HEADERS
     "include/aws/secretsmanager/model/*.h"
+)
+
+file(GLOB AWS_SECRETSMANAGER_INTERNAL_HEADERS
+    "include/aws/secretsmanager/internal/*.h"
 )
 
 file(GLOB AWS_SECRETSMANAGER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SECRETSMANAGER_MODEL_SOURCE
 
 file(GLOB SECRETSMANAGER_UNIFIED_HEADERS
     ${AWS_SECRETSMANAGER_HEADERS}
+    ${AWS_SECRETSMANAGER_INTERNAL_HEADERS}
     ${AWS_SECRETSMANAGER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\secretsmanager" FILES ${AWS_SECRETSMANAGER_HEADERS})
+        source_group("Header Files\\aws\\secretsmanager\\internal" FILES ${AWS_SECRETSMANAGER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\secretsmanager\\model" FILES ${AWS_SECRETSMANAGER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SECRETSMANAGER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SECRETSMANAGER_MODEL_SOURCE})

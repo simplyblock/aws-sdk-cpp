@@ -12,6 +12,7 @@
 #include <aws/resiliencehubv2/Resiliencehubv2_EXPORTS.h>
 #include <aws/resiliencehubv2/model/AssociatedSystem.h>
 #include <aws/resiliencehubv2/model/DependencyDiscoveryInput.h>
+#include <aws/resiliencehubv2/model/DevOpsAgentConfiguration.h>
 #include <aws/resiliencehubv2/model/PermissionModel.h>
 #include <aws/resiliencehubv2/model/ServiceReportConfiguration.h>
 
@@ -109,7 +110,7 @@ class CreateServiceRequest : public Resiliencehubv2Request {
 
   ///@{
   /**
-   * <p>The AWS Regions where the service operates.</p>
+   * <p>The Regions where the service operates.</p>
    */
   inline const Aws::Vector<Aws::String>& GetRegions() const { return m_regions; }
   inline bool RegionsHasBeenSet() const { return m_regionsHasBeenSet; }
@@ -196,6 +197,26 @@ class CreateServiceRequest : public Resiliencehubv2Request {
   ///@}
 
   ///@{
+  /**
+   * <p>The optional DevOps Agent integration configuration to apply to the new
+   * service. If you omit this field, the new service has no DevOps Agent
+   * integration.</p>
+   */
+  inline const DevOpsAgentConfiguration& GetDevOpsAgentConfiguration() const { return m_devOpsAgentConfiguration; }
+  inline bool DevOpsAgentConfigurationHasBeenSet() const { return m_devOpsAgentConfigurationHasBeenSet; }
+  template <typename DevOpsAgentConfigurationT = DevOpsAgentConfiguration>
+  void SetDevOpsAgentConfiguration(DevOpsAgentConfigurationT&& value) {
+    m_devOpsAgentConfigurationHasBeenSet = true;
+    m_devOpsAgentConfiguration = std::forward<DevOpsAgentConfigurationT>(value);
+  }
+  template <typename DevOpsAgentConfigurationT = DevOpsAgentConfiguration>
+  CreateServiceRequest& WithDevOpsAgentConfiguration(DevOpsAgentConfigurationT&& value) {
+    SetDevOpsAgentConfiguration(std::forward<DevOpsAgentConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
   inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
@@ -251,6 +272,8 @@ class CreateServiceRequest : public Resiliencehubv2Request {
 
   Aws::String m_kmsKeyId;
 
+  DevOpsAgentConfiguration m_devOpsAgentConfiguration;
+
   Aws::Map<Aws::String, Aws::String> m_tags;
 
   Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
@@ -263,6 +286,7 @@ class CreateServiceRequest : public Resiliencehubv2Request {
   bool m_dependencyDiscoveryHasBeenSet = false;
   bool m_reportConfigurationHasBeenSet = false;
   bool m_kmsKeyIdHasBeenSet = false;
+  bool m_devOpsAgentConfigurationHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
   bool m_clientTokenHasBeenSet = true;
 };

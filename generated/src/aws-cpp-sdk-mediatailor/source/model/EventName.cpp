@@ -17,6 +17,9 @@ namespace EventNameMapper {
 
 static const int PRE_SESSION_INITIALIZATION_HASH = HashingUtils::HashString("PRE_SESSION_INITIALIZATION");
 static const int PRE_ADS_REQUEST_HASH = HashingUtils::HashString("PRE_ADS_REQUEST");
+static const int POST_ADS_RESPONSE_HASH = HashingUtils::HashString("POST_ADS_RESPONSE");
+static const int PRE_MANIFEST_INSERTION_HASH = HashingUtils::HashString("PRE_MANIFEST_INSERTION");
+static const int POST_ORIGIN_RESPONSE_HASH = HashingUtils::HashString("POST_ORIGIN_RESPONSE");
 
 EventName GetEventNameForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -24,6 +27,12 @@ EventName GetEventNameForName(const Aws::String& name) {
     return EventName::PRE_SESSION_INITIALIZATION;
   } else if (hashCode == PRE_ADS_REQUEST_HASH) {
     return EventName::PRE_ADS_REQUEST;
+  } else if (hashCode == POST_ADS_RESPONSE_HASH) {
+    return EventName::POST_ADS_RESPONSE;
+  } else if (hashCode == PRE_MANIFEST_INSERTION_HASH) {
+    return EventName::PRE_MANIFEST_INSERTION;
+  } else if (hashCode == POST_ORIGIN_RESPONSE_HASH) {
+    return EventName::POST_ORIGIN_RESPONSE;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -42,6 +51,12 @@ Aws::String GetNameForEventName(EventName enumValue) {
       return "PRE_SESSION_INITIALIZATION";
     case EventName::PRE_ADS_REQUEST:
       return "PRE_ADS_REQUEST";
+    case EventName::POST_ADS_RESPONSE:
+      return "POST_ADS_RESPONSE";
+    case EventName::PRE_MANIFEST_INSERTION:
+      return "PRE_MANIFEST_INSERTION";
+    case EventName::POST_ORIGIN_RESPONSE:
+      return "POST_ORIGIN_RESPONSE";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

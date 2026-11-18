@@ -25,6 +25,7 @@
 #include <aws/s3tables/model/CreateTableResult.h>
 #include <aws/s3tables/model/GetNamespaceResult.h>
 #include <aws/s3tables/model/GetTableBucketEncryptionResult.h>
+#include <aws/s3tables/model/GetTableBucketLoggingResult.h>
 #include <aws/s3tables/model/GetTableBucketMaintenanceConfigurationResult.h>
 #include <aws/s3tables/model/GetTableBucketMetricsConfigurationResult.h>
 #include <aws/s3tables/model/GetTableBucketPolicyResult.h>
@@ -35,6 +36,8 @@
 #include <aws/s3tables/model/GetTableMaintenanceConfigurationResult.h>
 #include <aws/s3tables/model/GetTableMaintenanceJobStatusResult.h>
 #include <aws/s3tables/model/GetTableMetadataLocationResult.h>
+#include <aws/s3tables/model/GetTableMigrationRequest.h>
+#include <aws/s3tables/model/GetTableMigrationResult.h>
 #include <aws/s3tables/model/GetTablePolicyResult.h>
 #include <aws/s3tables/model/GetTableRecordExpirationConfigurationResult.h>
 #include <aws/s3tables/model/GetTableRecordExpirationJobStatusResult.h>
@@ -46,13 +49,18 @@
 #include <aws/s3tables/model/ListNamespacesResult.h>
 #include <aws/s3tables/model/ListTableBucketsRequest.h>
 #include <aws/s3tables/model/ListTableBucketsResult.h>
+#include <aws/s3tables/model/ListTableMigrationsRequest.h>
+#include <aws/s3tables/model/ListTableMigrationsResult.h>
 #include <aws/s3tables/model/ListTablesResult.h>
 #include <aws/s3tables/model/ListTagsForResourceResult.h>
 #include <aws/s3tables/model/PutTableBucketReplicationResult.h>
 #include <aws/s3tables/model/PutTableReplicationResult.h>
+#include <aws/s3tables/model/StartTableMigrationResult.h>
+#include <aws/s3tables/model/SyncTableMigrationResult.h>
 #include <aws/s3tables/model/TagResourceResult.h>
 #include <aws/s3tables/model/UntagResourceResult.h>
 #include <aws/s3tables/model/UpdateTableMetadataLocationResult.h>
+#include <aws/s3tables/model/UpdateTableMigrationResult.h>
 /* End of service model headers required in S3TablesClient header */
 
 namespace Aws {
@@ -86,6 +94,7 @@ using S3TablesEndpointProvider = Aws::S3Tables::Endpoint::S3TablesEndpointProvid
 
 namespace Model {
 /* Service model forward declarations required in S3TablesClient header */
+class CompleteTableMigrationRequest;
 class CreateNamespaceRequest;
 class CreateTableRequest;
 class CreateTableBucketRequest;
@@ -102,6 +111,7 @@ class GetNamespaceRequest;
 class GetTableRequest;
 class GetTableBucketRequest;
 class GetTableBucketEncryptionRequest;
+class GetTableBucketLoggingRequest;
 class GetTableBucketMaintenanceConfigurationRequest;
 class GetTableBucketMetricsConfigurationRequest;
 class GetTableBucketPolicyRequest;
@@ -111,6 +121,7 @@ class GetTableEncryptionRequest;
 class GetTableMaintenanceConfigurationRequest;
 class GetTableMaintenanceJobStatusRequest;
 class GetTableMetadataLocationRequest;
+class GetTableMigrationRequest;
 class GetTablePolicyRequest;
 class GetTableRecordExpirationConfigurationRequest;
 class GetTableRecordExpirationJobStatusRequest;
@@ -119,9 +130,11 @@ class GetTableReplicationStatusRequest;
 class GetTableStorageClassRequest;
 class ListNamespacesRequest;
 class ListTableBucketsRequest;
+class ListTableMigrationsRequest;
 class ListTablesRequest;
 class ListTagsForResourceRequest;
 class PutTableBucketEncryptionRequest;
+class PutTableBucketLoggingRequest;
 class PutTableBucketMaintenanceConfigurationRequest;
 class PutTableBucketMetricsConfigurationRequest;
 class PutTableBucketPolicyRequest;
@@ -132,12 +145,16 @@ class PutTablePolicyRequest;
 class PutTableRecordExpirationConfigurationRequest;
 class PutTableReplicationRequest;
 class RenameTableRequest;
+class StartTableMigrationRequest;
+class SyncTableMigrationRequest;
 class TagResourceRequest;
 class UntagResourceRequest;
 class UpdateTableMetadataLocationRequest;
+class UpdateTableMigrationRequest;
 /* End of service model forward declarations required in S3TablesClient header */
 
 /* Service model Outcome class definitions */
+typedef Aws::Utils::Outcome<Aws::NoResult, S3TablesError> CompleteTableMigrationOutcome;
 typedef Aws::Utils::Outcome<CreateNamespaceResult, S3TablesError> CreateNamespaceOutcome;
 typedef Aws::Utils::Outcome<CreateTableResult, S3TablesError> CreateTableOutcome;
 typedef Aws::Utils::Outcome<CreateTableBucketResult, S3TablesError> CreateTableBucketOutcome;
@@ -154,6 +171,7 @@ typedef Aws::Utils::Outcome<GetNamespaceResult, S3TablesError> GetNamespaceOutco
 typedef Aws::Utils::Outcome<GetTableResult, S3TablesError> GetTableOutcome;
 typedef Aws::Utils::Outcome<GetTableBucketResult, S3TablesError> GetTableBucketOutcome;
 typedef Aws::Utils::Outcome<GetTableBucketEncryptionResult, S3TablesError> GetTableBucketEncryptionOutcome;
+typedef Aws::Utils::Outcome<GetTableBucketLoggingResult, S3TablesError> GetTableBucketLoggingOutcome;
 typedef Aws::Utils::Outcome<GetTableBucketMaintenanceConfigurationResult, S3TablesError> GetTableBucketMaintenanceConfigurationOutcome;
 typedef Aws::Utils::Outcome<GetTableBucketMetricsConfigurationResult, S3TablesError> GetTableBucketMetricsConfigurationOutcome;
 typedef Aws::Utils::Outcome<GetTableBucketPolicyResult, S3TablesError> GetTableBucketPolicyOutcome;
@@ -163,6 +181,7 @@ typedef Aws::Utils::Outcome<GetTableEncryptionResult, S3TablesError> GetTableEnc
 typedef Aws::Utils::Outcome<GetTableMaintenanceConfigurationResult, S3TablesError> GetTableMaintenanceConfigurationOutcome;
 typedef Aws::Utils::Outcome<GetTableMaintenanceJobStatusResult, S3TablesError> GetTableMaintenanceJobStatusOutcome;
 typedef Aws::Utils::Outcome<GetTableMetadataLocationResult, S3TablesError> GetTableMetadataLocationOutcome;
+typedef Aws::Utils::Outcome<GetTableMigrationResult, S3TablesError> GetTableMigrationOutcome;
 typedef Aws::Utils::Outcome<GetTablePolicyResult, S3TablesError> GetTablePolicyOutcome;
 typedef Aws::Utils::Outcome<GetTableRecordExpirationConfigurationResult, S3TablesError> GetTableRecordExpirationConfigurationOutcome;
 typedef Aws::Utils::Outcome<GetTableRecordExpirationJobStatusResult, S3TablesError> GetTableRecordExpirationJobStatusOutcome;
@@ -171,9 +190,11 @@ typedef Aws::Utils::Outcome<GetTableReplicationStatusResult, S3TablesError> GetT
 typedef Aws::Utils::Outcome<GetTableStorageClassResult, S3TablesError> GetTableStorageClassOutcome;
 typedef Aws::Utils::Outcome<ListNamespacesResult, S3TablesError> ListNamespacesOutcome;
 typedef Aws::Utils::Outcome<ListTableBucketsResult, S3TablesError> ListTableBucketsOutcome;
+typedef Aws::Utils::Outcome<ListTableMigrationsResult, S3TablesError> ListTableMigrationsOutcome;
 typedef Aws::Utils::Outcome<ListTablesResult, S3TablesError> ListTablesOutcome;
 typedef Aws::Utils::Outcome<ListTagsForResourceResult, S3TablesError> ListTagsForResourceOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, S3TablesError> PutTableBucketEncryptionOutcome;
+typedef Aws::Utils::Outcome<Aws::NoResult, S3TablesError> PutTableBucketLoggingOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, S3TablesError> PutTableBucketMaintenanceConfigurationOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, S3TablesError> PutTableBucketMetricsConfigurationOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, S3TablesError> PutTableBucketPolicyOutcome;
@@ -184,12 +205,16 @@ typedef Aws::Utils::Outcome<Aws::NoResult, S3TablesError> PutTablePolicyOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, S3TablesError> PutTableRecordExpirationConfigurationOutcome;
 typedef Aws::Utils::Outcome<PutTableReplicationResult, S3TablesError> PutTableReplicationOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, S3TablesError> RenameTableOutcome;
+typedef Aws::Utils::Outcome<StartTableMigrationResult, S3TablesError> StartTableMigrationOutcome;
+typedef Aws::Utils::Outcome<SyncTableMigrationResult, S3TablesError> SyncTableMigrationOutcome;
 typedef Aws::Utils::Outcome<TagResourceResult, S3TablesError> TagResourceOutcome;
 typedef Aws::Utils::Outcome<UntagResourceResult, S3TablesError> UntagResourceOutcome;
 typedef Aws::Utils::Outcome<UpdateTableMetadataLocationResult, S3TablesError> UpdateTableMetadataLocationOutcome;
+typedef Aws::Utils::Outcome<UpdateTableMigrationResult, S3TablesError> UpdateTableMigrationOutcome;
 /* End of service model Outcome class definitions */
 
 /* Service model Outcome callable definitions */
+typedef std::future<CompleteTableMigrationOutcome> CompleteTableMigrationOutcomeCallable;
 typedef std::future<CreateNamespaceOutcome> CreateNamespaceOutcomeCallable;
 typedef std::future<CreateTableOutcome> CreateTableOutcomeCallable;
 typedef std::future<CreateTableBucketOutcome> CreateTableBucketOutcomeCallable;
@@ -206,6 +231,7 @@ typedef std::future<GetNamespaceOutcome> GetNamespaceOutcomeCallable;
 typedef std::future<GetTableOutcome> GetTableOutcomeCallable;
 typedef std::future<GetTableBucketOutcome> GetTableBucketOutcomeCallable;
 typedef std::future<GetTableBucketEncryptionOutcome> GetTableBucketEncryptionOutcomeCallable;
+typedef std::future<GetTableBucketLoggingOutcome> GetTableBucketLoggingOutcomeCallable;
 typedef std::future<GetTableBucketMaintenanceConfigurationOutcome> GetTableBucketMaintenanceConfigurationOutcomeCallable;
 typedef std::future<GetTableBucketMetricsConfigurationOutcome> GetTableBucketMetricsConfigurationOutcomeCallable;
 typedef std::future<GetTableBucketPolicyOutcome> GetTableBucketPolicyOutcomeCallable;
@@ -215,6 +241,7 @@ typedef std::future<GetTableEncryptionOutcome> GetTableEncryptionOutcomeCallable
 typedef std::future<GetTableMaintenanceConfigurationOutcome> GetTableMaintenanceConfigurationOutcomeCallable;
 typedef std::future<GetTableMaintenanceJobStatusOutcome> GetTableMaintenanceJobStatusOutcomeCallable;
 typedef std::future<GetTableMetadataLocationOutcome> GetTableMetadataLocationOutcomeCallable;
+typedef std::future<GetTableMigrationOutcome> GetTableMigrationOutcomeCallable;
 typedef std::future<GetTablePolicyOutcome> GetTablePolicyOutcomeCallable;
 typedef std::future<GetTableRecordExpirationConfigurationOutcome> GetTableRecordExpirationConfigurationOutcomeCallable;
 typedef std::future<GetTableRecordExpirationJobStatusOutcome> GetTableRecordExpirationJobStatusOutcomeCallable;
@@ -223,9 +250,11 @@ typedef std::future<GetTableReplicationStatusOutcome> GetTableReplicationStatusO
 typedef std::future<GetTableStorageClassOutcome> GetTableStorageClassOutcomeCallable;
 typedef std::future<ListNamespacesOutcome> ListNamespacesOutcomeCallable;
 typedef std::future<ListTableBucketsOutcome> ListTableBucketsOutcomeCallable;
+typedef std::future<ListTableMigrationsOutcome> ListTableMigrationsOutcomeCallable;
 typedef std::future<ListTablesOutcome> ListTablesOutcomeCallable;
 typedef std::future<ListTagsForResourceOutcome> ListTagsForResourceOutcomeCallable;
 typedef std::future<PutTableBucketEncryptionOutcome> PutTableBucketEncryptionOutcomeCallable;
+typedef std::future<PutTableBucketLoggingOutcome> PutTableBucketLoggingOutcomeCallable;
 typedef std::future<PutTableBucketMaintenanceConfigurationOutcome> PutTableBucketMaintenanceConfigurationOutcomeCallable;
 typedef std::future<PutTableBucketMetricsConfigurationOutcome> PutTableBucketMetricsConfigurationOutcomeCallable;
 typedef std::future<PutTableBucketPolicyOutcome> PutTableBucketPolicyOutcomeCallable;
@@ -236,15 +265,21 @@ typedef std::future<PutTablePolicyOutcome> PutTablePolicyOutcomeCallable;
 typedef std::future<PutTableRecordExpirationConfigurationOutcome> PutTableRecordExpirationConfigurationOutcomeCallable;
 typedef std::future<PutTableReplicationOutcome> PutTableReplicationOutcomeCallable;
 typedef std::future<RenameTableOutcome> RenameTableOutcomeCallable;
+typedef std::future<StartTableMigrationOutcome> StartTableMigrationOutcomeCallable;
+typedef std::future<SyncTableMigrationOutcome> SyncTableMigrationOutcomeCallable;
 typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
 typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
 typedef std::future<UpdateTableMetadataLocationOutcome> UpdateTableMetadataLocationOutcomeCallable;
+typedef std::future<UpdateTableMigrationOutcome> UpdateTableMigrationOutcomeCallable;
 /* End of service model Outcome callable definitions */
 }  // namespace Model
 
 class S3TablesClient;
 
 /* Service model async handlers definitions */
+typedef std::function<void(const S3TablesClient*, const Model::CompleteTableMigrationRequest&, const Model::CompleteTableMigrationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CompleteTableMigrationResponseReceivedHandler;
 typedef std::function<void(const S3TablesClient*, const Model::CreateNamespaceRequest&, const Model::CreateNamespaceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateNamespaceResponseReceivedHandler;
@@ -295,6 +330,9 @@ typedef std::function<void(const S3TablesClient*, const Model::GetTableBucketReq
 typedef std::function<void(const S3TablesClient*, const Model::GetTableBucketEncryptionRequest&,
                            const Model::GetTableBucketEncryptionOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetTableBucketEncryptionResponseReceivedHandler;
+typedef std::function<void(const S3TablesClient*, const Model::GetTableBucketLoggingRequest&, const Model::GetTableBucketLoggingOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetTableBucketLoggingResponseReceivedHandler;
 typedef std::function<void(const S3TablesClient*, const Model::GetTableBucketMaintenanceConfigurationRequest&,
                            const Model::GetTableBucketMaintenanceConfigurationOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
@@ -326,6 +364,9 @@ typedef std::function<void(const S3TablesClient*, const Model::GetTableMaintenan
 typedef std::function<void(const S3TablesClient*, const Model::GetTableMetadataLocationRequest&,
                            const Model::GetTableMetadataLocationOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetTableMetadataLocationResponseReceivedHandler;
+typedef std::function<void(const S3TablesClient*, const Model::GetTableMigrationRequest&, const Model::GetTableMigrationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetTableMigrationResponseReceivedHandler;
 typedef std::function<void(const S3TablesClient*, const Model::GetTablePolicyRequest&, const Model::GetTablePolicyOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetTablePolicyResponseReceivedHandler;
@@ -352,6 +393,9 @@ typedef std::function<void(const S3TablesClient*, const Model::ListNamespacesReq
 typedef std::function<void(const S3TablesClient*, const Model::ListTableBucketsRequest&, const Model::ListTableBucketsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListTableBucketsResponseReceivedHandler;
+typedef std::function<void(const S3TablesClient*, const Model::ListTableMigrationsRequest&, const Model::ListTableMigrationsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListTableMigrationsResponseReceivedHandler;
 typedef std::function<void(const S3TablesClient*, const Model::ListTablesRequest&, const Model::ListTablesOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListTablesResponseReceivedHandler;
@@ -361,6 +405,9 @@ typedef std::function<void(const S3TablesClient*, const Model::ListTagsForResour
 typedef std::function<void(const S3TablesClient*, const Model::PutTableBucketEncryptionRequest&,
                            const Model::PutTableBucketEncryptionOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     PutTableBucketEncryptionResponseReceivedHandler;
+typedef std::function<void(const S3TablesClient*, const Model::PutTableBucketLoggingRequest&, const Model::PutTableBucketLoggingOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    PutTableBucketLoggingResponseReceivedHandler;
 typedef std::function<void(const S3TablesClient*, const Model::PutTableBucketMaintenanceConfigurationRequest&,
                            const Model::PutTableBucketMaintenanceConfigurationOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
@@ -395,6 +442,12 @@ typedef std::function<void(const S3TablesClient*, const Model::PutTableReplicati
 typedef std::function<void(const S3TablesClient*, const Model::RenameTableRequest&, const Model::RenameTableOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     RenameTableResponseReceivedHandler;
+typedef std::function<void(const S3TablesClient*, const Model::StartTableMigrationRequest&, const Model::StartTableMigrationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    StartTableMigrationResponseReceivedHandler;
+typedef std::function<void(const S3TablesClient*, const Model::SyncTableMigrationRequest&, const Model::SyncTableMigrationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    SyncTableMigrationResponseReceivedHandler;
 typedef std::function<void(const S3TablesClient*, const Model::TagResourceRequest&, const Model::TagResourceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     TagResourceResponseReceivedHandler;
@@ -404,6 +457,9 @@ typedef std::function<void(const S3TablesClient*, const Model::UntagResourceRequ
 typedef std::function<void(const S3TablesClient*, const Model::UpdateTableMetadataLocationRequest&,
                            const Model::UpdateTableMetadataLocationOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateTableMetadataLocationResponseReceivedHandler;
+typedef std::function<void(const S3TablesClient*, const Model::UpdateTableMigrationRequest&, const Model::UpdateTableMigrationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateTableMigrationResponseReceivedHandler;
 /* End of service model async handlers definitions */
 }  // namespace S3Tables
 }  // namespace Aws

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -19,13 +19,19 @@
 #include <aws/networkmanager/model/GetNetworkResourceCountsPaginationTraits.h>
 #include <aws/networkmanager/model/GetNetworkResourceRelationshipsPaginationTraits.h>
 #include <aws/networkmanager/model/GetNetworkResourcesPaginationTraits.h>
+#include <aws/networkmanager/model/GetNetworkRoutesPaginationTraits.h>
 #include <aws/networkmanager/model/GetNetworkTelemetryPaginationTraits.h>
 #include <aws/networkmanager/model/GetSitesPaginationTraits.h>
 #include <aws/networkmanager/model/GetTransitGatewayConnectPeerAssociationsPaginationTraits.h>
 #include <aws/networkmanager/model/GetTransitGatewayRegistrationsPaginationTraits.h>
+#include <aws/networkmanager/model/ListAttachmentNatConfigurationsPaginationTraits.h>
 #include <aws/networkmanager/model/ListAttachmentRoutingPolicyAssociationsPaginationTraits.h>
 #include <aws/networkmanager/model/ListAttachmentsPaginationTraits.h>
 #include <aws/networkmanager/model/ListConnectPeersPaginationTraits.h>
+#include <aws/networkmanager/model/ListContextChangesPaginationTraits.h>
+#include <aws/networkmanager/model/ListContextStoreAssociationsPaginationTraits.h>
+#include <aws/networkmanager/model/ListContextStoresPaginationTraits.h>
+#include <aws/networkmanager/model/ListContextsPaginationTraits.h>
 #include <aws/networkmanager/model/ListCoreNetworkPolicyVersionsPaginationTraits.h>
 #include <aws/networkmanager/model/ListCoreNetworkPrefixListAssociationsPaginationTraits.h>
 #include <aws/networkmanager/model/ListCoreNetworkRoutingInformationPaginationTraits.h>
@@ -181,6 +187,18 @@ class NetworkManagerPaginationBase {
   }
 
   /**
+   * Create a paginator for GetNetworkRoutes operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetNetworkRoutesRequest,
+                                    Pagination::GetNetworkRoutesPaginationTraits<DerivedClient>>
+  GetNetworkRoutesPaginator(const Model::GetNetworkRoutesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetNetworkRoutesRequest,
+                                             Pagination::GetNetworkRoutesPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                          request};
+  }
+
+  /**
    * Create a paginator for GetNetworkTelemetry operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::GetNetworkTelemetryRequest,
@@ -227,6 +245,18 @@ class NetworkManagerPaginationBase {
   }
 
   /**
+   * Create a paginator for ListAttachmentNatConfigurations operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListAttachmentNatConfigurationsRequest,
+                                    Pagination::ListAttachmentNatConfigurationsPaginationTraits<DerivedClient>>
+  ListAttachmentNatConfigurationsPaginator(const Model::ListAttachmentNatConfigurationsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListAttachmentNatConfigurationsRequest,
+                                             Pagination::ListAttachmentNatConfigurationsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
    * Create a paginator for ListAttachmentRoutingPolicyAssociations operation
    */
   Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListAttachmentRoutingPolicyAssociationsRequest,
@@ -260,6 +290,53 @@ class NetworkManagerPaginationBase {
     return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListConnectPeersRequest,
                                              Pagination::ListConnectPeersPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
                                                                                                           request};
+  }
+
+  /**
+   * Create a paginator for ListContextChanges operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContextChangesRequest,
+                                    Pagination::ListContextChangesPaginationTraits<DerivedClient>>
+  ListContextChangesPaginator(const Model::ListContextChangesRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContextChangesRequest,
+                                             Pagination::ListContextChangesPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListContexts operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContextsRequest, Pagination::ListContextsPaginationTraits<DerivedClient>>
+  ListContextsPaginator(const Model::ListContextsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContextsRequest,
+                                             Pagination::ListContextsPaginationTraits<DerivedClient>>{static_cast<DerivedClient*>(this),
+                                                                                                      request};
+  }
+
+  /**
+   * Create a paginator for ListContextStoreAssociations operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContextStoreAssociationsRequest,
+                                    Pagination::ListContextStoreAssociationsPaginationTraits<DerivedClient>>
+  ListContextStoreAssociationsPaginator(const Model::ListContextStoreAssociationsRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContextStoreAssociationsRequest,
+                                             Pagination::ListContextStoreAssociationsPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
+  }
+
+  /**
+   * Create a paginator for ListContextStores operation
+   */
+  Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContextStoresRequest,
+                                    Pagination::ListContextStoresPaginationTraits<DerivedClient>>
+  ListContextStoresPaginator(const Model::ListContextStoresRequest& request) {
+    request.AddUserAgentFeature(Aws::Client::UserAgentFeature::PAGINATOR);
+    return Aws::Utils::Pagination::Paginator<DerivedClient, Model::ListContextStoresRequest,
+                                             Pagination::ListContextStoresPaginationTraits<DerivedClient>>{
+        static_cast<DerivedClient*>(this), request};
   }
 
   /**

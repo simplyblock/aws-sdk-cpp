@@ -58,6 +58,11 @@ namespace Aws
     }
 
     class AmazonWebServiceRequest;
+
+    namespace Internal
+    {
+        class ClientSkew;
+    }
 }
 
 namespace Aws
@@ -110,8 +115,7 @@ namespace client
               Aws::MakeShared<features::ChunkingInterceptor>("AwsSmithyClientBase", 
                   m_httpClient->IsDefaultAwsHttpClient() ? Aws::Client::HttpClientChunkedMode::DEFAULT : m_clientConfig->httpClientChunkedMode,
                   m_clientConfig->awsChunkedBufferSize)
-          }),
-          m_enableNewRetries{Aws::Utils::StringUtils::ToLower(Aws::Environment::GetEnv("AWS_NEW_RETRIES_2026").c_str()) == "true"}
+          })
         {
             
             baseInit();
@@ -151,7 +155,7 @@ namespace client
                               EndpointUpdateCallback&& endpointCallback,
                               ResponseHandlerFunc&& responseHandler,
                               AuthResolvedCallback&& authCallback,
-                              std::shared_ptr<Aws::Utils::Threading::Executor> pExecutor) const;
+                              std::shared_ptr<Aws::Utils::Threading::Executor> pExecutor = nullptr) const;
 
         HttpResponseOutcome MakeRequestSync(Aws::AmazonWebServiceRequest const * const request,
                                             const char* requestName,
@@ -169,6 +173,7 @@ namespace client
         virtual void EnableRequestProcessing();
         inline virtual const char* GetServiceClientName() const { return m_serviceName.c_str(); }
         inline virtual const std::shared_ptr<Aws::Http::HttpClient>& GetHttpClient() { return m_httpClient; }
+        const std::shared_ptr<Aws::Http::HttpClient>& GetHttpClient() const { return m_httpClient; }
 
     protected:
         template <typename OutcomeT, typename ClientT, typename RequestT, typename HandlerT>
@@ -214,15 +219,16 @@ namespace client
         std::shared_ptr<Aws::Http::HttpRequest> BuildHttpRequest(const std::shared_ptr<AwsSmithyClientAsyncRequestContext>& pRequestCtx, const Aws::Http::URI& uri, Aws::Http::HttpMethod method) const;
 
 
-        virtual void AttemptOneRequestAsync(std::shared_ptr<AwsSmithyClientAsyncRequestContext> pRequestCtx) const;
+        virtual std::shared_ptr<Aws::Http::HttpRequest> AttemptOneRequestAsync(std::shared_ptr<AwsSmithyClientAsyncRequestContext> pRequestCtx) const;
 
-        virtual void HandleAsyncReply(std::shared_ptr<AwsSmithyClientAsyncRequestContext> pRequestCtx,
+        virtual Aws::Http::HttpClient::AttemptOutcome HandleAsyncReply(std::shared_ptr<AwsSmithyClientAsyncRequestContext> pRequestCtx,
                                       std::shared_ptr<Aws::Http::HttpResponse> httpResponse) const;
 
         virtual ResolveEndpointOutcome ResolveEndpoint(const Aws::Endpoint::EndpointParameters& endpointParameters, EndpointUpdateCallback&& epCallback) const = 0;
         virtual SelectAuthSchemeOptionOutcome SelectAuthSchemeOption(const AwsSmithyClientAsyncRequestContext& ctx) const = 0;
         virtual SigningOutcome SignHttpRequest(std::shared_ptr<HttpRequest> httpRequest, const AwsSmithyClientAsyncRequestContext& ctx) const = 0;
-        virtual bool AdjustClockSkew(HttpResponseOutcome& outcome, const AuthSchemeOption& authSchemeOption) const = 0;
+        bool AdjustClockSkew(HttpResponseOutcome& outcome, const AwsSmithyClientAsyncRequestContext& ctx) const;
+        void RecordClockSkew(const Aws::Http::HttpResponse& response, const AwsSmithyClientAsyncRequestContext& ctx) const;
         virtual IdentityOutcome ResolveIdentity(const AwsSmithyClientAsyncRequestContext& ctx) const = 0;
         virtual GetContextEndpointParametersOutcome GetContextEndpointParameters(const AwsSmithyClientAsyncRequestContext& ctx) const = 0;
         AwsSmithyClientBase::ResolveEndpointOutcome ResolveEndpointFromRequest(
@@ -241,15 +247,26 @@ namespace client
         std::shared_ptr<Aws::Client::AWSErrorMarshaller> m_errorMarshaller;
         Aws::Vector<std::shared_ptr<smithy::interceptor::Interceptor>> m_interceptors{};
         std::shared_ptr<smithy::client::UserAgentInterceptor> m_userAgentInterceptor;
+        mutable std::shared_ptr<Aws::Internal::ClientSkew> m_clientSkew;
     private:
         void UpdateAuthSchemeFromEndpoint(const Aws::Endpoint::AWSEndpoint& endpoint, AuthSchemeOption& authscheme) const;
+        static StreamOutcome ProcessUnparsedResponse(HttpResponseOutcome& httpResponseOutcome);
+        std::shared_ptr<AwsSmithyClientAsyncRequestContext> CreateRequestContext(Aws::AmazonWebServiceRequest const * const request,
+                                                                                const char* requestName,
+                                                                                Aws::Http::HttpMethod method,
+                                                                                EndpointUpdateCallback&& endpointCallback,
+                                                                                ResponseHandlerFunc&& responseHandler,
+                                                                                AuthResolvedCallback&& authCallback,
+                                                                                std::shared_ptr<Aws::Utils::Threading::Executor> pExecutor) const;
+        void RunAttemptsAsync(const std::shared_ptr<AwsSmithyClientAsyncRequestContext>& pRequestCtx) const;
+        void RunAttemptsBlocking(const std::shared_ptr<AwsSmithyClientAsyncRequestContext>& pRequestCtx) const;
 
         bool ResolveIdentityAuth(
             std::shared_ptr<AwsSmithyClientAsyncRequestContext>& pRequestCtx,
             ResponseHandlerFunc&& responseHandler,
             EndpointUpdateCallback&& endpointCallback
         ) const;
-        bool m_enableNewRetries;
+        bool m_isLegacyRetryStrategy = false;
     };
 } // namespace client
 } // namespace smithy

@@ -41,12 +41,28 @@ Aws::String QueryVectorsRequest::SerializePayload() const {
     }
   }
 
+  if (m_queryModeHasBeenSet) {
+    payload.WithString("queryMode", IndexModeMapper::GetNameForIndexMode(m_queryMode));
+  }
+
   if (m_returnMetadataHasBeenSet) {
     payload.WithBool("returnMetadata", m_returnMetadata);
   }
 
   if (m_returnDistanceHasBeenSet) {
     payload.WithBool("returnDistance", m_returnDistance);
+  }
+
+  if (m_queryTextsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> queryTextsJsonList(m_queryTexts.size());
+    for (unsigned queryTextsIndex = 0; queryTextsIndex < queryTextsJsonList.GetLength(); ++queryTextsIndex) {
+      queryTextsJsonList[queryTextsIndex].AsObject(m_queryTexts[queryTextsIndex].Jsonize());
+    }
+    payload.WithArray("queryTexts", std::move(queryTextsJsonList));
+  }
+
+  if (m_returnScoresHasBeenSet) {
+    payload.WithBool("returnScores", m_returnScores);
   }
 
   if (m_nextTokenHasBeenSet) {

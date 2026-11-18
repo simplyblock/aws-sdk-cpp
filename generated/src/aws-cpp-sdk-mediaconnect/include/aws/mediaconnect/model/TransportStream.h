@@ -6,7 +6,9 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+#include <aws/mediaconnect/model/ColorInformation.h>
 #include <aws/mediaconnect/model/FrameResolution.h>
+#include <aws/mediaconnect/model/ScanMode.h>
 
 #include <utility>
 
@@ -63,6 +65,24 @@ class TransportStream {
   template <typename CodecT = Aws::String>
   TransportStream& WithCodec(CodecT&& value) {
     SetCodec(std::forward<CodecT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The color signaling of the video stream.</p>
+   */
+  inline const ColorInformation& GetColor() const { return m_color; }
+  inline bool ColorHasBeenSet() const { return m_colorHasBeenSet; }
+  template <typename ColorT = ColorInformation>
+  void SetColor(ColorT&& value) {
+    m_colorHasBeenSet = true;
+    m_color = std::forward<ColorT>(value);
+  }
+  template <typename ColorT = ColorInformation>
+  TransportStream& WithColor(ColorT&& value) {
+    SetColor(std::forward<ColorT>(value));
     return *this;
   }
   ///@}
@@ -153,6 +173,22 @@ class TransportStream {
 
   ///@{
   /**
+   * <p>The scan mode used by the video stream.</p>
+   */
+  inline ScanMode GetScanMode() const { return m_scanMode; }
+  inline bool ScanModeHasBeenSet() const { return m_scanModeHasBeenSet; }
+  inline void SetScanMode(ScanMode value) {
+    m_scanModeHasBeenSet = true;
+    m_scanMode = value;
+  }
+  inline TransportStream& WithScanMode(ScanMode value) {
+    SetScanMode(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p> The Stream Type as it is reported in the Program Map Table.</p>
    */
   inline const Aws::String& GetStreamType() const { return m_streamType; }
@@ -168,10 +204,30 @@ class TransportStream {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The language of the elementary stream.</p>
+   */
+  inline const Aws::String& GetLanguage() const { return m_language; }
+  inline bool LanguageHasBeenSet() const { return m_languageHasBeenSet; }
+  template <typename LanguageT = Aws::String>
+  void SetLanguage(LanguageT&& value) {
+    m_languageHasBeenSet = true;
+    m_language = std::forward<LanguageT>(value);
+  }
+  template <typename LanguageT = Aws::String>
+  TransportStream& WithLanguage(LanguageT&& value) {
+    SetLanguage(std::forward<LanguageT>(value));
+    return *this;
+  }
+  ///@}
  private:
   int m_channels{0};
 
   Aws::String m_codec;
+
+  ColorInformation m_color;
 
   Aws::String m_frameRate;
 
@@ -183,15 +239,22 @@ class TransportStream {
 
   int m_sampleSize{0};
 
+  ScanMode m_scanMode{ScanMode::NOT_SET};
+
   Aws::String m_streamType;
+
+  Aws::String m_language;
   bool m_channelsHasBeenSet = false;
   bool m_codecHasBeenSet = false;
+  bool m_colorHasBeenSet = false;
   bool m_frameRateHasBeenSet = false;
   bool m_frameResolutionHasBeenSet = false;
   bool m_pidHasBeenSet = false;
   bool m_sampleRateHasBeenSet = false;
   bool m_sampleSizeHasBeenSet = false;
+  bool m_scanModeHasBeenSet = false;
   bool m_streamTypeHasBeenSet = false;
+  bool m_languageHasBeenSet = false;
 };
 
 }  // namespace Model

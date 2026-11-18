@@ -5,16 +5,16 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AgreementService {
 namespace Model {
@@ -29,9 +29,9 @@ namespace Model {
 class DocumentItem {
  public:
   AWS_AGREEMENTSERVICE_API DocumentItem() = default;
-  AWS_AGREEMENTSERVICE_API DocumentItem(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API DocumentItem& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_AGREEMENTSERVICE_API DocumentItem(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API DocumentItem& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -43,10 +43,10 @@ class DocumentItem {
    * accessible Amazon S3 bucket is required for this document type.</p> </li> <li>
    * <p> <code>StandardEula</code> – The Standard Contract for AWS Marketplace
    * (SCMP). For more information about SCMP, see the AWS Marketplace Seller Guide.
-   * You don’t provide a URL for this type because it’s managed by AWS
+   * You don't provide a URL for this type because it's managed by AWS
    * Marketplace.</p> </li> <li> <p> <code>StandardDsa</code> – DSA for AWS
    * Marketplace. For more information about the DSA, see the AWS Data Exchange User
-   * Guide. You don’t provide a URL for this type because it’s managed by AWS
+   * Guide. You don't provide a URL for this type because it's managed by AWS
    * Marketplace.</p> </li> </ul>
    */
   inline const Aws::String& GetType() const { return m_type; }

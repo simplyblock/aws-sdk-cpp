@@ -8,12 +8,14 @@
 
 #include <aws/lex/LexRuntimeServiceClient.h>
 #include <aws/lex/LexRuntimeServiceEndpointProvider.h>
-#include <aws/lex/LexRuntimeServiceEndpointRules.h>
 #include <aws/lex/LexRuntimeServiceErrorMarshaller.h>
 #include <aws/lex/LexRuntimeServiceErrors.h>
+#include <aws/lex/LexRuntimeServicePaginationBase.h>
 #include <aws/lex/LexRuntimeServiceRequest.h>
 #include <aws/lex/LexRuntimeServiceServiceClientModel.h>
+#include <aws/lex/LexRuntimeServiceWaiter.h>
 #include <aws/lex/LexRuntimeService_EXPORTS.h>
+#include <aws/lex/internal/LexRuntimeServiceEndpointRules.h>
 #include <aws/lex/model/ActiveContext.h>
 #include <aws/lex/model/ActiveContextTimeToLive.h>
 #include <aws/lex/model/Button.h>

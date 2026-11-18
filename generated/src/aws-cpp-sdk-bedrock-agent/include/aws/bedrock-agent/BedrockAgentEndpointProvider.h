@@ -5,9 +5,8 @@
 
 #pragma once
 #include <aws/bedrock-agent/BedrockAgentClientConfiguration.h>
-#include <aws/bedrock-agent/BedrockAgentEndpointRules.h>
 #include <aws/bedrock-agent/BedrockAgent_EXPORTS.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -17,7 +16,7 @@ namespace BedrockAgent {
 namespace Endpoint {
 using BedrockAgentClientConfiguration = Aws::BedrockAgent::BedrockAgentClientConfiguration;
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using BedrockAgentClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -27,6 +26,7 @@ class AWS_BEDROCKAGENT_API BedrockAgentBuiltInParameters : public Aws::Endpoint:
   virtual ~BedrockAgentBuiltInParameters() {};
   using Aws::Endpoint::BuiltInParameters::SetFromClientConfiguration;
   virtual void SetFromClientConfiguration(const BedrockAgentClientConfiguration& config);
+  virtual void SetFromClientConfiguration(const BedrockAgentClientConfiguration& config, const Aws::String& serviceName);
 };
 
 /**
@@ -38,7 +38,7 @@ using BedrockAgentEndpointProviderBase =
     EndpointProviderBase<BedrockAgentClientConfiguration, BedrockAgentBuiltInParameters, BedrockAgentClientContextParameters>;
 
 using BedrockAgentDefaultEpProviderBase =
-    DefaultEndpointProvider<BedrockAgentClientConfiguration, BedrockAgentBuiltInParameters, BedrockAgentClientContextParameters>;
+    BDDEndpointProvider<BedrockAgentClientConfiguration, BedrockAgentBuiltInParameters, BedrockAgentClientContextParameters>;
 
 }  // namespace Endpoint
 }  // namespace BedrockAgent
@@ -51,7 +51,7 @@ AWS_BEDROCKAGENT_EXTERN template class AWS_BEDROCKAGENT_API Aws::Endpoint::Endpo
     BedrockAgent::Endpoint::BedrockAgentClientConfiguration, BedrockAgent::Endpoint::BedrockAgentBuiltInParameters,
     BedrockAgent::Endpoint::BedrockAgentClientContextParameters>;
 
-AWS_BEDROCKAGENT_EXTERN template class AWS_BEDROCKAGENT_API Aws::Endpoint::DefaultEndpointProvider<
+AWS_BEDROCKAGENT_EXTERN template class AWS_BEDROCKAGENT_API Aws::Endpoint::BDDEndpointProvider<
     BedrockAgent::Endpoint::BedrockAgentClientConfiguration, BedrockAgent::Endpoint::BedrockAgentBuiltInParameters,
     BedrockAgent::Endpoint::BedrockAgentClientContextParameters>;
 }  // namespace Endpoint
@@ -65,9 +65,7 @@ class AWS_BEDROCKAGENT_API BedrockAgentEndpointProvider : public BedrockAgentDef
  public:
   using BedrockAgentResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  BedrockAgentEndpointProvider()
-      : BedrockAgentDefaultEpProviderBase(Aws::BedrockAgent::BedrockAgentEndpointRules::GetRulesBlob(),
-                                          Aws::BedrockAgent::BedrockAgentEndpointRules::RulesBlobSize) {}
+  BedrockAgentEndpointProvider();
 
   ~BedrockAgentEndpointProvider() {}
 };

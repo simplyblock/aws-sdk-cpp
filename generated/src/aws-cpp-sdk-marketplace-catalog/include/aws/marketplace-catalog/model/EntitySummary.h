@@ -9,11 +9,13 @@
 #include <aws/marketplace-catalog/model/AmiProductSummary.h>
 #include <aws/marketplace-catalog/model/ContainerProductSummary.h>
 #include <aws/marketplace-catalog/model/DataProductSummary.h>
+#include <aws/marketplace-catalog/model/ExpressPrivateOfferConfigurationSummary.h>
 #include <aws/marketplace-catalog/model/MachineLearningProductSummary.h>
 #include <aws/marketplace-catalog/model/OfferSetSummary.h>
 #include <aws/marketplace-catalog/model/OfferSummary.h>
 #include <aws/marketplace-catalog/model/ResaleAuthorizationSummary.h>
 #include <aws/marketplace-catalog/model/SaaSProductSummary.h>
+#include <aws/marketplace-catalog/model/SubsidiaryAuthorizationSummary.h>
 
 #include <utility>
 
@@ -297,6 +299,47 @@ class EntitySummary {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>An object that contains summary information about the express private offer
+   * configuration.</p>
+   */
+  inline const ExpressPrivateOfferConfigurationSummary& GetExpressPrivateOfferConfigurationSummary() const {
+    return m_expressPrivateOfferConfigurationSummary;
+  }
+  inline bool ExpressPrivateOfferConfigurationSummaryHasBeenSet() const { return m_expressPrivateOfferConfigurationSummaryHasBeenSet; }
+  template <typename ExpressPrivateOfferConfigurationSummaryT = ExpressPrivateOfferConfigurationSummary>
+  void SetExpressPrivateOfferConfigurationSummary(ExpressPrivateOfferConfigurationSummaryT&& value) {
+    m_expressPrivateOfferConfigurationSummaryHasBeenSet = true;
+    m_expressPrivateOfferConfigurationSummary = std::forward<ExpressPrivateOfferConfigurationSummaryT>(value);
+  }
+  template <typename ExpressPrivateOfferConfigurationSummaryT = ExpressPrivateOfferConfigurationSummary>
+  EntitySummary& WithExpressPrivateOfferConfigurationSummary(ExpressPrivateOfferConfigurationSummaryT&& value) {
+    SetExpressPrivateOfferConfigurationSummary(std::forward<ExpressPrivateOfferConfigurationSummaryT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>An object that contains summary information about the subsidiary
+   * authorization, such as its status and authorized resource, when the entity type
+   * is <code>SubsidiaryAuthorization</code>.</p>
+   */
+  inline const SubsidiaryAuthorizationSummary& GetSubsidiaryAuthorizationSummary() const { return m_subsidiaryAuthorizationSummary; }
+  inline bool SubsidiaryAuthorizationSummaryHasBeenSet() const { return m_subsidiaryAuthorizationSummaryHasBeenSet; }
+  template <typename SubsidiaryAuthorizationSummaryT = SubsidiaryAuthorizationSummary>
+  void SetSubsidiaryAuthorizationSummary(SubsidiaryAuthorizationSummaryT&& value) {
+    m_subsidiaryAuthorizationSummaryHasBeenSet = true;
+    m_subsidiaryAuthorizationSummary = std::forward<SubsidiaryAuthorizationSummaryT>(value);
+  }
+  template <typename SubsidiaryAuthorizationSummaryT = SubsidiaryAuthorizationSummary>
+  EntitySummary& WithSubsidiaryAuthorizationSummary(SubsidiaryAuthorizationSummaryT&& value) {
+    SetSubsidiaryAuthorizationSummary(std::forward<SubsidiaryAuthorizationSummaryT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_name;
 
@@ -325,6 +368,10 @@ class EntitySummary {
   MachineLearningProductSummary m_machineLearningProductSummary;
 
   OfferSetSummary m_offerSetSummary;
+
+  ExpressPrivateOfferConfigurationSummary m_expressPrivateOfferConfigurationSummary;
+
+  SubsidiaryAuthorizationSummary m_subsidiaryAuthorizationSummary;
   bool m_nameHasBeenSet = false;
   bool m_entityTypeHasBeenSet = false;
   bool m_entityIdHasBeenSet = false;
@@ -339,6 +386,8 @@ class EntitySummary {
   bool m_resaleAuthorizationSummaryHasBeenSet = false;
   bool m_machineLearningProductSummaryHasBeenSet = false;
   bool m_offerSetSummaryHasBeenSet = false;
+  bool m_expressPrivateOfferConfigurationSummaryHasBeenSet = false;
+  bool m_subsidiaryAuthorizationSummaryHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/backup/BackupEndpointRules.h>
 #include <aws/backup/Backup_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace Backup {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using BackupClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,8 +30,7 @@ using BackupBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using BackupEndpointProviderBase = EndpointProviderBase<BackupClientConfiguration, BackupBuiltInParameters, BackupClientContextParameters>;
 
-using BackupDefaultEpProviderBase =
-    DefaultEndpointProvider<BackupClientConfiguration, BackupBuiltInParameters, BackupClientContextParameters>;
+using BackupDefaultEpProviderBase = BDDEndpointProvider<BackupClientConfiguration, BackupBuiltInParameters, BackupClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -41,8 +39,7 @@ class AWS_BACKUP_API BackupEndpointProvider : public BackupDefaultEpProviderBase
  public:
   using BackupResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  BackupEndpointProvider()
-      : BackupDefaultEpProviderBase(Aws::Backup::BackupEndpointRules::GetRulesBlob(), Aws::Backup::BackupEndpointRules::RulesBlobSize) {}
+  BackupEndpointProvider();
 
   ~BackupEndpointProvider() {}
 };

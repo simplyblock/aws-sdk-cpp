@@ -5,9 +5,8 @@
 
 #pragma once
 #include <aws/bedrock-data-automation/BedrockDataAutomationClientConfiguration.h>
-#include <aws/bedrock-data-automation/BedrockDataAutomationEndpointRules.h>
 #include <aws/bedrock-data-automation/BedrockDataAutomation_EXPORTS.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -17,7 +16,7 @@ namespace BedrockDataAutomation {
 namespace Endpoint {
 using BedrockDataAutomationClientConfiguration = Aws::BedrockDataAutomation::BedrockDataAutomationClientConfiguration;
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using BedrockDataAutomationClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -27,6 +26,7 @@ class AWS_BEDROCKDATAAUTOMATION_API BedrockDataAutomationBuiltInParameters : pub
   virtual ~BedrockDataAutomationBuiltInParameters() {};
   using Aws::Endpoint::BuiltInParameters::SetFromClientConfiguration;
   virtual void SetFromClientConfiguration(const BedrockDataAutomationClientConfiguration& config);
+  virtual void SetFromClientConfiguration(const BedrockDataAutomationClientConfiguration& config, const Aws::String& serviceName);
 };
 
 /**
@@ -39,8 +39,8 @@ using BedrockDataAutomationEndpointProviderBase =
                          BedrockDataAutomationClientContextParameters>;
 
 using BedrockDataAutomationDefaultEpProviderBase =
-    DefaultEndpointProvider<BedrockDataAutomationClientConfiguration, BedrockDataAutomationBuiltInParameters,
-                            BedrockDataAutomationClientContextParameters>;
+    BDDEndpointProvider<BedrockDataAutomationClientConfiguration, BedrockDataAutomationBuiltInParameters,
+                        BedrockDataAutomationClientContextParameters>;
 
 }  // namespace Endpoint
 }  // namespace BedrockDataAutomation
@@ -55,9 +55,9 @@ AWS_BEDROCKDATAAUTOMATION_EXTERN template class AWS_BEDROCKDATAAUTOMATION_API
                                         BedrockDataAutomation::Endpoint::BedrockDataAutomationClientContextParameters>;
 
 AWS_BEDROCKDATAAUTOMATION_EXTERN template class AWS_BEDROCKDATAAUTOMATION_API
-    Aws::Endpoint::DefaultEndpointProvider<BedrockDataAutomation::Endpoint::BedrockDataAutomationClientConfiguration,
-                                           BedrockDataAutomation::Endpoint::BedrockDataAutomationBuiltInParameters,
-                                           BedrockDataAutomation::Endpoint::BedrockDataAutomationClientContextParameters>;
+    Aws::Endpoint::BDDEndpointProvider<BedrockDataAutomation::Endpoint::BedrockDataAutomationClientConfiguration,
+                                       BedrockDataAutomation::Endpoint::BedrockDataAutomationBuiltInParameters,
+                                       BedrockDataAutomation::Endpoint::BedrockDataAutomationClientContextParameters>;
 }  // namespace Endpoint
 
 namespace BedrockDataAutomation {
@@ -69,9 +69,7 @@ class AWS_BEDROCKDATAAUTOMATION_API BedrockDataAutomationEndpointProvider : publ
  public:
   using BedrockDataAutomationResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  BedrockDataAutomationEndpointProvider()
-      : BedrockDataAutomationDefaultEpProviderBase(Aws::BedrockDataAutomation::BedrockDataAutomationEndpointRules::GetRulesBlob(),
-                                                   Aws::BedrockDataAutomation::BedrockDataAutomationEndpointRules::RulesBlobSize) {}
+  BedrockDataAutomationEndpointProvider();
 
   ~BedrockDataAutomationEndpointProvider() {}
 };

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-observabilityadmin "C++ SDK for the AWS observabilityadmin service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-observabilityadmin "C++ SDK for CloudWatch Observability Admin Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_OBSERVABILITYADMIN_HEADERS
     "include/aws/observabilityadmin/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_OBSERVABILITYADMIN_HEADERS
 
 file(GLOB AWS_OBSERVABILITYADMIN_MODEL_HEADERS
     "include/aws/observabilityadmin/model/*.h"
+)
+
+file(GLOB AWS_OBSERVABILITYADMIN_INTERNAL_HEADERS
+    "include/aws/observabilityadmin/internal/*.h"
 )
 
 file(GLOB AWS_OBSERVABILITYADMIN_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_OBSERVABILITYADMIN_MODEL_SOURCE
 
 file(GLOB OBSERVABILITYADMIN_UNIFIED_HEADERS
     ${AWS_OBSERVABILITYADMIN_HEADERS}
+    ${AWS_OBSERVABILITYADMIN_INTERNAL_HEADERS}
     ${AWS_OBSERVABILITYADMIN_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\observabilityadmin" FILES ${AWS_OBSERVABILITYADMIN_HEADERS})
+        source_group("Header Files\\aws\\observabilityadmin\\internal" FILES ${AWS_OBSERVABILITYADMIN_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\observabilityadmin\\model" FILES ${AWS_OBSERVABILITYADMIN_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_OBSERVABILITYADMIN_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_OBSERVABILITYADMIN_MODEL_SOURCE})

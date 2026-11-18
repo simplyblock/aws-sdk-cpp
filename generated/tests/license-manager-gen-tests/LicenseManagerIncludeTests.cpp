@@ -8,12 +8,14 @@
 
 #include <aws/license-manager/LicenseManagerClient.h>
 #include <aws/license-manager/LicenseManagerEndpointProvider.h>
-#include <aws/license-manager/LicenseManagerEndpointRules.h>
 #include <aws/license-manager/LicenseManagerErrorMarshaller.h>
 #include <aws/license-manager/LicenseManagerErrors.h>
+#include <aws/license-manager/LicenseManagerPaginationBase.h>
 #include <aws/license-manager/LicenseManagerRequest.h>
 #include <aws/license-manager/LicenseManagerServiceClientModel.h>
+#include <aws/license-manager/LicenseManagerWaiter.h>
 #include <aws/license-manager/LicenseManager_EXPORTS.h>
+#include <aws/license-manager/internal/LicenseManagerEndpointRules.h>
 #include <aws/license-manager/model/AcceptGrantRequest.h>
 #include <aws/license-manager/model/AcceptGrantResult.h>
 #include <aws/license-manager/model/ActivationOverrideBehavior.h>
@@ -100,6 +102,7 @@
 #include <aws/license-manager/model/GetServiceSettingsResult.h>
 #include <aws/license-manager/model/Grant.h>
 #include <aws/license-manager/model/GrantStatus.h>
+#include <aws/license-manager/model/GrantType.h>
 #include <aws/license-manager/model/GrantedLicense.h>
 #include <aws/license-manager/model/InstanceRuleStatement.h>
 #include <aws/license-manager/model/InventoryFilter.h>

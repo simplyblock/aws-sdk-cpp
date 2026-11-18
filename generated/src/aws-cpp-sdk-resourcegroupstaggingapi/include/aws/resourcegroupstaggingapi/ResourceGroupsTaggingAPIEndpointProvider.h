@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/resourcegroupstaggingapi/ResourceGroupsTaggingAPIEndpointRules.h>
 #include <aws/resourcegroupstaggingapi/ResourceGroupsTaggingAPI_EXPORTS.h>
 
 namespace Aws {
 namespace ResourceGroupsTaggingAPI {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ResourceGroupsTaggingAPIClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ResourceGroupsTaggingAPIEndpointProviderBase =
                          ResourceGroupsTaggingAPIClientContextParameters>;
 
 using ResourceGroupsTaggingAPIDefaultEpProviderBase =
-    DefaultEndpointProvider<ResourceGroupsTaggingAPIClientConfiguration, ResourceGroupsTaggingAPIBuiltInParameters,
-                            ResourceGroupsTaggingAPIClientContextParameters>;
+    BDDEndpointProvider<ResourceGroupsTaggingAPIClientConfiguration, ResourceGroupsTaggingAPIBuiltInParameters,
+                        ResourceGroupsTaggingAPIClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,10 +43,7 @@ class AWS_RESOURCEGROUPSTAGGINGAPI_API ResourceGroupsTaggingAPIEndpointProvider 
  public:
   using ResourceGroupsTaggingAPIResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ResourceGroupsTaggingAPIEndpointProvider()
-      : ResourceGroupsTaggingAPIDefaultEpProviderBase(Aws::ResourceGroupsTaggingAPI::ResourceGroupsTaggingAPIEndpointRules::GetRulesBlob(),
-                                                      Aws::ResourceGroupsTaggingAPI::ResourceGroupsTaggingAPIEndpointRules::RulesBlobSize) {
-  }
+  ResourceGroupsTaggingAPIEndpointProvider();
 
   ~ResourceGroupsTaggingAPIEndpointProvider() {}
 };

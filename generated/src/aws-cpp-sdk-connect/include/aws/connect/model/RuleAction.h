@@ -9,8 +9,11 @@
 #include <aws/connect/model/AssignContactCategoryActionDefinition.h>
 #include <aws/connect/model/AssignSlaActionDefinition.h>
 #include <aws/connect/model/CreateCaseActionDefinition.h>
+#include <aws/connect/model/EndAssociatedEmailsActionDefinition.h>
 #include <aws/connect/model/EndAssociatedTasksActionDefinition.h>
 #include <aws/connect/model/EventBridgeActionDefinition.h>
+#include <aws/connect/model/ExtractInformationActionDefinition.h>
+#include <aws/connect/model/SendInAppNotificationActionDefinition.h>
 #include <aws/connect/model/SendNotificationActionDefinition.h>
 #include <aws/connect/model/SubmitAutoEvaluationActionDefinition.h>
 #include <aws/connect/model/TaskActionDefinition.h>
@@ -227,6 +230,25 @@ class RuleAction {
 
   ///@{
   /**
+   * <p>Information about the end associated emails action.</p> <p>Supported only for
+   * <code>TriggerEventSource</code> values: <code>OnCaseUpdate</code>.</p>
+   */
+  inline const EndAssociatedEmailsActionDefinition& GetEndAssociatedEmailsAction() const { return m_endAssociatedEmailsAction; }
+  inline bool EndAssociatedEmailsActionHasBeenSet() const { return m_endAssociatedEmailsActionHasBeenSet; }
+  template <typename EndAssociatedEmailsActionT = EndAssociatedEmailsActionDefinition>
+  void SetEndAssociatedEmailsAction(EndAssociatedEmailsActionT&& value) {
+    m_endAssociatedEmailsActionHasBeenSet = true;
+    m_endAssociatedEmailsAction = std::forward<EndAssociatedEmailsActionT>(value);
+  }
+  template <typename EndAssociatedEmailsActionT = EndAssociatedEmailsActionDefinition>
+  RuleAction& WithEndAssociatedEmailsAction(EndAssociatedEmailsActionT&& value) {
+    SetEndAssociatedEmailsAction(std::forward<EndAssociatedEmailsActionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>Information about the submit automated evaluation action.</p>
    */
   inline const SubmitAutoEvaluationActionDefinition& GetSubmitAutoEvaluationAction() const { return m_submitAutoEvaluationAction; }
@@ -239,6 +261,52 @@ class RuleAction {
   template <typename SubmitAutoEvaluationActionT = SubmitAutoEvaluationActionDefinition>
   RuleAction& WithSubmitAutoEvaluationAction(SubmitAutoEvaluationActionT&& value) {
     SetSubmitAutoEvaluationAction(std::forward<SubmitAutoEvaluationActionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Information about the extract information action.</p>
+   */
+  inline const ExtractInformationActionDefinition& GetExtractInformationAction() const { return m_extractInformationAction; }
+  inline bool ExtractInformationActionHasBeenSet() const { return m_extractInformationActionHasBeenSet; }
+  template <typename ExtractInformationActionT = ExtractInformationActionDefinition>
+  void SetExtractInformationAction(ExtractInformationActionT&& value) {
+    m_extractInformationActionHasBeenSet = true;
+    m_extractInformationAction = std::forward<ExtractInformationActionT>(value);
+  }
+  template <typename ExtractInformationActionT = ExtractInformationActionDefinition>
+  RuleAction& WithExtractInformationAction(ExtractInformationActionT&& value) {
+    SetExtractInformationAction(std::forward<ExtractInformationActionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Information about the send in-app notification action.</p> <p>Supported only
+   * for <code>TriggerEventSource</code> values:
+   * <code>OnPostCallAnalysisAvailable</code> |
+   * <code>OnRealTimeCallAnalysisAvailable</code> |
+   * <code>OnRealTimeChatAnalysisAvailable</code> |
+   * <code>OnPostChatAnalysisAvailable</code> | <code>OnAfterCallWorkAvailable</code>
+   * | <code>OnAfterChatWorkAvailable</code> | <code>OnEmailAnalysisAvailable</code>
+   * | <code>OnContactEvaluationSubmit</code> | <code>OnCaseCreate</code> |
+   * <code>OnCaseUpdate</code> | <code>OnSlaBreach</code> |
+   * <code>OnSchedulePublish</code> | <code>OnScheduleUpdate</code> |
+   * <code>OnScheduleTimeOffRequestActivity</code> </p>
+   */
+  inline const SendInAppNotificationActionDefinition& GetSendInAppNotificationAction() const { return m_sendInAppNotificationAction; }
+  inline bool SendInAppNotificationActionHasBeenSet() const { return m_sendInAppNotificationActionHasBeenSet; }
+  template <typename SendInAppNotificationActionT = SendInAppNotificationActionDefinition>
+  void SetSendInAppNotificationAction(SendInAppNotificationActionT&& value) {
+    m_sendInAppNotificationActionHasBeenSet = true;
+    m_sendInAppNotificationAction = std::forward<SendInAppNotificationActionT>(value);
+  }
+  template <typename SendInAppNotificationActionT = SendInAppNotificationActionDefinition>
+  RuleAction& WithSendInAppNotificationAction(SendInAppNotificationActionT&& value) {
+    SetSendInAppNotificationAction(std::forward<SendInAppNotificationActionT>(value));
     return *this;
   }
   ///@}
@@ -261,7 +329,13 @@ class RuleAction {
 
   EndAssociatedTasksActionDefinition m_endAssociatedTasksAction;
 
+  EndAssociatedEmailsActionDefinition m_endAssociatedEmailsAction;
+
   SubmitAutoEvaluationActionDefinition m_submitAutoEvaluationAction;
+
+  ExtractInformationActionDefinition m_extractInformationAction;
+
+  SendInAppNotificationActionDefinition m_sendInAppNotificationAction;
   bool m_actionTypeHasBeenSet = false;
   bool m_taskActionHasBeenSet = false;
   bool m_eventBridgeActionHasBeenSet = false;
@@ -271,7 +345,10 @@ class RuleAction {
   bool m_updateCaseActionHasBeenSet = false;
   bool m_assignSlaActionHasBeenSet = false;
   bool m_endAssociatedTasksActionHasBeenSet = false;
+  bool m_endAssociatedEmailsActionHasBeenSet = false;
   bool m_submitAutoEvaluationActionHasBeenSet = false;
+  bool m_extractInformationActionHasBeenSet = false;
+  bool m_sendInAppNotificationActionHasBeenSet = false;
 };
 
 }  // namespace Model

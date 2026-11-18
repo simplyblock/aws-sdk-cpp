@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 #include <aws/marketplace-agreement/model/GrantItem.h>
 
@@ -13,16 +14,15 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AgreementService {
 namespace Model {
 
 /**
- * <p>Defines a short-term free pricing model where the buyers aren’t charged
+ * <p>Defines a short-term free pricing model where the buyers aren't charged
  * anything within a specified limit.</p><p><h3>See Also:</h3>   <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/marketplace-agreement-2020-03-01/FreeTrialPricingTerm">AWS
  * API Reference</a></p>
@@ -30,9 +30,9 @@ namespace Model {
 class FreeTrialPricingTerm {
  public:
   AWS_AGREEMENTSERVICE_API FreeTrialPricingTerm() = default;
-  AWS_AGREEMENTSERVICE_API FreeTrialPricingTerm(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API FreeTrialPricingTerm& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_AGREEMENTSERVICE_API FreeTrialPricingTerm(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API FreeTrialPricingTerm& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -72,7 +72,8 @@ class FreeTrialPricingTerm {
 
   ///@{
   /**
-   * <p>Duration of the free trial period (5–31 days). </p>
+   * <p>Duration of the free trial period. The allowed duration depends on the
+   * product type. For SaaS products, the free trial lasts 7 to 90 days.</p>
    */
   inline const Aws::String& GetDuration() const { return m_duration; }
   inline bool DurationHasBeenSet() const { return m_durationHasBeenSet; }

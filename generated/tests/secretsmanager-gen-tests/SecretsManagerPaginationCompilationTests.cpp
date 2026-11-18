@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -9,6 +9,7 @@
 #include <aws/secretsmanager/SecretsManagerClientPagination.h>
 #include <aws/secretsmanager/SecretsManagerPaginationBase.h>
 #include <aws/secretsmanager/model/BatchGetSecretValuePaginationTraits.h>
+#include <aws/secretsmanager/model/ListResourcePoliciesPaginationTraits.h>
 #include <aws/secretsmanager/model/ListSecretsPaginationTraits.h>
 #include <aws/secretsmanager/model/ListSecretVersionIdsPaginationTraits.h>
 
@@ -20,6 +21,6 @@ class SecretsManagerPaginationCompilationTest : public Aws::Testing::AwsCppSdkGT
 
 TEST_F(SecretsManagerPaginationCompilationTest, SecretsManagerPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

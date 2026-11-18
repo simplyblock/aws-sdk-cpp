@@ -9,6 +9,7 @@
 #include <aws/rds/RDSRequest.h>
 #include <aws/rds/RDS_EXPORTS.h>
 #include <aws/rds/model/ClusterScalabilityType.h>
+#include <aws/rds/model/DBClusterAssociatedRole.h>
 #include <aws/rds/model/DatabaseInsightsMode.h>
 #include <aws/rds/model/MasterUserAuthenticationType.h>
 #include <aws/rds/model/RdsCustomClusterConfiguration.h>
@@ -1389,7 +1390,7 @@ class CreateDBClusterRequest : public RDSRequest {
 
   ///@{
   /**
-   * <p>The life cycle type for this DB cluster.</p>  <p>By default, this value
+   * <p>The lifecycle type for this DB cluster.</p>  <p>By default, this value
    * is set to <code>open-source-rds-extended-support</code>, which enrolls your DB
    * cluster into Amazon RDS Extended Support. At the end of standard support, you
    * can avoid charges for Extended Support by setting the value to
@@ -1489,6 +1490,35 @@ class CreateDBClusterRequest : public RDSRequest {
   }
   inline CreateDBClusterRequest& WithWithExpressConfiguration(bool value) {
     SetWithExpressConfiguration(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>A list of Amazon Web Services Identity and Access Management (IAM) roles to
+   * associate with the DB cluster. Each role grants the DB cluster permission to
+   * access other Amazon Web Services on your behalf. For each role, specify a role
+   * ARN and, optionally, the feature name (such as <code>s3Import</code>,
+   * <code>s3Export</code>, or <code>Lambda</code>).</p> <p>Valid for Cluster Type:
+   * Aurora DB clusters only</p>
+   */
+  inline const Aws::Vector<DBClusterAssociatedRole>& GetAssociatedRoles() const { return m_associatedRoles; }
+  inline bool AssociatedRolesHasBeenSet() const { return m_associatedRolesHasBeenSet; }
+  template <typename AssociatedRolesT = Aws::Vector<DBClusterAssociatedRole>>
+  void SetAssociatedRoles(AssociatedRolesT&& value) {
+    m_associatedRolesHasBeenSet = true;
+    m_associatedRoles = std::forward<AssociatedRolesT>(value);
+  }
+  template <typename AssociatedRolesT = Aws::Vector<DBClusterAssociatedRole>>
+  CreateDBClusterRequest& WithAssociatedRoles(AssociatedRolesT&& value) {
+    SetAssociatedRoles(std::forward<AssociatedRolesT>(value));
+    return *this;
+  }
+  template <typename AssociatedRolesT = DBClusterAssociatedRole>
+  CreateDBClusterRequest& AddAssociatedRoles(AssociatedRolesT&& value) {
+    m_associatedRolesHasBeenSet = true;
+    m_associatedRoles.emplace_back(std::forward<AssociatedRolesT>(value));
     return *this;
   }
   ///@}
@@ -1629,6 +1659,8 @@ class CreateDBClusterRequest : public RDSRequest {
 
   bool m_withExpressConfiguration{false};
 
+  Aws::Vector<DBClusterAssociatedRole> m_associatedRoles;
+
   Aws::String m_sourceRegion;
   bool m_availabilityZonesHasBeenSet = false;
   bool m_backupRetentionPeriodHasBeenSet = false;
@@ -1689,6 +1721,7 @@ class CreateDBClusterRequest : public RDSRequest {
   bool m_tagSpecificationsHasBeenSet = false;
   bool m_masterUserAuthenticationTypeHasBeenSet = false;
   bool m_withExpressConfigurationHasBeenSet = false;
+  bool m_associatedRolesHasBeenSet = false;
   bool m_sourceRegionHasBeenSet = false;
 };
 

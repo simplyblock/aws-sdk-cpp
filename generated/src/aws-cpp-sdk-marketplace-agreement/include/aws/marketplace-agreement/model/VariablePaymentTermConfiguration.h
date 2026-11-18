@@ -5,6 +5,7 @@
 
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 #include <aws/marketplace-agreement/model/PaymentRequestApprovalStrategy.h>
 
@@ -12,10 +13,9 @@
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace AgreementService {
 namespace Model {
@@ -29,9 +29,9 @@ namespace Model {
 class VariablePaymentTermConfiguration {
  public:
   AWS_AGREEMENTSERVICE_API VariablePaymentTermConfiguration() = default;
-  AWS_AGREEMENTSERVICE_API VariablePaymentTermConfiguration(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API VariablePaymentTermConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_AGREEMENTSERVICE_API VariablePaymentTermConfiguration(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API VariablePaymentTermConfiguration& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_AGREEMENTSERVICE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -55,7 +55,8 @@ class VariablePaymentTermConfiguration {
    * <p>Defines the duration after which a payment request is automatically approved
    * if no further action is taken. This only applies when the payment request
    * approval strategy is set to <code>AUTO_APPROVE_ON_EXPIRATION</code>. The
-   * duration is represented in the ISO_8601 format (e.g., P10D for 10 days).</p>
+   * duration is represented in the ISO_8601 format (for example, P10D for 10
+   * days).</p>
    */
   inline const Aws::String& GetExpirationDuration() const { return m_expirationDuration; }
   inline bool ExpirationDurationHasBeenSet() const { return m_expirationDurationHasBeenSet; }

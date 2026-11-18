@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/license-manager-user-subscriptions/LicenseManagerUserSubscriptionsEndpointRules.h>
 #include <aws/license-manager-user-subscriptions/LicenseManagerUserSubscriptions_EXPORTS.h>
 
 namespace Aws {
 namespace LicenseManagerUserSubscriptions {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using LicenseManagerUserSubscriptionsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using LicenseManagerUserSubscriptionsEndpointProviderBase =
                          LicenseManagerUserSubscriptionsClientContextParameters>;
 
 using LicenseManagerUserSubscriptionsDefaultEpProviderBase =
-    DefaultEndpointProvider<LicenseManagerUserSubscriptionsClientConfiguration, LicenseManagerUserSubscriptionsBuiltInParameters,
-                            LicenseManagerUserSubscriptionsClientContextParameters>;
+    BDDEndpointProvider<LicenseManagerUserSubscriptionsClientConfiguration, LicenseManagerUserSubscriptionsBuiltInParameters,
+                        LicenseManagerUserSubscriptionsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -45,10 +44,7 @@ class AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API LicenseManagerUserSubscriptionsEnd
  public:
   using LicenseManagerUserSubscriptionsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  LicenseManagerUserSubscriptionsEndpointProvider()
-      : LicenseManagerUserSubscriptionsDefaultEpProviderBase(
-            Aws::LicenseManagerUserSubscriptions::LicenseManagerUserSubscriptionsEndpointRules::GetRulesBlob(),
-            Aws::LicenseManagerUserSubscriptions::LicenseManagerUserSubscriptionsEndpointRules::RulesBlobSize) {}
+  LicenseManagerUserSubscriptionsEndpointProvider();
 
   ~LicenseManagerUserSubscriptionsEndpointProvider() {}
 };

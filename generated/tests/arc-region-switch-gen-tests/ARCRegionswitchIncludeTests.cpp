@@ -7,13 +7,16 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/arc-region-switch/ARCRegionswitchClient.h>
+#include <aws/arc-region-switch/ARCRegionswitchClientPagination.h>
 #include <aws/arc-region-switch/ARCRegionswitchEndpointProvider.h>
-#include <aws/arc-region-switch/ARCRegionswitchEndpointRules.h>
 #include <aws/arc-region-switch/ARCRegionswitchErrorMarshaller.h>
 #include <aws/arc-region-switch/ARCRegionswitchErrors.h>
+#include <aws/arc-region-switch/ARCRegionswitchPaginationBase.h>
 #include <aws/arc-region-switch/ARCRegionswitchRequest.h>
 #include <aws/arc-region-switch/ARCRegionswitchServiceClientModel.h>
+#include <aws/arc-region-switch/ARCRegionswitchWaiter.h>
 #include <aws/arc-region-switch/ARCRegionswitch_EXPORTS.h>
+#include <aws/arc-region-switch/internal/ARCRegionswitchEndpointRules.h>
 #include <aws/arc-region-switch/model/AbbreviatedExecution.h>
 #include <aws/arc-region-switch/model/AbbreviatedPlan.h>
 #include <aws/arc-region-switch/model/AlarmCondition.h>
@@ -29,6 +32,7 @@
 #include <aws/arc-region-switch/model/AuroraServerlessScalingConfiguration.h>
 #include <aws/arc-region-switch/model/CancelPlanExecutionRequest.h>
 #include <aws/arc-region-switch/model/CancelPlanExecutionResult.h>
+#include <aws/arc-region-switch/model/ConflictException.h>
 #include <aws/arc-region-switch/model/CreatePlanRequest.h>
 #include <aws/arc-region-switch/model/CreatePlanResult.h>
 #include <aws/arc-region-switch/model/CustomActionLambdaConfiguration.h>
@@ -62,8 +66,10 @@
 #include <aws/arc-region-switch/model/FailedReportErrorCode.h>
 #include <aws/arc-region-switch/model/FailedReportOutput.h>
 #include <aws/arc-region-switch/model/GeneratedReport.h>
+#include <aws/arc-region-switch/model/GetPlanEvaluationStatusPaginationTraits.h>
 #include <aws/arc-region-switch/model/GetPlanEvaluationStatusRequest.h>
 #include <aws/arc-region-switch/model/GetPlanEvaluationStatusResult.h>
+#include <aws/arc-region-switch/model/GetPlanExecutionPaginationTraits.h>
 #include <aws/arc-region-switch/model/GetPlanExecutionRequest.h>
 #include <aws/arc-region-switch/model/GetPlanExecutionResult.h>
 #include <aws/arc-region-switch/model/GetPlanInRegionRequest.h>
@@ -82,18 +88,27 @@
 #include <aws/arc-region-switch/model/LambdaUngraceful.h>
 #include <aws/arc-region-switch/model/LambdaUngracefulBehavior.h>
 #include <aws/arc-region-switch/model/Lambdas.h>
+#include <aws/arc-region-switch/model/ListPlanExecutionEventsPaginationTraits.h>
 #include <aws/arc-region-switch/model/ListPlanExecutionEventsRequest.h>
 #include <aws/arc-region-switch/model/ListPlanExecutionEventsResult.h>
+#include <aws/arc-region-switch/model/ListPlanExecutionsPaginationTraits.h>
 #include <aws/arc-region-switch/model/ListPlanExecutionsRequest.h>
 #include <aws/arc-region-switch/model/ListPlanExecutionsResult.h>
+#include <aws/arc-region-switch/model/ListPlansInRegionPaginationTraits.h>
 #include <aws/arc-region-switch/model/ListPlansInRegionRequest.h>
 #include <aws/arc-region-switch/model/ListPlansInRegionResult.h>
+#include <aws/arc-region-switch/model/ListPlansPaginationTraits.h>
 #include <aws/arc-region-switch/model/ListPlansRequest.h>
 #include <aws/arc-region-switch/model/ListPlansResult.h>
+#include <aws/arc-region-switch/model/ListRoute53HealthChecksInRegionPaginationTraits.h>
 #include <aws/arc-region-switch/model/ListRoute53HealthChecksInRegionRequest.h>
 #include <aws/arc-region-switch/model/ListRoute53HealthChecksInRegionResult.h>
+#include <aws/arc-region-switch/model/ListRoute53HealthChecksPaginationTraits.h>
 #include <aws/arc-region-switch/model/ListRoute53HealthChecksRequest.h>
 #include <aws/arc-region-switch/model/ListRoute53HealthChecksResult.h>
+#include <aws/arc-region-switch/model/ListServiceQuotaWarningsPaginationTraits.h>
+#include <aws/arc-region-switch/model/ListServiceQuotaWarningsRequest.h>
+#include <aws/arc-region-switch/model/ListServiceQuotaWarningsResult.h>
 #include <aws/arc-region-switch/model/ListTagsForResourceRequest.h>
 #include <aws/arc-region-switch/model/ListTagsForResourceResult.h>
 #include <aws/arc-region-switch/model/MinimalWorkflow.h>
@@ -105,6 +120,9 @@
 #include <aws/arc-region-switch/model/Plan.h>
 #include <aws/arc-region-switch/model/RdsCreateCrossRegionReplicaConfiguration.h>
 #include <aws/arc-region-switch/model/RdsPromoteReadReplicaConfiguration.h>
+#include <aws/arc-region-switch/model/RdsSwitchoverReadReplicaConfiguration.h>
+#include <aws/arc-region-switch/model/RdsUngraceful.h>
+#include <aws/arc-region-switch/model/RdsUngracefulBehavior.h>
 #include <aws/arc-region-switch/model/RecoveryApproach.h>
 #include <aws/arc-region-switch/model/RegionSwitchPlanConfiguration.h>
 #include <aws/arc-region-switch/model/RegionToRunIn.h>
@@ -113,6 +131,7 @@
 #include <aws/arc-region-switch/model/ReportOutputConfiguration.h>
 #include <aws/arc-region-switch/model/ResourceWarning.h>
 #include <aws/arc-region-switch/model/ResourceWarningStatus.h>
+#include <aws/arc-region-switch/model/RetryableConflictException.h>
 #include <aws/arc-region-switch/model/Route53HealthCheck.h>
 #include <aws/arc-region-switch/model/Route53HealthCheckConfiguration.h>
 #include <aws/arc-region-switch/model/Route53HealthCheckStatus.h>
@@ -121,6 +140,13 @@
 #include <aws/arc-region-switch/model/S3ReportOutput.h>
 #include <aws/arc-region-switch/model/S3ReportOutputConfiguration.h>
 #include <aws/arc-region-switch/model/Service.h>
+#include <aws/arc-region-switch/model/ServiceQuotaWarningStatus.h>
+#include <aws/arc-region-switch/model/ServiceQuotaWarningSummary.h>
+#include <aws/arc-region-switch/model/SsmDocumentConfig.h>
+#include <aws/arc-region-switch/model/SsmSendCommandConfiguration.h>
+#include <aws/arc-region-switch/model/SsmSendCommandUngraceful.h>
+#include <aws/arc-region-switch/model/SsmSendCommandUngracefulBehavior.h>
+#include <aws/arc-region-switch/model/SsmTarget.h>
 #include <aws/arc-region-switch/model/StartPlanExecutionRequest.h>
 #include <aws/arc-region-switch/model/StartPlanExecutionResult.h>
 #include <aws/arc-region-switch/model/Step.h>
@@ -140,6 +166,7 @@
 #include <aws/arc-region-switch/model/UpdatePlanExecutionStepResult.h>
 #include <aws/arc-region-switch/model/UpdatePlanRequest.h>
 #include <aws/arc-region-switch/model/UpdatePlanResult.h>
+#include <aws/arc-region-switch/model/WaitELBTargetGroupHealthy.h>
 #include <aws/arc-region-switch/model/Workflow.h>
 #include <aws/arc-region-switch/model/WorkflowTargetAction.h>
 

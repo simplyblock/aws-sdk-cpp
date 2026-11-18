@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/datapipeline/DataPipelineEndpointRules.h>
 #include <aws/datapipeline/DataPipeline_EXPORTS.h>
 
 namespace Aws {
 namespace DataPipeline {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using DataPipelineClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using DataPipelineEndpointProviderBase =
     EndpointProviderBase<DataPipelineClientConfiguration, DataPipelineBuiltInParameters, DataPipelineClientContextParameters>;
 
 using DataPipelineDefaultEpProviderBase =
-    DefaultEndpointProvider<DataPipelineClientConfiguration, DataPipelineBuiltInParameters, DataPipelineClientContextParameters>;
+    BDDEndpointProvider<DataPipelineClientConfiguration, DataPipelineBuiltInParameters, DataPipelineClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_DATAPIPELINE_API DataPipelineEndpointProvider : public DataPipelineDef
  public:
   using DataPipelineResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  DataPipelineEndpointProvider()
-      : DataPipelineDefaultEpProviderBase(Aws::DataPipeline::DataPipelineEndpointRules::GetRulesBlob(),
-                                          Aws::DataPipeline::DataPipelineEndpointRules::RulesBlobSize) {}
+  DataPipelineEndpointProvider();
 
   ~DataPipelineEndpointProvider() {}
 };

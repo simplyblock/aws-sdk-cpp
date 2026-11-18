@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -17,6 +17,7 @@
 #include <aws/eks/model/ListAccessEntriesPaginationTraits.h>
 #include <aws/eks/model/ListEksAnywhereSubscriptionsPaginationTraits.h>
 #include <aws/eks/model/ListFargateProfilesPaginationTraits.h>
+#include <aws/eks/model/ListCertificateAuthoritiesPaginationTraits.h>
 #include <aws/eks/model/ListPodIdentityAssociationsPaginationTraits.h>
 #include <aws/eks/model/ListCapabilitiesPaginationTraits.h>
 #include <aws/eks/model/DescribeClusterVersionsPaginationTraits.h>
@@ -32,6 +33,6 @@ class EKSPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(EKSPaginationCompilationTest, EKSPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

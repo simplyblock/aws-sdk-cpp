@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -8,6 +8,7 @@
 #include <aws/route53globalresolver/Route53GlobalResolverClient.h>
 #include <aws/route53globalresolver/model/ListAccessSourcesPaginationTraits.h>
 #include <aws/route53globalresolver/model/ListAccessTokensPaginationTraits.h>
+#include <aws/route53globalresolver/model/ListCoreNetworkEndpointsPaginationTraits.h>
 #include <aws/route53globalresolver/model/ListDNSViewsPaginationTraits.h>
 #include <aws/route53globalresolver/model/ListFirewallDomainListsPaginationTraits.h>
 #include <aws/route53globalresolver/model/ListFirewallDomainsPaginationTraits.h>
@@ -15,6 +16,7 @@
 #include <aws/route53globalresolver/model/ListGlobalResolversPaginationTraits.h>
 #include <aws/route53globalresolver/model/ListHostedZoneAssociationsPaginationTraits.h>
 #include <aws/route53globalresolver/model/ListManagedFirewallDomainListsPaginationTraits.h>
+#include <aws/route53globalresolver/model/ListSharedDNSViewsPaginationTraits.h>
 
 namespace Aws {
 namespace Route53GlobalResolver {
@@ -25,6 +27,9 @@ using ListAccessSourcesPaginator =
 using ListAccessTokensPaginator =
     Aws::Utils::Pagination::Paginator<Route53GlobalResolverClient, Model::ListAccessTokensRequest,
                                       Pagination::ListAccessTokensPaginationTraits<Route53GlobalResolverClient>>;
+using ListCoreNetworkEndpointsPaginator =
+    Aws::Utils::Pagination::Paginator<Route53GlobalResolverClient, Model::ListCoreNetworkEndpointsRequest,
+                                      Pagination::ListCoreNetworkEndpointsPaginationTraits<Route53GlobalResolverClient>>;
 using ListDNSViewsPaginator = Aws::Utils::Pagination::Paginator<Route53GlobalResolverClient, Model::ListDNSViewsRequest,
                                                                 Pagination::ListDNSViewsPaginationTraits<Route53GlobalResolverClient>>;
 using ListFirewallDomainListsPaginator =
@@ -45,6 +50,9 @@ using ListHostedZoneAssociationsPaginator =
 using ListManagedFirewallDomainListsPaginator =
     Aws::Utils::Pagination::Paginator<Route53GlobalResolverClient, Model::ListManagedFirewallDomainListsRequest,
                                       Pagination::ListManagedFirewallDomainListsPaginationTraits<Route53GlobalResolverClient>>;
+using ListSharedDNSViewsPaginator =
+    Aws::Utils::Pagination::Paginator<Route53GlobalResolverClient, Model::ListSharedDNSViewsRequest,
+                                      Pagination::ListSharedDNSViewsPaginationTraits<Route53GlobalResolverClient>>;
 
 }  // namespace Route53GlobalResolver
 }  // namespace Aws

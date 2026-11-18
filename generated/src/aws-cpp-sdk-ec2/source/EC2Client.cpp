@@ -38,6 +38,7 @@
 #include <aws/ec2/model/AssignPrivateIpAddressesRequest.h>
 #include <aws/ec2/model/AssignPrivateNatGatewayAddressRequest.h>
 #include <aws/ec2/model/AssociateAddressRequest.h>
+#include <aws/ec2/model/AssociateApplicationStatusCheckRequest.h>
 #include <aws/ec2/model/AssociateCapacityReservationBillingOwnerRequest.h>
 #include <aws/ec2/model/AssociateClientVpnTargetNetworkRequest.h>
 #include <aws/ec2/model/AssociateDhcpOptionsRequest.h>
@@ -46,7 +47,9 @@
 #include <aws/ec2/model/AssociateInstanceEventWindowRequest.h>
 #include <aws/ec2/model/AssociateIpamByoasnRequest.h>
 #include <aws/ec2/model/AssociateIpamResourceDiscoveryRequest.h>
+#include <aws/ec2/model/AssociateKmsKeyIdRequest.h>
 #include <aws/ec2/model/AssociateNatGatewayAddressRequest.h>
+#include <aws/ec2/model/AssociateNetworkingFlexCostAllocationPolicyRequest.h>
 #include <aws/ec2/model/AssociateRouteServerRequest.h>
 #include <aws/ec2/model/AssociateRouteTableRequest.h>
 #include <aws/ec2/model/AssociateSecurityGroupVpcRequest.h>
@@ -66,6 +69,7 @@
 #include <aws/ec2/model/AuthorizeClientVpnIngressRequest.h>
 #include <aws/ec2/model/AuthorizeSecurityGroupEgressRequest.h>
 #include <aws/ec2/model/AuthorizeSecurityGroupIngressRequest.h>
+#include <aws/ec2/model/BatchModifyIpamRoutingPolicyRegistrationsRequest.h>
 #include <aws/ec2/model/BundleInstanceRequest.h>
 #include <aws/ec2/model/CancelBundleTaskRequest.h>
 #include <aws/ec2/model/CancelCapacityReservationFleetsRequest.h>
@@ -83,9 +87,11 @@
 #include <aws/ec2/model/CopyImageRequest.h>
 #include <aws/ec2/model/CopySnapshotRequest.h>
 #include <aws/ec2/model/CopyVolumesRequest.h>
+#include <aws/ec2/model/CreateApplicationStatusCheckRequest.h>
 #include <aws/ec2/model/CreateCapacityManagerDataExportRequest.h>
 #include <aws/ec2/model/CreateCapacityReservationBySplittingRequest.h>
 #include <aws/ec2/model/CreateCapacityReservationCancellationQuoteRequest.h>
+#include <aws/ec2/model/CreateCapacityReservationDateChangeQuoteRequest.h>
 #include <aws/ec2/model/CreateCapacityReservationFleetRequest.h>
 #include <aws/ec2/model/CreateCapacityReservationRequest.h>
 #include <aws/ec2/model/CreateCarrierGatewayRequest.h>
@@ -110,16 +116,10 @@
 #include <aws/ec2/model/CreateInternetGatewayRequest.h>
 #include <aws/ec2/model/CreateInterruptibleCapacityReservationAllocationRequest.h>
 #include <aws/ec2/model/CreateIpamExternalResourceVerificationTokenRequest.h>
+#include <aws/ec2/model/CreateIpamInternetRegistryAssociationRequest.h>
 #include <aws/ec2/model/CreateIpamPolicyRequest.h>
 #include <aws/ec2/model/CreateIpamPoolRequest.h>
-#include <aws/ec2/model/CreateIpamPrefixListResolverRequest.h>
-#include <aws/ec2/model/CreateIpamPrefixListResolverTargetRequest.h>
 #include <aws/ec2/model/CreateIpamRequest.h>
-#include <aws/ec2/model/CreateIpamResourceDiscoveryRequest.h>
-#include <aws/ec2/model/CreateIpamScopeRequest.h>
-#include <aws/ec2/model/CreateKeyPairRequest.h>
-#include <aws/ec2/model/CreateLaunchTemplateRequest.h>
-#include <aws/ec2/model/CreateLaunchTemplateVersionRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
 using namespace Aws;
@@ -254,7 +254,8 @@ EC2Client::InvokeOperationOutcome EC2Client::InvokeServiceOperation(const Amazon
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -266,7 +267,7 @@ EC2Client::InvokeOperationOutcome EC2Client::InvokeServiceOperation(const Amazon
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 AcceptAddressTransferOutcome EC2Client::AcceptAddressTransfer(const AcceptAddressTransferRequest& request) const {
@@ -384,6 +385,13 @@ AssociateAddressOutcome EC2Client::AssociateAddress(const AssociateAddressReques
                             : AssociateAddressOutcome(std::move(result.GetError()));
 }
 
+AssociateApplicationStatusCheckOutcome EC2Client::AssociateApplicationStatusCheck(
+    const AssociateApplicationStatusCheckRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? AssociateApplicationStatusCheckOutcome(result.GetResultWithOwnership())
+                            : AssociateApplicationStatusCheckOutcome(std::move(result.GetError()));
+}
+
 AssociateCapacityReservationBillingOwnerOutcome EC2Client::AssociateCapacityReservationBillingOwner(
     const AssociateCapacityReservationBillingOwnerRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
@@ -436,10 +444,23 @@ AssociateIpamResourceDiscoveryOutcome EC2Client::AssociateIpamResourceDiscovery(
                             : AssociateIpamResourceDiscoveryOutcome(std::move(result.GetError()));
 }
 
+AssociateKmsKeyIdOutcome EC2Client::AssociateKmsKeyId(const AssociateKmsKeyIdRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? AssociateKmsKeyIdOutcome(result.GetResultWithOwnership())
+                            : AssociateKmsKeyIdOutcome(std::move(result.GetError()));
+}
+
 AssociateNatGatewayAddressOutcome EC2Client::AssociateNatGatewayAddress(const AssociateNatGatewayAddressRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? AssociateNatGatewayAddressOutcome(result.GetResultWithOwnership())
                             : AssociateNatGatewayAddressOutcome(std::move(result.GetError()));
+}
+
+AssociateNetworkingFlexCostAllocationPolicyOutcome EC2Client::AssociateNetworkingFlexCostAllocationPolicy(
+    const AssociateNetworkingFlexCostAllocationPolicyRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? AssociateNetworkingFlexCostAllocationPolicyOutcome(result.GetResultWithOwnership())
+                            : AssociateNetworkingFlexCostAllocationPolicyOutcome(std::move(result.GetError()));
 }
 
 AssociateRouteServerOutcome EC2Client::AssociateRouteServer(const AssociateRouteServerRequest& request) const {
@@ -559,6 +580,13 @@ AuthorizeSecurityGroupIngressOutcome EC2Client::AuthorizeSecurityGroupIngress(co
                             : AuthorizeSecurityGroupIngressOutcome(std::move(result.GetError()));
 }
 
+BatchModifyIpamRoutingPolicyRegistrationsOutcome EC2Client::BatchModifyIpamRoutingPolicyRegistrations(
+    const BatchModifyIpamRoutingPolicyRegistrationsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? BatchModifyIpamRoutingPolicyRegistrationsOutcome(result.GetResultWithOwnership())
+                            : BatchModifyIpamRoutingPolicyRegistrationsOutcome(std::move(result.GetError()));
+}
+
 BundleInstanceOutcome EC2Client::BundleInstance(const BundleInstanceRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? BundleInstanceOutcome(result.GetResultWithOwnership()) : BundleInstanceOutcome(std::move(result.GetError()));
@@ -674,6 +702,12 @@ CopyVolumesOutcome EC2Client::CopyVolumes(const CopyVolumesRequest& request) con
   return result.IsSuccess() ? CopyVolumesOutcome(result.GetResultWithOwnership()) : CopyVolumesOutcome(std::move(result.GetError()));
 }
 
+CreateApplicationStatusCheckOutcome EC2Client::CreateApplicationStatusCheck(const CreateApplicationStatusCheckRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateApplicationStatusCheckOutcome(result.GetResultWithOwnership())
+                            : CreateApplicationStatusCheckOutcome(std::move(result.GetError()));
+}
+
 CreateCapacityManagerDataExportOutcome EC2Client::CreateCapacityManagerDataExport(
     const CreateCapacityManagerDataExportRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
@@ -699,6 +733,13 @@ CreateCapacityReservationCancellationQuoteOutcome EC2Client::CreateCapacityReser
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateCapacityReservationCancellationQuoteOutcome(result.GetResultWithOwnership())
                             : CreateCapacityReservationCancellationQuoteOutcome(std::move(result.GetError()));
+}
+
+CreateCapacityReservationDateChangeQuoteOutcome EC2Client::CreateCapacityReservationDateChangeQuote(
+    const CreateCapacityReservationDateChangeQuoteRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateCapacityReservationDateChangeQuoteOutcome(result.GetResultWithOwnership())
+                            : CreateCapacityReservationDateChangeQuoteOutcome(std::move(result.GetError()));
 }
 
 CreateCapacityReservationFleetOutcome EC2Client::CreateCapacityReservationFleet(
@@ -844,6 +885,13 @@ CreateIpamExternalResourceVerificationTokenOutcome EC2Client::CreateIpamExternal
                             : CreateIpamExternalResourceVerificationTokenOutcome(std::move(result.GetError()));
 }
 
+CreateIpamInternetRegistryAssociationOutcome EC2Client::CreateIpamInternetRegistryAssociation(
+    const CreateIpamInternetRegistryAssociationRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateIpamInternetRegistryAssociationOutcome(result.GetResultWithOwnership())
+                            : CreateIpamInternetRegistryAssociationOutcome(std::move(result.GetError()));
+}
+
 CreateIpamPolicyOutcome EC2Client::CreateIpamPolicy(const CreateIpamPolicyRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateIpamPolicyOutcome(result.GetResultWithOwnership())
@@ -853,46 +901,4 @@ CreateIpamPolicyOutcome EC2Client::CreateIpamPolicy(const CreateIpamPolicyReques
 CreateIpamPoolOutcome EC2Client::CreateIpamPool(const CreateIpamPoolRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateIpamPoolOutcome(result.GetResultWithOwnership()) : CreateIpamPoolOutcome(std::move(result.GetError()));
-}
-
-CreateIpamPrefixListResolverOutcome EC2Client::CreateIpamPrefixListResolver(const CreateIpamPrefixListResolverRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? CreateIpamPrefixListResolverOutcome(result.GetResultWithOwnership())
-                            : CreateIpamPrefixListResolverOutcome(std::move(result.GetError()));
-}
-
-CreateIpamPrefixListResolverTargetOutcome EC2Client::CreateIpamPrefixListResolverTarget(
-    const CreateIpamPrefixListResolverTargetRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? CreateIpamPrefixListResolverTargetOutcome(result.GetResultWithOwnership())
-                            : CreateIpamPrefixListResolverTargetOutcome(std::move(result.GetError()));
-}
-
-CreateIpamResourceDiscoveryOutcome EC2Client::CreateIpamResourceDiscovery(const CreateIpamResourceDiscoveryRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? CreateIpamResourceDiscoveryOutcome(result.GetResultWithOwnership())
-                            : CreateIpamResourceDiscoveryOutcome(std::move(result.GetError()));
-}
-
-CreateIpamScopeOutcome EC2Client::CreateIpamScope(const CreateIpamScopeRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? CreateIpamScopeOutcome(result.GetResultWithOwnership())
-                            : CreateIpamScopeOutcome(std::move(result.GetError()));
-}
-
-CreateKeyPairOutcome EC2Client::CreateKeyPair(const CreateKeyPairRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? CreateKeyPairOutcome(result.GetResultWithOwnership()) : CreateKeyPairOutcome(std::move(result.GetError()));
-}
-
-CreateLaunchTemplateOutcome EC2Client::CreateLaunchTemplate(const CreateLaunchTemplateRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? CreateLaunchTemplateOutcome(result.GetResultWithOwnership())
-                            : CreateLaunchTemplateOutcome(std::move(result.GetError()));
-}
-
-CreateLaunchTemplateVersionOutcome EC2Client::CreateLaunchTemplateVersion(const CreateLaunchTemplateVersionRequest& request) const {
-  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
-  return result.IsSuccess() ? CreateLaunchTemplateVersionOutcome(result.GetResultWithOwnership())
-                            : CreateLaunchTemplateVersionOutcome(std::move(result.GetError()));
 }

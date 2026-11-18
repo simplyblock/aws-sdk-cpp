@@ -20,16 +20,20 @@
 
 /* Service model headers required in BedrockAgentCoreControlClient header */
 #include <aws/bedrock-agentcore-control/model/AddDatasetExamplesResult.h>
+#include <aws/bedrock-agentcore-control/model/BatchPutGatewayRateLimitsResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateAgentRuntimeEndpointResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateAgentRuntimeResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateApiKeyCredentialProviderResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateBrowserProfileResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateBrowserResult.h>
+#include <aws/bedrock-agentcore-control/model/CreateCapacityProviderResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateCodeInterpreterResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateConfigurationBundleResult.h>
+#include <aws/bedrock-agentcore-control/model/CreateConsentPortalResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateDatasetResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateDatasetVersionResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateEvaluatorResult.h>
+#include <aws/bedrock-agentcore-control/model/CreateGatewayRateLimitResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateGatewayResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateGatewayRuleResult.h>
 #include <aws/bedrock-agentcore-control/model/CreateGatewayTargetResult.h>
@@ -51,11 +55,14 @@
 #include <aws/bedrock-agentcore-control/model/DeleteApiKeyCredentialProviderResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteBrowserProfileResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteBrowserResult.h>
+#include <aws/bedrock-agentcore-control/model/DeleteCapacityProviderResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteCodeInterpreterResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteConfigurationBundleResult.h>
+#include <aws/bedrock-agentcore-control/model/DeleteConsentPortalResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteDatasetExamplesResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteDatasetResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteEvaluatorResult.h>
+#include <aws/bedrock-agentcore-control/model/DeleteGatewayRateLimitResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteGatewayResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteGatewayRuleResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteGatewayTargetResult.h>
@@ -73,16 +80,20 @@
 #include <aws/bedrock-agentcore-control/model/DeleteRegistryResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteResourcePolicyResult.h>
 #include <aws/bedrock-agentcore-control/model/DeleteWorkloadIdentityResult.h>
+#include <aws/bedrock-agentcore-control/model/GetAgentInsightStoreResult.h>
 #include <aws/bedrock-agentcore-control/model/GetAgentRuntimeEndpointResult.h>
 #include <aws/bedrock-agentcore-control/model/GetAgentRuntimeResult.h>
 #include <aws/bedrock-agentcore-control/model/GetApiKeyCredentialProviderResult.h>
 #include <aws/bedrock-agentcore-control/model/GetBrowserProfileResult.h>
 #include <aws/bedrock-agentcore-control/model/GetBrowserResult.h>
+#include <aws/bedrock-agentcore-control/model/GetCapacityProviderResult.h>
 #include <aws/bedrock-agentcore-control/model/GetCodeInterpreterResult.h>
 #include <aws/bedrock-agentcore-control/model/GetConfigurationBundleResult.h>
 #include <aws/bedrock-agentcore-control/model/GetConfigurationBundleVersionResult.h>
+#include <aws/bedrock-agentcore-control/model/GetConsentPortalResult.h>
 #include <aws/bedrock-agentcore-control/model/GetDatasetResult.h>
 #include <aws/bedrock-agentcore-control/model/GetEvaluatorResult.h>
+#include <aws/bedrock-agentcore-control/model/GetGatewayRateLimitResult.h>
 #include <aws/bedrock-agentcore-control/model/GetGatewayResult.h>
 #include <aws/bedrock-agentcore-control/model/GetGatewayRuleResult.h>
 #include <aws/bedrock-agentcore-control/model/GetGatewayTargetResult.h>
@@ -106,7 +117,10 @@
 #include <aws/bedrock-agentcore-control/model/GetTokenVaultRequest.h>
 #include <aws/bedrock-agentcore-control/model/GetTokenVaultResult.h>
 #include <aws/bedrock-agentcore-control/model/GetWorkloadIdentityResult.h>
+#include <aws/bedrock-agentcore-control/model/ListAgentInsightStoresRequest.h>
+#include <aws/bedrock-agentcore-control/model/ListAgentInsightStoresResult.h>
 #include <aws/bedrock-agentcore-control/model/ListAgentRuntimeEndpointsResult.h>
+#include <aws/bedrock-agentcore-control/model/ListAgentRuntimeVersionsByCapacityProviderResult.h>
 #include <aws/bedrock-agentcore-control/model/ListAgentRuntimeVersionsResult.h>
 #include <aws/bedrock-agentcore-control/model/ListAgentRuntimesRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListAgentRuntimesResult.h>
@@ -116,17 +130,22 @@
 #include <aws/bedrock-agentcore-control/model/ListBrowserProfilesResult.h>
 #include <aws/bedrock-agentcore-control/model/ListBrowsersRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListBrowsersResult.h>
+#include <aws/bedrock-agentcore-control/model/ListCapacityProvidersRequest.h>
+#include <aws/bedrock-agentcore-control/model/ListCapacityProvidersResult.h>
 #include <aws/bedrock-agentcore-control/model/ListCodeInterpretersRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListCodeInterpretersResult.h>
 #include <aws/bedrock-agentcore-control/model/ListConfigurationBundleVersionsResult.h>
 #include <aws/bedrock-agentcore-control/model/ListConfigurationBundlesRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListConfigurationBundlesResult.h>
+#include <aws/bedrock-agentcore-control/model/ListConsentPortalsRequest.h>
+#include <aws/bedrock-agentcore-control/model/ListConsentPortalsResult.h>
 #include <aws/bedrock-agentcore-control/model/ListDatasetExamplesResult.h>
 #include <aws/bedrock-agentcore-control/model/ListDatasetVersionsResult.h>
 #include <aws/bedrock-agentcore-control/model/ListDatasetsRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListDatasetsResult.h>
 #include <aws/bedrock-agentcore-control/model/ListEvaluatorsRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListEvaluatorsResult.h>
+#include <aws/bedrock-agentcore-control/model/ListGatewayRateLimitsResult.h>
 #include <aws/bedrock-agentcore-control/model/ListGatewayRulesResult.h>
 #include <aws/bedrock-agentcore-control/model/ListGatewayTargetsResult.h>
 #include <aws/bedrock-agentcore-control/model/ListGatewaysRequest.h>
@@ -162,19 +181,25 @@
 #include <aws/bedrock-agentcore-control/model/ListWorkloadIdentitiesRequest.h>
 #include <aws/bedrock-agentcore-control/model/ListWorkloadIdentitiesResult.h>
 #include <aws/bedrock-agentcore-control/model/PutResourcePolicyResult.h>
+#include <aws/bedrock-agentcore-control/model/ResetTokenVaultKeyMaterialResult.h>
+#include <aws/bedrock-agentcore-control/model/RotatePaymentConnectorCredentialsResult.h>
 #include <aws/bedrock-agentcore-control/model/SetTokenVaultCMKResult.h>
 #include <aws/bedrock-agentcore-control/model/StartPolicyGenerationResult.h>
 #include <aws/bedrock-agentcore-control/model/SubmitRegistryRecordForApprovalResult.h>
 #include <aws/bedrock-agentcore-control/model/SynchronizeGatewayTargetsResult.h>
 #include <aws/bedrock-agentcore-control/model/TagResourceResult.h>
 #include <aws/bedrock-agentcore-control/model/UntagResourceResult.h>
+#include <aws/bedrock-agentcore-control/model/UpdateAgentInsightStoreResult.h>
 #include <aws/bedrock-agentcore-control/model/UpdateAgentRuntimeEndpointResult.h>
 #include <aws/bedrock-agentcore-control/model/UpdateAgentRuntimeResult.h>
 #include <aws/bedrock-agentcore-control/model/UpdateApiKeyCredentialProviderResult.h>
+#include <aws/bedrock-agentcore-control/model/UpdateCapacityProviderResult.h>
 #include <aws/bedrock-agentcore-control/model/UpdateConfigurationBundleResult.h>
+#include <aws/bedrock-agentcore-control/model/UpdateConsentPortalResult.h>
 #include <aws/bedrock-agentcore-control/model/UpdateDatasetExamplesResult.h>
 #include <aws/bedrock-agentcore-control/model/UpdateDatasetResult.h>
 #include <aws/bedrock-agentcore-control/model/UpdateEvaluatorResult.h>
+#include <aws/bedrock-agentcore-control/model/UpdateGatewayRateLimitResult.h>
 #include <aws/bedrock-agentcore-control/model/UpdateGatewayResult.h>
 #include <aws/bedrock-agentcore-control/model/UpdateGatewayRuleResult.h>
 #include <aws/bedrock-agentcore-control/model/UpdateGatewayTargetResult.h>
@@ -226,17 +251,21 @@ using BedrockAgentCoreControlEndpointProvider = Aws::BedrockAgentCoreControl::En
 namespace Model {
 /* Service model forward declarations required in BedrockAgentCoreControlClient header */
 class AddDatasetExamplesRequest;
+class BatchPutGatewayRateLimitsRequest;
 class CreateAgentRuntimeRequest;
 class CreateAgentRuntimeEndpointRequest;
 class CreateApiKeyCredentialProviderRequest;
 class CreateBrowserRequest;
 class CreateBrowserProfileRequest;
+class CreateCapacityProviderRequest;
 class CreateCodeInterpreterRequest;
 class CreateConfigurationBundleRequest;
+class CreateConsentPortalRequest;
 class CreateDatasetRequest;
 class CreateDatasetVersionRequest;
 class CreateEvaluatorRequest;
 class CreateGatewayRequest;
+class CreateGatewayRateLimitRequest;
 class CreateGatewayRuleRequest;
 class CreateGatewayTargetRequest;
 class CreateHarnessRequest;
@@ -257,12 +286,15 @@ class DeleteAgentRuntimeEndpointRequest;
 class DeleteApiKeyCredentialProviderRequest;
 class DeleteBrowserRequest;
 class DeleteBrowserProfileRequest;
+class DeleteCapacityProviderRequest;
 class DeleteCodeInterpreterRequest;
 class DeleteConfigurationBundleRequest;
+class DeleteConsentPortalRequest;
 class DeleteDatasetRequest;
 class DeleteDatasetExamplesRequest;
 class DeleteEvaluatorRequest;
 class DeleteGatewayRequest;
+class DeleteGatewayRateLimitRequest;
 class DeleteGatewayRuleRequest;
 class DeleteGatewayTargetRequest;
 class DeleteHarnessRequest;
@@ -279,17 +311,21 @@ class DeleteRegistryRequest;
 class DeleteRegistryRecordRequest;
 class DeleteResourcePolicyRequest;
 class DeleteWorkloadIdentityRequest;
+class GetAgentInsightStoreRequest;
 class GetAgentRuntimeRequest;
 class GetAgentRuntimeEndpointRequest;
 class GetApiKeyCredentialProviderRequest;
 class GetBrowserRequest;
 class GetBrowserProfileRequest;
+class GetCapacityProviderRequest;
 class GetCodeInterpreterRequest;
 class GetConfigurationBundleRequest;
 class GetConfigurationBundleVersionRequest;
+class GetConsentPortalRequest;
 class GetDatasetRequest;
 class GetEvaluatorRequest;
 class GetGatewayRequest;
+class GetGatewayRateLimitRequest;
 class GetGatewayRuleRequest;
 class GetGatewayTargetRequest;
 class GetHarnessRequest;
@@ -311,19 +347,24 @@ class GetRegistryRecordRequest;
 class GetResourcePolicyRequest;
 class GetTokenVaultRequest;
 class GetWorkloadIdentityRequest;
+class ListAgentInsightStoresRequest;
 class ListAgentRuntimeEndpointsRequest;
 class ListAgentRuntimeVersionsRequest;
+class ListAgentRuntimeVersionsByCapacityProviderRequest;
 class ListAgentRuntimesRequest;
 class ListApiKeyCredentialProvidersRequest;
 class ListBrowserProfilesRequest;
 class ListBrowsersRequest;
+class ListCapacityProvidersRequest;
 class ListCodeInterpretersRequest;
 class ListConfigurationBundleVersionsRequest;
 class ListConfigurationBundlesRequest;
+class ListConsentPortalsRequest;
 class ListDatasetExamplesRequest;
 class ListDatasetVersionsRequest;
 class ListDatasetsRequest;
 class ListEvaluatorsRequest;
+class ListGatewayRateLimitsRequest;
 class ListGatewayRulesRequest;
 class ListGatewayTargetsRequest;
 class ListGatewaysRequest;
@@ -348,20 +389,26 @@ class ListRegistryRecordsRequest;
 class ListTagsForResourceRequest;
 class ListWorkloadIdentitiesRequest;
 class PutResourcePolicyRequest;
+class ResetTokenVaultKeyMaterialRequest;
+class RotatePaymentConnectorCredentialsRequest;
 class SetTokenVaultCMKRequest;
 class StartPolicyGenerationRequest;
 class SubmitRegistryRecordForApprovalRequest;
 class SynchronizeGatewayTargetsRequest;
 class TagResourceRequest;
 class UntagResourceRequest;
+class UpdateAgentInsightStoreRequest;
 class UpdateAgentRuntimeRequest;
 class UpdateAgentRuntimeEndpointRequest;
 class UpdateApiKeyCredentialProviderRequest;
+class UpdateCapacityProviderRequest;
 class UpdateConfigurationBundleRequest;
+class UpdateConsentPortalRequest;
 class UpdateDatasetRequest;
 class UpdateDatasetExamplesRequest;
 class UpdateEvaluatorRequest;
 class UpdateGatewayRequest;
+class UpdateGatewayRateLimitRequest;
 class UpdateGatewayRuleRequest;
 class UpdateGatewayTargetRequest;
 class UpdateHarnessRequest;
@@ -382,17 +429,21 @@ class UpdateWorkloadIdentityRequest;
 
 /* Service model Outcome class definitions */
 typedef Aws::Utils::Outcome<AddDatasetExamplesResult, BedrockAgentCoreControlError> AddDatasetExamplesOutcome;
+typedef Aws::Utils::Outcome<BatchPutGatewayRateLimitsResult, BedrockAgentCoreControlError> BatchPutGatewayRateLimitsOutcome;
 typedef Aws::Utils::Outcome<CreateAgentRuntimeResult, BedrockAgentCoreControlError> CreateAgentRuntimeOutcome;
 typedef Aws::Utils::Outcome<CreateAgentRuntimeEndpointResult, BedrockAgentCoreControlError> CreateAgentRuntimeEndpointOutcome;
 typedef Aws::Utils::Outcome<CreateApiKeyCredentialProviderResult, BedrockAgentCoreControlError> CreateApiKeyCredentialProviderOutcome;
 typedef Aws::Utils::Outcome<CreateBrowserResult, BedrockAgentCoreControlError> CreateBrowserOutcome;
 typedef Aws::Utils::Outcome<CreateBrowserProfileResult, BedrockAgentCoreControlError> CreateBrowserProfileOutcome;
+typedef Aws::Utils::Outcome<CreateCapacityProviderResult, BedrockAgentCoreControlError> CreateCapacityProviderOutcome;
 typedef Aws::Utils::Outcome<CreateCodeInterpreterResult, BedrockAgentCoreControlError> CreateCodeInterpreterOutcome;
 typedef Aws::Utils::Outcome<CreateConfigurationBundleResult, BedrockAgentCoreControlError> CreateConfigurationBundleOutcome;
+typedef Aws::Utils::Outcome<CreateConsentPortalResult, BedrockAgentCoreControlError> CreateConsentPortalOutcome;
 typedef Aws::Utils::Outcome<CreateDatasetResult, BedrockAgentCoreControlError> CreateDatasetOutcome;
 typedef Aws::Utils::Outcome<CreateDatasetVersionResult, BedrockAgentCoreControlError> CreateDatasetVersionOutcome;
 typedef Aws::Utils::Outcome<CreateEvaluatorResult, BedrockAgentCoreControlError> CreateEvaluatorOutcome;
 typedef Aws::Utils::Outcome<CreateGatewayResult, BedrockAgentCoreControlError> CreateGatewayOutcome;
+typedef Aws::Utils::Outcome<CreateGatewayRateLimitResult, BedrockAgentCoreControlError> CreateGatewayRateLimitOutcome;
 typedef Aws::Utils::Outcome<CreateGatewayRuleResult, BedrockAgentCoreControlError> CreateGatewayRuleOutcome;
 typedef Aws::Utils::Outcome<CreateGatewayTargetResult, BedrockAgentCoreControlError> CreateGatewayTargetOutcome;
 typedef Aws::Utils::Outcome<CreateHarnessResult, BedrockAgentCoreControlError> CreateHarnessOutcome;
@@ -413,12 +464,15 @@ typedef Aws::Utils::Outcome<DeleteAgentRuntimeEndpointResult, BedrockAgentCoreCo
 typedef Aws::Utils::Outcome<DeleteApiKeyCredentialProviderResult, BedrockAgentCoreControlError> DeleteApiKeyCredentialProviderOutcome;
 typedef Aws::Utils::Outcome<DeleteBrowserResult, BedrockAgentCoreControlError> DeleteBrowserOutcome;
 typedef Aws::Utils::Outcome<DeleteBrowserProfileResult, BedrockAgentCoreControlError> DeleteBrowserProfileOutcome;
+typedef Aws::Utils::Outcome<DeleteCapacityProviderResult, BedrockAgentCoreControlError> DeleteCapacityProviderOutcome;
 typedef Aws::Utils::Outcome<DeleteCodeInterpreterResult, BedrockAgentCoreControlError> DeleteCodeInterpreterOutcome;
 typedef Aws::Utils::Outcome<DeleteConfigurationBundleResult, BedrockAgentCoreControlError> DeleteConfigurationBundleOutcome;
+typedef Aws::Utils::Outcome<DeleteConsentPortalResult, BedrockAgentCoreControlError> DeleteConsentPortalOutcome;
 typedef Aws::Utils::Outcome<DeleteDatasetResult, BedrockAgentCoreControlError> DeleteDatasetOutcome;
 typedef Aws::Utils::Outcome<DeleteDatasetExamplesResult, BedrockAgentCoreControlError> DeleteDatasetExamplesOutcome;
 typedef Aws::Utils::Outcome<DeleteEvaluatorResult, BedrockAgentCoreControlError> DeleteEvaluatorOutcome;
 typedef Aws::Utils::Outcome<DeleteGatewayResult, BedrockAgentCoreControlError> DeleteGatewayOutcome;
+typedef Aws::Utils::Outcome<DeleteGatewayRateLimitResult, BedrockAgentCoreControlError> DeleteGatewayRateLimitOutcome;
 typedef Aws::Utils::Outcome<DeleteGatewayRuleResult, BedrockAgentCoreControlError> DeleteGatewayRuleOutcome;
 typedef Aws::Utils::Outcome<DeleteGatewayTargetResult, BedrockAgentCoreControlError> DeleteGatewayTargetOutcome;
 typedef Aws::Utils::Outcome<DeleteHarnessResult, BedrockAgentCoreControlError> DeleteHarnessOutcome;
@@ -435,17 +489,21 @@ typedef Aws::Utils::Outcome<DeleteRegistryResult, BedrockAgentCoreControlError> 
 typedef Aws::Utils::Outcome<DeleteRegistryRecordResult, BedrockAgentCoreControlError> DeleteRegistryRecordOutcome;
 typedef Aws::Utils::Outcome<DeleteResourcePolicyResult, BedrockAgentCoreControlError> DeleteResourcePolicyOutcome;
 typedef Aws::Utils::Outcome<DeleteWorkloadIdentityResult, BedrockAgentCoreControlError> DeleteWorkloadIdentityOutcome;
+typedef Aws::Utils::Outcome<GetAgentInsightStoreResult, BedrockAgentCoreControlError> GetAgentInsightStoreOutcome;
 typedef Aws::Utils::Outcome<GetAgentRuntimeResult, BedrockAgentCoreControlError> GetAgentRuntimeOutcome;
 typedef Aws::Utils::Outcome<GetAgentRuntimeEndpointResult, BedrockAgentCoreControlError> GetAgentRuntimeEndpointOutcome;
 typedef Aws::Utils::Outcome<GetApiKeyCredentialProviderResult, BedrockAgentCoreControlError> GetApiKeyCredentialProviderOutcome;
 typedef Aws::Utils::Outcome<GetBrowserResult, BedrockAgentCoreControlError> GetBrowserOutcome;
 typedef Aws::Utils::Outcome<GetBrowserProfileResult, BedrockAgentCoreControlError> GetBrowserProfileOutcome;
+typedef Aws::Utils::Outcome<GetCapacityProviderResult, BedrockAgentCoreControlError> GetCapacityProviderOutcome;
 typedef Aws::Utils::Outcome<GetCodeInterpreterResult, BedrockAgentCoreControlError> GetCodeInterpreterOutcome;
 typedef Aws::Utils::Outcome<GetConfigurationBundleResult, BedrockAgentCoreControlError> GetConfigurationBundleOutcome;
 typedef Aws::Utils::Outcome<GetConfigurationBundleVersionResult, BedrockAgentCoreControlError> GetConfigurationBundleVersionOutcome;
+typedef Aws::Utils::Outcome<GetConsentPortalResult, BedrockAgentCoreControlError> GetConsentPortalOutcome;
 typedef Aws::Utils::Outcome<GetDatasetResult, BedrockAgentCoreControlError> GetDatasetOutcome;
 typedef Aws::Utils::Outcome<GetEvaluatorResult, BedrockAgentCoreControlError> GetEvaluatorOutcome;
 typedef Aws::Utils::Outcome<GetGatewayResult, BedrockAgentCoreControlError> GetGatewayOutcome;
+typedef Aws::Utils::Outcome<GetGatewayRateLimitResult, BedrockAgentCoreControlError> GetGatewayRateLimitOutcome;
 typedef Aws::Utils::Outcome<GetGatewayRuleResult, BedrockAgentCoreControlError> GetGatewayRuleOutcome;
 typedef Aws::Utils::Outcome<GetGatewayTargetResult, BedrockAgentCoreControlError> GetGatewayTargetOutcome;
 typedef Aws::Utils::Outcome<GetHarnessResult, BedrockAgentCoreControlError> GetHarnessOutcome;
@@ -467,19 +525,25 @@ typedef Aws::Utils::Outcome<GetRegistryRecordResult, BedrockAgentCoreControlErro
 typedef Aws::Utils::Outcome<GetResourcePolicyResult, BedrockAgentCoreControlError> GetResourcePolicyOutcome;
 typedef Aws::Utils::Outcome<GetTokenVaultResult, BedrockAgentCoreControlError> GetTokenVaultOutcome;
 typedef Aws::Utils::Outcome<GetWorkloadIdentityResult, BedrockAgentCoreControlError> GetWorkloadIdentityOutcome;
+typedef Aws::Utils::Outcome<ListAgentInsightStoresResult, BedrockAgentCoreControlError> ListAgentInsightStoresOutcome;
 typedef Aws::Utils::Outcome<ListAgentRuntimeEndpointsResult, BedrockAgentCoreControlError> ListAgentRuntimeEndpointsOutcome;
 typedef Aws::Utils::Outcome<ListAgentRuntimeVersionsResult, BedrockAgentCoreControlError> ListAgentRuntimeVersionsOutcome;
+typedef Aws::Utils::Outcome<ListAgentRuntimeVersionsByCapacityProviderResult, BedrockAgentCoreControlError>
+    ListAgentRuntimeVersionsByCapacityProviderOutcome;
 typedef Aws::Utils::Outcome<ListAgentRuntimesResult, BedrockAgentCoreControlError> ListAgentRuntimesOutcome;
 typedef Aws::Utils::Outcome<ListApiKeyCredentialProvidersResult, BedrockAgentCoreControlError> ListApiKeyCredentialProvidersOutcome;
 typedef Aws::Utils::Outcome<ListBrowserProfilesResult, BedrockAgentCoreControlError> ListBrowserProfilesOutcome;
 typedef Aws::Utils::Outcome<ListBrowsersResult, BedrockAgentCoreControlError> ListBrowsersOutcome;
+typedef Aws::Utils::Outcome<ListCapacityProvidersResult, BedrockAgentCoreControlError> ListCapacityProvidersOutcome;
 typedef Aws::Utils::Outcome<ListCodeInterpretersResult, BedrockAgentCoreControlError> ListCodeInterpretersOutcome;
 typedef Aws::Utils::Outcome<ListConfigurationBundleVersionsResult, BedrockAgentCoreControlError> ListConfigurationBundleVersionsOutcome;
 typedef Aws::Utils::Outcome<ListConfigurationBundlesResult, BedrockAgentCoreControlError> ListConfigurationBundlesOutcome;
+typedef Aws::Utils::Outcome<ListConsentPortalsResult, BedrockAgentCoreControlError> ListConsentPortalsOutcome;
 typedef Aws::Utils::Outcome<ListDatasetExamplesResult, BedrockAgentCoreControlError> ListDatasetExamplesOutcome;
 typedef Aws::Utils::Outcome<ListDatasetVersionsResult, BedrockAgentCoreControlError> ListDatasetVersionsOutcome;
 typedef Aws::Utils::Outcome<ListDatasetsResult, BedrockAgentCoreControlError> ListDatasetsOutcome;
 typedef Aws::Utils::Outcome<ListEvaluatorsResult, BedrockAgentCoreControlError> ListEvaluatorsOutcome;
+typedef Aws::Utils::Outcome<ListGatewayRateLimitsResult, BedrockAgentCoreControlError> ListGatewayRateLimitsOutcome;
 typedef Aws::Utils::Outcome<ListGatewayRulesResult, BedrockAgentCoreControlError> ListGatewayRulesOutcome;
 typedef Aws::Utils::Outcome<ListGatewayTargetsResult, BedrockAgentCoreControlError> ListGatewayTargetsOutcome;
 typedef Aws::Utils::Outcome<ListGatewaysResult, BedrockAgentCoreControlError> ListGatewaysOutcome;
@@ -504,20 +568,26 @@ typedef Aws::Utils::Outcome<ListRegistryRecordsResult, BedrockAgentCoreControlEr
 typedef Aws::Utils::Outcome<ListTagsForResourceResult, BedrockAgentCoreControlError> ListTagsForResourceOutcome;
 typedef Aws::Utils::Outcome<ListWorkloadIdentitiesResult, BedrockAgentCoreControlError> ListWorkloadIdentitiesOutcome;
 typedef Aws::Utils::Outcome<PutResourcePolicyResult, BedrockAgentCoreControlError> PutResourcePolicyOutcome;
+typedef Aws::Utils::Outcome<ResetTokenVaultKeyMaterialResult, BedrockAgentCoreControlError> ResetTokenVaultKeyMaterialOutcome;
+typedef Aws::Utils::Outcome<RotatePaymentConnectorCredentialsResult, BedrockAgentCoreControlError> RotatePaymentConnectorCredentialsOutcome;
 typedef Aws::Utils::Outcome<SetTokenVaultCMKResult, BedrockAgentCoreControlError> SetTokenVaultCMKOutcome;
 typedef Aws::Utils::Outcome<StartPolicyGenerationResult, BedrockAgentCoreControlError> StartPolicyGenerationOutcome;
 typedef Aws::Utils::Outcome<SubmitRegistryRecordForApprovalResult, BedrockAgentCoreControlError> SubmitRegistryRecordForApprovalOutcome;
 typedef Aws::Utils::Outcome<SynchronizeGatewayTargetsResult, BedrockAgentCoreControlError> SynchronizeGatewayTargetsOutcome;
 typedef Aws::Utils::Outcome<TagResourceResult, BedrockAgentCoreControlError> TagResourceOutcome;
 typedef Aws::Utils::Outcome<UntagResourceResult, BedrockAgentCoreControlError> UntagResourceOutcome;
+typedef Aws::Utils::Outcome<UpdateAgentInsightStoreResult, BedrockAgentCoreControlError> UpdateAgentInsightStoreOutcome;
 typedef Aws::Utils::Outcome<UpdateAgentRuntimeResult, BedrockAgentCoreControlError> UpdateAgentRuntimeOutcome;
 typedef Aws::Utils::Outcome<UpdateAgentRuntimeEndpointResult, BedrockAgentCoreControlError> UpdateAgentRuntimeEndpointOutcome;
 typedef Aws::Utils::Outcome<UpdateApiKeyCredentialProviderResult, BedrockAgentCoreControlError> UpdateApiKeyCredentialProviderOutcome;
+typedef Aws::Utils::Outcome<UpdateCapacityProviderResult, BedrockAgentCoreControlError> UpdateCapacityProviderOutcome;
 typedef Aws::Utils::Outcome<UpdateConfigurationBundleResult, BedrockAgentCoreControlError> UpdateConfigurationBundleOutcome;
+typedef Aws::Utils::Outcome<UpdateConsentPortalResult, BedrockAgentCoreControlError> UpdateConsentPortalOutcome;
 typedef Aws::Utils::Outcome<UpdateDatasetResult, BedrockAgentCoreControlError> UpdateDatasetOutcome;
 typedef Aws::Utils::Outcome<UpdateDatasetExamplesResult, BedrockAgentCoreControlError> UpdateDatasetExamplesOutcome;
 typedef Aws::Utils::Outcome<UpdateEvaluatorResult, BedrockAgentCoreControlError> UpdateEvaluatorOutcome;
 typedef Aws::Utils::Outcome<UpdateGatewayResult, BedrockAgentCoreControlError> UpdateGatewayOutcome;
+typedef Aws::Utils::Outcome<UpdateGatewayRateLimitResult, BedrockAgentCoreControlError> UpdateGatewayRateLimitOutcome;
 typedef Aws::Utils::Outcome<UpdateGatewayRuleResult, BedrockAgentCoreControlError> UpdateGatewayRuleOutcome;
 typedef Aws::Utils::Outcome<UpdateGatewayTargetResult, BedrockAgentCoreControlError> UpdateGatewayTargetOutcome;
 typedef Aws::Utils::Outcome<UpdateHarnessResult, BedrockAgentCoreControlError> UpdateHarnessOutcome;
@@ -538,17 +608,21 @@ typedef Aws::Utils::Outcome<UpdateWorkloadIdentityResult, BedrockAgentCoreContro
 
 /* Service model Outcome callable definitions */
 typedef std::future<AddDatasetExamplesOutcome> AddDatasetExamplesOutcomeCallable;
+typedef std::future<BatchPutGatewayRateLimitsOutcome> BatchPutGatewayRateLimitsOutcomeCallable;
 typedef std::future<CreateAgentRuntimeOutcome> CreateAgentRuntimeOutcomeCallable;
 typedef std::future<CreateAgentRuntimeEndpointOutcome> CreateAgentRuntimeEndpointOutcomeCallable;
 typedef std::future<CreateApiKeyCredentialProviderOutcome> CreateApiKeyCredentialProviderOutcomeCallable;
 typedef std::future<CreateBrowserOutcome> CreateBrowserOutcomeCallable;
 typedef std::future<CreateBrowserProfileOutcome> CreateBrowserProfileOutcomeCallable;
+typedef std::future<CreateCapacityProviderOutcome> CreateCapacityProviderOutcomeCallable;
 typedef std::future<CreateCodeInterpreterOutcome> CreateCodeInterpreterOutcomeCallable;
 typedef std::future<CreateConfigurationBundleOutcome> CreateConfigurationBundleOutcomeCallable;
+typedef std::future<CreateConsentPortalOutcome> CreateConsentPortalOutcomeCallable;
 typedef std::future<CreateDatasetOutcome> CreateDatasetOutcomeCallable;
 typedef std::future<CreateDatasetVersionOutcome> CreateDatasetVersionOutcomeCallable;
 typedef std::future<CreateEvaluatorOutcome> CreateEvaluatorOutcomeCallable;
 typedef std::future<CreateGatewayOutcome> CreateGatewayOutcomeCallable;
+typedef std::future<CreateGatewayRateLimitOutcome> CreateGatewayRateLimitOutcomeCallable;
 typedef std::future<CreateGatewayRuleOutcome> CreateGatewayRuleOutcomeCallable;
 typedef std::future<CreateGatewayTargetOutcome> CreateGatewayTargetOutcomeCallable;
 typedef std::future<CreateHarnessOutcome> CreateHarnessOutcomeCallable;
@@ -569,12 +643,15 @@ typedef std::future<DeleteAgentRuntimeEndpointOutcome> DeleteAgentRuntimeEndpoin
 typedef std::future<DeleteApiKeyCredentialProviderOutcome> DeleteApiKeyCredentialProviderOutcomeCallable;
 typedef std::future<DeleteBrowserOutcome> DeleteBrowserOutcomeCallable;
 typedef std::future<DeleteBrowserProfileOutcome> DeleteBrowserProfileOutcomeCallable;
+typedef std::future<DeleteCapacityProviderOutcome> DeleteCapacityProviderOutcomeCallable;
 typedef std::future<DeleteCodeInterpreterOutcome> DeleteCodeInterpreterOutcomeCallable;
 typedef std::future<DeleteConfigurationBundleOutcome> DeleteConfigurationBundleOutcomeCallable;
+typedef std::future<DeleteConsentPortalOutcome> DeleteConsentPortalOutcomeCallable;
 typedef std::future<DeleteDatasetOutcome> DeleteDatasetOutcomeCallable;
 typedef std::future<DeleteDatasetExamplesOutcome> DeleteDatasetExamplesOutcomeCallable;
 typedef std::future<DeleteEvaluatorOutcome> DeleteEvaluatorOutcomeCallable;
 typedef std::future<DeleteGatewayOutcome> DeleteGatewayOutcomeCallable;
+typedef std::future<DeleteGatewayRateLimitOutcome> DeleteGatewayRateLimitOutcomeCallable;
 typedef std::future<DeleteGatewayRuleOutcome> DeleteGatewayRuleOutcomeCallable;
 typedef std::future<DeleteGatewayTargetOutcome> DeleteGatewayTargetOutcomeCallable;
 typedef std::future<DeleteHarnessOutcome> DeleteHarnessOutcomeCallable;
@@ -591,17 +668,21 @@ typedef std::future<DeleteRegistryOutcome> DeleteRegistryOutcomeCallable;
 typedef std::future<DeleteRegistryRecordOutcome> DeleteRegistryRecordOutcomeCallable;
 typedef std::future<DeleteResourcePolicyOutcome> DeleteResourcePolicyOutcomeCallable;
 typedef std::future<DeleteWorkloadIdentityOutcome> DeleteWorkloadIdentityOutcomeCallable;
+typedef std::future<GetAgentInsightStoreOutcome> GetAgentInsightStoreOutcomeCallable;
 typedef std::future<GetAgentRuntimeOutcome> GetAgentRuntimeOutcomeCallable;
 typedef std::future<GetAgentRuntimeEndpointOutcome> GetAgentRuntimeEndpointOutcomeCallable;
 typedef std::future<GetApiKeyCredentialProviderOutcome> GetApiKeyCredentialProviderOutcomeCallable;
 typedef std::future<GetBrowserOutcome> GetBrowserOutcomeCallable;
 typedef std::future<GetBrowserProfileOutcome> GetBrowserProfileOutcomeCallable;
+typedef std::future<GetCapacityProviderOutcome> GetCapacityProviderOutcomeCallable;
 typedef std::future<GetCodeInterpreterOutcome> GetCodeInterpreterOutcomeCallable;
 typedef std::future<GetConfigurationBundleOutcome> GetConfigurationBundleOutcomeCallable;
 typedef std::future<GetConfigurationBundleVersionOutcome> GetConfigurationBundleVersionOutcomeCallable;
+typedef std::future<GetConsentPortalOutcome> GetConsentPortalOutcomeCallable;
 typedef std::future<GetDatasetOutcome> GetDatasetOutcomeCallable;
 typedef std::future<GetEvaluatorOutcome> GetEvaluatorOutcomeCallable;
 typedef std::future<GetGatewayOutcome> GetGatewayOutcomeCallable;
+typedef std::future<GetGatewayRateLimitOutcome> GetGatewayRateLimitOutcomeCallable;
 typedef std::future<GetGatewayRuleOutcome> GetGatewayRuleOutcomeCallable;
 typedef std::future<GetGatewayTargetOutcome> GetGatewayTargetOutcomeCallable;
 typedef std::future<GetHarnessOutcome> GetHarnessOutcomeCallable;
@@ -623,19 +704,24 @@ typedef std::future<GetRegistryRecordOutcome> GetRegistryRecordOutcomeCallable;
 typedef std::future<GetResourcePolicyOutcome> GetResourcePolicyOutcomeCallable;
 typedef std::future<GetTokenVaultOutcome> GetTokenVaultOutcomeCallable;
 typedef std::future<GetWorkloadIdentityOutcome> GetWorkloadIdentityOutcomeCallable;
+typedef std::future<ListAgentInsightStoresOutcome> ListAgentInsightStoresOutcomeCallable;
 typedef std::future<ListAgentRuntimeEndpointsOutcome> ListAgentRuntimeEndpointsOutcomeCallable;
 typedef std::future<ListAgentRuntimeVersionsOutcome> ListAgentRuntimeVersionsOutcomeCallable;
+typedef std::future<ListAgentRuntimeVersionsByCapacityProviderOutcome> ListAgentRuntimeVersionsByCapacityProviderOutcomeCallable;
 typedef std::future<ListAgentRuntimesOutcome> ListAgentRuntimesOutcomeCallable;
 typedef std::future<ListApiKeyCredentialProvidersOutcome> ListApiKeyCredentialProvidersOutcomeCallable;
 typedef std::future<ListBrowserProfilesOutcome> ListBrowserProfilesOutcomeCallable;
 typedef std::future<ListBrowsersOutcome> ListBrowsersOutcomeCallable;
+typedef std::future<ListCapacityProvidersOutcome> ListCapacityProvidersOutcomeCallable;
 typedef std::future<ListCodeInterpretersOutcome> ListCodeInterpretersOutcomeCallable;
 typedef std::future<ListConfigurationBundleVersionsOutcome> ListConfigurationBundleVersionsOutcomeCallable;
 typedef std::future<ListConfigurationBundlesOutcome> ListConfigurationBundlesOutcomeCallable;
+typedef std::future<ListConsentPortalsOutcome> ListConsentPortalsOutcomeCallable;
 typedef std::future<ListDatasetExamplesOutcome> ListDatasetExamplesOutcomeCallable;
 typedef std::future<ListDatasetVersionsOutcome> ListDatasetVersionsOutcomeCallable;
 typedef std::future<ListDatasetsOutcome> ListDatasetsOutcomeCallable;
 typedef std::future<ListEvaluatorsOutcome> ListEvaluatorsOutcomeCallable;
+typedef std::future<ListGatewayRateLimitsOutcome> ListGatewayRateLimitsOutcomeCallable;
 typedef std::future<ListGatewayRulesOutcome> ListGatewayRulesOutcomeCallable;
 typedef std::future<ListGatewayTargetsOutcome> ListGatewayTargetsOutcomeCallable;
 typedef std::future<ListGatewaysOutcome> ListGatewaysOutcomeCallable;
@@ -660,20 +746,26 @@ typedef std::future<ListRegistryRecordsOutcome> ListRegistryRecordsOutcomeCallab
 typedef std::future<ListTagsForResourceOutcome> ListTagsForResourceOutcomeCallable;
 typedef std::future<ListWorkloadIdentitiesOutcome> ListWorkloadIdentitiesOutcomeCallable;
 typedef std::future<PutResourcePolicyOutcome> PutResourcePolicyOutcomeCallable;
+typedef std::future<ResetTokenVaultKeyMaterialOutcome> ResetTokenVaultKeyMaterialOutcomeCallable;
+typedef std::future<RotatePaymentConnectorCredentialsOutcome> RotatePaymentConnectorCredentialsOutcomeCallable;
 typedef std::future<SetTokenVaultCMKOutcome> SetTokenVaultCMKOutcomeCallable;
 typedef std::future<StartPolicyGenerationOutcome> StartPolicyGenerationOutcomeCallable;
 typedef std::future<SubmitRegistryRecordForApprovalOutcome> SubmitRegistryRecordForApprovalOutcomeCallable;
 typedef std::future<SynchronizeGatewayTargetsOutcome> SynchronizeGatewayTargetsOutcomeCallable;
 typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
 typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
+typedef std::future<UpdateAgentInsightStoreOutcome> UpdateAgentInsightStoreOutcomeCallable;
 typedef std::future<UpdateAgentRuntimeOutcome> UpdateAgentRuntimeOutcomeCallable;
 typedef std::future<UpdateAgentRuntimeEndpointOutcome> UpdateAgentRuntimeEndpointOutcomeCallable;
 typedef std::future<UpdateApiKeyCredentialProviderOutcome> UpdateApiKeyCredentialProviderOutcomeCallable;
+typedef std::future<UpdateCapacityProviderOutcome> UpdateCapacityProviderOutcomeCallable;
 typedef std::future<UpdateConfigurationBundleOutcome> UpdateConfigurationBundleOutcomeCallable;
+typedef std::future<UpdateConsentPortalOutcome> UpdateConsentPortalOutcomeCallable;
 typedef std::future<UpdateDatasetOutcome> UpdateDatasetOutcomeCallable;
 typedef std::future<UpdateDatasetExamplesOutcome> UpdateDatasetExamplesOutcomeCallable;
 typedef std::future<UpdateEvaluatorOutcome> UpdateEvaluatorOutcomeCallable;
 typedef std::future<UpdateGatewayOutcome> UpdateGatewayOutcomeCallable;
+typedef std::future<UpdateGatewayRateLimitOutcome> UpdateGatewayRateLimitOutcomeCallable;
 typedef std::future<UpdateGatewayRuleOutcome> UpdateGatewayRuleOutcomeCallable;
 typedef std::future<UpdateGatewayTargetOutcome> UpdateGatewayTargetOutcomeCallable;
 typedef std::future<UpdateHarnessOutcome> UpdateHarnessOutcomeCallable;
@@ -699,6 +791,9 @@ class BedrockAgentCoreControlClient;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::AddDatasetExamplesRequest&,
                            const Model::AddDatasetExamplesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     AddDatasetExamplesResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::BatchPutGatewayRateLimitsRequest&,
+                           const Model::BatchPutGatewayRateLimitsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    BatchPutGatewayRateLimitsResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::CreateAgentRuntimeRequest&,
                            const Model::CreateAgentRuntimeOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateAgentRuntimeResponseReceivedHandler;
@@ -715,12 +810,18 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Cr
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::CreateBrowserProfileRequest&,
                            const Model::CreateBrowserProfileOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateBrowserProfileResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::CreateCapacityProviderRequest&,
+                           const Model::CreateCapacityProviderOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateCapacityProviderResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::CreateCodeInterpreterRequest&,
                            const Model::CreateCodeInterpreterOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateCodeInterpreterResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::CreateConfigurationBundleRequest&,
                            const Model::CreateConfigurationBundleOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateConfigurationBundleResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::CreateConsentPortalRequest&,
+                           const Model::CreateConsentPortalOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateConsentPortalResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::CreateDatasetRequest&, const Model::CreateDatasetOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateDatasetResponseReceivedHandler;
@@ -733,6 +834,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Cr
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::CreateGatewayRequest&, const Model::CreateGatewayOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateGatewayResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::CreateGatewayRateLimitRequest&,
+                           const Model::CreateGatewayRateLimitOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateGatewayRateLimitResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::CreateGatewayRuleRequest&,
                            const Model::CreateGatewayRuleOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateGatewayRuleResponseReceivedHandler;
@@ -797,12 +901,18 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::De
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::DeleteBrowserProfileRequest&,
                            const Model::DeleteBrowserProfileOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteBrowserProfileResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::DeleteCapacityProviderRequest&,
+                           const Model::DeleteCapacityProviderOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteCapacityProviderResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::DeleteCodeInterpreterRequest&,
                            const Model::DeleteCodeInterpreterOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteCodeInterpreterResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::DeleteConfigurationBundleRequest&,
                            const Model::DeleteConfigurationBundleOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteConfigurationBundleResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::DeleteConsentPortalRequest&,
+                           const Model::DeleteConsentPortalOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteConsentPortalResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::DeleteDatasetRequest&, const Model::DeleteDatasetOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteDatasetResponseReceivedHandler;
@@ -815,6 +925,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::De
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::DeleteGatewayRequest&, const Model::DeleteGatewayOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteGatewayResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::DeleteGatewayRateLimitRequest&,
+                           const Model::DeleteGatewayRateLimitOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteGatewayRateLimitResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::DeleteGatewayRuleRequest&,
                            const Model::DeleteGatewayRuleOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteGatewayRuleResponseReceivedHandler;
@@ -866,6 +979,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::De
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::DeleteWorkloadIdentityRequest&,
                            const Model::DeleteWorkloadIdentityOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteWorkloadIdentityResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetAgentInsightStoreRequest&,
+                           const Model::GetAgentInsightStoreOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetAgentInsightStoreResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetAgentRuntimeRequest&, const Model::GetAgentRuntimeOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetAgentRuntimeResponseReceivedHandler;
@@ -881,6 +997,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Ge
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetBrowserProfileRequest&,
                            const Model::GetBrowserProfileOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetBrowserProfileResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetCapacityProviderRequest&,
+                           const Model::GetCapacityProviderOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetCapacityProviderResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetCodeInterpreterRequest&,
                            const Model::GetCodeInterpreterOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetCodeInterpreterResponseReceivedHandler;
@@ -891,6 +1010,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Ge
                            const Model::GetConfigurationBundleVersionOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetConfigurationBundleVersionResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetConsentPortalRequest&,
+                           const Model::GetConsentPortalOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetConsentPortalResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetDatasetRequest&, const Model::GetDatasetOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetDatasetResponseReceivedHandler;
@@ -900,6 +1022,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Ge
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetGatewayRequest&, const Model::GetGatewayOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetGatewayResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetGatewayRateLimitRequest&,
+                           const Model::GetGatewayRateLimitOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetGatewayRateLimitResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetGatewayRuleRequest&, const Model::GetGatewayRuleOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetGatewayRuleResponseReceivedHandler;
@@ -964,12 +1089,19 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Ge
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::GetWorkloadIdentityRequest&,
                            const Model::GetWorkloadIdentityOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetWorkloadIdentityResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListAgentInsightStoresRequest&,
+                           const Model::ListAgentInsightStoresOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListAgentInsightStoresResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListAgentRuntimeEndpointsRequest&,
                            const Model::ListAgentRuntimeEndpointsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListAgentRuntimeEndpointsResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListAgentRuntimeVersionsRequest&,
                            const Model::ListAgentRuntimeVersionsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListAgentRuntimeVersionsResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListAgentRuntimeVersionsByCapacityProviderRequest&,
+                           const Model::ListAgentRuntimeVersionsByCapacityProviderOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListAgentRuntimeVersionsByCapacityProviderResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListAgentRuntimesRequest&,
                            const Model::ListAgentRuntimesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListAgentRuntimesResponseReceivedHandler;
@@ -983,6 +1115,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Li
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListBrowsersRequest&, const Model::ListBrowsersOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListBrowsersResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListCapacityProvidersRequest&,
+                           const Model::ListCapacityProvidersOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListCapacityProvidersResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListCodeInterpretersRequest&,
                            const Model::ListCodeInterpretersOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListCodeInterpretersResponseReceivedHandler;
@@ -993,6 +1128,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Li
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListConfigurationBundlesRequest&,
                            const Model::ListConfigurationBundlesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListConfigurationBundlesResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListConsentPortalsRequest&,
+                           const Model::ListConsentPortalsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListConsentPortalsResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListDatasetExamplesRequest&,
                            const Model::ListDatasetExamplesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListDatasetExamplesResponseReceivedHandler;
@@ -1005,6 +1143,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Li
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListEvaluatorsRequest&, const Model::ListEvaluatorsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListEvaluatorsResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListGatewayRateLimitsRequest&,
+                           const Model::ListGatewayRateLimitsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListGatewayRateLimitsResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ListGatewayRulesRequest&,
                            const Model::ListGatewayRulesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListGatewayRulesResponseReceivedHandler;
@@ -1080,6 +1221,13 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Li
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::PutResourcePolicyRequest&,
                            const Model::PutResourcePolicyOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     PutResourcePolicyResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::ResetTokenVaultKeyMaterialRequest&,
+                           const Model::ResetTokenVaultKeyMaterialOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ResetTokenVaultKeyMaterialResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::RotatePaymentConnectorCredentialsRequest&,
+                           const Model::RotatePaymentConnectorCredentialsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    RotatePaymentConnectorCredentialsResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::SetTokenVaultCMKRequest&,
                            const Model::SetTokenVaultCMKOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     SetTokenVaultCMKResponseReceivedHandler;
@@ -1099,6 +1247,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Ta
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::UntagResourceRequest&, const Model::UntagResourceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UntagResourceResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::UpdateAgentInsightStoreRequest&,
+                           const Model::UpdateAgentInsightStoreOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateAgentInsightStoreResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::UpdateAgentRuntimeRequest&,
                            const Model::UpdateAgentRuntimeOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateAgentRuntimeResponseReceivedHandler;
@@ -1109,9 +1260,15 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Up
                            const Model::UpdateApiKeyCredentialProviderOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateApiKeyCredentialProviderResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::UpdateCapacityProviderRequest&,
+                           const Model::UpdateCapacityProviderOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateCapacityProviderResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::UpdateConfigurationBundleRequest&,
                            const Model::UpdateConfigurationBundleOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateConfigurationBundleResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::UpdateConsentPortalRequest&,
+                           const Model::UpdateConsentPortalOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateConsentPortalResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::UpdateDatasetRequest&, const Model::UpdateDatasetOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateDatasetResponseReceivedHandler;
@@ -1124,6 +1281,9 @@ typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::Up
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::UpdateGatewayRequest&, const Model::UpdateGatewayOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateGatewayResponseReceivedHandler;
+typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::UpdateGatewayRateLimitRequest&,
+                           const Model::UpdateGatewayRateLimitOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateGatewayRateLimitResponseReceivedHandler;
 typedef std::function<void(const BedrockAgentCoreControlClient*, const Model::UpdateGatewayRuleRequest&,
                            const Model::UpdateGatewayRuleOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateGatewayRuleResponseReceivedHandler;

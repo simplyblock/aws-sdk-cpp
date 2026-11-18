@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/lexv2-runtime/LexRuntimeV2EndpointRules.h>
 #include <aws/lexv2-runtime/LexRuntimeV2_EXPORTS.h>
 
 namespace Aws {
 namespace LexRuntimeV2 {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using LexRuntimeV2ClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using LexRuntimeV2EndpointProviderBase =
     EndpointProviderBase<LexRuntimeV2ClientConfiguration, LexRuntimeV2BuiltInParameters, LexRuntimeV2ClientContextParameters>;
 
 using LexRuntimeV2DefaultEpProviderBase =
-    DefaultEndpointProvider<LexRuntimeV2ClientConfiguration, LexRuntimeV2BuiltInParameters, LexRuntimeV2ClientContextParameters>;
+    BDDEndpointProvider<LexRuntimeV2ClientConfiguration, LexRuntimeV2BuiltInParameters, LexRuntimeV2ClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_LEXRUNTIMEV2_API LexRuntimeV2EndpointProvider : public LexRuntimeV2Def
  public:
   using LexRuntimeV2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  LexRuntimeV2EndpointProvider()
-      : LexRuntimeV2DefaultEpProviderBase(Aws::LexRuntimeV2::LexRuntimeV2EndpointRules::GetRulesBlob(),
-                                          Aws::LexRuntimeV2::LexRuntimeV2EndpointRules::RulesBlobSize) {}
+  LexRuntimeV2EndpointProvider();
 
   ~LexRuntimeV2EndpointProvider() {}
 };

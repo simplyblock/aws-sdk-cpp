@@ -7,9 +7,11 @@
 #include <aws/bedrock-agentcore/BedrockAgentCoreRequest.h>
 #include <aws/bedrock-agentcore/BedrockAgentCore_EXPORTS.h>
 #include <aws/bedrock-agentcore/model/DataSourceConfig.h>
+#include <aws/bedrock-agentcore/model/DatasetExecutionConfig.h>
 #include <aws/bedrock-agentcore/model/EvaluationMetadata.h>
 #include <aws/bedrock-agentcore/model/Evaluator.h>
 #include <aws/bedrock-agentcore/model/Insight.h>
+#include <aws/bedrock-agentcore/model/OutputConfig.h>
 #include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
@@ -221,6 +223,48 @@ class StartBatchEvaluationRequest : public BedrockAgentCoreRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+
+  inline const OutputConfig& GetOutputConfig() const { return m_outputConfig; }
+  inline bool OutputConfigHasBeenSet() const { return m_outputConfigHasBeenSet; }
+  template <typename OutputConfigT = OutputConfig>
+  void SetOutputConfig(OutputConfigT&& value) {
+    m_outputConfigHasBeenSet = true;
+    m_outputConfig = std::forward<OutputConfigT>(value);
+  }
+  template <typename OutputConfigT = OutputConfig>
+  StartBatchEvaluationRequest& WithOutputConfig(OutputConfigT&& value) {
+    SetOutputConfig(std::forward<OutputConfigT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The configuration for running the scenarios in a dataset against an agent
+   * before evaluating the resulting sessions. When you specify this field, the batch
+   * evaluation runs each scenario in the dataset against the agent. It then
+   * evaluates the sessions that the agent produces. You must also specify
+   * <code>evaluators</code> and a <code>dataSourceConfig</code> that uses
+   * <code>cloudWatchLogs</code>. Configure <code>cloudWatchLogs</code> with the
+   * service name and log groups that the agent uses for its traces. You can't
+   * specify <code>insights</code> or an <code>onlineEvaluationConfigSource</code>
+   * data source with this field.</p>
+   */
+  inline const DatasetExecutionConfig& GetDatasetExecutionConfig() const { return m_datasetExecutionConfig; }
+  inline bool DatasetExecutionConfigHasBeenSet() const { return m_datasetExecutionConfigHasBeenSet; }
+  template <typename DatasetExecutionConfigT = DatasetExecutionConfig>
+  void SetDatasetExecutionConfig(DatasetExecutionConfigT&& value) {
+    m_datasetExecutionConfigHasBeenSet = true;
+    m_datasetExecutionConfig = std::forward<DatasetExecutionConfigT>(value);
+  }
+  template <typename DatasetExecutionConfigT = DatasetExecutionConfig>
+  StartBatchEvaluationRequest& WithDatasetExecutionConfig(DatasetExecutionConfigT&& value) {
+    SetDatasetExecutionConfig(std::forward<DatasetExecutionConfigT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_batchEvaluationName;
 
@@ -239,6 +283,10 @@ class StartBatchEvaluationRequest : public BedrockAgentCoreRequest {
   Aws::String m_kmsKeyArn;
 
   Aws::String m_description;
+
+  OutputConfig m_outputConfig;
+
+  DatasetExecutionConfig m_datasetExecutionConfig;
   bool m_batchEvaluationNameHasBeenSet = false;
   bool m_evaluatorsHasBeenSet = false;
   bool m_insightsHasBeenSet = false;
@@ -248,6 +296,8 @@ class StartBatchEvaluationRequest : public BedrockAgentCoreRequest {
   bool m_tagsHasBeenSet = false;
   bool m_kmsKeyArnHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
+  bool m_outputConfigHasBeenSet = false;
+  bool m_datasetExecutionConfigHasBeenSet = false;
 };
 
 }  // namespace Model

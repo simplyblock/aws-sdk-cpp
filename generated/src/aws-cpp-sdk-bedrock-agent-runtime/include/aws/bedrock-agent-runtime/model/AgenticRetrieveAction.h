@@ -6,7 +6,9 @@
 #pragma once
 #include <aws/bedrock-agent-runtime/BedrockAgentRuntime_EXPORTS.h>
 #include <aws/bedrock-agent-runtime/model/AgenticRetrieveActionDetails.h>
+#include <aws/bedrock-agent-runtime/model/AgenticRetrieveCodeExecutionDetails.h>
 #include <aws/bedrock-agent-runtime/model/AgenticRetrieveFullDocExpansionDetails.h>
+#include <aws/bedrock-agent-runtime/model/AgenticRetrieveMemoryRetrieveDetails.h>
 
 #include <utility>
 
@@ -34,6 +36,24 @@ class AgenticRetrieveAction {
 
   ///@{
   /**
+   * <p>The details of code that the agent chose to run.</p>
+   */
+  inline const AgenticRetrieveCodeExecutionDetails& GetCodeExecution() const { return m_codeExecution; }
+  inline bool CodeExecutionHasBeenSet() const { return m_codeExecutionHasBeenSet; }
+  template <typename CodeExecutionT = AgenticRetrieveCodeExecutionDetails>
+  void SetCodeExecution(CodeExecutionT&& value) {
+    m_codeExecutionHasBeenSet = true;
+    m_codeExecution = std::forward<CodeExecutionT>(value);
+  }
+  template <typename CodeExecutionT = AgenticRetrieveCodeExecutionDetails>
+  AgenticRetrieveAction& WithCodeExecution(CodeExecutionT&& value) {
+    SetCodeExecution(std::forward<CodeExecutionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>Details of a full document expansion action.</p>
    */
   inline const AgenticRetrieveFullDocExpansionDetails& GetFullDocumentExpansion() const { return m_fullDocumentExpansion; }
@@ -46,6 +66,25 @@ class AgenticRetrieveAction {
   template <typename FullDocumentExpansionT = AgenticRetrieveFullDocExpansionDetails>
   AgenticRetrieveAction& WithFullDocumentExpansion(FullDocumentExpansionT&& value) {
     SetFullDocumentExpansion(std::forward<FullDocumentExpansionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The details of a long-term memory retrieval that the agent chose to
+   * perform.</p>
+   */
+  inline const AgenticRetrieveMemoryRetrieveDetails& GetMemoryRetrieve() const { return m_memoryRetrieve; }
+  inline bool MemoryRetrieveHasBeenSet() const { return m_memoryRetrieveHasBeenSet; }
+  template <typename MemoryRetrieveT = AgenticRetrieveMemoryRetrieveDetails>
+  void SetMemoryRetrieve(MemoryRetrieveT&& value) {
+    m_memoryRetrieveHasBeenSet = true;
+    m_memoryRetrieve = std::forward<MemoryRetrieveT>(value);
+  }
+  template <typename MemoryRetrieveT = AgenticRetrieveMemoryRetrieveDetails>
+  AgenticRetrieveAction& WithMemoryRetrieve(MemoryRetrieveT&& value) {
+    SetMemoryRetrieve(std::forward<MemoryRetrieveT>(value));
     return *this;
   }
   ///@}
@@ -68,10 +107,16 @@ class AgenticRetrieveAction {
   }
   ///@}
  private:
+  AgenticRetrieveCodeExecutionDetails m_codeExecution;
+
   AgenticRetrieveFullDocExpansionDetails m_fullDocumentExpansion;
 
+  AgenticRetrieveMemoryRetrieveDetails m_memoryRetrieve;
+
   AgenticRetrieveActionDetails m_retrieve;
+  bool m_codeExecutionHasBeenSet = false;
   bool m_fullDocumentExpansionHasBeenSet = false;
+  bool m_memoryRetrieveHasBeenSet = false;
   bool m_retrieveHasBeenSet = false;
 };
 

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticfilesystem/EFSEndpointRules.h>
 #include <aws/elasticfilesystem/EFS_EXPORTS.h>
 
 namespace Aws {
 namespace EFS {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using EFSClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using EFSBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using EFSEndpointProviderBase = EndpointProviderBase<EFSClientConfiguration, EFSBuiltInParameters, EFSClientContextParameters>;
 
-using EFSDefaultEpProviderBase = DefaultEndpointProvider<EFSClientConfiguration, EFSBuiltInParameters, EFSClientContextParameters>;
+using EFSDefaultEpProviderBase = BDDEndpointProvider<EFSClientConfiguration, EFSBuiltInParameters, EFSClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_EFS_API EFSEndpointProvider : public EFSDefaultEpProviderBase {
  public:
   using EFSResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  EFSEndpointProvider() : EFSDefaultEpProviderBase(Aws::EFS::EFSEndpointRules::GetRulesBlob(), Aws::EFS::EFSEndpointRules::RulesBlobSize) {}
+  EFSEndpointProvider();
 
   ~EFSEndpointProvider() {}
 };

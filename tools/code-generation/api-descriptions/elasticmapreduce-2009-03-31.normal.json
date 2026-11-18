@@ -1282,20 +1282,6 @@
         "FAILED"
       ]
     },
-    "CertificateAuthority":{
-      "type":"structure",
-      "members":{
-        "CertificateArn":{
-          "shape":"XmlString",
-          "documentation":"<p>The Amazon Resource Name (ARN) of the certificate authority in Amazon Web Services Private CA that issued the Spark Connect server certificate.</p>"
-        },
-        "CertificateData":{
-          "shape":"XmlString",
-          "documentation":"<p>The PEM-encoded root CA certificate data. Provide this certificate to your client's trust store when connecting directly to the Spark Connect server over VPC peering.</p>"
-        }
-      },
-      "documentation":"<p>Describes the certificate authority used to establish an mTLS connection to the Spark Connect server when connecting directly over VPC peering.</p>"
-    },
     "ClientRequestToken":{
       "type":"string",
       "max":36,
@@ -5546,10 +5532,6 @@
           "shape":"Long",
           "documentation":"<p>The idle timeout, in minutes. If the session is idle for this duration, Amazon EMR automatically terminates it.</p>"
         },
-        "CertificateAuthority":{
-          "shape":"CertificateAuthority",
-          "documentation":"<p>The certificate authority used to establish an mTLS connection to the Spark Connect server when connecting directly over VPC peering.</p>"
-        },
         "ServerUrl":{
           "shape":"XmlString",
           "documentation":"<p>The Spark Connect server URL for the session. Use this URL with the <code>Credentials</code> returned by <code>GetSessionEndpoint</code> to connect directly to the session over VPC peering.</p>"
@@ -6089,9 +6071,27 @@
         "EncryptionKeyArn":{
           "shape":"String",
           "documentation":"<p>The KMS key ARN to encrypt the logs published to the given Amazon S3 destination.</p>"
+        },
+        "AdditionalInfo":{
+          "shape":"StepAdditionalInfo",
+          "documentation":"<p>Additional information about the step, including the YARN application IDs associated with the step and the resource manager that processed it.</p>"
         }
       },
       "documentation":"<p>This represents a step in a cluster.</p>"
+    },
+    "StepAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "ResourceManagerApplicationIds":{
+          "shape":"StringList",
+          "documentation":"<p>The YARN application IDs associated with the step.</p>"
+        },
+        "ResourceManager":{
+          "shape":"String",
+          "documentation":"<p>The address of the YARN resource manager that processed the step.</p>"
+        }
+      },
+      "documentation":"<p>Additional information about a step's execution, available after the step has started running.</p>"
     },
     "StepCancellationOption":{
       "type":"string",
@@ -6295,6 +6295,10 @@
         "EncryptionKeyArn":{
           "shape":"String",
           "documentation":"<p>The KMS key ARN to encrypt the logs published to the given Amazon S3 destination.</p>"
+        },
+        "AdditionalInfo":{
+          "shape":"StepAdditionalInfo",
+          "documentation":"<p>Additional information about the step, including the YARN application IDs associated with the step and the resource manager that processed it.</p>"
         }
       },
       "documentation":"<p>The summary of the cluster step.</p>"

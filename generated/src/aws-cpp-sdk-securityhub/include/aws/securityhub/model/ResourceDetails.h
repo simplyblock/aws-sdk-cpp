@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <aws/core/utils/Document.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/securityhub/SecurityHub_EXPORTS.h>
@@ -1993,6 +1994,42 @@ class ResourceDetails {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Details about an Azure resource that is related to a finding.</p>
+   */
+  inline Aws::Utils::DocumentView GetAzureResource() const { return m_azureResource; }
+  inline bool AzureResourceHasBeenSet() const { return m_azureResourceHasBeenSet; }
+  template <typename AzureResourceT = Aws::Utils::Document>
+  void SetAzureResource(AzureResourceT&& value) {
+    m_azureResourceHasBeenSet = true;
+    m_azureResource = std::forward<AzureResourceT>(value);
+  }
+  template <typename AzureResourceT = Aws::Utils::Document>
+  ResourceDetails& WithAzureResource(AzureResourceT&& value) {
+    SetAzureResource(std::forward<AzureResourceT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Details about a GCP resource that is related to a finding.</p>
+   */
+  inline Aws::Utils::DocumentView GetGcpResource() const { return m_gcpResource; }
+  inline bool GcpResourceHasBeenSet() const { return m_gcpResourceHasBeenSet; }
+  template <typename GcpResourceT = Aws::Utils::Document>
+  void SetGcpResource(GcpResourceT&& value) {
+    m_gcpResourceHasBeenSet = true;
+    m_gcpResource = std::forward<GcpResourceT>(value);
+  }
+  template <typename GcpResourceT = Aws::Utils::Document>
+  ResourceDetails& WithGcpResource(GcpResourceT&& value) {
+    SetGcpResource(std::forward<GcpResourceT>(value));
+    return *this;
+  }
+  ///@}
  private:
   AwsAutoScalingAutoScalingGroupDetails m_awsAutoScalingAutoScalingGroup;
 
@@ -2193,6 +2230,10 @@ class ResourceDetails {
   AwsEc2ClientVpnEndpointDetails m_awsEc2ClientVpnEndpoint;
 
   CodeRepositoryDetails m_codeRepository;
+
+  Aws::Utils::Document m_azureResource;
+
+  Aws::Utils::Document m_gcpResource;
   bool m_awsAutoScalingAutoScalingGroupHasBeenSet = false;
   bool m_awsCodeBuildProjectHasBeenSet = false;
   bool m_awsCloudFrontDistributionHasBeenSet = false;
@@ -2293,6 +2334,8 @@ class ResourceDetails {
   bool m_awsS3AccessPointHasBeenSet = false;
   bool m_awsEc2ClientVpnEndpointHasBeenSet = false;
   bool m_codeRepositoryHasBeenSet = false;
+  bool m_azureResourceHasBeenSet = false;
+  bool m_gcpResourceHasBeenSet = false;
 };
 
 }  // namespace Model

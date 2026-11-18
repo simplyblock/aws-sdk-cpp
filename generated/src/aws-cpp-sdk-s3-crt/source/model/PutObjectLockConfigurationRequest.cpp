@@ -41,7 +41,7 @@ Aws::String PutObjectLockConfigurationRequest::SerializePayload() const {
 
   m_objectLockConfiguration.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -112,3 +112,5 @@ Aws::String PutObjectLockConfigurationRequest::GetChecksumAlgorithmName() const 
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
 }
+
+bool PutObjectLockConfigurationRequest::ChecksumAlgorithmIsSet() const { return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET; }

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/outposts/OutpostsEndpointRules.h>
 #include <aws/outposts/Outposts_EXPORTS.h>
 
 namespace Aws {
 namespace Outposts {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using OutpostsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using OutpostsEndpointProviderBase =
     EndpointProviderBase<OutpostsClientConfiguration, OutpostsBuiltInParameters, OutpostsClientContextParameters>;
 
 using OutpostsDefaultEpProviderBase =
-    DefaultEndpointProvider<OutpostsClientConfiguration, OutpostsBuiltInParameters, OutpostsClientContextParameters>;
+    BDDEndpointProvider<OutpostsClientConfiguration, OutpostsBuiltInParameters, OutpostsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_OUTPOSTS_API OutpostsEndpointProvider : public OutpostsDefaultEpProvid
  public:
   using OutpostsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  OutpostsEndpointProvider()
-      : OutpostsDefaultEpProviderBase(Aws::Outposts::OutpostsEndpointRules::GetRulesBlob(),
-                                      Aws::Outposts::OutpostsEndpointRules::RulesBlobSize) {}
+  OutpostsEndpointProvider();
 
   ~OutpostsEndpointProvider() {}
 };

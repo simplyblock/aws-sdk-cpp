@@ -7,6 +7,7 @@
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/sesv2/SESV2_EXPORTS.h>
+#include <aws/sesv2/model/SendingStatus.h>
 
 #include <utility>
 
@@ -104,6 +105,26 @@ class TenantInfo {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The status of sending capability for the tenant:</p> <ul> <li> <p>
+   * <code>ENABLED</code> – Sending is allowed for the tenant.</p> </li> <li> <p>
+   * <code>DISABLED</code> – Sending is prevented for the tenant.</p> </li> <li> <p>
+   * <code>REINSTATED</code> – Sending is allowed even if there are active reputation
+   * findings.</p> </li> </ul>
+   */
+  inline SendingStatus GetSendingStatus() const { return m_sendingStatus; }
+  inline bool SendingStatusHasBeenSet() const { return m_sendingStatusHasBeenSet; }
+  inline void SetSendingStatus(SendingStatus value) {
+    m_sendingStatusHasBeenSet = true;
+    m_sendingStatus = value;
+  }
+  inline TenantInfo& WithSendingStatus(SendingStatus value) {
+    SetSendingStatus(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_tenantName;
 
@@ -112,10 +133,13 @@ class TenantInfo {
   Aws::String m_tenantArn;
 
   Aws::Utils::DateTime m_createdTimestamp{};
+
+  SendingStatus m_sendingStatus{SendingStatus::NOT_SET};
   bool m_tenantNameHasBeenSet = false;
   bool m_tenantIdHasBeenSet = false;
   bool m_tenantArnHasBeenSet = false;
   bool m_createdTimestampHasBeenSet = false;
+  bool m_sendingStatusHasBeenSet = false;
 };
 
 }  // namespace Model

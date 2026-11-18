@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-connectcampaignsv2 "C++ SDK for the AWS connectcampaignsv2 service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-connectcampaignsv2 "C++ SDK for AmazonConnectCampaignServiceV2" aws-cpp-sdk-core)
 
 file(GLOB AWS_CONNECTCAMPAIGNSV2_HEADERS
     "include/aws/connectcampaignsv2/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CONNECTCAMPAIGNSV2_HEADERS
 
 file(GLOB AWS_CONNECTCAMPAIGNSV2_MODEL_HEADERS
     "include/aws/connectcampaignsv2/model/*.h"
+)
+
+file(GLOB AWS_CONNECTCAMPAIGNSV2_INTERNAL_HEADERS
+    "include/aws/connectcampaignsv2/internal/*.h"
 )
 
 file(GLOB AWS_CONNECTCAMPAIGNSV2_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CONNECTCAMPAIGNSV2_MODEL_SOURCE
 
 file(GLOB CONNECTCAMPAIGNSV2_UNIFIED_HEADERS
     ${AWS_CONNECTCAMPAIGNSV2_HEADERS}
+    ${AWS_CONNECTCAMPAIGNSV2_INTERNAL_HEADERS}
     ${AWS_CONNECTCAMPAIGNSV2_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\connectcampaignsv2" FILES ${AWS_CONNECTCAMPAIGNSV2_HEADERS})
+        source_group("Header Files\\aws\\connectcampaignsv2\\internal" FILES ${AWS_CONNECTCAMPAIGNSV2_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\connectcampaignsv2\\model" FILES ${AWS_CONNECTCAMPAIGNSV2_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CONNECTCAMPAIGNSV2_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CONNECTCAMPAIGNSV2_MODEL_SOURCE})

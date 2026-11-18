@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -10,7 +10,10 @@
 #include <aws/health/HealthPaginationBase.h>
 #include <aws/health/model/DescribeAffectedAccountsForOrganizationPaginationTraits.h>
 #include <aws/health/model/DescribeAffectedEntitiesForOrganizationPaginationTraits.h>
+#include <aws/health/model/DescribeTagsForOrganizationPaginationTraits.h>
+#include <aws/health/model/DescribeTagsPaginationTraits.h>
 #include <aws/health/model/DescribeEventsPaginationTraits.h>
+#include <aws/health/model/DescribeServiceLifecyclePaginationTraits.h>
 #include <aws/health/model/DescribeAffectedEntitiesPaginationTraits.h>
 #include <aws/health/model/DescribeEventAggregatesPaginationTraits.h>
 #include <aws/health/model/DescribeEventsForOrganizationPaginationTraits.h>
@@ -24,6 +27,6 @@ class HealthPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(HealthPaginationCompilationTest, HealthPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

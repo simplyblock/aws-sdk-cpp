@@ -22,12 +22,15 @@ enum class InventoryOptionalField {
   ObjectLockRetainUntilDate,
   ObjectLockMode,
   ObjectLockLegalHoldStatus,
+  ObjectLockEventHoldStatus,
+  ObjectLockEventHoldDuration,
   IntelligentTieringAccessTier,
   BucketKeyStatus,
   ChecksumAlgorithm,
   ObjectAccessControlList,
   ObjectOwner,
-  LifecycleExpirationDate
+  LifecycleExpirationDate,
+  IntelligentTieringReferenceDate
 };
 
 namespace InventoryOptionalFieldMapper {

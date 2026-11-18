@@ -24,7 +24,7 @@ Aws::String CreateBucketMetadataTableConfigurationRequest::SerializePayload() co
 
   m_metadataTableConfiguration.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -88,4 +88,8 @@ Aws::String CreateBucketMetadataTableConfigurationRequest::GetChecksumAlgorithmN
   } else {
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
+}
+
+bool CreateBucketMetadataTableConfigurationRequest::ChecksumAlgorithmIsSet() const {
+  return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET;
 }

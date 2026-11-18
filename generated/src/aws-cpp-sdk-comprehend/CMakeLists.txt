@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-comprehend "C++ SDK for the AWS comprehend service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-comprehend "C++ SDK for Amazon Comprehend" aws-cpp-sdk-core)
 
 file(GLOB AWS_COMPREHEND_HEADERS
     "include/aws/comprehend/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_COMPREHEND_HEADERS
 
 file(GLOB AWS_COMPREHEND_MODEL_HEADERS
     "include/aws/comprehend/model/*.h"
+)
+
+file(GLOB AWS_COMPREHEND_INTERNAL_HEADERS
+    "include/aws/comprehend/internal/*.h"
 )
 
 file(GLOB AWS_COMPREHEND_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_COMPREHEND_MODEL_SOURCE
 
 file(GLOB COMPREHEND_UNIFIED_HEADERS
     ${AWS_COMPREHEND_HEADERS}
+    ${AWS_COMPREHEND_INTERNAL_HEADERS}
     ${AWS_COMPREHEND_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\comprehend" FILES ${AWS_COMPREHEND_HEADERS})
+        source_group("Header Files\\aws\\comprehend\\internal" FILES ${AWS_COMPREHEND_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\comprehend\\model" FILES ${AWS_COMPREHEND_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_COMPREHEND_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_COMPREHEND_MODEL_SOURCE})

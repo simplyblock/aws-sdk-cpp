@@ -10,10 +10,13 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/mgn/Mgn_EXPORTS.h>
+#include <aws/mgn/model/CidrMapping.h>
+#include <aws/mgn/model/DefinitionType.h>
 #include <aws/mgn/model/SourceConfiguration.h>
 #include <aws/mgn/model/TargetDeployment.h>
 #include <aws/mgn/model/TargetNetwork.h>
 #include <aws/mgn/model/TargetS3Configuration.h>
+#include <aws/mgn/model/VpcProvisioningStrategy.h>
 
 #include <utility>
 
@@ -127,6 +130,22 @@ class GetNetworkMigrationDefinitionResult {
 
   ///@{
   /**
+   * <p>Specifies the type of the definition. <code>MIGRATION</code> migrates an
+   * existing network. <code>NEW_NETWORK</code> designs a new network.</p>
+   */
+  inline DefinitionType GetDefinitionType() const { return m_definitionType; }
+  inline void SetDefinitionType(DefinitionType value) {
+    m_definitionTypeHasBeenSet = true;
+    m_definitionType = value;
+  }
+  inline GetNetworkMigrationDefinitionResult& WithDefinitionType(DefinitionType value) {
+    SetDefinitionType(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The S3 configuration for storing the target network artifacts.</p>
    */
   inline const TargetS3Configuration& GetTargetS3Configuration() const { return m_targetS3Configuration; }
@@ -170,6 +189,48 @@ class GetNetworkMigrationDefinitionResult {
   }
   inline GetNetworkMigrationDefinitionResult& WithTargetDeployment(TargetDeployment value) {
     SetTargetDeployment(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Indicates whether the migration creates new target VPCs or uses existing
+   * ones. <code>CREATE_NEW</code> provisions new target VPCs;
+   * <code>USE_EXISTING</code> migrates into existing VPCs in the target account.</p>
+   */
+  inline VpcProvisioningStrategy GetVpcProvisioningStrategy() const { return m_vpcProvisioningStrategy; }
+  inline void SetVpcProvisioningStrategy(VpcProvisioningStrategy value) {
+    m_vpcProvisioningStrategyHasBeenSet = true;
+    m_vpcProvisioningStrategy = value;
+  }
+  inline GetNetworkMigrationDefinitionResult& WithVpcProvisioningStrategy(VpcProvisioningStrategy value) {
+    SetVpcProvisioningStrategy(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>A list of CIDR mappings that map original source CIDR ranges to updated
+   * target CIDR ranges. CIDR mappings apply only when
+   * <code>vpcProvisioningStrategy</code> is set to <code>USE_EXISTING</code>.</p>
+   */
+  inline const Aws::Vector<CidrMapping>& GetCidrMappings() const { return m_cidrMappings; }
+  template <typename CidrMappingsT = Aws::Vector<CidrMapping>>
+  void SetCidrMappings(CidrMappingsT&& value) {
+    m_cidrMappingsHasBeenSet = true;
+    m_cidrMappings = std::forward<CidrMappingsT>(value);
+  }
+  template <typename CidrMappingsT = Aws::Vector<CidrMapping>>
+  GetNetworkMigrationDefinitionResult& WithCidrMappings(CidrMappingsT&& value) {
+    SetCidrMappings(std::forward<CidrMappingsT>(value));
+    return *this;
+  }
+  template <typename CidrMappingsT = CidrMapping>
+  GetNetworkMigrationDefinitionResult& AddCidrMappings(CidrMappingsT&& value) {
+    m_cidrMappingsHasBeenSet = true;
+    m_cidrMappings.emplace_back(std::forward<CidrMappingsT>(value));
     return *this;
   }
   ///@}
@@ -281,11 +342,17 @@ class GetNetworkMigrationDefinitionResult {
 
   Aws::Vector<SourceConfiguration> m_sourceConfigurations;
 
+  DefinitionType m_definitionType{DefinitionType::NOT_SET};
+
   TargetS3Configuration m_targetS3Configuration;
 
   TargetNetwork m_targetNetwork;
 
   TargetDeployment m_targetDeployment{TargetDeployment::NOT_SET};
+
+  VpcProvisioningStrategy m_vpcProvisioningStrategy{VpcProvisioningStrategy::NOT_SET};
+
+  Aws::Vector<CidrMapping> m_cidrMappings;
 
   Aws::Utils::DateTime m_createdAt{};
 
@@ -302,9 +369,12 @@ class GetNetworkMigrationDefinitionResult {
   bool m_nameHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_sourceConfigurationsHasBeenSet = false;
+  bool m_definitionTypeHasBeenSet = false;
   bool m_targetS3ConfigurationHasBeenSet = false;
   bool m_targetNetworkHasBeenSet = false;
   bool m_targetDeploymentHasBeenSet = false;
+  bool m_vpcProvisioningStrategyHasBeenSet = false;
+  bool m_cidrMappingsHasBeenSet = false;
   bool m_createdAtHasBeenSet = false;
   bool m_updatedAtHasBeenSet = false;
   bool m_tagsHasBeenSet = false;

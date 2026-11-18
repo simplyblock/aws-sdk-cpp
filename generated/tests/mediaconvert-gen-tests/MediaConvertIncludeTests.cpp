@@ -7,17 +7,21 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/mediaconvert/MediaConvertClient.h>
+#include <aws/mediaconvert/MediaConvertClientPagination.h>
 #include <aws/mediaconvert/MediaConvertEndpointProvider.h>
-#include <aws/mediaconvert/MediaConvertEndpointRules.h>
 #include <aws/mediaconvert/MediaConvertErrorMarshaller.h>
 #include <aws/mediaconvert/MediaConvertErrors.h>
+#include <aws/mediaconvert/MediaConvertPaginationBase.h>
 #include <aws/mediaconvert/MediaConvertRequest.h>
 #include <aws/mediaconvert/MediaConvertServiceClientModel.h>
+#include <aws/mediaconvert/MediaConvertWaiter.h>
 #include <aws/mediaconvert/MediaConvert_EXPORTS.h>
+#include <aws/mediaconvert/internal/MediaConvertEndpointRules.h>
 #include <aws/mediaconvert/model/AacAudioDescriptionBroadcasterMix.h>
 #include <aws/mediaconvert/model/AacCodecProfile.h>
 #include <aws/mediaconvert/model/AacCodingMode.h>
 #include <aws/mediaconvert/model/AacLoudnessMeasurementMode.h>
+#include <aws/mediaconvert/model/AacPassthroughControl.h>
 #include <aws/mediaconvert/model/AacRateControlMode.h>
 #include <aws/mediaconvert/model/AacRawFormat.h>
 #include <aws/mediaconvert/model/AacSettings.h>
@@ -51,6 +55,7 @@
 #include <aws/mediaconvert/model/AncillarySourceSettings.h>
 #include <aws/mediaconvert/model/AncillaryTerminateCaptions.h>
 #include <aws/mediaconvert/model/AntiAlias.h>
+#include <aws/mediaconvert/model/AspectRatio.h>
 #include <aws/mediaconvert/model/AssociateCertificateRequest.h>
 #include <aws/mediaconvert/model/AssociateCertificateResult.h>
 #include <aws/mediaconvert/model/AudioChannelTag.h>
@@ -71,6 +76,7 @@
 #include <aws/mediaconvert/model/AudioSelector.h>
 #include <aws/mediaconvert/model/AudioSelectorGroup.h>
 #include <aws/mediaconvert/model/AudioSelectorType.h>
+#include <aws/mediaconvert/model/AudioSmpte337Passthrough.h>
 #include <aws/mediaconvert/model/AudioTypeControl.h>
 #include <aws/mediaconvert/model/AutomatedAbrRule.h>
 #include <aws/mediaconvert/model/AutomatedAbrSettings.h>
@@ -82,6 +88,7 @@
 #include <aws/mediaconvert/model/Av1FramerateConversionAlgorithm.h>
 #include <aws/mediaconvert/model/Av1QvbrSettings.h>
 #include <aws/mediaconvert/model/Av1RateControlMode.h>
+#include <aws/mediaconvert/model/Av1SceneChangeDetect.h>
 #include <aws/mediaconvert/model/Av1Settings.h>
 #include <aws/mediaconvert/model/Av1SpatialAdaptiveQuantization.h>
 #include <aws/mediaconvert/model/AvailBlanking.h>
@@ -116,6 +123,7 @@
 #include <aws/mediaconvert/model/CaptionDestinationSettings.h>
 #include <aws/mediaconvert/model/CaptionDestinationType.h>
 #include <aws/mediaconvert/model/CaptionSelector.h>
+#include <aws/mediaconvert/model/CaptionSource.h>
 #include <aws/mediaconvert/model/CaptionSourceByteRateLimit.h>
 #include <aws/mediaconvert/model/CaptionSourceConvertPaintOnToPopOn.h>
 #include <aws/mediaconvert/model/CaptionSourceFramerate.h>
@@ -187,6 +195,7 @@
 #include <aws/mediaconvert/model/CreateQueueResult.h>
 #include <aws/mediaconvert/model/CreateResourceShareRequest.h>
 #include <aws/mediaconvert/model/CreateResourceShareResult.h>
+#include <aws/mediaconvert/model/DashAdaptationSetGrouping.h>
 #include <aws/mediaconvert/model/DashAdditionalManifest.h>
 #include <aws/mediaconvert/model/DashIsoEncryptionSettings.h>
 #include <aws/mediaconvert/model/DashIsoGroupAudioChannelConfigSchemeIdUri.h>
@@ -228,6 +237,8 @@
 #include <aws/mediaconvert/model/DolbyVisionLevel6Metadata.h>
 #include <aws/mediaconvert/model/DolbyVisionLevel6Mode.h>
 #include <aws/mediaconvert/model/DolbyVisionMapping.h>
+#include <aws/mediaconvert/model/DolbyVisionMetadata.h>
+#include <aws/mediaconvert/model/DolbyVisionPresence.h>
 #include <aws/mediaconvert/model/DolbyVisionProfile.h>
 #include <aws/mediaconvert/model/DropFrameTimecode.h>
 #include <aws/mediaconvert/model/DurationControl.h>
@@ -278,7 +289,9 @@
 #include <aws/mediaconvert/model/ElementalInferenceConfiguration.h>
 #include <aws/mediaconvert/model/ElementalInferenceFeature.h>
 #include <aws/mediaconvert/model/ElementalInferenceFeed.h>
+#include <aws/mediaconvert/model/ElementalInferenceFeedConfigurationSource.h>
 #include <aws/mediaconvert/model/ElementalInferenceFeedManagementState.h>
+#include <aws/mediaconvert/model/ElementalInferenceSettings.h>
 #include <aws/mediaconvert/model/EmbeddedConvert608To708.h>
 #include <aws/mediaconvert/model/EmbeddedDestinationSettings.h>
 #include <aws/mediaconvert/model/EmbeddedSourceSettings.h>
@@ -385,6 +398,7 @@
 #include <aws/mediaconvert/model/HDRToSDRToneMapper.h>
 #include <aws/mediaconvert/model/Hdr10Metadata.h>
 #include <aws/mediaconvert/model/Hdr10Plus.h>
+#include <aws/mediaconvert/model/Hdr10PlusPresence.h>
 #include <aws/mediaconvert/model/HdrMetadata.h>
 #include <aws/mediaconvert/model/HlsAdMarkers.h>
 #include <aws/mediaconvert/model/HlsAdditionalManifest.h>
@@ -457,16 +471,21 @@
 #include <aws/mediaconvert/model/JobsQueryStatus.h>
 #include <aws/mediaconvert/model/KantarWatermarkSettings.h>
 #include <aws/mediaconvert/model/LanguageCode.h>
+#include <aws/mediaconvert/model/ListJobTemplatesPaginationTraits.h>
 #include <aws/mediaconvert/model/ListJobTemplatesRequest.h>
 #include <aws/mediaconvert/model/ListJobTemplatesResult.h>
+#include <aws/mediaconvert/model/ListJobsPaginationTraits.h>
 #include <aws/mediaconvert/model/ListJobsRequest.h>
 #include <aws/mediaconvert/model/ListJobsResult.h>
+#include <aws/mediaconvert/model/ListPresetsPaginationTraits.h>
 #include <aws/mediaconvert/model/ListPresetsRequest.h>
 #include <aws/mediaconvert/model/ListPresetsResult.h>
+#include <aws/mediaconvert/model/ListQueuesPaginationTraits.h>
 #include <aws/mediaconvert/model/ListQueuesRequest.h>
 #include <aws/mediaconvert/model/ListQueuesResult.h>
 #include <aws/mediaconvert/model/ListTagsForResourceRequest.h>
 #include <aws/mediaconvert/model/ListTagsForResourceResult.h>
+#include <aws/mediaconvert/model/ListVersionsPaginationTraits.h>
 #include <aws/mediaconvert/model/ListVersionsRequest.h>
 #include <aws/mediaconvert/model/ListVersionsResult.h>
 #include <aws/mediaconvert/model/M2tsAudioBufferModel.h>
@@ -589,6 +608,7 @@
 #include <aws/mediaconvert/model/OutputSettings.h>
 #include <aws/mediaconvert/model/PadVideo.h>
 #include <aws/mediaconvert/model/PartnerWatermarking.h>
+#include <aws/mediaconvert/model/PassthroughSegmentationMode.h>
 #include <aws/mediaconvert/model/PassthroughSettings.h>
 #include <aws/mediaconvert/model/Policy.h>
 #include <aws/mediaconvert/model/Preset.h>
@@ -638,6 +658,7 @@
 #include <aws/mediaconvert/model/ScalingBehavior.h>
 #include <aws/mediaconvert/model/SccDestinationFramerate.h>
 #include <aws/mediaconvert/model/SccDestinationSettings.h>
+#include <aws/mediaconvert/model/SearchJobsPaginationTraits.h>
 #include <aws/mediaconvert/model/SearchJobsRequest.h>
 #include <aws/mediaconvert/model/SearchJobsResult.h>
 #include <aws/mediaconvert/model/ServiceOverride.h>
@@ -672,8 +693,13 @@
 #include <aws/mediaconvert/model/TrackType.h>
 #include <aws/mediaconvert/model/TransferCharacteristics.h>
 #include <aws/mediaconvert/model/TsPtsOffset.h>
+#include <aws/mediaconvert/model/TtmlBackgroundColor.h>
 #include <aws/mediaconvert/model/TtmlDestinationSettings.h>
+#include <aws/mediaconvert/model/TtmlFontColor.h>
+#include <aws/mediaconvert/model/TtmlFontStyle.h>
+#include <aws/mediaconvert/model/TtmlFontWeight.h>
 #include <aws/mediaconvert/model/TtmlStylePassthrough.h>
+#include <aws/mediaconvert/model/TtmlTextDecoration.h>
 #include <aws/mediaconvert/model/Type.h>
 #include <aws/mediaconvert/model/UncompressedFourcc.h>
 #include <aws/mediaconvert/model/UncompressedFramerateControl.h>

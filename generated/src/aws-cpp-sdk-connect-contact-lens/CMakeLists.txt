@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-connect-contact-lens "C++ SDK for the AWS connect-contact-lens service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-connect-contact-lens "C++ SDK for Amazon Connect Contact Lens" aws-cpp-sdk-core)
 
 file(GLOB AWS_CONNECT-CONTACT-LENS_HEADERS
     "include/aws/connect-contact-lens/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CONNECT-CONTACT-LENS_HEADERS
 
 file(GLOB AWS_CONNECT-CONTACT-LENS_MODEL_HEADERS
     "include/aws/connect-contact-lens/model/*.h"
+)
+
+file(GLOB AWS_CONNECT-CONTACT-LENS_INTERNAL_HEADERS
+    "include/aws/connect-contact-lens/internal/*.h"
 )
 
 file(GLOB AWS_CONNECT-CONTACT-LENS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CONNECT-CONTACT-LENS_MODEL_SOURCE
 
 file(GLOB CONNECT-CONTACT-LENS_UNIFIED_HEADERS
     ${AWS_CONNECT-CONTACT-LENS_HEADERS}
+    ${AWS_CONNECT-CONTACT-LENS_INTERNAL_HEADERS}
     ${AWS_CONNECT-CONTACT-LENS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\connect-contact-lens" FILES ${AWS_CONNECT-CONTACT-LENS_HEADERS})
+        source_group("Header Files\\aws\\connect-contact-lens\\internal" FILES ${AWS_CONNECT-CONTACT-LENS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\connect-contact-lens\\model" FILES ${AWS_CONNECT-CONTACT-LENS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CONNECT-CONTACT-LENS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CONNECT-CONTACT-LENS_MODEL_SOURCE})

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ssm-incidents/SSMIncidentsEndpointRules.h>
 #include <aws/ssm-incidents/SSMIncidents_EXPORTS.h>
 
 namespace Aws {
 namespace SSMIncidents {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SSMIncidentsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using SSMIncidentsEndpointProviderBase =
     EndpointProviderBase<SSMIncidentsClientConfiguration, SSMIncidentsBuiltInParameters, SSMIncidentsClientContextParameters>;
 
 using SSMIncidentsDefaultEpProviderBase =
-    DefaultEndpointProvider<SSMIncidentsClientConfiguration, SSMIncidentsBuiltInParameters, SSMIncidentsClientContextParameters>;
+    BDDEndpointProvider<SSMIncidentsClientConfiguration, SSMIncidentsBuiltInParameters, SSMIncidentsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_SSMINCIDENTS_API SSMIncidentsEndpointProvider : public SSMIncidentsDef
  public:
   using SSMIncidentsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SSMIncidentsEndpointProvider()
-      : SSMIncidentsDefaultEpProviderBase(Aws::SSMIncidents::SSMIncidentsEndpointRules::GetRulesBlob(),
-                                          Aws::SSMIncidents::SSMIncidentsEndpointRules::RulesBlobSize) {}
+  SSMIncidentsEndpointProvider();
 
   ~SSMIncidentsEndpointProvider() {}
 };

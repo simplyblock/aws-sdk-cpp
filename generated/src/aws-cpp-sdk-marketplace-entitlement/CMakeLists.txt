@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-marketplace-entitlement "C++ SDK for the AWS marketplace-entitlement service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-marketplace-entitlement "C++ SDK for AWS Marketplace Entitlement Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_MARKETPLACE-ENTITLEMENT_HEADERS
     "include/aws/marketplace-entitlement/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MARKETPLACE-ENTITLEMENT_HEADERS
 
 file(GLOB AWS_MARKETPLACE-ENTITLEMENT_MODEL_HEADERS
     "include/aws/marketplace-entitlement/model/*.h"
+)
+
+file(GLOB AWS_MARKETPLACE-ENTITLEMENT_INTERNAL_HEADERS
+    "include/aws/marketplace-entitlement/internal/*.h"
 )
 
 file(GLOB AWS_MARKETPLACE-ENTITLEMENT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MARKETPLACE-ENTITLEMENT_MODEL_SOURCE
 
 file(GLOB MARKETPLACE-ENTITLEMENT_UNIFIED_HEADERS
     ${AWS_MARKETPLACE-ENTITLEMENT_HEADERS}
+    ${AWS_MARKETPLACE-ENTITLEMENT_INTERNAL_HEADERS}
     ${AWS_MARKETPLACE-ENTITLEMENT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\marketplace-entitlement" FILES ${AWS_MARKETPLACE-ENTITLEMENT_HEADERS})
+        source_group("Header Files\\aws\\marketplace-entitlement\\internal" FILES ${AWS_MARKETPLACE-ENTITLEMENT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\marketplace-entitlement\\model" FILES ${AWS_MARKETPLACE-ENTITLEMENT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MARKETPLACE-ENTITLEMENT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MARKETPLACE-ENTITLEMENT_MODEL_SOURCE})

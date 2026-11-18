@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/chime-sdk-meetings/ChimeSDKMeetingsEndpointRules.h>
 #include <aws/chime-sdk-meetings/ChimeSDKMeetings_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ChimeSDKMeetings {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ChimeSDKMeetingsClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using ChimeSDKMeetingsEndpointProviderBase =
     EndpointProviderBase<ChimeSDKMeetingsClientConfiguration, ChimeSDKMeetingsBuiltInParameters, ChimeSDKMeetingsClientContextParameters>;
 
 using ChimeSDKMeetingsDefaultEpProviderBase =
-    DefaultEndpointProvider<ChimeSDKMeetingsClientConfiguration, ChimeSDKMeetingsBuiltInParameters,
-                            ChimeSDKMeetingsClientContextParameters>;
+    BDDEndpointProvider<ChimeSDKMeetingsClientConfiguration, ChimeSDKMeetingsBuiltInParameters, ChimeSDKMeetingsClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_CHIMESDKMEETINGS_API ChimeSDKMeetingsEndpointProvider : public ChimeSD
  public:
   using ChimeSDKMeetingsResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ChimeSDKMeetingsEndpointProvider()
-      : ChimeSDKMeetingsDefaultEpProviderBase(Aws::ChimeSDKMeetings::ChimeSDKMeetingsEndpointRules::GetRulesBlob(),
-                                              Aws::ChimeSDKMeetings::ChimeSDKMeetingsEndpointRules::RulesBlobSize) {}
+  ChimeSDKMeetingsEndpointProvider();
 
   ~ChimeSDKMeetingsEndpointProvider() {}
 };

@@ -5,6 +5,7 @@
 
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/HashingUtils.h>
+#include <aws/core/utils/cbor/CborValue.h>
 #include <aws/marketplace-agreement/AgreementServiceErrors.h>
 #include <aws/marketplace-agreement/model/AccessDeniedException.h>
 #include <aws/marketplace-agreement/model/ConflictException.h>
@@ -24,43 +25,50 @@ namespace AgreementService {
 template <>
 AWS_AGREEMENTSERVICE_API ConflictException AgreementServiceError::GetModeledError() {
   assert(this->GetErrorType() == AgreementServiceErrors::CONFLICT);
-  return ConflictException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return ConflictException(payload.GetDecoder());
 }
 
 template <>
 AWS_AGREEMENTSERVICE_API ThrottlingException AgreementServiceError::GetModeledError() {
   assert(this->GetErrorType() == AgreementServiceErrors::THROTTLING);
-  return ThrottlingException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return ThrottlingException(payload.GetDecoder());
 }
 
 template <>
 AWS_AGREEMENTSERVICE_API ServiceQuotaExceededException AgreementServiceError::GetModeledError() {
   assert(this->GetErrorType() == AgreementServiceErrors::SERVICE_QUOTA_EXCEEDED);
-  return ServiceQuotaExceededException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return ServiceQuotaExceededException(payload.GetDecoder());
 }
 
 template <>
 AWS_AGREEMENTSERVICE_API ResourceNotFoundException AgreementServiceError::GetModeledError() {
   assert(this->GetErrorType() == AgreementServiceErrors::RESOURCE_NOT_FOUND);
-  return ResourceNotFoundException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return ResourceNotFoundException(payload.GetDecoder());
 }
 
 template <>
 AWS_AGREEMENTSERVICE_API InternalServerException AgreementServiceError::GetModeledError() {
   assert(this->GetErrorType() == AgreementServiceErrors::INTERNAL_SERVER);
-  return InternalServerException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return InternalServerException(payload.GetDecoder());
 }
 
 template <>
 AWS_AGREEMENTSERVICE_API ValidationException AgreementServiceError::GetModeledError() {
   assert(this->GetErrorType() == AgreementServiceErrors::VALIDATION);
-  return ValidationException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return ValidationException(payload.GetDecoder());
 }
 
 template <>
 AWS_AGREEMENTSERVICE_API AccessDeniedException AgreementServiceError::GetModeledError() {
   assert(this->GetErrorType() == AgreementServiceErrors::ACCESS_DENIED);
-  return AccessDeniedException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return AccessDeniedException(payload.GetDecoder());
 }
 
 namespace AgreementServiceErrorMapper {
@@ -77,7 +85,7 @@ AWSError<CoreErrors> GetErrorForName(const char* errorName) {
   } else if (hashCode == SERVICE_QUOTA_EXCEEDED_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(AgreementServiceErrors::SERVICE_QUOTA_EXCEEDED), RetryableType::NOT_RETRYABLE);
   } else if (hashCode == INTERNAL_SERVER_HASH) {
-    return AWSError<CoreErrors>(static_cast<CoreErrors>(AgreementServiceErrors::INTERNAL_SERVER), RetryableType::NOT_RETRYABLE);
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(AgreementServiceErrors::INTERNAL_SERVER), RetryableType::RETRYABLE);
   }
   return AWSError<CoreErrors>(CoreErrors::UNKNOWN, false);
 }

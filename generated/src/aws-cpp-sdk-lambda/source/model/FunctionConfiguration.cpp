@@ -189,6 +189,14 @@ FunctionConfiguration& FunctionConfiguration::operator=(JsonView jsonValue) {
     m_durableConfig = jsonValue.GetObject("DurableConfig");
     m_durableConfigHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("RuntimeConfig")) {
+    m_runtimeConfig = jsonValue.GetObject("RuntimeConfig");
+    m_runtimeConfigHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AcceleratorConfig")) {
+    m_acceleratorConfig = jsonValue.GetObject("AcceleratorConfig");
+    m_acceleratorConfigHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -366,6 +374,14 @@ JsonValue FunctionConfiguration::Jsonize() const {
 
   if (m_durableConfigHasBeenSet) {
     payload.WithObject("DurableConfig", m_durableConfig.Jsonize());
+  }
+
+  if (m_runtimeConfigHasBeenSet) {
+    payload.WithObject("RuntimeConfig", m_runtimeConfig.Jsonize());
+  }
+
+  if (m_acceleratorConfigHasBeenSet) {
+    payload.WithObject("AcceleratorConfig", m_acceleratorConfig.Jsonize());
   }
 
   return payload;

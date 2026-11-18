@@ -11,6 +11,7 @@
 #include <aws/devicefarm/model/CustomerArtifactPaths.h>
 #include <aws/devicefarm/model/DeviceProxy.h>
 #include <aws/devicefarm/model/EnvironmentVariable.h>
+#include <aws/devicefarm/model/InsightsType.h>
 #include <aws/devicefarm/model/Location.h>
 #include <aws/devicefarm/model/Radios.h>
 
@@ -277,6 +278,34 @@ class ScheduleRunConfiguration {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The types of insights to generate for a run. If you do not specify a value,
+   * the default is <code>TEST_REPORT</code> for runs that support insights.</p>
+   * <p>Specify <code>NONE</code> if you do not want the service to generate insights
+   * for the run. You cannot combine <code>NONE</code> with any other value.</p>
+   * <p>Insights are supported for custom mode runs of all test types except Appium
+   * Ruby and Appium Web Ruby.</p>
+   */
+  inline const Aws::Vector<InsightsType>& GetInsightsTypes() const { return m_insightsTypes; }
+  inline bool InsightsTypesHasBeenSet() const { return m_insightsTypesHasBeenSet; }
+  template <typename InsightsTypesT = Aws::Vector<InsightsType>>
+  void SetInsightsTypes(InsightsTypesT&& value) {
+    m_insightsTypesHasBeenSet = true;
+    m_insightsTypes = std::forward<InsightsTypesT>(value);
+  }
+  template <typename InsightsTypesT = Aws::Vector<InsightsType>>
+  ScheduleRunConfiguration& WithInsightsTypes(InsightsTypesT&& value) {
+    SetInsightsTypes(std::forward<InsightsTypesT>(value));
+    return *this;
+  }
+  inline ScheduleRunConfiguration& AddInsightsTypes(InsightsType value) {
+    m_insightsTypesHasBeenSet = true;
+    m_insightsTypes.push_back(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_extraDataPackageArn;
 
@@ -301,6 +330,8 @@ class ScheduleRunConfiguration {
   Aws::Vector<EnvironmentVariable> m_environmentVariables;
 
   Aws::String m_executionRoleArn;
+
+  Aws::Vector<InsightsType> m_insightsTypes;
   bool m_extraDataPackageArnHasBeenSet = false;
   bool m_networkProfileArnHasBeenSet = false;
   bool m_localeHasBeenSet = false;
@@ -313,6 +344,7 @@ class ScheduleRunConfiguration {
   bool m_billingMethodHasBeenSet = false;
   bool m_environmentVariablesHasBeenSet = false;
   bool m_executionRoleArnHasBeenSet = false;
+  bool m_insightsTypesHasBeenSet = false;
 };
 
 }  // namespace Model

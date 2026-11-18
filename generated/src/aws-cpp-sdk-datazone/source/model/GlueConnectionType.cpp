@@ -28,6 +28,11 @@ static const int SAPHANA_HASH = HashingUtils::HashString("SAPHANA");
 static const int SQLSERVER_HASH = HashingUtils::HashString("SQLSERVER");
 static const int TERADATA_HASH = HashingUtils::HashString("TERADATA");
 static const int VERTICA_HASH = HashingUtils::HashString("VERTICA");
+static const int ICEBERGRESTCATALOG_HASH = HashingUtils::HashString("ICEBERGRESTCATALOG");
+static const int SNOWFLAKEICEBERGRESTCATALOG_HASH = HashingUtils::HashString("SNOWFLAKEICEBERGRESTCATALOG");
+static const int DATABRICKSICEBERGRESTCATALOG_HASH = HashingUtils::HashString("DATABRICKSICEBERGRESTCATALOG");
+static const int WORKDAYICEBERGRESTCATALOG_HASH = HashingUtils::HashString("WORKDAYICEBERGRESTCATALOG");
+static const int WORKDAYLDQ_HASH = HashingUtils::HashString("WORKDAYLDQ");
 
 GlueConnectionType GetGlueConnectionTypeForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -57,6 +62,16 @@ GlueConnectionType GetGlueConnectionTypeForName(const Aws::String& name) {
     return GlueConnectionType::TERADATA;
   } else if (hashCode == VERTICA_HASH) {
     return GlueConnectionType::VERTICA;
+  } else if (hashCode == ICEBERGRESTCATALOG_HASH) {
+    return GlueConnectionType::ICEBERGRESTCATALOG;
+  } else if (hashCode == SNOWFLAKEICEBERGRESTCATALOG_HASH) {
+    return GlueConnectionType::SNOWFLAKEICEBERGRESTCATALOG;
+  } else if (hashCode == DATABRICKSICEBERGRESTCATALOG_HASH) {
+    return GlueConnectionType::DATABRICKSICEBERGRESTCATALOG;
+  } else if (hashCode == WORKDAYICEBERGRESTCATALOG_HASH) {
+    return GlueConnectionType::WORKDAYICEBERGRESTCATALOG;
+  } else if (hashCode == WORKDAYLDQ_HASH) {
+    return GlueConnectionType::WORKDAYLDQ;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -97,6 +112,16 @@ Aws::String GetNameForGlueConnectionType(GlueConnectionType enumValue) {
       return "TERADATA";
     case GlueConnectionType::VERTICA:
       return "VERTICA";
+    case GlueConnectionType::ICEBERGRESTCATALOG:
+      return "ICEBERGRESTCATALOG";
+    case GlueConnectionType::SNOWFLAKEICEBERGRESTCATALOG:
+      return "SNOWFLAKEICEBERGRESTCATALOG";
+    case GlueConnectionType::DATABRICKSICEBERGRESTCATALOG:
+      return "DATABRICKSICEBERGRESTCATALOG";
+    case GlueConnectionType::WORKDAYICEBERGRESTCATALOG:
+      return "WORKDAYICEBERGRESTCATALOG";
+    case GlueConnectionType::WORKDAYLDQ:
+      return "WORKDAYLDQ";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

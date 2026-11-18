@@ -6,11 +6,19 @@
 #include <aws/testing/AwsCppSdkGTestSuite.h>
 #include <aws/core/utils/DateTime.h>
 
+#include <chrono>
+
 using namespace Aws::Utils;
 
 class DateTimeTest : public Aws::Testing::AwsCppSdkGTestSuite
 {
 };
+
+static bool SystemClockSaturatesNear2262()
+{
+    return std::chrono::system_clock::period::num == 1 &&
+           std::chrono::system_clock::period::den == 1000000000;
+}
 
 TEST_F(DateTimeTest, TestDefault)
 {
@@ -58,6 +66,130 @@ TEST_F(DateTimeTest, TestRFC822Parsing_WrongFormat)
     const char* gmtDateStr = "Wed, 02 Oct 2002";
     DateTime gmtDate(gmtDateStr, DateFormat::RFC822);
     ASSERT_FALSE(gmtDate.WasParseSuccessful());
+}
+
+TEST_F(DateTimeTest, TestRFC822Parsing_DayOverflow)
+{
+    const char* gmtDateStr = "Fri, 99999999999 Dec 2021 00:00:00 GMT";
+    DateTime date(gmtDateStr, DateFormat::RFC822);
+    ASSERT_FALSE(date.WasParseSuccessful());
+}
+
+TEST_F(DateTimeTest, TestRFC822Parsing_NeverExpiresSentinelIsSafe)
+{
+    if (!SystemClockSaturatesNear2262())
+    {
+        GTEST_SKIP() << "year 9999 is only out of range (and rejected) on a nanosecond system_clock";
+    }
+    const char* neverExpires = "Fri, 31 Dec 9999 23:59:59 GMT";
+    DateTime date(neverExpires, DateFormat::RFC822);
+    ASSERT_FALSE(date.WasParseSuccessful());
+}
+
+TEST_F(DateTimeTest, TestISO_8601Parsing_OutOfRangeSentinelIsSafe)
+{
+    if (!SystemClockSaturatesNear2262())
+    {
+        GTEST_SKIP() << "year 9999 is only out of range (and rejected) on a nanosecond system_clock";
+    }
+    const char* neverExpires = "9999-12-31T23:59:59Z";
+    DateTime date(neverExpires, DateFormat::ISO_8601);
+    ASSERT_FALSE(date.WasParseSuccessful());
+}
+
+TEST_F(DateTimeTest, TestISO_8601Parsing_InRangeFarFutureStillParses)
+{
+    const char* gmtDateStr = "2200-01-01T00:00:00Z";
+    DateTime date(gmtDateStr, DateFormat::ISO_8601);
+    ASSERT_TRUE(date.WasParseSuccessful());
+    ASSERT_EQ(2200, date.GetYear());
+    ASSERT_EQ(gmtDateStr, date.ToGmtString(DateFormat::ISO_8601));
+}
+
+TEST_F(DateTimeTest, TestISO_8601Parsing_UpperBoundaryRoundTrips)
+{
+    const char* gmtDateStr = "2262-04-11T00:00:00Z";
+    DateTime date(gmtDateStr, DateFormat::ISO_8601);
+    ASSERT_TRUE(date.WasParseSuccessful());
+    ASSERT_EQ(gmtDateStr, date.ToGmtString(DateFormat::ISO_8601));
+}
+
+TEST_F(DateTimeTest, TestISO_8601Parsing_LowerBoundaryIsSafe)
+{
+    const char* gmtDateStr = "1677-09-22T00:00:00Z";
+    DateTime date(gmtDateStr, DateFormat::ISO_8601);
+    ASSERT_TRUE(date.WasParseSuccessful());
+    ASSERT_LE(date.Seconds(), 0);
+}
+
+TEST_F(DateTimeTest, TestISO_8601Parsing_OnePastUpperBoundaryIsSafe)
+{
+    const char* gmtDateStr = "2262-04-12T00:00:00Z";
+    DateTime date(gmtDateStr, DateFormat::ISO_8601);
+    if (SystemClockSaturatesNear2262())
+    {
+        ASSERT_FALSE(date.WasParseSuccessful());
+    }
+    else
+    {
+        ASSERT_TRUE(date.WasParseSuccessful());
+        ASSERT_EQ(2262, date.GetYear());
+    }
+}
+
+TEST_F(DateTimeTest, TestISO_8601Parsing_PreEpochArchivalIsSafe)
+{
+    const char* gmtDateStr = "1600-01-01T00:00:00Z";
+    DateTime date(gmtDateStr, DateFormat::ISO_8601);
+    if (SystemClockSaturatesNear2262())
+    {
+        ASSERT_FALSE(date.WasParseSuccessful());
+    }
+    else
+    {
+        ASSERT_TRUE(date.WasParseSuccessful());
+        ASSERT_LE(date.Seconds(), 0);
+    }
+}
+
+TEST_F(DateTimeTest, TestISO_8601Parsing_MidRangeFutureIsSafe)
+{
+    const char* gmtDateStr = "2500-01-01T00:00:00Z";
+    DateTime date(gmtDateStr, DateFormat::ISO_8601);
+    if (SystemClockSaturatesNear2262())
+    {
+        ASSERT_FALSE(date.WasParseSuccessful());
+    }
+    else
+    {
+        ASSERT_TRUE(date.WasParseSuccessful());
+        ASSERT_EQ(2500, date.GetYear());
+    }
+}
+
+TEST_F(DateTimeTest, TestRFC822Parsing_NineDigitDayRejected)
+{
+    const char* gmtDateStr = "Wed, 999999999 Oct 2002 08:00:00 GMT";
+    DateTime date(gmtDateStr, DateFormat::RFC822);
+    ASSERT_FALSE(date.WasParseSuccessful());
+}
+
+TEST_F(DateTimeTest, TestRFC822Parsing_TwentyDigitDayRejected)
+{
+    const char* gmtDateStr = "Wed, 99999999999999999999 Oct 2002 08:00:00 GMT";
+    DateTime date(gmtDateStr, DateFormat::RFC822);
+    ASSERT_FALSE(date.WasParseSuccessful());
+}
+
+TEST_F(DateTimeTest, TestAutoDetectParsing_NeverExpiresSentinelIsSafe)
+{
+    if (!SystemClockSaturatesNear2262())
+    {
+        GTEST_SKIP() << "year 9999 is only out of range (and rejected) on a nanosecond system_clock";
+    }
+    const char* neverExpires = "Fri, 31 Dec 9999 23:59:59 GMT";
+    DateTime date(neverExpires, DateFormat::AutoDetect);
+    ASSERT_FALSE(date.WasParseSuccessful());
 }
 
 TEST_F(DateTimeTest, TestISO_8601Parsing)
@@ -132,6 +264,20 @@ TEST_F(DateTimeTest, TestISO_8601ParsingNSPrecision)
     ASSERT_EQ(gmtDate, DateTime(utcOffsetVersion, DateFormat::ISO_8601));
 }
 
+TEST_F(DateTimeTest, TestISO_8601ParsingPreservesMilliseconds)
+{
+    DateTime gmtDate("2026-09-15T18:00:00.016Z", DateFormat::ISO_8601);
+    ASSERT_TRUE(gmtDate.WasParseSuccessful());
+    ASSERT_EQ(16, gmtDate.Millis() % 1000);
+}
+
+TEST_F(DateTimeTest, TestISO_8601MillisecondRoundTrip)
+{
+    DateTime gmtDate("2026-09-15T18:00:00.016Z", DateFormat::ISO_8601);
+    ASSERT_TRUE(gmtDate.WasParseSuccessful());
+    ASSERT_EQ("2026-09-15T18:00:00.016", gmtDate.ToGmtStringWithMs());
+}
+
 TEST_F(DateTimeTest, TestISO_8601ParsingTooLowPrecision)
 {
     const char* gmtDateStr = "2002-10-02T08:05:09.12Z";
@@ -162,6 +308,20 @@ TEST_F(DateTimeTest, TestISO_8601BasicParsingMSPrecision)
     ASSERT_EQ("20021002T080509Z", gmtDate.ToGmtString(DateFormat::ISO_8601_BASIC));
 
     ASSERT_EQ(gmtDate, DateTime(utcOffsetVersion, DateFormat::ISO_8601_BASIC));
+}
+
+TEST_F(DateTimeTest, TestISO_8601BasicParsingPreservesMilliseconds)
+{
+    DateTime gmtDate("20021002T080509016Z", DateFormat::ISO_8601_BASIC);
+    ASSERT_TRUE(gmtDate.WasParseSuccessful());
+    ASSERT_EQ(16, gmtDate.Millis() % 1000);
+}
+
+TEST_F(DateTimeTest, TestISO_8601BasicMillisecondRoundTrip)
+{
+    DateTime gmtDate("20021002T080509016Z", DateFormat::ISO_8601_BASIC);
+    ASSERT_TRUE(gmtDate.WasParseSuccessful());
+    ASSERT_EQ("2002-10-02T08:05:09.016", gmtDate.ToGmtStringWithMs());
 }
 
 TEST_F(DateTimeTest, TestISO_8601Parsing_DOS_Stopped)
@@ -247,4 +407,22 @@ TEST_F(DateTimeTest, TestFormatAutoDetect)
     const char badDate[] = "2002 10,02T08 05 09G";
     DateTime parsedBadDate(badDate, DateFormat::AutoDetect);
     ASSERT_FALSE(parsedBadDate.WasParseSuccessful());
+}
+
+TEST_F(DateTimeTest, TestAutoDetectPreservesMilliseconds)
+{
+    const char* isoMsDate = "2026-09-15T18:00:00.016Z";
+    DateTime parsed(isoMsDate, DateFormat::AutoDetect);
+    ASSERT_TRUE(parsed.WasParseSuccessful());
+    ASSERT_EQ(16, parsed.Millis() % 1000);
+    ASSERT_EQ(DateTime(isoMsDate, DateFormat::ISO_8601), parsed);
+}
+
+TEST_F(DateTimeTest, TestAutoDetectBasicPreservesMilliseconds)
+{
+    const char* basicMsDate = "20021002T080509016Z";
+    DateTime parsed(basicMsDate, DateFormat::AutoDetect);
+    ASSERT_TRUE(parsed.WasParseSuccessful());
+    ASSERT_EQ(16, parsed.Millis() % 1000);
+    ASSERT_EQ(DateTime(basicMsDate, DateFormat::ISO_8601_BASIC), parsed);
 }

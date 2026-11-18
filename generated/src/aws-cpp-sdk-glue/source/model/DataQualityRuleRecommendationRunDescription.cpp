@@ -34,6 +34,14 @@ DataQualityRuleRecommendationRunDescription& DataQualityRuleRecommendationRunDes
     m_dataSource = jsonValue.GetObject("DataSource");
     m_dataSourceHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("CreatedRulesetName")) {
+    m_createdRulesetName = jsonValue.GetString("CreatedRulesetName");
+    m_createdRulesetNameHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("RecommendationMode")) {
+    m_recommendationMode = RecommendationModeMapper::GetRecommendationModeForName(jsonValue.GetString("RecommendationMode"));
+    m_recommendationModeHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -54,6 +62,14 @@ JsonValue DataQualityRuleRecommendationRunDescription::Jsonize() const {
 
   if (m_dataSourceHasBeenSet) {
     payload.WithObject("DataSource", m_dataSource.Jsonize());
+  }
+
+  if (m_createdRulesetNameHasBeenSet) {
+    payload.WithString("CreatedRulesetName", m_createdRulesetName);
+  }
+
+  if (m_recommendationModeHasBeenSet) {
+    payload.WithString("RecommendationMode", RecommendationModeMapper::GetNameForRecommendationMode(m_recommendationMode));
   }
 
   return payload;

@@ -8,8 +8,10 @@
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mwaa-serverless/MWAAServerless_EXPORTS.h>
+#include <aws/mwaa-serverless/model/Code.h>
 #include <aws/mwaa-serverless/model/DefinitionS3Location.h>
 #include <aws/mwaa-serverless/model/EncryptionConfiguration.h>
+#include <aws/mwaa-serverless/model/Environment.h>
 #include <aws/mwaa-serverless/model/LoggingConfiguration.h>
 #include <aws/mwaa-serverless/model/NetworkConfiguration.h>
 #include <aws/mwaa-serverless/model/ScheduleConfiguration.h>
@@ -222,12 +224,44 @@ class GetWorkflowResult {
 
   ///@{
   /**
-   * <p>The schedule configuration for the workflow, including cron expressions for
-   * automated execution. Amazon Managed Workflows for Apache Airflow Serverless uses
-   * EventBridge Scheduler for cost-effective, timezone-aware scheduling. When a
-   * workflow includes schedule information in its YAML definition, the service
-   * automatically configures the appropriate triggers for automated execution. Only
-   * one version of a workflow can have an active schedule at any given time.</p>
+   * <p>The Amazon S3 location of the code artifacts provided during workflow
+   * creation or update.</p>
+   */
+  inline const Code& GetCode() const { return m_code; }
+  template <typename CodeT = Code>
+  void SetCode(CodeT&& value) {
+    m_codeHasBeenSet = true;
+    m_code = std::forward<CodeT>(value);
+  }
+  template <typename CodeT = Code>
+  GetWorkflowResult& WithCode(CodeT&& value) {
+    SetCode(std::forward<CodeT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The time at which the code artifacts were copied for this workflow, in ISO
+   * 8601 date-time format.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCodeSnapshottedAt() const { return m_codeSnapshottedAt; }
+  template <typename CodeSnapshottedAtT = Aws::Utils::DateTime>
+  void SetCodeSnapshottedAt(CodeSnapshottedAtT&& value) {
+    m_codeSnapshottedAtHasBeenSet = true;
+    m_codeSnapshottedAt = std::forward<CodeSnapshottedAtT>(value);
+  }
+  template <typename CodeSnapshottedAtT = Aws::Utils::DateTime>
+  GetWorkflowResult& WithCodeSnapshottedAt(CodeSnapshottedAtT&& value) {
+    SetCodeSnapshottedAt(std::forward<CodeSnapshottedAtT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The schedule configuration for the workflow. Only one version of a workflow
+   * can have an active schedule at any given time.</p>
    */
   inline const ScheduleConfiguration& GetScheduleConfiguration() const { return m_scheduleConfiguration; }
   template <typename ScheduleConfigurationT = ScheduleConfiguration>
@@ -273,6 +307,24 @@ class GetWorkflowResult {
   template <typename NetworkConfigurationT = NetworkConfiguration>
   GetWorkflowResult& WithNetworkConfiguration(NetworkConfigurationT&& value) {
     SetNetworkConfiguration(std::forward<NetworkConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The environment variables that tasks in the workflow use during
+   * execution.</p>
+   */
+  inline const Environment& GetEnvironment() const { return m_environment; }
+  template <typename EnvironmentT = Environment>
+  void SetEnvironment(EnvironmentT&& value) {
+    m_environmentHasBeenSet = true;
+    m_environment = std::forward<EnvironmentT>(value);
+  }
+  template <typename EnvironmentT = Environment>
+  GetWorkflowResult& WithEnvironment(EnvironmentT&& value) {
+    SetEnvironment(std::forward<EnvironmentT>(value));
     return *this;
   }
   ///@}
@@ -350,11 +402,17 @@ class GetWorkflowResult {
 
   DefinitionS3Location m_definitionS3Location;
 
+  Code m_code;
+
+  Aws::Utils::DateTime m_codeSnapshottedAt{};
+
   ScheduleConfiguration m_scheduleConfiguration;
 
   Aws::String m_roleArn;
 
   NetworkConfiguration m_networkConfiguration;
+
+  Environment m_environment;
 
   Aws::String m_triggerMode;
 
@@ -373,9 +431,12 @@ class GetWorkflowResult {
   bool m_engineVersionHasBeenSet = false;
   bool m_workflowStatusHasBeenSet = false;
   bool m_definitionS3LocationHasBeenSet = false;
+  bool m_codeHasBeenSet = false;
+  bool m_codeSnapshottedAtHasBeenSet = false;
   bool m_scheduleConfigurationHasBeenSet = false;
   bool m_roleArnHasBeenSet = false;
   bool m_networkConfigurationHasBeenSet = false;
+  bool m_environmentHasBeenSet = false;
   bool m_triggerModeHasBeenSet = false;
   bool m_workflowDefinitionHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;

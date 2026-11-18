@@ -7,6 +7,9 @@
 #include <aws/rest-json-protocol/model/InputAndOutputWithHeadersRequest.h>
 #include <aws/testing/AwsProtocolTestHelpers.h>
 
+#include <cmath>
+#include <limits>
+
 using InputAndOutputWithHeaders = AWS_PROTOCOL_TEST_SUITE;
 using RestJsonProtocolClient = Aws::RestJsonProtocol::RestJsonProtocolClient;
 using namespace Aws::RestJsonProtocol::Model;
@@ -98,7 +101,7 @@ AWS_PROTOCOL_TEST(InputAndOutputWithHeaders, RestJsonInputAndOutputWithTimestamp
 
   InputAndOutputWithHeadersRequest request;
   request.SetHeaderTimestampList(
-      {Aws::Utils::DateTime(static_cast<int64_t>(1576540098)), Aws::Utils::DateTime(static_cast<int64_t>(1576540098))});
+      {Aws::Utils::DateTime(static_cast<double>(1576540098)), Aws::Utils::DateTime(static_cast<double>(1576540098))});
 
   auto outcome = client.InputAndOutputWithHeaders(request);
   ExpectedRequest expectedRq;

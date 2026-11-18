@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticmapreduce/EMREndpointRules.h>
 #include <aws/elasticmapreduce/EMR_EXPORTS.h>
 
 namespace Aws {
 namespace EMR {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using EMRClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using EMRBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using EMREndpointProviderBase = EndpointProviderBase<EMRClientConfiguration, EMRBuiltInParameters, EMRClientContextParameters>;
 
-using EMRDefaultEpProviderBase = DefaultEndpointProvider<EMRClientConfiguration, EMRBuiltInParameters, EMRClientContextParameters>;
+using EMRDefaultEpProviderBase = BDDEndpointProvider<EMRClientConfiguration, EMRBuiltInParameters, EMRClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_EMR_API EMREndpointProvider : public EMRDefaultEpProviderBase {
  public:
   using EMRResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  EMREndpointProvider() : EMRDefaultEpProviderBase(Aws::EMR::EMREndpointRules::GetRulesBlob(), Aws::EMR::EMREndpointRules::RulesBlobSize) {}
+  EMREndpointProvider();
 
   ~EMREndpointProvider() {}
 };

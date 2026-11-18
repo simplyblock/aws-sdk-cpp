@@ -4,6 +4,7 @@
  */
 
 #include <aws/bedrock/BedrockEndpointProvider.h>
+#include <aws/bedrock/internal/BedrockEndpointRules.h>
 
 namespace Aws {
 #ifndef AWS_BEDROCK_EXPORTS  // Except for Windows DLL
@@ -15,16 +16,23 @@ template class Aws::Endpoint::EndpointProviderBase<Bedrock::Endpoint::BedrockCli
                                                    Bedrock::Endpoint::BedrockBuiltInParameters,
                                                    Bedrock::Endpoint::BedrockClientContextParameters>;
 
-template class Aws::Endpoint::DefaultEndpointProvider<Bedrock::Endpoint::BedrockClientConfiguration,
-                                                      Bedrock::Endpoint::BedrockBuiltInParameters,
-                                                      Bedrock::Endpoint::BedrockClientContextParameters>;
+template class Aws::Endpoint::BDDEndpointProvider<Bedrock::Endpoint::BedrockClientConfiguration,
+                                                  Bedrock::Endpoint::BedrockBuiltInParameters,
+                                                  Bedrock::Endpoint::BedrockClientContextParameters>;
 }  // namespace Endpoint
 #endif
 
 namespace Bedrock {
 namespace Endpoint {
+BedrockEndpointProvider::BedrockEndpointProvider()
+    : BedrockDefaultEpProviderBase(Aws::Bedrock::BedrockEndpointRules::GetRulesBlob(), Aws::Bedrock::BedrockEndpointRules::RulesBlobSize) {}
+
 void BedrockBuiltInParameters::SetFromClientConfiguration(const BedrockClientConfiguration& config) {
   SetFromClientConfiguration(static_cast<const BedrockClientConfiguration::BaseClientConfigClass&>(config));
+}
+
+void BedrockBuiltInParameters::SetFromClientConfiguration(const BedrockClientConfiguration& config, const Aws::String& serviceName) {
+  SetFromClientConfiguration(static_cast<const BedrockClientConfiguration::BaseClientConfigClass&>(config), serviceName);
 }
 
 }  // namespace Endpoint

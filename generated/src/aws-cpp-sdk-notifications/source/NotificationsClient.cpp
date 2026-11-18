@@ -58,6 +58,7 @@
 #include <aws/notifications/model/TagResourceRequest.h>
 #include <aws/notifications/model/UntagResourceRequest.h>
 #include <aws/notifications/model/UpdateEventRuleRequest.h>
+#include <aws/notifications/model/UpdateManagedNotificationChannelAssociationRequest.h>
 #include <aws/notifications/model/UpdateNotificationConfigurationRequest.h>
 #include <smithy/tracing/TracingUtils.h>
 
@@ -196,7 +197,8 @@ NotificationsClient::InvokeOperationOutcome NotificationsClient::InvokeServiceOp
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -210,7 +212,7 @@ NotificationsClient::InvokeOperationOutcome NotificationsClient::InvokeServiceOp
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -838,6 +840,18 @@ UpdateEventRuleOutcome NotificationsClient::UpdateEventRule(const UpdateEventRul
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
   return result.IsSuccess() ? UpdateEventRuleOutcome(result.GetResultWithOwnership())
                             : UpdateEventRuleOutcome(std::move(result.GetError()));
+}
+
+UpdateManagedNotificationChannelAssociationOutcome NotificationsClient::UpdateManagedNotificationChannelAssociation(
+    const UpdateManagedNotificationChannelAssociationRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/channels/update-managed-notification-channel-association");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? UpdateManagedNotificationChannelAssociationOutcome(result.GetResultWithOwnership())
+                            : UpdateManagedNotificationChannelAssociationOutcome(std::move(result.GetError()));
 }
 
 UpdateNotificationConfigurationOutcome NotificationsClient::UpdateNotificationConfiguration(

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-lambda-microvms "C++ SDK for the AWS lambda-microvms service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-lambda-microvms "C++ SDK for Lambda MicroVMs" aws-cpp-sdk-core)
 
 file(GLOB AWS_LAMBDA-MICROVMS_HEADERS
     "include/aws/lambda-microvms/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_LAMBDA-MICROVMS_HEADERS
 
 file(GLOB AWS_LAMBDA-MICROVMS_MODEL_HEADERS
     "include/aws/lambda-microvms/model/*.h"
+)
+
+file(GLOB AWS_LAMBDA-MICROVMS_INTERNAL_HEADERS
+    "include/aws/lambda-microvms/internal/*.h"
 )
 
 file(GLOB AWS_LAMBDA-MICROVMS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_LAMBDA-MICROVMS_MODEL_SOURCE
 
 file(GLOB LAMBDA-MICROVMS_UNIFIED_HEADERS
     ${AWS_LAMBDA-MICROVMS_HEADERS}
+    ${AWS_LAMBDA-MICROVMS_INTERNAL_HEADERS}
     ${AWS_LAMBDA-MICROVMS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\lambda-microvms" FILES ${AWS_LAMBDA-MICROVMS_HEADERS})
+        source_group("Header Files\\aws\\lambda-microvms\\internal" FILES ${AWS_LAMBDA-MICROVMS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\lambda-microvms\\model" FILES ${AWS_LAMBDA-MICROVMS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_LAMBDA-MICROVMS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_LAMBDA-MICROVMS_MODEL_SOURCE})

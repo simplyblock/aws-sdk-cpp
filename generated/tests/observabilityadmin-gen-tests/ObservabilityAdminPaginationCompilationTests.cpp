@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -10,10 +10,13 @@
 #include <aws/observabilityadmin/ObservabilityAdminPaginationBase.h>
 #include <aws/observabilityadmin/model/ListResourceTelemetryPaginationTraits.h>
 #include <aws/observabilityadmin/model/ListTelemetryRulesPaginationTraits.h>
+#include <aws/observabilityadmin/model/ListDatasetIntegrationsPaginationTraits.h>
 #include <aws/observabilityadmin/model/ListTelemetryPipelinesPaginationTraits.h>
+#include <aws/observabilityadmin/model/ListThirdPartyTelemetryEnrichmentsPaginationTraits.h>
 #include <aws/observabilityadmin/model/ListS3TableIntegrationsPaginationTraits.h>
 #include <aws/observabilityadmin/model/ListCentralizationRulesForOrganizationPaginationTraits.h>
 #include <aws/observabilityadmin/model/ListResourceTelemetryForOrganizationPaginationTraits.h>
+#include <aws/observabilityadmin/model/ListConnectorsPaginationTraits.h>
 #include <aws/observabilityadmin/model/ListTelemetryRulesForOrganizationPaginationTraits.h>
 
 #include <aws/testing/AwsCppSdkGTestSuite.h>
@@ -24,6 +27,6 @@ class ObservabilityAdminPaginationCompilationTest : public Aws::Testing::AwsCppS
 
 TEST_F(ObservabilityAdminPaginationCompilationTest, ObservabilityAdminPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

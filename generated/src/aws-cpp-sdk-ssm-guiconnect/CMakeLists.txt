@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ssm-guiconnect "C++ SDK for the AWS ssm-guiconnect service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ssm-guiconnect "C++ SDK for AWS SSM-GUIConnect" aws-cpp-sdk-core)
 
 file(GLOB AWS_SSM-GUICONNECT_HEADERS
     "include/aws/ssm-guiconnect/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SSM-GUICONNECT_HEADERS
 
 file(GLOB AWS_SSM-GUICONNECT_MODEL_HEADERS
     "include/aws/ssm-guiconnect/model/*.h"
+)
+
+file(GLOB AWS_SSM-GUICONNECT_INTERNAL_HEADERS
+    "include/aws/ssm-guiconnect/internal/*.h"
 )
 
 file(GLOB AWS_SSM-GUICONNECT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SSM-GUICONNECT_MODEL_SOURCE
 
 file(GLOB SSM-GUICONNECT_UNIFIED_HEADERS
     ${AWS_SSM-GUICONNECT_HEADERS}
+    ${AWS_SSM-GUICONNECT_INTERNAL_HEADERS}
     ${AWS_SSM-GUICONNECT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ssm-guiconnect" FILES ${AWS_SSM-GUICONNECT_HEADERS})
+        source_group("Header Files\\aws\\ssm-guiconnect\\internal" FILES ${AWS_SSM-GUICONNECT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ssm-guiconnect\\model" FILES ${AWS_SSM-GUICONNECT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SSM-GUICONNECT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SSM-GUICONNECT_MODEL_SOURCE})

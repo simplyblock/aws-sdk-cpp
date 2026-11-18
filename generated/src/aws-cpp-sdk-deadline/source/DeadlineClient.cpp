@@ -102,6 +102,7 @@
 #include <aws/deadline/model/ListJobsRequest.h>
 #include <aws/deadline/model/ListLicenseEndpointsRequest.h>
 #include <aws/deadline/model/ListLimitsRequest.h>
+#include <aws/deadline/model/ListMembershipsRequest.h>
 #include <aws/deadline/model/ListMeteredProductsRequest.h>
 #include <aws/deadline/model/ListMonitorsRequest.h>
 #include <aws/deadline/model/ListQueueEnvironmentsRequest.h>
@@ -282,7 +283,8 @@ DeadlineClient::InvokeOperationOutcome DeadlineClient::InvokeServiceOperation(
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -296,7 +298,7 @@ DeadlineClient::InvokeOperationOutcome DeadlineClient::InvokeServiceOperation(
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -2259,6 +2261,23 @@ ListLimitsOutcome DeadlineClient::ListLimits(const ListLimitsRequest& request) c
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
   return result.IsSuccess() ? ListLimitsOutcome(result.GetResultWithOwnership()) : ListLimitsOutcome(std::move(result.GetError()));
+}
+
+ListMembershipsOutcome DeadlineClient::ListMemberships(const ListMembershipsRequest& request) const {
+  if (!request.PrincipalIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListMemberships", "Required field: PrincipalId, is not set");
+    return ListMembershipsOutcome(Aws::Client::AWSError<DeadlineErrors>(DeadlineErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                        "Missing required field [PrincipalId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2023-10-12/memberships");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListMembershipsOutcome(result.GetResultWithOwnership())
+                            : ListMembershipsOutcome(std::move(result.GetError()));
 }
 
 ListMeteredProductsOutcome DeadlineClient::ListMeteredProducts(const ListMeteredProductsRequest& request) const {

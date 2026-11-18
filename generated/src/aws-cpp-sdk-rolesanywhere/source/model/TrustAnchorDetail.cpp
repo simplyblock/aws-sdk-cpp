@@ -38,6 +38,10 @@ TrustAnchorDetail& TrustAnchorDetail::operator=(JsonView jsonValue) {
     m_enabled = jsonValue.GetBool("enabled");
     m_enabledHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("crlDpRevocationEnabled")) {
+    m_crlDpRevocationEnabled = jsonValue.GetBool("crlDpRevocationEnabled");
+    m_crlDpRevocationEnabledHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("createdAt")) {
     m_createdAt = jsonValue.GetString("createdAt");
     m_createdAtHasBeenSet = true;
@@ -53,6 +57,18 @@ TrustAnchorDetail& TrustAnchorDetail::operator=(JsonView jsonValue) {
       m_notificationSettings.push_back(notificationSettingsJsonList[notificationSettingsIndex].AsObject());
     }
     m_notificationSettingsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("aliasName")) {
+    m_aliasName = jsonValue.GetString("aliasName");
+    m_aliasNameHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("aliasArn")) {
+    m_aliasArn = jsonValue.GetString("aliasArn");
+    m_aliasArnHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("previousAliasName")) {
+    m_previousAliasName = jsonValue.GetString("previousAliasName");
+    m_previousAliasNameHasBeenSet = true;
   }
   return *this;
 }
@@ -80,6 +96,10 @@ JsonValue TrustAnchorDetail::Jsonize() const {
     payload.WithBool("enabled", m_enabled);
   }
 
+  if (m_crlDpRevocationEnabledHasBeenSet) {
+    payload.WithBool("crlDpRevocationEnabled", m_crlDpRevocationEnabled);
+  }
+
   if (m_createdAtHasBeenSet) {
     payload.WithString("createdAt", m_createdAt.ToGmtString(Aws::Utils::DateFormat::ISO_8601));
   }
@@ -95,6 +115,18 @@ JsonValue TrustAnchorDetail::Jsonize() const {
       notificationSettingsJsonList[notificationSettingsIndex].AsObject(m_notificationSettings[notificationSettingsIndex].Jsonize());
     }
     payload.WithArray("notificationSettings", std::move(notificationSettingsJsonList));
+  }
+
+  if (m_aliasNameHasBeenSet) {
+    payload.WithString("aliasName", m_aliasName);
+  }
+
+  if (m_aliasArnHasBeenSet) {
+    payload.WithString("aliasArn", m_aliasArn);
+  }
+
+  if (m_previousAliasNameHasBeenSet) {
+    payload.WithString("previousAliasName", m_previousAliasName);
   }
 
   return payload;

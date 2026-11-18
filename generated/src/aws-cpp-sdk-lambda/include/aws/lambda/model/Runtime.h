@@ -57,7 +57,13 @@ enum class Runtime {
   ruby4_0,
   provided,
   provided_al2,
-  provided_al2023
+  provided_al2023,
+  nodejs26_x,
+  python3_15,
+  java8_al2023,
+  java11_al2023,
+  java17_al2023,
+  custom
 };
 
 namespace RuntimeMapper {

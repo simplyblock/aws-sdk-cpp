@@ -47,6 +47,7 @@
 #include <aws/testing/TestingEnvironment.h>
 #include <aws/testing/mocks/monitoring/TestingMonitoring.h>
 #include <fstream>
+#include <future>
 #include <thread>
 
 #ifdef _MSC_VER
@@ -93,6 +94,7 @@ namespace
     static std::string BASE_EVENT_STREAM_LARGE_FILE_TEST_BUCKET_NAME = "largeeventstream";
     static std::string BASE_EVENT_STREAM_ERRORS_IN_EVENT_TEST_BUCKET_NAME = "errorsinevent";
     static std::string BASE_CHECKSUMS_BUCKET_NAME = "checksums";
+    static std::string BASE_CHECKSUMS_WHEN_REQUIRED_BUCKET_NAME = "checksumswhenrequired";
     static std::string BASE_CONTENT_ENCODING_BUCKET_NAME = "contentencoding";
     static std::string BASE_CROSS_REGION_BUCKET_NAME = "crossregion";
     static std::string BASE_ENDPOINT_OVERRIDE_BUCKET_NAME = "endpointoverride";
@@ -1582,6 +1584,89 @@ namespace
         ASSERT_TRUE(isStatsEventReceived);
     }
 
+    TEST_F(BucketAndObjectOperationTest, TestObjectOperationWithEventStreamAsync)
+    {
+        GTEST_SKIP() << "Select objects is not supported on new AWS accounts";
+        const Aws::String fullBucketName = CalculateBucketName(BASE_EVENT_STREAM_TEST_BUCKET_NAME.c_str());
+        SCOPED_TRACE(Aws::String("FullBucketName ") + fullBucketName);
+        CreateBucketRequest createBucketRequest;
+        createBucketRequest.SetBucket(fullBucketName);
+        createBucketRequest.SetACL(BucketCannedACL::private_);
+        CreateBucketOutcome createBucketOutcome = CreateBucket(createBucketRequest);
+        AWS_ASSERT_SUCCESS(createBucketOutcome);
+        ASSERT_TRUE(WaitForBucketToPropagate(fullBucketName, Client));
+        TagTestBucket(fullBucketName, Client);
+
+        PutObjectRequest putObjectRequest;
+        putObjectRequest.SetBucket(fullBucketName);
+
+        std::shared_ptr<Aws::IOStream> objectStream = Aws::MakeShared<Aws::StringStream>(ALLOCATION_TAG);
+        *objectStream << "Name,Number\nAlice,1\nBob,2";
+        Aws::String firstColumn = "Name\nAlice\nBob\n";
+        objectStream->flush();
+        putObjectRequest.SetBody(objectStream);
+        putObjectRequest.SetKey(TEST_EVENT_STREAM_OBJ_KEY);
+        auto objectSize = putObjectRequest.GetBody()->tellp();
+        putObjectRequest.SetContentLength(static_cast<long>(objectSize));
+        putObjectRequest.SetContentMD5(HashingUtils::Base64Encode(HashingUtils::CalculateMD5(*putObjectRequest.GetBody())));
+        putObjectRequest.SetContentType("text/csv");
+
+        PutObjectOutcome putObjectOutcome = Client->PutObject(putObjectRequest);
+        AWS_ASSERT_SUCCESS(putObjectOutcome);
+
+        ASSERT_TRUE(WaitForObjectToPropagate(fullBucketName, TEST_EVENT_STREAM_OBJ_KEY));
+
+        SelectObjectContentRequest selectObjectContentRequest;
+        selectObjectContentRequest.SetBucket(fullBucketName);
+        selectObjectContentRequest.SetKey(TEST_EVENT_STREAM_OBJ_KEY);
+        selectObjectContentRequest.SetExpressionType(ExpressionType::SQL);
+        selectObjectContentRequest.SetExpression("select s._1 from S3Object s");
+
+        CSVInput csvInput;
+        csvInput.SetFileHeaderInfo(FileHeaderInfo::NONE);
+        InputSerialization inputSerialization;
+        inputSerialization.SetCSV(csvInput);
+        selectObjectContentRequest.SetInputSerialization(inputSerialization);
+
+        CSVOutput csvOutput;
+        OutputSerialization outputSerialization;
+        outputSerialization.SetCSV(csvOutput);
+        selectObjectContentRequest.SetOutputSerialization(outputSerialization);
+
+        bool isRecordsEventReceived = false;
+        bool isStatsEventReceived = false;
+
+        SelectObjectContentHandler handler;
+        handler.SetRecordsEventCallback([&](const RecordsEvent& recordsEvent)
+        {
+            isRecordsEventReceived = true;
+            auto recordsVector = recordsEvent.GetPayload();
+            Aws::String records(recordsVector.begin(), recordsVector.end());
+            ASSERT_STREQ(firstColumn.c_str(), records.c_str());
+        });
+        handler.SetStatsEventCallback([&](const StatsEvent& statsEvent)
+        {
+            isStatsEventReceived = true;
+            ASSERT_EQ(static_cast<long long>(objectSize), statsEvent.GetDetails().GetBytesScanned());
+            ASSERT_EQ(static_cast<long long>(objectSize), statsEvent.GetDetails().GetBytesProcessed());
+            ASSERT_EQ(static_cast<long long>(firstColumn.size()), statsEvent.GetDetails().GetBytesReturned());
+        });
+
+        selectObjectContentRequest.SetEventStreamHandler(handler);
+
+        std::promise<bool> selectSucceeded;
+        Client->SelectObjectContentAsync(selectObjectContentRequest,
+            [&](const S3Client*, const SelectObjectContentRequest&, const SelectObjectContentOutcome& outcome,
+                const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)
+            {
+                AWS_EXPECT_SUCCESS(outcome);
+                selectSucceeded.set_value(outcome.IsSuccess());
+            });
+        ASSERT_TRUE(selectSucceeded.get_future().get());
+        ASSERT_TRUE(isRecordsEventReceived);
+        ASSERT_TRUE(isStatsEventReceived);
+    }
+
     // This test is to test failed event stream request will not cause crash during retry.
     TEST_F(BucketAndObjectOperationTest, TestSelectObjectOperationWithEventStreamFailWithRetry)
     {
@@ -1921,6 +2006,43 @@ namespace
         AWS_ASSERT_SUCCESS(getObjectOutcome);
     }
 
+    TEST_F(BucketAndObjectOperationTest, TestFlexibleChecksumsWhenRequiredWithExplicitAlgorithm)
+    {
+        const Aws::String fullBucketName = CalculateBucketName(BASE_CHECKSUMS_WHEN_REQUIRED_BUCKET_NAME.c_str());
+        SCOPED_TRACE(Aws::String("FullBucketName ") + fullBucketName);
+
+        CreateBucketRequest createBucketRequest;
+        createBucketRequest.SetBucket(fullBucketName);
+
+        CreateBucketOutcome createBucketOutcome = CreateBucket(createBucketRequest);
+        AWS_ASSERT_SUCCESS(createBucketOutcome);
+        WaitForBucketToPropagate(fullBucketName, Client);
+        TagTestBucket(fullBucketName, Client);
+
+        ClientConfiguration config;
+        config.region = Aws::Region::US_EAST_1;
+        config.checksumConfig.requestChecksumCalculation = RequestChecksumCalculation::WHEN_REQUIRED;
+        const S3Client whenRequiredClient{config};
+
+        std::shared_ptr<Aws::IOStream> objectStream = Aws::MakeShared<Aws::StringStream>(ALLOCATION_TAG);
+        *objectStream << "it's coming football's coming home";
+
+        PutObjectRequest putObjectRequest{};
+        putObjectRequest.SetBucket(fullBucketName);
+        putObjectRequest.SetKey(TEST_OBJ_KEY);
+        putObjectRequest.SetBody(objectStream);
+        putObjectRequest.SetChecksumAlgorithm(ChecksumAlgorithm::CRC32);
+        const auto putObjectOutcome = whenRequiredClient.PutObject(putObjectRequest);
+        AWS_ASSERT_SUCCESS(putObjectOutcome);
+
+        GetObjectRequest getObjectRequest{};
+        getObjectRequest.SetBucket(fullBucketName);
+        getObjectRequest.SetKey(TEST_OBJ_KEY);
+        const auto getOutcome = whenRequiredClient.GetObject(getObjectRequest);
+        AWS_ASSERT_SUCCESS(getOutcome);
+        EXPECT_STREQ(getOutcome.GetResult().GetChecksumCRC32().c_str(), "gR4VoA==");
+    }
+
     TEST_F(BucketAndObjectOperationTest, TestMultipartFlexibleChecksums)
     {
         const char* multipartKeyName = "MultiPartKey";
@@ -2031,6 +2153,33 @@ namespace
         // Client in aws-global will make cross-region request.
         listObjectsOutcome = globalClient->ListObjects(listObjectsRequest);
         AWS_ASSERT_SUCCESS(listObjectsOutcome);
+
+        // Cross-region PutObject (streaming request with Expect: 100-continue).
+        // Verifies that 301 redirect + Expect interaction works correctly.
+        PutObjectRequest putObjectRequest;
+        putObjectRequest.SetBucket(fullBucketName);
+        putObjectRequest.SetKey("cross-region-test-key");
+        auto body = Aws::MakeShared<StringStream>(ALLOCATION_TAG, "cross-region body");
+        putObjectRequest.SetBody(body);
+        PutObjectOutcome putObjectOutcome = globalClient->PutObject(putObjectRequest);
+        AWS_ASSERT_SUCCESS(putObjectOutcome);
+
+        // Verify the object was written correctly.
+        GetObjectRequest getObjectRequest;
+        getObjectRequest.SetBucket(fullBucketName);
+        getObjectRequest.SetKey("cross-region-test-key");
+        GetObjectOutcome getObjectOutcome = globalClient->GetObject(getObjectRequest);
+        AWS_ASSERT_SUCCESS(getObjectOutcome);
+        Aws::StringStream getObjectBody;
+        getObjectBody << getObjectOutcome.GetResult().GetBody().rdbuf();
+        EXPECT_EQ("cross-region body", getObjectBody.str());
+
+        // Clean up the object before deleting the bucket.
+        DeleteObjectRequest deleteObjectRequest;
+        deleteObjectRequest.SetBucket(fullBucketName);
+        deleteObjectRequest.SetKey("cross-region-test-key");
+        DeleteObjectOutcome deleteObjectOutcome = globalClient->DeleteObject(deleteObjectRequest);
+        AWS_ASSERT_SUCCESS(deleteObjectOutcome);
 
         DeleteBucketRequest deleteBucketRequest;
         deleteBucketRequest.SetBucket(fullBucketName);

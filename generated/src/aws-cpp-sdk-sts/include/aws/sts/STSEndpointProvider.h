@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/sts/STSEndpointRules.h>
 #include <aws/sts/STS_EXPORTS.h>
 
 namespace Aws {
 namespace STS {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using STSClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using STSBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using STSEndpointProviderBase = EndpointProviderBase<STSClientConfiguration, STSBuiltInParameters, STSClientContextParameters>;
 
-using STSDefaultEpProviderBase = DefaultEndpointProvider<STSClientConfiguration, STSBuiltInParameters, STSClientContextParameters>;
+using STSDefaultEpProviderBase = BDDEndpointProvider<STSClientConfiguration, STSBuiltInParameters, STSClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_STS_API STSEndpointProvider : public STSDefaultEpProviderBase {
  public:
   using STSResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  STSEndpointProvider() : STSDefaultEpProviderBase(Aws::STS::STSEndpointRules::GetRulesBlob(), Aws::STS::STSEndpointRules::RulesBlobSize) {}
+  STSEndpointProvider();
 
   ~STSEndpointProvider() {}
 };

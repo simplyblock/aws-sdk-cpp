@@ -38,6 +38,22 @@ CodecMetadata& CodecMetadata::operator=(JsonView jsonValue) {
     m_contentLightLevel = jsonValue.GetObject("contentLightLevel");
     m_contentLightLevelHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("displayAspectRatio")) {
+    m_displayAspectRatio = jsonValue.GetObject("displayAspectRatio");
+    m_displayAspectRatioHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("dolbyVision")) {
+    m_dolbyVision = jsonValue.GetObject("dolbyVision");
+    m_dolbyVisionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("fieldOrder")) {
+    m_fieldOrder = jsonValue.GetString("fieldOrder");
+    m_fieldOrderHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("hdr10PlusPresence")) {
+    m_hdr10PlusPresence = Hdr10PlusPresenceMapper::GetHdr10PlusPresenceForName(jsonValue.GetString("hdr10PlusPresence"));
+    m_hdr10PlusPresenceHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("height")) {
     m_height = jsonValue.GetInteger("height");
     m_heightHasBeenSet = true;
@@ -57,6 +73,10 @@ CodecMetadata& CodecMetadata::operator=(JsonView jsonValue) {
   if (jsonValue.ValueExists("rotation")) {
     m_rotation = jsonValue.GetInteger("rotation");
     m_rotationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("sampleAspectRatio")) {
+    m_sampleAspectRatio = jsonValue.GetObject("sampleAspectRatio");
+    m_sampleAspectRatioHasBeenSet = true;
   }
   if (jsonValue.ValueExists("scanType")) {
     m_scanType = jsonValue.GetString("scanType");
@@ -97,6 +117,22 @@ JsonValue CodecMetadata::Jsonize() const {
     payload.WithObject("contentLightLevel", m_contentLightLevel.Jsonize());
   }
 
+  if (m_displayAspectRatioHasBeenSet) {
+    payload.WithObject("displayAspectRatio", m_displayAspectRatio.Jsonize());
+  }
+
+  if (m_dolbyVisionHasBeenSet) {
+    payload.WithObject("dolbyVision", m_dolbyVision.Jsonize());
+  }
+
+  if (m_fieldOrderHasBeenSet) {
+    payload.WithString("fieldOrder", m_fieldOrder);
+  }
+
+  if (m_hdr10PlusPresenceHasBeenSet) {
+    payload.WithString("hdr10PlusPresence", Hdr10PlusPresenceMapper::GetNameForHdr10PlusPresence(m_hdr10PlusPresence));
+  }
+
   if (m_heightHasBeenSet) {
     payload.WithInteger("height", m_height);
   }
@@ -115,6 +151,10 @@ JsonValue CodecMetadata::Jsonize() const {
 
   if (m_rotationHasBeenSet) {
     payload.WithInteger("rotation", m_rotation);
+  }
+
+  if (m_sampleAspectRatioHasBeenSet) {
+    payload.WithObject("sampleAspectRatio", m_sampleAspectRatio.Jsonize());
   }
 
   if (m_scanTypeHasBeenSet) {

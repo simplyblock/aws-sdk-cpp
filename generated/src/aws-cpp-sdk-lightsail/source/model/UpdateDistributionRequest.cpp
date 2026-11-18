@@ -57,6 +57,35 @@ Aws::String UpdateDistributionRequest::SerializePayload() const {
     payload.WithBool("useDefaultCertificate", m_useDefaultCertificate);
   }
 
+  if (m_enablePrivateOriginAccessHasBeenSet) {
+    payload.WithBool("enablePrivateOriginAccess", m_enablePrivateOriginAccess);
+  }
+
+  if (m_defaultRootObjectHasBeenSet) {
+    payload.WithString("defaultRootObject", m_defaultRootObject);
+  }
+
+  if (m_customErrorResponsesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> customErrorResponsesJsonList(m_customErrorResponses.size());
+    for (unsigned customErrorResponsesIndex = 0; customErrorResponsesIndex < customErrorResponsesJsonList.GetLength();
+         ++customErrorResponsesIndex) {
+      customErrorResponsesJsonList[customErrorResponsesIndex].AsObject(m_customErrorResponses[customErrorResponsesIndex].Jsonize());
+    }
+    payload.WithArray("customErrorResponses", std::move(customErrorResponsesJsonList));
+  }
+
+  if (m_enableWafHasBeenSet) {
+    payload.WithBool("enableWaf", m_enableWaf);
+  }
+
+  if (m_wafRulesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> wafRulesJsonList(m_wafRules.size());
+    for (unsigned wafRulesIndex = 0; wafRulesIndex < wafRulesJsonList.GetLength(); ++wafRulesIndex) {
+      wafRulesJsonList[wafRulesIndex].AsObject(m_wafRules[wafRulesIndex].Jsonize());
+    }
+    payload.WithArray("wafRules", std::move(wafRulesJsonList));
+  }
+
   return payload.View().WriteReadable();
 }
 

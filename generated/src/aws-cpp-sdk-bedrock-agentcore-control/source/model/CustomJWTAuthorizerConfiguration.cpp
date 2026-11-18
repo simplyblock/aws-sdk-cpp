@@ -43,6 +43,13 @@ CustomJWTAuthorizerConfiguration& CustomJWTAuthorizerConfiguration::operator=(Js
     }
     m_allowedScopesHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("advertisedScopeMapping")) {
+    Aws::Map<Aws::String, JsonView> advertisedScopeMappingJsonMap = jsonValue.GetObject("advertisedScopeMapping").GetAllObjects();
+    for (auto& advertisedScopeMappingItem : advertisedScopeMappingJsonMap) {
+      m_advertisedScopeMapping[advertisedScopeMappingItem.first] = advertisedScopeMappingItem.second.AsString();
+    }
+    m_advertisedScopeMappingHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("customClaims")) {
     Aws::Utils::Array<JsonView> customClaimsJsonList = jsonValue.GetArray("customClaims");
     for (unsigned customClaimsIndex = 0; customClaimsIndex < customClaimsJsonList.GetLength(); ++customClaimsIndex) {
@@ -61,6 +68,14 @@ CustomJWTAuthorizerConfiguration& CustomJWTAuthorizerConfiguration::operator=(Js
       m_privateEndpointOverrides.push_back(privateEndpointOverridesJsonList[privateEndpointOverridesIndex].AsObject());
     }
     m_privateEndpointOverridesHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("certificateConfigurations")) {
+    Aws::Utils::Array<JsonView> certificateConfigurationsJsonList = jsonValue.GetArray("certificateConfigurations");
+    for (unsigned certificateConfigurationsIndex = 0; certificateConfigurationsIndex < certificateConfigurationsJsonList.GetLength();
+         ++certificateConfigurationsIndex) {
+      m_certificateConfigurations.push_back(certificateConfigurationsJsonList[certificateConfigurationsIndex].AsObject());
+    }
+    m_certificateConfigurationsHasBeenSet = true;
   }
   if (jsonValue.ValueExists("allowedWorkloadConfiguration")) {
     m_allowedWorkloadConfiguration = jsonValue.GetObject("allowedWorkloadConfiguration");
@@ -100,6 +115,14 @@ JsonValue CustomJWTAuthorizerConfiguration::Jsonize() const {
     payload.WithArray("allowedScopes", std::move(allowedScopesJsonList));
   }
 
+  if (m_advertisedScopeMappingHasBeenSet) {
+    JsonValue advertisedScopeMappingJsonMap;
+    for (auto& advertisedScopeMappingItem : m_advertisedScopeMapping) {
+      advertisedScopeMappingJsonMap.WithString(advertisedScopeMappingItem.first, advertisedScopeMappingItem.second);
+    }
+    payload.WithObject("advertisedScopeMapping", std::move(advertisedScopeMappingJsonMap));
+  }
+
   if (m_customClaimsHasBeenSet) {
     Aws::Utils::Array<JsonValue> customClaimsJsonList(m_customClaims.size());
     for (unsigned customClaimsIndex = 0; customClaimsIndex < customClaimsJsonList.GetLength(); ++customClaimsIndex) {
@@ -120,6 +143,16 @@ JsonValue CustomJWTAuthorizerConfiguration::Jsonize() const {
           m_privateEndpointOverrides[privateEndpointOverridesIndex].Jsonize());
     }
     payload.WithArray("privateEndpointOverrides", std::move(privateEndpointOverridesJsonList));
+  }
+
+  if (m_certificateConfigurationsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> certificateConfigurationsJsonList(m_certificateConfigurations.size());
+    for (unsigned certificateConfigurationsIndex = 0; certificateConfigurationsIndex < certificateConfigurationsJsonList.GetLength();
+         ++certificateConfigurationsIndex) {
+      certificateConfigurationsJsonList[certificateConfigurationsIndex].AsObject(
+          m_certificateConfigurations[certificateConfigurationsIndex].Jsonize());
+    }
+    payload.WithArray("certificateConfigurations", std::move(certificateConfigurationsJsonList));
   }
 
   if (m_allowedWorkloadConfigurationHasBeenSet) {

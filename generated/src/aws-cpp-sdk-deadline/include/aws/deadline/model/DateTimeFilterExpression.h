@@ -22,7 +22,7 @@ namespace deadline {
 namespace Model {
 
 /**
- * <p>The time stamp in date-time format.</p><p><h3>See Also:</h3>   <a
+ * <p>The timestamp in date-time format.</p><p><h3>See Also:</h3>   <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/DateTimeFilterExpression">AWS
  * API Reference</a></p>
  */
@@ -53,7 +53,8 @@ class DateTimeFilterExpression {
 
   ///@{
   /**
-   * <p>The type of comparison to use to filter the results.</p>
+   * <p>The type of comparison to use to filter the results. <code>NOT_EQUAL</code>,
+   * <code>ANY_EQUALS</code>, and <code>ALL_NOT_EQUALS</code> aren't supported.</p>
    */
   inline ComparisonOperator GetOperator() const { return m_operator; }
   inline bool OperatorHasBeenSet() const { return m_operatorHasBeenSet; }

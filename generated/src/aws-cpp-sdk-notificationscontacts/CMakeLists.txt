@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-notificationscontacts "C++ SDK for the AWS notificationscontacts service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-notificationscontacts "C++ SDK for AWS User Notifications Contacts" aws-cpp-sdk-core)
 
 file(GLOB AWS_NOTIFICATIONSCONTACTS_HEADERS
     "include/aws/notificationscontacts/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_NOTIFICATIONSCONTACTS_HEADERS
 
 file(GLOB AWS_NOTIFICATIONSCONTACTS_MODEL_HEADERS
     "include/aws/notificationscontacts/model/*.h"
+)
+
+file(GLOB AWS_NOTIFICATIONSCONTACTS_INTERNAL_HEADERS
+    "include/aws/notificationscontacts/internal/*.h"
 )
 
 file(GLOB AWS_NOTIFICATIONSCONTACTS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_NOTIFICATIONSCONTACTS_MODEL_SOURCE
 
 file(GLOB NOTIFICATIONSCONTACTS_UNIFIED_HEADERS
     ${AWS_NOTIFICATIONSCONTACTS_HEADERS}
+    ${AWS_NOTIFICATIONSCONTACTS_INTERNAL_HEADERS}
     ${AWS_NOTIFICATIONSCONTACTS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\notificationscontacts" FILES ${AWS_NOTIFICATIONSCONTACTS_HEADERS})
+        source_group("Header Files\\aws\\notificationscontacts\\internal" FILES ${AWS_NOTIFICATIONSCONTACTS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\notificationscontacts\\model" FILES ${AWS_NOTIFICATIONSCONTACTS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_NOTIFICATIONSCONTACTS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_NOTIFICATIONSCONTACTS_MODEL_SOURCE})

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-sagemaker-a2i-runtime "C++ SDK for the AWS sagemaker-a2i-runtime service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-sagemaker-a2i-runtime "C++ SDK for Amazon Augmented AI Runtime" aws-cpp-sdk-core)
 
 file(GLOB AWS_SAGEMAKER-A2I-RUNTIME_HEADERS
     "include/aws/sagemaker-a2i-runtime/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SAGEMAKER-A2I-RUNTIME_HEADERS
 
 file(GLOB AWS_SAGEMAKER-A2I-RUNTIME_MODEL_HEADERS
     "include/aws/sagemaker-a2i-runtime/model/*.h"
+)
+
+file(GLOB AWS_SAGEMAKER-A2I-RUNTIME_INTERNAL_HEADERS
+    "include/aws/sagemaker-a2i-runtime/internal/*.h"
 )
 
 file(GLOB AWS_SAGEMAKER-A2I-RUNTIME_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SAGEMAKER-A2I-RUNTIME_MODEL_SOURCE
 
 file(GLOB SAGEMAKER-A2I-RUNTIME_UNIFIED_HEADERS
     ${AWS_SAGEMAKER-A2I-RUNTIME_HEADERS}
+    ${AWS_SAGEMAKER-A2I-RUNTIME_INTERNAL_HEADERS}
     ${AWS_SAGEMAKER-A2I-RUNTIME_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\sagemaker-a2i-runtime" FILES ${AWS_SAGEMAKER-A2I-RUNTIME_HEADERS})
+        source_group("Header Files\\aws\\sagemaker-a2i-runtime\\internal" FILES ${AWS_SAGEMAKER-A2I-RUNTIME_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\sagemaker-a2i-runtime\\model" FILES ${AWS_SAGEMAKER-A2I-RUNTIME_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SAGEMAKER-A2I-RUNTIME_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SAGEMAKER-A2I-RUNTIME_MODEL_SOURCE})

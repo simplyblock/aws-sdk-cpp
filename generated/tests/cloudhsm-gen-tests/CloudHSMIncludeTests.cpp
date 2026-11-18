@@ -8,12 +8,14 @@
 
 #include <aws/cloudhsm/CloudHSMClient.h>
 #include <aws/cloudhsm/CloudHSMEndpointProvider.h>
-#include <aws/cloudhsm/CloudHSMEndpointRules.h>
 #include <aws/cloudhsm/CloudHSMErrorMarshaller.h>
 #include <aws/cloudhsm/CloudHSMErrors.h>
+#include <aws/cloudhsm/CloudHSMPaginationBase.h>
 #include <aws/cloudhsm/CloudHSMRequest.h>
 #include <aws/cloudhsm/CloudHSMServiceClientModel.h>
+#include <aws/cloudhsm/CloudHSMWaiter.h>
 #include <aws/cloudhsm/CloudHSM_EXPORTS.h>
+#include <aws/cloudhsm/internal/CloudHSMEndpointRules.h>
 #include <aws/cloudhsm/model/ClientVersion.h>
 #include <aws/cloudhsm/model/CloudHsmObjectState.h>
 #include <aws/cloudhsm/model/HsmStatus.h>

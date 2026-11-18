@@ -7,6 +7,7 @@
 #include <aws/application-insights/model/TooManyTagsException.h>
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/HashingUtils.h>
+#include <aws/core/utils/cbor/CborValue.h>
 
 using namespace Aws::Client;
 using namespace Aws::Utils;
@@ -18,7 +19,8 @@ namespace ApplicationInsights {
 template <>
 AWS_APPLICATIONINSIGHTS_API TooManyTagsException ApplicationInsightsError::GetModeledError() {
   assert(this->GetErrorType() == ApplicationInsightsErrors::TOO_MANY_TAGS);
-  return TooManyTagsException(this->GetJsonPayload().View());
+  Aws::Utils::Cbor::CborValue payload(this->GetCborPayload());
+  return TooManyTagsException(payload.GetDecoder());
 }
 
 namespace ApplicationInsightsErrorMapper {

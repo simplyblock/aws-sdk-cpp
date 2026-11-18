@@ -7,13 +7,16 @@
 #include <aws/testing/AwsTestHelpers.h>
 
 #include <aws/appstream/AppStreamClient.h>
+#include <aws/appstream/AppStreamClientPagination.h>
 #include <aws/appstream/AppStreamEndpointProvider.h>
-#include <aws/appstream/AppStreamEndpointRules.h>
 #include <aws/appstream/AppStreamErrorMarshaller.h>
 #include <aws/appstream/AppStreamErrors.h>
+#include <aws/appstream/AppStreamPaginationBase.h>
 #include <aws/appstream/AppStreamRequest.h>
 #include <aws/appstream/AppStreamServiceClientModel.h>
+#include <aws/appstream/AppStreamWaiter.h>
 #include <aws/appstream/AppStream_EXPORTS.h>
+#include <aws/appstream/internal/AppStreamEndpointRules.h>
 #include <aws/appstream/model/AccessEndpoint.h>
 #include <aws/appstream/model/AccessEndpointType.h>
 #include <aws/appstream/model/Action.h>
@@ -121,8 +124,10 @@
 #include <aws/appstream/model/DeleteUsageReportSubscriptionResult.h>
 #include <aws/appstream/model/DeleteUserRequest.h>
 #include <aws/appstream/model/DeleteUserResult.h>
+#include <aws/appstream/model/DescribeAppBlockBuilderAppBlockAssociationsPaginationTraits.h>
 #include <aws/appstream/model/DescribeAppBlockBuilderAppBlockAssociationsRequest.h>
 #include <aws/appstream/model/DescribeAppBlockBuilderAppBlockAssociationsResult.h>
+#include <aws/appstream/model/DescribeAppBlockBuildersPaginationTraits.h>
 #include <aws/appstream/model/DescribeAppBlockBuildersRequest.h>
 #include <aws/appstream/model/DescribeAppBlockBuildersResult.h>
 #include <aws/appstream/model/DescribeAppBlocksRequest.h>
@@ -141,8 +146,10 @@
 #include <aws/appstream/model/DescribeFleetsResult.h>
 #include <aws/appstream/model/DescribeImageBuildersRequest.h>
 #include <aws/appstream/model/DescribeImageBuildersResult.h>
+#include <aws/appstream/model/DescribeImagePermissionsPaginationTraits.h>
 #include <aws/appstream/model/DescribeImagePermissionsRequest.h>
 #include <aws/appstream/model/DescribeImagePermissionsResult.h>
+#include <aws/appstream/model/DescribeImagesPaginationTraits.h>
 #include <aws/appstream/model/DescribeImagesRequest.h>
 #include <aws/appstream/model/DescribeImagesResult.h>
 #include <aws/appstream/model/DescribeSessionsRequest.h>
@@ -197,11 +204,15 @@
 #include <aws/appstream/model/GetExportImageTaskResult.h>
 #include <aws/appstream/model/Image.h>
 #include <aws/appstream/model/ImageBuilder.h>
+#include <aws/appstream/model/ImageBuilderAgentAccessConfig.h>
+#include <aws/appstream/model/ImageBuilderAgentAccessConfigForUpdate.h>
+#include <aws/appstream/model/ImageBuilderAttribute.h>
 #include <aws/appstream/model/ImageBuilderState.h>
 #include <aws/appstream/model/ImageBuilderStateChangeReason.h>
 #include <aws/appstream/model/ImageBuilderStateChangeReasonCode.h>
 #include <aws/appstream/model/ImagePermissions.h>
 #include <aws/appstream/model/ImageSharedWithOthers.h>
+#include <aws/appstream/model/ImageSoftwareMetadata.h>
 #include <aws/appstream/model/ImageState.h>
 #include <aws/appstream/model/ImageStateChangeReason.h>
 #include <aws/appstream/model/ImageStateChangeReasonCode.h>
@@ -257,6 +268,7 @@
 #include <aws/appstream/model/StopImageBuilderRequest.h>
 #include <aws/appstream/model/StopImageBuilderResult.h>
 #include <aws/appstream/model/StorageConnector.h>
+#include <aws/appstream/model/StorageConnectorAuthentication.h>
 #include <aws/appstream/model/StorageConnectorType.h>
 #include <aws/appstream/model/StreamView.h>
 #include <aws/appstream/model/StreamingExperienceSettings.h>
@@ -279,6 +291,8 @@
 #include <aws/appstream/model/UpdateEntitlementResult.h>
 #include <aws/appstream/model/UpdateFleetRequest.h>
 #include <aws/appstream/model/UpdateFleetResult.h>
+#include <aws/appstream/model/UpdateImageBuilderRequest.h>
+#include <aws/appstream/model/UpdateImageBuilderResult.h>
 #include <aws/appstream/model/UpdateImagePermissionsRequest.h>
 #include <aws/appstream/model/UpdateImagePermissionsResult.h>
 #include <aws/appstream/model/UpdateStackRequest.h>

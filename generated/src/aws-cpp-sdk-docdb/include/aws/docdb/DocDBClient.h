@@ -269,14 +269,14 @@ class AWS_DOCDB_API DocDBClient : public Aws::Client::AWSXMLClient,
    * cannot make modifications directly to the <code>default.docdb3.6</code> cluster
    * parameter group. If your Amazon DocumentDB cluster is using the default cluster
    * parameter group and you want to modify a value in it, you must first <a
-   * href="https://docs.aws.amazon.com/documentdb/latest/developerguide/cluster_parameter_group-create.html">
+   * href="https://docs.aws.amazon.com/documentdb/latest/devguide/cluster_parameter_group-create.html">
    * create a new parameter group</a> or <a
-   * href="https://docs.aws.amazon.com/documentdb/latest/developerguide/cluster_parameter_group-copy.html">
+   * href="https://docs.aws.amazon.com/documentdb/latest/devguide/cluster_parameter_group-copy.html">
    * copy an existing parameter group</a>, modify it, and then apply the modified
    * parameter group to your cluster. For the new cluster parameter group and
    * associated settings to take effect, you must then reboot the instances in the
    * cluster without failover. For more information, see <a
-   * href="https://docs.aws.amazon.com/documentdb/latest/developerguide/cluster_parameter_group-modify.html">
+   * href="https://docs.aws.amazon.com/documentdb/latest/devguide/cluster_parameter_group-modify.html">
    * Modifying Amazon DocumentDB Cluster Parameter Groups</a>. </p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/CreateDBClusterParameterGroup">AWS
@@ -1154,6 +1154,36 @@ class AWS_DOCDB_API DocDBClient : public Aws::Client::AWSXMLClient,
   }
 
   /**
+   * <p>Describes the properties of specific platform versions for Amazon DocumentDB
+   * Serverless v2.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/DescribeServerlessV2PlatformVersions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DescribeServerlessV2PlatformVersionsOutcome DescribeServerlessV2PlatformVersions(
+      const Model::DescribeServerlessV2PlatformVersionsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for DescribeServerlessV2PlatformVersions that returns a future to the operation so that it can be executed in
+   * parallel to other requests.
+   */
+  template <typename DescribeServerlessV2PlatformVersionsRequestT = Model::DescribeServerlessV2PlatformVersionsRequest>
+  Model::DescribeServerlessV2PlatformVersionsOutcomeCallable DescribeServerlessV2PlatformVersionsCallable(
+      const DescribeServerlessV2PlatformVersionsRequestT& request = {}) const {
+    return SubmitCallable(&DocDBClient::DescribeServerlessV2PlatformVersions, request);
+  }
+
+  /**
+   * An Async wrapper for DescribeServerlessV2PlatformVersions that queues the request into a thread executor and triggers associated
+   * callback when operation has finished.
+   */
+  template <typename DescribeServerlessV2PlatformVersionsRequestT = Model::DescribeServerlessV2PlatformVersionsRequest>
+  void DescribeServerlessV2PlatformVersionsAsync(const DescribeServerlessV2PlatformVersionsResponseReceivedHandler& handler,
+                                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                                 const DescribeServerlessV2PlatformVersionsRequestT& request = {}) const {
+    return SubmitAsync(&DocDBClient::DescribeServerlessV2PlatformVersions, request, handler, context);
+  }
+
+  /**
    * <p>Forces a failover for a cluster.</p> <p>A failover for a cluster promotes one
    * of the Amazon DocumentDB replicas (read-only instances) in the cluster to be the
    * primary instance (the cluster writer).</p> <p>If the primary instance fails,
@@ -1700,7 +1730,7 @@ class AWS_DOCDB_API DocDBClient : public Aws::Client::AWSXMLClient,
   /**
    * <p>Restarts the stopped cluster that is specified by
    * <code>DBClusterIdentifier</code>. For more information, see <a
-   * href="https://docs.aws.amazon.com/documentdb/latest/developerguide/db-cluster-stop-start.html">Stopping
+   * href="https://docs.aws.amazon.com/documentdb/latest/devguide/db-cluster-stop-start.html">Stopping
    * and Starting an Amazon DocumentDB Cluster</a>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/StartDBCluster">AWS
    * API Reference</a></p>
@@ -1729,7 +1759,7 @@ class AWS_DOCDB_API DocDBClient : public Aws::Client::AWSXMLClient,
    * <p>Stops the running cluster that is specified by
    * <code>DBClusterIdentifier</code>. The cluster must be in the <i>available</i>
    * state. For more information, see <a
-   * href="https://docs.aws.amazon.com/documentdb/latest/developerguide/db-cluster-stop-start.html">Stopping
+   * href="https://docs.aws.amazon.com/documentdb/latest/devguide/db-cluster-stop-start.html">Stopping
    * and Starting an Amazon DocumentDB Cluster</a>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/StopDBCluster">AWS
    * API Reference</a></p>

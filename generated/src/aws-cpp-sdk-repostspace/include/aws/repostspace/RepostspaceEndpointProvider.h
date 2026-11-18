@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/repostspace/RepostspaceEndpointRules.h>
 #include <aws/repostspace/Repostspace_EXPORTS.h>
 
 namespace Aws {
 namespace repostspace {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using RepostspaceClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using RepostspaceEndpointProviderBase =
     EndpointProviderBase<RepostspaceClientConfiguration, RepostspaceBuiltInParameters, RepostspaceClientContextParameters>;
 
 using RepostspaceDefaultEpProviderBase =
-    DefaultEndpointProvider<RepostspaceClientConfiguration, RepostspaceBuiltInParameters, RepostspaceClientContextParameters>;
+    BDDEndpointProvider<RepostspaceClientConfiguration, RepostspaceBuiltInParameters, RepostspaceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_REPOSTSPACE_API RepostspaceEndpointProvider : public RepostspaceDefaul
  public:
   using RepostspaceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  RepostspaceEndpointProvider()
-      : RepostspaceDefaultEpProviderBase(Aws::repostspace::RepostspaceEndpointRules::GetRulesBlob(),
-                                         Aws::repostspace::RepostspaceEndpointRules::RulesBlobSize) {}
+  RepostspaceEndpointProvider();
 
   ~RepostspaceEndpointProvider() {}
 };

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -13,6 +13,7 @@
 #include <aws/redshift-data/model/ListDatabasesPaginationTraits.h>
 #include <aws/redshift-data/model/DescribeTablePaginationTraits.h>
 #include <aws/redshift-data/model/GetStatementResultPaginationTraits.h>
+#include <aws/redshift-data/model/ListSessionsPaginationTraits.h>
 #include <aws/redshift-data/model/ListSchemasPaginationTraits.h>
 #include <aws/redshift-data/model/ListTablesPaginationTraits.h>
 
@@ -24,6 +25,6 @@ class RedshiftDataAPIServicePaginationCompilationTest : public Aws::Testing::Aws
 
 TEST_F(RedshiftDataAPIServicePaginationCompilationTest, RedshiftDataAPIServicePaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

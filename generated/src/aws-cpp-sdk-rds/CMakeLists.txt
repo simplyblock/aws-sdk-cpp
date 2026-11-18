@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-rds "C++ SDK for the AWS rds service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-rds "C++ SDK for Amazon Relational Database Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_RDS_HEADERS
     "include/aws/rds/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_RDS_HEADERS
 
 file(GLOB AWS_RDS_MODEL_HEADERS
     "include/aws/rds/model/*.h"
+)
+
+file(GLOB AWS_RDS_INTERNAL_HEADERS
+    "include/aws/rds/internal/*.h"
 )
 
 file(GLOB AWS_RDS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_RDS_MODEL_SOURCE
 
 file(GLOB RDS_UNIFIED_HEADERS
     ${AWS_RDS_HEADERS}
+    ${AWS_RDS_INTERNAL_HEADERS}
     ${AWS_RDS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\rds" FILES ${AWS_RDS_HEADERS})
+        source_group("Header Files\\aws\\rds\\internal" FILES ${AWS_RDS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\rds\\model" FILES ${AWS_RDS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_RDS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_RDS_MODEL_SOURCE})

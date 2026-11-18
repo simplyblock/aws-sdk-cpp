@@ -19,8 +19,10 @@
 #include <aws/arc-region-switch/model/NeptuneGlobalDatabaseConfiguration.h>
 #include <aws/arc-region-switch/model/RdsCreateCrossRegionReplicaConfiguration.h>
 #include <aws/arc-region-switch/model/RdsPromoteReadReplicaConfiguration.h>
+#include <aws/arc-region-switch/model/RdsSwitchoverReadReplicaConfiguration.h>
 #include <aws/arc-region-switch/model/RegionSwitchPlanConfiguration.h>
 #include <aws/arc-region-switch/model/Route53HealthCheckConfiguration.h>
+#include <aws/arc-region-switch/model/SsmSendCommandConfiguration.h>
 #include <aws/core/utils/memory/stl/AWSAllocator.h>
 
 #include <utility>
@@ -356,6 +358,43 @@ class ExecutionBlockConfiguration {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>An Amazon RDS switchover read replica execution block.</p>
+   */
+  inline const RdsSwitchoverReadReplicaConfiguration& GetRdsSwitchoverReadReplicaConfig() const { return m_rdsSwitchoverReadReplicaConfig; }
+  inline bool RdsSwitchoverReadReplicaConfigHasBeenSet() const { return m_rdsSwitchoverReadReplicaConfigHasBeenSet; }
+  template <typename RdsSwitchoverReadReplicaConfigT = RdsSwitchoverReadReplicaConfiguration>
+  void SetRdsSwitchoverReadReplicaConfig(RdsSwitchoverReadReplicaConfigT&& value) {
+    m_rdsSwitchoverReadReplicaConfigHasBeenSet = true;
+    m_rdsSwitchoverReadReplicaConfig = std::forward<RdsSwitchoverReadReplicaConfigT>(value);
+  }
+  template <typename RdsSwitchoverReadReplicaConfigT = RdsSwitchoverReadReplicaConfiguration>
+  ExecutionBlockConfiguration& WithRdsSwitchoverReadReplicaConfig(RdsSwitchoverReadReplicaConfigT&& value) {
+    SetRdsSwitchoverReadReplicaConfig(std::forward<RdsSwitchoverReadReplicaConfigT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Specifies an AWS Systems Manager <code>SendCommand</code> execution
+   * block.</p>
+   */
+  inline const SsmSendCommandConfiguration& GetSsmSendCommandConfig() const { return m_ssmSendCommandConfig; }
+  inline bool SsmSendCommandConfigHasBeenSet() const { return m_ssmSendCommandConfigHasBeenSet; }
+  template <typename SsmSendCommandConfigT = SsmSendCommandConfiguration>
+  void SetSsmSendCommandConfig(SsmSendCommandConfigT&& value) {
+    m_ssmSendCommandConfigHasBeenSet = true;
+    m_ssmSendCommandConfig = std::forward<SsmSendCommandConfigT>(value);
+  }
+  template <typename SsmSendCommandConfigT = SsmSendCommandConfiguration>
+  ExecutionBlockConfiguration& WithSsmSendCommandConfig(SsmSendCommandConfigT&& value) {
+    SetSsmSendCommandConfig(std::forward<SsmSendCommandConfigT>(value));
+    return *this;
+  }
+  ///@}
  private:
   CustomActionLambdaConfiguration m_customActionLambdaConfig;
 
@@ -390,6 +429,10 @@ class ExecutionBlockConfiguration {
   AuroraProvisionedScalingConfiguration m_auroraProvisionedScalingConfig;
 
   NeptuneGlobalDatabaseConfiguration m_neptuneGlobalDatabaseConfig;
+
+  RdsSwitchoverReadReplicaConfiguration m_rdsSwitchoverReadReplicaConfig;
+
+  SsmSendCommandConfiguration m_ssmSendCommandConfig;
   bool m_customActionLambdaConfigHasBeenSet = false;
   bool m_ec2AsgCapacityIncreaseConfigHasBeenSet = false;
   bool m_executionApprovalConfigHasBeenSet = false;
@@ -407,6 +450,8 @@ class ExecutionBlockConfiguration {
   bool m_auroraServerlessScalingConfigHasBeenSet = false;
   bool m_auroraProvisionedScalingConfigHasBeenSet = false;
   bool m_neptuneGlobalDatabaseConfigHasBeenSet = false;
+  bool m_rdsSwitchoverReadReplicaConfigHasBeenSet = false;
+  bool m_ssmSendCommandConfigHasBeenSet = false;
 };
 
 }  // namespace Model

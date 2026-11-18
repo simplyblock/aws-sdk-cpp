@@ -23,12 +23,12 @@ Aws::String UpdateFHIRDatastoreRequest::SerializePayload() const {
     payload.WithString("DatastoreName", m_datastoreName);
   }
 
-  if (m_nlpConfigurationHasBeenSet) {
-    payload.WithObject("NlpConfiguration", m_nlpConfiguration.Jsonize());
-  }
-
   if (m_analyticsConfigurationHasBeenSet) {
     payload.WithObject("AnalyticsConfiguration", m_analyticsConfiguration.Jsonize());
+  }
+
+  if (m_nlpConfigurationHasBeenSet) {
+    payload.WithObject("NlpConfiguration", m_nlpConfiguration.Jsonize());
   }
 
   if (m_profileConfigurationHasBeenSet) {
@@ -37,6 +37,10 @@ Aws::String UpdateFHIRDatastoreRequest::SerializePayload() const {
 
   if (m_identityProviderConfigurationHasBeenSet) {
     payload.WithObject("IdentityProviderConfiguration", m_identityProviderConfiguration.Jsonize());
+  }
+
+  if (m_backupConfigurationHasBeenSet) {
+    payload.WithObject("BackupConfiguration", m_backupConfiguration.Jsonize());
   }
 
   return payload.View().WriteReadable();

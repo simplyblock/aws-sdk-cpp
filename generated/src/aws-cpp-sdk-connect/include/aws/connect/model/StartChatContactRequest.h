@@ -7,6 +7,8 @@
 #include <aws/connect/ConnectRequest.h>
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/model/ChatMessage.h>
+#include <aws/connect/model/ChatStreamingConfiguration.h>
+#include <aws/connect/model/ConnectionType.h>
 #include <aws/connect/model/DisconnectOnCustomerExitParticipantType.h>
 #include <aws/connect/model/ParticipantConfiguration.h>
 #include <aws/connect/model/ParticipantDetails.h>
@@ -361,6 +363,73 @@ class StartChatContactRequest : public ConnectRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The types of connection information to return in the response. This parameter
+   * is optional.</p> <p>To receive connection information, specify one or both of
+   * the following values:</p> <ul> <li> <p> <code>CONNECTION_CREDENTIALS</code>:
+   * Returns a connection token.</p> </li> <li> <p> <code>WEBSOCKET</code>: Returns a
+   * websocket URL.</p> </li> </ul> <p> <code>WEBSOCKET</code> and
+   * <code>CONNECTION_CREDENTIALS</code> are the values this operation acts on. No
+   * other value returns connection information.</p> <p>Request
+   * <code>WEBSOCKET</code> to get a URL the participant connects to directly. You do
+   * not need to call <a
+   * href="https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html">CreateParticipantConnection</a>
+   * for it. Request <code>CONNECTION_CREDENTIALS</code> on its own and the response
+   * returns a connection token but no websocket URL.</p> <p>If you omit this
+   * parameter, the response has no connection information.</p>  <p>When you
+   * start a new chat contact and the information you request cannot be returned,
+   * StartChatContact returns an error rather than a response that omits it. When you
+   * retry a request with the same <code>ClientToken</code>, the response repeats the
+   * original contact and can omit a websocket URL if the chat has already ended.</p>
+   *
+   */
+  inline const Aws::Vector<ConnectionType>& GetConnectionTypes() const { return m_connectionTypes; }
+  inline bool ConnectionTypesHasBeenSet() const { return m_connectionTypesHasBeenSet; }
+  template <typename ConnectionTypesT = Aws::Vector<ConnectionType>>
+  void SetConnectionTypes(ConnectionTypesT&& value) {
+    m_connectionTypesHasBeenSet = true;
+    m_connectionTypes = std::forward<ConnectionTypesT>(value);
+  }
+  template <typename ConnectionTypesT = Aws::Vector<ConnectionType>>
+  StartChatContactRequest& WithConnectionTypes(ConnectionTypesT&& value) {
+    SetConnectionTypes(std::forward<ConnectionTypesT>(value));
+    return *this;
+  }
+  inline StartChatContactRequest& AddConnectionTypes(ConnectionType value) {
+    m_connectionTypesHasBeenSet = true;
+    m_connectionTypes.push_back(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The streaming configuration, such as the Amazon SNS streaming endpoint. Use
+   * it to initiate real-time message streaming when the chat is created. This
+   * parameter is optional.</p> <p>Setting this parameter returns a
+   * <code>StreamingId</code> in the response, and you do not need to call <a
+   * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_StartContactStreaming.html">StartContactStreaming</a>.</p>
+   *  <p>This parameter starts message streaming only. The response does not
+   * include connection information, and setting this parameter does not remove the
+   * need to call <a
+   * href="https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html">CreateParticipantConnection</a>.</p>
+   *
+   */
+  inline const ChatStreamingConfiguration& GetChatStreamingConfiguration() const { return m_chatStreamingConfiguration; }
+  inline bool ChatStreamingConfigurationHasBeenSet() const { return m_chatStreamingConfigurationHasBeenSet; }
+  template <typename ChatStreamingConfigurationT = ChatStreamingConfiguration>
+  void SetChatStreamingConfiguration(ChatStreamingConfigurationT&& value) {
+    m_chatStreamingConfigurationHasBeenSet = true;
+    m_chatStreamingConfiguration = std::forward<ChatStreamingConfigurationT>(value);
+  }
+  template <typename ChatStreamingConfigurationT = ChatStreamingConfiguration>
+  StartChatContactRequest& WithChatStreamingConfiguration(ChatStreamingConfigurationT&& value) {
+    SetChatStreamingConfiguration(std::forward<ChatStreamingConfigurationT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_instanceId;
 
@@ -389,6 +458,10 @@ class StartChatContactRequest : public ConnectRequest {
   Aws::String m_customerId;
 
   Aws::Vector<DisconnectOnCustomerExitParticipantType> m_disconnectOnCustomerExit;
+
+  Aws::Vector<ConnectionType> m_connectionTypes;
+
+  ChatStreamingConfiguration m_chatStreamingConfiguration;
   bool m_instanceIdHasBeenSet = false;
   bool m_contactFlowIdHasBeenSet = false;
   bool m_attributesHasBeenSet = false;
@@ -403,6 +476,8 @@ class StartChatContactRequest : public ConnectRequest {
   bool m_segmentAttributesHasBeenSet = false;
   bool m_customerIdHasBeenSet = false;
   bool m_disconnectOnCustomerExitHasBeenSet = false;
+  bool m_connectionTypesHasBeenSet = false;
+  bool m_chatStreamingConfigurationHasBeenSet = false;
 };
 
 }  // namespace Model

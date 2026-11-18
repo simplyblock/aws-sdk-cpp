@@ -45,6 +45,8 @@ public class main {
     static final String STANDALONE_OPTION = "standalone";
     static final String ENABLE_VIRTUAL_OPERATIONS = "enable-virtual-operations";
     static final String DISABLE_SMITHY_GENERATION = "disable-smithy-generation";
+    static final String SKIP_MODEL_GENERATION = "skip-model-generation";
+    static final String SKIP_ENDPOINT_RULES_BLOB = "skip-endpoint-rules-blob";
     static final String USE_SMITHY_CLIENT = "use-smithy-client";
 
     public static void main(String[] args) throws IOException {
@@ -88,6 +90,8 @@ public class main {
             String serviceName = argPairs.get(SERVICE_OPTION);
             boolean enableVirtualOperations = argPairs.containsKey(ENABLE_VIRTUAL_OPERATIONS);
             boolean disableSmithyGeneration = argPairs.containsKey(DISABLE_SMITHY_GENERATION);
+            boolean skipModelGeneration = argPairs.containsKey(SKIP_MODEL_GENERATION);
+            boolean skipEndpointRulesBlob = argPairs.containsKey(SKIP_ENDPOINT_RULES_BLOB);
 
             String arbitraryJson = readFile(argPairs.getOrDefault(INPUT_FILE_NAME, ""));
             String endpointRules = null;
@@ -126,7 +130,8 @@ public class main {
                     if (serviceName != null && !serviceName.isEmpty()) {
                         if (!generateTests) {
                             generated = generateService(arbitraryJson, endpointRules, endpointRuleTests, languageBinding, serviceName, namespace,
-                                    licenseText, generateStandalonePackage, enableVirtualOperations, disableSmithyGeneration, useSmithyClient);
+                                    licenseText, generateStandalonePackage, enableVirtualOperations, disableSmithyGeneration, useSmithyClient,
+                                    skipModelGeneration, skipEndpointRulesBlob);
 
                             componentOutputName = String.format("aws-cpp-sdk-%s", serviceName);
                         } else if (argPairs.containsKey(ENDPOINT_TESTS)) {
@@ -208,7 +213,9 @@ public class main {
                                                          boolean generateStandalonePackage,
                                                          boolean enableVirtualOperations,
                                                          boolean disableSmithyGeneration,
-                                                         boolean useSmithyClient) throws Exception {
+                                                         boolean useSmithyClient,
+                                                         boolean skipModelGeneration,
+                                                         boolean skipEndpointRulesBlob) throws Exception {
         MainGenerator generator = new MainGenerator();
         DirectFromC2jGenerator directFromC2jGenerator = new DirectFromC2jGenerator(generator);
 
@@ -223,7 +230,9 @@ public class main {
                 generateStandalonePackage,
                 enableVirtualOperations,
                 disableSmithyGeneration,
-                useSmithyClient);
+                useSmithyClient,
+                skipModelGeneration,
+                skipEndpointRulesBlob);
         return outputStream;
     }
 
@@ -337,6 +346,8 @@ public class main {
         System.out.println("\t\t--inputfile Reads the c2j model from the file.");
         System.out.println("\t\t--outputfile Writes the generated zip archive to the file.");
         System.out.println("\t\t--disable-smithy-generation Disable smithy-based generation (default: enabled)");
+        System.out.println("\t\t--skip-model-generation Skip model file generation (headers+sources), only generate client files. Use when model files come from Smithy codegen.");
+        System.out.println("\t\t--skip-endpoint-rules-blob Skip generation of the JSON endpoint-rules blob and GetRulesBlob accessor. Use when the BDD bytecode blob carries the ruleset instead.");
 
     }
 

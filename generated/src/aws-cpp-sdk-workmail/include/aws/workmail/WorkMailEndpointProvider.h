@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/workmail/WorkMailEndpointRules.h>
 #include <aws/workmail/WorkMail_EXPORTS.h>
 
 namespace Aws {
 namespace WorkMail {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using WorkMailClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using WorkMailEndpointProviderBase =
     EndpointProviderBase<WorkMailClientConfiguration, WorkMailBuiltInParameters, WorkMailClientContextParameters>;
 
 using WorkMailDefaultEpProviderBase =
-    DefaultEndpointProvider<WorkMailClientConfiguration, WorkMailBuiltInParameters, WorkMailClientContextParameters>;
+    BDDEndpointProvider<WorkMailClientConfiguration, WorkMailBuiltInParameters, WorkMailClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_WORKMAIL_API WorkMailEndpointProvider : public WorkMailDefaultEpProvid
  public:
   using WorkMailResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  WorkMailEndpointProvider()
-      : WorkMailDefaultEpProviderBase(Aws::WorkMail::WorkMailEndpointRules::GetRulesBlob(),
-                                      Aws::WorkMail::WorkMailEndpointRules::RulesBlobSize) {}
+  WorkMailEndpointProvider();
 
   ~WorkMailEndpointProvider() {}
 };

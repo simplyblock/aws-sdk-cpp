@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/apigateway/APIGatewayEndpointRules.h>
 #include <aws/apigateway/APIGateway_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace APIGateway {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using APIGatewayClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using APIGatewayEndpointProviderBase =
     EndpointProviderBase<APIGatewayClientConfiguration, APIGatewayBuiltInParameters, APIGatewayClientContextParameters>;
 
 using APIGatewayDefaultEpProviderBase =
-    DefaultEndpointProvider<APIGatewayClientConfiguration, APIGatewayBuiltInParameters, APIGatewayClientContextParameters>;
+    BDDEndpointProvider<APIGatewayClientConfiguration, APIGatewayBuiltInParameters, APIGatewayClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_APIGATEWAY_API APIGatewayEndpointProvider : public APIGatewayDefaultEp
  public:
   using APIGatewayResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  APIGatewayEndpointProvider()
-      : APIGatewayDefaultEpProviderBase(Aws::APIGateway::APIGatewayEndpointRules::GetRulesBlob(),
-                                        Aws::APIGateway::APIGatewayEndpointRules::RulesBlobSize) {}
+  APIGatewayEndpointProvider();
 
   ~APIGatewayEndpointProvider() {}
 };

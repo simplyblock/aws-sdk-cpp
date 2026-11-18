@@ -32,6 +32,8 @@ public class ServiceModel {
     Map<String, Operation> operations;
     boolean enableVirtualOperations;
     boolean disableSmithyGeneration;
+    boolean skipModelGeneration;
+    boolean skipEndpointRulesBlob;
     Collection<Error> serviceErrors;
     Collection<CustomPresignedUtility> presigners;
     Map<String, String> queryCompatibleErrorMappings;

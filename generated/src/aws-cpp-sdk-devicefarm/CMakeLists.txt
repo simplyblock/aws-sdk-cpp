@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-devicefarm "C++ SDK for the AWS devicefarm service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-devicefarm "C++ SDK for AWS Device Farm" aws-cpp-sdk-core)
 
 file(GLOB AWS_DEVICEFARM_HEADERS
     "include/aws/devicefarm/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_DEVICEFARM_HEADERS
 
 file(GLOB AWS_DEVICEFARM_MODEL_HEADERS
     "include/aws/devicefarm/model/*.h"
+)
+
+file(GLOB AWS_DEVICEFARM_INTERNAL_HEADERS
+    "include/aws/devicefarm/internal/*.h"
 )
 
 file(GLOB AWS_DEVICEFARM_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_DEVICEFARM_MODEL_SOURCE
 
 file(GLOB DEVICEFARM_UNIFIED_HEADERS
     ${AWS_DEVICEFARM_HEADERS}
+    ${AWS_DEVICEFARM_INTERNAL_HEADERS}
     ${AWS_DEVICEFARM_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\devicefarm" FILES ${AWS_DEVICEFARM_HEADERS})
+        source_group("Header Files\\aws\\devicefarm\\internal" FILES ${AWS_DEVICEFARM_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\devicefarm\\model" FILES ${AWS_DEVICEFARM_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_DEVICEFARM_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_DEVICEFARM_MODEL_SOURCE})

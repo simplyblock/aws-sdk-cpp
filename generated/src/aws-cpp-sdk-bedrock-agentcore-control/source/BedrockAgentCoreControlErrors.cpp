@@ -4,6 +4,7 @@
  */
 
 #include <aws/bedrock-agentcore-control/BedrockAgentCoreControlErrors.h>
+#include <aws/bedrock-agentcore-control/model/SubscriptionRequiredException.h>
 #include <aws/bedrock-agentcore-control/model/ValidationException.h>
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/HashingUtils.h>
@@ -21,6 +22,12 @@ AWS_BEDROCKAGENTCORECONTROL_API ValidationException BedrockAgentCoreControlError
   return ValidationException(this->GetJsonPayload().View());
 }
 
+template <>
+AWS_BEDROCKAGENTCORECONTROL_API SubscriptionRequiredException BedrockAgentCoreControlError::GetModeledError() {
+  assert(this->GetErrorType() == BedrockAgentCoreControlErrors::SUBSCRIPTION_REQUIRED);
+  return SubscriptionRequiredException(this->GetJsonPayload().View());
+}
+
 namespace BedrockAgentCoreControlErrorMapper {
 
 static const int CONFLICT_HASH = HashingUtils::HashString("ConflictException");
@@ -31,6 +38,8 @@ static const int RESOURCE_LIMIT_EXCEEDED_HASH = HashingUtils::HashString("Resour
 static const int DECRYPTION_FAILURE_HASH = HashingUtils::HashString("DecryptionFailure");
 static const int CONCURRENT_MODIFICATION_HASH = HashingUtils::HashString("ConcurrentModificationException");
 static const int SERVICE_HASH = HashingUtils::HashString("ServiceException");
+static const int RETRYABLE_CONFLICT_HASH = HashingUtils::HashString("RetryableConflictException");
+static const int SUBSCRIPTION_REQUIRED_HASH = HashingUtils::HashString("SubscriptionRequiredException");
 static const int ENCRYPTION_FAILURE_HASH = HashingUtils::HashString("EncryptionFailure");
 
 AWSError<CoreErrors> GetErrorForName(const char* errorName) {
@@ -55,6 +64,11 @@ AWSError<CoreErrors> GetErrorForName(const char* errorName) {
                                 RetryableType::NOT_RETRYABLE);
   } else if (hashCode == SERVICE_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(BedrockAgentCoreControlErrors::SERVICE), RetryableType::RETRYABLE);
+  } else if (hashCode == RETRYABLE_CONFLICT_HASH) {
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(BedrockAgentCoreControlErrors::RETRYABLE_CONFLICT), RetryableType::RETRYABLE);
+  } else if (hashCode == SUBSCRIPTION_REQUIRED_HASH) {
+    return AWSError<CoreErrors>(static_cast<CoreErrors>(BedrockAgentCoreControlErrors::SUBSCRIPTION_REQUIRED),
+                                RetryableType::NOT_RETRYABLE);
   } else if (hashCode == ENCRYPTION_FAILURE_HASH) {
     return AWSError<CoreErrors>(static_cast<CoreErrors>(BedrockAgentCoreControlErrors::ENCRYPTION_FAILURE), RetryableType::NOT_RETRYABLE);
   }

@@ -13,6 +13,8 @@
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/stream/ResponseStream.h>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/DateTime.h>
+#include <aws/crt/Optional.h>
 #include <aws/core/monitoring/HttpClientMetrics.h>
 #include <memory>
 #include <functional>
@@ -63,6 +65,8 @@ namespace Aws
         extern AWS_CORE_API const char X_AMZN_TRACE_ID_HEADER[];
         extern AWS_CORE_API const char CHUNKED_VALUE[];
         extern AWS_CORE_API const char AWS_CHUNKED_VALUE[];
+        extern AWS_CORE_API const char EXPECT_HEADER[];
+        extern AWS_CORE_API const char EXPECT_100_CONTINUE_VALUE[];
         extern AWS_CORE_API const char X_AMZN_ERROR_TYPE[];
         extern AWS_CORE_API const char X_AMZN_QUERY_MODE[];
 
@@ -557,6 +561,33 @@ namespace Aws
             inline void SetSigningRegion(const Aws::String& region) { m_signingRegion = region; }
 
             /**
+            * Gets the per-attempt signing timestamp override set for clock-skew correction, if any.
+            */
+            inline const Aws::Crt::Optional<Aws::Utils::DateTime>& GetSigningTimestampOverride() const { return m_signingTimestampOverride; }
+            /**
+            * Sets an explicit signing timestamp for this attempt (now() + AttemptSkew). The signer uses it
+            * instead of its own clock; set per attempt so concurrent operations don't share skew state.
+            */
+            inline void SetSigningTimestampOverride(const Aws::Utils::DateTime& signingTime) { m_signingTimestampOverride = signingTime; }
+
+            /**
+             * Gets the raw client time (no skew applied) at which the final response's headers arrived for this attempt, if
+             * the HTTP client recorded it.
+             */
+            inline const Aws::Crt::Optional<Aws::Utils::DateTime>& GetResponseHeadersReceivedTime() const {
+              return m_responseHeadersReceivedTime;
+            }
+            /**
+             * Records when the response headers arrived, before the body is read. Set by the HTTP client; used as the
+             * response-received time for clock-skew correction.
+             */
+            inline void SetResponseHeadersReceivedTime(const Aws::Utils::DateTime& time) { m_responseHeadersReceivedTime = time; }
+            /**
+             * Clears the response headers received time; called at the start of each attempt.
+             */
+            inline void ClearResponseHeadersReceivedTime() { m_responseHeadersReceivedTime.reset(); }
+
+            /**
              * Add a request metric
              * @param key, HttpClientMetricsKey defined in HttpClientMetrics.cpp
              * @param value, the corresponding value of this key measured during http request.
@@ -616,6 +647,8 @@ namespace Aws
             DataSentEventHandler m_onDataSent;
             ContinueRequestHandler m_continueRequest;
             Aws::String m_signingRegion;
+            Aws::Crt::Optional<Aws::Utils::DateTime> m_signingTimestampOverride;
+            Aws::Crt::Optional<Aws::Utils::DateTime> m_responseHeadersReceivedTime;
             Aws::String m_signingAccessKey;
             Aws::String m_resolvedRemoteHost;
             Aws::Monitoring::HttpClientMetricsCollection m_httpRequestMetrics;

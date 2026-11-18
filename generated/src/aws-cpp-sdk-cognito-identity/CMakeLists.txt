@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-cognito-identity "C++ SDK for the AWS cognito-identity service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-cognito-identity "C++ SDK for Amazon Cognito Identity" aws-cpp-sdk-core)
 
 file(GLOB AWS_COGNITO-IDENTITY_HEADERS
     "include/aws/cognito-identity/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_COGNITO-IDENTITY_HEADERS
 
 file(GLOB AWS_COGNITO-IDENTITY_MODEL_HEADERS
     "include/aws/cognito-identity/model/*.h"
+)
+
+file(GLOB AWS_COGNITO-IDENTITY_INTERNAL_HEADERS
+    "include/aws/cognito-identity/internal/*.h"
 )
 
 file(GLOB AWS_COGNITO-IDENTITY_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_COGNITO-IDENTITY_MODEL_SOURCE
 
 file(GLOB COGNITO-IDENTITY_UNIFIED_HEADERS
     ${AWS_COGNITO-IDENTITY_HEADERS}
+    ${AWS_COGNITO-IDENTITY_INTERNAL_HEADERS}
     ${AWS_COGNITO-IDENTITY_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\cognito-identity" FILES ${AWS_COGNITO-IDENTITY_HEADERS})
+        source_group("Header Files\\aws\\cognito-identity\\internal" FILES ${AWS_COGNITO-IDENTITY_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\cognito-identity\\model" FILES ${AWS_COGNITO-IDENTITY_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_COGNITO-IDENTITY_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_COGNITO-IDENTITY_MODEL_SOURCE})

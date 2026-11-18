@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-savingsplans "C++ SDK for the AWS savingsplans service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-savingsplans "C++ SDK for AWS Savings Plans" aws-cpp-sdk-core)
 
 file(GLOB AWS_SAVINGSPLANS_HEADERS
     "include/aws/savingsplans/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SAVINGSPLANS_HEADERS
 
 file(GLOB AWS_SAVINGSPLANS_MODEL_HEADERS
     "include/aws/savingsplans/model/*.h"
+)
+
+file(GLOB AWS_SAVINGSPLANS_INTERNAL_HEADERS
+    "include/aws/savingsplans/internal/*.h"
 )
 
 file(GLOB AWS_SAVINGSPLANS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SAVINGSPLANS_MODEL_SOURCE
 
 file(GLOB SAVINGSPLANS_UNIFIED_HEADERS
     ${AWS_SAVINGSPLANS_HEADERS}
+    ${AWS_SAVINGSPLANS_INTERNAL_HEADERS}
     ${AWS_SAVINGSPLANS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\savingsplans" FILES ${AWS_SAVINGSPLANS_HEADERS})
+        source_group("Header Files\\aws\\savingsplans\\internal" FILES ${AWS_SAVINGSPLANS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\savingsplans\\model" FILES ${AWS_SAVINGSPLANS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SAVINGSPLANS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SAVINGSPLANS_MODEL_SOURCE})

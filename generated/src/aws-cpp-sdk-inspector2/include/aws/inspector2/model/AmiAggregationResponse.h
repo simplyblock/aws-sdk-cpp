@@ -6,6 +6,8 @@
 #pragma once
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/inspector2/Inspector2_EXPORTS.h>
+#include <aws/inspector2/model/Provider.h>
+#include <aws/inspector2/model/ScanSource.h>
 #include <aws/inspector2/model/SeverityCounts.h>
 
 #include <utility>
@@ -71,6 +73,108 @@ class AmiAggregationResponse {
 
   ///@{
   /**
+   * <p>The cloud service provider associated with this Amazon Machine Image (AMI)
+   * aggregation. Valid values:</p> <ul> <li> <p> <code>AWS</code> – Findings from
+   * Amazon Web Services resources.</p> </li> <li> <p> <code>AZURE</code> – Findings
+   * from Microsoft Azure resources.</p> </li> <li> <p> <code>GCP</code> – Findings
+   * from Google Cloud Platform (GCP) resources.</p> </li> </ul>
+   */
+  inline Provider GetCloudProvider() const { return m_cloudProvider; }
+  inline bool CloudProviderHasBeenSet() const { return m_cloudProviderHasBeenSet; }
+  inline void SetCloudProvider(Provider value) {
+    m_cloudProviderHasBeenSet = true;
+    m_cloudProvider = value;
+  }
+  inline AmiAggregationResponse& WithCloudProvider(Provider value) {
+    SetCloudProvider(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The cloud infrastructure partition associated with this AMI aggregation.
+   * Valid values:</p> <ul> <li> <p> <code>aws</code> – Amazon Web Services
+   * commercial Regions.</p> </li> <li> <p> <code>aws-cn</code> – Amazon Web Services
+   * China Regions.</p> </li> <li> <p> <code>aws-us-gov</code> – Amazon Web Services
+   * GovCloud (US) Regions.</p> </li> <li> <p> <code>AzureCloud</code> – Azure
+   * commercial Regions.</p> </li> </ul>
+   */
+  inline const Aws::String& GetCloudPartition() const { return m_cloudPartition; }
+  inline bool CloudPartitionHasBeenSet() const { return m_cloudPartitionHasBeenSet; }
+  template <typename CloudPartitionT = Aws::String>
+  void SetCloudPartition(CloudPartitionT&& value) {
+    m_cloudPartitionHasBeenSet = true;
+    m_cloudPartition = std::forward<CloudPartitionT>(value);
+  }
+  template <typename CloudPartitionT = Aws::String>
+  AmiAggregationResponse& WithCloudPartition(CloudPartitionT&& value) {
+    SetCloudPartition(std::forward<CloudPartitionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The cloud Region associated with this AMI aggregation. The value format
+   * depends on the cloud provider:</p> <ul> <li> <p>An Amazon Web Services Region,
+   * such as <code>us-east-1</code>.</p> </li> <li> <p>An Azure region, such as
+   * <code>eastus</code>.</p> </li> <li> <p>A Google Cloud Platform (GCP) location,
+   * such as the region <code>us-central1</code> or the zone
+   * <code>us-central1-a</code>.</p> </li> </ul>
+   */
+  inline const Aws::String& GetCloudRegion() const { return m_cloudRegion; }
+  inline bool CloudRegionHasBeenSet() const { return m_cloudRegionHasBeenSet; }
+  template <typename CloudRegionT = Aws::String>
+  void SetCloudRegion(CloudRegionT&& value) {
+    m_cloudRegionHasBeenSet = true;
+    m_cloudRegion = std::forward<CloudRegionT>(value);
+  }
+  template <typename CloudRegionT = Aws::String>
+  AmiAggregationResponse& WithCloudRegion(CloudRegionT&& value) {
+    SetCloudRegion(std::forward<CloudRegionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The cloud organization ID for the AMI aggregation.</p>
+   */
+  inline const Aws::String& GetCloudOrgId() const { return m_cloudOrgId; }
+  inline bool CloudOrgIdHasBeenSet() const { return m_cloudOrgIdHasBeenSet; }
+  template <typename CloudOrgIdT = Aws::String>
+  void SetCloudOrgId(CloudOrgIdT&& value) {
+    m_cloudOrgIdHasBeenSet = true;
+    m_cloudOrgId = std::forward<CloudOrgIdT>(value);
+  }
+  template <typename CloudOrgIdT = Aws::String>
+  AmiAggregationResponse& WithCloudOrgId(CloudOrgIdT&& value) {
+    SetCloudOrgId(std::forward<CloudOrgIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The cloud account ID for the AMI aggregation.</p>
+   */
+  inline const Aws::String& GetCloudAccountId() const { return m_cloudAccountId; }
+  inline bool CloudAccountIdHasBeenSet() const { return m_cloudAccountIdHasBeenSet; }
+  template <typename CloudAccountIdT = Aws::String>
+  void SetCloudAccountId(CloudAccountIdT&& value) {
+    m_cloudAccountIdHasBeenSet = true;
+    m_cloudAccountId = std::forward<CloudAccountIdT>(value);
+  }
+  template <typename CloudAccountIdT = Aws::String>
+  AmiAggregationResponse& WithCloudAccountId(CloudAccountIdT&& value) {
+    SetCloudAccountId(std::forward<CloudAccountIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>An object that contains the count of matched findings per severity.</p>
    */
   inline const SeverityCounts& GetSeverityCounts() const { return m_severityCounts; }
@@ -102,18 +206,53 @@ class AmiAggregationResponse {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The source of the scan that generated the findings for the Amazon Machine
+   * Image (AMI).</p>
+   */
+  inline ScanSource GetScanSource() const { return m_scanSource; }
+  inline bool ScanSourceHasBeenSet() const { return m_scanSourceHasBeenSet; }
+  inline void SetScanSource(ScanSource value) {
+    m_scanSourceHasBeenSet = true;
+    m_scanSource = value;
+  }
+  inline AmiAggregationResponse& WithScanSource(ScanSource value) {
+    SetScanSource(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_ami;
 
   Aws::String m_accountId;
 
+  Provider m_cloudProvider{Provider::NOT_SET};
+
+  Aws::String m_cloudPartition;
+
+  Aws::String m_cloudRegion;
+
+  Aws::String m_cloudOrgId;
+
+  Aws::String m_cloudAccountId;
+
   SeverityCounts m_severityCounts;
 
   long long m_affectedInstances{0};
+
+  ScanSource m_scanSource{ScanSource::NOT_SET};
   bool m_amiHasBeenSet = false;
   bool m_accountIdHasBeenSet = false;
+  bool m_cloudProviderHasBeenSet = false;
+  bool m_cloudPartitionHasBeenSet = false;
+  bool m_cloudRegionHasBeenSet = false;
+  bool m_cloudOrgIdHasBeenSet = false;
+  bool m_cloudAccountIdHasBeenSet = false;
   bool m_severityCountsHasBeenSet = false;
   bool m_affectedInstancesHasBeenSet = false;
+  bool m_scanSourceHasBeenSet = false;
 };
 
 }  // namespace Model

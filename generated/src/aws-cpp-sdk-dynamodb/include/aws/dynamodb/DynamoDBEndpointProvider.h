@@ -4,12 +4,11 @@
  */
 
 #pragma once
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/dynamodb/DynamoDBClientConfiguration.h>
-#include <aws/dynamodb/DynamoDBEndpointRules.h>
 #include <aws/dynamodb/DynamoDB_EXPORTS.h>
 
 namespace Aws {
@@ -17,7 +16,7 @@ namespace DynamoDB {
 namespace Endpoint {
 using DynamoDBClientConfiguration = Aws::DynamoDB::DynamoDBClientConfiguration;
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using DynamoDBClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -27,6 +26,10 @@ class AWS_DYNAMODB_API DynamoDBBuiltInParameters : public Aws::Endpoint::BuiltIn
   virtual ~DynamoDBBuiltInParameters() {};
   using Aws::Endpoint::BuiltInParameters::SetFromClientConfiguration;
   virtual void SetFromClientConfiguration(const DynamoDBClientConfiguration& config);
+  virtual void SetFromClientConfiguration(const DynamoDBClientConfiguration& config, const Aws::String& serviceName);
+
+ private:
+  void SetServiceSpecificParameters(const DynamoDBClientConfiguration& config);
 };
 
 /**
@@ -38,7 +41,7 @@ using DynamoDBEndpointProviderBase =
     EndpointProviderBase<DynamoDBClientConfiguration, DynamoDBBuiltInParameters, DynamoDBClientContextParameters>;
 
 using DynamoDBDefaultEpProviderBase =
-    DefaultEndpointProvider<DynamoDBClientConfiguration, DynamoDBBuiltInParameters, DynamoDBClientContextParameters>;
+    BDDEndpointProvider<DynamoDBClientConfiguration, DynamoDBBuiltInParameters, DynamoDBClientContextParameters>;
 
 }  // namespace Endpoint
 }  // namespace DynamoDB
@@ -52,8 +55,8 @@ AWS_DYNAMODB_EXTERN template class AWS_DYNAMODB_API
                                         DynamoDB::Endpoint::DynamoDBClientContextParameters>;
 
 AWS_DYNAMODB_EXTERN template class AWS_DYNAMODB_API
-    Aws::Endpoint::DefaultEndpointProvider<DynamoDB::Endpoint::DynamoDBClientConfiguration, DynamoDB::Endpoint::DynamoDBBuiltInParameters,
-                                           DynamoDB::Endpoint::DynamoDBClientContextParameters>;
+    Aws::Endpoint::BDDEndpointProvider<DynamoDB::Endpoint::DynamoDBClientConfiguration, DynamoDB::Endpoint::DynamoDBBuiltInParameters,
+                                       DynamoDB::Endpoint::DynamoDBClientContextParameters>;
 }  // namespace Endpoint
 
 namespace DynamoDB {
@@ -65,9 +68,7 @@ class AWS_DYNAMODB_API DynamoDBEndpointProvider : public DynamoDBDefaultEpProvid
  public:
   using DynamoDBResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  DynamoDBEndpointProvider()
-      : DynamoDBDefaultEpProviderBase(Aws::DynamoDB::DynamoDBEndpointRules::GetRulesBlob(),
-                                      Aws::DynamoDB::DynamoDBEndpointRules::RulesBlobSize) {}
+  DynamoDBEndpointProvider();
 
   ~DynamoDBEndpointProvider() {}
 };

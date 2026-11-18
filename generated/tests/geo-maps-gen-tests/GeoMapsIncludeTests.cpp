@@ -8,12 +8,14 @@
 
 #include <aws/geo-maps/GeoMapsClient.h>
 #include <aws/geo-maps/GeoMapsEndpointProvider.h>
-#include <aws/geo-maps/GeoMapsEndpointRules.h>
 #include <aws/geo-maps/GeoMapsErrorMarshaller.h>
 #include <aws/geo-maps/GeoMapsErrors.h>
+#include <aws/geo-maps/GeoMapsPaginationBase.h>
 #include <aws/geo-maps/GeoMapsRequest.h>
 #include <aws/geo-maps/GeoMapsServiceClientModel.h>
+#include <aws/geo-maps/GeoMapsWaiter.h>
 #include <aws/geo-maps/GeoMaps_EXPORTS.h>
+#include <aws/geo-maps/internal/GeoMapsEndpointRules.h>
 #include <aws/geo-maps/model/Buildings.h>
 #include <aws/geo-maps/model/ColorScheme.h>
 #include <aws/geo-maps/model/ContourDensity.h>
@@ -30,6 +32,8 @@
 #include <aws/geo-maps/model/LabelSize.h>
 #include <aws/geo-maps/model/MapFeatureMode.h>
 #include <aws/geo-maps/model/MapStyle.h>
+#include <aws/geo-maps/model/PoiCategory.h>
+#include <aws/geo-maps/model/PoiDensity.h>
 #include <aws/geo-maps/model/ScaleBarUnit.h>
 #include <aws/geo-maps/model/StaticMapStyle.h>
 #include <aws/geo-maps/model/Terrain.h>

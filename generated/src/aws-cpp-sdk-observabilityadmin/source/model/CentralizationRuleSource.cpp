@@ -37,6 +37,14 @@ CentralizationRuleSource& CentralizationRuleSource::operator=(JsonView jsonValue
     m_sourceMetricsConfiguration = jsonValue.GetObject("SourceMetricsConfiguration");
     m_sourceMetricsConfigurationHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("SourceProfilesConfiguration")) {
+    m_sourceProfilesConfiguration = jsonValue.GetObject("SourceProfilesConfiguration");
+    m_sourceProfilesConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("SourceContextGraphConfiguration")) {
+    m_sourceContextGraphConfiguration = jsonValue.GetObject("SourceContextGraphConfiguration");
+    m_sourceContextGraphConfigurationHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -61,6 +69,14 @@ JsonValue CentralizationRuleSource::Jsonize() const {
 
   if (m_sourceMetricsConfigurationHasBeenSet) {
     payload.WithObject("SourceMetricsConfiguration", m_sourceMetricsConfiguration.Jsonize());
+  }
+
+  if (m_sourceProfilesConfigurationHasBeenSet) {
+    payload.WithObject("SourceProfilesConfiguration", m_sourceProfilesConfiguration.Jsonize());
+  }
+
+  if (m_sourceContextGraphConfigurationHasBeenSet) {
+    payload.WithObject("SourceContextGraphConfiguration", m_sourceContextGraphConfiguration.Jsonize());
   }
 
   return payload;

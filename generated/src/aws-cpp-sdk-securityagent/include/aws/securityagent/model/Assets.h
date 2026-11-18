@@ -7,10 +7,12 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/securityagent/SecurityAgent_EXPORTS.h>
 #include <aws/securityagent/model/Actor.h>
+#include <aws/securityagent/model/ClientCertificate.h>
 #include <aws/securityagent/model/DocumentInfo.h>
 #include <aws/securityagent/model/Endpoint.h>
 #include <aws/securityagent/model/IntegratedRepository.h>
 #include <aws/securityagent/model/SourceCodeRepository.h>
+#include <aws/securityagent/model/TrustedCaCertificate.h>
 
 #include <utility>
 
@@ -157,6 +159,58 @@ class Assets {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The trust anchors used to validate target endpoint TLS certificates. Provide
+   * these for endpoints served by a private or internal certificate authority (CA),
+   * an intermediate CA, or a self-signed certificate.</p>
+   */
+  inline const Aws::Vector<TrustedCaCertificate>& GetTrustedCaCertificates() const { return m_trustedCaCertificates; }
+  inline bool TrustedCaCertificatesHasBeenSet() const { return m_trustedCaCertificatesHasBeenSet; }
+  template <typename TrustedCaCertificatesT = Aws::Vector<TrustedCaCertificate>>
+  void SetTrustedCaCertificates(TrustedCaCertificatesT&& value) {
+    m_trustedCaCertificatesHasBeenSet = true;
+    m_trustedCaCertificates = std::forward<TrustedCaCertificatesT>(value);
+  }
+  template <typename TrustedCaCertificatesT = Aws::Vector<TrustedCaCertificate>>
+  Assets& WithTrustedCaCertificates(TrustedCaCertificatesT&& value) {
+    SetTrustedCaCertificates(std::forward<TrustedCaCertificatesT>(value));
+    return *this;
+  }
+  template <typename TrustedCaCertificatesT = TrustedCaCertificate>
+  Assets& AddTrustedCaCertificates(TrustedCaCertificatesT&& value) {
+    m_trustedCaCertificatesHasBeenSet = true;
+    m_trustedCaCertificates.emplace_back(std::forward<TrustedCaCertificatesT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The client certificates for mutual TLS (mTLS) authentication to target hosts.
+   * Each certificate is stored in Secrets Manager and scoped to specific target
+   * origins.</p>
+   */
+  inline const Aws::Vector<ClientCertificate>& GetClientCertificates() const { return m_clientCertificates; }
+  inline bool ClientCertificatesHasBeenSet() const { return m_clientCertificatesHasBeenSet; }
+  template <typename ClientCertificatesT = Aws::Vector<ClientCertificate>>
+  void SetClientCertificates(ClientCertificatesT&& value) {
+    m_clientCertificatesHasBeenSet = true;
+    m_clientCertificates = std::forward<ClientCertificatesT>(value);
+  }
+  template <typename ClientCertificatesT = Aws::Vector<ClientCertificate>>
+  Assets& WithClientCertificates(ClientCertificatesT&& value) {
+    SetClientCertificates(std::forward<ClientCertificatesT>(value));
+    return *this;
+  }
+  template <typename ClientCertificatesT = ClientCertificate>
+  Assets& AddClientCertificates(ClientCertificatesT&& value) {
+    m_clientCertificatesHasBeenSet = true;
+    m_clientCertificates.emplace_back(std::forward<ClientCertificatesT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::Vector<Endpoint> m_endpoints;
 
@@ -167,11 +221,17 @@ class Assets {
   Aws::Vector<SourceCodeRepository> m_sourceCode;
 
   Aws::Vector<IntegratedRepository> m_integratedRepositories;
+
+  Aws::Vector<TrustedCaCertificate> m_trustedCaCertificates;
+
+  Aws::Vector<ClientCertificate> m_clientCertificates;
   bool m_endpointsHasBeenSet = false;
   bool m_actorsHasBeenSet = false;
   bool m_documentsHasBeenSet = false;
   bool m_sourceCodeHasBeenSet = false;
   bool m_integratedRepositoriesHasBeenSet = false;
+  bool m_trustedCaCertificatesHasBeenSet = false;
+  bool m_clientCertificatesHasBeenSet = false;
 };
 
 }  // namespace Model

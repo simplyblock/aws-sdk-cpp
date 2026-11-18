@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ram/RAMEndpointRules.h>
 #include <aws/ram/RAM_EXPORTS.h>
 
 namespace Aws {
 namespace RAM {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using RAMClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using RAMBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using RAMEndpointProviderBase = EndpointProviderBase<RAMClientConfiguration, RAMBuiltInParameters, RAMClientContextParameters>;
 
-using RAMDefaultEpProviderBase = DefaultEndpointProvider<RAMClientConfiguration, RAMBuiltInParameters, RAMClientContextParameters>;
+using RAMDefaultEpProviderBase = BDDEndpointProvider<RAMClientConfiguration, RAMBuiltInParameters, RAMClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_RAM_API RAMEndpointProvider : public RAMDefaultEpProviderBase {
  public:
   using RAMResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  RAMEndpointProvider() : RAMDefaultEpProviderBase(Aws::RAM::RAMEndpointRules::GetRulesBlob(), Aws::RAM::RAMEndpointRules::RulesBlobSize) {}
+  RAMEndpointProvider();
 
   ~RAMEndpointProvider() {}
 };

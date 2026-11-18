@@ -92,6 +92,7 @@
 #include <aws/logs/model/GetQueryResultsRequest.h>
 #include <aws/logs/model/GetScheduledQueryHistoryRequest.h>
 #include <aws/logs/model/GetScheduledQueryRequest.h>
+#include <aws/logs/model/GetStorageTierPolicyRequest.h>
 #include <aws/logs/model/GetTransformerRequest.h>
 #include <aws/logs/model/ListAggregateLogGroupSummariesRequest.h>
 #include <aws/logs/model/ListAnomaliesRequest.h>
@@ -119,6 +120,7 @@
 #include <aws/logs/model/PutQueryDefinitionRequest.h>
 #include <aws/logs/model/PutResourcePolicyRequest.h>
 #include <aws/logs/model/PutRetentionPolicyRequest.h>
+#include <aws/logs/model/PutStorageTierPolicyRequest.h>
 #include <aws/logs/model/PutSubscriptionFilterRequest.h>
 #include <aws/logs/model/PutSyslogConfigurationRequest.h>
 #include <aws/logs/model/PutTransformerRequest.h>
@@ -270,7 +272,8 @@ CloudWatchLogsClient::InvokeOperationOutcome CloudWatchLogsClient::InvokeService
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -282,7 +285,7 @@ CloudWatchLogsClient::InvokeOperationOutcome CloudWatchLogsClient::InvokeService
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -687,7 +690,8 @@ GetLogObjectOutcome CloudWatchLogsClient::GetLogObject(GetLogObjectRequest& requ
                                   {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetLogObjectOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<GetLogObjectOutcome>(
+      request, std::move(span),
       [&]() -> GetLogObjectOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -714,7 +718,7 @@ GetLogObjectOutcome CloudWatchLogsClient::GetLogObject(GetLogObjectRequest& requ
         return result.IsSuccess() ? GetLogObjectOutcome(result.GetResultWithOwnership())
                                   : GetLogObjectOutcome(std::move(result.GetError()));
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
        {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
@@ -745,6 +749,12 @@ GetScheduledQueryHistoryOutcome CloudWatchLogsClient::GetScheduledQueryHistory(c
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetScheduledQueryHistoryOutcome(result.GetResultWithOwnership())
                             : GetScheduledQueryHistoryOutcome(std::move(result.GetError()));
+}
+
+GetStorageTierPolicyOutcome CloudWatchLogsClient::GetStorageTierPolicy(const GetStorageTierPolicyRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetStorageTierPolicyOutcome(result.GetResultWithOwnership())
+                            : GetStorageTierPolicyOutcome(std::move(result.GetError()));
 }
 
 GetTransformerOutcome CloudWatchLogsClient::GetTransformer(const GetTransformerRequest& request) const {
@@ -907,6 +917,12 @@ PutRetentionPolicyOutcome CloudWatchLogsClient::PutRetentionPolicy(const PutRete
                             : PutRetentionPolicyOutcome(std::move(result.GetError()));
 }
 
+PutStorageTierPolicyOutcome CloudWatchLogsClient::PutStorageTierPolicy(const PutStorageTierPolicyRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? PutStorageTierPolicyOutcome(result.GetResultWithOwnership())
+                            : PutStorageTierPolicyOutcome(std::move(result.GetError()));
+}
+
 PutSubscriptionFilterOutcome CloudWatchLogsClient::PutSubscriptionFilter(const PutSubscriptionFilterRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? PutSubscriptionFilterOutcome(result.GetResultWithOwnership())
@@ -936,7 +952,8 @@ StartLiveTailOutcome CloudWatchLogsClient::StartLiveTail(StartLiveTailRequest& r
                                   {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<StartLiveTailOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<StartLiveTailOutcome>(
+      request, std::move(span),
       [&]() -> StartLiveTailOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -963,7 +980,7 @@ StartLiveTailOutcome CloudWatchLogsClient::StartLiveTail(StartLiveTailRequest& r
         return result.IsSuccess() ? StartLiveTailOutcome(result.GetResultWithOwnership())
                                   : StartLiveTailOutcome(std::move(result.GetError()));
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
        {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }

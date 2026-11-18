@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -13,6 +13,8 @@
 #include <aws/inspector2/model/ListCisScanResultsAggregatedByChecksPaginationTraits.h>
 #include <aws/inspector2/model/ListCisScanResultsAggregatedByTargetResourcePaginationTraits.h>
 #include <aws/inspector2/model/ListCisScansPaginationTraits.h>
+#include <aws/inspector2/model/ListConnectorScanConfigurationsPaginationTraits.h>
+#include <aws/inspector2/model/ListConnectorsPaginationTraits.h>
 #include <aws/inspector2/model/ListCoveragePaginationTraits.h>
 #include <aws/inspector2/model/ListCoverageStatisticsPaginationTraits.h>
 #include <aws/inspector2/model/ListDelegatedAdminAccountsPaginationTraits.h>
@@ -20,6 +22,7 @@
 #include <aws/inspector2/model/ListFindingAggregationsPaginationTraits.h>
 #include <aws/inspector2/model/ListFindingsPaginationTraits.h>
 #include <aws/inspector2/model/ListMembersPaginationTraits.h>
+#include <aws/inspector2/model/ListOnDemandScansPaginationTraits.h>
 #include <aws/inspector2/model/ListUsageTotalsPaginationTraits.h>
 #include <aws/inspector2/model/SearchVulnerabilitiesPaginationTraits.h>
 
@@ -45,6 +48,11 @@ using ListCisScanResultsAggregatedByTargetResourcePaginator =
                                       Pagination::ListCisScanResultsAggregatedByTargetResourcePaginationTraits<Inspector2Client>>;
 using ListCisScansPaginator = Aws::Utils::Pagination::Paginator<Inspector2Client, Model::ListCisScansRequest,
                                                                 Pagination::ListCisScansPaginationTraits<Inspector2Client>>;
+using ListConnectorsPaginator = Aws::Utils::Pagination::Paginator<Inspector2Client, Model::ListConnectorsRequest,
+                                                                  Pagination::ListConnectorsPaginationTraits<Inspector2Client>>;
+using ListConnectorScanConfigurationsPaginator =
+    Aws::Utils::Pagination::Paginator<Inspector2Client, Model::ListConnectorScanConfigurationsRequest,
+                                      Pagination::ListConnectorScanConfigurationsPaginationTraits<Inspector2Client>>;
 using ListCoveragePaginator = Aws::Utils::Pagination::Paginator<Inspector2Client, Model::ListCoverageRequest,
                                                                 Pagination::ListCoveragePaginationTraits<Inspector2Client>>;
 using ListCoverageStatisticsPaginator =
@@ -62,6 +70,8 @@ using ListFindingsPaginator = Aws::Utils::Pagination::Paginator<Inspector2Client
                                                                 Pagination::ListFindingsPaginationTraits<Inspector2Client>>;
 using ListMembersPaginator = Aws::Utils::Pagination::Paginator<Inspector2Client, Model::ListMembersRequest,
                                                                Pagination::ListMembersPaginationTraits<Inspector2Client>>;
+using ListOnDemandScansPaginator = Aws::Utils::Pagination::Paginator<Inspector2Client, Model::ListOnDemandScansRequest,
+                                                                     Pagination::ListOnDemandScansPaginationTraits<Inspector2Client>>;
 using ListUsageTotalsPaginator = Aws::Utils::Pagination::Paginator<Inspector2Client, Model::ListUsageTotalsRequest,
                                                                    Pagination::ListUsageTotalsPaginationTraits<Inspector2Client>>;
 using SearchVulnerabilitiesPaginator =

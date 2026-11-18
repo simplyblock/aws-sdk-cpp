@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -9,6 +9,7 @@
 #include <aws/docdb/DocDBClientPagination.h>
 #include <aws/docdb/DocDBPaginationBase.h>
 #include <aws/docdb/model/DescribeDBClusterSnapshotsPaginationTraits.h>
+#include <aws/docdb/model/DescribeServerlessV2PlatformVersionsPaginationTraits.h>
 #include <aws/docdb/model/DescribeDBClustersPaginationTraits.h>
 #include <aws/docdb/model/DescribeDBEngineVersionsPaginationTraits.h>
 #include <aws/docdb/model/DescribeEventsPaginationTraits.h>
@@ -30,6 +31,6 @@ class DocDBPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(DocDBPaginationCompilationTest, DocDBPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

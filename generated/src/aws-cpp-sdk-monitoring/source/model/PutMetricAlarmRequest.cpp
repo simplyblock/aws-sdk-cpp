@@ -86,10 +86,16 @@ Aws::String PutMetricAlarmRequest::SerializePayload() const {
   if (m_evaluationWindowHasBeenSet) {
     mapSize++;
   }
+  if (m_warmUpConfigurationHasBeenSet) {
+    mapSize++;
+  }
   if (m_evaluationCriteriaHasBeenSet) {
     mapSize++;
   }
   if (m_evaluationIntervalHasBeenSet) {
+    mapSize++;
+  }
+  if (m_actionConfigurationHasBeenSet) {
     mapSize++;
   }
 
@@ -229,6 +235,11 @@ Aws::String PutMetricAlarmRequest::SerializePayload() const {
     m_evaluationWindow.CborEncode(encoder);
   }
 
+  if (m_warmUpConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("WarmUpConfiguration"));
+    m_warmUpConfiguration.CborEncode(encoder);
+  }
+
   if (m_evaluationCriteriaHasBeenSet) {
     encoder.WriteText(Aws::Crt::ByteCursorFromCString("EvaluationCriteria"));
     m_evaluationCriteria.CborEncode(encoder);
@@ -237,6 +248,11 @@ Aws::String PutMetricAlarmRequest::SerializePayload() const {
   if (m_evaluationIntervalHasBeenSet) {
     encoder.WriteText(Aws::Crt::ByteCursorFromCString("EvaluationInterval"));
     (m_evaluationInterval >= 0) ? encoder.WriteUInt(m_evaluationInterval) : encoder.WriteNegInt(m_evaluationInterval);
+  }
+
+  if (m_actionConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ActionConfiguration"));
+    m_actionConfiguration.CborEncode(encoder);
   }
   const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
   return str;

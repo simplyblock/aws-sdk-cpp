@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/snow-device-management/SnowDeviceManagementEndpointRules.h>
 #include <aws/snow-device-management/SnowDeviceManagement_EXPORTS.h>
 
 namespace Aws {
 namespace SnowDeviceManagement {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SnowDeviceManagementClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using SnowDeviceManagementEndpointProviderBase =
                          SnowDeviceManagementClientContextParameters>;
 
 using SnowDeviceManagementDefaultEpProviderBase =
-    DefaultEndpointProvider<SnowDeviceManagementClientConfiguration, SnowDeviceManagementBuiltInParameters,
-                            SnowDeviceManagementClientContextParameters>;
+    BDDEndpointProvider<SnowDeviceManagementClientConfiguration, SnowDeviceManagementBuiltInParameters,
+                        SnowDeviceManagementClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_SNOWDEVICEMANAGEMENT_API SnowDeviceManagementEndpointProvider : public
  public:
   using SnowDeviceManagementResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SnowDeviceManagementEndpointProvider()
-      : SnowDeviceManagementDefaultEpProviderBase(Aws::SnowDeviceManagement::SnowDeviceManagementEndpointRules::GetRulesBlob(),
-                                                  Aws::SnowDeviceManagement::SnowDeviceManagementEndpointRules::RulesBlobSize) {}
+  SnowDeviceManagementEndpointProvider();
 
   ~SnowDeviceManagementEndpointProvider() {}
 };

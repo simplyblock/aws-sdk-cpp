@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ssm-sap "C++ SDK for the AWS ssm-sap service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ssm-sap "C++ SDK for AWS Systems Manager for SAP" aws-cpp-sdk-core)
 
 file(GLOB AWS_SSM-SAP_HEADERS
     "include/aws/ssm-sap/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_SSM-SAP_HEADERS
 
 file(GLOB AWS_SSM-SAP_MODEL_HEADERS
     "include/aws/ssm-sap/model/*.h"
+)
+
+file(GLOB AWS_SSM-SAP_INTERNAL_HEADERS
+    "include/aws/ssm-sap/internal/*.h"
 )
 
 file(GLOB AWS_SSM-SAP_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_SSM-SAP_MODEL_SOURCE
 
 file(GLOB SSM-SAP_UNIFIED_HEADERS
     ${AWS_SSM-SAP_HEADERS}
+    ${AWS_SSM-SAP_INTERNAL_HEADERS}
     ${AWS_SSM-SAP_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ssm-sap" FILES ${AWS_SSM-SAP_HEADERS})
+        source_group("Header Files\\aws\\ssm-sap\\internal" FILES ${AWS_SSM-SAP_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ssm-sap\\model" FILES ${AWS_SSM-SAP_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_SSM-SAP_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_SSM-SAP_MODEL_SOURCE})

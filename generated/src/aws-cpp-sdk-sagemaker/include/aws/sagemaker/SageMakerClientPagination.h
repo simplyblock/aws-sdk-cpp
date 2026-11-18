@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -21,7 +21,10 @@
 #include <aws/sagemaker/model/ListAutoMLJobsPaginationTraits.h>
 #include <aws/sagemaker/model/ListCandidatesForAutoMLJobPaginationTraits.h>
 #include <aws/sagemaker/model/ListClusterEventsPaginationTraits.h>
+#include <aws/sagemaker/model/ListClusterExtensionVersionsPaginationTraits.h>
+#include <aws/sagemaker/model/ListClusterExtensionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListClusterNodesPaginationTraits.h>
+#include <aws/sagemaker/model/ListClusterOperationsPaginationTraits.h>
 #include <aws/sagemaker/model/ListClusterSchedulerConfigsPaginationTraits.h>
 #include <aws/sagemaker/model/ListClustersPaginationTraits.h>
 #include <aws/sagemaker/model/ListCodeRepositoriesPaginationTraits.h>
@@ -47,6 +50,7 @@
 #include <aws/sagemaker/model/ListInferenceExperimentsPaginationTraits.h>
 #include <aws/sagemaker/model/ListInferenceRecommendationsJobStepsPaginationTraits.h>
 #include <aws/sagemaker/model/ListInferenceRecommendationsJobsPaginationTraits.h>
+#include <aws/sagemaker/model/ListInferenceRoutersPaginationTraits.h>
 #include <aws/sagemaker/model/ListJobSchemaVersionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListJobsPaginationTraits.h>
 #include <aws/sagemaker/model/ListLabelingJobsForWorkteamPaginationTraits.h>
@@ -88,6 +92,7 @@
 #include <aws/sagemaker/model/ListTrainingJobsForHyperParameterTuningJobPaginationTraits.h>
 #include <aws/sagemaker/model/ListTrainingJobsPaginationTraits.h>
 #include <aws/sagemaker/model/ListTrainingPlansPaginationTraits.h>
+#include <aws/sagemaker/model/ListTrainingSessionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListTransformJobsPaginationTraits.h>
 #include <aws/sagemaker/model/ListTrialComponentsPaginationTraits.h>
 #include <aws/sagemaker/model/ListTrialsPaginationTraits.h>
@@ -136,8 +141,17 @@ using ListCandidatesForAutoMLJobPaginator =
                                       Pagination::ListCandidatesForAutoMLJobPaginationTraits<SageMakerClient>>;
 using ListClusterEventsPaginator = Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListClusterEventsRequest,
                                                                      Pagination::ListClusterEventsPaginationTraits<SageMakerClient>>;
+using ListClusterExtensionsPaginator =
+    Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListClusterExtensionsRequest,
+                                      Pagination::ListClusterExtensionsPaginationTraits<SageMakerClient>>;
+using ListClusterExtensionVersionsPaginator =
+    Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListClusterExtensionVersionsRequest,
+                                      Pagination::ListClusterExtensionVersionsPaginationTraits<SageMakerClient>>;
 using ListClusterNodesPaginator = Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListClusterNodesRequest,
                                                                     Pagination::ListClusterNodesPaginationTraits<SageMakerClient>>;
+using ListClusterOperationsPaginator =
+    Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListClusterOperationsRequest,
+                                      Pagination::ListClusterOperationsPaginationTraits<SageMakerClient>>;
 using ListClustersPaginator = Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListClustersRequest,
                                                                 Pagination::ListClustersPaginationTraits<SageMakerClient>>;
 using ListClusterSchedulerConfigsPaginator =
@@ -197,6 +211,8 @@ using ListInferenceRecommendationsJobsPaginator =
 using ListInferenceRecommendationsJobStepsPaginator =
     Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListInferenceRecommendationsJobStepsRequest,
                                       Pagination::ListInferenceRecommendationsJobStepsPaginationTraits<SageMakerClient>>;
+using ListInferenceRoutersPaginator = Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListInferenceRoutersRequest,
+                                                                        Pagination::ListInferenceRoutersPaginationTraits<SageMakerClient>>;
 using ListJobsPaginator =
     Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListJobsRequest, Pagination::ListJobsPaginationTraits<SageMakerClient>>;
 using ListJobSchemaVersionsPaginator =
@@ -299,6 +315,8 @@ using ListTrainingJobsForHyperParameterTuningJobPaginator =
                                       Pagination::ListTrainingJobsForHyperParameterTuningJobPaginationTraits<SageMakerClient>>;
 using ListTrainingPlansPaginator = Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListTrainingPlansRequest,
                                                                      Pagination::ListTrainingPlansPaginationTraits<SageMakerClient>>;
+using ListTrainingSessionsPaginator = Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListTrainingSessionsRequest,
+                                                                        Pagination::ListTrainingSessionsPaginationTraits<SageMakerClient>>;
 using ListTransformJobsPaginator = Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListTransformJobsRequest,
                                                                      Pagination::ListTransformJobsPaginationTraits<SageMakerClient>>;
 using ListTrialComponentsPaginator = Aws::Utils::Pagination::Paginator<SageMakerClient, Model::ListTrialComponentsRequest,

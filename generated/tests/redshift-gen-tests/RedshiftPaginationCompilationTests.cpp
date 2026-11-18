@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -24,6 +24,7 @@
 #include <aws/redshift/model/DescribeReservedNodeOfferingsPaginationTraits.h>
 #include <aws/redshift/model/DescribeRedshiftIdcApplicationsPaginationTraits.h>
 #include <aws/redshift/model/DescribeSnapshotCopyGrantsPaginationTraits.h>
+#include <aws/redshift/model/DescribeQev2IdcApplicationsPaginationTraits.h>
 #include <aws/redshift/model/DescribeTableRestoreStatusPaginationTraits.h>
 #include <aws/redshift/model/DescribeNodeConfigurationOptionsPaginationTraits.h>
 #include <aws/redshift/model/GetReservedNodeExchangeConfigurationOptionsPaginationTraits.h>
@@ -54,6 +55,6 @@ class RedshiftPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSui
 
 TEST_F(RedshiftPaginationCompilationTest, RedshiftPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

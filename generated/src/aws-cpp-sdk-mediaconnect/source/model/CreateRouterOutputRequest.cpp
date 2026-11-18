@@ -55,8 +55,16 @@ Aws::String CreateRouterOutputRequest::SerializePayload() const {
     payload.WithObject("tags", std::move(tagsJsonMap));
   }
 
+  if (m_fabricConfigurationHasBeenSet) {
+    payload.WithObject("fabricConfiguration", m_fabricConfiguration.Jsonize());
+  }
+
   if (m_clientTokenHasBeenSet) {
     payload.WithString("clientToken", m_clientToken);
+  }
+
+  if (m_processorsHasBeenSet) {
+    payload.WithObject("processors", m_processors.Jsonize());
   }
 
   return payload.View().WriteReadable();

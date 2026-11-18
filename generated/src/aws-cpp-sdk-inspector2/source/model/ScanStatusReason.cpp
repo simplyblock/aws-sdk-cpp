@@ -53,6 +53,11 @@ static const int NO_SCAN_CONFIGURATION_ASSOCIATED_HASH = HashingUtils::HashStrin
 static const int SCAN_IN_PROGRESS_HASH = HashingUtils::HashString("SCAN_IN_PROGRESS");
 static const int IMAGE_ARCHIVED_HASH = HashingUtils::HashString("IMAGE_ARCHIVED");
 static const int UNSUPPORTED_CODE_ARTIFACTS_HASH = HashingUtils::HashString("UNSUPPORTED_CODE_ARTIFACTS");
+static const int RESOURCE_UNMANAGED_HASH = HashingUtils::HashString("RESOURCE_UNMANAGED");
+static const int RESOURCE_STOPPED_HASH = HashingUtils::HashString("RESOURCE_STOPPED");
+static const int EXTRACTION_COLLECTION_TIME_LIMIT_EXCEEDED_HASH = HashingUtils::HashString("EXTRACTION_COLLECTION_TIME_LIMIT_EXCEEDED");
+static const int STORAGE_LIMIT_EXCEEDED_HASH = HashingUtils::HashString("STORAGE_LIMIT_EXCEEDED");
+static const int INVALID_ARTIFACT_HASH = HashingUtils::HashString("INVALID_ARTIFACT");
 
 ScanStatusReason GetScanStatusReasonForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -124,6 +129,16 @@ ScanStatusReason GetScanStatusReasonForName(const Aws::String& name) {
     return ScanStatusReason::IMAGE_ARCHIVED;
   } else if (hashCode == UNSUPPORTED_CODE_ARTIFACTS_HASH) {
     return ScanStatusReason::UNSUPPORTED_CODE_ARTIFACTS;
+  } else if (hashCode == RESOURCE_UNMANAGED_HASH) {
+    return ScanStatusReason::RESOURCE_UNMANAGED;
+  } else if (hashCode == RESOURCE_STOPPED_HASH) {
+    return ScanStatusReason::RESOURCE_STOPPED;
+  } else if (hashCode == EXTRACTION_COLLECTION_TIME_LIMIT_EXCEEDED_HASH) {
+    return ScanStatusReason::EXTRACTION_COLLECTION_TIME_LIMIT_EXCEEDED;
+  } else if (hashCode == STORAGE_LIMIT_EXCEEDED_HASH) {
+    return ScanStatusReason::STORAGE_LIMIT_EXCEEDED;
+  } else if (hashCode == INVALID_ARTIFACT_HASH) {
+    return ScanStatusReason::INVALID_ARTIFACT;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -206,6 +221,16 @@ Aws::String GetNameForScanStatusReason(ScanStatusReason enumValue) {
       return "IMAGE_ARCHIVED";
     case ScanStatusReason::UNSUPPORTED_CODE_ARTIFACTS:
       return "UNSUPPORTED_CODE_ARTIFACTS";
+    case ScanStatusReason::RESOURCE_UNMANAGED:
+      return "RESOURCE_UNMANAGED";
+    case ScanStatusReason::RESOURCE_STOPPED:
+      return "RESOURCE_STOPPED";
+    case ScanStatusReason::EXTRACTION_COLLECTION_TIME_LIMIT_EXCEEDED:
+      return "EXTRACTION_COLLECTION_TIME_LIMIT_EXCEEDED";
+    case ScanStatusReason::STORAGE_LIMIT_EXCEEDED:
+      return "STORAGE_LIMIT_EXCEEDED";
+    case ScanStatusReason::INVALID_ARTIFACT:
+      return "INVALID_ARTIFACT";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

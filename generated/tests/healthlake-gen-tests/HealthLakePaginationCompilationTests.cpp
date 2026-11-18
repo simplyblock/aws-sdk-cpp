@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -9,6 +9,9 @@
 #include <aws/healthlake/HealthLakeClientPagination.h>
 #include <aws/healthlake/HealthLakePaginationBase.h>
 #include <aws/healthlake/model/ListFHIRImportJobsPaginationTraits.h>
+#include <aws/healthlake/model/ListDataTransformationJobsPaginationTraits.h>
+#include <aws/healthlake/model/ListDataTransformationProfilesPaginationTraits.h>
+#include <aws/healthlake/model/ListDataTransformationProfileVersionsPaginationTraits.h>
 #include <aws/healthlake/model/ListFHIRDatastoresPaginationTraits.h>
 #include <aws/healthlake/model/ListFHIRExportJobsPaginationTraits.h>
 
@@ -20,6 +23,6 @@ class HealthLakePaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestS
 
 TEST_F(HealthLakePaginationCompilationTest, HealthLakePaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

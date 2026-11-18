@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-route53domains "C++ SDK for the AWS route53domains service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-route53domains "C++ SDK for Amazon Route 53 Domains" aws-cpp-sdk-core)
 
 file(GLOB AWS_ROUTE53DOMAINS_HEADERS
     "include/aws/route53domains/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ROUTE53DOMAINS_HEADERS
 
 file(GLOB AWS_ROUTE53DOMAINS_MODEL_HEADERS
     "include/aws/route53domains/model/*.h"
+)
+
+file(GLOB AWS_ROUTE53DOMAINS_INTERNAL_HEADERS
+    "include/aws/route53domains/internal/*.h"
 )
 
 file(GLOB AWS_ROUTE53DOMAINS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ROUTE53DOMAINS_MODEL_SOURCE
 
 file(GLOB ROUTE53DOMAINS_UNIFIED_HEADERS
     ${AWS_ROUTE53DOMAINS_HEADERS}
+    ${AWS_ROUTE53DOMAINS_INTERNAL_HEADERS}
     ${AWS_ROUTE53DOMAINS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\route53domains" FILES ${AWS_ROUTE53DOMAINS_HEADERS})
+        source_group("Header Files\\aws\\route53domains\\internal" FILES ${AWS_ROUTE53DOMAINS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\route53domains\\model" FILES ${AWS_ROUTE53DOMAINS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ROUTE53DOMAINS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ROUTE53DOMAINS_MODEL_SOURCE})

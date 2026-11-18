@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-mwaa-serverless "C++ SDK for the AWS mwaa-serverless service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-mwaa-serverless "C++ SDK for AmazonMWAAServerless" aws-cpp-sdk-core)
 
 file(GLOB AWS_MWAA-SERVERLESS_HEADERS
     "include/aws/mwaa-serverless/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MWAA-SERVERLESS_HEADERS
 
 file(GLOB AWS_MWAA-SERVERLESS_MODEL_HEADERS
     "include/aws/mwaa-serverless/model/*.h"
+)
+
+file(GLOB AWS_MWAA-SERVERLESS_INTERNAL_HEADERS
+    "include/aws/mwaa-serverless/internal/*.h"
 )
 
 file(GLOB AWS_MWAA-SERVERLESS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MWAA-SERVERLESS_MODEL_SOURCE
 
 file(GLOB MWAA-SERVERLESS_UNIFIED_HEADERS
     ${AWS_MWAA-SERVERLESS_HEADERS}
+    ${AWS_MWAA-SERVERLESS_INTERNAL_HEADERS}
     ${AWS_MWAA-SERVERLESS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\mwaa-serverless" FILES ${AWS_MWAA-SERVERLESS_HEADERS})
+        source_group("Header Files\\aws\\mwaa-serverless\\internal" FILES ${AWS_MWAA-SERVERLESS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\mwaa-serverless\\model" FILES ${AWS_MWAA-SERVERLESS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MWAA-SERVERLESS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MWAA-SERVERLESS_MODEL_SOURCE})

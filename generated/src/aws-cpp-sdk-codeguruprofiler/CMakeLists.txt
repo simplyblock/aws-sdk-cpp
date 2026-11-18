@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-codeguruprofiler "C++ SDK for the AWS codeguruprofiler service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-codeguruprofiler "C++ SDK for Amazon CodeGuru Profiler" aws-cpp-sdk-core)
 
 file(GLOB AWS_CODEGURUPROFILER_HEADERS
     "include/aws/codeguruprofiler/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CODEGURUPROFILER_HEADERS
 
 file(GLOB AWS_CODEGURUPROFILER_MODEL_HEADERS
     "include/aws/codeguruprofiler/model/*.h"
+)
+
+file(GLOB AWS_CODEGURUPROFILER_INTERNAL_HEADERS
+    "include/aws/codeguruprofiler/internal/*.h"
 )
 
 file(GLOB AWS_CODEGURUPROFILER_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CODEGURUPROFILER_MODEL_SOURCE
 
 file(GLOB CODEGURUPROFILER_UNIFIED_HEADERS
     ${AWS_CODEGURUPROFILER_HEADERS}
+    ${AWS_CODEGURUPROFILER_INTERNAL_HEADERS}
     ${AWS_CODEGURUPROFILER_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\codeguruprofiler" FILES ${AWS_CODEGURUPROFILER_HEADERS})
+        source_group("Header Files\\aws\\codeguruprofiler\\internal" FILES ${AWS_CODEGURUPROFILER_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\codeguruprofiler\\model" FILES ${AWS_CODEGURUPROFILER_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CODEGURUPROFILER_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CODEGURUPROFILER_MODEL_SOURCE})

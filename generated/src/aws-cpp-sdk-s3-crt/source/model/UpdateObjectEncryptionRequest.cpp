@@ -24,7 +24,7 @@ Aws::String UpdateObjectEncryptionRequest::SerializePayload() const {
 
   m_objectEncryption.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -95,3 +95,5 @@ Aws::String UpdateObjectEncryptionRequest::GetChecksumAlgorithmName() const {
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
 }
+
+bool UpdateObjectEncryptionRequest::ChecksumAlgorithmIsSet() const { return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET; }

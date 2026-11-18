@@ -28,10 +28,15 @@
 #include <aws/account/model/GetGovCloudAccountInformationRequest.h>
 #include <aws/account/model/GetGovCloudAccountInformationResult.h>
 #include <aws/account/model/GetPrimaryEmailResult.h>
+#include <aws/account/model/GetPrimaryEmailUpdateStatusRequest.h>
+#include <aws/account/model/GetPrimaryEmailUpdateStatusResult.h>
 #include <aws/account/model/GetRegionOptStatusResult.h>
 #include <aws/account/model/ListRegionsRequest.h>
 #include <aws/account/model/ListRegionsResult.h>
+#include <aws/account/model/SendPhoneNumberVerificationRequest.h>
+#include <aws/account/model/SendPhoneNumberVerificationResult.h>
 #include <aws/account/model/StartPrimaryEmailUpdateResult.h>
+#include <aws/account/model/VerifyPhoneNumberResult.h>
 #include <aws/core/NoResult.h>
 /* End of service model headers required in AccountClient header */
 
@@ -75,12 +80,15 @@ class GetAlternateContactRequest;
 class GetContactInformationRequest;
 class GetGovCloudAccountInformationRequest;
 class GetPrimaryEmailRequest;
+class GetPrimaryEmailUpdateStatusRequest;
 class GetRegionOptStatusRequest;
 class ListRegionsRequest;
 class PutAccountNameRequest;
 class PutAlternateContactRequest;
 class PutContactInformationRequest;
+class SendPhoneNumberVerificationRequest;
 class StartPrimaryEmailUpdateRequest;
+class VerifyPhoneNumberRequest;
 /* End of service model forward declarations required in AccountClient header */
 
 /* Service model Outcome class definitions */
@@ -93,12 +101,15 @@ typedef Aws::Utils::Outcome<GetAlternateContactResult, AccountError> GetAlternat
 typedef Aws::Utils::Outcome<GetContactInformationResult, AccountError> GetContactInformationOutcome;
 typedef Aws::Utils::Outcome<GetGovCloudAccountInformationResult, AccountError> GetGovCloudAccountInformationOutcome;
 typedef Aws::Utils::Outcome<GetPrimaryEmailResult, AccountError> GetPrimaryEmailOutcome;
+typedef Aws::Utils::Outcome<GetPrimaryEmailUpdateStatusResult, AccountError> GetPrimaryEmailUpdateStatusOutcome;
 typedef Aws::Utils::Outcome<GetRegionOptStatusResult, AccountError> GetRegionOptStatusOutcome;
 typedef Aws::Utils::Outcome<ListRegionsResult, AccountError> ListRegionsOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, AccountError> PutAccountNameOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, AccountError> PutAlternateContactOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, AccountError> PutContactInformationOutcome;
+typedef Aws::Utils::Outcome<SendPhoneNumberVerificationResult, AccountError> SendPhoneNumberVerificationOutcome;
 typedef Aws::Utils::Outcome<StartPrimaryEmailUpdateResult, AccountError> StartPrimaryEmailUpdateOutcome;
+typedef Aws::Utils::Outcome<VerifyPhoneNumberResult, AccountError> VerifyPhoneNumberOutcome;
 /* End of service model Outcome class definitions */
 
 /* Service model Outcome callable definitions */
@@ -111,12 +122,15 @@ typedef std::future<GetAlternateContactOutcome> GetAlternateContactOutcomeCallab
 typedef std::future<GetContactInformationOutcome> GetContactInformationOutcomeCallable;
 typedef std::future<GetGovCloudAccountInformationOutcome> GetGovCloudAccountInformationOutcomeCallable;
 typedef std::future<GetPrimaryEmailOutcome> GetPrimaryEmailOutcomeCallable;
+typedef std::future<GetPrimaryEmailUpdateStatusOutcome> GetPrimaryEmailUpdateStatusOutcomeCallable;
 typedef std::future<GetRegionOptStatusOutcome> GetRegionOptStatusOutcomeCallable;
 typedef std::future<ListRegionsOutcome> ListRegionsOutcomeCallable;
 typedef std::future<PutAccountNameOutcome> PutAccountNameOutcomeCallable;
 typedef std::future<PutAlternateContactOutcome> PutAlternateContactOutcomeCallable;
 typedef std::future<PutContactInformationOutcome> PutContactInformationOutcomeCallable;
+typedef std::future<SendPhoneNumberVerificationOutcome> SendPhoneNumberVerificationOutcomeCallable;
 typedef std::future<StartPrimaryEmailUpdateOutcome> StartPrimaryEmailUpdateOutcomeCallable;
+typedef std::future<VerifyPhoneNumberOutcome> VerifyPhoneNumberOutcomeCallable;
 /* End of service model Outcome callable definitions */
 }  // namespace Model
 
@@ -151,6 +165,9 @@ typedef std::function<void(const AccountClient*, const Model::GetGovCloudAccount
 typedef std::function<void(const AccountClient*, const Model::GetPrimaryEmailRequest&, const Model::GetPrimaryEmailOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetPrimaryEmailResponseReceivedHandler;
+typedef std::function<void(const AccountClient*, const Model::GetPrimaryEmailUpdateStatusRequest&,
+                           const Model::GetPrimaryEmailUpdateStatusOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetPrimaryEmailUpdateStatusResponseReceivedHandler;
 typedef std::function<void(const AccountClient*, const Model::GetRegionOptStatusRequest&, const Model::GetRegionOptStatusOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetRegionOptStatusResponseReceivedHandler;
@@ -166,9 +183,15 @@ typedef std::function<void(const AccountClient*, const Model::PutAlternateContac
 typedef std::function<void(const AccountClient*, const Model::PutContactInformationRequest&, const Model::PutContactInformationOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     PutContactInformationResponseReceivedHandler;
+typedef std::function<void(const AccountClient*, const Model::SendPhoneNumberVerificationRequest&,
+                           const Model::SendPhoneNumberVerificationOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    SendPhoneNumberVerificationResponseReceivedHandler;
 typedef std::function<void(const AccountClient*, const Model::StartPrimaryEmailUpdateRequest&, const Model::StartPrimaryEmailUpdateOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     StartPrimaryEmailUpdateResponseReceivedHandler;
+typedef std::function<void(const AccountClient*, const Model::VerifyPhoneNumberRequest&, const Model::VerifyPhoneNumberOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    VerifyPhoneNumberResponseReceivedHandler;
 /* End of service model async handlers definitions */
 }  // namespace Account
 }  // namespace Aws

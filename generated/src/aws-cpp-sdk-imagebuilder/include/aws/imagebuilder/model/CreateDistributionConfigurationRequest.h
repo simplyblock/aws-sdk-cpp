@@ -34,7 +34,11 @@ class CreateDistributionConfigurationRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The name of the distribution configuration.</p>
+   * <p>The name of the distribution configuration. Distribution configuration names
+   * must be unique to your account in each Amazon Web Services Region. Image Builder
+   * generates the distribution configuration ARN from a normalized form of the name,
+   * so names that differ only in case, spaces, or underscores count as the same
+   * name.</p>
    */
   inline const Aws::String& GetName() const { return m_name; }
   inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
@@ -70,7 +74,9 @@ class CreateDistributionConfigurationRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The distributions of the distribution configuration.</p>
+   * <p>The distribution settings for the configuration. Each entry defines how
+   * output images are distributed in one target Amazon Web Services Region. A Region
+   * can appear at most once in the list.</p>
    */
   inline const Aws::Vector<Distribution>& GetDistributions() const { return m_distributions; }
   inline bool DistributionsHasBeenSet() const { return m_distributionsHasBeenSet; }
@@ -118,8 +124,10 @@ class CreateDistributionConfigurationRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Unique, case-sensitive identifier you provide to ensure idempotency of the
-   * request. For more information, see <a
+   * <p>A unique, case-sensitive identifier you provide to ensure that the operation
+   * runs no more than one time. If you retry a request with the same client token,
+   * Image Builder returns the original response without running the operation again.
+   * For more information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
    * idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>
    */
@@ -136,6 +144,24 @@ class CreateDistributionConfigurationRequest : public ImagebuilderRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>Validates the required permissions and request parameters without performing
+   * the operation. If validation succeeds, the operation returns a
+   * <code>DryRunOperationException</code> error response.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline CreateDistributionConfigurationRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_name;
 
@@ -146,11 +172,14 @@ class CreateDistributionConfigurationRequest : public ImagebuilderRequest {
   Aws::Map<Aws::String, Aws::String> m_tags;
 
   Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+
+  bool m_dryRun{false};
   bool m_nameHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_distributionsHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
   bool m_clientTokenHasBeenSet = true;
+  bool m_dryRunHasBeenSet = false;
 };
 
 }  // namespace Model

@@ -8,12 +8,14 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/lambda/LambdaRequest.h>
 #include <aws/lambda/Lambda_EXPORTS.h>
+#include <aws/lambda/model/AcceleratorConfig.h>
 #include <aws/lambda/model/CapacityProviderConfig.h>
 #include <aws/lambda/model/DeadLetterConfig.h>
 #include <aws/lambda/model/DurableConfig.h>
 #include <aws/lambda/model/Environment.h>
 #include <aws/lambda/model/EphemeralStorage.h>
 #include <aws/lambda/model/FileSystemConfig.h>
+#include <aws/lambda/model/FunctionRuntimeConfig.h>
 #include <aws/lambda/model/ImageConfig.h>
 #include <aws/lambda/model/LoggingConfig.h>
 #include <aws/lambda/model/Runtime.h>
@@ -128,8 +130,11 @@ class UpdateFunctionConfigurationRequest : public LambdaRequest {
   ///@{
   /**
    * <p>The amount of time (in seconds) that Lambda allows a function to run before
-   * stopping it. The default is 3 seconds. The maximum allowed value is 900 seconds.
-   * For more information, see <a
+   * stopping it. The default is 3 seconds, and the maximum allowed value is 900
+   * seconds. For functions using Lambda Managed Instances, asynchronous invocations
+   * and event source mapping invocations (except Amazon MQ and Amazon DocumentDB)
+   * support a maximum allowed value of 5,400 seconds (90 minutes). For more
+   * information, see <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/runtimes-context.html">Lambda
    * execution environment</a>.</p>
    */
@@ -410,8 +415,9 @@ class UpdateFunctionConfigurationRequest : public LambdaRequest {
   ///@{
   /**
    * <p>The size of the function's <code>/tmp</code> directory in MB. The default
-   * value is 512, but can be any whole number between 512 and 10,240 MB. For more
-   * information, see <a
+   * value is 512, but can be any whole number between 512 and 10,240 MB. For
+   * functions that use <code>AcceleratorConfig</code>, the maximum is 32,768 MB. For
+   * more information, see <a
    * href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage">Configuring
    * ephemeral storage (console)</a>.</p>
    */
@@ -488,8 +494,12 @@ class UpdateFunctionConfigurationRequest : public LambdaRequest {
 
   ///@{
   /**
-   * <p>Configuration settings for durable functions. Allows updating execution
-   * timeout and retention period for functions with durability enabled.</p>
+   * <p>Configuration settings for <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html">durable
+   * functions</a>, including execution timeout, retention period for execution
+   * history, and an optional ARN of the Key Management Service (KMS) customer
+   * managed key that is used to encrypt your durable execution's payload data,
+   * including input, output, and error payloads.</p>
    */
   inline const DurableConfig& GetDurableConfig() const { return m_durableConfig; }
   inline bool DurableConfigHasBeenSet() const { return m_durableConfigHasBeenSet; }
@@ -501,6 +511,43 @@ class UpdateFunctionConfigurationRequest : public LambdaRequest {
   template <typename DurableConfigT = DurableConfig>
   UpdateFunctionConfigurationRequest& WithDurableConfig(DurableConfigT&& value) {
     SetDurableConfig(std::forward<DurableConfigT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The customer-managed runtime configuration for your function. Specifies the
+   * customer-managed runtime and the runtime alias that your function uses.</p>
+   */
+  inline const FunctionRuntimeConfig& GetRuntimeConfig() const { return m_runtimeConfig; }
+  inline bool RuntimeConfigHasBeenSet() const { return m_runtimeConfigHasBeenSet; }
+  template <typename RuntimeConfigT = FunctionRuntimeConfig>
+  void SetRuntimeConfig(RuntimeConfigT&& value) {
+    m_runtimeConfigHasBeenSet = true;
+    m_runtimeConfig = std::forward<RuntimeConfigT>(value);
+  }
+  template <typename RuntimeConfigT = FunctionRuntimeConfig>
+  UpdateFunctionConfigurationRequest& WithRuntimeConfig(RuntimeConfigT&& value) {
+    SetRuntimeConfig(std::forward<RuntimeConfigT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The accelerator resource settings for a Lambda execution environment.</p>
+   */
+  inline const AcceleratorConfig& GetAcceleratorConfig() const { return m_acceleratorConfig; }
+  inline bool AcceleratorConfigHasBeenSet() const { return m_acceleratorConfigHasBeenSet; }
+  template <typename AcceleratorConfigT = AcceleratorConfig>
+  void SetAcceleratorConfig(AcceleratorConfigT&& value) {
+    m_acceleratorConfigHasBeenSet = true;
+    m_acceleratorConfig = std::forward<AcceleratorConfigT>(value);
+  }
+  template <typename AcceleratorConfigT = AcceleratorConfig>
+  UpdateFunctionConfigurationRequest& WithAcceleratorConfig(AcceleratorConfigT&& value) {
+    SetAcceleratorConfig(std::forward<AcceleratorConfigT>(value));
     return *this;
   }
   ///@}
@@ -546,6 +593,10 @@ class UpdateFunctionConfigurationRequest : public LambdaRequest {
   CapacityProviderConfig m_capacityProviderConfig;
 
   DurableConfig m_durableConfig;
+
+  FunctionRuntimeConfig m_runtimeConfig;
+
+  AcceleratorConfig m_acceleratorConfig;
   bool m_functionNameHasBeenSet = false;
   bool m_roleHasBeenSet = false;
   bool m_handlerHasBeenSet = false;
@@ -567,6 +618,8 @@ class UpdateFunctionConfigurationRequest : public LambdaRequest {
   bool m_loggingConfigHasBeenSet = false;
   bool m_capacityProviderConfigHasBeenSet = false;
   bool m_durableConfigHasBeenSet = false;
+  bool m_runtimeConfigHasBeenSet = false;
+  bool m_acceleratorConfigHasBeenSet = false;
 };
 
 }  // namespace Model

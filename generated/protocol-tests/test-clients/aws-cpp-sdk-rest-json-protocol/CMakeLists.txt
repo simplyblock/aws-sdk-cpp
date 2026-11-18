@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-rest-json-protocol "C++ SDK for the AWS rest-json-protocol service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-rest-json-protocol "C++ SDK for Sample Rest Json Protocol Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_REST-JSON-PROTOCOL_HEADERS
     "include/aws/rest-json-protocol/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_REST-JSON-PROTOCOL_HEADERS
 
 file(GLOB AWS_REST-JSON-PROTOCOL_MODEL_HEADERS
     "include/aws/rest-json-protocol/model/*.h"
+)
+
+file(GLOB AWS_REST-JSON-PROTOCOL_INTERNAL_HEADERS
+    "include/aws/rest-json-protocol/internal/*.h"
 )
 
 file(GLOB AWS_REST-JSON-PROTOCOL_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_REST-JSON-PROTOCOL_MODEL_SOURCE
 
 file(GLOB REST-JSON-PROTOCOL_UNIFIED_HEADERS
     ${AWS_REST-JSON-PROTOCOL_HEADERS}
+    ${AWS_REST-JSON-PROTOCOL_INTERNAL_HEADERS}
     ${AWS_REST-JSON-PROTOCOL_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\rest-json-protocol" FILES ${AWS_REST-JSON-PROTOCOL_HEADERS})
+        source_group("Header Files\\aws\\rest-json-protocol\\internal" FILES ${AWS_REST-JSON-PROTOCOL_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\rest-json-protocol\\model" FILES ${AWS_REST-JSON-PROTOCOL_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_REST-JSON-PROTOCOL_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_REST-JSON-PROTOCOL_MODEL_SOURCE})

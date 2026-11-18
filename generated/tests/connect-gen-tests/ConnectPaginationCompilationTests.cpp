@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -11,6 +11,7 @@
 #include <aws/connect/model/SearchResourceTagsPaginationTraits.h>
 #include <aws/connect/model/ListTrafficDistributionGroupsPaginationTraits.h>
 #include <aws/connect/model/ListEvaluationFormsPaginationTraits.h>
+#include <aws/connect/model/ListMetricsPaginationTraits.h>
 #include <aws/connect/model/ListUserProficienciesPaginationTraits.h>
 #include <aws/connect/model/ListSecurityProfileFlowModulesPaginationTraits.h>
 #include <aws/connect/model/EvaluateDataTableValuesPaginationTraits.h>
@@ -18,13 +19,16 @@
 #include <aws/connect/model/SearchDataTablesPaginationTraits.h>
 #include <aws/connect/model/SearchTestCasesPaginationTraits.h>
 #include <aws/connect/model/ListDataTableValuesPaginationTraits.h>
+#include <aws/connect/model/ListEvaluationFormAIVersionsPaginationTraits.h>
 #include <aws/connect/model/ListRoutingProfileQueuesPaginationTraits.h>
 #include <aws/connect/model/ListSecurityProfilePermissionsPaginationTraits.h>
+#include <aws/connect/model/ListExtractionDefinitionsPaginationTraits.h>
 #include <aws/connect/model/ListRoutingProfilesPaginationTraits.h>
 #include <aws/connect/model/SearchSecurityProfilesPaginationTraits.h>
 #include <aws/connect/model/GetMetricDataPaginationTraits.h>
 #include <aws/connect/model/ListTestCasesPaginationTraits.h>
 #include <aws/connect/model/SearchHoursOfOperationsPaginationTraits.h>
+#include <aws/connect/model/SearchMetricsPaginationTraits.h>
 #include <aws/connect/model/ListSecurityProfilesPaginationTraits.h>
 #include <aws/connect/model/ListDefaultVocabulariesPaginationTraits.h>
 #include <aws/connect/model/ListInstanceAttributesPaginationTraits.h>
@@ -37,6 +41,7 @@
 #include <aws/connect/model/ListContactFlowsPaginationTraits.h>
 #include <aws/connect/model/ListRulesPaginationTraits.h>
 #include <aws/connect/model/ListAuthenticationProfilesPaginationTraits.h>
+#include <aws/connect/model/SearchRulesPaginationTraits.h>
 #include <aws/connect/model/ListViewsPaginationTraits.h>
 #include <aws/connect/model/SearchPromptsPaginationTraits.h>
 #include <aws/connect/model/SearchRoutingProfilesPaginationTraits.h>
@@ -78,12 +83,14 @@
 #include <aws/connect/model/ListIntegrationAssociationsPaginationTraits.h>
 #include <aws/connect/model/ListContactReferencesPaginationTraits.h>
 #include <aws/connect/model/SearchPredefinedAttributesPaginationTraits.h>
+#include <aws/connect/model/ListSecurityProfileAIAgentsPaginationTraits.h>
 #include <aws/connect/model/ListContactFlowVersionsPaginationTraits.h>
 #include <aws/connect/model/ListLexBotsPaginationTraits.h>
 #include <aws/connect/model/ListDataTablesPaginationTraits.h>
 #include <aws/connect/model/SearchContactFlowModulesPaginationTraits.h>
 #include <aws/connect/model/SearchUsersPaginationTraits.h>
 #include <aws/connect/model/ListEntitySecurityProfilesPaginationTraits.h>
+#include <aws/connect/model/ListContactFlowAliasesPaginationTraits.h>
 #include <aws/connect/model/ListTrafficDistributionGroupUsersPaginationTraits.h>
 #include <aws/connect/model/SearchHoursOfOperationOverridesPaginationTraits.h>
 #include <aws/connect/model/ListQuickConnectsPaginationTraits.h>
@@ -91,6 +98,7 @@
 #include <aws/connect/model/ListEvaluationFormVersionsPaginationTraits.h>
 #include <aws/connect/model/ListLambdaFunctionsPaginationTraits.h>
 #include <aws/connect/model/ListPhoneNumbersPaginationTraits.h>
+#include <aws/connect/model/ListReplicationFindingsPaginationTraits.h>
 #include <aws/connect/model/ListChildHoursOfOperationsPaginationTraits.h>
 #include <aws/connect/model/SearchAgentStatusesPaginationTraits.h>
 #include <aws/connect/model/SearchVocabulariesPaginationTraits.h>
@@ -103,6 +111,6 @@ class ConnectPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuit
 
 TEST_F(ConnectPaginationCompilationTest, ConnectPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

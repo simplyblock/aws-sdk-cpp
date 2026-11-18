@@ -20,6 +20,7 @@
 #include <aws/sesv2/SESV2Client.h>
 #include <aws/sesv2/SESV2EndpointProvider.h>
 #include <aws/sesv2/SESV2ErrorMarshaller.h>
+#include <aws/sesv2/model/AssociateEmailIdentityCertificateRequest.h>
 #include <aws/sesv2/model/BatchGetMetricDataRequest.h>
 #include <aws/sesv2/model/CancelExportJobRequest.h>
 #include <aws/sesv2/model/CreateConfigurationSetEventDestinationRequest.h>
@@ -50,6 +51,7 @@
 #include <aws/sesv2/model/DeleteSuppressedDestinationRequest.h>
 #include <aws/sesv2/model/DeleteTenantRequest.h>
 #include <aws/sesv2/model/DeleteTenantResourceAssociationRequest.h>
+#include <aws/sesv2/model/DisassociateEmailIdentityCertificateRequest.h>
 #include <aws/sesv2/model/GetAccountRequest.h>
 #include <aws/sesv2/model/GetBlacklistReportsRequest.h>
 #include <aws/sesv2/model/GetConfigurationSetEventDestinationsRequest.h>
@@ -83,6 +85,7 @@
 #include <aws/sesv2/model/ListDeliverabilityTestReportsRequest.h>
 #include <aws/sesv2/model/ListDomainDeliverabilityCampaignsRequest.h>
 #include <aws/sesv2/model/ListEmailIdentitiesRequest.h>
+#include <aws/sesv2/model/ListEmailIdentityCertificatesRequest.h>
 #include <aws/sesv2/model/ListEmailTemplatesRequest.h>
 #include <aws/sesv2/model/ListExportJobsRequest.h>
 #include <aws/sesv2/model/ListImportJobsRequest.h>
@@ -96,6 +99,7 @@
 #include <aws/sesv2/model/ListTenantsRequest.h>
 #include <aws/sesv2/model/PutAccountDedicatedIpWarmupAttributesRequest.h>
 #include <aws/sesv2/model/PutAccountDetailsRequest.h>
+#include <aws/sesv2/model/PutAccountPricingAttributesRequest.h>
 #include <aws/sesv2/model/PutAccountSendingAttributesRequest.h>
 #include <aws/sesv2/model/PutAccountSuppressionAttributesRequest.h>
 #include <aws/sesv2/model/PutAccountVdmAttributesRequest.h>
@@ -124,6 +128,7 @@
 #include <aws/sesv2/model/TestRenderEmailTemplateRequest.h>
 #include <aws/sesv2/model/UntagResourceRequest.h>
 #include <aws/sesv2/model/UpdateConfigurationSetEventDestinationRequest.h>
+#include <aws/sesv2/model/UpdateConfigurationSetRequest.h>
 #include <aws/sesv2/model/UpdateContactListRequest.h>
 #include <aws/sesv2/model/UpdateContactRequest.h>
 #include <aws/sesv2/model/UpdateCustomVerificationEmailTemplateRequest.h>
@@ -271,7 +276,8 @@ SESV2Client::InvokeOperationOutcome SESV2Client::InvokeServiceOperation(
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -285,8 +291,20 @@ SESV2Client::InvokeOperationOutcome SESV2Client::InvokeServiceOperation(
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
+}
+
+AssociateEmailIdentityCertificateOutcome SESV2Client::AssociateEmailIdentityCertificate(
+    const AssociateEmailIdentityCertificateRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v2/email/identity/certificates");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? AssociateEmailIdentityCertificateOutcome(result.GetResultWithOwnership())
+                            : AssociateEmailIdentityCertificateOutcome(std::move(result.GetError()));
 }
 
 BatchGetMetricDataOutcome SESV2Client::BatchGetMetricData(const BatchGetMetricDataRequest& request) const {
@@ -758,6 +776,18 @@ DeleteTenantResourceAssociationOutcome SESV2Client::DeleteTenantResourceAssociat
                             : DeleteTenantResourceAssociationOutcome(std::move(result.GetError()));
 }
 
+DisassociateEmailIdentityCertificateOutcome SESV2Client::DisassociateEmailIdentityCertificate(
+    const DisassociateEmailIdentityCertificateRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v2/email/identity/certificates/delete");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DisassociateEmailIdentityCertificateOutcome(result.GetResultWithOwnership())
+                            : DisassociateEmailIdentityCertificateOutcome(std::move(result.GetError()));
+}
+
 GetAccountOutcome SESV2Client::GetAccount(const GetAccountRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
@@ -1198,10 +1228,10 @@ GetTenantOutcome SESV2Client::GetTenant(const GetTenantRequest& request) const {
 ListConfigurationSetsOutcome SESV2Client::ListConfigurationSets(const ListConfigurationSetsRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
-    endpointResolutionOutcome.GetResult().AddPathSegments("/v2/email/configuration-sets");
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v2/email/list-configuration-sets");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListConfigurationSetsOutcome(result.GetResultWithOwnership())
                             : ListConfigurationSetsOutcome(std::move(result.GetError()));
 }
@@ -1302,12 +1332,23 @@ ListDomainDeliverabilityCampaignsOutcome SESV2Client::ListDomainDeliverabilityCa
 ListEmailIdentitiesOutcome SESV2Client::ListEmailIdentities(const ListEmailIdentitiesRequest& request) const {
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
-    endpointResolutionOutcome.GetResult().AddPathSegments("/v2/email/identities");
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v2/email/list-identities");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListEmailIdentitiesOutcome(result.GetResultWithOwnership())
                             : ListEmailIdentitiesOutcome(std::move(result.GetError()));
+}
+
+ListEmailIdentityCertificatesOutcome SESV2Client::ListEmailIdentityCertificates(const ListEmailIdentityCertificatesRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v2/email/identity/certificates/list");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListEmailIdentityCertificatesOutcome(result.GetResultWithOwnership())
+                            : ListEmailIdentityCertificatesOutcome(std::move(result.GetError()));
 }
 
 ListEmailTemplatesOutcome SESV2Client::ListEmailTemplates(const ListEmailTemplatesRequest& request) const {
@@ -1455,6 +1496,17 @@ PutAccountDetailsOutcome SESV2Client::PutAccountDetails(const PutAccountDetailsR
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? PutAccountDetailsOutcome(result.GetResultWithOwnership())
                             : PutAccountDetailsOutcome(std::move(result.GetError()));
+}
+
+PutAccountPricingAttributesOutcome SESV2Client::PutAccountPricingAttributes(const PutAccountPricingAttributesRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v2/email/account/pricing-attributes");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? PutAccountPricingAttributesOutcome(result.GetResultWithOwnership())
+                            : PutAccountPricingAttributesOutcome(std::move(result.GetError()));
 }
 
 PutAccountSendingAttributesOutcome SESV2Client::PutAccountSendingAttributes(const PutAccountSendingAttributesRequest& request) const {
@@ -1903,6 +1955,17 @@ UntagResourceOutcome SESV2Client::UntagResource(const UntagResourceRequest& requ
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? UntagResourceOutcome(result.GetResultWithOwnership()) : UntagResourceOutcome(std::move(result.GetError()));
+}
+
+UpdateConfigurationSetOutcome SESV2Client::UpdateConfigurationSet(const UpdateConfigurationSetRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/v2/email/update-configuration-sets");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UpdateConfigurationSetOutcome(result.GetResultWithOwnership())
+                            : UpdateConfigurationSetOutcome(std::move(result.GetError()));
 }
 
 UpdateConfigurationSetEventDestinationOutcome SESV2Client::UpdateConfigurationSetEventDestination(

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/signer-data/SignerDataEndpointRules.h>
 #include <aws/signer-data/SignerData_EXPORTS.h>
 
 namespace Aws {
 namespace SignerData {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using SignerDataClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using SignerDataEndpointProviderBase =
     EndpointProviderBase<SignerDataClientConfiguration, SignerDataBuiltInParameters, SignerDataClientContextParameters>;
 
 using SignerDataDefaultEpProviderBase =
-    DefaultEndpointProvider<SignerDataClientConfiguration, SignerDataBuiltInParameters, SignerDataClientContextParameters>;
+    BDDEndpointProvider<SignerDataClientConfiguration, SignerDataBuiltInParameters, SignerDataClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_SIGNERDATA_API SignerDataEndpointProvider : public SignerDataDefaultEp
  public:
   using SignerDataResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  SignerDataEndpointProvider()
-      : SignerDataDefaultEpProviderBase(Aws::SignerData::SignerDataEndpointRules::GetRulesBlob(),
-                                        Aws::SignerData::SignerDataEndpointRules::RulesBlobSize) {}
+  SignerDataEndpointProvider();
 
   ~SignerDataEndpointProvider() {}
 };

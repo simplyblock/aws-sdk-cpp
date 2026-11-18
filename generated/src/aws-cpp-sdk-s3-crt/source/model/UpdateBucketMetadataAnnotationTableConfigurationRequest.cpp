@@ -24,7 +24,7 @@ Aws::String UpdateBucketMetadataAnnotationTableConfigurationRequest::SerializePa
 
   m_annotationTableConfiguration.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -88,4 +88,8 @@ Aws::String UpdateBucketMetadataAnnotationTableConfigurationRequest::GetChecksum
   } else {
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
+}
+
+bool UpdateBucketMetadataAnnotationTableConfigurationRequest::ChecksumAlgorithmIsSet() const {
+  return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET;
 }

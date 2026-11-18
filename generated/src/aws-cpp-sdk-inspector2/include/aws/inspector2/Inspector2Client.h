@@ -495,6 +495,32 @@ class AWS_INSPECTOR2_API Inspector2Client : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Creates a connector that links an external cloud provider to Amazon Inspector
+   * for vulnerability scanning.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/CreateConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateConnectorOutcome CreateConnector(const Model::CreateConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateConnector that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename CreateConnectorRequestT = Model::CreateConnectorRequest>
+  Model::CreateConnectorOutcomeCallable CreateConnectorCallable(const CreateConnectorRequestT& request) const {
+    return SubmitCallable(&Inspector2Client::CreateConnector, request);
+  }
+
+  /**
+   * An Async wrapper for CreateConnector that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename CreateConnectorRequestT = Model::CreateConnectorRequest>
+  void CreateConnectorAsync(const CreateConnectorRequestT& request, const CreateConnectorResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Inspector2Client::CreateConnector, request, handler, context);
+  }
+
+  /**
    * <p>Creates a filter resource using specified filter criteria. When the filter
    * action is set to <code>SUPPRESS</code> this action creates a suppression
    * rule.</p><p><h3>See Also:</h3>   <a
@@ -662,6 +688,31 @@ class AWS_INSPECTOR2_API Inspector2Client : public Aws::Client::AWSJsonClient,
                                                 const DeleteCodeSecurityScanConfigurationResponseReceivedHandler& handler,
                                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&Inspector2Client::DeleteCodeSecurityScanConfiguration, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a connector from your account.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/DeleteConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteConnectorOutcome DeleteConnector(const Model::DeleteConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteConnector that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DeleteConnectorRequestT = Model::DeleteConnectorRequest>
+  Model::DeleteConnectorOutcomeCallable DeleteConnectorCallable(const DeleteConnectorRequestT& request) const {
+    return SubmitCallable(&Inspector2Client::DeleteConnector, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteConnector that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DeleteConnectorRequestT = Model::DeleteConnectorRequest>
+  void DeleteConnectorAsync(const DeleteConnectorRequestT& request, const DeleteConnectorResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Inspector2Client::DeleteConnector, request, handler, context);
   }
 
   /**
@@ -1028,8 +1079,11 @@ class AWS_INSPECTOR2_API Inspector2Client : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Retrieves setting configurations for Inspector scans.</p><p><h3>See
-   * Also:</h3>   <a
+   * <p>Retrieves setting configurations for Amazon Inspector scans. If you specify
+   * an <code>accountId</code>, this operation returns the scan configuration for
+   * that member account. You must be the delegated administrator for the specified
+   * member account. If you do not specify an <code>accountId</code>, this operation
+   * returns your own scan configuration.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/GetConfiguration">AWS
    * API Reference</a></p>
    */
@@ -1190,6 +1244,33 @@ class AWS_INSPECTOR2_API Inspector2Client : public Aws::Client::AWSJsonClient,
   void GetMemberAsync(const GetMemberRequestT& request, const GetMemberResponseReceivedHandler& handler,
                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
     return SubmitAsync(&Inspector2Client::GetMember, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the status of a specific on-demand scan for a
+   * resource.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/GetOnDemandScanStatus">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetOnDemandScanStatusOutcome GetOnDemandScanStatus(const Model::GetOnDemandScanStatusRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetOnDemandScanStatus that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetOnDemandScanStatusRequestT = Model::GetOnDemandScanStatusRequest>
+  Model::GetOnDemandScanStatusOutcomeCallable GetOnDemandScanStatusCallable(const GetOnDemandScanStatusRequestT& request) const {
+    return SubmitCallable(&Inspector2Client::GetOnDemandScanStatus, request);
+  }
+
+  /**
+   * An Async wrapper for GetOnDemandScanStatus that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetOnDemandScanStatusRequestT = Model::GetOnDemandScanStatusRequest>
+  void GetOnDemandScanStatusAsync(const GetOnDemandScanStatusRequestT& request, const GetOnDemandScanStatusResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Inspector2Client::GetOnDemandScanStatus, request, handler, context);
   }
 
   /**
@@ -1455,6 +1536,65 @@ class AWS_INSPECTOR2_API Inspector2Client : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Lists scan configurations for Amazon Web Services Config connectors. Results
+   * are paginated. Use the <code>nextToken</code> parameter to retrieve the next
+   * page of results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/ListConnectorScanConfigurations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListConnectorScanConfigurationsOutcome ListConnectorScanConfigurations(
+      const Model::ListConnectorScanConfigurationsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListConnectorScanConfigurations that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename ListConnectorScanConfigurationsRequestT = Model::ListConnectorScanConfigurationsRequest>
+  Model::ListConnectorScanConfigurationsOutcomeCallable ListConnectorScanConfigurationsCallable(
+      const ListConnectorScanConfigurationsRequestT& request = {}) const {
+    return SubmitCallable(&Inspector2Client::ListConnectorScanConfigurations, request);
+  }
+
+  /**
+   * An Async wrapper for ListConnectorScanConfigurations that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename ListConnectorScanConfigurationsRequestT = Model::ListConnectorScanConfigurationsRequest>
+  void ListConnectorScanConfigurationsAsync(const ListConnectorScanConfigurationsResponseReceivedHandler& handler,
+                                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                            const ListConnectorScanConfigurationsRequestT& request = {}) const {
+    return SubmitAsync(&Inspector2Client::ListConnectorScanConfigurations, request, handler, context);
+  }
+
+  /**
+   * <p>Lists connectors in your account. Results are paginated. Use the
+   * <code>nextToken</code> parameter to retrieve the next page of
+   * results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/ListConnectors">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListConnectorsOutcome ListConnectors(const Model::ListConnectorsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListConnectors that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListConnectorsRequestT = Model::ListConnectorsRequest>
+  Model::ListConnectorsOutcomeCallable ListConnectorsCallable(const ListConnectorsRequestT& request = {}) const {
+    return SubmitCallable(&Inspector2Client::ListConnectors, request);
+  }
+
+  /**
+   * An Async wrapper for ListConnectors that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListConnectorsRequestT = Model::ListConnectorsRequest>
+  void ListConnectorsAsync(const ListConnectorsResponseReceivedHandler& handler,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                           const ListConnectorsRequestT& request = {}) const {
+    return SubmitAsync(&Inspector2Client::ListConnectors, request, handler, context);
+  }
+
+  /**
    * <p>Lists coverage details for your environment.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/ListCoverage">AWS
    * API Reference</a></p>
@@ -1643,6 +1783,32 @@ class AWS_INSPECTOR2_API Inspector2Client : public Aws::Client::AWSJsonClient,
                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                         const ListMembersRequestT& request = {}) const {
     return SubmitAsync(&Inspector2Client::ListMembers, request, handler, context);
+  }
+
+  /**
+   * <p>Lists the on-demand scans for a resource.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/ListOnDemandScans">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListOnDemandScansOutcome ListOnDemandScans(const Model::ListOnDemandScansRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListOnDemandScans that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListOnDemandScansRequestT = Model::ListOnDemandScansRequest>
+  Model::ListOnDemandScansOutcomeCallable ListOnDemandScansCallable(const ListOnDemandScansRequestT& request) const {
+    return SubmitCallable(&Inspector2Client::ListOnDemandScans, request);
+  }
+
+  /**
+   * An Async wrapper for ListOnDemandScans that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListOnDemandScansRequestT = Model::ListOnDemandScansRequest>
+  void ListOnDemandScansAsync(const ListOnDemandScansRequestT& request, const ListOnDemandScansResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Inspector2Client::ListOnDemandScans, request, handler, context);
   }
 
   /**
@@ -1867,6 +2033,33 @@ class AWS_INSPECTOR2_API Inspector2Client : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Starts an on-demand scan of the specified resource, such as an Amazon Machine
+   * Image (AMI).</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/StartOnDemandScan">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartOnDemandScanOutcome StartOnDemandScan(const Model::StartOnDemandScanRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartOnDemandScan that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StartOnDemandScanRequestT = Model::StartOnDemandScanRequest>
+  Model::StartOnDemandScanOutcomeCallable StartOnDemandScanCallable(const StartOnDemandScanRequestT& request) const {
+    return SubmitCallable(&Inspector2Client::StartOnDemandScan, request);
+  }
+
+  /**
+   * An Async wrapper for StartOnDemandScan that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename StartOnDemandScanRequestT = Model::StartOnDemandScanRequest>
+  void StartOnDemandScanAsync(const StartOnDemandScanRequestT& request, const StartOnDemandScanResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Inspector2Client::StartOnDemandScan, request, handler, context);
+  }
+
+  /**
    * <p> Stops a CIS session. This API is used by the Amazon Inspector SSM plugin to
    * communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin
    * calls this API to stop a CIS scan session for the scan ID supplied by the
@@ -2038,10 +2231,13 @@ class AWS_INSPECTOR2_API Inspector2Client : public Aws::Client::AWSJsonClient,
   }
 
   /**
-   * <p>Updates setting configurations for your Amazon Inspector account. When you
-   * use this API as an Amazon Inspector delegated administrator this updates the
-   * setting for all accounts you manage. Member accounts in an organization cannot
-   * update this setting.</p><p><h3>See Also:</h3>   <a
+   * <p>Updates the scan configuration for your Amazon Inspector account. If you
+   * don't specify an <code>accountId</code>, this operation updates the delegated
+   * administrator's configuration and propagates it to member accounts that have not
+   * been individually configured. If you specify an <code>accountId</code>, this
+   * operation updates that member account's configuration. Only the delegated
+   * administrator can specify an <code>accountId</code>; member accounts cannot call
+   * this operation.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/UpdateConfiguration">AWS
    * API Reference</a></p>
    */
@@ -2065,6 +2261,62 @@ class AWS_INSPECTOR2_API Inspector2Client : public Aws::Client::AWSJsonClient,
                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
                                 const UpdateConfigurationRequestT& request = {}) const {
     return SubmitAsync(&Inspector2Client::UpdateConfiguration, request, handler, context);
+  }
+
+  /**
+   * <p>Updates the description or provider-specific configuration details of an
+   * existing connector.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/UpdateConnector">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateConnectorOutcome UpdateConnector(const Model::UpdateConnectorRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateConnector that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename UpdateConnectorRequestT = Model::UpdateConnectorRequest>
+  Model::UpdateConnectorOutcomeCallable UpdateConnectorCallable(const UpdateConnectorRequestT& request) const {
+    return SubmitCallable(&Inspector2Client::UpdateConnector, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateConnector that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename UpdateConnectorRequestT = Model::UpdateConnectorRequest>
+  void UpdateConnectorAsync(const UpdateConnectorRequestT& request, const UpdateConnectorResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Inspector2Client::UpdateConnector, request, handler, context);
+  }
+
+  /**
+   * <p>Updates scan configuration settings for resources associated with an Amazon
+   * Web Services Config connector.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/UpdateConnectorScanConfiguration">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateConnectorScanConfigurationOutcome UpdateConnectorScanConfiguration(
+      const Model::UpdateConnectorScanConfigurationRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateConnectorScanConfiguration that returns a future to the operation so that it can be executed in parallel
+   * to other requests.
+   */
+  template <typename UpdateConnectorScanConfigurationRequestT = Model::UpdateConnectorScanConfigurationRequest>
+  Model::UpdateConnectorScanConfigurationOutcomeCallable UpdateConnectorScanConfigurationCallable(
+      const UpdateConnectorScanConfigurationRequestT& request) const {
+    return SubmitCallable(&Inspector2Client::UpdateConnectorScanConfiguration, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateConnectorScanConfiguration that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename UpdateConnectorScanConfigurationRequestT = Model::UpdateConnectorScanConfigurationRequest>
+  void UpdateConnectorScanConfigurationAsync(const UpdateConnectorScanConfigurationRequestT& request,
+                                             const UpdateConnectorScanConfigurationResponseReceivedHandler& handler,
+                                             const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&Inspector2Client::UpdateConnectorScanConfiguration, request, handler, context);
   }
 
   /**

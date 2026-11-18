@@ -8,12 +8,14 @@
 
 #include <aws/lightsail/LightsailClient.h>
 #include <aws/lightsail/LightsailEndpointProvider.h>
-#include <aws/lightsail/LightsailEndpointRules.h>
 #include <aws/lightsail/LightsailErrorMarshaller.h>
 #include <aws/lightsail/LightsailErrors.h>
+#include <aws/lightsail/LightsailPaginationBase.h>
 #include <aws/lightsail/LightsailRequest.h>
 #include <aws/lightsail/LightsailServiceClientModel.h>
+#include <aws/lightsail/LightsailWaiter.h>
 #include <aws/lightsail/Lightsail_EXPORTS.h>
+#include <aws/lightsail/internal/LightsailEndpointRules.h>
 #include <aws/lightsail/model/AccessDeniedException.h>
 #include <aws/lightsail/model/AccessDirection.h>
 #include <aws/lightsail/model/AccessKey.h>
@@ -67,6 +69,8 @@
 #include <aws/lightsail/model/CertificateProvider.h>
 #include <aws/lightsail/model/CertificateStatus.h>
 #include <aws/lightsail/model/CertificateSummary.h>
+#include <aws/lightsail/model/CheckSubdomainAvailabilityRequest.h>
+#include <aws/lightsail/model/CheckSubdomainAvailabilityResult.h>
 #include <aws/lightsail/model/CloseInstancePublicPortsRequest.h>
 #include <aws/lightsail/model/CloseInstancePublicPortsResult.h>
 #include <aws/lightsail/model/CloudFormationStackRecord.h>
@@ -148,6 +152,8 @@
 #include <aws/lightsail/model/CreateRelationalDatabaseResult.h>
 #include <aws/lightsail/model/CreateRelationalDatabaseSnapshotRequest.h>
 #include <aws/lightsail/model/CreateRelationalDatabaseSnapshotResult.h>
+#include <aws/lightsail/model/CreateSubdomainRequest.h>
+#include <aws/lightsail/model/CreateSubdomainResult.h>
 #include <aws/lightsail/model/Currency.h>
 #include <aws/lightsail/model/DeleteAlarmRequest.h>
 #include <aws/lightsail/model/DeleteAlarmResult.h>
@@ -191,6 +197,8 @@
 #include <aws/lightsail/model/DeleteRelationalDatabaseResult.h>
 #include <aws/lightsail/model/DeleteRelationalDatabaseSnapshotRequest.h>
 #include <aws/lightsail/model/DeleteRelationalDatabaseSnapshotResult.h>
+#include <aws/lightsail/model/DeleteSubdomainRequest.h>
+#include <aws/lightsail/model/DeleteSubdomainResult.h>
 #include <aws/lightsail/model/DestinationInfo.h>
 #include <aws/lightsail/model/DetachCertificateFromDistributionRequest.h>
 #include <aws/lightsail/model/DetachCertificateFromDistributionResult.h>
@@ -210,6 +218,7 @@
 #include <aws/lightsail/model/DiskSnapshotState.h>
 #include <aws/lightsail/model/DiskState.h>
 #include <aws/lightsail/model/DistributionBundle.h>
+#include <aws/lightsail/model/DistributionCustomErrorResponse.h>
 #include <aws/lightsail/model/DistributionMetricName.h>
 #include <aws/lightsail/model/DnsRecordCreationState.h>
 #include <aws/lightsail/model/DnsRecordCreationStateCode.h>
@@ -326,6 +335,8 @@
 #include <aws/lightsail/model/GetOperationsForResourceResult.h>
 #include <aws/lightsail/model/GetOperationsRequest.h>
 #include <aws/lightsail/model/GetOperationsResult.h>
+#include <aws/lightsail/model/GetProfileRequest.h>
+#include <aws/lightsail/model/GetProfileResult.h>
 #include <aws/lightsail/model/GetRegionsRequest.h>
 #include <aws/lightsail/model/GetRegionsResult.h>
 #include <aws/lightsail/model/GetRelationalDatabaseBlueprintsRequest.h>
@@ -358,6 +369,8 @@
 #include <aws/lightsail/model/GetStaticIpResult.h>
 #include <aws/lightsail/model/GetStaticIpsRequest.h>
 #include <aws/lightsail/model/GetStaticIpsResult.h>
+#include <aws/lightsail/model/GetSubdomainsRequest.h>
+#include <aws/lightsail/model/GetSubdomainsResult.h>
 #include <aws/lightsail/model/HeaderEnum.h>
 #include <aws/lightsail/model/HeaderObject.h>
 #include <aws/lightsail/model/HostKeyAttributes.h>
@@ -370,10 +383,16 @@
 #include <aws/lightsail/model/Instance.h>
 #include <aws/lightsail/model/InstanceAccessDetails.h>
 #include <aws/lightsail/model/InstanceAccessProtocol.h>
+#include <aws/lightsail/model/InstanceAttributeUpdates.h>
 #include <aws/lightsail/model/InstanceEntry.h>
 #include <aws/lightsail/model/InstanceHardware.h>
 #include <aws/lightsail/model/InstanceHealthReason.h>
 #include <aws/lightsail/model/InstanceHealthState.h>
+#include <aws/lightsail/model/InstanceHealthStatus.h>
+#include <aws/lightsail/model/InstanceHealthStatusDetail.h>
+#include <aws/lightsail/model/InstanceHealthStatusDetailName.h>
+#include <aws/lightsail/model/InstanceHealthStatusDetailValue.h>
+#include <aws/lightsail/model/InstanceHealthStatusValue.h>
 #include <aws/lightsail/model/InstanceHealthSummary.h>
 #include <aws/lightsail/model/InstanceMetadataOptions.h>
 #include <aws/lightsail/model/InstanceMetadataState.h>
@@ -392,6 +411,8 @@
 #include <aws/lightsail/model/IsVpcPeeredResult.h>
 #include <aws/lightsail/model/KeyPair.h>
 #include <aws/lightsail/model/LightsailDistribution.h>
+#include <aws/lightsail/model/LightsailDistributionSubdomain.h>
+#include <aws/lightsail/model/LightsailDistributionSubdomainStateEnum.h>
 #include <aws/lightsail/model/LoadBalancer.h>
 #include <aws/lightsail/model/LoadBalancerAttributeName.h>
 #include <aws/lightsail/model/LoadBalancerMetricName.h>
@@ -430,6 +451,8 @@
 #include <aws/lightsail/model/Origin.h>
 #include <aws/lightsail/model/OriginIpAddressTypeEnum.h>
 #include <aws/lightsail/model/OriginProtocolPolicyEnum.h>
+#include <aws/lightsail/model/PartnerInfo.h>
+#include <aws/lightsail/model/PartnerStatus.h>
 #include <aws/lightsail/model/PasswordData.h>
 #include <aws/lightsail/model/PeerVpcRequest.h>
 #include <aws/lightsail/model/PeerVpcResult.h>
@@ -442,6 +465,7 @@
 #include <aws/lightsail/model/PricingUnit.h>
 #include <aws/lightsail/model/PrivateRegistryAccess.h>
 #include <aws/lightsail/model/PrivateRegistryAccessRequest.h>
+#include <aws/lightsail/model/ProfileType.h>
 #include <aws/lightsail/model/PutAlarmRequest.h>
 #include <aws/lightsail/model/PutAlarmResult.h>
 #include <aws/lightsail/model/PutInstancePublicPortsRequest.h>
@@ -514,11 +538,16 @@
 #include <aws/lightsail/model/StopInstanceResult.h>
 #include <aws/lightsail/model/StopRelationalDatabaseRequest.h>
 #include <aws/lightsail/model/StopRelationalDatabaseResult.h>
+#include <aws/lightsail/model/Subdomain.h>
+#include <aws/lightsail/model/SubdomainAssociationAction.h>
+#include <aws/lightsail/model/SubdomainAttachableResource.h>
+#include <aws/lightsail/model/SubdomainState.h>
 #include <aws/lightsail/model/Tag.h>
 #include <aws/lightsail/model/TagResourceRequest.h>
 #include <aws/lightsail/model/TagResourceResult.h>
 #include <aws/lightsail/model/TestAlarmRequest.h>
 #include <aws/lightsail/model/TestAlarmResult.h>
+#include <aws/lightsail/model/TierName.h>
 #include <aws/lightsail/model/TimePeriod.h>
 #include <aws/lightsail/model/TreatMissingData.h>
 #include <aws/lightsail/model/UnauthenticatedException.h>
@@ -546,7 +575,17 @@
 #include <aws/lightsail/model/UpdateRelationalDatabaseParametersResult.h>
 #include <aws/lightsail/model/UpdateRelationalDatabaseRequest.h>
 #include <aws/lightsail/model/UpdateRelationalDatabaseResult.h>
+#include <aws/lightsail/model/UpdateSubdomainAssociationRequest.h>
+#include <aws/lightsail/model/UpdateSubdomainAssociationResult.h>
 #include <aws/lightsail/model/ViewerMinimumTlsProtocolVersionEnum.h>
+#include <aws/lightsail/model/WafAcfpConfig.h>
+#include <aws/lightsail/model/WafAtpConfig.h>
+#include <aws/lightsail/model/WafBotControlConfig.h>
+#include <aws/lightsail/model/WafConfig.h>
+#include <aws/lightsail/model/WafInspectionLevelEnum.h>
+#include <aws/lightsail/model/WafPayloadTypeEnum.h>
+#include <aws/lightsail/model/WafResponseInspection.h>
+#include <aws/lightsail/model/WafRule.h>
 
 using LightsailIncludeTest = ::testing::Test;
 

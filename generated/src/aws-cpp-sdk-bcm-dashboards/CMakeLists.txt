@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-bcm-dashboards "C++ SDK for the AWS bcm-dashboards service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-bcm-dashboards "C++ SDK for AWS Billing and Cost Management Dashboards" aws-cpp-sdk-core)
 
 file(GLOB AWS_BCM-DASHBOARDS_HEADERS
     "include/aws/bcm-dashboards/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_BCM-DASHBOARDS_HEADERS
 
 file(GLOB AWS_BCM-DASHBOARDS_MODEL_HEADERS
     "include/aws/bcm-dashboards/model/*.h"
+)
+
+file(GLOB AWS_BCM-DASHBOARDS_INTERNAL_HEADERS
+    "include/aws/bcm-dashboards/internal/*.h"
 )
 
 file(GLOB AWS_BCM-DASHBOARDS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_BCM-DASHBOARDS_MODEL_SOURCE
 
 file(GLOB BCM-DASHBOARDS_UNIFIED_HEADERS
     ${AWS_BCM-DASHBOARDS_HEADERS}
+    ${AWS_BCM-DASHBOARDS_INTERNAL_HEADERS}
     ${AWS_BCM-DASHBOARDS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\bcm-dashboards" FILES ${AWS_BCM-DASHBOARDS_HEADERS})
+        source_group("Header Files\\aws\\bcm-dashboards\\internal" FILES ${AWS_BCM-DASHBOARDS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\bcm-dashboards\\model" FILES ${AWS_BCM-DASHBOARDS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_BCM-DASHBOARDS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_BCM-DASHBOARDS_MODEL_SOURCE})

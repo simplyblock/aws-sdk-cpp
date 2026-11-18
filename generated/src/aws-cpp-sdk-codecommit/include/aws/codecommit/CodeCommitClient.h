@@ -16,16 +16,16 @@
 namespace Aws {
 namespace CodeCommit {
 /**
- * <fullname>CodeCommit</fullname> <p>This is the <i>CodeCommit API Reference</i>.
- * This reference provides descriptions of the operations and data types for
- * CodeCommit API along with usage examples.</p> <p>You can use the CodeCommit API
- * to work with the following objects:</p> <p>Repositories, by calling the
- * following:</p> <ul> <li> <p> <a>BatchGetRepositories</a>, which returns
- * information about one or more repositories associated with your Amazon Web
- * Services account.</p> </li> <li> <p> <a>CreateRepository</a>, which creates an
- * CodeCommit repository.</p> </li> <li> <p> <a>DeleteRepository</a>, which deletes
- * an CodeCommit repository.</p> </li> <li> <p> <a>GetRepository</a>, which returns
- * information about a specified repository.</p> </li> <li> <p>
+ * <fullname> CodeCommit </fullname> <p>This is the <i> CodeCommit API
+ * Reference</i>. This reference provides descriptions of the operations and data
+ * types for CodeCommit API along with usage examples.</p> <p>You can use the
+ * CodeCommit API to work with the following objects:</p> <p>Repositories, by
+ * calling the following:</p> <ul> <li> <p> <a>BatchGetRepositories</a>, which
+ * returns information about one or more repositories associated with your Amazon
+ * Web Services account.</p> </li> <li> <p> <a>CreateRepository</a>, which creates
+ * an CodeCommit repository.</p> </li> <li> <p> <a>DeleteRepository</a>, which
+ * deletes an CodeCommit repository.</p> </li> <li> <p> <a>GetRepository</a>, which
+ * returns information about a specified repository.</p> </li> <li> <p>
  * <a>ListRepositories</a>, which lists all CodeCommit repositories associated with
  * your Amazon Web Services account.</p> </li> <li> <p>
  * <a>UpdateRepositoryDescription</a>, which sets or updates the description of the
@@ -45,18 +45,20 @@ namespace CodeCommit {
  * <p> <a>DeleteFile</a>, which deletes the content of a specified file from a
  * specified branch.</p> </li> <li> <p> <a>GetBlob</a>, which returns the base-64
  * encoded content of an individual Git blob object in a repository.</p> </li> <li>
- * <p> <a>GetFile</a>, which returns the base-64 encoded content of a specified
- * file.</p> </li> <li> <p> <a>GetFolder</a>, which returns the contents of a
- * specified folder or directory.</p> </li> <li> <p> <a>ListFileCommitHistory</a>,
- * which retrieves a list of commits and changes to a specified file. </p> </li>
- * <li> <p> <a>PutFile</a>, which adds or modifies a single file in a specified
- * repository and branch.</p> </li> </ul> <p>Commits, by calling the following:</p>
- * <ul> <li> <p> <a>BatchGetCommits</a>, which returns information about one or
- * more commits in a repository.</p> </li> <li> <p> <a>CreateCommit</a>, which
- * creates a commit for changes to a repository.</p> </li> <li> <p>
- * <a>GetCommit</a>, which returns information about a commit, including commit
- * messages and author and committer information.</p> </li> <li> <p>
- * <a>GetDifferences</a>, which returns information about the differences in a
+ * <p> <a>GetBlobDifferences</a>, which returns a structured, line-level diff
+ * between two blob versions in a repository, with optional surrounding context
+ * lines.</p> </li> <li> <p> <a>GetFile</a>, which returns the base-64 encoded
+ * content of a specified file.</p> </li> <li> <p> <a>GetFolder</a>, which returns
+ * the contents of a specified folder or directory.</p> </li> <li> <p>
+ * <a>ListFileCommitHistory</a>, which retrieves a list of commits and changes to a
+ * specified file. </p> </li> <li> <p> <a>PutFile</a>, which adds or modifies a
+ * single file in a specified repository and branch.</p> </li> </ul> <p>Commits, by
+ * calling the following:</p> <ul> <li> <p> <a>BatchGetCommits</a>, which returns
+ * information about one or more commits in a repository.</p> </li> <li> <p>
+ * <a>CreateCommit</a>, which creates a commit for changes to a repository.</p>
+ * </li> <li> <p> <a>GetCommit</a>, which returns information about a commit,
+ * including commit messages and author and committer information.</p> </li> <li>
+ * <p> <a>GetDifferences</a>, which returns information about the differences in a
  * valid commit specifier (such as a branch, tag, HEAD, commit ID, or other fully
  * qualified reference).</p> </li> </ul> <p>Merges, by calling the following:</p>
  * <ul> <li> <p> <a>BatchDescribeMergeConflicts</a>, which returns information
@@ -176,8 +178,8 @@ namespace CodeCommit {
  * <a>TestRepositoryTriggers</a>, which tests the functionality of a repository
  * trigger by sending data to the trigger target.</p> </li> </ul> <p>For
  * information about how to use CodeCommit, see the <a
- * href="https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html">CodeCommit
- * User Guide</a>.</p>
+ * href="https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html">
+ * CodeCommit User Guide</a>.</p>
  */
 class AWS_CODECOMMIT_API CodeCommitClient : public Aws::Client::AWSJsonClient,
                                             public Aws::Client::ClientWithAsyncTemplateMethods<CodeCommitClient>,
@@ -991,6 +993,38 @@ class AWS_CODECOMMIT_API CodeCommitClient : public Aws::Client::AWSJsonClient,
   }
 
   /**
+   * <p>Returns a structured, line-level diff between two blob versions in a
+   * repository. The diff is returned as an ordered list of hunks, where each hunk
+   * represents a contiguous run of changed lines together with any surrounding
+   * unchanged context lines.</p> <p>Results are paginated. Use
+   * <code>MaxResults</code> and <code>NextToken</code> to retrieve additional
+   * pages.</p> <p>For the typical usage workflow, see
+   * <a>GetDifferences</a>.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetBlobDifferences">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetBlobDifferencesOutcome GetBlobDifferences(const Model::GetBlobDifferencesRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetBlobDifferences that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetBlobDifferencesRequestT = Model::GetBlobDifferencesRequest>
+  Model::GetBlobDifferencesOutcomeCallable GetBlobDifferencesCallable(const GetBlobDifferencesRequestT& request) const {
+    return SubmitCallable(&CodeCommitClient::GetBlobDifferences, request);
+  }
+
+  /**
+   * An Async wrapper for GetBlobDifferences that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetBlobDifferencesRequestT = Model::GetBlobDifferencesRequest>
+  void GetBlobDifferencesAsync(const GetBlobDifferencesRequestT& request, const GetBlobDifferencesResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&CodeCommitClient::GetBlobDifferences, request, handler, context);
+  }
+
+  /**
    * <p>Returns information about a repository branch, including its name and the
    * last commit ID.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetBranch">AWS
@@ -1167,7 +1201,10 @@ class AWS_CODECOMMIT_API CodeCommitClient : public Aws::Client::AWSJsonClient,
   /**
    * <p>Returns information about the differences in a valid commit specifier (such
    * as a branch, tag, HEAD, commit ID, or other fully qualified reference). Results
-   * can be limited to a specified path.</p><p><h3>See Also:</h3>   <a
+   * can be limited to a specified path.</p> <p>For line-level diff details, pass the
+   * <code>beforeBlob.blobId</code> and <code>afterBlob.blobId</code> values from a
+   * <code>Difference</code> object to <a>GetBlobDifferences</a>.</p><p><h3>See
+   * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetDifferences">AWS
    * API Reference</a></p>
    */
@@ -1677,9 +1714,9 @@ class AWS_CODECOMMIT_API CodeCommitClient : public Aws::Client::AWSJsonClient,
    * <p>Gets information about Amazon Web Servicestags for a specified Amazon
    * Resource Name (ARN) in CodeCommit. For a list of valid resources in CodeCommit,
    * see <a
-   * href="https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats">CodeCommit
-   * Resources and Operations</a> in the<i> CodeCommit User Guide</i>.</p><p><h3>See
-   * Also:</h3>   <a
+   * href="https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats">
+   * CodeCommit Resources and Operations</a> in the<i> CodeCommit User
+   * Guide</i>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListTagsForResource">AWS
    * API Reference</a></p>
    */
@@ -2083,9 +2120,9 @@ class AWS_CODECOMMIT_API CodeCommitClient : public Aws::Client::AWSJsonClient,
   /**
    * <p>Adds or updates tags for a resource in CodeCommit. For a list of valid
    * resources in CodeCommit, see <a
-   * href="https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats">CodeCommit
-   * Resources and Operations</a> in the <i>CodeCommit User Guide</i>.</p><p><h3>See
-   * Also:</h3>   <a
+   * href="https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats">
+   * CodeCommit Resources and Operations</a> in the <i> CodeCommit User
+   * Guide</i>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/TagResource">AWS
    * API Reference</a></p>
    */
@@ -2142,9 +2179,9 @@ class AWS_CODECOMMIT_API CodeCommitClient : public Aws::Client::AWSJsonClient,
   /**
    * <p>Removes tags for a resource in CodeCommit. For a list of valid resources in
    * CodeCommit, see <a
-   * href="https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats">CodeCommit
-   * Resources and Operations</a> in the <i>CodeCommit User Guide</i>.</p><p><h3>See
-   * Also:</h3>   <a
+   * href="https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats">
+   * CodeCommit Resources and Operations</a> in the <i> CodeCommit User
+   * Guide</i>.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UntagResource">AWS
    * API Reference</a></p>
    */

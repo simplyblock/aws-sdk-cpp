@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-mediapackage-vod "C++ SDK for the AWS mediapackage-vod service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-mediapackage-vod "C++ SDK for AWS Elemental MediaPackage VOD" aws-cpp-sdk-core)
 
 file(GLOB AWS_MEDIAPACKAGE-VOD_HEADERS
     "include/aws/mediapackage-vod/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_MEDIAPACKAGE-VOD_HEADERS
 
 file(GLOB AWS_MEDIAPACKAGE-VOD_MODEL_HEADERS
     "include/aws/mediapackage-vod/model/*.h"
+)
+
+file(GLOB AWS_MEDIAPACKAGE-VOD_INTERNAL_HEADERS
+    "include/aws/mediapackage-vod/internal/*.h"
 )
 
 file(GLOB AWS_MEDIAPACKAGE-VOD_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_MEDIAPACKAGE-VOD_MODEL_SOURCE
 
 file(GLOB MEDIAPACKAGE-VOD_UNIFIED_HEADERS
     ${AWS_MEDIAPACKAGE-VOD_HEADERS}
+    ${AWS_MEDIAPACKAGE-VOD_INTERNAL_HEADERS}
     ${AWS_MEDIAPACKAGE-VOD_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\mediapackage-vod" FILES ${AWS_MEDIAPACKAGE-VOD_HEADERS})
+        source_group("Header Files\\aws\\mediapackage-vod\\internal" FILES ${AWS_MEDIAPACKAGE-VOD_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\mediapackage-vod\\model" FILES ${AWS_MEDIAPACKAGE-VOD_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_MEDIAPACKAGE-VOD_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_MEDIAPACKAGE-VOD_MODEL_SOURCE})

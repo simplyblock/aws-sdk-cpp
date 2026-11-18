@@ -50,6 +50,14 @@ EntityTypeFilters& EntityTypeFilters::operator=(JsonView jsonValue) {
     m_offerSetFilters = jsonValue.GetObject("OfferSetFilters");
     m_offerSetFiltersHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("ExpressPrivateOfferConfigurationFilters")) {
+    m_expressPrivateOfferConfigurationFilters = jsonValue.GetObject("ExpressPrivateOfferConfigurationFilters");
+    m_expressPrivateOfferConfigurationFiltersHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("SubsidiaryAuthorizationFilters")) {
+    m_subsidiaryAuthorizationFilters = jsonValue.GetObject("SubsidiaryAuthorizationFilters");
+    m_subsidiaryAuthorizationFiltersHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -86,6 +94,14 @@ JsonValue EntityTypeFilters::Jsonize() const {
 
   if (m_offerSetFiltersHasBeenSet) {
     payload.WithObject("OfferSetFilters", m_offerSetFilters.Jsonize());
+  }
+
+  if (m_expressPrivateOfferConfigurationFiltersHasBeenSet) {
+    payload.WithObject("ExpressPrivateOfferConfigurationFilters", m_expressPrivateOfferConfigurationFilters.Jsonize());
+  }
+
+  if (m_subsidiaryAuthorizationFiltersHasBeenSet) {
+    payload.WithObject("SubsidiaryAuthorizationFilters", m_subsidiaryAuthorizationFilters.Jsonize());
   }
 
   return payload;

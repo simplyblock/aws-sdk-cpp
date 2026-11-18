@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -11,6 +11,8 @@
 #include <aws/ecr/model/GetLifecyclePolicyPreviewPaginationTraits.h>
 #include <aws/ecr/model/DescribeImageScanFindingsPaginationTraits.h>
 #include <aws/ecr/model/DescribeRepositoryCreationTemplatesPaginationTraits.h>
+#include <aws/ecr/model/ListReplicationBackfillsPaginationTraits.h>
+#include <aws/ecr/model/DescribeReplicationBackfillResultsPaginationTraits.h>
 #include <aws/ecr/model/DescribeRepositoriesPaginationTraits.h>
 #include <aws/ecr/model/DescribeImagesPaginationTraits.h>
 #include <aws/ecr/model/DescribePullThroughCacheRulesPaginationTraits.h>
@@ -24,6 +26,6 @@ class ECRPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuite
 
 TEST_F(ECRPaginationCompilationTest, ECRPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

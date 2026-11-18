@@ -6,8 +6,10 @@
 #pragma once
 #include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/cognito-idp/model/AccountRecoverySettingType.h>
+#include <aws/cognito-idp/model/AcrLevelConfigType.h>
 #include <aws/cognito-idp/model/AdminCreateUserConfigType.h>
 #include <aws/cognito-idp/model/AliasAttributeType.h>
+#include <aws/cognito-idp/model/DcrConfigurationType.h>
 #include <aws/cognito-idp/model/DeletionProtectionType.h>
 #include <aws/cognito-idp/model/DeviceConfigurationType.h>
 #include <aws/cognito-idp/model/EmailConfigurationType.h>
@@ -675,6 +677,29 @@ class UserPoolType {
 
   ///@{
   /**
+   * <p>The dynamic client registration configuration for the user pool. With dynamic
+   * client registration, applications can register their own app clients at runtime
+   * through the registration endpoint of your user pool domain. To activate this
+   * setting, your user pool must be in the <a
+   * href="https://docs.aws.amazon.com/cognito/latest/developerguide/feature-plans-features-essentials.html">
+   * Essentials tier</a> or higher.</p>
+   */
+  inline const DcrConfigurationType& GetDcrConfiguration() const { return m_dcrConfiguration; }
+  inline bool DcrConfigurationHasBeenSet() const { return m_dcrConfigurationHasBeenSet; }
+  template <typename DcrConfigurationT = DcrConfigurationType>
+  void SetDcrConfiguration(DcrConfigurationT&& value) {
+    m_dcrConfigurationHasBeenSet = true;
+    m_dcrConfiguration = std::forward<DcrConfigurationT>(value);
+  }
+  template <typename DcrConfigurationT = DcrConfigurationType>
+  UserPoolType& WithDcrConfiguration(DcrConfigurationT&& value) {
+    SetDcrConfiguration(std::forward<DcrConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>Case sensitivity of the username input for the selected sign-in option. When
    * case sensitivity is set to <code>False</code> (case insensitive), users can sign
    * in with any combination of capital and lowercase letters. For example,
@@ -797,6 +822,36 @@ class UserPoolType {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The names of the authentication context class reference (ACR) levels for the
+   * user pool. Amazon Cognito always returns the effective configuration, with
+   * default names merged in for any level that you haven't customized.</p>
+   * <p>Configuring custom ACR level names requires the Essentials or Plus feature
+   * plan. To activate this setting, your user pool must be in the <a
+   * href="https://docs.aws.amazon.com/cognito/latest/developerguide/feature-plans-features-essentials.html">
+   * Essentials tier</a> or higher.</p>
+   */
+  inline const Aws::Map<Aws::String, AcrLevelConfigType>& GetAcrConfiguration() const { return m_acrConfiguration; }
+  inline bool AcrConfigurationHasBeenSet() const { return m_acrConfigurationHasBeenSet; }
+  template <typename AcrConfigurationT = Aws::Map<Aws::String, AcrLevelConfigType>>
+  void SetAcrConfiguration(AcrConfigurationT&& value) {
+    m_acrConfigurationHasBeenSet = true;
+    m_acrConfiguration = std::forward<AcrConfigurationT>(value);
+  }
+  template <typename AcrConfigurationT = Aws::Map<Aws::String, AcrLevelConfigType>>
+  UserPoolType& WithAcrConfiguration(AcrConfigurationT&& value) {
+    SetAcrConfiguration(std::forward<AcrConfigurationT>(value));
+    return *this;
+  }
+  template <typename AcrConfigurationKeyT = Aws::String, typename AcrConfigurationValueT = AcrLevelConfigType>
+  UserPoolType& AddAcrConfiguration(AcrConfigurationKeyT&& key, AcrConfigurationValueT&& value) {
+    m_acrConfigurationHasBeenSet = true;
+    m_acrConfiguration.emplace(std::forward<AcrConfigurationKeyT>(key), std::forward<AcrConfigurationValueT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_id;
 
@@ -856,6 +911,8 @@ class UserPoolType {
 
   UserPoolAddOnsType m_userPoolAddOns;
 
+  DcrConfigurationType m_dcrConfiguration;
+
   UsernameConfigurationType m_usernameConfiguration;
 
   Aws::String m_arn;
@@ -867,6 +924,8 @@ class UserPoolType {
   KeyConfigurationType m_keyConfiguration;
 
   IssuerConfigurationType m_issuerConfiguration;
+
+  Aws::Map<Aws::String, AcrLevelConfigType> m_acrConfiguration;
   bool m_idHasBeenSet = false;
   bool m_nameHasBeenSet = false;
   bool m_policiesHasBeenSet = false;
@@ -896,12 +955,14 @@ class UserPoolType {
   bool m_customDomainHasBeenSet = false;
   bool m_adminCreateUserConfigHasBeenSet = false;
   bool m_userPoolAddOnsHasBeenSet = false;
+  bool m_dcrConfigurationHasBeenSet = false;
   bool m_usernameConfigurationHasBeenSet = false;
   bool m_arnHasBeenSet = false;
   bool m_accountRecoverySettingHasBeenSet = false;
   bool m_userPoolTierHasBeenSet = false;
   bool m_keyConfigurationHasBeenSet = false;
   bool m_issuerConfigurationHasBeenSet = false;
+  bool m_acrConfigurationHasBeenSet = false;
 };
 
 }  // namespace Model

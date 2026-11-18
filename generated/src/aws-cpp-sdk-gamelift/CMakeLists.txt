@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-gamelift "C++ SDK for the AWS gamelift service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-gamelift "C++ SDK for Amazon GameLift" aws-cpp-sdk-core)
 
 file(GLOB AWS_GAMELIFT_HEADERS
     "include/aws/gamelift/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_GAMELIFT_HEADERS
 
 file(GLOB AWS_GAMELIFT_MODEL_HEADERS
     "include/aws/gamelift/model/*.h"
+)
+
+file(GLOB AWS_GAMELIFT_INTERNAL_HEADERS
+    "include/aws/gamelift/internal/*.h"
 )
 
 file(GLOB AWS_GAMELIFT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_GAMELIFT_MODEL_SOURCE
 
 file(GLOB GAMELIFT_UNIFIED_HEADERS
     ${AWS_GAMELIFT_HEADERS}
+    ${AWS_GAMELIFT_INTERNAL_HEADERS}
     ${AWS_GAMELIFT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\gamelift" FILES ${AWS_GAMELIFT_HEADERS})
+        source_group("Header Files\\aws\\gamelift\\internal" FILES ${AWS_GAMELIFT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\gamelift\\model" FILES ${AWS_GAMELIFT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_GAMELIFT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_GAMELIFT_MODEL_SOURCE})

@@ -141,6 +141,10 @@ TableDescription& TableDescription::operator=(JsonView jsonValue) {
     m_deletionProtectionEnabled = jsonValue.GetBool("DeletionProtectionEnabled");
     m_deletionProtectionEnabledHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("DisassociationProtectionEnabled")) {
+    m_disassociationProtectionEnabled = jsonValue.GetBool("DisassociationProtectionEnabled");
+    m_disassociationProtectionEnabledHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("OnDemandThroughput")) {
     m_onDemandThroughput = jsonValue.GetObject("OnDemandThroughput");
     m_onDemandThroughputHasBeenSet = true;
@@ -153,6 +157,13 @@ TableDescription& TableDescription::operator=(JsonView jsonValue) {
     m_multiRegionConsistency =
         MultiRegionConsistencyMapper::GetMultiRegionConsistencyForName(jsonValue.GetString("MultiRegionConsistency"));
     m_multiRegionConsistencyHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("VectorIndexes")) {
+    Aws::Utils::Array<JsonView> vectorIndexesJsonList = jsonValue.GetArray("VectorIndexes");
+    for (unsigned vectorIndexesIndex = 0; vectorIndexesIndex < vectorIndexesJsonList.GetLength(); ++vectorIndexesIndex) {
+      m_vectorIndexes.push_back(vectorIndexesJsonList[vectorIndexesIndex].AsObject());
+    }
+    m_vectorIndexesHasBeenSet = true;
   }
   return *this;
 }
@@ -290,6 +301,10 @@ JsonValue TableDescription::Jsonize() const {
     payload.WithBool("DeletionProtectionEnabled", m_deletionProtectionEnabled);
   }
 
+  if (m_disassociationProtectionEnabledHasBeenSet) {
+    payload.WithBool("DisassociationProtectionEnabled", m_disassociationProtectionEnabled);
+  }
+
   if (m_onDemandThroughputHasBeenSet) {
     payload.WithObject("OnDemandThroughput", m_onDemandThroughput.Jsonize());
   }
@@ -300,6 +315,14 @@ JsonValue TableDescription::Jsonize() const {
 
   if (m_multiRegionConsistencyHasBeenSet) {
     payload.WithString("MultiRegionConsistency", MultiRegionConsistencyMapper::GetNameForMultiRegionConsistency(m_multiRegionConsistency));
+  }
+
+  if (m_vectorIndexesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> vectorIndexesJsonList(m_vectorIndexes.size());
+    for (unsigned vectorIndexesIndex = 0; vectorIndexesIndex < vectorIndexesJsonList.GetLength(); ++vectorIndexesIndex) {
+      vectorIndexesJsonList[vectorIndexesIndex].AsObject(m_vectorIndexes[vectorIndexesIndex].Jsonize());
+    }
+    payload.WithArray("VectorIndexes", std::move(vectorIndexesJsonList));
   }
 
   return payload;

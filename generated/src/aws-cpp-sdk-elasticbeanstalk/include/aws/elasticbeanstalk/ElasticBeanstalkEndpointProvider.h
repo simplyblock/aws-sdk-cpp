@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticbeanstalk/ElasticBeanstalkEndpointRules.h>
 #include <aws/elasticbeanstalk/ElasticBeanstalk_EXPORTS.h>
 
 namespace Aws {
 namespace ElasticBeanstalk {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ElasticBeanstalkClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using ElasticBeanstalkEndpointProviderBase =
     EndpointProviderBase<ElasticBeanstalkClientConfiguration, ElasticBeanstalkBuiltInParameters, ElasticBeanstalkClientContextParameters>;
 
 using ElasticBeanstalkDefaultEpProviderBase =
-    DefaultEndpointProvider<ElasticBeanstalkClientConfiguration, ElasticBeanstalkBuiltInParameters,
-                            ElasticBeanstalkClientContextParameters>;
+    BDDEndpointProvider<ElasticBeanstalkClientConfiguration, ElasticBeanstalkBuiltInParameters, ElasticBeanstalkClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_ELASTICBEANSTALK_API ElasticBeanstalkEndpointProvider : public Elastic
  public:
   using ElasticBeanstalkResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ElasticBeanstalkEndpointProvider()
-      : ElasticBeanstalkDefaultEpProviderBase(Aws::ElasticBeanstalk::ElasticBeanstalkEndpointRules::GetRulesBlob(),
-                                              Aws::ElasticBeanstalk::ElasticBeanstalkEndpointRules::RulesBlobSize) {}
+  ElasticBeanstalkEndpointProvider();
 
   ~ElasticBeanstalkEndpointProvider() {}
 };

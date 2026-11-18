@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-s3files "C++ SDK for the AWS s3files service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-s3files "C++ SDK for Amazon S3 Files" aws-cpp-sdk-core)
 
 file(GLOB AWS_S3FILES_HEADERS
     "include/aws/s3files/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_S3FILES_HEADERS
 
 file(GLOB AWS_S3FILES_MODEL_HEADERS
     "include/aws/s3files/model/*.h"
+)
+
+file(GLOB AWS_S3FILES_INTERNAL_HEADERS
+    "include/aws/s3files/internal/*.h"
 )
 
 file(GLOB AWS_S3FILES_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_S3FILES_MODEL_SOURCE
 
 file(GLOB S3FILES_UNIFIED_HEADERS
     ${AWS_S3FILES_HEADERS}
+    ${AWS_S3FILES_INTERNAL_HEADERS}
     ${AWS_S3FILES_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\s3files" FILES ${AWS_S3FILES_HEADERS})
+        source_group("Header Files\\aws\\s3files\\internal" FILES ${AWS_S3FILES_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\s3files\\model" FILES ${AWS_S3FILES_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_S3FILES_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_S3FILES_MODEL_SOURCE})

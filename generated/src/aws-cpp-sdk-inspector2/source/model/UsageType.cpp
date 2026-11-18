@@ -24,6 +24,16 @@ static const int CODE_REPOSITORY_SAST_HASH = HashingUtils::HashString("CODE_REPO
 static const int CODE_REPOSITORY_IAC_HASH = HashingUtils::HashString("CODE_REPOSITORY_IAC");
 static const int CODE_REPOSITORY_SCA_HASH = HashingUtils::HashString("CODE_REPOSITORY_SCA");
 static const int EC2_AGENTLESS_INSTANCE_HOURS_HASH = HashingUtils::HashString("EC2_AGENTLESS_INSTANCE_HOURS");
+static const int AZURE_CONTAINER_IMAGE_INITIAL_SCAN_HASH = HashingUtils::HashString("AZURE_CONTAINER_IMAGE_INITIAL_SCAN");
+static const int AZURE_CONTAINER_IMAGE_RESCAN_HASH = HashingUtils::HashString("AZURE_CONTAINER_IMAGE_RESCAN");
+static const int AZURE_VM_AGENT_BASED_INSTANCE_HOURS_HASH = HashingUtils::HashString("AZURE_VM_AGENT_BASED_INSTANCE_HOURS");
+static const int AZURE_SERVERLESS_FUNCTION_HOURS_HASH = HashingUtils::HashString("AZURE_SERVERLESS_FUNCTION_HOURS");
+static const int EC2_AMI_HOURS_HASH = HashingUtils::HashString("EC2_AMI_HOURS");
+static const int EC2_AMI_ONE_SHOT_SCAN_HASH = HashingUtils::HashString("EC2_AMI_ONE_SHOT_SCAN");
+static const int GCP_VM_AGENT_BASED_INSTANCE_HOURS_HASH = HashingUtils::HashString("GCP_VM_AGENT_BASED_INSTANCE_HOURS");
+static const int GCP_CLOUD_RUN_HOURS_HASH = HashingUtils::HashString("GCP_CLOUD_RUN_HOURS");
+static const int GCP_CONTAINER_IMAGE_INITIAL_SCAN_HASH = HashingUtils::HashString("GCP_CONTAINER_IMAGE_INITIAL_SCAN");
+static const int GCP_CONTAINER_IMAGE_RESCAN_HASH = HashingUtils::HashString("GCP_CONTAINER_IMAGE_RESCAN");
 
 UsageType GetUsageTypeForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -45,6 +55,26 @@ UsageType GetUsageTypeForName(const Aws::String& name) {
     return UsageType::CODE_REPOSITORY_SCA;
   } else if (hashCode == EC2_AGENTLESS_INSTANCE_HOURS_HASH) {
     return UsageType::EC2_AGENTLESS_INSTANCE_HOURS;
+  } else if (hashCode == AZURE_CONTAINER_IMAGE_INITIAL_SCAN_HASH) {
+    return UsageType::AZURE_CONTAINER_IMAGE_INITIAL_SCAN;
+  } else if (hashCode == AZURE_CONTAINER_IMAGE_RESCAN_HASH) {
+    return UsageType::AZURE_CONTAINER_IMAGE_RESCAN;
+  } else if (hashCode == AZURE_VM_AGENT_BASED_INSTANCE_HOURS_HASH) {
+    return UsageType::AZURE_VM_AGENT_BASED_INSTANCE_HOURS;
+  } else if (hashCode == AZURE_SERVERLESS_FUNCTION_HOURS_HASH) {
+    return UsageType::AZURE_SERVERLESS_FUNCTION_HOURS;
+  } else if (hashCode == EC2_AMI_HOURS_HASH) {
+    return UsageType::EC2_AMI_HOURS;
+  } else if (hashCode == EC2_AMI_ONE_SHOT_SCAN_HASH) {
+    return UsageType::EC2_AMI_ONE_SHOT_SCAN;
+  } else if (hashCode == GCP_VM_AGENT_BASED_INSTANCE_HOURS_HASH) {
+    return UsageType::GCP_VM_AGENT_BASED_INSTANCE_HOURS;
+  } else if (hashCode == GCP_CLOUD_RUN_HOURS_HASH) {
+    return UsageType::GCP_CLOUD_RUN_HOURS;
+  } else if (hashCode == GCP_CONTAINER_IMAGE_INITIAL_SCAN_HASH) {
+    return UsageType::GCP_CONTAINER_IMAGE_INITIAL_SCAN;
+  } else if (hashCode == GCP_CONTAINER_IMAGE_RESCAN_HASH) {
+    return UsageType::GCP_CONTAINER_IMAGE_RESCAN;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -77,6 +107,26 @@ Aws::String GetNameForUsageType(UsageType enumValue) {
       return "CODE_REPOSITORY_SCA";
     case UsageType::EC2_AGENTLESS_INSTANCE_HOURS:
       return "EC2_AGENTLESS_INSTANCE_HOURS";
+    case UsageType::AZURE_CONTAINER_IMAGE_INITIAL_SCAN:
+      return "AZURE_CONTAINER_IMAGE_INITIAL_SCAN";
+    case UsageType::AZURE_CONTAINER_IMAGE_RESCAN:
+      return "AZURE_CONTAINER_IMAGE_RESCAN";
+    case UsageType::AZURE_VM_AGENT_BASED_INSTANCE_HOURS:
+      return "AZURE_VM_AGENT_BASED_INSTANCE_HOURS";
+    case UsageType::AZURE_SERVERLESS_FUNCTION_HOURS:
+      return "AZURE_SERVERLESS_FUNCTION_HOURS";
+    case UsageType::EC2_AMI_HOURS:
+      return "EC2_AMI_HOURS";
+    case UsageType::EC2_AMI_ONE_SHOT_SCAN:
+      return "EC2_AMI_ONE_SHOT_SCAN";
+    case UsageType::GCP_VM_AGENT_BASED_INSTANCE_HOURS:
+      return "GCP_VM_AGENT_BASED_INSTANCE_HOURS";
+    case UsageType::GCP_CLOUD_RUN_HOURS:
+      return "GCP_CLOUD_RUN_HOURS";
+    case UsageType::GCP_CONTAINER_IMAGE_INITIAL_SCAN:
+      return "GCP_CONTAINER_IMAGE_INITIAL_SCAN";
+    case UsageType::GCP_CONTAINER_IMAGE_RESCAN:
+      return "GCP_CONTAINER_IMAGE_RESCAN";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

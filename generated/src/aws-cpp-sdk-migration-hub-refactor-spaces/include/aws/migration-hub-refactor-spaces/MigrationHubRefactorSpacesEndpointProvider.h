@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/migration-hub-refactor-spaces/MigrationHubRefactorSpacesEndpointRules.h>
 #include <aws/migration-hub-refactor-spaces/MigrationHubRefactorSpaces_EXPORTS.h>
 
 namespace Aws {
 namespace MigrationHubRefactorSpaces {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using MigrationHubRefactorSpacesClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using MigrationHubRefactorSpacesEndpointProviderBase =
                          MigrationHubRefactorSpacesClientContextParameters>;
 
 using MigrationHubRefactorSpacesDefaultEpProviderBase =
-    DefaultEndpointProvider<MigrationHubRefactorSpacesClientConfiguration, MigrationHubRefactorSpacesBuiltInParameters,
-                            MigrationHubRefactorSpacesClientContextParameters>;
+    BDDEndpointProvider<MigrationHubRefactorSpacesClientConfiguration, MigrationHubRefactorSpacesBuiltInParameters,
+                        MigrationHubRefactorSpacesClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -45,10 +44,7 @@ class AWS_MIGRATIONHUBREFACTORSPACES_API MigrationHubRefactorSpacesEndpointProvi
  public:
   using MigrationHubRefactorSpacesResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  MigrationHubRefactorSpacesEndpointProvider()
-      : MigrationHubRefactorSpacesDefaultEpProviderBase(
-            Aws::MigrationHubRefactorSpaces::MigrationHubRefactorSpacesEndpointRules::GetRulesBlob(),
-            Aws::MigrationHubRefactorSpaces::MigrationHubRefactorSpacesEndpointRules::RulesBlobSize) {}
+  MigrationHubRefactorSpacesEndpointProvider();
 
   ~MigrationHubRefactorSpacesEndpointProvider() {}
 };

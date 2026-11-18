@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/marketplace-discovery/MarketplaceDiscoveryEndpointRules.h>
 #include <aws/marketplace-discovery/MarketplaceDiscovery_EXPORTS.h>
 
 namespace Aws {
 namespace MarketplaceDiscovery {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using MarketplaceDiscoveryClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using MarketplaceDiscoveryEndpointProviderBase =
                          MarketplaceDiscoveryClientContextParameters>;
 
 using MarketplaceDiscoveryDefaultEpProviderBase =
-    DefaultEndpointProvider<MarketplaceDiscoveryClientConfiguration, MarketplaceDiscoveryBuiltInParameters,
-                            MarketplaceDiscoveryClientContextParameters>;
+    BDDEndpointProvider<MarketplaceDiscoveryClientConfiguration, MarketplaceDiscoveryBuiltInParameters,
+                        MarketplaceDiscoveryClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_MARKETPLACEDISCOVERY_API MarketplaceDiscoveryEndpointProvider : public
  public:
   using MarketplaceDiscoveryResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  MarketplaceDiscoveryEndpointProvider()
-      : MarketplaceDiscoveryDefaultEpProviderBase(Aws::MarketplaceDiscovery::MarketplaceDiscoveryEndpointRules::GetRulesBlob(),
-                                                  Aws::MarketplaceDiscovery::MarketplaceDiscoveryEndpointRules::RulesBlobSize) {}
+  MarketplaceDiscoveryEndpointProvider();
 
   ~MarketplaceDiscoveryEndpointProvider() {}
 };

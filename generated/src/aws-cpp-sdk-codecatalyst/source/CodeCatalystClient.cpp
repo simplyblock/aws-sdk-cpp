@@ -127,7 +127,7 @@ void CodeCatalystClient::OverrideEndpoint(const Aws::String& endpoint) {
 }
 CodeCatalystClient::InvokeOperationOutcome CodeCatalystClient::InvokeServiceOperation(
     const AmazonWebServiceRequest& request, const std::function<void(Aws::Endpoint::ResolveEndpointOutcome&)>& resolveUri,
-    Aws::Http::HttpMethod httpMethod) const {
+    Aws::Http::HttpMethod httpMethod, const char* signerName) const {
   auto operationName = request.GetServiceRequestName();
   auto serviceName = GetServiceClientName();
 
@@ -146,7 +146,8 @@ CodeCatalystClient::InvokeOperationOutcome CodeCatalystClient::InvokeServiceOper
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -158,9 +159,9 @@ CodeCatalystClient::InvokeOperationOutcome CodeCatalystClient::InvokeServiceOper
 
         resolveUri(endpointResolutionOutcome);
 
-        return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
+        return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, signerName)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -170,7 +171,7 @@ CreateAccessTokenOutcome CodeCatalystClient::CreateAccessToken(const CreateAcces
     endpointResolutionOutcome.GetResult().AddPathSegments("/v1/accessTokens");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? CreateAccessTokenOutcome(result.GetResultWithOwnership())
                             : CreateAccessTokenOutcome(std::move(result.GetError()));
 }
@@ -196,7 +197,7 @@ CreateDevEnvironmentOutcome CodeCatalystClient::CreateDevEnvironment(const Creat
     endpointResolutionOutcome.GetResult().AddPathSegments("/devEnvironments");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? CreateDevEnvironmentOutcome(result.GetResultWithOwnership())
                             : CreateDevEnvironmentOutcome(std::move(result.GetError()));
 }
@@ -215,7 +216,7 @@ CreateProjectOutcome CodeCatalystClient::CreateProject(const CreateProjectReques
     endpointResolutionOutcome.GetResult().AddPathSegments("/projects");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? CreateProjectOutcome(result.GetResultWithOwnership()) : CreateProjectOutcome(std::move(result.GetError()));
 }
 
@@ -246,7 +247,7 @@ CreateSourceRepositoryOutcome CodeCatalystClient::CreateSourceRepository(const C
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetName());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? CreateSourceRepositoryOutcome(result.GetResultWithOwnership())
                             : CreateSourceRepositoryOutcome(std::move(result.GetError()));
 }
@@ -286,7 +287,7 @@ CreateSourceRepositoryBranchOutcome CodeCatalystClient::CreateSourceRepositoryBr
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetName());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? CreateSourceRepositoryBranchOutcome(result.GetResultWithOwnership())
                             : CreateSourceRepositoryBranchOutcome(std::move(result.GetError()));
 }
@@ -304,7 +305,7 @@ DeleteAccessTokenOutcome CodeCatalystClient::DeleteAccessToken(const DeleteAcces
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? DeleteAccessTokenOutcome(result.GetResultWithOwnership())
                             : DeleteAccessTokenOutcome(std::move(result.GetError()));
 }
@@ -336,7 +337,7 @@ DeleteDevEnvironmentOutcome CodeCatalystClient::DeleteDevEnvironment(const Delet
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? DeleteDevEnvironmentOutcome(result.GetResultWithOwnership())
                             : DeleteDevEnvironmentOutcome(std::move(result.GetError()));
 }
@@ -361,7 +362,7 @@ DeleteProjectOutcome CodeCatalystClient::DeleteProject(const DeleteProjectReques
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetName());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? DeleteProjectOutcome(result.GetResultWithOwnership()) : DeleteProjectOutcome(std::move(result.GetError()));
 }
 
@@ -392,7 +393,7 @@ DeleteSourceRepositoryOutcome CodeCatalystClient::DeleteSourceRepository(const D
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetName());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? DeleteSourceRepositoryOutcome(result.GetResultWithOwnership())
                             : DeleteSourceRepositoryOutcome(std::move(result.GetError()));
 }
@@ -410,7 +411,7 @@ DeleteSpaceOutcome CodeCatalystClient::DeleteSpace(const DeleteSpaceRequest& req
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetName());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? DeleteSpaceOutcome(result.GetResultWithOwnership()) : DeleteSpaceOutcome(std::move(result.GetError()));
 }
 
@@ -441,7 +442,7 @@ GetDevEnvironmentOutcome CodeCatalystClient::GetDevEnvironment(const GetDevEnvir
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? GetDevEnvironmentOutcome(result.GetResultWithOwnership())
                             : GetDevEnvironmentOutcome(std::move(result.GetError()));
 }
@@ -466,7 +467,7 @@ GetProjectOutcome CodeCatalystClient::GetProject(const GetProjectRequest& reques
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetName());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? GetProjectOutcome(result.GetResultWithOwnership()) : GetProjectOutcome(std::move(result.GetError()));
 }
 
@@ -497,7 +498,7 @@ GetSourceRepositoryOutcome CodeCatalystClient::GetSourceRepository(const GetSour
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetName());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? GetSourceRepositoryOutcome(result.GetResultWithOwnership())
                             : GetSourceRepositoryOutcome(std::move(result.GetError()));
 }
@@ -531,7 +532,7 @@ GetSourceRepositoryCloneUrlsOutcome CodeCatalystClient::GetSourceRepositoryClone
     endpointResolutionOutcome.GetResult().AddPathSegments("/cloneUrls");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? GetSourceRepositoryCloneUrlsOutcome(result.GetResultWithOwnership())
                             : GetSourceRepositoryCloneUrlsOutcome(std::move(result.GetError()));
 }
@@ -549,7 +550,7 @@ GetSpaceOutcome CodeCatalystClient::GetSpace(const GetSpaceRequest& request) con
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetName());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? GetSpaceOutcome(result.GetResultWithOwnership()) : GetSpaceOutcome(std::move(result.GetError()));
 }
 
@@ -567,7 +568,7 @@ GetSubscriptionOutcome CodeCatalystClient::GetSubscription(const GetSubscription
     endpointResolutionOutcome.GetResult().AddPathSegments("/subscription");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? GetSubscriptionOutcome(result.GetResultWithOwnership())
                             : GetSubscriptionOutcome(std::move(result.GetError()));
 }
@@ -578,7 +579,7 @@ GetUserDetailsOutcome CodeCatalystClient::GetUserDetails(const GetUserDetailsReq
     endpointResolutionOutcome.GetResult().AddPathSegments("/userDetails");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? GetUserDetailsOutcome(result.GetResultWithOwnership()) : GetUserDetailsOutcome(std::move(result.GetError()));
 }
 
@@ -609,7 +610,7 @@ GetWorkflowOutcome CodeCatalystClient::GetWorkflow(const GetWorkflowRequest& req
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? GetWorkflowOutcome(result.GetResultWithOwnership()) : GetWorkflowOutcome(std::move(result.GetError()));
 }
 
@@ -640,7 +641,7 @@ GetWorkflowRunOutcome CodeCatalystClient::GetWorkflowRun(const GetWorkflowRunReq
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? GetWorkflowRunOutcome(result.GetResultWithOwnership()) : GetWorkflowRunOutcome(std::move(result.GetError()));
 }
 
@@ -650,7 +651,7 @@ ListAccessTokensOutcome CodeCatalystClient::ListAccessTokens(const ListAccessTok
     endpointResolutionOutcome.GetResult().AddPathSegments("/v1/accessTokens");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? ListAccessTokensOutcome(result.GetResultWithOwnership())
                             : ListAccessTokensOutcome(std::move(result.GetError()));
 }
@@ -683,7 +684,7 @@ ListDevEnvironmentSessionsOutcome CodeCatalystClient::ListDevEnvironmentSessions
     endpointResolutionOutcome.GetResult().AddPathSegments("/sessions");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? ListDevEnvironmentSessionsOutcome(result.GetResultWithOwnership())
                             : ListDevEnvironmentSessionsOutcome(std::move(result.GetError()));
 }
@@ -702,7 +703,7 @@ ListDevEnvironmentsOutcome CodeCatalystClient::ListDevEnvironments(const ListDev
     endpointResolutionOutcome.GetResult().AddPathSegments("/devEnvironments");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? ListDevEnvironmentsOutcome(result.GetResultWithOwnership())
                             : ListDevEnvironmentsOutcome(std::move(result.GetError()));
 }
@@ -721,7 +722,7 @@ ListEventLogsOutcome CodeCatalystClient::ListEventLogs(const ListEventLogsReques
     endpointResolutionOutcome.GetResult().AddPathSegments("/eventLogs");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? ListEventLogsOutcome(result.GetResultWithOwnership()) : ListEventLogsOutcome(std::move(result.GetError()));
 }
 
@@ -739,7 +740,7 @@ ListProjectsOutcome CodeCatalystClient::ListProjects(const ListProjectsRequest& 
     endpointResolutionOutcome.GetResult().AddPathSegments("/projects");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? ListProjectsOutcome(result.GetResultWithOwnership()) : ListProjectsOutcome(std::move(result.GetError()));
 }
 
@@ -764,7 +765,7 @@ ListSourceRepositoriesOutcome CodeCatalystClient::ListSourceRepositories(const L
     endpointResolutionOutcome.GetResult().AddPathSegments("/sourceRepositories");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? ListSourceRepositoriesOutcome(result.GetResultWithOwnership())
                             : ListSourceRepositoriesOutcome(std::move(result.GetError()));
 }
@@ -798,7 +799,7 @@ ListSourceRepositoryBranchesOutcome CodeCatalystClient::ListSourceRepositoryBran
     endpointResolutionOutcome.GetResult().AddPathSegments("/branches");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? ListSourceRepositoryBranchesOutcome(result.GetResultWithOwnership())
                             : ListSourceRepositoryBranchesOutcome(std::move(result.GetError()));
 }
@@ -809,7 +810,7 @@ ListSpacesOutcome CodeCatalystClient::ListSpaces(const ListSpacesRequest& reques
     endpointResolutionOutcome.GetResult().AddPathSegments("/v1/spaces");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? ListSpacesOutcome(result.GetResultWithOwnership()) : ListSpacesOutcome(std::move(result.GetError()));
 }
 
@@ -834,7 +835,7 @@ ListWorkflowRunsOutcome CodeCatalystClient::ListWorkflowRuns(const ListWorkflowR
     endpointResolutionOutcome.GetResult().AddPathSegments("/workflowRuns");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? ListWorkflowRunsOutcome(result.GetResultWithOwnership())
                             : ListWorkflowRunsOutcome(std::move(result.GetError()));
 }
@@ -860,7 +861,7 @@ ListWorkflowsOutcome CodeCatalystClient::ListWorkflows(const ListWorkflowsReques
     endpointResolutionOutcome.GetResult().AddPathSegments("/workflows");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? ListWorkflowsOutcome(result.GetResultWithOwnership()) : ListWorkflowsOutcome(std::move(result.GetError()));
 }
 
@@ -892,7 +893,7 @@ StartDevEnvironmentOutcome CodeCatalystClient::StartDevEnvironment(const StartDe
     endpointResolutionOutcome.GetResult().AddPathSegments("/start");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? StartDevEnvironmentOutcome(result.GetResultWithOwnership())
                             : StartDevEnvironmentOutcome(std::move(result.GetError()));
 }
@@ -925,7 +926,7 @@ StartDevEnvironmentSessionOutcome CodeCatalystClient::StartDevEnvironmentSession
     endpointResolutionOutcome.GetResult().AddPathSegments("/session");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? StartDevEnvironmentSessionOutcome(result.GetResultWithOwnership())
                             : StartDevEnvironmentSessionOutcome(std::move(result.GetError()));
 }
@@ -956,7 +957,7 @@ StartWorkflowRunOutcome CodeCatalystClient::StartWorkflowRun(const StartWorkflow
     endpointResolutionOutcome.GetResult().AddPathSegments("/workflowRuns");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? StartWorkflowRunOutcome(result.GetResultWithOwnership())
                             : StartWorkflowRunOutcome(std::move(result.GetError()));
 }
@@ -989,7 +990,7 @@ StopDevEnvironmentOutcome CodeCatalystClient::StopDevEnvironment(const StopDevEn
     endpointResolutionOutcome.GetResult().AddPathSegments("/stop");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? StopDevEnvironmentOutcome(result.GetResultWithOwnership())
                             : StopDevEnvironmentOutcome(std::move(result.GetError()));
 }
@@ -1028,7 +1029,7 @@ StopDevEnvironmentSessionOutcome CodeCatalystClient::StopDevEnvironmentSession(c
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetSessionId());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? StopDevEnvironmentSessionOutcome(result.GetResultWithOwnership())
                             : StopDevEnvironmentSessionOutcome(std::move(result.GetError()));
 }
@@ -1060,7 +1061,7 @@ UpdateDevEnvironmentOutcome CodeCatalystClient::UpdateDevEnvironment(const Updat
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetId());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? UpdateDevEnvironmentOutcome(result.GetResultWithOwnership())
                             : UpdateDevEnvironmentOutcome(std::move(result.GetError()));
 }
@@ -1085,7 +1086,7 @@ UpdateProjectOutcome CodeCatalystClient::UpdateProject(const UpdateProjectReques
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetName());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? UpdateProjectOutcome(result.GetResultWithOwnership()) : UpdateProjectOutcome(std::move(result.GetError()));
 }
 
@@ -1102,7 +1103,7 @@ UpdateSpaceOutcome CodeCatalystClient::UpdateSpace(const UpdateSpaceRequest& req
     endpointResolutionOutcome.GetResult().AddPathSegment(request.GetName());
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? UpdateSpaceOutcome(result.GetResultWithOwnership()) : UpdateSpaceOutcome(std::move(result.GetError()));
 }
 
@@ -1112,6 +1113,6 @@ VerifySessionOutcome CodeCatalystClient::VerifySession(const VerifySessionReques
     endpointResolutionOutcome.GetResult().AddPathSegments("/session");
   };
 
-  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::BEARER_SIGNER);
   return result.IsSuccess() ? VerifySessionOutcome(result.GetResultWithOwnership()) : VerifySessionOutcome(std::move(result.GetError()));
 }

@@ -24,7 +24,7 @@ Aws::String UpdateBucketMetadataInventoryTableConfigurationRequest::SerializePay
 
   m_inventoryTableConfiguration.AddToNode(parentNode);
   if (parentNode.HasChildren()) {
-    return payloadDoc.ConvertToString();
+    return payloadDoc.ConvertToCompactString();
   }
 
   return {};
@@ -88,4 +88,8 @@ Aws::String UpdateBucketMetadataInventoryTableConfigurationRequest::GetChecksumA
   } else {
     return ChecksumAlgorithmMapper::GetNameForChecksumAlgorithm(m_checksumAlgorithm);
   }
+}
+
+bool UpdateBucketMetadataInventoryTableConfigurationRequest::ChecksumAlgorithmIsSet() const {
+  return m_checksumAlgorithm != ChecksumAlgorithm::NOT_SET;
 }

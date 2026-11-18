@@ -38,6 +38,24 @@ class Container {
 
   ///@{
   /**
+   * The overall bit rate of your media file, in bits per second. This is derived
+   * from the file size and duration as (file size in bytes * 8) / duration in
+   * seconds.
+   */
+  inline long long GetBitRate() const { return m_bitRate; }
+  inline bool BitRateHasBeenSet() const { return m_bitRateHasBeenSet; }
+  inline void SetBitRate(long long value) {
+    m_bitRateHasBeenSet = true;
+    m_bitRate = value;
+  }
+  inline Container& WithBitRate(long long value) {
+    SetBitRate(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * The total duration of your media file, in seconds.
    */
   inline double GetDuration() const { return m_duration; }
@@ -55,9 +73,10 @@ class Container {
   ///@{
   /**
    * The format of your media file. For example: MP4, QuickTime (MOV), Matroska
-   * (MKV), WebM, MXF, Wave, AVI, MPEG-TS, MPEG-PS, or MP3. Note that this will be
-   * blank if your media file has a format that the MediaConvert Probe operation does
-   * not recognize.
+   * (MKV), WebM, MXF, Wave, AVI, MPEG-TS, MPEG-PS, MP3, FLAC, ASF (Windows Media /
+   * WMA), OGG, 3GP, 3G2, AAC (raw ADTS), AC-3, or Enhanced AC-3 (E-AC-3). Note that
+   * this will be blank if your media file has a format that the MediaConvert Probe
+   * operation does not recognize.
    */
   inline Format GetFormat() const { return m_format; }
   inline bool FormatHasBeenSet() const { return m_formatHasBeenSet; }
@@ -115,6 +134,8 @@ class Container {
   }
   ///@}
  private:
+  long long m_bitRate{0};
+
   double m_duration{0.0};
 
   Format m_format{Format::NOT_SET};
@@ -122,6 +143,7 @@ class Container {
   Aws::String m_startTimecode;
 
   Aws::Vector<Track> m_tracks;
+  bool m_bitRateHasBeenSet = false;
   bool m_durationHasBeenSet = false;
   bool m_formatHasBeenSet = false;
   bool m_startTimecodeHasBeenSet = false;

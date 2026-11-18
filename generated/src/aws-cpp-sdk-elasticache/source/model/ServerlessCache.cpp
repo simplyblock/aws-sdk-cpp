@@ -134,6 +134,28 @@ ServerlessCache& ServerlessCache::operator=(const XmlNode& xmlNode) {
           StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(networkTypeNode.GetText()).c_str()));
       m_networkTypeHasBeenSet = true;
     }
+    XmlNode connectionTypeNode = resultNode.FirstChild("ConnectionType");
+    if (!connectionTypeNode.IsNull()) {
+      m_connectionType = ConnectionTypeMapper::GetConnectionTypeForName(
+          StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(connectionTypeNode.GetText()).c_str()));
+      m_connectionTypeHasBeenSet = true;
+    }
+    XmlNode migrationNode = resultNode.FirstChild("Migration");
+    if (!migrationNode.IsNull()) {
+      m_migration = migrationNode;
+      m_migrationHasBeenSet = true;
+    }
+    XmlNode integrationsNode = resultNode.FirstChild("Integrations");
+    if (!integrationsNode.IsNull()) {
+      XmlNode integrationsMember = integrationsNode.FirstChild("Integration");
+      m_integrationsHasBeenSet = !integrationsMember.IsNull();
+      while (!integrationsMember.IsNull()) {
+        m_integrations.push_back(integrationsMember);
+        integrationsMember = integrationsMember.NextNode("Integration");
+      }
+
+      m_integrationsHasBeenSet = true;
+    }
   }
 
   return *this;
@@ -233,6 +255,26 @@ void ServerlessCache::OutputToStream(Aws::OStream& oStream, const char* location
     oStream << location << index << locationValue
             << ".NetworkType=" << StringUtils::URLEncode(NetworkTypeMapper::GetNameForNetworkType(m_networkType)) << "&";
   }
+
+  if (m_connectionTypeHasBeenSet) {
+    oStream << location << index << locationValue
+            << ".ConnectionType=" << StringUtils::URLEncode(ConnectionTypeMapper::GetNameForConnectionType(m_connectionType)) << "&";
+  }
+
+  if (m_migrationHasBeenSet) {
+    Aws::StringStream migrationLocationAndMemberSs;
+    migrationLocationAndMemberSs << location << index << locationValue << ".Migration";
+    m_migration.OutputToStream(oStream, migrationLocationAndMemberSs.str().c_str());
+  }
+
+  if (m_integrationsHasBeenSet) {
+    unsigned integrationsIdx = 1;
+    for (auto& item : m_integrations) {
+      Aws::StringStream integrationsSs;
+      integrationsSs << location << index << locationValue << ".Integrations.Integration." << integrationsIdx++;
+      item.OutputToStream(oStream, integrationsSs.str().c_str());
+    }
+  }
 }
 
 void ServerlessCache::OutputToStream(Aws::OStream& oStream, const char* location) const {
@@ -307,6 +349,23 @@ void ServerlessCache::OutputToStream(Aws::OStream& oStream, const char* location
   }
   if (m_networkTypeHasBeenSet) {
     oStream << location << ".NetworkType=" << StringUtils::URLEncode(NetworkTypeMapper::GetNameForNetworkType(m_networkType)) << "&";
+  }
+  if (m_connectionTypeHasBeenSet) {
+    oStream << location << ".ConnectionType=" << StringUtils::URLEncode(ConnectionTypeMapper::GetNameForConnectionType(m_connectionType))
+            << "&";
+  }
+  if (m_migrationHasBeenSet) {
+    Aws::String migrationLocationAndMember(location);
+    migrationLocationAndMember += ".Migration";
+    m_migration.OutputToStream(oStream, migrationLocationAndMember.c_str());
+  }
+  if (m_integrationsHasBeenSet) {
+    unsigned integrationsIdx = 1;
+    for (auto& item : m_integrations) {
+      Aws::StringStream integrationsSs;
+      integrationsSs << location << ".Integrations.Integration." << integrationsIdx++;
+      item.OutputToStream(oStream, integrationsSs.str().c_str());
+    }
   }
 }
 

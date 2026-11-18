@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/neptunedata/NeptunedataEndpointRules.h>
 #include <aws/neptunedata/Neptunedata_EXPORTS.h>
 
 namespace Aws {
 namespace neptunedata {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using NeptunedataClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using NeptunedataEndpointProviderBase =
     EndpointProviderBase<NeptunedataClientConfiguration, NeptunedataBuiltInParameters, NeptunedataClientContextParameters>;
 
 using NeptunedataDefaultEpProviderBase =
-    DefaultEndpointProvider<NeptunedataClientConfiguration, NeptunedataBuiltInParameters, NeptunedataClientContextParameters>;
+    BDDEndpointProvider<NeptunedataClientConfiguration, NeptunedataBuiltInParameters, NeptunedataClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_NEPTUNEDATA_API NeptunedataEndpointProvider : public NeptunedataDefaul
  public:
   using NeptunedataResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  NeptunedataEndpointProvider()
-      : NeptunedataDefaultEpProviderBase(Aws::neptunedata::NeptunedataEndpointRules::GetRulesBlob(),
-                                         Aws::neptunedata::NeptunedataEndpointRules::RulesBlobSize) {}
+  NeptunedataEndpointProvider();
 
   ~NeptunedataEndpointProvider() {}
 };

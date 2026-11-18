@@ -9,6 +9,8 @@
 #include <aws/elasticache/ElastiCacheRequest.h>
 #include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/elasticache/model/CacheUsageLimits.h>
+#include <aws/elasticache/model/ConnectionType.h>
+#include <aws/elasticache/model/IntegrationRequest.h>
 #include <aws/elasticache/model/NetworkType.h>
 #include <aws/elasticache/model/Tag.h>
 
@@ -332,6 +334,54 @@ class CreateServerlessCacheRequest : public ElastiCacheRequest {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The connection type for the serverless cache. Must be either <code>vpc</code>
+   * | <code>public</code>. Use <code>vpc</code> to access the cache through a VPC
+   * endpoint, or <code>public</code> to access the cache over the internet. If not
+   * specified, defaults to <code>vpc</code>. This value cannot be changed after the
+   * serverless cache is created. Setting this to <code>public</code> requires Valkey
+   * 9 or above.</p>
+   */
+  inline ConnectionType GetConnectionType() const { return m_connectionType; }
+  inline bool ConnectionTypeHasBeenSet() const { return m_connectionTypeHasBeenSet; }
+  inline void SetConnectionType(ConnectionType value) {
+    m_connectionTypeHasBeenSet = true;
+    m_connectionType = value;
+  }
+  inline CreateServerlessCacheRequest& WithConnectionType(ConnectionType value) {
+    SetConnectionType(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Which serverless cache integrations to enable. Valid values are:</p> <ul>
+   * <li> <p> <code>dynamodb</code> – DynamoDB integration.</p> </li> </ul>
+   * <p>DynamoDB integration requires the Valkey engine with a major engine version
+   * of 9 or above. If not specified, no integrations are enabled.</p>
+   */
+  inline const Aws::Vector<IntegrationRequest>& GetIntegrations() const { return m_integrations; }
+  inline bool IntegrationsHasBeenSet() const { return m_integrationsHasBeenSet; }
+  template <typename IntegrationsT = Aws::Vector<IntegrationRequest>>
+  void SetIntegrations(IntegrationsT&& value) {
+    m_integrationsHasBeenSet = true;
+    m_integrations = std::forward<IntegrationsT>(value);
+  }
+  template <typename IntegrationsT = Aws::Vector<IntegrationRequest>>
+  CreateServerlessCacheRequest& WithIntegrations(IntegrationsT&& value) {
+    SetIntegrations(std::forward<IntegrationsT>(value));
+    return *this;
+  }
+  template <typename IntegrationsT = IntegrationRequest>
+  CreateServerlessCacheRequest& AddIntegrations(IntegrationsT&& value) {
+    m_integrationsHasBeenSet = true;
+    m_integrations.emplace_back(std::forward<IntegrationsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   Aws::String m_serverlessCacheName;
 
@@ -360,6 +410,10 @@ class CreateServerlessCacheRequest : public ElastiCacheRequest {
   Aws::String m_dailySnapshotTime;
 
   NetworkType m_networkType{NetworkType::NOT_SET};
+
+  ConnectionType m_connectionType{ConnectionType::NOT_SET};
+
+  Aws::Vector<IntegrationRequest> m_integrations;
   bool m_serverlessCacheNameHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_engineHasBeenSet = false;
@@ -374,6 +428,8 @@ class CreateServerlessCacheRequest : public ElastiCacheRequest {
   bool m_snapshotRetentionLimitHasBeenSet = false;
   bool m_dailySnapshotTimeHasBeenSet = false;
   bool m_networkTypeHasBeenSet = false;
+  bool m_connectionTypeHasBeenSet = false;
+  bool m_integrationsHasBeenSet = false;
 };
 
 }  // namespace Model

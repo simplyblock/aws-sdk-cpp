@@ -27,12 +27,28 @@ Aws::String PutFunctionRequest::SerializePayload() const {
     payload.WithObject("HttpRequestConfiguration", m_httpRequestConfiguration.Jsonize());
   }
 
+  if (m_awsServiceRequestConfigurationHasBeenSet) {
+    payload.WithObject("AwsServiceRequestConfiguration", m_awsServiceRequestConfiguration.Jsonize());
+  }
+
   if (m_customOutputConfigurationHasBeenSet) {
     payload.WithObject("CustomOutputConfiguration", m_customOutputConfiguration.Jsonize());
   }
 
+  if (m_concurrentExecutorConfigurationHasBeenSet) {
+    payload.WithObject("ConcurrentExecutorConfiguration", m_concurrentExecutorConfiguration.Jsonize());
+  }
+
   if (m_sequentialExecutorConfigurationHasBeenSet) {
     payload.WithObject("SequentialExecutorConfiguration", m_sequentialExecutorConfiguration.Jsonize());
+  }
+
+  if (m_vastRequestConfigurationHasBeenSet) {
+    payload.WithObject("VastRequestConfiguration", m_vastRequestConfiguration.Jsonize());
+  }
+
+  if (m_hlsTagProcessorConfigurationHasBeenSet) {
+    payload.WithObject("HlsTagProcessorConfiguration", m_hlsTagProcessorConfiguration.Jsonize());
   }
 
   if (m_tagsHasBeenSet) {

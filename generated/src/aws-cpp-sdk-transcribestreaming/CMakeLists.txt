@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-transcribestreaming "C++ SDK for the AWS transcribestreaming service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-transcribestreaming "C++ SDK for Amazon Transcribe Streaming Service" aws-cpp-sdk-core)
 
 file(GLOB AWS_TRANSCRIBESTREAMING_HEADERS
     "include/aws/transcribestreaming/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_TRANSCRIBESTREAMING_HEADERS
 
 file(GLOB AWS_TRANSCRIBESTREAMING_MODEL_HEADERS
     "include/aws/transcribestreaming/model/*.h"
+)
+
+file(GLOB AWS_TRANSCRIBESTREAMING_INTERNAL_HEADERS
+    "include/aws/transcribestreaming/internal/*.h"
 )
 
 file(GLOB AWS_TRANSCRIBESTREAMING_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_TRANSCRIBESTREAMING_MODEL_SOURCE
 
 file(GLOB TRANSCRIBESTREAMING_UNIFIED_HEADERS
     ${AWS_TRANSCRIBESTREAMING_HEADERS}
+    ${AWS_TRANSCRIBESTREAMING_INTERNAL_HEADERS}
     ${AWS_TRANSCRIBESTREAMING_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\transcribestreaming" FILES ${AWS_TRANSCRIBESTREAMING_HEADERS})
+        source_group("Header Files\\aws\\transcribestreaming\\internal" FILES ${AWS_TRANSCRIBESTREAMING_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\transcribestreaming\\model" FILES ${AWS_TRANSCRIBESTREAMING_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_TRANSCRIBESTREAMING_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_TRANSCRIBESTREAMING_MODEL_SOURCE})

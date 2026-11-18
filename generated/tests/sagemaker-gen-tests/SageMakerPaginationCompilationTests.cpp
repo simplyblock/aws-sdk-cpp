@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -23,6 +23,7 @@
 #include <aws/sagemaker/model/ListPipelineVersionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListWorkteamsPaginationTraits.h>
 #include <aws/sagemaker/model/ListClustersPaginationTraits.h>
+#include <aws/sagemaker/model/ListInferenceRoutersPaginationTraits.h>
 #include <aws/sagemaker/model/ListModelExplainabilityJobDefinitionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListModelPackageGroupsPaginationTraits.h>
 #include <aws/sagemaker/model/ListMonitoringExecutionsPaginationTraits.h>
@@ -35,6 +36,7 @@
 #include <aws/sagemaker/model/ListTrialsPaginationTraits.h>
 #include <aws/sagemaker/model/ListModelMetadataPaginationTraits.h>
 #include <aws/sagemaker/model/ListComputeQuotasPaginationTraits.h>
+#include <aws/sagemaker/model/ListClusterExtensionVersionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListArtifactsPaginationTraits.h>
 #include <aws/sagemaker/model/ListTagsPaginationTraits.h>
 #include <aws/sagemaker/model/ListModelCardExportJobsPaginationTraits.h>
@@ -45,6 +47,7 @@
 #include <aws/sagemaker/model/ListActionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListCandidatesForAutoMLJobPaginationTraits.h>
 #include <aws/sagemaker/model/ListInferenceRecommendationsJobStepsPaginationTraits.h>
+#include <aws/sagemaker/model/ListClusterExtensionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListDevicesPaginationTraits.h>
 #include <aws/sagemaker/model/ListModelPackagesPaginationTraits.h>
 #include <aws/sagemaker/model/ListImageVersionsPaginationTraits.h>
@@ -69,8 +72,10 @@
 #include <aws/sagemaker/model/ListModelCardsPaginationTraits.h>
 #include <aws/sagemaker/model/ListStageDevicesPaginationTraits.h>
 #include <aws/sagemaker/model/ListSubscribedWorkteamsPaginationTraits.h>
+#include <aws/sagemaker/model/ListClusterOperationsPaginationTraits.h>
 #include <aws/sagemaker/model/ListCodeRepositoriesPaginationTraits.h>
 #include <aws/sagemaker/model/ListPipelinesPaginationTraits.h>
+#include <aws/sagemaker/model/ListTrainingSessionsPaginationTraits.h>
 #include <aws/sagemaker/model/ListPipelineExecutionStepsPaginationTraits.h>
 #include <aws/sagemaker/model/ListTrainingPlansPaginationTraits.h>
 #include <aws/sagemaker/model/ListHyperParameterTuningJobsPaginationTraits.h>
@@ -108,6 +113,6 @@ class SageMakerPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSu
 
 TEST_F(SageMakerPaginationCompilationTest, SageMakerPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

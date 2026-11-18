@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-application-insights "C++ SDK for the AWS application-insights service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-application-insights "C++ SDK for Amazon CloudWatch Application Insights" aws-cpp-sdk-core)
 
 file(GLOB AWS_APPLICATION-INSIGHTS_HEADERS
     "include/aws/application-insights/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_APPLICATION-INSIGHTS_HEADERS
 
 file(GLOB AWS_APPLICATION-INSIGHTS_MODEL_HEADERS
     "include/aws/application-insights/model/*.h"
+)
+
+file(GLOB AWS_APPLICATION-INSIGHTS_INTERNAL_HEADERS
+    "include/aws/application-insights/internal/*.h"
 )
 
 file(GLOB AWS_APPLICATION-INSIGHTS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_APPLICATION-INSIGHTS_MODEL_SOURCE
 
 file(GLOB APPLICATION-INSIGHTS_UNIFIED_HEADERS
     ${AWS_APPLICATION-INSIGHTS_HEADERS}
+    ${AWS_APPLICATION-INSIGHTS_INTERNAL_HEADERS}
     ${AWS_APPLICATION-INSIGHTS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\application-insights" FILES ${AWS_APPLICATION-INSIGHTS_HEADERS})
+        source_group("Header Files\\aws\\application-insights\\internal" FILES ${AWS_APPLICATION-INSIGHTS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\application-insights\\model" FILES ${AWS_APPLICATION-INSIGHTS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_APPLICATION-INSIGHTS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_APPLICATION-INSIGHTS_MODEL_SOURCE})

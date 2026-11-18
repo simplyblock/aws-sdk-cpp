@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ebs/EBSEndpointRules.h>
 #include <aws/ebs/EBS_EXPORTS.h>
 
 namespace Aws {
 namespace EBS {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using EBSClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using EBSBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using EBSEndpointProviderBase = EndpointProviderBase<EBSClientConfiguration, EBSBuiltInParameters, EBSClientContextParameters>;
 
-using EBSDefaultEpProviderBase = DefaultEndpointProvider<EBSClientConfiguration, EBSBuiltInParameters, EBSClientContextParameters>;
+using EBSDefaultEpProviderBase = BDDEndpointProvider<EBSClientConfiguration, EBSBuiltInParameters, EBSClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_EBS_API EBSEndpointProvider : public EBSDefaultEpProviderBase {
  public:
   using EBSResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  EBSEndpointProvider() : EBSDefaultEpProviderBase(Aws::EBS::EBSEndpointRules::GetRulesBlob(), Aws::EBS::EBSEndpointRules::RulesBlobSize) {}
+  EBSEndpointProvider();
 
   ~EBSEndpointProvider() {}
 };

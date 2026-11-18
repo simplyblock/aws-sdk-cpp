@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-codestar-notifications "C++ SDK for the AWS codestar-notifications service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-codestar-notifications "C++ SDK for AWS CodeStar Notifications" aws-cpp-sdk-core)
 
 file(GLOB AWS_CODESTAR-NOTIFICATIONS_HEADERS
     "include/aws/codestar-notifications/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_CODESTAR-NOTIFICATIONS_HEADERS
 
 file(GLOB AWS_CODESTAR-NOTIFICATIONS_MODEL_HEADERS
     "include/aws/codestar-notifications/model/*.h"
+)
+
+file(GLOB AWS_CODESTAR-NOTIFICATIONS_INTERNAL_HEADERS
+    "include/aws/codestar-notifications/internal/*.h"
 )
 
 file(GLOB AWS_CODESTAR-NOTIFICATIONS_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_CODESTAR-NOTIFICATIONS_MODEL_SOURCE
 
 file(GLOB CODESTAR-NOTIFICATIONS_UNIFIED_HEADERS
     ${AWS_CODESTAR-NOTIFICATIONS_HEADERS}
+    ${AWS_CODESTAR-NOTIFICATIONS_INTERNAL_HEADERS}
     ${AWS_CODESTAR-NOTIFICATIONS_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\codestar-notifications" FILES ${AWS_CODESTAR-NOTIFICATIONS_HEADERS})
+        source_group("Header Files\\aws\\codestar-notifications\\internal" FILES ${AWS_CODESTAR-NOTIFICATIONS_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\codestar-notifications\\model" FILES ${AWS_CODESTAR-NOTIFICATIONS_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_CODESTAR-NOTIFICATIONS_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_CODESTAR-NOTIFICATIONS_MODEL_SOURCE})

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -16,6 +16,7 @@
 #include <aws/codecommit/model/GetMergeConflictsPaginationTraits.h>
 #include <aws/codecommit/model/ListPullRequestsPaginationTraits.h>
 #include <aws/codecommit/model/GetDifferencesPaginationTraits.h>
+#include <aws/codecommit/model/GetBlobDifferencesPaginationTraits.h>
 #include <aws/codecommit/model/GetCommentReactionsPaginationTraits.h>
 #include <aws/codecommit/model/ListApprovalRuleTemplatesPaginationTraits.h>
 #include <aws/codecommit/model/DescribeMergeConflictsPaginationTraits.h>
@@ -31,6 +32,6 @@ class CodeCommitPaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestS
 
 TEST_F(CodeCommitPaginationCompilationTest, CodeCommitPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

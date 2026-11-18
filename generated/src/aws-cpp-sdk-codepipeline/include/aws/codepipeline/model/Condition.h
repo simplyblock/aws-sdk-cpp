@@ -8,15 +8,15 @@
 #include <aws/codepipeline/model/Result.h>
 #include <aws/codepipeline/model/RuleDeclaration.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace CodePipeline {
 namespace Model {
@@ -28,17 +28,17 @@ namespace Model {
  * conditions</a> and <a
  * href="https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html">How
  * do stage conditions work?</a>.. For more information about rules, see the <a
- * href="https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html">CodePipeline
- * rule reference</a>.</p><p><h3>See Also:</h3>   <a
+ * href="https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html">
+ * CodePipeline rule reference</a>.</p><p><h3>See Also:</h3>   <a
  * href="http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/Condition">AWS
  * API Reference</a></p>
  */
 class Condition {
  public:
   AWS_CODEPIPELINE_API Condition() = default;
-  AWS_CODEPIPELINE_API Condition(Aws::Utils::Json::JsonView jsonValue);
-  AWS_CODEPIPELINE_API Condition& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_CODEPIPELINE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_CODEPIPELINE_API Condition(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CODEPIPELINE_API Condition& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CODEPIPELINE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**

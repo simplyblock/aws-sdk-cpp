@@ -54,7 +54,11 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The name of the container recipe.</p>
+   * <p>The name of the container recipe. The recipe name, combined with the semantic
+   * version, must be unique to your account in each Amazon Web Services Region.
+   * Image Builder generates the container recipe ARN from a normalized form of the
+   * name, so names that differ only in case, spaces, or underscores count as the
+   * same name.</p>
    */
   inline const Aws::String& GetName() const { return m_name; }
   inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
@@ -94,8 +98,8 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
    * semantic version syntax.</p>  <p>The semantic version has four nodes:
    * &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values
    * for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b>
-   * For the first three nodes you can assign any positive integer value, including
-   * zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder
+   * For the first three nodes, you can assign any positive integer value, including
+   * zero. The upper limit is 2^30-1, or 1073741823, for each node. Image Builder
    * automatically assigns the build number to the fourth node.</p> <p>
    * <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment
    * requirements for the nodes that you can assign. For example, you might choose a
@@ -118,7 +122,8 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The components included in the container recipe.</p>
+   * <p>The components included in the container recipe. You can specify each
+   * component only one time in a recipe.</p>
    */
   inline const Aws::Vector<ComponentConfiguration>& GetComponents() const { return m_components; }
   inline bool ComponentsHasBeenSet() const { return m_componentsHasBeenSet; }
@@ -161,7 +166,13 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The Dockerfile template used to build your image as an inline data blob.</p>
+   * <p>The Dockerfile template used to build your image, as an inline data blob. You
+   * must specify exactly one of the <code>dockerfileTemplateData</code> or
+   * <code>dockerfileTemplateUri</code> properties. For the contextual variables that
+   * the template can include, see <a
+   * href="https://docs.aws.amazon.com/imagebuilder/latest/userguide/create-container-recipes.html">Create
+   * a new version of a container recipe</a> in the <i>EC2 Image Builder User
+   * Guide</i>.</p>
    */
   inline const Aws::String& GetDockerfileTemplateData() const { return m_dockerfileTemplateData; }
   inline bool DockerfileTemplateDataHasBeenSet() const { return m_dockerfileTemplateDataHasBeenSet; }
@@ -179,8 +190,12 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The Amazon S3 URI for the Dockerfile that will be used to build your
-   * container image.</p>
+   * <p>The Amazon S3 URI for the Dockerfile template that is used to build your
+   * container image. You must have permission to read the object. Image Builder
+   * reads the object once, when it creates the recipe, and stores its content in the
+   * recipe. Later changes to the S3 object don't affect the recipe. You must specify
+   * exactly one of the <code>dockerfileTemplateData</code> or
+   * <code>dockerfileTemplateUri</code> properties.</p>
    */
   inline const Aws::String& GetDockerfileTemplateUri() const { return m_dockerfileTemplateUri; }
   inline bool DockerfileTemplateUriHasBeenSet() const { return m_dockerfileTemplateUriHasBeenSet; }
@@ -198,7 +213,8 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Specifies the operating system platform when you use a custom base image.</p>
+   * <p>Specifies the operating system platform when you use a custom base image.
+   * Container recipes support only the Linux and Windows platforms.</p>
    */
   inline Platform GetPlatformOverride() const { return m_platformOverride; }
   inline bool PlatformOverrideHasBeenSet() const { return m_platformOverrideHasBeenSet; }
@@ -214,7 +230,10 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Specifies the operating system version for the base image.</p>
+   * <p>Specifies the operating system version for the base image. Use this property
+   * only when the base image is a container image from a registry. When the base
+   * image is an Image Builder image, the operating system version comes from the
+   * parent image.</p>
    */
   inline const Aws::String& GetImageOsVersionOverride() const { return m_imageOsVersionOverride; }
   inline bool ImageOsVersionOverrideHasBeenSet() const { return m_imageOsVersionOverrideHasBeenSet; }
@@ -232,7 +251,9 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The base image for the container recipe.</p>
+   * <p>The base image for the container recipe. This can be an Image Builder image
+   * resource ARN or a container image URI from a registry, for example
+   * <code>amazonlinux:latest</code>.</p>
    */
   inline const Aws::String& GetParentImage() const { return m_parentImage; }
   inline bool ParentImageHasBeenSet() const { return m_parentImageHasBeenSet; }
@@ -292,7 +313,8 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The destination repository for the container image.</p>
+   * <p>The destination repository for the container image. The Amazon ECR repository
+   * must already exist in the Amazon Web Services Region where the build runs.</p>
    */
   inline const TargetContainerRepository& GetTargetRepository() const { return m_targetRepository; }
   inline bool TargetRepositoryHasBeenSet() const { return m_targetRepositoryHasBeenSet; }
@@ -333,8 +355,10 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Unique, case-sensitive identifier you provide to ensure idempotency of the
-   * request. For more information, see <a
+   * <p>A unique, case-sensitive identifier you provide to ensure that the operation
+   * runs no more than one time. If you retry a request with the same client token,
+   * Image Builder returns the original response without running the operation again.
+   * For more information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
    * idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>
    */
@@ -348,6 +372,24 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
   template <typename ClientTokenT = Aws::String>
   CreateContainerRecipeRequest& WithClientToken(ClientTokenT&& value) {
     SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Validates the required permissions and request parameters without performing
+   * the operation. If validation succeeds, the operation returns a
+   * <code>DryRunOperationException</code> error response.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline CreateContainerRecipeRequest& WithDryRun(bool value) {
+    SetDryRun(value);
     return *this;
   }
   ///@}
@@ -383,6 +425,8 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
   Aws::String m_kmsKeyId;
 
   Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+
+  bool m_dryRun{false};
   bool m_containerTypeHasBeenSet = false;
   bool m_nameHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
@@ -399,6 +443,7 @@ class CreateContainerRecipeRequest : public ImagebuilderRequest {
   bool m_targetRepositoryHasBeenSet = false;
   bool m_kmsKeyIdHasBeenSet = false;
   bool m_clientTokenHasBeenSet = true;
+  bool m_dryRunHasBeenSet = false;
 };
 
 }  // namespace Model

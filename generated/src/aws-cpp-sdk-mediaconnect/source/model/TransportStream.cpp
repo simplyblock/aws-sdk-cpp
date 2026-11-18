@@ -26,6 +26,10 @@ TransportStream& TransportStream::operator=(JsonView jsonValue) {
     m_codec = jsonValue.GetString("codec");
     m_codecHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("color")) {
+    m_color = jsonValue.GetObject("color");
+    m_colorHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("frameRate")) {
     m_frameRate = jsonValue.GetString("frameRate");
     m_frameRateHasBeenSet = true;
@@ -46,9 +50,17 @@ TransportStream& TransportStream::operator=(JsonView jsonValue) {
     m_sampleSize = jsonValue.GetInteger("sampleSize");
     m_sampleSizeHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("scanMode")) {
+    m_scanMode = ScanModeMapper::GetScanModeForName(jsonValue.GetString("scanMode"));
+    m_scanModeHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("streamType")) {
     m_streamType = jsonValue.GetString("streamType");
     m_streamTypeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("language")) {
+    m_language = jsonValue.GetString("language");
+    m_languageHasBeenSet = true;
   }
   return *this;
 }
@@ -62,6 +74,10 @@ JsonValue TransportStream::Jsonize() const {
 
   if (m_codecHasBeenSet) {
     payload.WithString("codec", m_codec);
+  }
+
+  if (m_colorHasBeenSet) {
+    payload.WithObject("color", m_color.Jsonize());
   }
 
   if (m_frameRateHasBeenSet) {
@@ -84,8 +100,16 @@ JsonValue TransportStream::Jsonize() const {
     payload.WithInteger("sampleSize", m_sampleSize);
   }
 
+  if (m_scanModeHasBeenSet) {
+    payload.WithString("scanMode", ScanModeMapper::GetNameForScanMode(m_scanMode));
+  }
+
   if (m_streamTypeHasBeenSet) {
     payload.WithString("streamType", m_streamType);
+  }
+
+  if (m_languageHasBeenSet) {
+    payload.WithString("language", m_language);
   }
 
   return payload;

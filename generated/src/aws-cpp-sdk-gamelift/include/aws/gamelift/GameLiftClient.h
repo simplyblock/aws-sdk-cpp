@@ -131,7 +131,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * received before a specified timeout, the proposed match is dropped. Each
    * matchmaking ticket in the failed match is handled as follows: </p> <ul> <li>
    * <p>If the ticket has one or more players who rejected the match or failed to
-   * respond, the ticket status is set <code>CANCELLED</code> and processing is
+   * respond, the ticket status is set to <code>CANCELLED</code> and processing is
    * terminated.</p> </li> <li> <p>If all players in the ticket accepted the match,
    * the ticket status is returned to <code>SEARCHING</code> to find a new match.
    * </p> </li> </ul> <p> <b>Learn more</b> </p> <p> <a
@@ -438,8 +438,9 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * parameter values:</p> <ul> <li> <p> <code>Name</code> </p> </li> <li> <p>
    * <code>ContainerGroupType</code> (<code>GAME_SERVER</code>)</p> </li> <li> <p>
    * <code>OperatingSystem</code> </p> </li> <li> <p>
-   * <code>TotalMemoryLimitMebibytes</code> </p> </li> <li> <p>
-   * <code>TotalVcpuLimit</code> </p> </li> <li> <p>At least one
+   * <code>TotalMemoryLimitMebibytes</code> </p> </li> <li> <p>Either
+   * <code>TotalVcpuLimit</code> or a <code>Vcpu</code> value for the game server
+   * container</p> </li> <li> <p>At least one
    * <code>GameServerContainerDefinition</code> </p> <ul> <li> <p>
    * <code>ContainerName</code> </p> </li> <li> <p> <code>ImageUrl</code> </p> </li>
    * <li> <p> <code>PortConfiguration</code> </p> </li> <li> <p>
@@ -562,18 +563,18 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
-   * <p>Adds remote locations to an EC2 and begins populating the new locations with
-   * instances. The new instances conform to the fleet's instance type, auto-scaling,
-   * and other configuration settings.</p>  <p>You can't add remote locations
-   * to a fleet that resides in an Amazon Web Services Region that doesn't support
-   * multiple locations. Fleets created prior to March 2021 can't support multiple
-   * locations.</p>  <p>To add fleet locations, specify the fleet to be
-   * updated and provide a list of one or more locations. </p> <p>If successful, this
-   * operation returns the list of added locations with their status set to
-   * <code>NEW</code>. Amazon GameLift Servers initiates the process of starting an
-   * instance in each added location. You can track the status of each new location
-   * by monitoring location creation events using <a
+   * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere,
+   * Container</p> <p>Adds remote locations to an EC2 fleet and begins populating the
+   * new locations with instances. The new instances conform to the fleet's instance
+   * type, auto-scaling, and other configuration settings.</p>  <p>You can't
+   * add remote locations to a fleet that resides in an Amazon Web Services Region
+   * that doesn't support multiple locations. Fleets created prior to March 2021
+   * can't support multiple locations.</p>  <p>To add fleet locations, specify
+   * the fleet to be updated and provide a list of one or more locations. </p> <p>If
+   * successful, this operation returns the list of added locations with their status
+   * set to <code>NEW</code>. Amazon GameLift Servers initiates the process of
+   * starting an instance in each added location. You can track the status of each
+   * new location by monitoring location creation events using <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetEvents.html">DescribeFleetEvents</a>.</p>
    * <p> <b>Learn more</b> </p> <p> <a
    * href="https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html">Setting
@@ -694,8 +695,8 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * restrict new player access by using <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_UpdateGameSession.html">UpdateGameSession</a>
    * to change the game session's player session creation policy.</p> <p>Amazon
-   * GameLift Servers retains logs for active for 14 days. To access the logs, call
-   * <a
+   * GameLift Servers retains logs for active game sessions for 14 days. To access
+   * the logs, call <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_GetGameSessionLogUrl.html">GetGameSessionLogUrl</a>
    * to download the log files.</p> <p> <i>Available in Amazon GameLift Servers
    * Local.</i> </p> <p> <b>Learn more</b> </p> <p> <a
@@ -730,10 +731,9 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   /**
    * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere,
    * Container</p> <p>Creates a placement queue that processes requests for new game
-   * sessions. A queue uses FleetIQ algorithms to locate the best available placement
-   * locations for a new game session, and then prompts the game server process to
-   * start a new game session.</p> <p>A game session queue is configured with a set
-   * of destinations (Amazon GameLift Servers fleets or aliases) that determine where
+   * sessions. A queue finds the best available game server, then prompts it to start
+   * a new game session.</p> <p>A game session queue is configured with a set of
+   * destinations (Amazon GameLift Servers fleets or aliases) that determine where
    * the queue can place new game sessions. These destinations can span multiple
    * Amazon Web Services Regions, can use different instance types, and can include
    * both Spot and On-Demand fleets. If the queue includes multi-location fleets, the
@@ -759,10 +759,13 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * </p> </li> </ul> </li> <li> <p>Create a queue with special rules for processing
    * player latency data.</p> <ul> <li> <p>Required parameters <code>Name</code> and
    * <code>Destinations</code> </p> </li> <li> <p> <code>PlayerLatencyPolicies</code>
-   * </p> </li> </ul> </li> </ul> <p> <b>Results</b> </p> <p>If successful, this
-   * operation returns a new <code>GameSessionQueue</code> object with an assigned
-   * queue ARN. Use the queue's name or ARN when submitting new game session requests
-   * with <a
+   * </p> </li> </ul> </li> <li> <p>Create a queue that delivers game session
+   * placement insight logs to one or more log destinations.</p> <ul> <li>
+   * <p>Required parameters <code>Name</code> and <code>Destinations</code> </p>
+   * </li> <li> <p> <code>LogConfiguration</code> </p> </li> </ul> </li> </ul> <p>
+   * <b>Results</b> </p> <p>If successful, this operation returns a new
+   * <code>GameSessionQueue</code> object with an assigned queue ARN. Use the queue's
+   * name or ARN when submitting new game session requests with <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_StartGameSessionPlacement.html">StartGameSessionPlacement</a>
    * or <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_StartMatchmaking.html">StartMatchmaking</a>.
@@ -836,7 +839,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   /**
    * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere,
    * Container</p> <p>Defines a new matchmaking configuration for use with FlexMatch.
-   * Whether your are using FlexMatch with Amazon GameLift Servers hosting or as a
+   * Whether you are using FlexMatch with Amazon GameLift Servers hosting or as a
    * standalone matchmaking service, the matchmaking configuration sets out rules for
    * matching players and forming teams. If you're also using Amazon GameLift Servers
    * hosting, it defines how to start game sessions for each match. Your matchmaking
@@ -1149,7 +1152,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * acceptance, updating routing tables, etc. </p> <p>To establish the connection,
    * call this operation from the Amazon Web Services account that is used to manage
    * the Amazon GameLift Servers fleets. Identify the following values: (1) The ID of
-   * the fleet you want to be enable a VPC peering connection for; (2) The Amazon Web
+   * the fleet you want to enable a VPC peering connection for; (2) The Amazon Web
    * Services account with the VPC that you want to peer with; and (3) The ID of the
    * VPC you want to peer with. This operation is asynchronous. If successful, a
    * connection request is created. You can use continuous polling to track the
@@ -1344,12 +1347,11 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere,
-   * Container</p> <p>Deletes all resources and information related to a fleet and
-   * shuts down any currently running fleet instances, including those in remote
-   * locations.</p>  <p>If the fleet being deleted has a VPC peering
-   * connection, you first need to get a valid authorization (good for 24 hours) by
-   * calling <a
+   * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere</p>
+   * <p>Deletes all resources and information related to a fleet and shuts down any
+   * currently running fleet instances, including those in remote locations.</p>
+   *  <p>If the fleet being deleted has a VPC peering connection, you first
+   * need to get a valid authorization (good for 24 hours) by calling <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateVpcPeeringAuthorization.html">CreateVpcPeeringAuthorization</a>.
    * You don't need to explicitly delete the VPC peering connection.</p>
    * <p>To delete a fleet, specify the fleet ID to be terminated. During the deletion
@@ -1382,15 +1384,15 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
-   * <p>Removes locations from a multi-location fleet. When deleting a location, all
-   * game server process and all instances that are still active in the location are
-   * shut down. </p> <p>To delete fleet locations, identify the fleet ID and provide
-   * a list of the locations to be deleted. </p> <p>If successful, GameLift sets the
-   * location status to <code>DELETING</code>, and begins to shut down existing
-   * server processes and terminate instances in each location being deleted. When
-   * completed, the location status changes to <code>TERMINATED</code>.</p> <p>
-   * <b>Learn more</b> </p> <p> <a
+   * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere,
+   * Container</p> <p>Removes locations from a multi-location fleet. When deleting a
+   * location, all game server processes and all instances that are still active in
+   * the location are shut down. </p> <p>To delete fleet locations, identify the
+   * fleet ID and provide a list of the locations to be deleted. </p> <p>If
+   * successful, GameLift sets the location status to <code>DELETING</code>, and
+   * begins to shut down existing server processes and terminate instances in each
+   * location being deleted. When completed, the location status changes to
+   * <code>TERMINATED</code>.</p> <p> <b>Learn more</b> </p> <p> <a
    * href="https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html">Setting
    * up Amazon GameLift Servers fleets</a> </p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/gamelift-2015-10-01/DeleteFleetLocations">AWS
@@ -1591,11 +1593,11 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2</p> <p>Deletes a
-   * fleet scaling policy. Once deleted, the policy is no longer in force and Amazon
-   * GameLift Servers removes all record of it. To delete a scaling policy, specify
-   * both the scaling policy name and the fleet ID it is associated with.</p> <p>To
-   * temporarily suspend scaling policies, use <a
+   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
+   * <p>Deletes a fleet scaling policy. Once deleted, the policy is no longer in
+   * force and Amazon GameLift Servers removes all record of it. To delete a scaling
+   * policy, specify both the scaling policy name and the fleet ID it is associated
+   * with.</p> <p>To temporarily suspend scaling policies, use <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_StopFleetActions.html">StopFleetActions</a>.
    * This operation suspends all policies for the fleet.</p><p><h3>See Also:</h3>
    * <a
@@ -1698,7 +1700,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   /**
    * <p> <b>This API works with the following fleet types:</b> EC2</p> <p>Removes a
    * VPC peering connection. To delete the connection, you must have a valid
-   * authorization for the VPC peering connection that you want to delete.. </p>
+   * authorization for the VPC peering connection that you want to delete. </p>
    * <p>Once a valid authorization exists, call this operation from the Amazon Web
    * Services account that is used to manage the Amazon GameLift Servers fleets.
    * Identify the connection to delete by the connection ID and fleet ID. If
@@ -1737,7 +1739,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * <p> <b>This API works with the following fleet types:</b> Anywhere</p>
    * <p>Removes a compute resource from an Anywhere fleet. Deregistered computes can
    * no longer host game sessions through Amazon GameLift Servers. Use this operation
-   * with an Anywhere fleet that doesn't use the Amazon GameLift Servers Agent For
+   * with an Anywhere fleet that doesn't use the Amazon GameLift Servers Agent. For
    * Anywhere fleets with the Agent, the Agent handles all compute registry tasks for
    * you. </p> <p>To deregister a compute, call this operation from the compute
    * that's being deregistered and specify the compute name and the fleet ID.
@@ -1917,7 +1919,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * ARN value. </p> </li> </ul> <p> <b>Results</b> </p> <p>If successful, a
    * <code>ContainerFleet</code> object is returned. This object includes the fleet
    * properties, including information about the most recent deployment.</p>
-   * <p>Some API operations limit the number of fleet IDs that allowed in one
+   * <p>Some API operations limit the number of fleet IDs that are allowed in one
    * request. If a request exceeds this limit, the request fails and the error
    * message contains the maximum allowed number.</p> <p><h3>See Also:</h3>
    * <a
@@ -2120,7 +2122,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * for multiple fleets, use the pagination parameters to retrieve results as a set
    * of sequential pages. </p> <p>If successful, a <code>FleetAttributes</code>
    * object is returned for each fleet requested, unless the fleet identifier is not
-   * found. </p>  <p>Some API operations limit the number of fleet IDs that
+   * found. </p>  <p>Some API operations limit the number of fleet IDs that are
    * allowed in one request. If a request exceeds this limit, the request fails and
    * the error message contains the maximum allowed number.</p>  <p> <b>Learn
    * more</b> </p> <p> <a
@@ -2270,13 +2272,13 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
-   * <p>Retrieves information on a fleet's remote locations, including life-cycle
-   * status and any suspended fleet activity. </p> <p>This operation can be used in
-   * the following ways: </p> <ul> <li> <p>To get data for specific locations,
-   * provide a fleet identifier and a list of locations. Location data is returned in
-   * the order that it is requested. </p> </li> <li> <p>To get data for all
-   * locations, provide a fleet identifier only. Location data is returned in no
+   * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere,
+   * Container</p> <p>Retrieves information on a fleet's remote locations, including
+   * life-cycle status and any suspended fleet activity. </p> <p>This operation can
+   * be used in the following ways: </p> <ul> <li> <p>To get data for specific
+   * locations, provide a fleet identifier and a list of locations. Location data is
+   * returned in the order that it is requested. </p> </li> <li> <p>To get data for
+   * all locations, provide a fleet identifier only. Location data is returned in no
    * particular order. </p> </li> </ul> <p>When requesting attributes for multiple
    * locations, use the pagination parameters to retrieve results as a set of
    * sequential pages. </p> <p>If successful, a <code>LocationAttributes</code>
@@ -2316,10 +2318,10 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
-   * <p>Retrieves the resource capacity settings for a fleet location. The data
-   * returned includes the current capacity (number of EC2 instances) and some
-   * scaling settings for the requested fleet location. For a managed container
+   * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere,
+   * Container</p> <p>Retrieves the resource capacity settings for a fleet location.
+   * The data returned includes the current capacity (number of EC2 instances) and
+   * some scaling settings for the requested fleet location. For a managed container
    * fleet, this operation also returns counts for game server container groups.</p>
    * <p>Use this operation to retrieve capacity information for a fleet's remote
    * location or home Region (you can also retrieve home Region capacity by calling
@@ -2361,13 +2363,13 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere,
-   * Container</p> <p>Retrieves current usage data for a fleet location. Utilization
-   * data provides a snapshot of current game hosting activity at the requested
-   * location. Use this operation to retrieve utilization information for a fleet's
-   * remote location or home Region (you can also retrieve home Region utilization by
-   * calling <code>DescribeFleetUtilization</code>).</p> <p>To retrieve utilization
-   * data, identify a fleet and location. </p> <p>If successful, a
+   * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere</p>
+   * <p>Retrieves current usage data for a fleet location. Utilization data provides
+   * a snapshot of current game hosting activity at the requested location. Use this
+   * operation to retrieve utilization information for a fleet's remote location or
+   * home Region (you can also retrieve home Region utilization by calling
+   * <code>DescribeFleetUtilization</code>).</p> <p>To retrieve utilization data,
+   * identify a fleet and location. </p> <p>If successful, a
    * <code>FleetUtilization</code> object is returned for the requested fleet
    * location. </p> <p> <b>Learn more</b> </p> <p> <a
    * href="https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-intro.html">Setting
@@ -2404,14 +2406,14 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
-   * <p>Retrieves a fleet's inbound connection permissions. Connection permissions
-   * specify IP addresses and port settings that incoming traffic can use to access
-   * server processes in the fleet. Game server processes that are running in the
-   * fleet must use a port that falls within this range. </p> <p>Use this operation
-   * in the following ways: </p> <ul> <li> <p>To retrieve the port settings for a
-   * fleet, identify the fleet's unique identifier. </p> </li> <li> <p>To check the
-   * status of recent updates to a fleet remote location, specify the fleet ID and a
+   * <p> <b>This API works with the following fleet types:</b> EC2</p> <p>Retrieves a
+   * fleet's inbound connection permissions. Connection permissions specify IP
+   * addresses and port settings that incoming traffic can use to access server
+   * processes in the fleet. Game server processes that are running in the fleet must
+   * use a port that falls within this range. </p> <p>Use this operation in the
+   * following ways: </p> <ul> <li> <p>To retrieve the port settings for a fleet,
+   * identify the fleet's unique identifier. </p> </li> <li> <p>To check the status
+   * of recent updates to a fleet remote location, specify the fleet ID and a
    * location. Port setting updates can take time to propagate across all locations.
    * </p> </li> </ul> <p>If successful, a set of <code>IpPermission</code> objects is
    * returned for the requested fleet ID. When specifying a location, this operation
@@ -2446,11 +2448,11 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
-   * <p>Retrieves utilization statistics for one or more fleets. Utilization data
-   * provides a snapshot of how the fleet's hosting resources are currently being
-   * used. For fleets with remote locations, this operation retrieves data for the
-   * fleet's home Region only. See <a
+   * <p> <b>This API works with the following fleet types:</b> EC2</p> <p>Retrieves
+   * utilization statistics for one or more fleets. Utilization data provides a
+   * snapshot of how the fleet's hosting resources are currently being used. For
+   * fleets with remote locations, this operation retrieves data for the fleet's home
+   * Region only. See <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetLocationUtilization.html">DescribeFleetLocationUtilization</a>
    * to get utilization statistics for a fleet's remote locations.</p> <p>This
    * operation can be used in the following ways: </p> <ul> <li> <p>To get
@@ -2611,10 +2613,10 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   /**
    * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere,
    * Container</p> <p>Retrieves additional game session properties, including the
-   * game session protection policy in force, a set of one or more game sessions in a
-   * specific fleet location. You can optionally filter the results by current game
-   * session status.</p> <p>This operation can be used in the following ways: </p>
-   * <ul> <li> <p>To retrieve details for all game sessions that are currently
+   * game session protection policy in force, for a set of one or more game sessions
+   * in a specific fleet location. You can optionally filter the results by current
+   * game session status.</p> <p>This operation can be used in the following ways:
+   * </p> <ul> <li> <p>To retrieve details for all game sessions that are currently
    * running on all locations in a fleet, provide a fleet or alias ID, with an
    * optional status filter. This approach returns details from the fleet's home
    * Region and all remote locations.</p> </li> <li> <p>To retrieve details for all
@@ -2790,7 +2792,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b>EC2, Container</p>
+   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
    * <p>Retrieves information about the EC2 instances in an Amazon GameLift Servers
    * managed fleet, including instance ID, connection data, and status. You can use
    * this operation with a multi-location fleet to get location-specific instance
@@ -3042,15 +3044,15 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2</p> <p>Retrieves
-   * all scaling policies applied to a fleet.</p> <p>To get a fleet's scaling
-   * policies, specify the fleet ID. You can filter this request by policy status,
-   * such as to retrieve only active scaling policies. Use the pagination parameters
-   * to retrieve results as a set of sequential pages. If successful, set of
-   * <code>ScalingPolicy</code> objects is returned for the fleet.</p> <p>A fleet may
-   * have all of its scaling policies suspended. This operation does not affect the
-   * status of the scaling policies, which remains ACTIVE.</p><p><h3>See Also:</h3>
-   * <a
+   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
+   * <p>Retrieves all scaling policies applied to a fleet.</p> <p>To get a fleet's
+   * scaling policies, specify the fleet ID. You can filter this request by policy
+   * status, such as to retrieve only active scaling policies. Use the pagination
+   * parameters to retrieve results as a set of sequential pages. If successful, set
+   * of <code>ScalingPolicy</code> objects is returned for the fleet.</p> <p>A fleet
+   * may have all of its scaling policies suspended. This operation does not affect
+   * the status of the scaling policies, which remains ACTIVE.</p><p><h3>See
+   * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/gamelift-2015-10-01/DescribeScalingPolicies">AWS
    * API Reference</a></p>
    */
@@ -3683,16 +3685,16 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * Services Region. You can filter the result set to find only those fleets that
    * are deployed with a specific build or script. For fleets that have multiple
    * locations, this operation retrieves fleets based on their home Region only.</p>
-   * <p>You can use operation in the following ways: </p> <ul> <li> <p>To get a list
-   * of all fleets in a Region, don't provide a build or script identifier.</p> </li>
-   * <li> <p>To get a list of all fleets where a specific game build is deployed,
-   * provide the build ID.</p> </li> <li> <p>To get a list of all Amazon GameLift
-   * Servers Realtime fleets with a specific configuration script, provide the script
-   * ID. </p> </li> </ul> <p>Use the pagination parameters to retrieve results as a
-   * set of sequential pages. </p> <p>If successful, this operation returns a list of
-   * fleet IDs that match the request parameters. A NextToken value is also returned
-   * if there are more result pages to retrieve.</p>  <p>Fleet IDs are returned
-   * in no particular order.</p> <p><h3>See Also:</h3>   <a
+   * <p>You can use this operation in the following ways: </p> <ul> <li> <p>To get a
+   * list of all fleets in a Region, don't provide a build or script identifier.</p>
+   * </li> <li> <p>To get a list of all fleets where a specific game build is
+   * deployed, provide the build ID.</p> </li> <li> <p>To get a list of all Amazon
+   * GameLift Servers Realtime fleets with a specific configuration script, provide
+   * the script ID. </p> </li> </ul> <p>Use the pagination parameters to retrieve
+   * results as a set of sequential pages. </p> <p>If successful, this operation
+   * returns a list of fleet IDs that match the request parameters. A NextToken value
+   * is also returned if there are more result pages to retrieve.</p>  <p>Fleet
+   * IDs are returned in no particular order.</p> <p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/gamelift-2015-10-01/ListFleets">AWS
    * API Reference</a></p>
    */
@@ -3719,7 +3721,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
 
   /**
    * <p> <b>This API works with the following fleet types:</b> EC2 (FleetIQ)</p>
-   * <p>Lists a game server groups.</p><p><h3>See Also:</h3>   <a
+   * <p>Lists game server groups.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/gamelift-2015-10-01/ListGameServerGroups">AWS
    * API Reference</a></p>
    */
@@ -3883,19 +3885,19 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2</p> <p>Creates or
-   * updates a scaling policy for a fleet. Scaling policies are used to automatically
-   * scale a fleet's hosting capacity to meet player demand. An active scaling policy
-   * instructs Amazon GameLift Servers to track a fleet metric and automatically
-   * change the fleet's capacity when a certain threshold is reached. There are two
-   * types of scaling policies: target-based and rule-based. Use a target-based
-   * policy to quickly and efficiently manage fleet scaling; this option is the most
-   * commonly used. Use rule-based policies when you need to exert fine-grained
-   * control over auto-scaling. </p> <p>Fleets can have multiple scaling policies of
-   * each type in force at the same time; you can have one target-based policy, one
-   * or multiple rule-based scaling policies, or both. We recommend caution, however,
-   * because multiple auto-scaling policies can have unintended consequences.</p>
-   * <p>Learn more about how to work with auto-scaling in <a
+   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
+   * <p>Creates or updates a scaling policy for a fleet. Scaling policies are used to
+   * automatically scale a fleet's hosting capacity to meet player demand. An active
+   * scaling policy instructs Amazon GameLift Servers to track a fleet metric and
+   * automatically change the fleet's capacity when a certain threshold is reached.
+   * There are two types of scaling policies: target-based and rule-based. Use a
+   * target-based policy to quickly and efficiently manage fleet scaling; this option
+   * is the most commonly used. Use rule-based policies when you need to exert
+   * fine-grained control over auto-scaling. </p> <p>Fleets can have multiple scaling
+   * policies of each type in force at the same time; you can have one target-based
+   * policy, one or multiple rule-based scaling policies, or both. We recommend
+   * caution, however, because multiple auto-scaling policies can have unintended
+   * consequences.</p> <p>Learn more about how to work with auto-scaling in <a
    * href="https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-autoscaling.html">Set
    * Up Fleet Automatic Scaling</a>.</p> <p> <b>Target-based policy</b> </p> <p>A
    * target-based policy tracks a single metric: PercentAvailableGameSessions. This
@@ -3964,21 +3966,21 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> Anywhere,
-   * Container</p> <p>Registers a compute resource in an Amazon GameLift Servers
-   * Anywhere fleet. </p> <p>For an Anywhere fleet that's running the Amazon GameLift
-   * Servers Agent, the Agent handles all compute registry tasks for you. For an
-   * Anywhere fleet that doesn't use the Agent, call this operation to register fleet
-   * computes.</p> <p>To register a compute, give the compute a name (must be unique
-   * within the fleet) and specify the compute resource's DNS name or IP address.
-   * Provide a fleet ID and a fleet location to associate with the compute being
-   * registered. You can optionally include the path to a TLS certificate on the
-   * compute resource.</p> <p>If successful, this operation returns compute details,
-   * including an Amazon GameLift Servers SDK endpoint or Agent endpoint. Game server
-   * processes running on the compute can use this endpoint to communicate with the
-   * Amazon GameLift Servers service. Each server process includes the SDK endpoint
-   * in its call to the Amazon GameLift Servers server SDK action
-   * <code>InitSDK()</code>. </p> <p>To view compute details, call <a
+   * <p> <b>This API works with the following fleet types:</b> Anywhere</p>
+   * <p>Registers a compute resource in an Amazon GameLift Servers Anywhere fleet.
+   * </p> <p>For an Anywhere fleet that's running the Amazon GameLift Servers Agent,
+   * the Agent handles all compute registry tasks for you. For an Anywhere fleet that
+   * doesn't use the Agent, call this operation to register fleet computes.</p> <p>To
+   * register a compute, give the compute a name (must be unique within the fleet)
+   * and specify the compute resource's DNS name or IP address. Provide a fleet ID
+   * and a fleet location to associate with the compute being registered. You can
+   * optionally include the path to a TLS certificate on the compute resource.</p>
+   * <p>If successful, this operation returns compute details, including an Amazon
+   * GameLift Servers SDK endpoint or Agent endpoint. Game server processes running
+   * on the compute can use this endpoint to communicate with the Amazon GameLift
+   * Servers service. Each server process includes the SDK endpoint in its call to
+   * the Amazon GameLift Servers server SDK action <code>InitSDK()</code>. </p> <p>To
+   * view compute details, call <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeCompute.html">DescribeCompute</a>
    * with the compute name. </p> <p> <b>Learn more</b> </p> <ul> <li> <p> <a
    * href="https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-anywhere.html">Create
@@ -4197,7 +4199,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * pairs that can store custom data in a game session. For example: <code>{"Key":
    * "difficulty", "Value": "novice"}</code>. The filter expression must specify the
    * <a
-   * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_GameProperty">https://docs.aws.amazon.com/gamelift/latest/apireference/API_GameProperty</a>
+   * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_GameProperty.html">GameProperty</a>
    * -- a <code>Key</code> and a string <code>Value</code> to search for the game
    * sessions.</p> <p>For example, to search for the above key-value pair, specify
    * the following search filter: <code>gameSessionProperties.difficulty =
@@ -4319,7 +4321,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * <code>MaximumPlayerSessionCount</code>, <code>PlacementID</code>.</p> </li> <li>
    * <p> <code>PlayerLatencies</code>. Include a set of latency values for
    * destinations in the queue. When a request includes latency data, Amazon GameLift
-   * Servers automatically reorder the queue's locations priority list based on
+   * Servers automatically reorders the queue's locations priority list based on
    * lowest available latency values. If a request includes latency data for multiple
    * players, Amazon GameLift Servers calculates each location's average latency for
    * all players and reorders to find the lowest latency across all players. </p>
@@ -4334,7 +4336,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * hosting resource for the new game session. Specify a fallback strategy to use in
    * the event that Amazon GameLift Servers fails to place the game session in any of
    * the locations on the override list. </p> </li> </ul> </li> <li> <p>Request a
-   * placement and prioritized based on a custom list of locations. </p> </li> <li>
+   * placement and prioritize based on a custom list of locations. </p> </li> <li>
    * <p>You can request new player sessions for a group of players. Include the
    * <i>DesiredPlayerSessions</i> parameter and include at minimum a unique player ID
    * for each. You can also include player-specific data to pass to the new game
@@ -4389,7 +4391,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * forming new matches. Backfill requests use the same matchmaker that was used to
    * make the original match, and they provide matchmaking data for all players
    * currently in the game session. FlexMatch uses this information to select new
-   * players so that backfilled match continues to meet the original match
+   * players so that the backfilled match continues to meet the original match
    * requirements. </p> <p>When using FlexMatch with Amazon GameLift Servers managed
    * hosting, you can request a backfill match from a client service by calling this
    * operation with a <code>GameSessions</code> ID. You also have the option of
@@ -4540,7 +4542,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * status. To stop a placement, provide the placement ID value. </p> <p>Results</p>
    * <p>If successful, this operation removes the placement request from the queue
    * and moves the <code>GameSessionPlacement</code> to <code>CANCELLED</code>
-   * status.</p> <p>This operation results in an <code>InvalidRequestExecption</code>
+   * status.</p> <p>This operation results in an <code>InvalidRequestException</code>
    * (400) error if a game session has already been created for this placement. You
    * can clean up an unneeded game session by calling <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_TerminateGameSession">TerminateGameSession</a>.</p><p><h3>See
@@ -4870,7 +4872,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * can track deployments for a fleet using <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetDeployment.html">https://docs.aws.amazon.com/gamelift/latest/apireference/API_DescribeFleetDeployment.html</a>.</p>
    *  <p>A managed fleet's runtime environment, which depends on the fleet's
-   * Amazon Machine Image {AMI} version, can't be updated. You must create a new
+   * Amazon Machine Image (AMI) version, can't be updated. You must create a new
    * fleet. As a best practice, we recommend replacing your managed fleets every 30
    * days to maintain a secure and up-to-date runtime environment for your hosted
    * game servers. For guidance, see <a
@@ -4894,7 +4896,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * initiate a new deployment of fleet resources using the deployment configuration
    * provided. A deployment replaces existing fleet instances with new instances that
    * are deployed with the updated fleet properties. The fleet is placed in
-   * <code>UPDATING</code> status until the deployment is complete, then return to
+   * <code>UPDATING</code> status until the deployment is complete, then returns to
    * <code>ACTIVE</code>. </p> <p>You can have only one update deployment active at a
    * time for a fleet. If a second update request initiates a deployment while
    * another deployment is in progress, the first deployment is
@@ -4944,11 +4946,17 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * including the updated definition.</p> </li> <li> <p>Remove a support container
    * definition. Provide a complete set of container definitions, excluding the
    * definition to remove. If the container group has only one support container
-   * definition, provide an empty set.</p> </li> </ul> <p> <b>Results:</b> </p> <p>If
-   * successful, this operation returns the complete properties of the new container
-   * group definition version.</p> <p>If the container group definition version is
-   * used in an active fleets, the update automatically initiates a new fleet
-   * deployment of the new version. You can track a fleet's deployments using <a
+   * definition, provide an empty set.</p> </li> <li> <p>Remove the total vCPU limit
+   * from a game server container group so that its containers can use up to the
+   * instance's available vCPU. Set <code>RemoveAttributes</code> to
+   * <code>TOTAL_VCPU_LIMIT</code>. The game server container must have a
+   * <code>Vcpu</code> value, because a game server container group needs either a
+   * total vCPU limit or a game server <code>Vcpu</code> value.</p> </li> </ul> <p>
+   * <b>Results:</b> </p> <p>If successful, this operation returns the complete
+   * properties of the new container group definition version.</p> <p>If the
+   * container group definition version is used in an active fleet, the update
+   * automatically initiates a new fleet deployment of the new version. You can track
+   * a fleet's deployments using <a
    * href="https://docs.aws.amazon.com/gamelift/latest/apireference/API_ListFleetDeployments.html">ListFleetDeployments</a>.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/gamelift-2015-10-01/UpdateContainerGroupDefinition">AWS
@@ -4979,16 +4987,16 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere,
-   * Container</p> <p>Updates a fleet's mutable attributes, such as game session
-   * protection and resource creation limits.</p> <p>To update fleet attributes,
-   * specify the fleet ID and the property values that you want to change. If
-   * successful, Amazon GameLift Servers returns the identifiers for the updated
-   * fleet.</p>  <p>A managed fleet's runtime environment, which depends on the
-   * fleet's Amazon Machine Image {AMI} version, can't be updated. You must create a
-   * new fleet. As a best practice, we recommend replacing your managed fleets every
-   * 30 days to maintain a secure and up-to-date runtime environment for your hosted
-   * game servers. For guidance, see <a
+   * <p> <b>This API works with the following fleet types:</b> EC2, Anywhere</p>
+   * <p>Updates a fleet's mutable attributes, such as game session protection and
+   * resource creation limits.</p> <p>To update fleet attributes, specify the fleet
+   * ID and the property values that you want to change. If successful, Amazon
+   * GameLift Servers returns the identifiers for the updated fleet.</p>  <p>A
+   * managed fleet's runtime environment, which depends on the fleet's Amazon Machine
+   * Image (AMI) version, can't be updated. You must create a new fleet. As a best
+   * practice, we recommend replacing your managed fleets every 30 days to maintain a
+   * secure and up-to-date runtime environment for your hosted game servers. For
+   * guidance, see <a
    * href="https://docs.aws.amazon.com/gameliftservers/latest/developerguide/security-best-practices.html">
    * Security best practices for Amazon GameLift Servers</a>.</p>  <p>
    * <b>Learn more</b> </p> <p> <a
@@ -5092,10 +5100,10 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
   }
 
   /**
-   * <p> <b>This API works with the following fleet types:</b> EC2, Container</p>
-   * <p>Updates permissions that allow inbound traffic to connect to game sessions in
-   * the fleet. </p> <p>To update settings, specify the fleet ID to be updated and
-   * specify the changes to be made. List the permissions you want to add in
+   * <p> <b>This API works with the following fleet types:</b> EC2</p> <p>Updates
+   * permissions that allow inbound traffic to connect to game sessions in the fleet.
+   * </p> <p>To update settings, specify the fleet ID to be updated and specify the
+   * changes to be made. List the permissions you want to add in
    * <code>InboundPermissionAuthorizations</code>, and permissions you want to remove
    * in <code>InboundPermissionRevocations</code>. Permissions to be removed must
    * match existing fleet permissions. </p> <p>If successful, the fleet identifiers
@@ -5142,7 +5150,7 @@ class AWS_GAMELIFT_API GameLiftClient : public Aws::Client::AWSRpcV2CborClient,
    * the game server is available to be claimed) to <code>UTILIZED</code> (when the
    * game server is currently hosting games). Identify the game server and game
    * server group and specify the new utilization status. You can't change the status
-   * from to <code>UTILIZED</code> to <code>AVAILABLE</code> .</p> </li> <li> <p>To
+   * from <code>UTILIZED</code> to <code>AVAILABLE</code> .</p> </li> <li> <p>To
    * report health status, identify the game server and game server group and set
    * health check to <code>HEALTHY</code>. If a game server does not report health
    * status for a certain length of time, the game server is no longer considered

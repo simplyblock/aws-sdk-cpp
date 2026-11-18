@@ -54,6 +54,22 @@ Assets& Assets::operator=(JsonView jsonValue) {
     }
     m_integratedRepositoriesHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("trustedCaCertificates")) {
+    Aws::Utils::Array<JsonView> trustedCaCertificatesJsonList = jsonValue.GetArray("trustedCaCertificates");
+    for (unsigned trustedCaCertificatesIndex = 0; trustedCaCertificatesIndex < trustedCaCertificatesJsonList.GetLength();
+         ++trustedCaCertificatesIndex) {
+      m_trustedCaCertificates.push_back(trustedCaCertificatesJsonList[trustedCaCertificatesIndex].AsObject());
+    }
+    m_trustedCaCertificatesHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("clientCertificates")) {
+    Aws::Utils::Array<JsonView> clientCertificatesJsonList = jsonValue.GetArray("clientCertificates");
+    for (unsigned clientCertificatesIndex = 0; clientCertificatesIndex < clientCertificatesJsonList.GetLength();
+         ++clientCertificatesIndex) {
+      m_clientCertificates.push_back(clientCertificatesJsonList[clientCertificatesIndex].AsObject());
+    }
+    m_clientCertificatesHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -99,6 +115,24 @@ JsonValue Assets::Jsonize() const {
       integratedRepositoriesJsonList[integratedRepositoriesIndex].AsObject(m_integratedRepositories[integratedRepositoriesIndex].Jsonize());
     }
     payload.WithArray("integratedRepositories", std::move(integratedRepositoriesJsonList));
+  }
+
+  if (m_trustedCaCertificatesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> trustedCaCertificatesJsonList(m_trustedCaCertificates.size());
+    for (unsigned trustedCaCertificatesIndex = 0; trustedCaCertificatesIndex < trustedCaCertificatesJsonList.GetLength();
+         ++trustedCaCertificatesIndex) {
+      trustedCaCertificatesJsonList[trustedCaCertificatesIndex].AsObject(m_trustedCaCertificates[trustedCaCertificatesIndex].Jsonize());
+    }
+    payload.WithArray("trustedCaCertificates", std::move(trustedCaCertificatesJsonList));
+  }
+
+  if (m_clientCertificatesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> clientCertificatesJsonList(m_clientCertificates.size());
+    for (unsigned clientCertificatesIndex = 0; clientCertificatesIndex < clientCertificatesJsonList.GetLength();
+         ++clientCertificatesIndex) {
+      clientCertificatesJsonList[clientCertificatesIndex].AsObject(m_clientCertificates[clientCertificatesIndex].Jsonize());
+    }
+    payload.WithArray("clientCertificates", std::move(clientCertificatesJsonList));
   }
 
   return payload;

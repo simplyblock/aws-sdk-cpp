@@ -28,6 +28,7 @@
 #include <aws/acm/model/ListAcmeDomainValidationsRequest.h>
 #include <aws/acm/model/ListAcmeEndpointsRequest.h>
 #include <aws/acm/model/ListAcmeExternalAccountBindingsRequest.h>
+#include <aws/acm/model/ListCertificateDomainValidationsRequest.h>
 #include <aws/acm/model/ListCertificatesRequest.h>
 #include <aws/acm/model/ListTagsForCertificateRequest.h>
 #include <aws/acm/model/ListTagsForResourceRequest.h>
@@ -192,7 +193,8 @@ ACMClient::InvokeOperationOutcome ACMClient::InvokeServiceOperation(const Amazon
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -204,7 +206,7 @@ ACMClient::InvokeOperationOutcome ACMClient::InvokeServiceOperation(const Amazon
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -342,6 +344,13 @@ ListAcmeExternalAccountBindingsOutcome ACMClient::ListAcmeExternalAccountBinding
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? ListAcmeExternalAccountBindingsOutcome(result.GetResultWithOwnership())
                             : ListAcmeExternalAccountBindingsOutcome(std::move(result.GetError()));
+}
+
+ListCertificateDomainValidationsOutcome ACMClient::ListCertificateDomainValidations(
+    const ListCertificateDomainValidationsRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListCertificateDomainValidationsOutcome(result.GetResultWithOwnership())
+                            : ListCertificateDomainValidationsOutcome(std::move(result.GetError()));
 }
 
 ListCertificatesOutcome ACMClient::ListCertificates(const ListCertificatesRequest& request) const {

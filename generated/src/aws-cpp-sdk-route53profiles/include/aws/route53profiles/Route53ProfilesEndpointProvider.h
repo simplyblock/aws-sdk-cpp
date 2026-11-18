@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/route53profiles/Route53ProfilesEndpointRules.h>
 #include <aws/route53profiles/Route53Profiles_EXPORTS.h>
 
 namespace Aws {
 namespace Route53Profiles {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using Route53ProfilesClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using Route53ProfilesEndpointProviderBase =
     EndpointProviderBase<Route53ProfilesClientConfiguration, Route53ProfilesBuiltInParameters, Route53ProfilesClientContextParameters>;
 
 using Route53ProfilesDefaultEpProviderBase =
-    DefaultEndpointProvider<Route53ProfilesClientConfiguration, Route53ProfilesBuiltInParameters, Route53ProfilesClientContextParameters>;
+    BDDEndpointProvider<Route53ProfilesClientConfiguration, Route53ProfilesBuiltInParameters, Route53ProfilesClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_ROUTE53PROFILES_API Route53ProfilesEndpointProvider : public Route53Pr
  public:
   using Route53ProfilesResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  Route53ProfilesEndpointProvider()
-      : Route53ProfilesDefaultEpProviderBase(Aws::Route53Profiles::Route53ProfilesEndpointRules::GetRulesBlob(),
-                                             Aws::Route53Profiles::Route53ProfilesEndpointRules::RulesBlobSize) {}
+  Route53ProfilesEndpointProvider();
 
   ~Route53ProfilesEndpointProvider() {}
 };

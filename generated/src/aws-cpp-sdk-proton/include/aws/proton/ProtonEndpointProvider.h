@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/proton/ProtonEndpointRules.h>
 #include <aws/proton/Proton_EXPORTS.h>
 
 namespace Aws {
 namespace Proton {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ProtonClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,8 +30,7 @@ using ProtonBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using ProtonEndpointProviderBase = EndpointProviderBase<ProtonClientConfiguration, ProtonBuiltInParameters, ProtonClientContextParameters>;
 
-using ProtonDefaultEpProviderBase =
-    DefaultEndpointProvider<ProtonClientConfiguration, ProtonBuiltInParameters, ProtonClientContextParameters>;
+using ProtonDefaultEpProviderBase = BDDEndpointProvider<ProtonClientConfiguration, ProtonBuiltInParameters, ProtonClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -41,8 +39,7 @@ class AWS_PROTON_API ProtonEndpointProvider : public ProtonDefaultEpProviderBase
  public:
   using ProtonResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ProtonEndpointProvider()
-      : ProtonDefaultEpProviderBase(Aws::Proton::ProtonEndpointRules::GetRulesBlob(), Aws::Proton::ProtonEndpointRules::RulesBlobSize) {}
+  ProtonEndpointProvider();
 
   ~ProtonEndpointProvider() {}
 };

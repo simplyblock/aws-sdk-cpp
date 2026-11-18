@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -8,6 +8,7 @@
 
 #include <aws/route53/Route53ClientPagination.h>
 #include <aws/route53/Route53PaginationBase.h>
+#include <aws/route53/model/ListResourceRecordSetProtectionsPaginationTraits.h>
 #include <aws/route53/model/ListCidrLocationsPaginationTraits.h>
 #include <aws/route53/model/ListHostedZonesPaginationTraits.h>
 #include <aws/route53/model/ListCidrCollectionsPaginationTraits.h>
@@ -23,6 +24,6 @@ class Route53PaginationCompilationTest : public Aws::Testing::AwsCppSdkGTestSuit
 
 TEST_F(Route53PaginationCompilationTest, Route53PaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

@@ -19,10 +19,6 @@ namespace deadline {
 namespace Model {
 
 /**
- * <p>Shared pagination fields for List operation inputs (nextToken +
- * maxResults).</p><p><h3>See Also:</h3>   <a
- * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/ListQueuesRequest">AWS
- * API Reference</a></p>
  */
 class ListQueuesRequest : public DeadlineRequest {
  public:
@@ -112,9 +108,9 @@ class ListQueuesRequest : public DeadlineRequest {
 
   ///@{
   /**
-   * <p>The status of the queues listed.</p> <ul> <li> <p> <code>ACTIVE</code>–The
-   * queues are active.</p> </li> <li> <p> <code>SCHEDULING</code>–The queues are
-   * scheduling.</p> </li> <li> <p> <code>SCHEDULING_BLOCKED</code>–The queue
+   * <p>The status of the queues listed.</p> <ul> <li> <p> <code>ACTIVE</code> - The
+   * queues are active.</p> </li> <li> <p> <code>SCHEDULING</code> - The queues are
+   * scheduling.</p> </li> <li> <p> <code>SCHEDULING_BLOCKED</code> - The queue
    * scheduling is blocked for these queues.</p> </li> </ul>
    */
   inline QueueStatus GetStatus() const { return m_status; }

@@ -50,6 +50,8 @@ static const int FunctionError_PermissionDenied_HASH = HashingUtils::HashString(
 static const int FunctionError_TooManyExtensions_HASH = HashingUtils::HashString("FunctionError.TooManyExtensions");
 static const int FunctionError_InitResourceExhausted_HASH = HashingUtils::HashString("FunctionError.InitResourceExhausted");
 static const int DisallowedByVpcEncryptionControl_HASH = HashingUtils::HashString("DisallowedByVpcEncryptionControl");
+static const int IncompatibleAcceleratorInstanceTypes_HASH = HashingUtils::HashString("IncompatibleAcceleratorInstanceTypes");
+static const int DependencyError_HASH = HashingUtils::HashString("DependencyError");
 
 LastUpdateStatusReasonCode GetLastUpdateStatusReasonCodeForName(const Aws::String& name) {
   int hashCode = HashingUtils::HashString(name.c_str());
@@ -123,6 +125,10 @@ LastUpdateStatusReasonCode GetLastUpdateStatusReasonCodeForName(const Aws::Strin
     return LastUpdateStatusReasonCode::FunctionError_InitResourceExhausted;
   } else if (hashCode == DisallowedByVpcEncryptionControl_HASH) {
     return LastUpdateStatusReasonCode::DisallowedByVpcEncryptionControl;
+  } else if (hashCode == IncompatibleAcceleratorInstanceTypes_HASH) {
+    return LastUpdateStatusReasonCode::IncompatibleAcceleratorInstanceTypes;
+  } else if (hashCode == DependencyError_HASH) {
+    return LastUpdateStatusReasonCode::DependencyError;
   }
   EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
   if (overflowContainer) {
@@ -207,6 +213,10 @@ Aws::String GetNameForLastUpdateStatusReasonCode(LastUpdateStatusReasonCode enum
       return "FunctionError.InitResourceExhausted";
     case LastUpdateStatusReasonCode::DisallowedByVpcEncryptionControl:
       return "DisallowedByVpcEncryptionControl";
+    case LastUpdateStatusReasonCode::IncompatibleAcceleratorInstanceTypes:
+      return "IncompatibleAcceleratorInstanceTypes";
+    case LastUpdateStatusReasonCode::DependencyError:
+      return "DependencyError";
     default:
       EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
       if (overflowContainer) {

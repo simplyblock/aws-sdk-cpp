@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/datasync/DataSyncEndpointRules.h>
 #include <aws/datasync/DataSync_EXPORTS.h>
 
 namespace Aws {
 namespace DataSync {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using DataSyncClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using DataSyncEndpointProviderBase =
     EndpointProviderBase<DataSyncClientConfiguration, DataSyncBuiltInParameters, DataSyncClientContextParameters>;
 
 using DataSyncDefaultEpProviderBase =
-    DefaultEndpointProvider<DataSyncClientConfiguration, DataSyncBuiltInParameters, DataSyncClientContextParameters>;
+    BDDEndpointProvider<DataSyncClientConfiguration, DataSyncBuiltInParameters, DataSyncClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_DATASYNC_API DataSyncEndpointProvider : public DataSyncDefaultEpProvid
  public:
   using DataSyncResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  DataSyncEndpointProvider()
-      : DataSyncDefaultEpProviderBase(Aws::DataSync::DataSyncEndpointRules::GetRulesBlob(),
-                                      Aws::DataSync::DataSyncEndpointRules::RulesBlobSize) {}
+  DataSyncEndpointProvider();
 
   ~DataSyncEndpointProvider() {}
 };

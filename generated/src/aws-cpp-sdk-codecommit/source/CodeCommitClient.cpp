@@ -30,6 +30,7 @@
 #include <aws/codecommit/model/DisassociateApprovalRuleTemplateFromRepositoryRequest.h>
 #include <aws/codecommit/model/EvaluatePullRequestApprovalRulesRequest.h>
 #include <aws/codecommit/model/GetApprovalRuleTemplateRequest.h>
+#include <aws/codecommit/model/GetBlobDifferencesRequest.h>
 #include <aws/codecommit/model/GetBlobRequest.h>
 #include <aws/codecommit/model/GetBranchRequest.h>
 #include <aws/codecommit/model/GetCommentReactionsRequest.h>
@@ -234,7 +235,8 @@ CodeCommitClient::InvokeOperationOutcome CodeCommitClient::InvokeServiceOperatio
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -246,7 +248,7 @@ CodeCommitClient::InvokeOperationOutcome CodeCommitClient::InvokeServiceOperatio
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -401,6 +403,12 @@ GetApprovalRuleTemplateOutcome CodeCommitClient::GetApprovalRuleTemplate(const G
 GetBlobOutcome CodeCommitClient::GetBlob(const GetBlobRequest& request) const {
   auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? GetBlobOutcome(result.GetResultWithOwnership()) : GetBlobOutcome(std::move(result.GetError()));
+}
+
+GetBlobDifferencesOutcome CodeCommitClient::GetBlobDifferences(const GetBlobDifferencesRequest& request) const {
+  auto result = InvokeServiceOperation(request, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? GetBlobDifferencesOutcome(result.GetResultWithOwnership())
+                            : GetBlobDifferencesOutcome(std::move(result.GetError()));
 }
 
 GetBranchOutcome CodeCommitClient::GetBranch(const GetBranchRequest& request) const {

@@ -78,6 +78,19 @@ StreamDescriptionSummary& StreamDescriptionSummary::operator=(JsonView jsonValue
     m_maxRecordSizeInKiB = jsonValue.GetInteger("MaxRecordSizeInKiB");
     m_maxRecordSizeInKiBHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("ChannelCount")) {
+    m_channelCount = jsonValue.GetInteger("ChannelCount");
+    m_channelCountHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("RecordDistributionStrategy")) {
+    m_recordDistributionStrategy =
+        RecordDistributionStrategyMapper::GetRecordDistributionStrategyForName(jsonValue.GetString("RecordDistributionStrategy"));
+    m_recordDistributionStrategyHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("QueueCount")) {
+    m_queueCount = jsonValue.GetInteger("QueueCount");
+    m_queueCountHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -143,6 +156,19 @@ JsonValue StreamDescriptionSummary::Jsonize() const {
 
   if (m_maxRecordSizeInKiBHasBeenSet) {
     payload.WithInteger("MaxRecordSizeInKiB", m_maxRecordSizeInKiB);
+  }
+
+  if (m_channelCountHasBeenSet) {
+    payload.WithInteger("ChannelCount", m_channelCount);
+  }
+
+  if (m_recordDistributionStrategyHasBeenSet) {
+    payload.WithString("RecordDistributionStrategy",
+                       RecordDistributionStrategyMapper::GetNameForRecordDistributionStrategy(m_recordDistributionStrategy));
+  }
+
+  if (m_queueCountHasBeenSet) {
+    payload.WithInteger("QueueCount", m_queueCount);
   }
 
   return payload;

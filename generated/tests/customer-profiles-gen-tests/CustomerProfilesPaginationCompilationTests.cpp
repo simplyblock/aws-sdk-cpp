@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0.
  */
@@ -18,6 +18,7 @@
 #include <aws/customer-profiles/model/ListObjectTypeAttributesPaginationTraits.h>
 #include <aws/customer-profiles/model/ListRecommenderRecipesPaginationTraits.h>
 #include <aws/customer-profiles/model/ListDomainLayoutsPaginationTraits.h>
+#include <aws/customer-profiles/model/ListSegmentSubscriptionEventsPaginationTraits.h>
 #include <aws/customer-profiles/model/ListEventStreamsPaginationTraits.h>
 #include <aws/customer-profiles/model/ListUploadJobsPaginationTraits.h>
 #include <aws/customer-profiles/model/GetSimilarProfilesPaginationTraits.h>
@@ -30,6 +31,6 @@ class CustomerProfilesPaginationCompilationTest : public Aws::Testing::AwsCppSdk
 
 TEST_F(CustomerProfilesPaginationCompilationTest, CustomerProfilesPaginationHeadersCompile)
 {
-        // Test passes if compilation succeeds
-        SUCCEED();
+      // Test passes if compilation succeeds
+      SUCCEED();
 }

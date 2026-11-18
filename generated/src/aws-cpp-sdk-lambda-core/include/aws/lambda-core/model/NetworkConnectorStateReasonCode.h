@@ -16,8 +16,10 @@ enum class NetworkConnectorStateReasonCode {
   Ec2RequestLimitExceeded,
   InsufficientRolePermissions,
   InternalError,
+  InternetGatewayNotAttached,
   InvalidSecurityGroup,
   InvalidSubnet,
+  SecurityGroupsPerInterfaceLimitExceeded,
   SubnetOutOfIPAddresses
 };
 

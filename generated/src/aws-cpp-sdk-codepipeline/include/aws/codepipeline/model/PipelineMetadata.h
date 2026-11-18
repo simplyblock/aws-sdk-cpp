@@ -7,15 +7,15 @@
 #include <aws/codepipeline/CodePipeline_EXPORTS.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 namespace Aws {
 namespace Utils {
-namespace Json {
-class JsonValue;
-class JsonView;
-}  // namespace Json
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
 }  // namespace Utils
 namespace CodePipeline {
 namespace Model {
@@ -28,9 +28,9 @@ namespace Model {
 class PipelineMetadata {
  public:
   AWS_CODEPIPELINE_API PipelineMetadata() = default;
-  AWS_CODEPIPELINE_API PipelineMetadata(Aws::Utils::Json::JsonView jsonValue);
-  AWS_CODEPIPELINE_API PipelineMetadata& operator=(Aws::Utils::Json::JsonView jsonValue);
-  AWS_CODEPIPELINE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  AWS_CODEPIPELINE_API PipelineMetadata(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CODEPIPELINE_API PipelineMetadata& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CODEPIPELINE_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
 
   ///@{
   /**
@@ -102,8 +102,8 @@ class PipelineMetadata {
    * you migrate (update) your pipeline to use CloudWatch Events. To learn more, see
    * <a
    * href="https://docs.aws.amazon.com/codepipeline/latest/userguide/update-change-detection.html">Migrate
-   * polling pipelines to use event-based change detection</a> in the <i>CodePipeline
-   * User Guide</i>.</p>
+   * polling pipelines to use event-based change detection</a> in the <i>
+   * CodePipeline User Guide</i>.</p>
    */
   inline const Aws::Utils::DateTime& GetPollingDisabledAt() const { return m_pollingDisabledAt; }
   inline bool PollingDisabledAtHasBeenSet() const { return m_pollingDisabledAtHasBeenSet; }

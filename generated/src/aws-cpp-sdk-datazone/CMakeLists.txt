@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-datazone "C++ SDK for the AWS datazone service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-datazone "C++ SDK for Amazon DataZone" aws-cpp-sdk-core)
 
 file(GLOB AWS_DATAZONE_HEADERS
     "include/aws/datazone/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_DATAZONE_HEADERS
 
 file(GLOB AWS_DATAZONE_MODEL_HEADERS
     "include/aws/datazone/model/*.h"
+)
+
+file(GLOB AWS_DATAZONE_INTERNAL_HEADERS
+    "include/aws/datazone/internal/*.h"
 )
 
 file(GLOB AWS_DATAZONE_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_DATAZONE_MODEL_SOURCE
 
 file(GLOB DATAZONE_UNIFIED_HEADERS
     ${AWS_DATAZONE_HEADERS}
+    ${AWS_DATAZONE_INTERNAL_HEADERS}
     ${AWS_DATAZONE_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\datazone" FILES ${AWS_DATAZONE_HEADERS})
+        source_group("Header Files\\aws\\datazone\\internal" FILES ${AWS_DATAZONE_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\datazone\\model" FILES ${AWS_DATAZONE_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_DATAZONE_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_DATAZONE_MODEL_SOURCE})

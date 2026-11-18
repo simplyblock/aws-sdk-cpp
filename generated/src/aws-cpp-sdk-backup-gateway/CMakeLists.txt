@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-backup-gateway "C++ SDK for the AWS backup-gateway service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-backup-gateway "C++ SDK for AWS Backup Gateway" aws-cpp-sdk-core)
 
 file(GLOB AWS_BACKUP-GATEWAY_HEADERS
     "include/aws/backup-gateway/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_BACKUP-GATEWAY_HEADERS
 
 file(GLOB AWS_BACKUP-GATEWAY_MODEL_HEADERS
     "include/aws/backup-gateway/model/*.h"
+)
+
+file(GLOB AWS_BACKUP-GATEWAY_INTERNAL_HEADERS
+    "include/aws/backup-gateway/internal/*.h"
 )
 
 file(GLOB AWS_BACKUP-GATEWAY_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_BACKUP-GATEWAY_MODEL_SOURCE
 
 file(GLOB BACKUP-GATEWAY_UNIFIED_HEADERS
     ${AWS_BACKUP-GATEWAY_HEADERS}
+    ${AWS_BACKUP-GATEWAY_INTERNAL_HEADERS}
     ${AWS_BACKUP-GATEWAY_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\backup-gateway" FILES ${AWS_BACKUP-GATEWAY_HEADERS})
+        source_group("Header Files\\aws\\backup-gateway\\internal" FILES ${AWS_BACKUP-GATEWAY_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\backup-gateway\\model" FILES ${AWS_BACKUP-GATEWAY_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_BACKUP-GATEWAY_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_BACKUP-GATEWAY_MODEL_SOURCE})

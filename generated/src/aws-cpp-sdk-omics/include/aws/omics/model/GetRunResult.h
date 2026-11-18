@@ -16,6 +16,7 @@
 #include <aws/omics/model/NetworkingMode.h>
 #include <aws/omics/model/RunLogLevel.h>
 #include <aws/omics/model/RunLogLocation.h>
+#include <aws/omics/model/RunOutputUriPrefixMode.h>
 #include <aws/omics/model/RunRetentionMode.h>
 #include <aws/omics/model/RunStatus.h>
 #include <aws/omics/model/ScratchStorageMode.h>
@@ -754,6 +755,41 @@ class GetRunResult {
   ///@}
 
   ///@{
+  /**
+   * <p>Inline policy json for scoping down permissions via a session policy on the
+   * IAM role.</p>
+   */
+  inline const Aws::String& GetSessionPolicy() const { return m_sessionPolicy; }
+  template <typename SessionPolicyT = Aws::String>
+  void SetSessionPolicy(SessionPolicyT&& value) {
+    m_sessionPolicyHasBeenSet = true;
+    m_sessionPolicy = std::forward<SessionPolicyT>(value);
+  }
+  template <typename SessionPolicyT = Aws::String>
+  GetRunResult& WithSessionPolicy(SessionPolicyT&& value) {
+    SetSessionPolicy(std::forward<SessionPolicyT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The service returns the value that the <code>StartRun</code> request
+   * specified for <code>outputUriPrefixMode</code>. The service returns
+   * <code>SERVICE_DEFINED</code> if the request did not specify a value.</p>
+   */
+  inline RunOutputUriPrefixMode GetOutputUriPrefixMode() const { return m_outputUriPrefixMode; }
+  inline void SetOutputUriPrefixMode(RunOutputUriPrefixMode value) {
+    m_outputUriPrefixModeHasBeenSet = true;
+    m_outputUriPrefixMode = value;
+  }
+  inline GetRunResult& WithOutputUriPrefixMode(RunOutputUriPrefixMode value) {
+    SetOutputUriPrefixMode(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
 
   inline const Aws::String& GetRequestId() const { return m_requestId; }
   template <typename RequestIdT = Aws::String>
@@ -854,6 +890,10 @@ class GetRunResult {
 
   Aws::Utils::Document m_engineSettings;
 
+  Aws::String m_sessionPolicy;
+
+  RunOutputUriPrefixMode m_outputUriPrefixMode{RunOutputUriPrefixMode::NOT_SET};
+
   Aws::String m_requestId;
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_arnHasBeenSet = false;
@@ -898,6 +938,8 @@ class GetRunResult {
   bool m_configurationHasBeenSet = false;
   bool m_vpcConfigHasBeenSet = false;
   bool m_engineSettingsHasBeenSet = false;
+  bool m_sessionPolicyHasBeenSet = false;
+  bool m_outputUriPrefixModeHasBeenSet = false;
   bool m_requestIdHasBeenSet = false;
 };
 

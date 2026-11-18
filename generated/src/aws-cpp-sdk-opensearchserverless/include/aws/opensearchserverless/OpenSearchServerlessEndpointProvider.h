@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/opensearchserverless/OpenSearchServerlessEndpointRules.h>
 #include <aws/opensearchserverless/OpenSearchServerless_EXPORTS.h>
 
 namespace Aws {
 namespace OpenSearchServerless {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using OpenSearchServerlessClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using OpenSearchServerlessEndpointProviderBase =
                          OpenSearchServerlessClientContextParameters>;
 
 using OpenSearchServerlessDefaultEpProviderBase =
-    DefaultEndpointProvider<OpenSearchServerlessClientConfiguration, OpenSearchServerlessBuiltInParameters,
-                            OpenSearchServerlessClientContextParameters>;
+    BDDEndpointProvider<OpenSearchServerlessClientConfiguration, OpenSearchServerlessBuiltInParameters,
+                        OpenSearchServerlessClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_OPENSEARCHSERVERLESS_API OpenSearchServerlessEndpointProvider : public
  public:
   using OpenSearchServerlessResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  OpenSearchServerlessEndpointProvider()
-      : OpenSearchServerlessDefaultEpProviderBase(Aws::OpenSearchServerless::OpenSearchServerlessEndpointRules::GetRulesBlob(),
-                                                  Aws::OpenSearchServerless::OpenSearchServerlessEndpointRules::RulesBlobSize) {}
+  OpenSearchServerlessEndpointProvider();
 
   ~OpenSearchServerlessEndpointProvider() {}
 };

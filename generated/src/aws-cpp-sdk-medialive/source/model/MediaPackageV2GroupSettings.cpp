@@ -73,6 +73,15 @@ MediaPackageV2GroupSettings& MediaPackageV2GroupSettings::operator=(JsonView jso
     }
     m_additionalDestinationsHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("watermarkingSettings")) {
+    m_watermarkingSettings = jsonValue.GetObject("watermarkingSettings");
+    m_watermarkingSettingsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("captionLanguageSetting")) {
+    m_captionLanguageSetting = MediaPackageV2CaptionLanguageSettingMapper::GetMediaPackageV2CaptionLanguageSettingForName(
+        jsonValue.GetString("captionLanguageSetting"));
+    m_captionLanguageSettingHasBeenSet = true;
+  }
   return *this;
 }
 
@@ -135,6 +144,15 @@ JsonValue MediaPackageV2GroupSettings::Jsonize() const {
       additionalDestinationsJsonList[additionalDestinationsIndex].AsObject(m_additionalDestinations[additionalDestinationsIndex].Jsonize());
     }
     payload.WithArray("additionalDestinations", std::move(additionalDestinationsJsonList));
+  }
+
+  if (m_watermarkingSettingsHasBeenSet) {
+    payload.WithObject("watermarkingSettings", m_watermarkingSettings.Jsonize());
+  }
+
+  if (m_captionLanguageSettingHasBeenSet) {
+    payload.WithString("captionLanguageSetting", MediaPackageV2CaptionLanguageSettingMapper::GetNameForMediaPackageV2CaptionLanguageSetting(
+                                                     m_captionLanguageSetting));
   }
 
   return payload;

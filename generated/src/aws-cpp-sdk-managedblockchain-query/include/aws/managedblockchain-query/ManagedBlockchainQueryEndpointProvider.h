@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/managedblockchain-query/ManagedBlockchainQueryEndpointRules.h>
 #include <aws/managedblockchain-query/ManagedBlockchainQuery_EXPORTS.h>
 
 namespace Aws {
 namespace ManagedBlockchainQuery {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ManagedBlockchainQueryClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ManagedBlockchainQueryEndpointProviderBase =
                          ManagedBlockchainQueryClientContextParameters>;
 
 using ManagedBlockchainQueryDefaultEpProviderBase =
-    DefaultEndpointProvider<ManagedBlockchainQueryClientConfiguration, ManagedBlockchainQueryBuiltInParameters,
-                            ManagedBlockchainQueryClientContextParameters>;
+    BDDEndpointProvider<ManagedBlockchainQueryClientConfiguration, ManagedBlockchainQueryBuiltInParameters,
+                        ManagedBlockchainQueryClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_MANAGEDBLOCKCHAINQUERY_API ManagedBlockchainQueryEndpointProvider : pu
  public:
   using ManagedBlockchainQueryResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ManagedBlockchainQueryEndpointProvider()
-      : ManagedBlockchainQueryDefaultEpProviderBase(Aws::ManagedBlockchainQuery::ManagedBlockchainQueryEndpointRules::GetRulesBlob(),
-                                                    Aws::ManagedBlockchainQuery::ManagedBlockchainQueryEndpointRules::RulesBlobSize) {}
+  ManagedBlockchainQueryEndpointProvider();
 
   ~ManagedBlockchainQueryEndpointProvider() {}
 };

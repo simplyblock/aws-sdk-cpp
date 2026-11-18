@@ -34,13 +34,29 @@ Function& Function::operator=(JsonView jsonValue) {
     m_httpRequestConfiguration = jsonValue.GetObject("HttpRequestConfiguration");
     m_httpRequestConfigurationHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("AwsServiceRequestConfiguration")) {
+    m_awsServiceRequestConfiguration = jsonValue.GetObject("AwsServiceRequestConfiguration");
+    m_awsServiceRequestConfigurationHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("CustomOutputConfiguration")) {
     m_customOutputConfiguration = jsonValue.GetObject("CustomOutputConfiguration");
     m_customOutputConfigurationHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("ConcurrentExecutorConfiguration")) {
+    m_concurrentExecutorConfiguration = jsonValue.GetObject("ConcurrentExecutorConfiguration");
+    m_concurrentExecutorConfigurationHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("SequentialExecutorConfiguration")) {
     m_sequentialExecutorConfiguration = jsonValue.GetObject("SequentialExecutorConfiguration");
     m_sequentialExecutorConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("VastRequestConfiguration")) {
+    m_vastRequestConfiguration = jsonValue.GetObject("VastRequestConfiguration");
+    m_vastRequestConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("HlsTagProcessorConfiguration")) {
+    m_hlsTagProcessorConfiguration = jsonValue.GetObject("HlsTagProcessorConfiguration");
+    m_hlsTagProcessorConfigurationHasBeenSet = true;
   }
   if (jsonValue.ValueExists("tags")) {
     Aws::Map<Aws::String, JsonView> tagsJsonMap = jsonValue.GetObject("tags").GetAllObjects();
@@ -75,12 +91,28 @@ JsonValue Function::Jsonize() const {
     payload.WithObject("HttpRequestConfiguration", m_httpRequestConfiguration.Jsonize());
   }
 
+  if (m_awsServiceRequestConfigurationHasBeenSet) {
+    payload.WithObject("AwsServiceRequestConfiguration", m_awsServiceRequestConfiguration.Jsonize());
+  }
+
   if (m_customOutputConfigurationHasBeenSet) {
     payload.WithObject("CustomOutputConfiguration", m_customOutputConfiguration.Jsonize());
   }
 
+  if (m_concurrentExecutorConfigurationHasBeenSet) {
+    payload.WithObject("ConcurrentExecutorConfiguration", m_concurrentExecutorConfiguration.Jsonize());
+  }
+
   if (m_sequentialExecutorConfigurationHasBeenSet) {
     payload.WithObject("SequentialExecutorConfiguration", m_sequentialExecutorConfiguration.Jsonize());
+  }
+
+  if (m_vastRequestConfigurationHasBeenSet) {
+    payload.WithObject("VastRequestConfiguration", m_vastRequestConfiguration.Jsonize());
+  }
+
+  if (m_hlsTagProcessorConfigurationHasBeenSet) {
+    payload.WithObject("HlsTagProcessorConfiguration", m_hlsTagProcessorConfiguration.Jsonize());
   }
 
   if (m_tagsHasBeenSet) {

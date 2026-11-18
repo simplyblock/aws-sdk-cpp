@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/forecastquery/ForecastQueryServiceEndpointRules.h>
 #include <aws/forecastquery/ForecastQueryService_EXPORTS.h>
 
 namespace Aws {
 namespace ForecastQueryService {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ForecastQueryServiceClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using ForecastQueryServiceEndpointProviderBase =
                          ForecastQueryServiceClientContextParameters>;
 
 using ForecastQueryServiceDefaultEpProviderBase =
-    DefaultEndpointProvider<ForecastQueryServiceClientConfiguration, ForecastQueryServiceBuiltInParameters,
-                            ForecastQueryServiceClientContextParameters>;
+    BDDEndpointProvider<ForecastQueryServiceClientConfiguration, ForecastQueryServiceBuiltInParameters,
+                        ForecastQueryServiceClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_FORECASTQUERYSERVICE_API ForecastQueryServiceEndpointProvider : public
  public:
   using ForecastQueryServiceResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ForecastQueryServiceEndpointProvider()
-      : ForecastQueryServiceDefaultEpProviderBase(Aws::ForecastQueryService::ForecastQueryServiceEndpointRules::GetRulesBlob(),
-                                                  Aws::ForecastQueryService::ForecastQueryServiceEndpointRules::RulesBlobSize) {}
+  ForecastQueryServiceEndpointProvider();
 
   ~ForecastQueryServiceEndpointProvider() {}
 };

@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/workmailmessageflow/WorkMailMessageFlowEndpointRules.h>
 #include <aws/workmailmessageflow/WorkMailMessageFlow_EXPORTS.h>
 
 namespace Aws {
 namespace WorkMailMessageFlow {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using WorkMailMessageFlowClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -34,8 +33,8 @@ using WorkMailMessageFlowEndpointProviderBase =
                          WorkMailMessageFlowClientContextParameters>;
 
 using WorkMailMessageFlowDefaultEpProviderBase =
-    DefaultEndpointProvider<WorkMailMessageFlowClientConfiguration, WorkMailMessageFlowBuiltInParameters,
-                            WorkMailMessageFlowClientContextParameters>;
+    BDDEndpointProvider<WorkMailMessageFlowClientConfiguration, WorkMailMessageFlowBuiltInParameters,
+                        WorkMailMessageFlowClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -44,9 +43,7 @@ class AWS_WORKMAILMESSAGEFLOW_API WorkMailMessageFlowEndpointProvider : public W
  public:
   using WorkMailMessageFlowResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  WorkMailMessageFlowEndpointProvider()
-      : WorkMailMessageFlowDefaultEpProviderBase(Aws::WorkMailMessageFlow::WorkMailMessageFlowEndpointRules::GetRulesBlob(),
-                                                 Aws::WorkMailMessageFlow::WorkMailMessageFlowEndpointRules::RulesBlobSize) {}
+  WorkMailMessageFlowEndpointProvider();
 
   ~WorkMailMessageFlowEndpointProvider() {}
 };

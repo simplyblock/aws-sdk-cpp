@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ec2-instance-connect "C++ SDK for the AWS ec2-instance-connect service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ec2-instance-connect "C++ SDK for AWS EC2 Instance Connect" aws-cpp-sdk-core)
 
 file(GLOB AWS_EC2-INSTANCE-CONNECT_HEADERS
     "include/aws/ec2-instance-connect/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_EC2-INSTANCE-CONNECT_HEADERS
 
 file(GLOB AWS_EC2-INSTANCE-CONNECT_MODEL_HEADERS
     "include/aws/ec2-instance-connect/model/*.h"
+)
+
+file(GLOB AWS_EC2-INSTANCE-CONNECT_INTERNAL_HEADERS
+    "include/aws/ec2-instance-connect/internal/*.h"
 )
 
 file(GLOB AWS_EC2-INSTANCE-CONNECT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_EC2-INSTANCE-CONNECT_MODEL_SOURCE
 
 file(GLOB EC2-INSTANCE-CONNECT_UNIFIED_HEADERS
     ${AWS_EC2-INSTANCE-CONNECT_HEADERS}
+    ${AWS_EC2-INSTANCE-CONNECT_INTERNAL_HEADERS}
     ${AWS_EC2-INSTANCE-CONNECT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ec2-instance-connect" FILES ${AWS_EC2-INSTANCE-CONNECT_HEADERS})
+        source_group("Header Files\\aws\\ec2-instance-connect\\internal" FILES ${AWS_EC2-INSTANCE-CONNECT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ec2-instance-connect\\model" FILES ${AWS_EC2-INSTANCE-CONNECT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_EC2-INSTANCE-CONNECT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_EC2-INSTANCE-CONNECT_MODEL_SOURCE})

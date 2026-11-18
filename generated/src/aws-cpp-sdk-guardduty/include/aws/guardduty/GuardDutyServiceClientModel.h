@@ -22,6 +22,8 @@
 #include <aws/core/NoResult.h>
 #include <aws/guardduty/model/AcceptAdministratorInvitationResult.h>
 #include <aws/guardduty/model/ArchiveFindingsResult.h>
+#include <aws/guardduty/model/CreateCustomDetectionRuleAssociationResult.h>
+#include <aws/guardduty/model/CreateCustomDetectionRuleOrgConfigurationResult.h>
 #include <aws/guardduty/model/CreateDetectorResult.h>
 #include <aws/guardduty/model/CreateFilterResult.h>
 #include <aws/guardduty/model/CreateIPSetResult.h>
@@ -34,6 +36,8 @@
 #include <aws/guardduty/model/CreateThreatIntelSetResult.h>
 #include <aws/guardduty/model/CreateTrustedEntitySetResult.h>
 #include <aws/guardduty/model/DeclineInvitationsResult.h>
+#include <aws/guardduty/model/DeleteCustomDetectionRuleAssociationResult.h>
+#include <aws/guardduty/model/DeleteCustomDetectionRuleOrgConfigurationResult.h>
 #include <aws/guardduty/model/DeleteDetectorResult.h>
 #include <aws/guardduty/model/DeleteFilterResult.h>
 #include <aws/guardduty/model/DeleteIPSetResult.h>
@@ -52,6 +56,9 @@
 #include <aws/guardduty/model/EnableOrganizationAdminAccountResult.h>
 #include <aws/guardduty/model/GetAdministratorAccountResult.h>
 #include <aws/guardduty/model/GetCoverageStatisticsResult.h>
+#include <aws/guardduty/model/GetCustomDetectionRuleAssociationResult.h>
+#include <aws/guardduty/model/GetCustomDetectionRuleOrgConfigurationResult.h>
+#include <aws/guardduty/model/GetCustomDetectionRuleResult.h>
 #include <aws/guardduty/model/GetDetectorResult.h>
 #include <aws/guardduty/model/GetFilterResult.h>
 #include <aws/guardduty/model/GetFindingsResult.h>
@@ -74,11 +81,18 @@
 #include <aws/guardduty/model/GetUsageStatisticsResult.h>
 #include <aws/guardduty/model/InviteMembersResult.h>
 #include <aws/guardduty/model/ListCoverageResult.h>
+#include <aws/guardduty/model/ListCustomDetectionRuleAssociationsRequest.h>
+#include <aws/guardduty/model/ListCustomDetectionRuleAssociationsResult.h>
+#include <aws/guardduty/model/ListCustomDetectionRuleOrgConfigurationsRequest.h>
+#include <aws/guardduty/model/ListCustomDetectionRuleOrgConfigurationsResult.h>
+#include <aws/guardduty/model/ListCustomDetectionRulesRequest.h>
+#include <aws/guardduty/model/ListCustomDetectionRulesResult.h>
 #include <aws/guardduty/model/ListDetectorsRequest.h>
 #include <aws/guardduty/model/ListDetectorsResult.h>
 #include <aws/guardduty/model/ListFiltersResult.h>
 #include <aws/guardduty/model/ListFindingsResult.h>
 #include <aws/guardduty/model/ListIPSetsResult.h>
+#include <aws/guardduty/model/ListInvestigationRecordsResult.h>
 #include <aws/guardduty/model/ListInvestigationsResult.h>
 #include <aws/guardduty/model/ListInvitationsRequest.h>
 #include <aws/guardduty/model/ListInvitationsResult.h>
@@ -102,6 +116,8 @@
 #include <aws/guardduty/model/TagResourceResult.h>
 #include <aws/guardduty/model/UnarchiveFindingsResult.h>
 #include <aws/guardduty/model/UntagResourceResult.h>
+#include <aws/guardduty/model/UpdateCustomDetectionRuleAssociationResult.h>
+#include <aws/guardduty/model/UpdateCustomDetectionRuleOrgConfigurationResult.h>
 #include <aws/guardduty/model/UpdateDetectorResult.h>
 #include <aws/guardduty/model/UpdateFilterResult.h>
 #include <aws/guardduty/model/UpdateFindingsFeedbackResult.h>
@@ -148,6 +164,8 @@ namespace Model {
 /* Service model forward declarations required in GuardDutyClient header */
 class AcceptAdministratorInvitationRequest;
 class ArchiveFindingsRequest;
+class CreateCustomDetectionRuleAssociationRequest;
+class CreateCustomDetectionRuleOrgConfigurationRequest;
 class CreateDetectorRequest;
 class CreateFilterRequest;
 class CreateIPSetRequest;
@@ -160,6 +178,8 @@ class CreateThreatEntitySetRequest;
 class CreateThreatIntelSetRequest;
 class CreateTrustedEntitySetRequest;
 class DeclineInvitationsRequest;
+class DeleteCustomDetectionRuleAssociationRequest;
+class DeleteCustomDetectionRuleOrgConfigurationRequest;
 class DeleteDetectorRequest;
 class DeleteFilterRequest;
 class DeleteIPSetRequest;
@@ -179,6 +199,9 @@ class DisassociateMembersRequest;
 class EnableOrganizationAdminAccountRequest;
 class GetAdministratorAccountRequest;
 class GetCoverageStatisticsRequest;
+class GetCustomDetectionRuleRequest;
+class GetCustomDetectionRuleAssociationRequest;
+class GetCustomDetectionRuleOrgConfigurationRequest;
 class GetDetectorRequest;
 class GetFilterRequest;
 class GetFindingsRequest;
@@ -199,10 +222,14 @@ class GetTrustedEntitySetRequest;
 class GetUsageStatisticsRequest;
 class InviteMembersRequest;
 class ListCoverageRequest;
+class ListCustomDetectionRuleAssociationsRequest;
+class ListCustomDetectionRuleOrgConfigurationsRequest;
+class ListCustomDetectionRulesRequest;
 class ListDetectorsRequest;
 class ListFiltersRequest;
 class ListFindingsRequest;
 class ListIPSetsRequest;
+class ListInvestigationRecordsRequest;
 class ListInvestigationsRequest;
 class ListInvitationsRequest;
 class ListMalwareProtectionPlansRequest;
@@ -221,6 +248,8 @@ class StopMonitoringMembersRequest;
 class TagResourceRequest;
 class UnarchiveFindingsRequest;
 class UntagResourceRequest;
+class UpdateCustomDetectionRuleAssociationRequest;
+class UpdateCustomDetectionRuleOrgConfigurationRequest;
 class UpdateDetectorRequest;
 class UpdateFilterRequest;
 class UpdateFindingsFeedbackRequest;
@@ -238,6 +267,9 @@ class UpdateTrustedEntitySetRequest;
 /* Service model Outcome class definitions */
 typedef Aws::Utils::Outcome<AcceptAdministratorInvitationResult, GuardDutyError> AcceptAdministratorInvitationOutcome;
 typedef Aws::Utils::Outcome<ArchiveFindingsResult, GuardDutyError> ArchiveFindingsOutcome;
+typedef Aws::Utils::Outcome<CreateCustomDetectionRuleAssociationResult, GuardDutyError> CreateCustomDetectionRuleAssociationOutcome;
+typedef Aws::Utils::Outcome<CreateCustomDetectionRuleOrgConfigurationResult, GuardDutyError>
+    CreateCustomDetectionRuleOrgConfigurationOutcome;
 typedef Aws::Utils::Outcome<CreateDetectorResult, GuardDutyError> CreateDetectorOutcome;
 typedef Aws::Utils::Outcome<CreateFilterResult, GuardDutyError> CreateFilterOutcome;
 typedef Aws::Utils::Outcome<CreateIPSetResult, GuardDutyError> CreateIPSetOutcome;
@@ -250,6 +282,9 @@ typedef Aws::Utils::Outcome<CreateThreatEntitySetResult, GuardDutyError> CreateT
 typedef Aws::Utils::Outcome<CreateThreatIntelSetResult, GuardDutyError> CreateThreatIntelSetOutcome;
 typedef Aws::Utils::Outcome<CreateTrustedEntitySetResult, GuardDutyError> CreateTrustedEntitySetOutcome;
 typedef Aws::Utils::Outcome<DeclineInvitationsResult, GuardDutyError> DeclineInvitationsOutcome;
+typedef Aws::Utils::Outcome<DeleteCustomDetectionRuleAssociationResult, GuardDutyError> DeleteCustomDetectionRuleAssociationOutcome;
+typedef Aws::Utils::Outcome<DeleteCustomDetectionRuleOrgConfigurationResult, GuardDutyError>
+    DeleteCustomDetectionRuleOrgConfigurationOutcome;
 typedef Aws::Utils::Outcome<DeleteDetectorResult, GuardDutyError> DeleteDetectorOutcome;
 typedef Aws::Utils::Outcome<DeleteFilterResult, GuardDutyError> DeleteFilterOutcome;
 typedef Aws::Utils::Outcome<DeleteIPSetResult, GuardDutyError> DeleteIPSetOutcome;
@@ -269,6 +304,9 @@ typedef Aws::Utils::Outcome<DisassociateMembersResult, GuardDutyError> Disassoci
 typedef Aws::Utils::Outcome<EnableOrganizationAdminAccountResult, GuardDutyError> EnableOrganizationAdminAccountOutcome;
 typedef Aws::Utils::Outcome<GetAdministratorAccountResult, GuardDutyError> GetAdministratorAccountOutcome;
 typedef Aws::Utils::Outcome<GetCoverageStatisticsResult, GuardDutyError> GetCoverageStatisticsOutcome;
+typedef Aws::Utils::Outcome<GetCustomDetectionRuleResult, GuardDutyError> GetCustomDetectionRuleOutcome;
+typedef Aws::Utils::Outcome<GetCustomDetectionRuleAssociationResult, GuardDutyError> GetCustomDetectionRuleAssociationOutcome;
+typedef Aws::Utils::Outcome<GetCustomDetectionRuleOrgConfigurationResult, GuardDutyError> GetCustomDetectionRuleOrgConfigurationOutcome;
 typedef Aws::Utils::Outcome<GetDetectorResult, GuardDutyError> GetDetectorOutcome;
 typedef Aws::Utils::Outcome<GetFilterResult, GuardDutyError> GetFilterOutcome;
 typedef Aws::Utils::Outcome<GetFindingsResult, GuardDutyError> GetFindingsOutcome;
@@ -289,10 +327,14 @@ typedef Aws::Utils::Outcome<GetTrustedEntitySetResult, GuardDutyError> GetTruste
 typedef Aws::Utils::Outcome<GetUsageStatisticsResult, GuardDutyError> GetUsageStatisticsOutcome;
 typedef Aws::Utils::Outcome<InviteMembersResult, GuardDutyError> InviteMembersOutcome;
 typedef Aws::Utils::Outcome<ListCoverageResult, GuardDutyError> ListCoverageOutcome;
+typedef Aws::Utils::Outcome<ListCustomDetectionRuleAssociationsResult, GuardDutyError> ListCustomDetectionRuleAssociationsOutcome;
+typedef Aws::Utils::Outcome<ListCustomDetectionRuleOrgConfigurationsResult, GuardDutyError> ListCustomDetectionRuleOrgConfigurationsOutcome;
+typedef Aws::Utils::Outcome<ListCustomDetectionRulesResult, GuardDutyError> ListCustomDetectionRulesOutcome;
 typedef Aws::Utils::Outcome<ListDetectorsResult, GuardDutyError> ListDetectorsOutcome;
 typedef Aws::Utils::Outcome<ListFiltersResult, GuardDutyError> ListFiltersOutcome;
 typedef Aws::Utils::Outcome<ListFindingsResult, GuardDutyError> ListFindingsOutcome;
 typedef Aws::Utils::Outcome<ListIPSetsResult, GuardDutyError> ListIPSetsOutcome;
+typedef Aws::Utils::Outcome<ListInvestigationRecordsResult, GuardDutyError> ListInvestigationRecordsOutcome;
 typedef Aws::Utils::Outcome<ListInvestigationsResult, GuardDutyError> ListInvestigationsOutcome;
 typedef Aws::Utils::Outcome<ListInvitationsResult, GuardDutyError> ListInvitationsOutcome;
 typedef Aws::Utils::Outcome<ListMalwareProtectionPlansResult, GuardDutyError> ListMalwareProtectionPlansOutcome;
@@ -311,6 +353,9 @@ typedef Aws::Utils::Outcome<StopMonitoringMembersResult, GuardDutyError> StopMon
 typedef Aws::Utils::Outcome<TagResourceResult, GuardDutyError> TagResourceOutcome;
 typedef Aws::Utils::Outcome<UnarchiveFindingsResult, GuardDutyError> UnarchiveFindingsOutcome;
 typedef Aws::Utils::Outcome<UntagResourceResult, GuardDutyError> UntagResourceOutcome;
+typedef Aws::Utils::Outcome<UpdateCustomDetectionRuleAssociationResult, GuardDutyError> UpdateCustomDetectionRuleAssociationOutcome;
+typedef Aws::Utils::Outcome<UpdateCustomDetectionRuleOrgConfigurationResult, GuardDutyError>
+    UpdateCustomDetectionRuleOrgConfigurationOutcome;
 typedef Aws::Utils::Outcome<UpdateDetectorResult, GuardDutyError> UpdateDetectorOutcome;
 typedef Aws::Utils::Outcome<UpdateFilterResult, GuardDutyError> UpdateFilterOutcome;
 typedef Aws::Utils::Outcome<UpdateFindingsFeedbackResult, GuardDutyError> UpdateFindingsFeedbackOutcome;
@@ -328,6 +373,8 @@ typedef Aws::Utils::Outcome<UpdateTrustedEntitySetResult, GuardDutyError> Update
 /* Service model Outcome callable definitions */
 typedef std::future<AcceptAdministratorInvitationOutcome> AcceptAdministratorInvitationOutcomeCallable;
 typedef std::future<ArchiveFindingsOutcome> ArchiveFindingsOutcomeCallable;
+typedef std::future<CreateCustomDetectionRuleAssociationOutcome> CreateCustomDetectionRuleAssociationOutcomeCallable;
+typedef std::future<CreateCustomDetectionRuleOrgConfigurationOutcome> CreateCustomDetectionRuleOrgConfigurationOutcomeCallable;
 typedef std::future<CreateDetectorOutcome> CreateDetectorOutcomeCallable;
 typedef std::future<CreateFilterOutcome> CreateFilterOutcomeCallable;
 typedef std::future<CreateIPSetOutcome> CreateIPSetOutcomeCallable;
@@ -340,6 +387,8 @@ typedef std::future<CreateThreatEntitySetOutcome> CreateThreatEntitySetOutcomeCa
 typedef std::future<CreateThreatIntelSetOutcome> CreateThreatIntelSetOutcomeCallable;
 typedef std::future<CreateTrustedEntitySetOutcome> CreateTrustedEntitySetOutcomeCallable;
 typedef std::future<DeclineInvitationsOutcome> DeclineInvitationsOutcomeCallable;
+typedef std::future<DeleteCustomDetectionRuleAssociationOutcome> DeleteCustomDetectionRuleAssociationOutcomeCallable;
+typedef std::future<DeleteCustomDetectionRuleOrgConfigurationOutcome> DeleteCustomDetectionRuleOrgConfigurationOutcomeCallable;
 typedef std::future<DeleteDetectorOutcome> DeleteDetectorOutcomeCallable;
 typedef std::future<DeleteFilterOutcome> DeleteFilterOutcomeCallable;
 typedef std::future<DeleteIPSetOutcome> DeleteIPSetOutcomeCallable;
@@ -359,6 +408,9 @@ typedef std::future<DisassociateMembersOutcome> DisassociateMembersOutcomeCallab
 typedef std::future<EnableOrganizationAdminAccountOutcome> EnableOrganizationAdminAccountOutcomeCallable;
 typedef std::future<GetAdministratorAccountOutcome> GetAdministratorAccountOutcomeCallable;
 typedef std::future<GetCoverageStatisticsOutcome> GetCoverageStatisticsOutcomeCallable;
+typedef std::future<GetCustomDetectionRuleOutcome> GetCustomDetectionRuleOutcomeCallable;
+typedef std::future<GetCustomDetectionRuleAssociationOutcome> GetCustomDetectionRuleAssociationOutcomeCallable;
+typedef std::future<GetCustomDetectionRuleOrgConfigurationOutcome> GetCustomDetectionRuleOrgConfigurationOutcomeCallable;
 typedef std::future<GetDetectorOutcome> GetDetectorOutcomeCallable;
 typedef std::future<GetFilterOutcome> GetFilterOutcomeCallable;
 typedef std::future<GetFindingsOutcome> GetFindingsOutcomeCallable;
@@ -379,10 +431,14 @@ typedef std::future<GetTrustedEntitySetOutcome> GetTrustedEntitySetOutcomeCallab
 typedef std::future<GetUsageStatisticsOutcome> GetUsageStatisticsOutcomeCallable;
 typedef std::future<InviteMembersOutcome> InviteMembersOutcomeCallable;
 typedef std::future<ListCoverageOutcome> ListCoverageOutcomeCallable;
+typedef std::future<ListCustomDetectionRuleAssociationsOutcome> ListCustomDetectionRuleAssociationsOutcomeCallable;
+typedef std::future<ListCustomDetectionRuleOrgConfigurationsOutcome> ListCustomDetectionRuleOrgConfigurationsOutcomeCallable;
+typedef std::future<ListCustomDetectionRulesOutcome> ListCustomDetectionRulesOutcomeCallable;
 typedef std::future<ListDetectorsOutcome> ListDetectorsOutcomeCallable;
 typedef std::future<ListFiltersOutcome> ListFiltersOutcomeCallable;
 typedef std::future<ListFindingsOutcome> ListFindingsOutcomeCallable;
 typedef std::future<ListIPSetsOutcome> ListIPSetsOutcomeCallable;
+typedef std::future<ListInvestigationRecordsOutcome> ListInvestigationRecordsOutcomeCallable;
 typedef std::future<ListInvestigationsOutcome> ListInvestigationsOutcomeCallable;
 typedef std::future<ListInvitationsOutcome> ListInvitationsOutcomeCallable;
 typedef std::future<ListMalwareProtectionPlansOutcome> ListMalwareProtectionPlansOutcomeCallable;
@@ -401,6 +457,8 @@ typedef std::future<StopMonitoringMembersOutcome> StopMonitoringMembersOutcomeCa
 typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
 typedef std::future<UnarchiveFindingsOutcome> UnarchiveFindingsOutcomeCallable;
 typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
+typedef std::future<UpdateCustomDetectionRuleAssociationOutcome> UpdateCustomDetectionRuleAssociationOutcomeCallable;
+typedef std::future<UpdateCustomDetectionRuleOrgConfigurationOutcome> UpdateCustomDetectionRuleOrgConfigurationOutcomeCallable;
 typedef std::future<UpdateDetectorOutcome> UpdateDetectorOutcomeCallable;
 typedef std::future<UpdateFilterOutcome> UpdateFilterOutcomeCallable;
 typedef std::future<UpdateFindingsFeedbackOutcome> UpdateFindingsFeedbackOutcomeCallable;
@@ -426,6 +484,14 @@ typedef std::function<void(const GuardDutyClient*, const Model::AcceptAdministra
 typedef std::function<void(const GuardDutyClient*, const Model::ArchiveFindingsRequest&, const Model::ArchiveFindingsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ArchiveFindingsResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::CreateCustomDetectionRuleAssociationRequest&,
+                           const Model::CreateCustomDetectionRuleAssociationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateCustomDetectionRuleAssociationResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::CreateCustomDetectionRuleOrgConfigurationRequest&,
+                           const Model::CreateCustomDetectionRuleOrgConfigurationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    CreateCustomDetectionRuleOrgConfigurationResponseReceivedHandler;
 typedef std::function<void(const GuardDutyClient*, const Model::CreateDetectorRequest&, const Model::CreateDetectorOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     CreateDetectorResponseReceivedHandler;
@@ -462,6 +528,14 @@ typedef std::function<void(const GuardDutyClient*, const Model::CreateTrustedEnt
 typedef std::function<void(const GuardDutyClient*, const Model::DeclineInvitationsRequest&, const Model::DeclineInvitationsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeclineInvitationsResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::DeleteCustomDetectionRuleAssociationRequest&,
+                           const Model::DeleteCustomDetectionRuleAssociationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteCustomDetectionRuleAssociationResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::DeleteCustomDetectionRuleOrgConfigurationRequest&,
+                           const Model::DeleteCustomDetectionRuleOrgConfigurationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    DeleteCustomDetectionRuleOrgConfigurationResponseReceivedHandler;
 typedef std::function<void(const GuardDutyClient*, const Model::DeleteDetectorRequest&, const Model::DeleteDetectorOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     DeleteDetectorResponseReceivedHandler;
@@ -524,6 +598,17 @@ typedef std::function<void(const GuardDutyClient*, const Model::GetAdministrator
 typedef std::function<void(const GuardDutyClient*, const Model::GetCoverageStatisticsRequest&, const Model::GetCoverageStatisticsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetCoverageStatisticsResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::GetCustomDetectionRuleRequest&, const Model::GetCustomDetectionRuleOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetCustomDetectionRuleResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::GetCustomDetectionRuleAssociationRequest&,
+                           const Model::GetCustomDetectionRuleAssociationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetCustomDetectionRuleAssociationResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::GetCustomDetectionRuleOrgConfigurationRequest&,
+                           const Model::GetCustomDetectionRuleOrgConfigurationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetCustomDetectionRuleOrgConfigurationResponseReceivedHandler;
 typedef std::function<void(const GuardDutyClient*, const Model::GetDetectorRequest&, const Model::GetDetectorOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetDetectorResponseReceivedHandler;
@@ -584,6 +669,17 @@ typedef std::function<void(const GuardDutyClient*, const Model::InviteMembersReq
 typedef std::function<void(const GuardDutyClient*, const Model::ListCoverageRequest&, const Model::ListCoverageOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListCoverageResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::ListCustomDetectionRuleAssociationsRequest&,
+                           const Model::ListCustomDetectionRuleAssociationsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListCustomDetectionRuleAssociationsResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::ListCustomDetectionRuleOrgConfigurationsRequest&,
+                           const Model::ListCustomDetectionRuleOrgConfigurationsOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListCustomDetectionRuleOrgConfigurationsResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::ListCustomDetectionRulesRequest&,
+                           const Model::ListCustomDetectionRulesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListCustomDetectionRulesResponseReceivedHandler;
 typedef std::function<void(const GuardDutyClient*, const Model::ListDetectorsRequest&, const Model::ListDetectorsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListDetectorsResponseReceivedHandler;
@@ -596,6 +692,9 @@ typedef std::function<void(const GuardDutyClient*, const Model::ListFindingsRequ
 typedef std::function<void(const GuardDutyClient*, const Model::ListIPSetsRequest&, const Model::ListIPSetsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListIPSetsResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::ListInvestigationRecordsRequest&,
+                           const Model::ListInvestigationRecordsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    ListInvestigationRecordsResponseReceivedHandler;
 typedef std::function<void(const GuardDutyClient*, const Model::ListInvestigationsRequest&, const Model::ListInvestigationsOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     ListInvestigationsResponseReceivedHandler;
@@ -651,6 +750,14 @@ typedef std::function<void(const GuardDutyClient*, const Model::UnarchiveFinding
 typedef std::function<void(const GuardDutyClient*, const Model::UntagResourceRequest&, const Model::UntagResourceOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UntagResourceResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::UpdateCustomDetectionRuleAssociationRequest&,
+                           const Model::UpdateCustomDetectionRuleAssociationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateCustomDetectionRuleAssociationResponseReceivedHandler;
+typedef std::function<void(const GuardDutyClient*, const Model::UpdateCustomDetectionRuleOrgConfigurationRequest&,
+                           const Model::UpdateCustomDetectionRuleOrgConfigurationOutcome&,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    UpdateCustomDetectionRuleOrgConfigurationResponseReceivedHandler;
 typedef std::function<void(const GuardDutyClient*, const Model::UpdateDetectorRequest&, const Model::UpdateDetectorOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     UpdateDetectorResponseReceivedHandler;

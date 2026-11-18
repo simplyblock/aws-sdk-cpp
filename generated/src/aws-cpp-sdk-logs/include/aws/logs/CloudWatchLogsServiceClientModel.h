@@ -28,6 +28,7 @@
 #include <aws/logs/model/CreateLogAnomalyDetectorResult.h>
 #include <aws/logs/model/CreateLookupTableResult.h>
 #include <aws/logs/model/CreateScheduledQueryResult.h>
+#include <aws/logs/model/DeleteAccountPolicyResult.h>
 #include <aws/logs/model/DeleteIndexPolicyResult.h>
 #include <aws/logs/model/DeleteIntegrationResult.h>
 #include <aws/logs/model/DeleteQueryDefinitionResult.h>
@@ -86,6 +87,8 @@
 #include <aws/logs/model/GetQueryResultsResult.h>
 #include <aws/logs/model/GetScheduledQueryHistoryResult.h>
 #include <aws/logs/model/GetScheduledQueryResult.h>
+#include <aws/logs/model/GetStorageTierPolicyRequest.h>
+#include <aws/logs/model/GetStorageTierPolicyResult.h>
 #include <aws/logs/model/GetTransformerResult.h>
 #include <aws/logs/model/ListAggregateLogGroupSummariesResult.h>
 #include <aws/logs/model/ListAnomaliesRequest.h>
@@ -115,6 +118,7 @@
 #include <aws/logs/model/PutQueryDefinitionResult.h>
 #include <aws/logs/model/PutResourcePolicyRequest.h>
 #include <aws/logs/model/PutResourcePolicyResult.h>
+#include <aws/logs/model/PutStorageTierPolicyResult.h>
 #include <aws/logs/model/StartQueryResult.h>
 #include <aws/logs/model/StopQueryResult.h>
 #include <aws/logs/model/TestMetricFilterResult.h>
@@ -226,6 +230,7 @@ class GetLookupTableRequest;
 class GetQueryResultsRequest;
 class GetScheduledQueryRequest;
 class GetScheduledQueryHistoryRequest;
+class GetStorageTierPolicyRequest;
 class GetTransformerRequest;
 class ListAggregateLogGroupSummariesRequest;
 class ListAnomaliesRequest;
@@ -253,6 +258,7 @@ class PutMetricFilterRequest;
 class PutQueryDefinitionRequest;
 class PutResourcePolicyRequest;
 class PutRetentionPolicyRequest;
+class PutStorageTierPolicyRequest;
 class PutSubscriptionFilterRequest;
 class PutSyslogConfigurationRequest;
 class PutTransformerRequest;
@@ -283,7 +289,7 @@ typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> CreateLogGroupOu
 typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> CreateLogStreamOutcome;
 typedef Aws::Utils::Outcome<CreateLookupTableResult, CloudWatchLogsError> CreateLookupTableOutcome;
 typedef Aws::Utils::Outcome<CreateScheduledQueryResult, CloudWatchLogsError> CreateScheduledQueryOutcome;
-typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> DeleteAccountPolicyOutcome;
+typedef Aws::Utils::Outcome<DeleteAccountPolicyResult, CloudWatchLogsError> DeleteAccountPolicyOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> DeleteDataProtectionPolicyOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> DeleteDeliveryOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> DeleteDeliveryDestinationOutcome;
@@ -343,6 +349,7 @@ typedef Aws::Utils::Outcome<GetLookupTableResult, CloudWatchLogsError> GetLookup
 typedef Aws::Utils::Outcome<GetQueryResultsResult, CloudWatchLogsError> GetQueryResultsOutcome;
 typedef Aws::Utils::Outcome<GetScheduledQueryResult, CloudWatchLogsError> GetScheduledQueryOutcome;
 typedef Aws::Utils::Outcome<GetScheduledQueryHistoryResult, CloudWatchLogsError> GetScheduledQueryHistoryOutcome;
+typedef Aws::Utils::Outcome<GetStorageTierPolicyResult, CloudWatchLogsError> GetStorageTierPolicyOutcome;
 typedef Aws::Utils::Outcome<GetTransformerResult, CloudWatchLogsError> GetTransformerOutcome;
 typedef Aws::Utils::Outcome<ListAggregateLogGroupSummariesResult, CloudWatchLogsError> ListAggregateLogGroupSummariesOutcome;
 typedef Aws::Utils::Outcome<ListAnomaliesResult, CloudWatchLogsError> ListAnomaliesOutcome;
@@ -370,6 +377,7 @@ typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> PutMetricFilterO
 typedef Aws::Utils::Outcome<PutQueryDefinitionResult, CloudWatchLogsError> PutQueryDefinitionOutcome;
 typedef Aws::Utils::Outcome<PutResourcePolicyResult, CloudWatchLogsError> PutResourcePolicyOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> PutRetentionPolicyOutcome;
+typedef Aws::Utils::Outcome<PutStorageTierPolicyResult, CloudWatchLogsError> PutStorageTierPolicyOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> PutSubscriptionFilterOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> PutSyslogConfigurationOutcome;
 typedef Aws::Utils::Outcome<Aws::NoResult, CloudWatchLogsError> PutTransformerOutcome;
@@ -459,6 +467,7 @@ typedef std::future<GetLookupTableOutcome> GetLookupTableOutcomeCallable;
 typedef std::future<GetQueryResultsOutcome> GetQueryResultsOutcomeCallable;
 typedef std::future<GetScheduledQueryOutcome> GetScheduledQueryOutcomeCallable;
 typedef std::future<GetScheduledQueryHistoryOutcome> GetScheduledQueryHistoryOutcomeCallable;
+typedef std::future<GetStorageTierPolicyOutcome> GetStorageTierPolicyOutcomeCallable;
 typedef std::future<GetTransformerOutcome> GetTransformerOutcomeCallable;
 typedef std::future<ListAggregateLogGroupSummariesOutcome> ListAggregateLogGroupSummariesOutcomeCallable;
 typedef std::future<ListAnomaliesOutcome> ListAnomaliesOutcomeCallable;
@@ -486,6 +495,7 @@ typedef std::future<PutMetricFilterOutcome> PutMetricFilterOutcomeCallable;
 typedef std::future<PutQueryDefinitionOutcome> PutQueryDefinitionOutcomeCallable;
 typedef std::future<PutResourcePolicyOutcome> PutResourcePolicyOutcomeCallable;
 typedef std::future<PutRetentionPolicyOutcome> PutRetentionPolicyOutcomeCallable;
+typedef std::future<PutStorageTierPolicyOutcome> PutStorageTierPolicyOutcomeCallable;
 typedef std::future<PutSubscriptionFilterOutcome> PutSubscriptionFilterOutcomeCallable;
 typedef std::future<PutSyslogConfigurationOutcome> PutSyslogConfigurationOutcomeCallable;
 typedef std::future<PutTransformerOutcome> PutTransformerOutcomeCallable;
@@ -726,6 +736,9 @@ typedef std::function<void(const CloudWatchLogsClient*, const Model::GetSchedule
 typedef std::function<void(const CloudWatchLogsClient*, const Model::GetScheduledQueryHistoryRequest&,
                            const Model::GetScheduledQueryHistoryOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetScheduledQueryHistoryResponseReceivedHandler;
+typedef std::function<void(const CloudWatchLogsClient*, const Model::GetStorageTierPolicyRequest&,
+                           const Model::GetStorageTierPolicyOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    GetStorageTierPolicyResponseReceivedHandler;
 typedef std::function<void(const CloudWatchLogsClient*, const Model::GetTransformerRequest&, const Model::GetTransformerOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     GetTransformerResponseReceivedHandler;
@@ -812,6 +825,9 @@ typedef std::function<void(const CloudWatchLogsClient*, const Model::PutResource
 typedef std::function<void(const CloudWatchLogsClient*, const Model::PutRetentionPolicyRequest&, const Model::PutRetentionPolicyOutcome&,
                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     PutRetentionPolicyResponseReceivedHandler;
+typedef std::function<void(const CloudWatchLogsClient*, const Model::PutStorageTierPolicyRequest&,
+                           const Model::PutStorageTierPolicyOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
+    PutStorageTierPolicyResponseReceivedHandler;
 typedef std::function<void(const CloudWatchLogsClient*, const Model::PutSubscriptionFilterRequest&,
                            const Model::PutSubscriptionFilterOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&)>
     PutSubscriptionFilterResponseReceivedHandler;

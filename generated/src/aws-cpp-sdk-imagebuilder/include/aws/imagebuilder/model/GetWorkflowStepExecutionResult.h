@@ -48,7 +48,7 @@ class GetWorkflowStepExecutionResult {
 
   ///@{
   /**
-   * <p>The unique identifier for the runtime version of the workflow step that you
+   * <p>The unique identifier for the runtime instance of the workflow step that you
    * specified in the request.</p>
    */
   inline const Aws::String& GetStepExecutionId() const { return m_stepExecutionId; }
@@ -102,8 +102,8 @@ class GetWorkflowStepExecutionResult {
 
   ///@{
   /**
-   * <p>The Amazon Resource Name (ARN) of the image resource build version that the
-   * specified runtime instance of the workflow step creates.</p>
+   * <p>The Amazon Resource Name (ARN) of the image build version that owns the
+   * specified runtime instance of the workflow step.</p>
    */
   inline const Aws::String& GetImageBuildVersionArn() const { return m_imageBuildVersionArn; }
   template <typename ImageBuildVersionArnT = Aws::String>
@@ -171,7 +171,7 @@ class GetWorkflowStepExecutionResult {
 
   ///@{
   /**
-   * <p>The current status for the specified runtime version of the workflow
+   * <p>The current status for the specified runtime instance of the workflow
    * step.</p>
    */
   inline WorkflowStepExecutionStatus GetStatus() const { return m_status; }
@@ -187,8 +187,9 @@ class GetWorkflowStepExecutionResult {
 
   ///@{
   /**
-   * <p>Reports on the rollback status of the specified runtime version of the
-   * workflow step, if applicable.</p>
+   * <p>Reports on the rollback status of the specified runtime instance of the
+   * workflow step, if applicable. Rollback runs when the workflow execution fails,
+   * and undoes the work that completed steps performed.</p>
    */
   inline WorkflowStepExecutionRollbackStatus GetRollbackStatus() const { return m_rollbackStatus; }
   inline void SetRollbackStatus(WorkflowStepExecutionRollbackStatus value) {
@@ -222,7 +223,7 @@ class GetWorkflowStepExecutionResult {
   ///@{
   /**
    * <p>Input parameters that Image Builder provided for the specified runtime
-   * instance of the workflow step.</p>
+   * instance of the workflow step, as a JSON-encoded string.</p>
    */
   inline const Aws::String& GetInputs() const { return m_inputs; }
   template <typename InputsT = Aws::String>
@@ -239,8 +240,10 @@ class GetWorkflowStepExecutionResult {
 
   ///@{
   /**
-   * <p>The file names that the specified runtime version of the workflow step
-   * created as output.</p>
+   * <p>The output values that the specified runtime instance of the workflow step
+   * produced, as a JSON-encoded string. For example, a step that launches an
+   * instance outputs the instance ID. If the step failed, this field contains the
+   * error message.</p>
    */
   inline const Aws::String& GetOutputs() const { return m_outputs; }
   template <typename OutputsT = Aws::String>
@@ -257,7 +260,7 @@ class GetWorkflowStepExecutionResult {
 
   ///@{
   /**
-   * <p>The timestamp when the specified runtime version of the workflow step
+   * <p>The timestamp when the specified runtime instance of the workflow step
    * started.</p>
    */
   inline const Aws::String& GetStartTime() const { return m_startTime; }
@@ -293,7 +296,10 @@ class GetWorkflowStepExecutionResult {
 
   ///@{
   /**
-   * <p>The action to perform if the workflow step fails.</p>
+   * <p>The action that the workflow takes if this step fails, as configured in the
+   * workflow document. <code>Abort</code> fails the workflow and rolls back
+   * completed steps. <code>Continue</code> proceeds to the next step. If the step
+   * doesn't set a value, it defaults to <code>Abort</code>.</p>
    */
   inline const Aws::String& GetOnFailure() const { return m_onFailure; }
   template <typename OnFailureT = Aws::String>
@@ -310,7 +316,9 @@ class GetWorkflowStepExecutionResult {
 
   ///@{
   /**
-   * <p>The maximum duration in seconds for this step to complete its action.</p>
+   * <p>The maximum duration in seconds for this step to complete its action. If the
+   * workflow document doesn't set a timeout for the step, Image Builder applies the
+   * default timeout for the step's action. This field returns that value.</p>
    */
   inline int GetTimeoutSeconds() const { return m_timeoutSeconds; }
   inline void SetTimeoutSeconds(int value) {
@@ -319,6 +327,40 @@ class GetWorkflowStepExecutionResult {
   }
   inline GetWorkflowStepExecutionResult& WithTimeoutSeconds(int value) {
     SetTimeoutSeconds(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The current attempt number for the specified runtime instance of the workflow
+   * step. The first run is attempt one. The number increases by one for each
+   * retry.</p>
+   */
+  inline int GetAttemptNumber() const { return m_attemptNumber; }
+  inline void SetAttemptNumber(int value) {
+    m_attemptNumberHasBeenSet = true;
+    m_attemptNumber = value;
+  }
+  inline GetWorkflowStepExecutionResult& WithAttemptNumber(int value) {
+    SetAttemptNumber(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The maximum number of attempts allowed for the specified runtime instance of
+   * the workflow step, based on the retry configuration in the workflow document. If
+   * the step doesn't configure retries, the maximum is one attempt.</p>
+   */
+  inline int GetMaxAttempts() const { return m_maxAttempts; }
+  inline void SetMaxAttempts(int value) {
+    m_maxAttemptsHasBeenSet = true;
+    m_maxAttempts = value;
+  }
+  inline GetWorkflowStepExecutionResult& WithMaxAttempts(int value) {
+    SetMaxAttempts(value);
     return *this;
   }
   ///@}
@@ -358,6 +400,10 @@ class GetWorkflowStepExecutionResult {
   Aws::String m_onFailure;
 
   int m_timeoutSeconds{0};
+
+  int m_attemptNumber{0};
+
+  int m_maxAttempts{0};
   Aws::Http::HttpResponseCode m_HttpResponseCode;
   bool m_requestIdHasBeenSet = false;
   bool m_stepExecutionIdHasBeenSet = false;
@@ -376,6 +422,8 @@ class GetWorkflowStepExecutionResult {
   bool m_endTimeHasBeenSet = false;
   bool m_onFailureHasBeenSet = false;
   bool m_timeoutSecondsHasBeenSet = false;
+  bool m_attemptNumberHasBeenSet = false;
+  bool m_maxAttemptsHasBeenSet = false;
 };
 
 }  // namespace Model

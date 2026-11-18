@@ -8,10 +8,14 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/mediatailor/MediaTailorRequest.h>
 #include <aws/mediatailor/MediaTailor_EXPORTS.h>
+#include <aws/mediatailor/model/AwsServiceRequestConfiguration.h>
+#include <aws/mediatailor/model/ConcurrentExecutorConfiguration.h>
 #include <aws/mediatailor/model/CustomOutputConfiguration.h>
 #include <aws/mediatailor/model/FunctionType.h>
+#include <aws/mediatailor/model/HlsTagProcessorConfiguration.h>
 #include <aws/mediatailor/model/HttpRequestConfiguration.h>
 #include <aws/mediatailor/model/SequentialExecutorConfiguration.h>
+#include <aws/mediatailor/model/VastRequestConfiguration.h>
 
 #include <utility>
 
@@ -57,13 +61,23 @@ class PutFunctionRequest : public MediaTailorRequest {
 
   ///@{
   /**
-   * <p>The type of the function. The function type determines what the function can
-   * do at runtime. Valid values: <code>CUSTOM_OUTPUT</code> evaluates expressions
-   * and produces output bindings with no external calls. <code>HTTP_REQUEST</code>
-   * makes an HTTP call to an external service and evaluates output expressions that
-   * can reference the response. <code>SEQUENTIAL_EXECUTOR</code> runs a sequence of
-   * child functions in order, passing data between steps through temporary data. For
-   * more information, see <a
+   * <p>The type of the function, which determines what the function can do at
+   * runtime. Valid values:</p> <ul> <li> <p> <code>CUSTOM_OUTPUT</code> – Evaluates
+   * expressions and produces output bindings with no external calls.</p> </li> <li>
+   * <p> <code>HTTP_REQUEST</code> – Makes an HTTP call to an external service and
+   * evaluates output expressions that can reference the response.</p> </li> <li> <p>
+   * <code>AWS_SERVICE_REQUEST</code> – Makes an authenticated request to a supported
+   * AWS service API and evaluates output expressions that can reference the
+   * response.</p> </li> <li> <p> <code>HLS_TAG_PROCESSOR</code> – Reads and changes
+   * HLS tags in the origin manifest at the <code>POST_ORIGIN_RESPONSE</code>
+   * lifecycle hook.</p> </li> <li> <p> <code>VAST_REQUEST</code> – Calls a VAST
+   * endpoint, parses the response as VAST, and makes the parsed ads available to
+   * output expressions.</p> </li> <li> <p> <code>SEQUENTIAL_EXECUTOR</code> – Runs a
+   * sequence of child functions in order, passing data between steps through
+   * temporary data.</p> </li> <li> <p> <code>CONCURRENT_EXECUTOR</code> – Runs a set
+   * of child functions in parallel, up to a maximum concurrency, and combines their
+   * output when all functions complete.</p> </li> </ul> <p>For more information, see
+   * <a
    * href="https://docs.aws.amazon.com/mediatailor/latest/ug/monetization-functions-types.html">Function
    * types and composition</a> in the <i>MediaTailor User Guide</i>.</p>
    */
@@ -119,6 +133,26 @@ class PutFunctionRequest : public MediaTailorRequest {
 
   ///@{
   /**
+   * <p>The configuration for an <code>AWS_SERVICE_REQUEST</code> function. You must
+   * specify this parameter when <code>FunctionType</code> is
+   * <code>AWS_SERVICE_REQUEST</code>.</p>
+   */
+  inline const AwsServiceRequestConfiguration& GetAwsServiceRequestConfiguration() const { return m_awsServiceRequestConfiguration; }
+  inline bool AwsServiceRequestConfigurationHasBeenSet() const { return m_awsServiceRequestConfigurationHasBeenSet; }
+  template <typename AwsServiceRequestConfigurationT = AwsServiceRequestConfiguration>
+  void SetAwsServiceRequestConfiguration(AwsServiceRequestConfigurationT&& value) {
+    m_awsServiceRequestConfigurationHasBeenSet = true;
+    m_awsServiceRequestConfiguration = std::forward<AwsServiceRequestConfigurationT>(value);
+  }
+  template <typename AwsServiceRequestConfigurationT = AwsServiceRequestConfiguration>
+  PutFunctionRequest& WithAwsServiceRequestConfiguration(AwsServiceRequestConfigurationT&& value) {
+    SetAwsServiceRequestConfiguration(std::forward<AwsServiceRequestConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * <p>The configuration for a <code>CUSTOM_OUTPUT</code> function. Specifies the
    * runtime and output expressions. Required when <code>FunctionType</code> is
    * <code>CUSTOM_OUTPUT</code>.</p>
@@ -133,6 +167,27 @@ class PutFunctionRequest : public MediaTailorRequest {
   template <typename CustomOutputConfigurationT = CustomOutputConfiguration>
   PutFunctionRequest& WithCustomOutputConfiguration(CustomOutputConfigurationT&& value) {
     SetCustomOutputConfiguration(std::forward<CustomOutputConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The configuration for a <code>CONCURRENT_EXECUTOR</code> function. Specifies
+   * the list of child functions to run in parallel, the maximum concurrency, an
+   * optional output block, and a timeout. Required when <code>FunctionType</code> is
+   * <code>CONCURRENT_EXECUTOR</code>.</p>
+   */
+  inline const ConcurrentExecutorConfiguration& GetConcurrentExecutorConfiguration() const { return m_concurrentExecutorConfiguration; }
+  inline bool ConcurrentExecutorConfigurationHasBeenSet() const { return m_concurrentExecutorConfigurationHasBeenSet; }
+  template <typename ConcurrentExecutorConfigurationT = ConcurrentExecutorConfiguration>
+  void SetConcurrentExecutorConfiguration(ConcurrentExecutorConfigurationT&& value) {
+    m_concurrentExecutorConfigurationHasBeenSet = true;
+    m_concurrentExecutorConfiguration = std::forward<ConcurrentExecutorConfigurationT>(value);
+  }
+  template <typename ConcurrentExecutorConfigurationT = ConcurrentExecutorConfiguration>
+  PutFunctionRequest& WithConcurrentExecutorConfiguration(ConcurrentExecutorConfigurationT&& value) {
+    SetConcurrentExecutorConfiguration(std::forward<ConcurrentExecutorConfigurationT>(value));
     return *this;
   }
   ///@}
@@ -154,6 +209,46 @@ class PutFunctionRequest : public MediaTailorRequest {
   template <typename SequentialExecutorConfigurationT = SequentialExecutorConfiguration>
   PutFunctionRequest& WithSequentialExecutorConfiguration(SequentialExecutorConfigurationT&& value) {
     SetSequentialExecutorConfiguration(std::forward<SequentialExecutorConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The configuration for a <code>VAST_REQUEST</code> function. Specifies the
+   * HTTP method, URL, headers, body, timeout, and output expressions. Required when
+   * <code>FunctionType</code> is <code>VAST_REQUEST</code>.</p>
+   */
+  inline const VastRequestConfiguration& GetVastRequestConfiguration() const { return m_vastRequestConfiguration; }
+  inline bool VastRequestConfigurationHasBeenSet() const { return m_vastRequestConfigurationHasBeenSet; }
+  template <typename VastRequestConfigurationT = VastRequestConfiguration>
+  void SetVastRequestConfiguration(VastRequestConfigurationT&& value) {
+    m_vastRequestConfigurationHasBeenSet = true;
+    m_vastRequestConfiguration = std::forward<VastRequestConfigurationT>(value);
+  }
+  template <typename VastRequestConfigurationT = VastRequestConfiguration>
+  PutFunctionRequest& WithVastRequestConfiguration(VastRequestConfigurationT&& value) {
+    SetVastRequestConfiguration(std::forward<VastRequestConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>The configuration for an <code>HLS_TAG_PROCESSOR</code> function. Specifies
+   * the runtime, tag filter, optional run condition, and output expressions.
+   * Required when <code>FunctionType</code> is <code>HLS_TAG_PROCESSOR</code>.</p>
+   */
+  inline const HlsTagProcessorConfiguration& GetHlsTagProcessorConfiguration() const { return m_hlsTagProcessorConfiguration; }
+  inline bool HlsTagProcessorConfigurationHasBeenSet() const { return m_hlsTagProcessorConfigurationHasBeenSet; }
+  template <typename HlsTagProcessorConfigurationT = HlsTagProcessorConfiguration>
+  void SetHlsTagProcessorConfiguration(HlsTagProcessorConfigurationT&& value) {
+    m_hlsTagProcessorConfigurationHasBeenSet = true;
+    m_hlsTagProcessorConfiguration = std::forward<HlsTagProcessorConfigurationT>(value);
+  }
+  template <typename HlsTagProcessorConfigurationT = HlsTagProcessorConfiguration>
+  PutFunctionRequest& WithHlsTagProcessorConfiguration(HlsTagProcessorConfigurationT&& value) {
+    SetHlsTagProcessorConfiguration(std::forward<HlsTagProcessorConfigurationT>(value));
     return *this;
   }
   ///@}
@@ -194,17 +289,29 @@ class PutFunctionRequest : public MediaTailorRequest {
 
   HttpRequestConfiguration m_httpRequestConfiguration;
 
+  AwsServiceRequestConfiguration m_awsServiceRequestConfiguration;
+
   CustomOutputConfiguration m_customOutputConfiguration;
 
+  ConcurrentExecutorConfiguration m_concurrentExecutorConfiguration;
+
   SequentialExecutorConfiguration m_sequentialExecutorConfiguration;
+
+  VastRequestConfiguration m_vastRequestConfiguration;
+
+  HlsTagProcessorConfiguration m_hlsTagProcessorConfiguration;
 
   Aws::Map<Aws::String, Aws::String> m_tags;
   bool m_functionIdHasBeenSet = false;
   bool m_functionTypeHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_httpRequestConfigurationHasBeenSet = false;
+  bool m_awsServiceRequestConfigurationHasBeenSet = false;
   bool m_customOutputConfigurationHasBeenSet = false;
+  bool m_concurrentExecutorConfigurationHasBeenSet = false;
   bool m_sequentialExecutorConfigurationHasBeenSet = false;
+  bool m_vastRequestConfigurationHasBeenSet = false;
+  bool m_hlsTagProcessorConfigurationHasBeenSet = false;
   bool m_tagsHasBeenSet = false;
 };
 

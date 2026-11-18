@@ -26,12 +26,14 @@
 #include <aws/route53globalresolver/model/BatchUpdateFirewallRuleRequest.h>
 #include <aws/route53globalresolver/model/CreateAccessSourceRequest.h>
 #include <aws/route53globalresolver/model/CreateAccessTokenRequest.h>
+#include <aws/route53globalresolver/model/CreateCoreNetworkEndpointRequest.h>
 #include <aws/route53globalresolver/model/CreateDNSViewRequest.h>
 #include <aws/route53globalresolver/model/CreateFirewallDomainListRequest.h>
 #include <aws/route53globalresolver/model/CreateFirewallRuleRequest.h>
 #include <aws/route53globalresolver/model/CreateGlobalResolverRequest.h>
 #include <aws/route53globalresolver/model/DeleteAccessSourceRequest.h>
 #include <aws/route53globalresolver/model/DeleteAccessTokenRequest.h>
+#include <aws/route53globalresolver/model/DeleteCoreNetworkEndpointRequest.h>
 #include <aws/route53globalresolver/model/DeleteDNSViewRequest.h>
 #include <aws/route53globalresolver/model/DeleteFirewallDomainListRequest.h>
 #include <aws/route53globalresolver/model/DeleteFirewallRuleRequest.h>
@@ -41,6 +43,7 @@
 #include <aws/route53globalresolver/model/EnableDNSViewRequest.h>
 #include <aws/route53globalresolver/model/GetAccessSourceRequest.h>
 #include <aws/route53globalresolver/model/GetAccessTokenRequest.h>
+#include <aws/route53globalresolver/model/GetCoreNetworkEndpointRequest.h>
 #include <aws/route53globalresolver/model/GetDNSViewRequest.h>
 #include <aws/route53globalresolver/model/GetFirewallDomainListRequest.h>
 #include <aws/route53globalresolver/model/GetFirewallRuleRequest.h>
@@ -50,6 +53,7 @@
 #include <aws/route53globalresolver/model/ImportFirewallDomainsRequest.h>
 #include <aws/route53globalresolver/model/ListAccessSourcesRequest.h>
 #include <aws/route53globalresolver/model/ListAccessTokensRequest.h>
+#include <aws/route53globalresolver/model/ListCoreNetworkEndpointsRequest.h>
 #include <aws/route53globalresolver/model/ListDNSViewsRequest.h>
 #include <aws/route53globalresolver/model/ListFirewallDomainListsRequest.h>
 #include <aws/route53globalresolver/model/ListFirewallDomainsRequest.h>
@@ -57,11 +61,13 @@
 #include <aws/route53globalresolver/model/ListGlobalResolversRequest.h>
 #include <aws/route53globalresolver/model/ListHostedZoneAssociationsRequest.h>
 #include <aws/route53globalresolver/model/ListManagedFirewallDomainListsRequest.h>
+#include <aws/route53globalresolver/model/ListSharedDNSViewsRequest.h>
 #include <aws/route53globalresolver/model/ListTagsForResourceRequest.h>
 #include <aws/route53globalresolver/model/TagResourceRequest.h>
 #include <aws/route53globalresolver/model/UntagResourceRequest.h>
 #include <aws/route53globalresolver/model/UpdateAccessSourceRequest.h>
 #include <aws/route53globalresolver/model/UpdateAccessTokenRequest.h>
+#include <aws/route53globalresolver/model/UpdateCoreNetworkEndpointRequest.h>
 #include <aws/route53globalresolver/model/UpdateDNSViewRequest.h>
 #include <aws/route53globalresolver/model/UpdateFirewallDomainsRequest.h>
 #include <aws/route53globalresolver/model/UpdateFirewallRuleRequest.h>
@@ -212,7 +218,8 @@ Route53GlobalResolverClient::InvokeOperationOutcome Route53GlobalResolverClient:
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -226,7 +233,7 @@ Route53GlobalResolverClient::InvokeOperationOutcome Route53GlobalResolverClient:
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -308,6 +315,18 @@ CreateAccessTokenOutcome Route53GlobalResolverClient::CreateAccessToken(const Cr
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
   return result.IsSuccess() ? CreateAccessTokenOutcome(result.GetResultWithOwnership())
                             : CreateAccessTokenOutcome(std::move(result.GetError()));
+}
+
+CreateCoreNetworkEndpointOutcome Route53GlobalResolverClient::CreateCoreNetworkEndpoint(
+    const CreateCoreNetworkEndpointRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/core-network-endpoints");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateCoreNetworkEndpointOutcome(result.GetResultWithOwnership())
+                            : CreateCoreNetworkEndpointOutcome(std::move(result.GetError()));
 }
 
 CreateDNSViewOutcome Route53GlobalResolverClient::CreateDNSView(const CreateDNSViewRequest& request) const {
@@ -402,6 +421,25 @@ DeleteAccessTokenOutcome Route53GlobalResolverClient::DeleteAccessToken(const De
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? DeleteAccessTokenOutcome(result.GetResultWithOwnership())
                             : DeleteAccessTokenOutcome(std::move(result.GetError()));
+}
+
+DeleteCoreNetworkEndpointOutcome Route53GlobalResolverClient::DeleteCoreNetworkEndpoint(
+    const DeleteCoreNetworkEndpointRequest& request) const {
+  if (!request.CoreNetworkEndpointIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteCoreNetworkEndpoint", "Required field: CoreNetworkEndpointId, is not set");
+    return DeleteCoreNetworkEndpointOutcome(Aws::Client::AWSError<Route53GlobalResolverErrors>(
+        Route53GlobalResolverErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [CoreNetworkEndpointId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/core-network-endpoints/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetCoreNetworkEndpointId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteCoreNetworkEndpointOutcome(result.GetResultWithOwnership())
+                            : DeleteCoreNetworkEndpointOutcome(std::move(result.GetError()));
 }
 
 DeleteDNSViewOutcome Route53GlobalResolverClient::DeleteDNSView(const DeleteDNSViewRequest& request) const {
@@ -573,6 +611,24 @@ GetAccessTokenOutcome Route53GlobalResolverClient::GetAccessToken(const GetAcces
   return result.IsSuccess() ? GetAccessTokenOutcome(result.GetResultWithOwnership()) : GetAccessTokenOutcome(std::move(result.GetError()));
 }
 
+GetCoreNetworkEndpointOutcome Route53GlobalResolverClient::GetCoreNetworkEndpoint(const GetCoreNetworkEndpointRequest& request) const {
+  if (!request.CoreNetworkEndpointIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetCoreNetworkEndpoint", "Required field: CoreNetworkEndpointId, is not set");
+    return GetCoreNetworkEndpointOutcome(Aws::Client::AWSError<Route53GlobalResolverErrors>(
+        Route53GlobalResolverErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [CoreNetworkEndpointId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/core-network-endpoints/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetCoreNetworkEndpointId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetCoreNetworkEndpointOutcome(result.GetResultWithOwnership())
+                            : GetCoreNetworkEndpointOutcome(std::move(result.GetError()));
+}
+
 GetDNSViewOutcome Route53GlobalResolverClient::GetDNSView(const GetDNSViewRequest& request) const {
   if (!request.DnsViewIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetDNSView", "Required field: DnsViewId, is not set");
@@ -731,6 +787,18 @@ ListAccessTokensOutcome Route53GlobalResolverClient::ListAccessTokens(const List
                             : ListAccessTokensOutcome(std::move(result.GetError()));
 }
 
+ListCoreNetworkEndpointsOutcome Route53GlobalResolverClient::ListCoreNetworkEndpoints(
+    const ListCoreNetworkEndpointsRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/core-network-endpoints");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListCoreNetworkEndpointsOutcome(result.GetResultWithOwnership())
+                            : ListCoreNetworkEndpointsOutcome(std::move(result.GetError()));
+}
+
 ListDNSViewsOutcome Route53GlobalResolverClient::ListDNSViews(const ListDNSViewsRequest& request) const {
   if (!request.GlobalResolverIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("ListDNSViews", "Required field: GlobalResolverId, is not set");
@@ -808,17 +876,9 @@ ListGlobalResolversOutcome Route53GlobalResolverClient::ListGlobalResolvers(cons
 
 ListHostedZoneAssociationsOutcome Route53GlobalResolverClient::ListHostedZoneAssociations(
     const ListHostedZoneAssociationsRequest& request) const {
-  if (!request.ResourceArnHasBeenSet()) {
-    AWS_LOGSTREAM_ERROR("ListHostedZoneAssociations", "Required field: ResourceArn, is not set");
-    return ListHostedZoneAssociationsOutcome(Aws::Client::AWSError<Route53GlobalResolverErrors>(
-        Route53GlobalResolverErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ResourceArn]", false));
-  }
-
   auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
     (void)endpointResolutionOutcome;
-    endpointResolutionOutcome.GetResult().AddPathSegments("/hosted-zone-associations/resource-arn/");
-    endpointResolutionOutcome.GetResult().SetRfc3986Encoded(true);
-    endpointResolutionOutcome.GetResult().AddPathSegments(request.GetResourceArn());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/hosted-zone-associations");
   };
 
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
@@ -844,6 +904,17 @@ ListManagedFirewallDomainListsOutcome Route53GlobalResolverClient::ListManagedFi
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
   return result.IsSuccess() ? ListManagedFirewallDomainListsOutcome(result.GetResultWithOwnership())
                             : ListManagedFirewallDomainListsOutcome(std::move(result.GetError()));
+}
+
+ListSharedDNSViewsOutcome Route53GlobalResolverClient::ListSharedDNSViews(const ListSharedDNSViewsRequest& request) const {
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/shared-dns-views");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListSharedDNSViewsOutcome(result.GetResultWithOwnership())
+                            : ListSharedDNSViewsOutcome(std::move(result.GetError()));
 }
 
 ListTagsForResourceOutcome Route53GlobalResolverClient::ListTagsForResource(const ListTagsForResourceRequest& request) const {
@@ -911,6 +982,25 @@ UpdateAccessTokenOutcome Route53GlobalResolverClient::UpdateAccessToken(const Up
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
   return result.IsSuccess() ? UpdateAccessTokenOutcome(result.GetResultWithOwnership())
                             : UpdateAccessTokenOutcome(std::move(result.GetError()));
+}
+
+UpdateCoreNetworkEndpointOutcome Route53GlobalResolverClient::UpdateCoreNetworkEndpoint(
+    const UpdateCoreNetworkEndpointRequest& request) const {
+  if (!request.CoreNetworkEndpointIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateCoreNetworkEndpoint", "Required field: CoreNetworkEndpointId, is not set");
+    return UpdateCoreNetworkEndpointOutcome(Aws::Client::AWSError<Route53GlobalResolverErrors>(
+        Route53GlobalResolverErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [CoreNetworkEndpointId]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/core-network-endpoints/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetCoreNetworkEndpointId());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateCoreNetworkEndpointOutcome(result.GetResultWithOwnership())
+                            : UpdateCoreNetworkEndpointOutcome(std::move(result.GetError()));
 }
 
 UpdateDNSViewOutcome Route53GlobalResolverClient::UpdateDNSView(const UpdateDNSViewRequest& request) const {

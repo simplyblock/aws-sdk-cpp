@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-route53profiles "C++ SDK for the AWS route53profiles service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-route53profiles "C++ SDK for Route 53 Profiles" aws-cpp-sdk-core)
 
 file(GLOB AWS_ROUTE53PROFILES_HEADERS
     "include/aws/route53profiles/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_ROUTE53PROFILES_HEADERS
 
 file(GLOB AWS_ROUTE53PROFILES_MODEL_HEADERS
     "include/aws/route53profiles/model/*.h"
+)
+
+file(GLOB AWS_ROUTE53PROFILES_INTERNAL_HEADERS
+    "include/aws/route53profiles/internal/*.h"
 )
 
 file(GLOB AWS_ROUTE53PROFILES_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_ROUTE53PROFILES_MODEL_SOURCE
 
 file(GLOB ROUTE53PROFILES_UNIFIED_HEADERS
     ${AWS_ROUTE53PROFILES_HEADERS}
+    ${AWS_ROUTE53PROFILES_INTERNAL_HEADERS}
     ${AWS_ROUTE53PROFILES_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\route53profiles" FILES ${AWS_ROUTE53PROFILES_HEADERS})
+        source_group("Header Files\\aws\\route53profiles\\internal" FILES ${AWS_ROUTE53PROFILES_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\route53profiles\\model" FILES ${AWS_ROUTE53PROFILES_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_ROUTE53PROFILES_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_ROUTE53PROFILES_MODEL_SOURCE})

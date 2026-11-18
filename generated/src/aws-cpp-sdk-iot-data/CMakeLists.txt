@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-iot-data "C++ SDK for the AWS iot-data service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-iot-data "C++ SDK for AWS IoT Data Plane" aws-cpp-sdk-core)
 
 file(GLOB AWS_IOT-DATA_HEADERS
     "include/aws/iot-data/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_IOT-DATA_HEADERS
 
 file(GLOB AWS_IOT-DATA_MODEL_HEADERS
     "include/aws/iot-data/model/*.h"
+)
+
+file(GLOB AWS_IOT-DATA_INTERNAL_HEADERS
+    "include/aws/iot-data/internal/*.h"
 )
 
 file(GLOB AWS_IOT-DATA_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_IOT-DATA_MODEL_SOURCE
 
 file(GLOB IOT-DATA_UNIFIED_HEADERS
     ${AWS_IOT-DATA_HEADERS}
+    ${AWS_IOT-DATA_INTERNAL_HEADERS}
     ${AWS_IOT-DATA_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\iot-data" FILES ${AWS_IOT-DATA_HEADERS})
+        source_group("Header Files\\aws\\iot-data\\internal" FILES ${AWS_IOT-DATA_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\iot-data\\model" FILES ${AWS_IOT-DATA_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_IOT-DATA_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_IOT-DATA_MODEL_SOURCE})

@@ -33,6 +33,7 @@
 #include <aws/lambda/model/DeleteAliasRequest.h>
 #include <aws/lambda/model/DeleteCapacityProviderRequest.h>
 #include <aws/lambda/model/DeleteCodeSigningConfigRequest.h>
+#include <aws/lambda/model/DeleteDurableExecutionRequest.h>
 #include <aws/lambda/model/DeleteEventSourceMappingRequest.h>
 #include <aws/lambda/model/DeleteFunctionCodeSigningConfigRequest.h>
 #include <aws/lambda/model/DeleteFunctionConcurrencyRequest.h>
@@ -41,6 +42,7 @@
 #include <aws/lambda/model/DeleteFunctionUrlConfigRequest.h>
 #include <aws/lambda/model/DeleteLayerVersionRequest.h>
 #include <aws/lambda/model/DeleteProvisionedConcurrencyConfigRequest.h>
+#include <aws/lambda/model/DeleteResourcePolicyRequest.h>
 #include <aws/lambda/model/GetAccountSettingsRequest.h>
 #include <aws/lambda/model/GetAliasRequest.h>
 #include <aws/lambda/model/GetCapacityProviderRequest.h>
@@ -62,6 +64,7 @@
 #include <aws/lambda/model/GetLayerVersionRequest.h>
 #include <aws/lambda/model/GetPolicyRequest.h>
 #include <aws/lambda/model/GetProvisionedConcurrencyConfigRequest.h>
+#include <aws/lambda/model/GetResourcePolicyRequest.h>
 #include <aws/lambda/model/GetRuntimeManagementConfigRequest.h>
 #include <aws/lambda/model/InvokeRequest.h>
 #include <aws/lambda/model/InvokeWithResponseStreamRequest.h>
@@ -80,6 +83,7 @@
 #include <aws/lambda/model/ListProvisionedConcurrencyConfigsRequest.h>
 #include <aws/lambda/model/ListTagsRequest.h>
 #include <aws/lambda/model/ListVersionsByFunctionRequest.h>
+#include <aws/lambda/model/PauseDurableExecutionRequest.h>
 #include <aws/lambda/model/PublishLayerVersionRequest.h>
 #include <aws/lambda/model/PublishVersionRequest.h>
 #include <aws/lambda/model/PutFunctionCodeSigningConfigRequest.h>
@@ -88,9 +92,11 @@
 #include <aws/lambda/model/PutFunctionRecursionConfigRequest.h>
 #include <aws/lambda/model/PutFunctionScalingConfigRequest.h>
 #include <aws/lambda/model/PutProvisionedConcurrencyConfigRequest.h>
+#include <aws/lambda/model/PutResourcePolicyRequest.h>
 #include <aws/lambda/model/PutRuntimeManagementConfigRequest.h>
 #include <aws/lambda/model/RemoveLayerVersionPermissionRequest.h>
 #include <aws/lambda/model/RemovePermissionRequest.h>
+#include <aws/lambda/model/ResumeDurableExecutionRequest.h>
 #include <aws/lambda/model/SendDurableExecutionCallbackFailureRequest.h>
 #include <aws/lambda/model/SendDurableExecutionCallbackHeartbeatRequest.h>
 #include <aws/lambda/model/SendDurableExecutionCallbackSuccessRequest.h>
@@ -245,7 +251,8 @@ LambdaClient::InvokeOperationOutcome LambdaClient::InvokeServiceOperation(
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
 
-  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOperationOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOperationOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -259,7 +266,7 @@ LambdaClient::InvokeOperationOutcome LambdaClient::InvokeServiceOperation(
 
         return InvokeOperationOutcome{MakeRequest(request, endpointResolutionOutcome.GetResult(), httpMethod, Aws::Auth::SIGV4_SIGNER)};
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
 
@@ -466,6 +473,24 @@ DeleteCodeSigningConfigOutcome LambdaClient::DeleteCodeSigningConfig(const Delet
                             : DeleteCodeSigningConfigOutcome(std::move(result.GetError()));
 }
 
+DeleteDurableExecutionOutcome LambdaClient::DeleteDurableExecution(const DeleteDurableExecutionRequest& request) const {
+  if (!request.DurableExecutionArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteDurableExecution", "Required field: DurableExecutionArn, is not set");
+    return DeleteDurableExecutionOutcome(Aws::Client::AWSError<LambdaErrors>(LambdaErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                             "Missing required field [DurableExecutionArn]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2025-12-01/durable-executions/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDurableExecutionArn());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteDurableExecutionOutcome(result.GetResultWithOwnership())
+                            : DeleteDurableExecutionOutcome(std::move(result.GetError()));
+}
+
 DeleteEventSourceMappingOutcome LambdaClient::DeleteEventSourceMapping(const DeleteEventSourceMappingRequest& request) const {
   if (!request.UUIDHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("DeleteEventSourceMapping", "Required field: UUID, is not set");
@@ -627,6 +652,24 @@ DeleteProvisionedConcurrencyConfigOutcome LambdaClient::DeleteProvisionedConcurr
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? DeleteProvisionedConcurrencyConfigOutcome(result.GetResultWithOwnership())
                             : DeleteProvisionedConcurrencyConfigOutcome(std::move(result.GetError()));
+}
+
+DeleteResourcePolicyOutcome LambdaClient::DeleteResourcePolicy(const DeleteResourcePolicyRequest& request) const {
+  if (!request.ResourceArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteResourcePolicy", "Required field: ResourceArn, is not set");
+    return DeleteResourcePolicyOutcome(Aws::Client::AWSError<LambdaErrors>(LambdaErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                           "Missing required field [ResourceArn]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2026-07-09/resource-policy/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetResourceArn());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteResourcePolicyOutcome(result.GetResultWithOwnership())
+                            : DeleteResourcePolicyOutcome(std::move(result.GetError()));
 }
 
 GetAccountSettingsOutcome LambdaClient::GetAccountSettings(const GetAccountSettingsRequest& request) const {
@@ -1048,6 +1091,24 @@ GetProvisionedConcurrencyConfigOutcome LambdaClient::GetProvisionedConcurrencyCo
                             : GetProvisionedConcurrencyConfigOutcome(std::move(result.GetError()));
 }
 
+GetResourcePolicyOutcome LambdaClient::GetResourcePolicy(const GetResourcePolicyRequest& request) const {
+  if (!request.ResourceArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetResourcePolicy", "Required field: ResourceArn, is not set");
+    return GetResourcePolicyOutcome(Aws::Client::AWSError<LambdaErrors>(LambdaErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                        "Missing required field [ResourceArn]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2026-07-09/resource-policy/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetResourceArn());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetResourcePolicyOutcome(result.GetResultWithOwnership())
+                            : GetResourcePolicyOutcome(std::move(result.GetError()));
+}
+
 GetRuntimeManagementConfigOutcome LambdaClient::GetRuntimeManagementConfig(const GetRuntimeManagementConfigRequest& request) const {
   if (!request.FunctionNameHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetRuntimeManagementConfig", "Required field: FunctionName, is not set");
@@ -1084,7 +1145,8 @@ InvokeOutcome LambdaClient::Invoke(const InvokeRequest& request) const {
                                   {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<InvokeOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeOutcome>(
+      request, std::move(span),
       [&]() -> InvokeOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -1099,7 +1161,7 @@ InvokeOutcome LambdaClient::Invoke(const InvokeRequest& request) const {
         auto result = MakeRequestWithUnparsedResponse(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST);
         return result.IsSuccess() ? InvokeOutcome(result.GetResultWithOwnership()) : InvokeOutcome(std::move(result.GetError()));
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
        {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
@@ -1121,7 +1183,8 @@ InvokeWithResponseStreamOutcome LambdaClient::InvokeWithResponseStream(InvokeWit
                                   {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
                                   {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
                                  smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<InvokeWithResponseStreamOutcome>(
+  return Aws::Client::AsyncOperationState::MakeCallWithTiming<InvokeWithResponseStreamOutcome>(
+      request, std::move(span),
       [&]() -> InvokeWithResponseStreamOutcome {
         auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
             [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
@@ -1149,7 +1212,7 @@ InvokeWithResponseStreamOutcome LambdaClient::InvokeWithResponseStream(InvokeWit
         return result.IsSuccess() ? InvokeWithResponseStreamOutcome(result.GetResultWithOwnership())
                                   : InvokeWithResponseStreamOutcome(std::move(result.GetError()));
       },
-      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, meter,
       {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
        {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
@@ -1402,6 +1465,25 @@ ListVersionsByFunctionOutcome LambdaClient::ListVersionsByFunction(const ListVer
                             : ListVersionsByFunctionOutcome(std::move(result.GetError()));
 }
 
+PauseDurableExecutionOutcome LambdaClient::PauseDurableExecution(const PauseDurableExecutionRequest& request) const {
+  if (!request.DurableExecutionArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("PauseDurableExecution", "Required field: DurableExecutionArn, is not set");
+    return PauseDurableExecutionOutcome(Aws::Client::AWSError<LambdaErrors>(LambdaErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                            "Missing required field [DurableExecutionArn]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2025-12-01/durable-executions/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDurableExecutionArn());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/pause");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? PauseDurableExecutionOutcome(result.GetResultWithOwnership())
+                            : PauseDurableExecutionOutcome(std::move(result.GetError()));
+}
+
 PublishLayerVersionOutcome LambdaClient::PublishLayerVersion(const PublishLayerVersionRequest& request) const {
   if (!request.LayerNameHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("PublishLayerVersion", "Required field: LayerName, is not set");
@@ -1564,6 +1646,24 @@ PutProvisionedConcurrencyConfigOutcome LambdaClient::PutProvisionedConcurrencyCo
                             : PutProvisionedConcurrencyConfigOutcome(std::move(result.GetError()));
 }
 
+PutResourcePolicyOutcome LambdaClient::PutResourcePolicy(const PutResourcePolicyRequest& request) const {
+  if (!request.ResourceArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("PutResourcePolicy", "Required field: ResourceArn, is not set");
+    return PutResourcePolicyOutcome(Aws::Client::AWSError<LambdaErrors>(LambdaErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                        "Missing required field [ResourceArn]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2026-07-09/resource-policy/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetResourceArn());
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? PutResourcePolicyOutcome(result.GetResultWithOwnership())
+                            : PutResourcePolicyOutcome(std::move(result.GetError()));
+}
+
 PutRuntimeManagementConfigOutcome LambdaClient::PutRuntimeManagementConfig(const PutRuntimeManagementConfigRequest& request) const {
   if (!request.FunctionNameHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("PutRuntimeManagementConfig", "Required field: FunctionName, is not set");
@@ -1638,6 +1738,25 @@ RemovePermissionOutcome LambdaClient::RemovePermission(const RemovePermissionReq
   auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_DELETE);
   return result.IsSuccess() ? RemovePermissionOutcome(result.GetResultWithOwnership())
                             : RemovePermissionOutcome(std::move(result.GetError()));
+}
+
+ResumeDurableExecutionOutcome LambdaClient::ResumeDurableExecution(const ResumeDurableExecutionRequest& request) const {
+  if (!request.DurableExecutionArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ResumeDurableExecution", "Required field: DurableExecutionArn, is not set");
+    return ResumeDurableExecutionOutcome(Aws::Client::AWSError<LambdaErrors>(LambdaErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                             "Missing required field [DurableExecutionArn]", false));
+  }
+
+  auto uriResolver = [&](Aws::Endpoint::ResolveEndpointOutcome& endpointResolutionOutcome) {
+    (void)endpointResolutionOutcome;
+    endpointResolutionOutcome.GetResult().AddPathSegments("/2025-12-01/durable-executions/");
+    endpointResolutionOutcome.GetResult().AddPathSegment(request.GetDurableExecutionArn());
+    endpointResolutionOutcome.GetResult().AddPathSegments("/resume");
+  };
+
+  auto result = InvokeServiceOperation(request, uriResolver, Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ResumeDurableExecutionOutcome(result.GetResultWithOwnership())
+                            : ResumeDurableExecutionOutcome(std::move(result.GetError()));
 }
 
 SendDurableExecutionCallbackFailureOutcome LambdaClient::SendDurableExecutionCallbackFailure(

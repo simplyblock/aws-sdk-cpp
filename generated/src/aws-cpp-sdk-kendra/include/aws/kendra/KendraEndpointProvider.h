@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/kendra/KendraEndpointRules.h>
 #include <aws/kendra/Kendra_EXPORTS.h>
 
 namespace Aws {
 namespace kendra {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using KendraClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,8 +30,7 @@ using KendraBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using KendraEndpointProviderBase = EndpointProviderBase<KendraClientConfiguration, KendraBuiltInParameters, KendraClientContextParameters>;
 
-using KendraDefaultEpProviderBase =
-    DefaultEndpointProvider<KendraClientConfiguration, KendraBuiltInParameters, KendraClientContextParameters>;
+using KendraDefaultEpProviderBase = BDDEndpointProvider<KendraClientConfiguration, KendraBuiltInParameters, KendraClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -41,8 +39,7 @@ class AWS_KENDRA_API KendraEndpointProvider : public KendraDefaultEpProviderBase
  public:
   using KendraResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  KendraEndpointProvider()
-      : KendraDefaultEpProviderBase(Aws::kendra::KendraEndpointRules::GetRulesBlob(), Aws::kendra::KendraEndpointRules::RulesBlobSize) {}
+  KendraEndpointProvider();
 
   ~KendraEndpointProvider() {}
 };

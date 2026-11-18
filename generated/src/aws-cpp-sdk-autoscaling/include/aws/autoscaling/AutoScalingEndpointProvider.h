@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/autoscaling/AutoScalingEndpointRules.h>
 #include <aws/autoscaling/AutoScaling_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace AutoScaling {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using AutoScalingClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using AutoScalingEndpointProviderBase =
     EndpointProviderBase<AutoScalingClientConfiguration, AutoScalingBuiltInParameters, AutoScalingClientContextParameters>;
 
 using AutoScalingDefaultEpProviderBase =
-    DefaultEndpointProvider<AutoScalingClientConfiguration, AutoScalingBuiltInParameters, AutoScalingClientContextParameters>;
+    BDDEndpointProvider<AutoScalingClientConfiguration, AutoScalingBuiltInParameters, AutoScalingClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_AUTOSCALING_API AutoScalingEndpointProvider : public AutoScalingDefaul
  public:
   using AutoScalingResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  AutoScalingEndpointProvider()
-      : AutoScalingDefaultEpProviderBase(Aws::AutoScaling::AutoScalingEndpointRules::GetRulesBlob(),
-                                         Aws::AutoScaling::AutoScalingEndpointRules::RulesBlobSize) {}
+  AutoScalingEndpointProvider();
 
   ~AutoScalingEndpointProvider() {}
 };

@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include <aws/apigatewayv2/ApiGatewayV2EndpointRules.h>
 #include <aws/apigatewayv2/ApiGatewayV2_EXPORTS.h>
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -16,7 +15,7 @@ namespace Aws {
 namespace ApiGatewayV2 {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using ApiGatewayV2ClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using ApiGatewayV2EndpointProviderBase =
     EndpointProviderBase<ApiGatewayV2ClientConfiguration, ApiGatewayV2BuiltInParameters, ApiGatewayV2ClientContextParameters>;
 
 using ApiGatewayV2DefaultEpProviderBase =
-    DefaultEndpointProvider<ApiGatewayV2ClientConfiguration, ApiGatewayV2BuiltInParameters, ApiGatewayV2ClientContextParameters>;
+    BDDEndpointProvider<ApiGatewayV2ClientConfiguration, ApiGatewayV2BuiltInParameters, ApiGatewayV2ClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_APIGATEWAYV2_API ApiGatewayV2EndpointProvider : public ApiGatewayV2Def
  public:
   using ApiGatewayV2ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  ApiGatewayV2EndpointProvider()
-      : ApiGatewayV2DefaultEpProviderBase(Aws::ApiGatewayV2::ApiGatewayV2EndpointRules::GetRulesBlob(),
-                                          Aws::ApiGatewayV2::ApiGatewayV2EndpointRules::RulesBlobSize) {}
+  ApiGatewayV2EndpointProvider();
 
   ~ApiGatewayV2EndpointProvider() {}
 };

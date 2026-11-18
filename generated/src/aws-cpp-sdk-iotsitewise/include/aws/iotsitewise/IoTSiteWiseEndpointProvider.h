@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/iotsitewise/IoTSiteWiseEndpointRules.h>
 #include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
 
 namespace Aws {
 namespace IoTSiteWise {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using IoTSiteWiseClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,7 +32,7 @@ using IoTSiteWiseEndpointProviderBase =
     EndpointProviderBase<IoTSiteWiseClientConfiguration, IoTSiteWiseBuiltInParameters, IoTSiteWiseClientContextParameters>;
 
 using IoTSiteWiseDefaultEpProviderBase =
-    DefaultEndpointProvider<IoTSiteWiseClientConfiguration, IoTSiteWiseBuiltInParameters, IoTSiteWiseClientContextParameters>;
+    BDDEndpointProvider<IoTSiteWiseClientConfiguration, IoTSiteWiseBuiltInParameters, IoTSiteWiseClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -42,9 +41,7 @@ class AWS_IOTSITEWISE_API IoTSiteWiseEndpointProvider : public IoTSiteWiseDefaul
  public:
   using IoTSiteWiseResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  IoTSiteWiseEndpointProvider()
-      : IoTSiteWiseDefaultEpProviderBase(Aws::IoTSiteWise::IoTSiteWiseEndpointRules::GetRulesBlob(),
-                                         Aws::IoTSiteWise::IoTSiteWiseEndpointRules::RulesBlobSize) {}
+  IoTSiteWiseEndpointProvider();
 
   ~IoTSiteWiseEndpointProvider() {}
 };

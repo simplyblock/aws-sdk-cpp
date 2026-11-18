@@ -13,7 +13,9 @@
 #include <aws/athena/model/MonitoringConfiguration.h>
 #include <aws/athena/model/QueryResultsS3AccessGrantsConfiguration.h>
 #include <aws/athena/model/ResultConfiguration.h>
+#include <aws/athena/model/SystemTableStatus.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 
 #include <utility>
 
@@ -172,9 +174,7 @@ class WorkGroupConfiguration {
 
   ///@{
   /**
-   * <p>The engine version that all queries running on the workgroup use. Queries on
-   * the <code>AmazonAthenaPreviewFunctionality</code> workgroup run on the preview
-   * engine regardless of this setting.</p>
+   * <p>The engine version that all queries running on the workgroup use.</p>
    */
   inline const EngineVersion& GetEngineVersion() const { return m_engineVersion; }
   inline bool EngineVersionHasBeenSet() const { return m_engineVersionHasBeenSet; }
@@ -347,6 +347,31 @@ class WorkGroupConfiguration {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * <p>The read-only enablement status of each system table for the account. This
+   * field is returned by <a>GetWorkGroup</a> and is ignored on write.</p>
+   */
+  inline const Aws::Vector<SystemTableStatus>& GetSystemTableStatuses() const { return m_systemTableStatuses; }
+  inline bool SystemTableStatusesHasBeenSet() const { return m_systemTableStatusesHasBeenSet; }
+  template <typename SystemTableStatusesT = Aws::Vector<SystemTableStatus>>
+  void SetSystemTableStatuses(SystemTableStatusesT&& value) {
+    m_systemTableStatusesHasBeenSet = true;
+    m_systemTableStatuses = std::forward<SystemTableStatusesT>(value);
+  }
+  template <typename SystemTableStatusesT = Aws::Vector<SystemTableStatus>>
+  WorkGroupConfiguration& WithSystemTableStatuses(SystemTableStatusesT&& value) {
+    SetSystemTableStatuses(std::forward<SystemTableStatusesT>(value));
+    return *this;
+  }
+  template <typename SystemTableStatusesT = SystemTableStatus>
+  WorkGroupConfiguration& AddSystemTableStatuses(SystemTableStatusesT&& value) {
+    m_systemTableStatusesHasBeenSet = true;
+    m_systemTableStatuses.emplace_back(std::forward<SystemTableStatusesT>(value));
+    return *this;
+  }
+  ///@}
  private:
   ResultConfiguration m_resultConfiguration;
 
@@ -377,6 +402,8 @@ class WorkGroupConfiguration {
   IdentityCenterConfiguration m_identityCenterConfiguration;
 
   QueryResultsS3AccessGrantsConfiguration m_queryResultsS3AccessGrantsConfiguration;
+
+  Aws::Vector<SystemTableStatus> m_systemTableStatuses;
   bool m_resultConfigurationHasBeenSet = false;
   bool m_managedQueryResultsConfigurationHasBeenSet = false;
   bool m_enforceWorkGroupConfigurationHasBeenSet = false;
@@ -392,6 +419,7 @@ class WorkGroupConfiguration {
   bool m_enableMinimumEncryptionConfigurationHasBeenSet = false;
   bool m_identityCenterConfigurationHasBeenSet = false;
   bool m_queryResultsS3AccessGrantsConfigurationHasBeenSet = false;
+  bool m_systemTableStatusesHasBeenSet = false;
 };
 
 }  // namespace Model

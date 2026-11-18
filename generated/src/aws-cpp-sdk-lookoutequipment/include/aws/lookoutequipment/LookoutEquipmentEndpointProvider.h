@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/lookoutequipment/LookoutEquipmentEndpointRules.h>
 #include <aws/lookoutequipment/LookoutEquipment_EXPORTS.h>
 
 namespace Aws {
 namespace LookoutEquipment {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using LookoutEquipmentClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -33,8 +32,7 @@ using LookoutEquipmentEndpointProviderBase =
     EndpointProviderBase<LookoutEquipmentClientConfiguration, LookoutEquipmentBuiltInParameters, LookoutEquipmentClientContextParameters>;
 
 using LookoutEquipmentDefaultEpProviderBase =
-    DefaultEndpointProvider<LookoutEquipmentClientConfiguration, LookoutEquipmentBuiltInParameters,
-                            LookoutEquipmentClientContextParameters>;
+    BDDEndpointProvider<LookoutEquipmentClientConfiguration, LookoutEquipmentBuiltInParameters, LookoutEquipmentClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -43,9 +41,7 @@ class AWS_LOOKOUTEQUIPMENT_API LookoutEquipmentEndpointProvider : public Lookout
  public:
   using LookoutEquipmentResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  LookoutEquipmentEndpointProvider()
-      : LookoutEquipmentDefaultEpProviderBase(Aws::LookoutEquipment::LookoutEquipmentEndpointRules::GetRulesBlob(),
-                                              Aws::LookoutEquipment::LookoutEquipmentEndpointRules::RulesBlobSize) {}
+  LookoutEquipmentEndpointProvider();
 
   ~LookoutEquipmentEndpointProvider() {}
 };

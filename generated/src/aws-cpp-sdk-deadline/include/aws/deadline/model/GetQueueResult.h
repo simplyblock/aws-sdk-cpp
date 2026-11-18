@@ -29,13 +29,6 @@ class JsonValue;
 }  // namespace Utils
 namespace deadline {
 namespace Model {
-/**
- * <p>Mixin that adds an optional ARN field to response structures. Apply to
- * SummaryMixins (flows into Get, Summary, and BatchGet) and Create
- * outputs.</p><p><h3>See Also:</h3>   <a
- * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/GetQueueResponse">AWS
- * API Reference</a></p>
- */
 class GetQueueResult {
  public:
   AWS_DEADLINE_API GetQueueResult() = default;
@@ -97,10 +90,10 @@ class GetQueueResult {
 
   ///@{
   /**
-   * <p>The status of the queue.</p> <ul> <li> <p> <code>ACTIVE</code>–The queue is
-   * active.</p> </li> <li> <p> <code>SCHEDULING</code>–The queue is scheduling.</p>
-   * </li> <li> <p> <code>SCHEDULING_BLOCKED</code>–The queue scheduling is blocked.
-   * See the provided reason.</p> </li> </ul>
+   * <p>The status of the queue.</p> <ul> <li> <p> <code>ACTIVE</code> - The queue is
+   * active.</p> </li> <li> <p> <code>SCHEDULING</code> - The queue is
+   * scheduling.</p> </li> <li> <p> <code>SCHEDULING_BLOCKED</code> - The queue
+   * scheduling is blocked. See the provided reason.</p> </li> </ul>
    */
   inline QueueStatus GetStatus() const { return m_status; }
   inline void SetStatus(QueueStatus value) {

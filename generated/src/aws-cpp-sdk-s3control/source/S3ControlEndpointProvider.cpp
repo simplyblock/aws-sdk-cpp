@@ -4,6 +4,7 @@
  */
 
 #include <aws/s3control/S3ControlEndpointProvider.h>
+#include <aws/s3control/internal/S3ControlEndpointRules.h>
 
 namespace Aws {
 #ifndef AWS_S3CONTROL_EXPORTS  // Except for Windows DLL
@@ -15,14 +16,18 @@ template class Aws::Endpoint::EndpointProviderBase<S3Control::Endpoint::S3Contro
                                                    S3Control::Endpoint::S3ControlBuiltInParameters,
                                                    S3Control::Endpoint::S3ControlClientContextParameters>;
 
-template class Aws::Endpoint::DefaultEndpointProvider<S3Control::Endpoint::S3ControlClientConfiguration,
-                                                      S3Control::Endpoint::S3ControlBuiltInParameters,
-                                                      S3Control::Endpoint::S3ControlClientContextParameters>;
+template class Aws::Endpoint::BDDEndpointProvider<S3Control::Endpoint::S3ControlClientConfiguration,
+                                                  S3Control::Endpoint::S3ControlBuiltInParameters,
+                                                  S3Control::Endpoint::S3ControlClientContextParameters>;
 }  // namespace Endpoint
 #endif
 
 namespace S3Control {
 namespace Endpoint {
+S3ControlEndpointProvider::S3ControlEndpointProvider()
+    : S3ControlDefaultEpProviderBase(Aws::S3Control::S3ControlEndpointRules::GetRulesBlob(),
+                                     Aws::S3Control::S3ControlEndpointRules::RulesBlobSize) {}
+
 void S3ControlClientContextParameters::SetUseArnRegion(bool value) { return SetBooleanParameter(Aws::String("UseArnRegion"), value); }
 const S3ControlClientContextParameters::ClientContextParameters::EndpointParameter& S3ControlClientContextParameters::GetUseArnRegion()
     const {
@@ -30,14 +35,21 @@ const S3ControlClientContextParameters::ClientContextParameters::EndpointParamet
 }
 void S3ControlBuiltInParameters::SetFromClientConfiguration(const S3ControlClientConfiguration& config) {
   SetFromClientConfiguration(static_cast<const S3ControlClientConfiguration::BaseClientConfigClass&>(config));
+  SetServiceSpecificParameters(config);
+}
 
+void S3ControlBuiltInParameters::SetFromClientConfiguration(const S3ControlClientConfiguration& config, const Aws::String& serviceName) {
+  SetFromClientConfiguration(static_cast<const S3ControlClientConfiguration::BaseClientConfigClass&>(config), serviceName);
+  SetServiceSpecificParameters(config);
+}
+
+void S3ControlBuiltInParameters::SetServiceSpecificParameters(const S3ControlClientConfiguration& config) {
   static const char* AWS_S3_USE_ARN_REGION = "UseArnRegion";
   SetBooleanParameter(AWS_S3_USE_ARN_REGION, config.useArnRegion);
   if (!config.accountId.empty()) {
     SetStringParameter("AccountId", config.accountId);
   }
 }
-
 }  // namespace Endpoint
 }  // namespace S3Control
 }  // namespace Aws

@@ -1,4 +1,4 @@
-add_project(aws-cpp-sdk-ivschat "C++ SDK for the AWS ivschat service" aws-cpp-sdk-core)
+add_project(aws-cpp-sdk-ivschat "C++ SDK for Amazon Interactive Video Service Chat" aws-cpp-sdk-core)
 
 file(GLOB AWS_IVSCHAT_HEADERS
     "include/aws/ivschat/*.h"
@@ -6,6 +6,10 @@ file(GLOB AWS_IVSCHAT_HEADERS
 
 file(GLOB AWS_IVSCHAT_MODEL_HEADERS
     "include/aws/ivschat/model/*.h"
+)
+
+file(GLOB AWS_IVSCHAT_INTERNAL_HEADERS
+    "include/aws/ivschat/internal/*.h"
 )
 
 file(GLOB AWS_IVSCHAT_SOURCE
@@ -18,6 +22,7 @@ file(GLOB AWS_IVSCHAT_MODEL_SOURCE
 
 file(GLOB IVSCHAT_UNIFIED_HEADERS
     ${AWS_IVSCHAT_HEADERS}
+    ${AWS_IVSCHAT_INTERNAL_HEADERS}
     ${AWS_IVSCHAT_MODEL_HEADERS}
 )
 
@@ -39,6 +44,7 @@ if(WIN32)
     #if we are compiling for visual studio, create a sane directory tree.
     if(MSVC)
         source_group("Header Files\\aws\\ivschat" FILES ${AWS_IVSCHAT_HEADERS})
+        source_group("Header Files\\aws\\ivschat\\internal" FILES ${AWS_IVSCHAT_INTERNAL_HEADERS})
         source_group("Header Files\\aws\\ivschat\\model" FILES ${AWS_IVSCHAT_MODEL_HEADERS})
         source_group("Source Files" FILES ${AWS_IVSCHAT_SOURCE})
         source_group("Source Files\\model" FILES ${AWS_IVSCHAT_MODEL_SOURCE})

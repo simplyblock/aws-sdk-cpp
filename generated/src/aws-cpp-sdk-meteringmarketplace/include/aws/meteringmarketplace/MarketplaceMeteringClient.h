@@ -33,8 +33,8 @@ namespace MarketplaceMetering {
  * <p>Vendor-metered tagging: Supported allocation tagging</p> </li> </ul> <p>
  * <i>BatchMeterUsage</i> </p> <ul> <li> <p>Submits the metering record for a set
  * of customers. <code>BatchMeterUsage</code> API calls are captured by CloudTrail.
- * You can use CloudTrail to verify that the software as a subscription (SaaS)
- * metering records that you sent are accurate by searching for records with the
+ * You can use CloudTrail to verify that the software as a service (SaaS) metering
+ * records that you sent are accurate by searching for records with the
  * <code>eventName</code> of <code>BatchMeterUsage</code>. You can also use
  * CloudTrail to audit records over time. For more information, see the <a
  * href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html">CloudTrail
@@ -49,7 +49,7 @@ namespace MarketplaceMetering {
  * the registration process</p> </li> <li> <p>Supported product type: SaaS</p>
  * </li> <li> <p>Vendor-metered tagging: Not applicable</p> </li> </ul> <p>
  * <b>Entitlement and metering for paid container products</b> </p> <p>
- * <i>RegisteredUsage</i> </p> <ul> <li> <p>Provides software entitlement and
+ * <i>RegisterUsage</i> </p> <ul> <li> <p>Provides software entitlement and
  * metering. Paid container software products sold through Amazon Web Services
  * Marketplace must integrate with the Marketplace Metering Service and call the
  * <code>RegisterUsage</code> operation. Free and Bring Your Own License model
@@ -144,26 +144,66 @@ class AWS_MARKETPLACEMETERING_API MarketplaceMeteringClient : public Aws::Client
   virtual ~MarketplaceMeteringClient();
 
   /**
-   *  <p>Amazon Web Services Marketplace is introducing Concurrent
-   * Agreements, enabling buyers to make multiple purchases per Amazon Web Services
-   * account. Starting June 1, 2026, new SaaS products must use
-   * <code>CustomerAWSAccountId</code> (instead of <code>CustomerIdentifier</code>),
-   * <code>LicenseArn</code> (instead of <code>ProductCode</code>) to support this
-   * feature. Existing integrations will continue to work. Review the new integration
-   * for Concurrent Agreements <a
-   * href="https://catalog.workshops.aws/mpseller/en-US/saas/integration-for-concurrent-agreements">here</a>.</p>
-   *  <p>To post metering records for customers, SaaS applications call
-   * <code>BatchMeterUsage</code>, which is used for metering SaaS flexible
-   * consumption pricing (FCP). Identical requests are idempotent and can be retried
-   * with the same records or a subset of records. Each <code>BatchMeterUsage</code>
-   * request is for only one product. If you want to meter usage for multiple
-   * products, you must make multiple <code>BatchMeterUsage</code> calls.</p>
-   * <p>Usage records should be submitted in quick succession following a recorded
-   * event. Usage records aren't accepted 24 hours or more after an event.</p> <p>
+   *  <p>The Amazon Web Services Marketplace AI Metering Agent Skill
+   * (<code>aws-marketplace-metering</code>) helps an AI coding agent integrate your
+   * SaaS product's usage reporting with the <code>BatchMeterUsage</code> API. The
+   * skill is a curated package of instructions and reference material that guides
+   * your AI coding agent through building, deploying, and testing the metering
+   * integration. To get the skill on demand without checking it out locally, install
+   * the <a
+   * href="https://docs.aws.amazon.com/agent-toolkit/latest/userguide/mcp-server.html">Amazon
+   * Web Services MCP Server</a> in your coding agent; the agent then discovers and
+   * loads the skill at runtime. The skill source is also available on <a
+   * href="https://github.com/aws/agent-toolkit-for-aws/blob/main/skills/specialized-skills/aws-marketplace-skills/aws-marketplace-metering">GitHub</a>.
+   * For more information, see <a
+   * href="https://aws.amazon.com/blogs/awsmarketplace/build-aws-marketplace-saas-metering-with-the-metering-agent-skill/">Get
+   * started with the Amazon Web Services Marketplace AI Metering Agent Skill</a> on
+   * the Amazon Web Services Marketplace blog.</p>   <p>Amazon Web
+   * Services Marketplace is introducing Concurrent Agreements, enabling buyers to
+   * make multiple purchases per Amazon Web Services account. Starting June 1, 2026,
+   * new SaaS products must use <code>CustomerAWSAccountId</code> (instead of
+   * <code>CustomerIdentifier</code>), <code>LicenseArn</code> (instead of
+   * <code>ProductCode</code>) to support this feature. <code>BatchMeterUsage</code>
+   * does not support <code>CustomerIdentifier</code> for new integrations. Existing
+   * integrations continue to work. Review the new integration for Concurrent
+   * Agreements <a
+   * href="https://catalog.workshops.aws/mpseller/en-US/saas/integration-for-concurrent-agreements">here</a>.
+   * For additional implementation details, see <a
+   * href="https://docs.aws.amazon.com/marketplace/latest/userguide/saas-code-examples.html#saas-batchmeterusage-licensearn-example">BatchMeterUsage
+   * code example with LicenseArn</a> in the <i>Amazon Web Services Marketplace
+   * Seller Guide</i>.</p>  <p>To post metering records for customers,
+   * SaaS applications call <code>BatchMeterUsage</code>, which is used for metering
+   * SaaS flexible consumption pricing (FCP). Identical requests are idempotent and
+   * can be retried with the same records or a subset of records. Each
+   * <code>BatchMeterUsage</code> request is for only one product. If you want to
+   * meter usage for multiple products, you must make multiple
+   * <code>BatchMeterUsage</code> calls.</p> <p>Usage records should be submitted in
+   * quick succession following a recorded event. Usage records aren't accepted 24
+   * hours or more after an event. At the end of each billing cycle, a 6-hour grace
+   * period applies. We accept usage records for the previous billing month until
+   * 06:00 UTC on the first day of the next month. For example, you must submit March
+   * usage records before 06:00 UTC on April 1. On April 1 at 05:00 UTC, you can
+   * still submit records for March 31 (within the 6-hour grace period). After 06:00
+   * UTC on April 1, March records are rejected regardless of the normal 24-hour
+   * submission window. After this grace period, we return a
+   * <code>TimestampOutOfBoundsException</code> error.</p> <p>
    * <code>BatchMeterUsage</code> can process up to 25 <code>UsageRecords</code> at a
-   * time, and each request must be less than 1 MB in size. Optionally, you can have
-   * multiple usage allocations for usage data that's split into buckets according to
-   * predefined tags.</p> <p> <code>BatchMeterUsage</code> returns a list of
+   * time, and each request must be less than 1 MB in size.</p> <p> <b>Vendor-metered
+   * tagging</b> </p> <p> <code>BatchMeterUsage</code> supports vendor-metered
+   * tagging. Optionally, you can split the usage in a <code>UsageRecord</code> into
+   * buckets by including <code>UsageAllocations</code>, where each
+   * <code>UsageAllocation</code> has a set of <code>Tags</code> that you define.
+   * Vendor-metered tagging doesn't change the price, dimensions, or the total usage
+   * that you report. It gives buyers a more granular view of their usage of your
+   * product so they can perform cost allocation in the Amazon Web Services Billing
+   * and Cost Management console. For more information, see <a
+   * href="https://docs.aws.amazon.com/marketplace/latest/userguide/metering-for-usage.html#saas-vendor-metered-tagging">Vendor-metered
+   * tagging</a> and <a
+   * href="https://docs.aws.amazon.com/marketplace/latest/userguide/saas-code-examples.html#saas-batchmeterusage-tagging">BatchMeterUsage
+   * with usage allocation tagging code example</a> in the <i>Amazon Web Services
+   * Marketplace Seller Guide</i>.</p> <p>To report fractional usage, use
+   * <code>QuantityAsDecimal</code> instead of <code>Quantity</code> in each
+   * <code>UsageRecord</code>.</p> <p> <code>BatchMeterUsage</code> returns a list of
    * <code>UsageRecordResult</code> objects, which have each
    * <code>UsageRecord</code>. It also returns a list of
    * <code>UnprocessedRecords</code>, which indicate errors on the service side that
@@ -245,10 +285,12 @@ class AWS_MARKETPLACEMETERING_API MarketplaceMeteringClient : public Aws::Client
    * <code>Timestamps</code> are aggregated as long as the <code>ClientToken</code>
    * is unique.</p> </li> </ul> <p>If you submit records more than six hours after
    * events occur, the records won't be accepted. The timestamp in your request
-   * determines when an event is recorded.</p> <p>You can optionally include multiple
-   * usage allocations, to provide customers with usage data split into buckets by
-   * tags that you define or allow the customer to define.</p> <p>For Amazon Web
-   * Services Regions that support <code>MeterUsage</code>, see <a
+   * determines when an event is recorded.</p> <p>To report fractional usage, use
+   * <code>UsageQuantityAsDecimal</code> instead of <code>UsageQuantity</code>.</p>
+   * <p>You can optionally include multiple usage allocations, to provide customers
+   * with usage data split into buckets by tags that you define or allow the customer
+   * to define.</p> <p>For Amazon Web Services Regions that support
+   * <code>MeterUsage</code>, see <a
    * href="https://docs.aws.amazon.com/marketplace/latest/APIReference/metering-regions.html#meterusage-region-support-ec2">MeterUsage
    * Region support for Amazon EC2</a> and <a
    * href="https://docs.aws.amazon.com/marketplace/latest/APIReference/metering-regions.html#meterusage-region-support-ecs-eks">MeterUsage
@@ -347,9 +389,14 @@ class AWS_MARKETPLACEMETERING_API MarketplaceMeteringClient : public Aws::Client
    * registration token is resolved through this API to obtain a
    * <code>CustomerIdentifier</code> along with the
    * <code>CustomerAWSAccountId</code>, <code>ProductCode</code>, and
-   * <code>LicenseArn</code>.</p>  <p>To successfully resolve the token, the
-   * API must be called from the account that was used to publish the SaaS
-   * application. For an example of using <code>ResolveCustomer</code>, see <a
+   * <code>LicenseArn</code>.</p>  <p>For new SaaS product integrations,
+   * the <code>CustomerIdentifier</code> field is not populated in the
+   * <code>ResolveCustomer</code> API response. New integrations must use
+   * <code>CustomerAWSAccountId</code> and <code>LicenseArn</code> to identify
+   * customers. Existing integrations continue to work unchanged.</p>
+   *  <p>To successfully resolve the token, the API must be called from the
+   * account that was used to publish the SaaS application. For an example of using
+   * <code>ResolveCustomer</code>, see <a
    * href="https://docs.aws.amazon.com/marketplace/latest/userguide/saas-code-examples.html#saas-resolvecustomer-example">
    * ResolveCustomer code example</a> in the <i>Amazon Web Services Marketplace
    * Seller Guide</i>.</p>  <p>Permission is required for this operation. Your

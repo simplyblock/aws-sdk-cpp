@@ -11,6 +11,7 @@
 #include <aws/medialive/model/CmafId3Behavior.h>
 #include <aws/medialive/model/CmafIngestCaptionLanguageMapping.h>
 #include <aws/medialive/model/CmafIngestSegmentLengthUnits.h>
+#include <aws/medialive/model/CmafIngestWatermarkingSettings.h>
 #include <aws/medialive/model/CmafKLVBehavior.h>
 #include <aws/medialive/model/CmafNielsenId3Behavior.h>
 #include <aws/medialive/model/CmafTimedMetadataId3Frame.h>
@@ -80,7 +81,17 @@ class CmafIngestGroupSettings {
 
   ///@{
   /**
-   * Type of scte35 track to add. none or scte35WithoutSegmentation
+   * SCTE-35 insertion type. Option "none" indicates that a SCTE-35 marker will not
+   * be inserted, nor will an IDR be inserted at the SCTE-35 cue point, nor will the
+   * segment be segmented. Option "scte35WithoutIdr" indicates that a SCTE-35 marker
+   * will be inserted to indicate the cue point, but MediaLive will not insert an IDR
+   * on that frame nor will it introduce a new segment boundary there if it wasn't
+   * already going to be one (this option is required for use with downstream
+   * multiview bitstream stitching workflows). Option "scte35WithoutSegmentation"
+   * indicates that a SCTE-35 marker will be inserted to indicate the cue point, and
+   * an IDR will be inserted on that frame so that a downstream re-packager might
+   * split the segment there, but MediaLive itself will not introduce a new segment
+   * boundary there.
    */
   inline Scte35Type GetScte35Type() const { return m_scte35Type; }
   inline bool Scte35TypeHasBeenSet() const { return m_scte35TypeHasBeenSet; }
@@ -365,6 +376,24 @@ class CmafIngestGroupSettings {
     return *this;
   }
   ///@}
+
+  ///@{
+  /**
+   * Specifies the type of watermarking technology to use.
+   */
+  inline const CmafIngestWatermarkingSettings& GetWatermarkingSettings() const { return m_watermarkingSettings; }
+  inline bool WatermarkingSettingsHasBeenSet() const { return m_watermarkingSettingsHasBeenSet; }
+  template <typename WatermarkingSettingsT = CmafIngestWatermarkingSettings>
+  void SetWatermarkingSettings(WatermarkingSettingsT&& value) {
+    m_watermarkingSettingsHasBeenSet = true;
+    m_watermarkingSettings = std::forward<WatermarkingSettingsT>(value);
+  }
+  template <typename WatermarkingSettingsT = CmafIngestWatermarkingSettings>
+  CmafIngestGroupSettings& WithWatermarkingSettings(WatermarkingSettingsT&& value) {
+    SetWatermarkingSettings(std::forward<WatermarkingSettingsT>(value));
+    return *this;
+  }
+  ///@}
  private:
   OutputLocationRef m_destination;
 
@@ -399,6 +428,8 @@ class CmafIngestGroupSettings {
   CmafTimedMetadataPassthrough m_timedMetadataPassthrough{CmafTimedMetadataPassthrough::NOT_SET};
 
   Aws::Vector<AdditionalDestinations> m_additionalDestinations;
+
+  CmafIngestWatermarkingSettings m_watermarkingSettings;
   bool m_destinationHasBeenSet = false;
   bool m_nielsenId3BehaviorHasBeenSet = false;
   bool m_scte35TypeHasBeenSet = false;
@@ -416,6 +447,7 @@ class CmafIngestGroupSettings {
   bool m_timedMetadataId3PeriodHasBeenSet = false;
   bool m_timedMetadataPassthroughHasBeenSet = false;
   bool m_additionalDestinationsHasBeenSet = false;
+  bool m_watermarkingSettingsHasBeenSet = false;
 };
 
 }  // namespace Model

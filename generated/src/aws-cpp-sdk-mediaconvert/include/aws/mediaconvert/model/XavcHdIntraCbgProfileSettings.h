@@ -6,6 +6,7 @@
 #pragma once
 #include <aws/mediaconvert/MediaConvert_EXPORTS.h>
 #include <aws/mediaconvert/model/XavcHdIntraCbgProfileClass.h>
+#include <aws/mediaconvert/model/XavcInterlaceMode.h>
 
 #include <utility>
 
@@ -34,6 +35,27 @@ class XavcHdIntraCbgProfileSettings {
 
   ///@{
   /**
+   * Choose the scan line type for the output. Keep the default value, Progressive,
+   * to create a progressive output, regardless of the scan type of your input. To
+   * create an interlaced output, choose Top field first or Follow, default top.
+   * Outputs that you create with this profile are always top field first when they
+   * are interlaced. When you create an interlaced output, set your output frame rate
+   * to 25 or 29.97.
+   */
+  inline XavcInterlaceMode GetInterlaceMode() const { return m_interlaceMode; }
+  inline bool InterlaceModeHasBeenSet() const { return m_interlaceModeHasBeenSet; }
+  inline void SetInterlaceMode(XavcInterlaceMode value) {
+    m_interlaceModeHasBeenSet = true;
+    m_interlaceMode = value;
+  }
+  inline XavcHdIntraCbgProfileSettings& WithInterlaceMode(XavcInterlaceMode value) {
+    SetInterlaceMode(value);
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
    * Specify the XAVC Intra HD (CBG) Class to set the bitrate of your output. Outputs
    * of the same class have similar image quality over the operating points that are
    * valid for that class.
@@ -50,7 +72,10 @@ class XavcHdIntraCbgProfileSettings {
   }
   ///@}
  private:
+  XavcInterlaceMode m_interlaceMode{XavcInterlaceMode::NOT_SET};
+
   XavcHdIntraCbgProfileClass m_xavcClass{XavcHdIntraCbgProfileClass::NOT_SET};
+  bool m_interlaceModeHasBeenSet = false;
   bool m_xavcClassHasBeenSet = false;
 };
 

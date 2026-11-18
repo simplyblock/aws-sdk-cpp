@@ -34,6 +34,15 @@ Rule& Rule::operator=(JsonView jsonValue) {
     m_triggerEventSource = jsonValue.GetObject("TriggerEventSource");
     m_triggerEventSourceHasBeenSet = true;
   }
+  if (jsonValue.ValueExists("RuleCapabilityTiers")) {
+    Aws::Utils::Array<JsonView> ruleCapabilityTiersJsonList = jsonValue.GetArray("RuleCapabilityTiers");
+    for (unsigned ruleCapabilityTiersIndex = 0; ruleCapabilityTiersIndex < ruleCapabilityTiersJsonList.GetLength();
+         ++ruleCapabilityTiersIndex) {
+      m_ruleCapabilityTiers.push_back(
+          RuleCapabilityTierMapper::GetRuleCapabilityTierForName(ruleCapabilityTiersJsonList[ruleCapabilityTiersIndex].AsString()));
+    }
+    m_ruleCapabilityTiersHasBeenSet = true;
+  }
   if (jsonValue.ValueExists("Function")) {
     m_function = jsonValue.GetString("Function");
     m_functionHasBeenSet = true;
@@ -48,6 +57,10 @@ Rule& Rule::operator=(JsonView jsonValue) {
   if (jsonValue.ValueExists("PublishStatus")) {
     m_publishStatus = RulePublishStatusMapper::GetRulePublishStatusForName(jsonValue.GetString("PublishStatus"));
     m_publishStatusHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("PreEvaluationFilters")) {
+    m_preEvaluationFilters = jsonValue.GetObject("PreEvaluationFilters");
+    m_preEvaluationFiltersHasBeenSet = true;
   }
   if (jsonValue.ValueExists("CreatedTime")) {
     m_createdTime = jsonValue.GetDouble("CreatedTime");
@@ -90,6 +103,16 @@ JsonValue Rule::Jsonize() const {
     payload.WithObject("TriggerEventSource", m_triggerEventSource.Jsonize());
   }
 
+  if (m_ruleCapabilityTiersHasBeenSet) {
+    Aws::Utils::Array<JsonValue> ruleCapabilityTiersJsonList(m_ruleCapabilityTiers.size());
+    for (unsigned ruleCapabilityTiersIndex = 0; ruleCapabilityTiersIndex < ruleCapabilityTiersJsonList.GetLength();
+         ++ruleCapabilityTiersIndex) {
+      ruleCapabilityTiersJsonList[ruleCapabilityTiersIndex].AsString(
+          RuleCapabilityTierMapper::GetNameForRuleCapabilityTier(m_ruleCapabilityTiers[ruleCapabilityTiersIndex]));
+    }
+    payload.WithArray("RuleCapabilityTiers", std::move(ruleCapabilityTiersJsonList));
+  }
+
   if (m_functionHasBeenSet) {
     payload.WithString("Function", m_function);
   }
@@ -104,6 +127,10 @@ JsonValue Rule::Jsonize() const {
 
   if (m_publishStatusHasBeenSet) {
     payload.WithString("PublishStatus", RulePublishStatusMapper::GetNameForRulePublishStatus(m_publishStatus));
+  }
+
+  if (m_preEvaluationFiltersHasBeenSet) {
+    payload.WithObject("PreEvaluationFilters", m_preEvaluationFilters.Jsonize());
   }
 
   if (m_createdTimeHasBeenSet) {

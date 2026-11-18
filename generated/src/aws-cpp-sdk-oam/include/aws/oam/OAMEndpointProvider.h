@@ -5,18 +5,17 @@
 
 #pragma once
 #include <aws/core/client/GenericClientConfiguration.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
+#include <aws/core/endpoint/BDDEndpointProvider.h>
 #include <aws/core/endpoint/EndpointParameter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/oam/OAMEndpointRules.h>
 #include <aws/oam/OAM_EXPORTS.h>
 
 namespace Aws {
 namespace OAM {
 namespace Endpoint {
 using EndpointParameters = Aws::Endpoint::EndpointParameters;
-using Aws::Endpoint::DefaultEndpointProvider;
+using Aws::Endpoint::BDDEndpointProvider;
 using Aws::Endpoint::EndpointProviderBase;
 
 using OAMClientContextParameters = Aws::Endpoint::ClientContextParameters;
@@ -31,7 +30,7 @@ using OAMBuiltInParameters = Aws::Endpoint::BuiltInParameters;
  */
 using OAMEndpointProviderBase = EndpointProviderBase<OAMClientConfiguration, OAMBuiltInParameters, OAMClientContextParameters>;
 
-using OAMDefaultEpProviderBase = DefaultEndpointProvider<OAMClientConfiguration, OAMBuiltInParameters, OAMClientContextParameters>;
+using OAMDefaultEpProviderBase = BDDEndpointProvider<OAMClientConfiguration, OAMBuiltInParameters, OAMClientContextParameters>;
 
 /**
  * Default endpoint provider used for this service
@@ -40,7 +39,7 @@ class AWS_OAM_API OAMEndpointProvider : public OAMDefaultEpProviderBase {
  public:
   using OAMResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-  OAMEndpointProvider() : OAMDefaultEpProviderBase(Aws::OAM::OAMEndpointRules::GetRulesBlob(), Aws::OAM::OAMEndpointRules::RulesBlobSize) {}
+  OAMEndpointProvider();
 
   ~OAMEndpointProvider() {}
 };

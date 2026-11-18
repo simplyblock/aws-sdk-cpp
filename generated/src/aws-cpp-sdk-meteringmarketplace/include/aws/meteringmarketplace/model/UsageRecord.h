@@ -42,6 +42,9 @@ class UsageRecord {
    * <p>Timestamp, in UTC, for which the usage is being reported.</p> <p>Your
    * application can meter usage for up to 24 hours in the past. Make sure the
    * <code>timestamp</code> value is not before the start of the software usage.</p>
+   * <p>At the end of each billing cycle, you have a 6-hour grace period to submit
+   * usage records for the previous billing month before 06:00 UTC on the first day
+   * of the next month.</p>
    */
   inline const Aws::Utils::DateTime& GetTimestamp() const { return m_timestamp; }
   inline bool TimestampHasBeenSet() const { return m_timestampHasBeenSet; }
@@ -61,7 +64,9 @@ class UsageRecord {
   /**
    * <p>The <code>CustomerIdentifier</code> is obtained through the
    * <code>ResolveCustomer</code> operation and represents an individual buyer in
-   * your application.</p>
+   * your application.</p>  <p> <code>CustomerIdentifier</code> is not
+   * supported for new SaaS product integrations. Use
+   * <code>CustomerAWSAccountId</code> to identify the buyer.</p>
    */
   inline const Aws::String& GetCustomerIdentifier() const { return m_customerIdentifier; }
   inline bool CustomerIdentifierHasBeenSet() const { return m_customerIdentifierHasBeenSet; }
@@ -100,16 +105,28 @@ class UsageRecord {
   ///@{
   /**
    * <p>The quantity of usage consumed by the customer for the given dimension and
-   * time. Defaults to <code>0</code> if not specified.</p>
+   * time, as a decimal string. Use this instead of <code>Quantity</code> to report
+   * fractional usage.</p> <p>A non-negative decimal number, for example
+   * <code>17.42</code>.</p> <p>You can't specify both <code>Quantity</code> and
+   * <code>QuantityAsDecimal</code> in a usage record. If you provide
+   * <code>UsageAllocations</code>, each allocation must use
+   * <code>AllocatedUsageQuantityAsDecimal</code>. If any usage record fails these
+   * checks, the entire <code>BatchMeterUsage</code> request fails and no records are
+   * processed.</p> <p>Quantities are compared by value when checking for duplicate
+   * records, so <code>17</code>, <code>17.0</code>, and <code>17.00</code> are the
+   * same quantity, whether you send it in <code>Quantity</code> or
+   * <code>QuantityAsDecimal</code>.</p>
    */
-  inline int GetQuantity() const { return m_quantity; }
-  inline bool QuantityHasBeenSet() const { return m_quantityHasBeenSet; }
-  inline void SetQuantity(int value) {
-    m_quantityHasBeenSet = true;
-    m_quantity = value;
+  inline const Aws::String& GetQuantityAsDecimal() const { return m_quantityAsDecimal; }
+  inline bool QuantityAsDecimalHasBeenSet() const { return m_quantityAsDecimalHasBeenSet; }
+  template <typename QuantityAsDecimalT = Aws::String>
+  void SetQuantityAsDecimal(QuantityAsDecimalT&& value) {
+    m_quantityAsDecimalHasBeenSet = true;
+    m_quantityAsDecimal = std::forward<QuantityAsDecimalT>(value);
   }
-  inline UsageRecord& WithQuantity(int value) {
-    SetQuantity(value);
+  template <typename QuantityAsDecimalT = Aws::String>
+  UsageRecord& WithQuantityAsDecimal(QuantityAsDecimalT&& value) {
+    SetQuantityAsDecimal(std::forward<QuantityAsDecimalT>(value));
     return *this;
   }
   ///@}
@@ -117,8 +134,12 @@ class UsageRecord {
   ///@{
   /**
    * <p>The set of <code>UsageAllocations</code> to submit. The sum of all
-   * <code>UsageAllocation</code> quantities must equal the Quantity of the
-   * <code>UsageRecord</code>.</p>
+   * <code>UsageAllocation</code> quantities must equal the quantity of the
+   * <code>UsageRecord</code> (<code>Quantity</code> or
+   * <code>QuantityAsDecimal</code>). Allocations must use the same type of quantity
+   * as the usage record: <code>AllocatedUsageQuantity</code> with
+   * <code>Quantity</code>, or <code>AllocatedUsageQuantityAsDecimal</code> with
+   * <code>QuantityAsDecimal</code>.</p>
    */
   inline const Aws::Vector<UsageAllocation>& GetUsageAllocations() const { return m_usageAllocations; }
   inline bool UsageAllocationsHasBeenSet() const { return m_usageAllocationsHasBeenSet; }
@@ -143,11 +164,14 @@ class UsageRecord {
   ///@{
   /**
    * <p>The <code>CustomerAWSAccountId</code> parameter specifies the AWS account ID
-   * of the buyer.</p>  <p>For existing integrations, to access your
-   * <code>CustomerIdentifier</code> to <code>CustomerAWSAccountId</code> mapping,
-   * see <a
-   * href="https://docs.aws.amazon.com/marketplace/latest/userguide/data-feed-account.html">Account
-   * Feeds</a>.</p>
+   * of the buyer.</p>  <p>If you have an existing integration and need
+   * the <code>CustomerAWSAccountId</code> that corresponds to a
+   * <code>CustomerIdentifier</code>, contact <a
+   * href="https://aws.amazon.com/marketplace/management/contact-us/">AWS Marketplace
+   * Seller Operations</a> to obtain the mapping. Do not request the
+   * <code>CustomerAWSAccountId</code> directly from buyers. We cannot verify that a
+   * buyer-provided account ID is authentic, which can result in incorrect metering
+   * or billing.</p>
    */
   inline const Aws::String& GetCustomerAWSAccountId() const { return m_customerAWSAccountId; }
   inline bool CustomerAWSAccountIdHasBeenSet() const { return m_customerAWSAccountIdHasBeenSet; }
@@ -192,7 +216,7 @@ class UsageRecord {
 
   Aws::String m_dimension;
 
-  int m_quantity{0};
+  Aws::String m_quantityAsDecimal;
 
   Aws::Vector<UsageAllocation> m_usageAllocations;
 
@@ -202,7 +226,7 @@ class UsageRecord {
   bool m_timestampHasBeenSet = false;
   bool m_customerIdentifierHasBeenSet = false;
   bool m_dimensionHasBeenSet = false;
-  bool m_quantityHasBeenSet = false;
+  bool m_quantityAsDecimalHasBeenSet = false;
   bool m_usageAllocationsHasBeenSet = false;
   bool m_customerAWSAccountIdHasBeenSet = false;
   bool m_licenseArnHasBeenSet = false;

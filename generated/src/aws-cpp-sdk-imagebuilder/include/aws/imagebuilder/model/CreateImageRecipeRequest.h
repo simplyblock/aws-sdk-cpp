@@ -36,7 +36,11 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The name of the image recipe.</p>
+   * <p>The name of the image recipe. The recipe name, combined with the semantic
+   * version, must be unique to your account in each Amazon Web Services Region.
+   * Image Builder generates the image recipe ARN from a normalized form of the name,
+   * so names that differ only in case, spaces, or underscores count as the same
+   * name.</p>
    */
   inline const Aws::String& GetName() const { return m_name; }
   inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
@@ -76,8 +80,8 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
    * version syntax.</p>  <p>The semantic version has four nodes:
    * &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values
    * for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b>
-   * For the first three nodes you can assign any positive integer value, including
-   * zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder
+   * For the first three nodes, you can assign any positive integer value, including
+   * zero. The upper limit is 2^30-1, or 1073741823, for each node. Image Builder
    * automatically assigns the build number to the fourth node.</p> <p>
    * <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment
    * requirements for the nodes that you can assign. For example, you might choose a
@@ -100,7 +104,11 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The components included in the image recipe.</p>
+   * <p>The components included in the image recipe. Components are optional. A
+   * recipe with no components bakes the base image without additional customization.
+   * You can specify each component only one time in a recipe. Components with a
+   * status of <code>DEPRECATED</code> or <code>DISABLED</code> can't be added to new
+   * recipes.</p>
    */
   inline const Aws::Vector<ComponentConfiguration>& GetComponents() const { return m_components; }
   inline bool ComponentsHasBeenSet() const { return m_componentsHasBeenSet; }
@@ -131,7 +139,8 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
    * Parameter, prefixed by <code>ssm:</code>, followed by the parameter name or
    * ARN.</p> </li> <li> <p>Amazon Web Services Marketplace product ID</p> </li>
    * </ul> <p>If you enter an AMI ID or an SSM parameter that contains the AMI ID,
-   * you must have access to the AMI, and the AMI must be in the source Region.</p>
+   * you must have access to the AMI. The AMI must also be in the Region where you're
+   * creating the recipe.</p>
    */
   inline const Aws::String& GetParentImage() const { return m_parentImage; }
   inline bool ParentImageHasBeenSet() const { return m_parentImageHasBeenSet; }
@@ -149,7 +158,9 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The block device mappings of the image recipe.</p>
+   * <p>The block device mappings that Image Builder applies to the build instance
+   * and the output AMI. For example, you can override the size of the base image's
+   * root volume or attach additional EBS volumes.</p>
    */
   inline const Aws::Vector<InstanceBlockDeviceMapping>& GetBlockDeviceMappings() const { return m_blockDeviceMappings; }
   inline bool BlockDeviceMappingsHasBeenSet() const { return m_blockDeviceMappingsHasBeenSet; }
@@ -197,7 +208,9 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>The working directory used during build and test workflows.</p>
+   * <p>The working directory used during build and test workflows. If you don't
+   * specify a working directory, Image Builder uses <code>/tmp</code> for Linux and
+   * macOS build instances, and <code>C:/</code> for Windows build instances.</p>
    */
   inline const Aws::String& GetWorkingDirectory() const { return m_workingDirectory; }
   inline bool WorkingDirectoryHasBeenSet() const { return m_workingDirectoryHasBeenSet; }
@@ -215,7 +228,7 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Specify additional settings and launch scripts for your build instances.</p>
+   * <p>The additional settings and launch scripts for your build instances.</p>
    */
   inline const AdditionalInstanceConfiguration& GetAdditionalInstanceConfiguration() const { return m_additionalInstanceConfiguration; }
   inline bool AdditionalInstanceConfigurationHasBeenSet() const { return m_additionalInstanceConfigurationHasBeenSet; }
@@ -286,8 +299,10 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
 
   ///@{
   /**
-   * <p>Unique, case-sensitive identifier you provide to ensure idempotency of the
-   * request. For more information, see <a
+   * <p>A unique, case-sensitive identifier you provide to ensure that the operation
+   * runs no more than one time. If you retry a request with the same client token,
+   * Image Builder returns the original response without running the operation again.
+   * For more information, see <a
    * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
    * idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>
    */
@@ -301,6 +316,24 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
   template <typename ClientTokenT = Aws::String>
   CreateImageRecipeRequest& WithClientToken(ClientTokenT&& value) {
     SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>Validates the required permissions and request parameters without performing
+   * the operation. If validation succeeds, the operation returns a
+   * <code>DryRunOperationException</code> error response.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline CreateImageRecipeRequest& WithDryRun(bool value) {
+    SetDryRun(value);
     return *this;
   }
   ///@}
@@ -328,6 +361,8 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
   Aws::Vector<Aws::String> m_amiWatermarks;
 
   Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+
+  bool m_dryRun{false};
   bool m_nameHasBeenSet = false;
   bool m_descriptionHasBeenSet = false;
   bool m_semanticVersionHasBeenSet = false;
@@ -340,6 +375,7 @@ class CreateImageRecipeRequest : public ImagebuilderRequest {
   bool m_amiTagsHasBeenSet = false;
   bool m_amiWatermarksHasBeenSet = false;
   bool m_clientTokenHasBeenSet = true;
+  bool m_dryRunHasBeenSet = false;
 };
 
 }  // namespace Model

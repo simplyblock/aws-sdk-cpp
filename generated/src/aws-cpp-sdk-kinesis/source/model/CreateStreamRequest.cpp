@@ -43,6 +43,11 @@ Aws::String CreateStreamRequest::SerializePayload() const {
     payload.WithInteger("MaxRecordSizeInKiB", m_maxRecordSizeInKiB);
   }
 
+  if (m_recordDistributionStrategyHasBeenSet) {
+    payload.WithString("RecordDistributionStrategy",
+                       RecordDistributionStrategyMapper::GetNameForRecordDistributionStrategy(m_recordDistributionStrategy));
+  }
+
   return payload.View().WriteReadable();
 }
 
@@ -50,4 +55,11 @@ Aws::Http::HeaderValueCollection CreateStreamRequest::GetRequestSpecificHeaders(
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Kinesis_20131202.CreateStream"));
   return headers;
+}
+
+CreateStreamRequest::EndpointParameters CreateStreamRequest::GetEndpointContextParams() const {
+  EndpointParameters parameters;
+  // Static context parameters
+  parameters.emplace_back(Aws::String("OperationType"), "control", Aws::Endpoint::EndpointParameter::ParameterOrigin::STATIC_CONTEXT);
+  return parameters;
 }
